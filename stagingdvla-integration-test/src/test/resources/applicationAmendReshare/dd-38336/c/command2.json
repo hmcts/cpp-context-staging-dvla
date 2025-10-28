@@ -1,0 +1,172 @@
+{
+  "masterDefendantId": "%DEFENDANT_ID%",
+  "orderingCourt": {
+    "address": {
+      "address1": "1 Queen Victoria Street",
+      "address2": "London",
+      "postcode": "EC4N 4XY"
+    },
+    "code": "B01DU00",
+    "id": "c133d0de-c989-48b9-bd20-0431943e347e",
+    "lja": {
+      "ljaCode": "2570",
+      "ljaName": "Central London Magistrates' Court"
+    },
+    "name": "City of London Magistrates' Court"
+  },
+  "nowContent": {
+    "orderDate": "2025-04-03",
+    "defendant": {
+      "dateOfBirth": "2000-01-01",
+      "gender": "MALE",
+      "driverNumber": "ULLRI611187XH9ZM",
+      "firstName": "Leon",
+      "lastName": "Rempel",
+      "name": "Leon Rempel",
+      "address": {
+        "line1": "FLAT - 25A",
+        "line2": "9680 Walsh Square",
+        "line3": "Swansea",
+        "line4": "Walsh",
+        "line5": "UK",
+        "postCode": "SA1 1AU"
+      }
+    },
+    "caseApplicationReferences": [
+      "DVLA02022455"
+    ],
+    "cases": [
+      {
+        "initiationCode": "C",
+        "reference": "DVLA02022455",
+        "caseId": "29c2923c-ed1f-4180-b4f3-7d7498caf1f6",
+        "defendantCaseOffences": []
+      }
+    ],
+    "courtApplications": [
+      {
+        "applicationType": "Application within criminal proceedings",
+        "applicationTypeId": "fde5dd50-fb49-4100-8c46-4c10096fb136",
+        "applicationReceivedDate": "2025-04-01",
+        "id": "0cfb05d1-3c86-4f37-bd5f-a069f0b5cf2b",
+        "applicationReference": "DVLA02022455",
+        "applicationStatus": "IN_PROGRESS",
+        "results": [
+          {
+            "resultIdentifier": "d278650c-e429-11e8-9f32-f2801f1b9fd1",
+            "publishedForNows": false,
+            "prompts": [
+              {
+                "promptIdentifier": "70c98fa6-804d-11e8-adc0-fa7ae01bbebc",
+                "promptReference": "3d0618c2-15bb-49e1-9896-862c318a00ad",
+                "label": "Next hearing in magistrates' court",
+                "value": "Date of hearing:12/05/2025\nTime of hearing:10:00\nCourthouse organisation name:City of London Magistrates' Court\nCourthouse address line 1:1 Queen Victoria Street\nCourthouse address line 2:London\nCourthouse post code:EC4N 4XY\nCourtroom:Courtroom 01\nHearing type:Plea\nEstimated duration:20 MINUTES\nBooking reference:5777a711-f724-4be3-8be1-3c20f0585dd7"
+              },
+              {
+                "promptIdentifier": "61f951c3-f18d-4a44-ae4a-0cad4efb4133",
+                "promptReference": "defendantToAttendTheNextHearing",
+                "label": "Defendant to attend the next hearing",
+                "value": "Yes"
+              },
+              {
+                "promptIdentifier": "69ff04d5-84e8-4a61-8478-82c2999c1969",
+                "promptReference": "ea10c580-b534-414c-a26b-6b76ecbf2b69",
+                "label": "To attend or a warrant to issue",
+                "value": ""
+              },
+              {
+                "promptIdentifier": "7fc17a01-2f5a-4433-aae9-28e0c959f73b",
+                "promptReference": "67e29d72-0cac-4a44-9f1b-2454855ea2e2",
+                "label": "Adjournment reasons",
+                "value": ""
+              }
+            ],
+            "resultWording": "",
+            "d20": false,
+            "label": "Adjournment"
+          },
+          {
+            "resultIdentifier": "69ff04d5-84e8-4a61-8478-82c2999c1969",
+            "publishedForNows": true,
+            "resultWording": "",
+            "resultDefinitionGroup": "Adjournment reasons",
+            "d20": false,
+            "label": "To attend or a warrant to issue"
+          },
+          {
+            "resultIdentifier": "70c98fa6-804d-11e8-adc0-fa7ae01bbebc",
+            "publishedForNows": true,
+            "prompts": [
+              {
+                "promptIdentifier": "d27a5d86-d51f-4c6e-914b-cb4b0abc4283",
+                "promptReference": "HDATE",
+                "label": "Date of hearing",
+                "value": "12/05/2025"
+              },
+              {
+                "promptIdentifier": "4d125a5a-acbc-461d-a657-ba5643af85a6",
+                "promptReference": "timeOfHearing",
+                "label": "Time of hearing",
+                "value": "10:00"
+              },
+              {
+                "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                "promptReference": "hCHOUSEOrganisationName",
+                "label": "Courthouse organisation name",
+                "value": "City of London Magistrates' Court"
+              },
+              {
+                "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                "promptReference": "hCHOUSEAddress1",
+                "label": "Courthouse address line 1",
+                "value": "1 Queen Victoria Street"
+              },
+              {
+                "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                "promptReference": "hCHOUSEAddress2",
+                "label": "Courthouse address line 2",
+                "value": "London"
+              },
+              {
+                "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                "promptReference": "hCHOUSEPostCode",
+                "label": "Courthouse post code",
+                "value": "EC4N 4XY"
+              },
+              {
+                "promptIdentifier": "49ec9b26-dd63-4637-b2e9-55ba9948a90f",
+                "promptReference": "HCROOM",
+                "label": "Courtroom",
+                "value": "Courtroom 01"
+              },
+              {
+                "promptIdentifier": "c1116d12-dd35-4171-807a-2cb845357d22",
+                "promptReference": "HTYPE",
+                "label": "Hearing type",
+                "value": "Plea"
+              },
+              {
+                "promptIdentifier": "d85cc2d7-66c8-471e-b6ff-c1bc60c6cdac",
+                "promptReference": "HEST",
+                "label": "Estimated duration",
+                "value": "20 MINUTES"
+              },
+              {
+                "promptIdentifier": "e73e6ab8-9bfe-4135-9fe6-f526544584d6",
+                "promptReference": "bookingReference",
+                "label": "Booking reference",
+                "value": "5777a711-f724-4be3-8be1-3c20f0585dd7"
+              }
+            ],
+            "resultWording": "",
+            "resultDefinitionGroup": "Next hearing",
+            "d20": false,
+            "label": "Next hearing in magistrates' court"
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": true,
+  "orderingHearingId": "f380434a-9579-46ea-a183-e5f90d986451"
+}

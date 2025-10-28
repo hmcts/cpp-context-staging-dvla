@@ -1,0 +1,103 @@
+{
+  "masterDefendantId": "%DEFENDANT_ID%",
+  "orderingCourt": {
+    "address": {
+      "address1": "Warwickshire Justice Centre",
+      "address2": "Newbold Terrace",
+      "address3": "Leamington Spa",
+      "address4": "Warwickshire",
+      "postcode": "CV32 4EL"
+    },
+    "code": "B23HS00",
+    "id": "c50bbdea-bea9-4ed2-a9ef-2d090e425fc3",
+    "lja": {
+      "ljaCode": "2905",
+      "ljaName": "Coventry and Warwickshire (Warwickshire) Magistrates' Court"
+    },
+    "name": "Leamington Spa Magistrates' Court"
+  },
+  "nowContent": {
+    "orderDate": "2023-05-16",
+    "defendant": {
+      "dateOfBirth": "1985-01-20",
+      "gender": "MALE",
+      "title": "MR",
+      "firstName": "Baron",
+      "lastName": "Kessler",
+      "name": "Baron Kessler",
+      "address": {
+        "line1": "27 Good Place",
+        "line2": "Heaven Avenue",
+        "line4": "Heaven",
+        "postCode": "CV1 2JT"
+      }
+    },
+    "caseApplicationReferences": [
+      "JW132310877"
+    ],
+    "cases": [
+      {
+        "reference": "JW132310877",
+        "caseId": "d38f6d0c-7f04-4bea-ba90-9e6d9c0f1297",
+        "defendantCaseOffences": []
+      }
+    ],
+    "courtApplications": [
+      {
+        "applicationType": "Appearance to make statutory declaration (SJP case)",
+        "applicationReceivedDate": "2023-05-15",
+        "id": "df879d39-7047-4bbc-9202-8467fe4d3f6a",
+        "applicationReference": "JW132310877",
+        "applicationStatus": "IN_PROGRESS",
+        "results": [
+          {
+            "resultIdentifier": "e2f6e11b-c3a2-4e76-8d29-fbede4174988",
+            "publishedForNows": false,
+            "prompts": [
+              {
+                "promptIdentifier": "7b6ef0ac-2d0b-44e5-a68e-4720b96cc679",
+                "promptReference": "statutoryDeclarationMadeUnder",
+                "label": "Statutory declaration made under",
+                "value": "Section 14 of the Magistrates' Courts Act 1980"
+              },
+              {
+                "promptIdentifier": "36e32c50-dbec-41c4-904b-25eb20c9c54a",
+                "promptReference": "financialPenaltiesToBeWrittenOff",
+                "label": "Financial penalties to be written off",
+                "value": "No"
+              },
+              {
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedOrganisationName",
+                "label": "Prosecutor to be notified organisation name",
+                "value": "Test"
+              },
+              {
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedAddress1",
+                "label": "Prosecutor to be notified address line 1",
+                "value": "Test address line 1"
+              },
+              {
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedPostCode",
+                "label": "Prosecutor to be notified post code",
+                "value": "TS2 1AA"
+              },
+              {
+                "promptIdentifier": "f42fa098-0f7b-4269-ac4f-b10c9b6832d7",
+                "promptReference": "f6475bbb-0a92-42ca-904b-dd9e5ee5f2c6",
+                "label": "Driving endorsement to be removed",
+                "value": "Original court code:2905\nOriginal conviction date:16/05/2023\nDVLA endorsement code:TS30\nOriginal offence date:20/11/2022"
+              }
+            ],
+            "d20": false,
+            "label": "Statutory Declaration"
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": true,
+  "orderingHearingId": "fb37ae72-ee4d-432b-a8d3-0ac2b306c057"
+}

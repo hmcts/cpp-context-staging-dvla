@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="crete-driver-audit"
+               logicalFilePath="004-create-driver-audit.xml"
+               author="cpp.context.staging.dvla">
+        <createTable tableName="driver_audit">
+            <column name="id" type="UUID">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="user_id" type="UUID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_email" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date_time" type="DATETIME TZ">
+                <constraints nullable="false"/>
+            </column>
+            <column name="reason_type" type="VARCHAR">
+                <constraints nullable="false" />
+            </column>
+            <column name="reference" type="VARCHAR(35)">
+                <constraints nullable="false" />
+            </column>
+            <column name="driving_license_number" type="VARCHAR(16)">
+            </column>
+            <column name="first_names" type="VARCHAR">
+            </column>
+            <column name="last_name" type="VARCHAR">
+            </column>
+            <column name="gender" type="VARCHAR(6)">
+            </column>
+            <column name="postcode" type="VARCHAR(8)">
+            </column>
+            <column name="date_of_birth" type="date"/>
+        </createTable>
+
+        <createIndex tableName="driver_audit" indexName="driver_audit_user_email_idx">
+            <column name="user_email"/>
+        </createIndex>
+        <createIndex tableName="driver_audit" indexName="driver_audit_date_time_idx">
+            <column name="date_time"/>
+        </createIndex>
+        <createIndex tableName="driver_audit" indexName="driver_audit_driving_license_number_idx">
+            <column name="driving_license_number"/>
+        </createIndex>
+        <rollback>
+            <dropTable tableName="driver_audit"/>
+        </rollback>
+
+    </changeSet>
+</databaseChangeLog>

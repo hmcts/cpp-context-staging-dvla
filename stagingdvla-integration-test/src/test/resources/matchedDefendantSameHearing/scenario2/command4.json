@@ -1,0 +1,195 @@
+{
+  "masterDefendantId": "%DEFENDANT_ID%",
+  "orderingCourt": {
+    "address": {
+      "address1": "176A Lavender Hill",
+      "address2": "London",
+      "address3": "",
+      "address4": "",
+      "address5": "",
+      "postcode": "SW11 1JU"
+    },
+    "code": "B01LY00",
+    "courtHearingLocation": "B01LY01",
+    "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+    "lja": {
+      "ljaCode": "2577",
+      "ljaName": "South West London Magistrates' Court"
+    },
+    "name": "Lavender Hill Magistrates' Court",
+    "roomId": "9e4932f7-97b2-3010-b942-ddd2624e4dd8",
+    "roomName": "Courtroom 01"
+  },
+  "nowContent": {
+    "orderDate": "2023-04-14",
+    "defendant": {
+      "dateOfBirth": "1951-09-21",
+      "gender": "MALE",
+      "title": "Mr",
+      "firstName": "Jon",
+      "lastName": "Matt",
+      "name": "Jon Matt",
+      "address": {
+        "line1": "799",
+        "line2": "StreetDescription",
+        "line3": "Locality2O",
+        "postCode": "CR0 1XG"
+      }
+    },
+    "caseApplicationReferences": [
+      "14AP830004"
+    ],
+    "cases": [
+      {
+        "reference": "14AP830004",
+        "caseId": "bef71b62-af31-493d-95c0-c3e9d9760665",
+        "defendantCaseOffences": [
+          {
+            "title": "Drive a vehicle whilst unfit through drugs",
+            "civilOffence": false,
+            "dvlaCode": "DR80",
+            "convictionStatus": "Not Convicted",
+            "alcoholReadingAmount": 500,
+            "alcoholReadingMethodCode": "A",
+            "alcoholReadingMethodDescription": "Blood",
+            "code": "RT88340",
+            "modeOfTrial": "Summary",
+            "endorsableFlag": true,
+            "wording": "Driving Insurance",
+            "startDate": "2022-10-01",
+            "results": [
+              {
+                "resultIdentifier": "d278650c-e429-11e8-9f32-f2801f1b9fd1",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "70c98fa6-804d-11e8-adc0-fa7ae01bbebc",
+                    "promptReference": "190a8513-4fc1-4ba7-8481-d8bfbab7ddb2",
+                    "label": "Next hearing in magistrates' court",
+                    "value": "Date of hearing:15/04/2023\nTime of hearing:10:00\nCourthouse organisation name:Lavender Hill Magistrates' Court\nCourthouse address line 1:176A Lavender Hill\nCourthouse address line 2:London\nCourthouse post code:SW11 1JU\nCourtroom:Courtroom 01\nHearing type:First hearing\nEstimated duration:20 MINUTES\nExisting Hearing Id:6215720d-5d85-4873-9118-ff1fce706c3a"
+                  },
+                  {
+                    "promptIdentifier": "61f951c3-f18d-4a44-ae4a-0cad4efb4133",
+                    "promptReference": "defendantToAttendTheNextHearing",
+                    "label": "Defendant to attend the next hearing",
+                    "value": "Yes"
+                  },
+                  {
+                    "promptIdentifier": "9c1dcdfa-ec44-4167-bbd4-d29c3a63a7fc",
+                    "promptReference": "6aabdbd6-0c54-4b73-82d1-3713c0a91d0e",
+                    "label": "Unexpected circumstances meant that the case could not be heard",
+                    "value": ""
+                  },
+                  {
+                    "promptIdentifier": "a1f2e6d7-7a21-41f8-9a9a-854b25a606d4",
+                    "promptReference": "e5533ca4-1d4b-428f-93bc-75ca3871ffa1",
+                    "label": "Insufficient court time to hear the case",
+                    "value": ""
+                  },
+                  {
+                    "promptIdentifier": "7fc17a01-2f5a-4433-aae9-28e0c959f73b",
+                    "promptReference": "77de33c5-6a08-436a-b3d3-e557c1aeb845",
+                    "label": "Adjournment reasons",
+                    "value": ""
+                  }
+                ],
+                "resultWording": "",
+                "d20": false,
+                "label": "Adjournment"
+              },
+              {
+                "resultIdentifier": "a1f2e6d7-7a21-41f8-9a9a-854b25a606d4",
+                "publishedForNows": true,
+                "resultWording": "",
+                "resultDefinitionGroup": "Adjournment reasons",
+                "d20": false,
+                "label": "Insufficient court time to hear the case"
+              },
+              {
+                "resultIdentifier": "70c98fa6-804d-11e8-adc0-fa7ae01bbebc",
+                "publishedForNows": true,
+                "prompts": [
+                  {
+                    "promptIdentifier": "d27a5d86-d51f-4c6e-914b-cb4b0abc4283",
+                    "promptReference": "HDATE",
+                    "label": "Date of hearing",
+                    "value": "15/04/2023"
+                  },
+                  {
+                    "promptIdentifier": "4d125a5a-acbc-461d-a657-ba5643af85a6",
+                    "promptReference": "timeOfHearing",
+                    "label": "Time of hearing",
+                    "value": "10:00"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEOrganisationName",
+                    "label": "Courthouse organisation name",
+                    "value": "Lavender Hill Magistrates' Court"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEAddress1",
+                    "label": "Courthouse address line 1",
+                    "value": "176A Lavender Hill"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEAddress2",
+                    "label": "Courthouse address line 2",
+                    "value": "London"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEPostCode",
+                    "label": "Courthouse post code",
+                    "value": "SW11 1JU"
+                  },
+                  {
+                    "promptIdentifier": "49ec9b26-dd63-4637-b2e9-55ba9948a90f",
+                    "promptReference": "HCROOM",
+                    "label": "Courtroom",
+                    "value": "Courtroom 01"
+                  },
+                  {
+                    "promptIdentifier": "c1116d12-dd35-4171-807a-2cb845357d22",
+                    "promptReference": "HTYPE",
+                    "label": "Hearing type",
+                    "value": "First hearing"
+                  },
+                  {
+                    "promptIdentifier": "d85cc2d7-66c8-471e-b6ff-c1bc60c6cdac",
+                    "promptReference": "HEST",
+                    "label": "Estimated duration",
+                    "value": "20 MINUTES"
+                  },
+                  {
+                    "promptIdentifier": "a0ec3e68-5210-422f-9959-73c1c7ce495a",
+                    "promptReference": "existingHearingId",
+                    "label": "Existing Hearing Id",
+                    "value": "6215720d-5d85-4873-9118-ff1fce706c3a"
+                  }
+                ],
+                "resultWording": "",
+                "resultDefinitionGroup": "Next hearing",
+                "d20": false,
+                "label": "Next hearing in magistrates' court"
+              },
+              {
+                "resultIdentifier": "9c1dcdfa-ec44-4167-bbd4-d29c3a63a7fc",
+                "publishedForNows": true,
+                "resultWording": "",
+                "resultDefinitionGroup": "Adjournment reasons",
+                "d20": false,
+                "label": "Unexpected circumstances meant that the case could not be heard"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "amendmentDate": "2023-04-14"
+  },
+  "isReshare": true,
+  "orderingHearingId": "7dfc008c-5a24-464c-96ca-b9040ceb3787"
+}

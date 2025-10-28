@@ -1,0 +1,161 @@
+# The following values should be provided as input params when you start the runbook.
+# $ChangeDVLAPasswordUrl = 'https://driver-vehicle-licensing.api.gov.uk/thirdparty-access/v1/password'
+# $AuthenticateWithDVLAUrl = 'https://driver-vehicle-licensing.api.gov.uk/thirdparty-access/v1/authenticate'
+# GetNewDVLAAPIKeyUrl = 'https://driver-vehicle-licensing.api.gov.uk/thirdparty-access/v1/new-api-key'
+param
+(
+[Parameter (Mandatory = $false)]
+[object] $WebhookData,
+
+[Parameter (Mandatory = $true)]
+[String] $ChangeDVLAPasswordUrl,
+
+[Parameter (Mandatory = $true)]
+[String] $AuthenticateWithDVLAUrl,
+
+[Parameter (Mandatory = $true)]
+[String] $GetNewDVLAAPIKeyUrl
+)
+
+# Functions
+function Get-RandomCharacters($length, $characters) {
+    $random = 1..$length | ForEach-Object { Get-Random -Maximum $characters.length }
+    $private:ofs=""
+    return [String]$characters[$random]
+}
+ 
+function Scramble-String([string]$inputString){     
+     $characterArray = $inputString.ToCharArray()   
+     $scrambledStringArray = $characterArray | Get-Random -Count $characterArray.Length     
+     $outputString = -join $scrambledStringArray
+     return $outputString 
+ }
+
+function Get-Secret([string] $ObjectName){
+    $secret = Get-AzKeyVaultSecret -VaultName "KV-STE-COMMON" -Name $ObjectName
+    $ssPtr = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($secret.SecretValue)
+    try {
+        $secretValueText = [System.Runtime.InteropServices.Marshal]::PtrToStringBSTR($ssPtr)
+    } finally {
+        [System.Runtime.InteropServices.Marshal]::ZeroFreeBSTR($ssPtr)
+    }
+    return $secretValueText
+}
+
+if ($WebhookData) {   
+    # Parsing the RequestBody from the WebhookData.
+    $RequestBody = ConvertFrom-Json -InputObject $WebhookData.RequestBody
+    $ObjectName = $RequestBody.data.ObjectName
+    
+    Write-Output "OBJECT NAME"
+    $ObjectName
+
+    "Logging in to Azure..."
+
+    Disable-AzContextAutosave –Scope Process
+    $Conn = Get-AutomationConnection -Name AzureRunAsConnection
+    Connect-AzAccount -ServicePrincipal -Tenant $Conn.TenantID `
+    -ApplicationId $Conn.ApplicationID -CertificateThumbprint $Conn.CertificateThumbprint
+    $AzureContext = Select-AzSubscription -SubscriptionId $Conn.SubscriptionID
+
+    # dvla-password
+    if ($ObjectName -eq 'dvla-password')
+    {
+        # Get Secret from Key vault for dvla-username
+        $userNameSecretValueText = Get-Secret "dvla-username"
+
+        # Get Secret from Key vault for dvla-password
+        $pwdSecretValueText = Get-Secret $ObjectName
+
+        # Generate New password
+        $password = Get-RandomCharacters -length 5 -characters 'abcdefghiklmnoprstuvwxyz'
+        $password += Get-RandomCharacters -length 1 -characters 'ABCDEFGHKLMNOPRSTUVWXYZ'
+        $password += Get-RandomCharacters -length 1 -characters '1234567890'
+        $password += Get-RandomCharacters -length 1 -characters '!"§$%&/()=?}][{@#*+'
+
+        $password = Scramble-String $password
+
+        # Invoke APIM - ChangeDVLAPassword by passing in username and password
+        $data = '{"userName": "$userNameSecretValueText","password": "$pwdSecretValueText","newPassword": "$password"}'
+        $params = @{
+                        Uri         = $ChangeDVLAPasswordUrl
+                        Method      = 'POST'
+                        Body        = $data
+                        ContentType = 'application/json'
+                    }
+        $result = Invoke-RestMethod @params
+
+        $secret = Get-AzKeyVaultSecret -VaultName "KV-STE-COMMON" -Name $ObjectName
+        if ($secret.Expires) {
+            $secretExpiration = Get-date $secret.Expires #-Format yyyyMMdd
+            $expiryDate = (get-date).AddDays(+29).ToString("yyy-MM-ddTHH:mm:ssZ")
+            Write-Output $expiryDate
+        }
+
+        # Set Secret from Key vault for dvla-password
+        $secretvalue = ConvertTo-SecureString $password -AsPlainText -Force
+        $secretNew = Set-AzKeyVaultSecret -VaultName "KV-STE-COMMON" -Name $ObjectName -SecretValue $secretvalue -Expires $expiryDate
+    }
+
+    # dvla-apikey
+    if ($ObjectName -eq 'dvla-apikey')
+    {
+        # Get Secret from Key vault for dvla-username
+        $userNameSecretValueText = Get-Secret "dvla-username"
+
+        # Get Secret from Key vault for dvla-password
+        $pwdSecretValueText = Get-Secret "dvla-password"
+
+        # Get Secret from Key vault for dvla-apikey
+        $apiKeySecretValueText = Get-Secret "dvla-apikey"
+
+        # Invoke APIM - AuthenticateWithDVLA
+        $data = '{"userName": "$userNameSecretValueText","password": "$pwdSecretValueText"}'
+        $params = @{
+                        Uri         = $AuthenticateWithDVLAUrl
+                        Method      = 'POST'
+                        Body        = $data
+                        ContentType = 'application/json'
+                    }
+        $authenticationResult = Invoke-RestMethod @params
+
+        #$authorization = fetch the "id-token" from $authenticationResult
+
+        # Invoke APIM - getNewDVLAAPIKey
+        $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
+        $headers.Add("Accept", "application/json")
+        $headers.Add("x-api-key", "{{apiKeySecretValueText}}")
+        $headers.Add("Authorization", "{{authorization}}")
+
+        $params = @{
+                        Uri         = $GetNewDVLAAPIKeyUrl
+                        Method      = 'POST'
+                        ContentType = 'application/json'
+                    }
+        $apiKeyResult = Invoke-RestMethod @params -Headers $headers
+
+        # $newApiKey = Fetch the "newApiKey" from $apiKeyResult
+
+        $secret = Get-AzKeyVaultSecret -VaultName "KV-STE-COMMON" -Name $ObjectName
+        if ($secret.Expires) {
+            $secretExpiration = Get-date $secret.Expires
+            $expiryDate = (get-date).AddDays(+30).ToString("yyy-MM-ddTHH:mm:ssZ")
+            Write-Output $expiryDate
+        }
+
+        # The expiration date of this secret must be 1 day AFTER the expiration date of the dvla-password
+        $secretDvlaPwd = Get-AzKeyVaultSecret -VaultName "KV-STE-COMMON" -Name "dvla-password"
+        if ($secretDvlaPwd.Expires) {
+            $secretPwdExpiration = Get-date $secret.Expires
+            if(($secretPwdExpiration+1) -lt $expiryDate){
+                $secretvalue = ConvertTo-SecureString $password -AsPlainText -Force
+                $secretNew = Set-AzKeyVaultSecret -VaultName "KV-STE-COMMON" -Name $ObjectName -SecretValue $apiKeyResult -Expires $expiryDate
+            }
+        }
+    }
+}
+else
+{
+# Error
+write-Error "No input data found." 
+}

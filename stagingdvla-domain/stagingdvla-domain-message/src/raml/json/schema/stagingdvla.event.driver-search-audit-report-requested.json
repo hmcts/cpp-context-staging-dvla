@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://justice.gov.uk/cpp/stagingdvla/event/driver-search-audit-report-requested.json",
+  "description": "Driver record search audit report request, capturing report search criteria, date, creator etc",
+  "type": "object",
+  "properties": {
+    "id": {
+      "$ref": "http://justice.gov.uk/domain/core/common/definitions.json#/definitions/uuid"
+    },
+    "userId": {
+      "$ref": "http://justice.gov.uk/domain/core/common/definitions.json#/definitions/uuid"
+    },
+    "dateTime": {
+      "type": "string",
+      "format": "date"
+    },
+    "reportSearchCriteria": {
+      "$ref": "http://justice.gov.uk/cpp/stagingdvla/driver-audit-report-search-criteria.json"
+    }
+  },
+  "required": [
+    "id",
+    "userId",
+    "dateTime",
+    "reportSearchCriteria"
+  ],
+  "additionalProperties": false
+}

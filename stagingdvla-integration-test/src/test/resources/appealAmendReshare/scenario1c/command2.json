@@ -1,0 +1,127 @@
+{
+  "masterDefendantId": "%DEFENDANT_ID%",
+  "orderingCourt": {
+    "address": {
+      "address1": "176A Lavender Hill",
+      "address2": "London",
+      "address3": "",
+      "address4": "",
+      "address5": "",
+      "postcode": "SW11 1JU"
+    },
+    "code": "B01LY00",
+    "courtHearingLocation": "B01LY01",
+    "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+    "lja": {
+      "ljaCode": "2577",
+      "ljaName": "South West London Magistrates' Court"
+    },
+    "name": "Lavender Hill Magistrates' Court",
+    "roomId": "9e4932f7-97b2-3010-b942-ddd2624e4dd8",
+    "roomName": "Courtroom 01"
+  },
+  "nowContent": {
+    "orderDate": "2023-05-16",
+    "defendant": {
+      "dateOfBirth": "2000-09-09",
+      "gender": "MALE",
+      "driverNumber": "ABCDE0,0010BCFAA",
+      "title": "MR",
+      "firstName": "Hannah",
+      "middleName": "Jasmine Jasmine",
+      "lastName": "Turner",
+      "name": "Hannah Jasmine Jasmine Turner",
+      "address": {
+        "line1": "56saon",
+        "line2": "56Police House",
+        "line3": "StreetDescription1",
+        "line4": "Locality1",
+        "line5": "Anahimouth",
+        "postCode": "TW14 9XJ"
+      }
+    },
+    "caseApplicationReferences": [
+      "JW31113590"
+    ],
+    "cases": [
+      {
+        "reference": "JW31113590",
+        "caseId": "853952bc-9f7d-42d8-9316-7f0d14199cbc",
+        "defendantCaseOffences": [
+          {
+            "title": "Drive motor vehicle fail comply with red / green arrow / lane closure traffic light signals - manual detection",
+            "civilOffence": false,
+            "dvlaCode": "TS10",
+            "endDate": "2020-09-17",
+            "convictionStatus": "Not Convicted",
+            "vehicleRegistration": "TE4654",
+            "alcoholReadingAmount": 500,
+            "alcoholReadingMethodCode": "A",
+            "alcoholReadingMethodDescription": "Blood",
+            "code": "RT88971",
+            "modeOfTrial": "Summary",
+            "endorsableFlag": true,
+            "wording": "Has a violent past and fear that he will commit further offences and interfere with witnesse",
+            "startDate": "2020-09-18",
+            "results": [
+              {
+                "resultIdentifier": "14d66587-8fbe-424f-a369-b1144f1684e3",
+                "publishedForNows": false,
+                "d20": false,
+                "label": "Dismissed"
+              },
+              {
+                "resultIdentifier": "55f15ecf-ea80-40f4-848d-29e7b8d73ae2",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "80dd4486-fa86-41f0-b09b-bad84b55f61c",
+                    "promptReference": "CADATE",
+                    "label": "Date appeal heard",
+                    "value": "16/05/2023"
+                  }
+                ],
+                "d20": false,
+                "label": "Sentence varied"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "courtApplications": [
+      {
+        "applicationType": "Appeal against sentence by a Magistrates' Court to the Crown Court",
+        "applicationReceivedDate": "2023-05-16",
+        "id": "dd5af28f-6231-4644-8975-40af27771323",
+        "applicationReference": "JW31113590",
+        "applicationStatus": "UN_ALLOCATED",
+        "results": [
+          {
+            "resultIdentifier": "d861586a-df88-440d-98d4-63cc2a680ae1",
+            "publishedForNows": false,
+            "prompts": [
+              {
+                "promptIdentifier": "c946a5df-5849-4cca-b425-ecbd6bd704dc",
+                "promptReference": "dateSentenceWasImposed",
+                "label": "Date sentence was imposed",
+                "value": "16/05/2023"
+              },
+              {
+                "promptIdentifier": "c10b4c83-1856-4ca9-9592-d8b8183a0324",
+                "promptReference": "reasons",
+                "label": "Reasons",
+                "value": "Test reason"
+              }
+            ],
+            "resultWording": "",
+            "d20": false,
+            "label": "Appeal against sentence allowed"
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": true,
+  "orderingHearingId": "d43a28ff-d906-4fc7-a50e-268b7164cf52"
+}

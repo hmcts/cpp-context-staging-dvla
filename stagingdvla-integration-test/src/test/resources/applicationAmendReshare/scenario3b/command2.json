@@ -1,0 +1,103 @@
+{
+  "masterDefendantId": "%DEFENDANT_ID%",
+  "orderingCourt": {
+    "address": {
+      "address1": "176A Lavender Hill",
+      "address2": "London",
+      "address3": "",
+      "address4": "",
+      "address5": "",
+      "postcode": "SW11 1JU"
+    },
+    "code": "B01LY00",
+    "courtHearingLocation": "B01LY01",
+    "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+    "lja": {
+      "ljaCode": "2577",
+      "ljaName": "South West London Magistrates' Court"
+    },
+    "name": "Lavender Hill Magistrates' Court",
+    "roomId": "9e4932f7-97b2-3010-b942-ddd2624e4dd8",
+    "roomName": "Courtroom 01"
+  },
+  "nowContent": {
+    "orderDate": "2023-04-23",
+    "defendant": {
+      "dateOfBirth": "1985-01-20",
+      "gender": "MALE",
+      "title": "MR",
+      "firstName": "Maryse",
+      "lastName": "Ullrich",
+      "name": "Maryse Ullrich",
+      "address": {
+        "line1": "27 Good Place",
+        "line2": "Heaven Avenue",
+        "line4": "Heaven",
+        "postCode": "CV1 2JT"
+      }
+    },
+    "caseApplicationReferences": [
+      "JW144438146"
+    ],
+    "cases": [
+      {
+        "reference": "JW144438146",
+        "caseId": "f999a2d6-282e-44a1-b9d4-6766eb3336fc",
+        "defendantCaseOffences": [
+          {
+            "title": "Cause use of motor vehicle with no insurance",
+            "civilOffence": false,
+            "dvlaCode": "IN14",
+            "convictionDate": "2023-04-23",
+            "convictionStatus": "Convicted",
+            "code": "RT88319",
+            "convictingCourtCode": "2577",
+            "wording": "On 20 Nov 2022, that Josh Austin failed to hand over their ticket for inspection and verification of validity when asked to do so by an authorised person.",
+            "startDate": "2022-11-20",
+            "results": [
+              {
+                "resultIdentifier": "cee54856-4450-4f28-a8a9-72b688726201",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "a8719de4-7783-448a-b792-e3f94e670ad0",
+                    "promptReference": "PENPT",
+                    "label": "Penalty points for this offence",
+                    "value": "2"
+                  }
+                ],
+                "d20": true,
+                "label": "Driving record endorsed with penalty points"
+              },
+              {
+                "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956",
+                "publishedForNows": true,
+                "d20": false,
+                "label": "0: None or unknown"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "courtApplications": [
+      {
+        "applicationType": "Application to reopen case",
+        "applicationReceivedDate": "2023-04-01",
+        "id": "3c5cdbdf-38f3-4ac1-af13-651f5ce7e8d5",
+        "applicationReference": "JW144438146",
+        "applicationStatus": "UN_ALLOCATED",
+        "results": [
+          {
+            "resultIdentifier": "2b3f7c20-8fc1-4fad-9076-df196c24b27e",
+            "publishedForNows": false,
+            "d20": false,
+            "label": "Granted"
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": true,
+  "orderingHearingId": "fd688804-d0eb-4014-9a0f-38a6316ca38e"
+}

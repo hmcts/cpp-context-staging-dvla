@@ -1,0 +1,134 @@
+{
+  "masterDefendantId": "%DEFENDANT_ID%",
+  "orderingCourt": {
+    "address": {
+      "address1": "The Law Courts",
+      "address2": "The Quayside",
+      "address3": "Newcastle Upon Tyne",
+      "postcode": "NE1 3LA"
+    },
+    "code": "B10JL00",
+    "id": "1b73c7dd-bef1-33f4-81f5-fbfa092d4c49",
+    "lja": {
+      "ljaCode": "2360",
+      "ljaName": "Newcastle Magistrates' Court",
+      "welshLjaName": "Llys Ynadon Newcastle"
+    },
+    "name": "Newcastle Magistrates' Court"
+  },
+  "nowContent": {
+    "orderDate": "2023-05-04",
+    "defendant": {
+      "dateOfBirth": "2022-11-11",
+      "gender": "NOT_SPECIFIED",
+      "title": "Mr",
+      "firstName": "chin1",
+      "lastName": "goog1",
+      "name": "chin1 goog1",
+      "address": {
+        "line1": "67",
+        "postCode": "NE5 3LD"
+      }
+    },
+    "caseApplicationReferences": [
+      "SJP21"
+    ],
+    "cases": [
+      {
+        "reference": "SJP21",
+        "caseId": "65184043-3691-4580-9f8e-53c8fdca441a",
+        "defendantCaseOffences": [
+          {
+            "title": "Drive motor vehicle fail comply with red / green arrow / lane closure traffic light signals - automatic equipment",
+            "civilOffence": false,
+            "dvlaCode": "TS10",
+            "convictionDate": "2023-05-04",
+            "convictionStatus": "Convicted",
+            "code": "RT88972",
+            "modeOfTrial": "1",
+            "endorsableFlag": true,
+            "convictingCourtCode": "2360",
+            "wording": "On or in 11 November 2022 at Leeds drove a motor vehicle, namely aSsa and failed to comply with the indication given by a traffic sign specified as subject to obligatory endorsement in Schedule 2 to the Road Traffic Offenders Act 1988, namely a lane closure traffic light signal lawfully placed on or near a road, namely sassa",
+            "startDate": "2022-11-11",
+            "results": [
+              {
+                "resultIdentifier": "969f150c-cd05-46b0-9dd9-30891efcc766",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "7cd1472f-2379-4f5b-9e67-98a43d86e122",
+                    "promptReference": "AOF",
+                    "durationSequence": 0,
+                    "label": "Amount of fine",
+                    "value": "£220.00"
+                  }
+                ],
+                "resultDefinitionGroup": "Imposition",
+                "d20": false,
+                "label": "Fine"
+              },
+              {
+                "resultIdentifier": "ae89b99c-e0e3-47b5-b218-24d4fca3ca53",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "26985e5b-fe1f-4d7d-a21a-57207c5966e7",
+                    "promptReference": "AOCOM",
+                    "durationSequence": 0,
+                    "label": "Amount of compensation",
+                    "value": "£100.00"
+                  },
+                  {
+                    "promptIdentifier": "af921cf4-06e7-4f6b-a4ea-dcb58aab0dbe",
+                    "promptReference": "CREDNAME",
+                    "durationSequence": 0,
+                    "label": "Major creditor",
+                    "value": "Driver and Vehicle Licensing Agency"
+                  }
+                ],
+                "resultDefinitionGroup": "Imposition",
+                "d20": false,
+                "label": "Compensation"
+              },
+              {
+                "resultIdentifier": "cee54856-4450-4f28-a8a9-72b688726201",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "a8719de4-7783-448a-b792-e3f94e670ad0",
+                    "promptReference": "PENPT",
+                    "durationSequence": 0,
+                    "label": "Penalty points for this offence",
+                    "value": "1"
+                  },
+                  {
+                    "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+                    "promptReference": "defendantDrivingLicenceNumber",
+                    "durationSequence": 0,
+                    "label": "Defendant driving licence number"
+                  }
+                ],
+                "d20": true,
+                "label": "Driving record endorsed with penalty points"
+              },
+              {
+                "resultIdentifier": "ea1ee5a4-be13-48dc-8411-78f22e01c236",
+                "publishedForNows": false,
+                "d20": false,
+                "label": "Licence produced in court"
+              },
+              {
+                "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956",
+                "publishedForNows": true,
+                "d20": false,
+                "label": "0: None or unknown"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": false,
+  "orderingHearingId": "439480b9-ce12-437b-b507-9f79be908492"
+}

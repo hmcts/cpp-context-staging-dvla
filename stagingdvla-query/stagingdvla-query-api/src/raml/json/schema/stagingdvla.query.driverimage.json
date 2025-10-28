@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "id": "http://justice.gov.uk/json/schemas/domains/stagingdvla/stagingdvla.query.driverimage.json",
+  "additionalProperties": false,
+  "properties":  {
+    "photograph": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "A driver image",
+      "properties": {
+        "image": {
+          "type": "string",
+          "example": "ahdksjfhldjhgljahgkladshglkjfhadlgkjhdfaljgh"
+        },
+        "imageFormat": {
+          "type": "string",
+          "enum": [
+            "image/jpeg",
+            "image/png"
+          ],
+          "example": "image/jpeg"
+        }
+      },
+      "required": ["image", "imageFormat"]
+    },
+    "signature": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "A driver signature",
+      "properties": {
+        "image": {
+          "type": "string",
+          "example": "ahdksjfhldjhgljahgkladshglkjfhadlgkjhdfaljgh"
+        },
+        "imageFormat": {
+          "type": "string",
+          "enum": [
+            "image/jpeg",
+            "image/png"
+          ],
+          "example": "image/png"
+        }
+      },
+      "required": ["image", "imageFormat"]
+    }
+  }
+}
+

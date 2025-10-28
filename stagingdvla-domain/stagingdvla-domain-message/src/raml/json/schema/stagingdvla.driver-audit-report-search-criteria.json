@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://justice.gov.uk/cpp/stagingdvla/driver-audit-report-search-criteria.json",
+  "description": "The search criteria entered that the audit report needs to be generated for",
+  "type": "object",
+  "properties": {
+    "email": {
+      "type": "string"
+    },
+    "driverNumber": {
+      "type": "string"
+    },
+    "startDate": {
+      "type": "string",
+      "format": "date"
+    },
+    "endDate": {
+      "type": "string",
+      "format": "date"
+    }
+  },
+  "additionalProperties": false
+}

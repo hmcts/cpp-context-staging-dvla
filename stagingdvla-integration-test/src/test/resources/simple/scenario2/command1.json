@@ -1,0 +1,337 @@
+{
+  "masterDefendantId": "%DEFENDANT_ID%",
+  "orderingCourt": {
+    "address": {
+      "address1": "176A Lavender Hill",
+      "address2": "London",
+      "address3": "",
+      "address4": "",
+      "address5": "",
+      "postcode": "SW11 1JU"
+    },
+    "code": "B01LY00",
+    "courtHearingLocation": "B01LY01",
+    "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+    "lja": {
+      "ljaCode": "2577",
+      "ljaName": "South West London Magistrates' Court"
+    },
+    "name": "Lavender Hill Magistrates' Court",
+    "roomId": "9e4932f7-97b2-3010-b942-ddd2624e4dd8",
+    "roomName": "Courtroom 01"
+  },
+  "nowContent": {
+    "orderDate": "2023-07-29",
+    "defendant": {
+      "dateOfBirth": "2000-09-09",
+      "gender": "MALE",
+      "driverNumber": "ABCDE0,0010BCFAA",
+      "title": "MR",
+      "firstName": "Paula",
+      "middleName": "Jasmine Jasmine",
+      "lastName": "Johnston",
+      "name": "Paula Jasmine Jasmine Johnston",
+      "address": {
+        "line1": "56saon",
+        "line2": "56Police House",
+        "line3": "StreetDescription1",
+        "line4": "Locality1",
+        "line5": "Pittsburgh",
+        "postCode": "TW14 9XJ"
+      }
+    },
+    "caseApplicationReferences": [
+      "JW27593102"
+    ],
+    "cases": [
+      {
+        "reference": "JW27593102",
+        "caseId": "e02e64bf-f3b3-46d6-8cf2-6dc37b82f5c6",
+        "defendantCaseOffences": [
+          {
+            "title": "Drive motor vehicle fail comply with red / green arrow / lane closure traffic light signals - manual detection",
+            "civilOffence": false,
+            "dvlaCode": "TS10",
+            "endDate": "2020-09-17",
+            "convictionDate": "2023-07-29",
+            "convictionStatus": "Convicted",
+            "plea": "GUILTY",
+            "vehicleRegistration": "TE4654",
+            "alcoholReadingAmount": 500,
+            "alcoholReadingMethodCode": "A",
+            "alcoholReadingMethodDescription": "Blood",
+            "code": "RT88971",
+            "modeOfTrial": "Summary",
+            "allocationDecision": "Summary-only offence",
+            "endorsableFlag": true,
+            "convictingCourtCode": "2577",
+            "wording": "Has a violent past and fear that he will commit further offences and interfere with witnesse",
+            "startDate": "2020-09-18",
+            "results": [
+              {
+                "resultIdentifier": "d278650c-e429-11e8-9f32-f2801f1b9fd1",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "70c98fa6-804d-11e8-adc0-fa7ae01bbebc",
+                    "promptReference": "f28938c4-e8d0-4f97-8597-c825e43beca0",
+                    "label": "Next hearing in magistrates' court",
+                    "value": "Date of hearing:30/07/2023\nTime of hearing:10:00\nCourthouse organisation name:Lavender Hill Magistrates' Court\nCourthouse address line 1:176A Lavender Hill\nCourthouse address line 2:London\nCourthouse post code:SW11 1JU\nCourtroom:Courtroom 02\nHearing type:Trial\nEstimated duration:3 HOURS\nBooking reference:e069512b-7c96-4783-8a93-edd9958d7b37"
+                  },
+                  {
+                    "promptIdentifier": "61f951c3-f18d-4a44-ae4a-0cad4efb4133",
+                    "promptReference": "defendantToAttendTheNextHearing",
+                    "label": "Defendant to attend the next hearing",
+                    "value": "Yes"
+                  },
+                  {
+                    "promptIdentifier": "1d55fdeb-7dbc-46ec-b3ff-7b15fe08a476",
+                    "promptReference": "9e67ab3e-09c7-400f-b562-9507d9cde83a",
+                    "label": "At request of the prosecution",
+                    "value": "Reason:test"
+                  },
+                  {
+                    "promptIdentifier": "7fc17a01-2f5a-4433-aae9-28e0c959f73b",
+                    "promptReference": "06e74fdd-4996-4307-8c3a-353bb00daf95",
+                    "label": "Adjournment reasons",
+                    "value": ""
+                  }
+                ],
+                "resultWording": "",
+                "d20": false,
+                "label": "Adjournment"
+              },
+              {
+                "resultIdentifier": "70c98fa6-804d-11e8-adc0-fa7ae01bbebc",
+                "publishedForNows": true,
+                "prompts": [
+                  {
+                    "promptIdentifier": "d27a5d86-d51f-4c6e-914b-cb4b0abc4283",
+                    "promptReference": "HDATE",
+                    "label": "Date of hearing",
+                    "value": "30/07/2023"
+                  },
+                  {
+                    "promptIdentifier": "4d125a5a-acbc-461d-a657-ba5643af85a6",
+                    "promptReference": "timeOfHearing",
+                    "label": "Time of hearing",
+                    "value": "10:00"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEOrganisationName",
+                    "label": "Courthouse organisation name",
+                    "value": "Lavender Hill Magistrates' Court"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEAddress1",
+                    "label": "Courthouse address line 1",
+                    "value": "176A Lavender Hill"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEAddress2",
+                    "label": "Courthouse address line 2",
+                    "value": "London"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEPostCode",
+                    "label": "Courthouse post code",
+                    "value": "SW11 1JU"
+                  },
+                  {
+                    "promptIdentifier": "49ec9b26-dd63-4637-b2e9-55ba9948a90f",
+                    "promptReference": "HCROOM",
+                    "label": "Courtroom",
+                    "value": "Courtroom 02"
+                  },
+                  {
+                    "promptIdentifier": "c1116d12-dd35-4171-807a-2cb845357d22",
+                    "promptReference": "HTYPE",
+                    "label": "Hearing type",
+                    "value": "Trial"
+                  },
+                  {
+                    "promptIdentifier": "d85cc2d7-66c8-471e-b6ff-c1bc60c6cdac",
+                    "promptReference": "HEST",
+                    "label": "Estimated duration",
+                    "value": "3 HOURS"
+                  },
+                  {
+                    "promptIdentifier": "e73e6ab8-9bfe-4135-9fe6-f526544584d6",
+                    "promptReference": "bookingReference",
+                    "label": "Booking reference",
+                    "value": "e069512b-7c96-4783-8a93-edd9958d7b37"
+                  }
+                ],
+                "resultWording": "",
+                "resultDefinitionGroup": "Next hearing",
+                "d20": false,
+                "label": "Next hearing in magistrates' court"
+              },
+              {
+                "resultIdentifier": "1d55fdeb-7dbc-46ec-b3ff-7b15fe08a476",
+                "publishedForNows": true,
+                "prompts": [
+                  {
+                    "promptIdentifier": "8c144a05-5804-4478-a419-12bab06748cc",
+                    "promptReference": "reason",
+                    "label": "Reason",
+                    "value": "test"
+                  }
+                ],
+                "resultWording": "",
+                "resultDefinitionGroup": "Adjournment reasons",
+                "d20": false,
+                "label": "At request of the prosecution"
+              }
+            ]
+          },
+          {
+            "title": "Drive motor vehicle fail comply with red / green arrow / lane closure traffic light signals - manual detection",
+            "civilOffence": false,
+            "dvlaCode": "TS10",
+            "endDate": "2020-09-17",
+            "convictionStatus": "Not Convicted",
+            "plea": "NOT_GUILTY",
+            "vehicleRegistration": "TE4654",
+            "alcoholReadingAmount": 500,
+            "alcoholReadingMethodCode": "A",
+            "alcoholReadingMethodDescription": "Blood",
+            "code": "RT88971",
+            "modeOfTrial": "Summary",
+            "allocationDecision": "Summary-only offence",
+            "endorsableFlag": true,
+            "wording": "Has a violent past and fear that he will commit further offences and interfere with witnesse",
+            "startDate": "2020-09-18",
+            "results": [
+              {
+                "resultIdentifier": "d278650c-e429-11e8-9f32-f2801f1b9fd1",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "70c98fa6-804d-11e8-adc0-fa7ae01bbebc",
+                    "promptReference": "685fd75f-e6c7-472d-bab6-ac19f7940779",
+                    "label": "Next hearing in magistrates' court",
+                    "value": "Date of hearing:30/07/2023\nTime of hearing:10:00\nCourthouse organisation name:Lavender Hill Magistrates' Court\nCourthouse address line 1:176A Lavender Hill\nCourthouse address line 2:London\nCourthouse post code:SW11 1JU\nCourtroom:Courtroom 02\nHearing type:Trial\nEstimated duration:3 HOURS\nBooking reference:e069512b-7c96-4783-8a93-edd9958d7b37"
+                  },
+                  {
+                    "promptIdentifier": "61f951c3-f18d-4a44-ae4a-0cad4efb4133",
+                    "promptReference": "defendantToAttendTheNextHearing",
+                    "label": "Defendant to attend the next hearing",
+                    "value": "Yes"
+                  },
+                  {
+                    "promptIdentifier": "1d55fdeb-7dbc-46ec-b3ff-7b15fe08a476",
+                    "promptReference": "84492bcc-37b8-4ada-8fb8-2cbd5e0a09a6",
+                    "label": "At request of the prosecution",
+                    "value": "Reason:test"
+                  },
+                  {
+                    "promptIdentifier": "7fc17a01-2f5a-4433-aae9-28e0c959f73b",
+                    "promptReference": "eccfe98a-36e7-4548-82be-0bbde96b0786",
+                    "label": "Adjournment reasons",
+                    "value": ""
+                  }
+                ],
+                "resultWording": "",
+                "d20": false,
+                "label": "Adjournment"
+              },
+              {
+                "resultIdentifier": "70c98fa6-804d-11e8-adc0-fa7ae01bbebc",
+                "publishedForNows": true,
+                "prompts": [
+                  {
+                    "promptIdentifier": "d27a5d86-d51f-4c6e-914b-cb4b0abc4283",
+                    "promptReference": "HDATE",
+                    "label": "Date of hearing",
+                    "value": "30/07/2023"
+                  },
+                  {
+                    "promptIdentifier": "4d125a5a-acbc-461d-a657-ba5643af85a6",
+                    "promptReference": "timeOfHearing",
+                    "label": "Time of hearing",
+                    "value": "10:00"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEOrganisationName",
+                    "label": "Courthouse organisation name",
+                    "value": "Lavender Hill Magistrates' Court"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEAddress1",
+                    "label": "Courthouse address line 1",
+                    "value": "176A Lavender Hill"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEAddress2",
+                    "label": "Courthouse address line 2",
+                    "value": "London"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEPostCode",
+                    "label": "Courthouse post code",
+                    "value": "SW11 1JU"
+                  },
+                  {
+                    "promptIdentifier": "49ec9b26-dd63-4637-b2e9-55ba9948a90f",
+                    "promptReference": "HCROOM",
+                    "label": "Courtroom",
+                    "value": "Courtroom 02"
+                  },
+                  {
+                    "promptIdentifier": "c1116d12-dd35-4171-807a-2cb845357d22",
+                    "promptReference": "HTYPE",
+                    "label": "Hearing type",
+                    "value": "Trial"
+                  },
+                  {
+                    "promptIdentifier": "d85cc2d7-66c8-471e-b6ff-c1bc60c6cdac",
+                    "promptReference": "HEST",
+                    "label": "Estimated duration",
+                    "value": "3 HOURS"
+                  },
+                  {
+                    "promptIdentifier": "e73e6ab8-9bfe-4135-9fe6-f526544584d6",
+                    "promptReference": "bookingReference",
+                    "label": "Booking reference",
+                    "value": "e069512b-7c96-4783-8a93-edd9958d7b37"
+                  }
+                ],
+                "resultWording": "",
+                "resultDefinitionGroup": "Next hearing",
+                "d20": false,
+                "label": "Next hearing in magistrates' court"
+              },
+              {
+                "resultIdentifier": "1d55fdeb-7dbc-46ec-b3ff-7b15fe08a476",
+                "publishedForNows": true,
+                "prompts": [
+                  {
+                    "promptIdentifier": "8c144a05-5804-4478-a419-12bab06748cc",
+                    "promptReference": "reason",
+                    "label": "Reason",
+                    "value": "test"
+                  }
+                ],
+                "resultWording": "",
+                "resultDefinitionGroup": "Adjournment reasons",
+                "d20": false,
+                "label": "At request of the prosecution"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": true,
+  "orderingHearingId": "071dbb51-40a2-418b-a3f5-3f33c8f7a51d"
+}

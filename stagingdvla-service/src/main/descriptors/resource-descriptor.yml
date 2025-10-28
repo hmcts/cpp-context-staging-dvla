@@ -1,0 +1,56 @@
+---
+resource_descriptor:
+  spec_version: '1.0.0'
+  version: '${project.version}'
+
+
+
+  resources:
+    - name: java:/app/stagingdvla-service/DS.eventstore
+      type: xa-datasource
+      setup:
+        - type: liquibase
+          maven:
+            groupId: uk.gov.justice.services
+            artifactId: event-repository-liquibase
+            type: jar
+            version: '${cpp.framework.version}'
+        - type: liquibase
+          maven:
+            groupId: uk.gov.justice.services
+            artifactId: aggregate-snapshot-repository-liquibase
+            type: jar
+            version: '${project.version}'
+
+    - name: java:/DS.stagingdvla
+      type: xa-datasource
+      setup:
+        - type: liquibase
+          maven:
+            groupId: uk.gov.justice.services
+            artifactId: event-buffer-liquibase
+            type: jar
+            version: '${cpp.framework.version}'
+        - type: liquibase
+          maven:
+            groupId: uk.gov.moj.cpp.staging.dvla
+            artifactId: stagingdvla-viewstore-liquibase
+            type: jar
+            version: '${project.version}'
+
+    - name: stagingdvla.handler.command
+      type: queue
+    - name: stagingdvla.event
+      type: topic
+
+  services:
+    # stagingdvla provides these service mappings
+    - name: 'stagingdvla-service'
+      id: 'stagingdvla_service'
+      target: '/stagingdvla-service'
+      map:
+        - '/stagingdvla-command-api'
+        - '/stagingdvla-command-handler'
+        - '/stagingdvla-event-listener'
+        - '/stagingdvla-query-api'
+      matcher: '/stagingdvla-[^/]+'

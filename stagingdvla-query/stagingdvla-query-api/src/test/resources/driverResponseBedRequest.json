@@ -1,0 +1,9 @@
+{
+  "errors": [
+    {
+      "status": "400",
+      "code": "REQUEST_VALIDATION_ERROR",
+      "detail": "Failed to parse request body"
+    }
+  ]
+}

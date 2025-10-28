@@ -1,0 +1,194 @@
+{
+  "masterDefendantId": "%DEFENDANT_ID%",
+  "orderingCourt": {
+    "address": {
+      "address1": "176A Lavender Hill",
+      "address2": "London",
+      "address3": "",
+      "address4": "",
+      "address5": "",
+      "postcode": "SW11 1JU"
+    },
+    "code": "B01LY00",
+    "courtHearingLocation": "B01LY01",
+    "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+    "lja": {
+      "ljaCode": "2577",
+      "ljaName": "South West London Magistrates' Court"
+    },
+    "name": "Lavender Hill Magistrates' Court",
+    "roomId": "9e4932f7-97b2-3010-b942-ddd2624e4dd8",
+    "roomName": "Courtroom 01"
+  },
+  "nowContent": {
+    "orderDate": "2023-05-05",
+    "defendant": {
+      "dateOfBirth": "1996-08-08",
+      "gender": "MALE",
+      "driverNumber": "ABCDE0,0010BCFAA",
+      "title": "MR",
+      "firstName": "Rachel",
+      "middleName": "Jasmine Jasmine",
+      "lastName": "Green",
+      "name": "Rachel Jasmine Jasmine Green",
+      "address": {
+        "line1": "56saon",
+        "line2": "56Police House",
+        "line3": "StreetDescription1",
+        "line4": "Locality1",
+        "line5": "Leeds",
+        "postCode": "TW14 9XD"
+      }
+    },
+    "caseApplicationReferences": [
+      "JW183148540",
+      "JW183165878",
+      "JW183162908"
+    ],
+    "cases": [
+      {
+        "reference": "JW183148540",
+        "caseId": "29155c07-d1e3-4d1c-9b97-354d31f31074",
+        "defendantCaseOffences": [
+          {
+            "title": "Drive motor vehicle fail comply with red / green arrow / lane closure traffic light signals - manual detection",
+            "civilOffence": false,
+            "dvlaCode": "TS10",
+            "endDate": "2020-09-17",
+            "convictionStatus": "Not Convicted",
+            "plea": "NOT_GUILTY",
+            "vehicleRegistration": "TE4654",
+            "alcoholReadingAmount": 500,
+            "alcoholReadingMethodCode": "A",
+            "alcoholReadingMethodDescription": "Blood",
+            "code": "RT88971",
+            "modeOfTrial": "Summary",
+            "allocationDecision": "Summary-only offence",
+            "endorsableFlag": true,
+            "wording": "Has a violent past and fear that he will commit further offences and interfere with witnesse",
+            "startDate": "2020-09-18",
+            "results": [
+              {
+                "resultIdentifier": "14d66587-8fbe-424f-a369-b1144f1684e3",
+                "publishedForNows": false,
+                "d20": false,
+                "label": "Dismissed"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "reference": "JW183165878",
+        "caseId": "db4c1935-9c02-4e98-b3e6-f2c0d9559279",
+        "defendantCaseOffences": [
+          {
+            "title": "Drive motor vehicle fail comply with red / green arrow / lane closure traffic light signals - manual detection",
+            "civilOffence": false,
+            "dvlaCode": "TS10",
+            "endDate": "2020-09-17",
+            "convictionDate": "2023-05-05",
+            "convictionStatus": "Convicted",
+            "plea": "GUILTY",
+            "vehicleRegistration": "TE4654",
+            "alcoholReadingAmount": 500,
+            "alcoholReadingMethodCode": "A",
+            "alcoholReadingMethodDescription": "Blood",
+            "code": "RT88971",
+            "modeOfTrial": "Summary",
+            "allocationDecision": "Summary-only offence",
+            "endorsableFlag": true,
+            "convictingCourtCode": "2577",
+            "wording": "Has a violent past and fear that he will commit further offences and interfere with witnesse",
+            "startDate": "2020-09-18",
+            "results": [
+              {
+                "resultIdentifier": "cee54856-4450-4f28-a8a9-72b688726201",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "a8719de4-7783-448a-b792-e3f94e670ad0",
+                    "promptReference": "PENPT",
+                    "label": "Penalty points for this offence",
+                    "value": "2"
+                  },
+                  {
+                    "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+                    "promptReference": "defendantDrivingLicenceNumber",
+                    "label": "Defendant driving licence number",
+                    "value": "ABCDE0,0010BCFAA"
+                  }
+                ],
+                "d20": true,
+                "label": "Driving record endorsed with penalty points"
+              },
+              {
+                "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956",
+                "publishedForNows": true,
+                "d20": false,
+                "label": "0: None or unknown"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "reference": "JW183162908",
+        "caseId": "3caa5ec6-8a32-4125-9be1-0aa686fe590c",
+        "defendantCaseOffences": [
+          {
+            "title": "Drive motor vehicle fail comply with red / green arrow / lane closure traffic light signals - manual detection",
+            "civilOffence": false,
+            "dvlaCode": "TS10",
+            "endDate": "2020-09-17",
+            "convictionDate": "2023-05-05",
+            "convictionStatus": "Convicted",
+            "plea": "GUILTY",
+            "vehicleRegistration": "TE4654",
+            "alcoholReadingAmount": 500,
+            "alcoholReadingMethodCode": "A",
+            "alcoholReadingMethodDescription": "Blood",
+            "code": "RT88971",
+            "modeOfTrial": "Summary",
+            "allocationDecision": "Summary-only offence",
+            "endorsableFlag": true,
+            "convictingCourtCode": "2577",
+            "wording": "Has a violent past and fear that he will commit further offences and interfere with witnesse",
+            "startDate": "2020-09-18",
+            "results": [
+              {
+                "resultIdentifier": "cee54856-4450-4f28-a8a9-72b688726201",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "a8719de4-7783-448a-b792-e3f94e670ad0",
+                    "promptReference": "PENPT",
+                    "label": "Penalty points for this offence",
+                    "value": "3"
+                  },
+                  {
+                    "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+                    "promptReference": "defendantDrivingLicenceNumber",
+                    "label": "Defendant driving licence number",
+                    "value": "ABCDE0,0010BCFAA"
+                  }
+                ],
+                "d20": true,
+                "label": "Driving record endorsed with penalty points"
+              },
+              {
+                "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956",
+                "publishedForNows": true,
+                "d20": false,
+                "label": "0: None or unknown"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "amendmentDate": "2023-05-05"
+  },
+  "isReshare": true,
+  "orderingHearingId": "9f93c6df-b40b-4d80-bd25-efb8385252e8"
+}

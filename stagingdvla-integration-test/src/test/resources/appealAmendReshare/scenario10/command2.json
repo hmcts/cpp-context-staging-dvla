@@ -1,0 +1,105 @@
+{
+  "masterDefendantId": "%DEFENDANT_ID%",
+  "orderingCourt": {
+    "address": {
+      "address1": "176A Lavender Hill",
+      "address2": "London",
+      "address3": "",
+      "address4": "",
+      "address5": "",
+      "postcode": "SW11 1JU"
+    },
+    "code": "B01LY00",
+    "courtHearingLocation": "B01LY01",
+    "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+    "lja": {
+      "ljaCode": "2577",
+      "ljaName": "South West London Magistrates' Court"
+    },
+    "name": "Lavender Hill Magistrates' Court",
+    "roomId": "9e4932f7-97b2-3010-b942-ddd2624e4dd8",
+    "roomName": "Courtroom 01"
+  },
+  "nowContent": {
+    "orderDate": "2023-05-05",
+    "defendant": {
+      "dateOfBirth": "2001-08-08",
+      "gender": "MALE",
+      "driverNumber": "ABCDE0,0010BCFAA",
+      "title": "MR",
+      "firstName": "Cecilia",
+      "lastName": "Bernhard",
+      "name": "Cecilia Bernhard",
+      "address": {
+        "line1": "56saon",
+        "line2": "56Police House",
+        "line3": "StreetDescription1",
+        "line4": "Locality1",
+        "line5": "Town2",
+        "postCode": "TW14 9XD"
+      }
+    },
+    "caseApplicationReferences": [
+      "VT05MAYC008"
+    ],
+    "cases": [
+      {
+        "reference": "VT05MAYC008",
+        "caseId": "1f01eb7d-f268-426f-a408-29716411be69",
+        "defendantCaseOffences": [
+          {
+            "title": "Drive / move vehicle making 'u' turn on the motorway",
+            "civilOffence": false,
+            "dvlaCode": "MW10",
+            "endDate": "2020-09-17",
+            "convictionStatus": "Not Convicted",
+            "vehicleRegistration": "TE4654",
+            "alcoholReadingAmount": 500,
+            "alcoholReadingMethodCode": "A",
+            "alcoholReadingMethodDescription": "Blood",
+            "code": "ME82005",
+            "modeOfTrial": "Summary",
+            "endorsableFlag": true,
+            "wording": "Drive / move vehicle making 'u' turn on the motorway",
+            "startDate": "2020-09-18",
+            "results": [
+              {
+                "resultIdentifier": "55f15ecf-ea80-40f4-848d-29e7b8d73ae2",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "80dd4486-fa86-41f0-b09b-bad84b55f61c",
+                    "promptReference": "CADATE",
+                    "label": "Date appeal heard",
+                    "value": "05/05/2023"
+                  }
+                ],
+                "d20": false,
+                "label": "Sentence varied"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "courtApplications": [
+      {
+        "applicationType": "Appearance to make statutory declaration",
+        "applicationReceivedDate": "2023-05-05",
+        "id": "1f3061cb-0fa1-4bb5-9c61-91137b0c76a3",
+        "applicationReference": "VT05MAYC008",
+        "applicationStatus": "UN_ALLOCATED",
+        "results": [
+          {
+            "resultIdentifier": "2b3f7c20-8fc1-4fad-9076-df196c24b27e",
+            "publishedForNows": false,
+            "d20": false,
+            "label": "Granted"
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": true,
+  "orderingHearingId": "a55f27f2-5e9a-41e3-b47d-0ba6b736c522"
+}

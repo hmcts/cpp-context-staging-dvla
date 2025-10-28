@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <include file="liquibase/create-case-text.xml"/>
+    <include file="liquibase/stagingdvla-view-store-db-changesets/002-create-driving-conviction-retry.xml"/>
+    <include file="liquibase/stagingdvla-view-store-db-changesets/003-drop-process-event-index.xml"/>
+    <include file="liquibase/stagingdvla-view-store-db-changesets/004-create-driver-audit.xml"/>
+    <include file="liquibase/stagingdvla-view-store-db-changesets/005-create-driver-audit-report-table.xml"/>
+</databaseChangeLog>

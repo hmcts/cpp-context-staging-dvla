@@ -1,0 +1,22 @@
+{
+  "driverSearchAuditReports": [
+    {
+      "id": "ca2d5c17-eba4-4c34-85e5-61b8d24c7112",
+      "searchDateTime": "25th October 2023 16:00:32",
+      "searchedByEmail": "eltonjohn12345@co.uk",
+      "dateFrom": "25th October 2023",
+      "dateUntil": "25th November 2023",
+      "status": "COMPLETE",
+      "reportFileId": "A23C5GG890Y",
+      "materialId": "da2d5c17-eba4-4c34-85e5-61b8d24c7114"
+    },
+    {
+      "id": "da2d5c17-eba4-4c34-85e5-61b8d24c7114",
+      "searchDateTime": "25th October 2023 16:00:32",
+      "searchedDriverNumber": "DRIVER1002101212122",
+      "dateFrom": "26th October 2023",
+      "dateUntil": "26th November 2023",
+      "status": "PENDING"
+    }
+  ]
+}

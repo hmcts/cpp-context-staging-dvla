@@ -1,0 +1,234 @@
+{
+  "masterDefendantId": "%DEFENDANT_ID%",
+  "orderingCourt": {
+    "address": {
+      "address1": "176A Lavender Hill",
+      "address2": "London",
+      "address3": "",
+      "address4": "",
+      "address5": "",
+      "postcode": "SW11 1JU"
+    },
+    "code": "B01LY00",
+    "courtHearingLocation": "B01LY01",
+    "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+    "lja": {
+      "ljaCode": "2577",
+      "ljaName": "South West London Magistrates' Court"
+    },
+    "name": "Lavender Hill Magistrates' Court",
+    "roomId": "9e4932f7-97b2-3010-b942-ddd2624e4dd8",
+    "roomName": "Courtroom 01"
+  },
+  "nowContent": {
+    "orderDate": "2023-04-23",
+    "defendant": {
+      "dateOfBirth": "2010-09-09",
+      "gender": "MALE",
+      "driverNumber": "ABCDE0,0010BCFAA",
+      "title": "MR",
+      "firstName": "Kody",
+      "middleName": "Jasmine Jasmine",
+      "lastName": "Wisozk",
+      "name": "Kody Jasmine Jasmine Wisozk",
+      "address": {
+        "line1": "56saon",
+        "line2": "56Police House",
+        "line3": "StreetDescription1",
+        "line4": "Locality1",
+        "line5": "New Dulcestad",
+        "postCode": "TW14 9XJ"
+      }
+    },
+    "caseApplicationReferences": [
+      "JW74896350"
+    ],
+    "cases": [
+      {
+        "reference": "JW74896350",
+        "caseId": "349df35b-e046-492f-be05-0652b4236f38",
+        "defendantCaseOffences": [
+          {
+            "title": "Cause use of motor vehicle with no insurance",
+            "civilOffence": false,
+            "dvlaCode": "IN14",
+            "endDate": "2020-09-17",
+            "convictionDate": "2023-04-23",
+            "convictionStatus": "Convicted",
+            "plea": "GUILTY",
+            "vehicleRegistration": "TE4654",
+            "alcoholReadingAmount": 500,
+            "alcoholReadingMethodCode": "A",
+            "alcoholReadingMethodDescription": "Blood",
+            "code": "RT88319",
+            "modeOfTrial": "Summary",
+            "allocationDecision": "Summary-only offence",
+            "endorsableFlag": true,
+            "convictingCourtCode": "2577",
+            "wording": "Has a violent past and fear that he will commit further offences and interfere with witnesse",
+            "startDate": "2020-09-18",
+            "results": [
+              {
+                "resultIdentifier": "418b3aa7-65ab-4a4a-bab9-2f96b698118c",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "d6caa3c4-ec9d-41ec-8f86-2c617ef0d5d9",
+                    "promptReference": "endDate",
+                    "label": "End Date",
+                    "value": "01/08/2023"
+                  },
+                  {
+                    "promptIdentifier": "29f5b3c7-8d15-4606-9dcf-23f32a21b5ef",
+                    "promptReference": "responsibleOfficer",
+                    "label": "Responsible officer",
+                    "value": "a member of the youth offending team"
+                  },
+                  {
+                    "promptIdentifier": "f4a4f159-779e-4f35-822a-b559a2415ecb",
+                    "promptReference": "supervisingCourt",
+                    "label": "Supervising Court",
+                    "value": "Lavender Hill Magistrates' Court"
+                  },
+                  {
+                    "promptIdentifier": "68c92035-27fd-4ee6-b03c-fe18ea6dbcb0",
+                    "promptReference": "probationteamtobenotifiedOrganisationName",
+                    "label": "Probation team to be notified organisation name",
+                    "value": "South West and Central Division NPS"
+                  },
+                  {
+                    "promptIdentifier": "68c92035-27fd-4ee6-b03c-fe18ea6dbcb0",
+                    "promptReference": "probationteamtobenotifiedEmailAddress1",
+                    "label": "Probation team to be notified email address 1",
+                    "value": "SWSCNPS.Court@justice.gov.uk"
+                  },
+                  {
+                    "promptIdentifier": "dada120c-160a-49a9-b040-e8b6b7128d67",
+                    "promptReference": "03107a26-cb0c-4646-a1a3-4a755e675800",
+                    "label": "Notification of electronic monitoring order (requirement)",
+                    "value": "Electronic monitoring contractor organisation name:G4S Scotland Monitoring Technologies & Services\nElectronic monitoring contractor email address 1:EM.Scotland.Notifications@uk.g4s.com.cjsm.net\nFirst notification of electronic monitoring:Yes\nAre there any additional requirements as well?:No\nDefendant's mobile number:0917894278022\nWas an interpreter used?:No\nLanguage:English\nDoes the offender have any special needs?:No\nSpecial needs:Test1"
+                  }
+                ],
+                "d20": false,
+                "dvlaCode": "M",
+                "label": "Community order England / Wales"
+              },
+              {
+                "resultIdentifier": "65a59f46-61ae-4dac-a040-a25fca647cb2",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "7025bdf4-f438-4b6e-8acf-b7ef38fcbd23",
+                    "promptReference": "address",
+                    "label": "Address",
+                    "value": "1 Main St"
+                  },
+                  {
+                    "promptIdentifier": "b17b7df3-064f-492a-b19d-8e0bde43f7c6",
+                    "promptReference": "periodOfResidence",
+                    "label": "Period of residence",
+                    "value": "6 Months"
+                  }
+                ],
+                "resultDefinitionGroup": "Community Requirement",
+                "d20": false,
+                "label": "Residence"
+              },
+              {
+                "resultIdentifier": "cee54856-4450-4f28-a8a9-72b688726201",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "a8719de4-7783-448a-b792-e3f94e670ad0",
+                    "promptReference": "PENPT",
+                    "label": "Penalty points for this offence",
+                    "value": "3"
+                  },
+                  {
+                    "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+                    "promptReference": "defendantDrivingLicenceNumber",
+                    "label": "Defendant driving licence number",
+                    "value": "ABCDE0,0010BCFAA"
+                  }
+                ],
+                "d20": true,
+                "label": "Driving record endorsed with penalty points"
+              },
+              {
+                "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956",
+                "publishedForNows": true,
+                "d20": false,
+                "label": "0: None or unknown"
+              },
+              {
+                "resultIdentifier": "dada120c-160a-49a9-b040-e8b6b7128d67",
+                "publishedForNows": true,
+                "prompts": [
+                  {
+                    "promptIdentifier": "92566757-ef79-4804-bced-c63ebb0937e7",
+                    "promptReference": "electronicmonitoringcontractorOrganisationName",
+                    "label": "Electronic monitoring contractor organisation name",
+                    "value": "G4S Scotland Monitoring Technologies & Services"
+                  },
+                  {
+                    "promptIdentifier": "92566757-ef79-4804-bced-c63ebb0937e7",
+                    "promptReference": "electronicmonitoringcontractorEmailAddress1",
+                    "label": "Electronic monitoring contractor email address 1",
+                    "value": "EM.Scotland.Notifications@uk.g4s.com.cjsm.net"
+                  },
+                  {
+                    "promptIdentifier": "5ce30920-b300-471c-8fd7-67f3a193476a",
+                    "promptReference": "firstNotificationOfElectronicMonitoring",
+                    "label": "First notification of electronic monitoring",
+                    "value": "Yes"
+                  },
+                  {
+                    "promptIdentifier": "f6ca6307-bdab-42d3-968b-44485824b535",
+                    "promptReference": "areThereAnyAdditionalRequirementsAsWell",
+                    "label": "Are there any additional requirements as well?",
+                    "value": "No"
+                  },
+                  {
+                    "promptIdentifier": "380d5917-d860-4c6a-9fde-d5e7e1923331",
+                    "promptReference": "defendantsMobileNumber",
+                    "label": "Defendant's mobile number",
+                    "value": "0917894278022"
+                  },
+                  {
+                    "promptIdentifier": "cdc4f47c-612d-4f81-b321-a2b5861d6e19",
+                    "promptReference": "wasAnInterpreterUsed",
+                    "label": "Was an interpreter used?",
+                    "value": "No"
+                  },
+                  {
+                    "promptIdentifier": "c7d508e9-1ea0-4a41-9961-703a5d164b6f",
+                    "promptReference": "language",
+                    "label": "Language",
+                    "value": "English"
+                  },
+                  {
+                    "promptIdentifier": "5a386999-b2d9-45f4-9b68-57000ba2d6ef",
+                    "promptReference": "doesTheOffenderHaveAnySpecialNeeds",
+                    "label": "Does the offender have any special needs?",
+                    "value": "No"
+                  },
+                  {
+                    "promptIdentifier": "c1503a10-f976-4d79-8073-3bc63b9d0641",
+                    "promptReference": "specialNeeds",
+                    "label": "Special needs",
+                    "value": "Test1"
+                  }
+                ],
+                "resultDefinitionGroup": "Community requirements,ELMON",
+                "d20": false,
+                "label": "Notification of electronic monitoring order (requirement)"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": true,
+  "orderingHearingId": "258bdebd-43ed-4b4e-9c0a-8b9437dac88c"
+}

@@ -1,0 +1,341 @@
+{
+  "masterDefendantId": "%DEFENDANT_ID%",
+  "orderingCourt": {
+    "address": {
+      "address1": "176A Lavender Hill",
+      "address2": "London",
+      "postcode": "SW11 1JU"
+    },
+    "code": "B01LY00",
+    "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+    "lja": {
+      "ljaCode": "2577",
+      "ljaName": "Lavender Hill Magistrates' Court",
+      "welshLjaName": "Llys Ynadon Lavender Hill"
+    },
+    "name": "Lavender Hill Magistrates' Court"
+  },
+  "nowContent": {
+    "orderDate": "2024-11-29",
+    "defendant": {
+      "dateOfBirth": "2000-01-01",
+      "gender": "MALE",
+      "firstName": "Jonathan",
+      "lastName": "Heaney",
+      "name": "Jonathan Heaney",
+      "address": {
+        "line1": "FLAT - 25A",
+        "line2": "3785 Turcotte Villages",
+        "line3": "Swansea",
+        "line4": "Walsh",
+        "line5": "UK",
+        "postCode": "SA1 1AU"
+      }
+    },
+    "caseApplicationReferences": [
+      "DVLA02022601"
+    ],
+    "cases": [
+      {
+        "initiationCode": "J",
+        "reference": "DVLA02022601",
+        "caseId": "f55fe360-def9-4830-9875-6a7482e5c24f",
+        "defendantCaseOffences": [
+          {
+            "title": "Speeding - exceed 40 mph special road / motorway limit - ACD",
+            "civilOffence": false,
+            "dvlaCode": "SP50",
+            "convictionDate": "2024-11-29",
+            "convictionStatus": "Convicted",
+            "code": "RR84702",
+            "modeOfTrial": "1",
+            "endorsableFlag": true,
+            "convictingCourtCode": "2577",
+            "wording": "A fine not exceeding level five on the standard scale.Time limit for prosecutions:6 monthsOn the 12th March 2015 the limit on fines imposed by a Magistrates’ court was removed – as such, the potential fine on summary conviction in relation to an offence committed after this date is unlimited.",
+            "startDate": "2020-07-02",
+            "results": [
+              {
+                "resultIdentifier": "969f150c-cd05-46b0-9dd9-30891efcc766",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "7cd1472f-2379-4f5b-9e67-98a43d86e122",
+                    "promptReference": "AOF",
+                    "durationSequence": 0,
+                    "label": "Amount of fine",
+                    "value": "£220.00"
+                  }
+                ],
+                "resultDefinitionGroup": "Imposition",
+                "d20": false,
+                "label": "Fine"
+              },
+              {
+                "resultIdentifier": "ae89b99c-e0e3-47b5-b218-24d4fca3ca53",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "26985e5b-fe1f-4d7d-a21a-57207c5966e7",
+                    "promptReference": "AOCOM",
+                    "durationSequence": 0,
+                    "label": "Amount of compensation",
+                    "value": "£542.34"
+                  },
+                  {
+                    "promptIdentifier": "af921cf4-06e7-4f6b-a4ea-dcb58aab0dbe",
+                    "promptReference": "cREDNAMEOrganisationName",
+                    "durationSequence": 0,
+                    "label": "Major creditor organisation name",
+                    "value": "City of London Police"
+                  }
+                ],
+                "resultDefinitionGroup": "Imposition",
+                "d20": false,
+                "label": "Compensation"
+              },
+              {
+                "resultIdentifier": "73fe22ca-76bd-4aba-bdea-6dfef8ee03a2",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "2bf54447-328c-4c1b-a123-341adbd52172",
+                    "promptReference": "disqualificationPeriod",
+                    "durationSequence": 1,
+                    "label": "Disqualification period",
+                    "value": "1 Months"
+                  },
+                  {
+                    "promptIdentifier": "462d5ba8-7a1c-44a0-a732-6c75601bd6af",
+                    "promptReference": "notionalPenaltyPoints",
+                    "durationSequence": 0,
+                    "label": "Notional penalty points",
+                    "value": "3"
+                  },
+                  {
+                    "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+                    "promptReference": "defendantDrivingLicenceNumber",
+                    "durationSequence": 0,
+                    "label": "Defendant driving licence number",
+                    "value": "MORGA657054460BF"
+                  }
+                ],
+                "resultWording": "Disqualified for holding or obtaining a driving licence. Disqualification obligatory due to repeat offending. Driving record endorsed. Section 35(1) Road Traffic Offenders Act 1988",
+                "d20": true,
+                "pointsDisqualificationCode": "TT99",
+                "label": "Points disqualification"
+              },
+              {
+                "resultIdentifier": "ea1ee5a4-be13-48dc-8411-78f22e01c236",
+                "publishedForNows": false,
+                "d20": false,
+                "label": "Licence produced in court"
+              },
+              {
+                "resultIdentifier": "5c5a693f-c26c-4352-bbb3-ac72dd141e88",
+                "publishedForNows": true,
+                "d20": false,
+                "label": "5: DVLA held not produced"
+              }
+            ]
+          },
+          {
+            "title": "Aggravated vehicle taking - ( driver did not take ) and property damage £5000 or over",
+            "civilOffence": false,
+            "dvlaCode": "UT50",
+            "convictionDate": "2024-11-29",
+            "convictionStatus": "Convicted",
+            "code": "TH68149",
+            "modeOfTrial": "1",
+            "endorsableFlag": true,
+            "convictingCourtCode": "2577",
+            "wording": "Driver - vehicle emergency information inadequate - Dangerous Goods and Pressure Equipment Reg's 07",
+            "startDate": "2020-12-02",
+            "results": [
+              {
+                "resultIdentifier": "969f150c-cd05-46b0-9dd9-30891efcc766",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "7cd1472f-2379-4f5b-9e67-98a43d86e122",
+                    "promptReference": "AOF",
+                    "durationSequence": 0,
+                    "label": "Amount of fine",
+                    "value": "£220.00"
+                  }
+                ],
+                "resultDefinitionGroup": "Imposition",
+                "d20": false,
+                "label": "Fine"
+              },
+              {
+                "resultIdentifier": "ae89b99c-e0e3-47b5-b218-24d4fca3ca53",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "26985e5b-fe1f-4d7d-a21a-57207c5966e7",
+                    "promptReference": "AOCOM",
+                    "durationSequence": 0,
+                    "label": "Amount of compensation",
+                    "value": "£542.34"
+                  },
+                  {
+                    "promptIdentifier": "af921cf4-06e7-4f6b-a4ea-dcb58aab0dbe",
+                    "promptReference": "cREDNAMEOrganisationName",
+                    "durationSequence": 0,
+                    "label": "Major creditor organisation name",
+                    "value": "City of London Police"
+                  }
+                ],
+                "resultDefinitionGroup": "Imposition",
+                "d20": false,
+                "label": "Compensation"
+              },
+              {
+                "resultIdentifier": "73fe22ca-76bd-4aba-bdea-6dfef8ee03a2",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "2bf54447-328c-4c1b-a123-341adbd52172",
+                    "promptReference": "disqualificationPeriod",
+                    "durationSequence": 1,
+                    "label": "Disqualification period",
+                    "value": "2 Months"
+                  },
+                  {
+                    "promptIdentifier": "462d5ba8-7a1c-44a0-a732-6c75601bd6af",
+                    "promptReference": "notionalPenaltyPoints",
+                    "durationSequence": 0,
+                    "label": "Notional penalty points",
+                    "value": "6"
+                  },
+                  {
+                    "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+                    "promptReference": "defendantDrivingLicenceNumber",
+                    "durationSequence": 0,
+                    "label": "Defendant driving licence number",
+                    "value": "MORGA657054460BF"
+                  }
+                ],
+                "resultWording": "Disqualified for holding or obtaining a driving licence. Disqualification obligatory due to repeat offending. Driving record endorsed. Section 35(1) Road Traffic Offenders Act 1988",
+                "d20": true,
+                "pointsDisqualificationCode": "TT99",
+                "label": "Points disqualification"
+              },
+              {
+                "resultIdentifier": "ea1ee5a4-be13-48dc-8411-78f22e01c236",
+                "publishedForNows": false,
+                "d20": false,
+                "label": "Licence produced in court"
+              },
+              {
+                "resultIdentifier": "5c5a693f-c26c-4352-bbb3-ac72dd141e88",
+                "publishedForNows": true,
+                "d20": false,
+                "label": "5: DVLA held not produced"
+              }
+            ]
+          },
+          {
+            "title": "Exceed 60 mph speed limit in contravention of a Local Traffic Order - manned equipment",
+            "civilOffence": false,
+            "dvlaCode": "SP30",
+            "convictionDate": "2024-11-29",
+            "convictionStatus": "Convicted",
+            "code": "RR84214",
+            "modeOfTrial": "1",
+            "endorsableFlag": true,
+            "convictingCourtCode": "2577",
+            "wording": "Driver of vehicle fail to produce insurance / permit / competence to drive on request - Birmingham International Airport",
+            "startDate": "2020-12-02",
+            "results": [
+              {
+                "resultIdentifier": "969f150c-cd05-46b0-9dd9-30891efcc766",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "7cd1472f-2379-4f5b-9e67-98a43d86e122",
+                    "promptReference": "AOF",
+                    "durationSequence": 0,
+                    "label": "Amount of fine",
+                    "value": "£220.00"
+                  }
+                ],
+                "resultDefinitionGroup": "Imposition",
+                "d20": false,
+                "label": "Fine"
+              },
+              {
+                "resultIdentifier": "ae89b99c-e0e3-47b5-b218-24d4fca3ca53",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "26985e5b-fe1f-4d7d-a21a-57207c5966e7",
+                    "promptReference": "AOCOM",
+                    "durationSequence": 0,
+                    "label": "Amount of compensation",
+                    "value": "£542.34"
+                  },
+                  {
+                    "promptIdentifier": "af921cf4-06e7-4f6b-a4ea-dcb58aab0dbe",
+                    "promptReference": "cREDNAMEOrganisationName",
+                    "durationSequence": 0,
+                    "label": "Major creditor organisation name",
+                    "value": "City of London Police"
+                  }
+                ],
+                "resultDefinitionGroup": "Imposition",
+                "d20": false,
+                "label": "Compensation"
+              },
+              {
+                "resultIdentifier": "73fe22ca-76bd-4aba-bdea-6dfef8ee03a2",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "2bf54447-328c-4c1b-a123-341adbd52172",
+                    "promptReference": "disqualificationPeriod",
+                    "durationSequence": 1,
+                    "label": "Disqualification period",
+                    "value": "8 Months"
+                  },
+                  {
+                    "promptIdentifier": "462d5ba8-7a1c-44a0-a732-6c75601bd6af",
+                    "promptReference": "notionalPenaltyPoints",
+                    "durationSequence": 0,
+                    "label": "Notional penalty points",
+                    "value": "6"
+                  },
+                  {
+                    "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+                    "promptReference": "defendantDrivingLicenceNumber",
+                    "durationSequence": 0,
+                    "label": "Defendant driving licence number",
+                    "value": "MORGA657054460BF"
+                  }
+                ],
+                "resultWording": "Disqualified for holding or obtaining a driving licence. Disqualification obligatory due to repeat offending. Driving record endorsed. Section 35(1) Road Traffic Offenders Act 1988",
+                "d20": true,
+                "pointsDisqualificationCode": "TT99",
+                "label": "Points disqualification"
+              },
+              {
+                "resultIdentifier": "ea1ee5a4-be13-48dc-8411-78f22e01c236",
+                "publishedForNows": false,
+                "d20": false,
+                "label": "Licence produced in court"
+              },
+              {
+                "resultIdentifier": "5c5a693f-c26c-4352-bbb3-ac72dd141e88",
+                "publishedForNows": true,
+                "d20": false,
+                "label": "5: DVLA held not produced"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": false,
+  "orderingHearingId": "80c73eb2-a827-40f2-b9a0-862c10e06f89"
+}
