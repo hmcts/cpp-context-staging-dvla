@@ -1,0 +1,103 @@
+{
+  "masterDefendantId": "%DEFENDANT_ID%",
+  "orderingCourt": {
+    "address": {
+      "address1": "1 Queen Victoria Street",
+      "address2": "London",
+      "address3": "",
+      "address4": "",
+      "address5": "",
+      "postcode": "EC4N 4XY"
+    },
+    "code": "B01DU00",
+    "courtHearingLocation": "B01DU03",
+    "id": "c133d0de-c989-48b9-bd20-0431943e347e",
+    "lja": {
+      "ljaCode": "2570",
+      "ljaName": "Central London Magistrates' Court"
+    },
+    "name": "City of London Magistrates' Court",
+    "roomId": "a1b456e1-1b0e-3a4a-aad9-b8cc2bd87dd1",
+    "roomName": "Courtroom 03"
+  },
+  "nowContent": {
+    "orderDate": "2024-09-26",
+    "defendant": {
+      "dateOfBirth": "2000-01-01",
+      "gender": "MALE",
+      "driverNumber": "ULLRI611187XH9ZM",
+      "firstName": "Dallas",
+      "lastName": "Smith",
+      "name": "Dallas Smith",
+      "address": {
+        "line1": "FLAT - 25A",
+        "line2": "2103 Chad River",
+        "line3": "Swansea",
+        "line4": "Walsh",
+        "line5": "UK",
+        "postCode": "SA1 1AU"
+      }
+    },
+    "caseApplicationReferences": [
+      "DVLA02022362"
+    ],
+    "cases": [
+      {
+        "reference": "DVLA02022362",
+        "caseId": "817916aa-44da-4879-906c-f9d16c679db3",
+        "defendantCaseOffences": []
+      }
+    ],
+    "courtApplications": [
+      {
+        "applicationType": "Application to suspend disqualification pending appeal",
+        "applicationReceivedDate": "2024-09-01",
+        "id": "76dac602-61bf-41bd-84e5-da720323f303",
+        "applicationReference": "DVLA02022362",
+        "applicationStatus": "UN_ALLOCATED",
+        "results": [
+          {
+            "resultIdentifier": "d3ca848c-ab33-4650-a0e6-36f1b86998a2",
+            "publishedForNows": false,
+            "prompts": [
+              {
+                "promptIdentifier": "6e108b9d-bac5-4b01-945e-b0d2c2c7031e",
+                "promptReference": "convictingCourt",
+                "label": "Convicting court",
+                "value": "Bexley Magistrates' Court"
+              },
+              {
+                "promptIdentifier": "e3764c59-4e25-4864-a3af-1c2e3390af99",
+                "promptReference": "dateOfConviction",
+                "label": "Date of conviction",
+                "value": "01/01/2024"
+              },
+              {
+                "promptIdentifier": "9c1c1ba5-eb13-45be-a7d3-dcc83debe0ba",
+                "promptReference": "dateOfOffence",
+                "label": "Date of offence",
+                "value": "12/01/2023"
+              },
+              {
+                "promptIdentifier": "9dc27662-6953-4acf-a7ac-9b9165e12e2d",
+                "promptReference": "dVLACodeForOffence",
+                "label": "DVLA code for offence",
+                "value": "SP50"
+              }
+            ],
+            "d20": true,
+            "label": "Driving disqualification suspended pending appeal in a later session"
+          },
+          {
+            "resultIdentifier": "2b3f7c20-8fc1-4fad-9076-df196c24b27e",
+            "publishedForNows": false,
+            "d20": false,
+            "label": "Granted"
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": true,
+  "orderingHearingId": "de1d0240-3325-4b2f-9450-bfdf1c9ea2a2"
+}

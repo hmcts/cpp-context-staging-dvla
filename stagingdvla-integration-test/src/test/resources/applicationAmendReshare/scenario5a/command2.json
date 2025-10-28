@@ -1,0 +1,167 @@
+{
+  "masterDefendantId": "%DEFENDANT_ID%",
+  "orderingCourt": {
+    "address": {
+      "address1": "Warwickshire Justice Centre",
+      "address2": "Newbold Terrace",
+      "address3": "Leamington Spa",
+      "address4": "Warwickshire",
+      "postcode": "CV32 4EL"
+    },
+    "code": "B23HS00",
+    "id": "c50bbdea-bea9-4ed2-a9ef-2d090e425fc3",
+    "lja": {
+      "ljaCode": "2905",
+      "ljaName": "Leamington Spa Magistrates' Court",
+      "welshLjaName": "Llys Ynadon Leamington Spa"
+    },
+    "name": "Leamington Spa Magistrates' Court"
+  },
+  "nowContent": {
+    "orderDate": "2023-05-04",
+    "defendant": {
+      "dateOfBirth": "1985-01-20",
+      "gender": "MALE",
+      "title": "MR",
+      "firstName": "Creola",
+      "lastName": "Koch",
+      "name": "Creola Koch",
+      "address": {
+        "line1": "27 Good Place",
+        "line2": "Heaven Avenue",
+        "line4": "Heaven",
+        "postCode": "CV1 2JT"
+      }
+    },
+    "caseApplicationReferences": [
+      "JW135015757"
+    ],
+    "cases": [
+      {
+        "reference": "JW135015757",
+        "caseId": "86a4753a-ddd2-4b77-8f13-714b0b8a87cc",
+        "defendantCaseOffences": []
+      }
+    ],
+    "courtApplications": [
+      {
+        "applicationType": "Appearance to make statutory declaration (SJP case)",
+        "applicationReceivedDate": "2023-05-04",
+        "id": "401d929d-888f-4b91-9c70-abab7f37cb9a",
+        "applicationReference": "DZ2C66UZAR",
+        "applicationStatus": "FINALISED",
+        "results": [
+          {
+            "resultIdentifier": "e2f6e11b-c3a2-4e76-8d29-fbede4174988",
+            "publishedForNows": false,
+            "prompts": [
+              {
+                "promptIdentifier": "7b6ef0ac-2d0b-44e5-a68e-4720b96cc679",
+                "promptReference": "statutoryDeclarationMadeUnder",
+                "durationSequence": 0,
+                "label": "Statutory declaration made under",
+                "value": "Section 14 of the Magistrates' Courts Act 1980"
+              },
+              {
+                "promptIdentifier": "36e32c50-dbec-41c4-904b-25eb20c9c54a",
+                "promptReference": "financialPenaltiesToBeWrittenOff",
+                "durationSequence": 0,
+                "label": "Financial penalties to be written off",
+                "value": "Yes"
+              },
+              {
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedOrganisationName",
+                "durationSequence": 0,
+                "label": "Prosecutor to be notified organisation name",
+                "value": "Driver and Vehicle Licensing Agency"
+              },
+              {
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedOrganisationName",
+                "durationSequence": 0,
+                "label": "Prosecutor to be notified organisation name",
+                "value": "Finance Operations"
+              },
+              {
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedOrganisationName",
+                "durationSequence": 0,
+                "label": "Prosecutor to be notified organisation name",
+                "value": "C3 East"
+              },
+              {
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedOrganisationName",
+                "durationSequence": 0,
+                "label": "Prosecutor to be notified organisation name",
+                "value": "DVLA"
+              },
+              {
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedOrganisationName",
+                "durationSequence": 0,
+                "label": "Prosecutor to be notified organisation name",
+                "value": "Longview Road"
+              },
+              {
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedOrganisationName",
+                "durationSequence": 0,
+                "label": "Prosecutor to be notified organisation name",
+                "value": "Swansea"
+              },
+              {
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedOrganisationName",
+                "durationSequence": 0,
+                "label": "Prosecutor to be notified organisation name",
+                "value": "SA6 7JL"
+              }
+            ],
+            "d20": false,
+            "label": "Statutory Declaration"
+          },
+          {
+            "resultIdentifier": "f42fa098-0f7b-4269-ac4f-b10c9b6832d7",
+            "publishedForNows": false,
+            "prompts": [
+              {
+                "promptIdentifier": "b49bf4fa-0b1e-4079-b85a-c0113a46b91b",
+                "promptReference": "originalCourtCode",
+                "durationSequence": 0,
+                "label": "Original court code",
+                "value": "2905"
+              },
+              {
+                "promptIdentifier": "0cd86af5-10d8-4fd1-a78a-8a0e80179034",
+                "promptReference": "originalConvictionDate",
+                "durationSequence": 0,
+                "label": "Original conviction date",
+                "value": "2023-05-04"
+              },
+              {
+                "promptIdentifier": "37ee2b08-1950-4b04-bea5-f6f66b768bb0",
+                "promptReference": "originalOffenceDate",
+                "durationSequence": 0,
+                "label": "Original offence date",
+                "value": "2022-11-20"
+              },
+              {
+                "promptIdentifier": "1a2a23ea-c70d-4a5c-afa7-09dc514f84cc",
+                "promptReference": "dVLAEndorsementCode",
+                "durationSequence": 0,
+                "label": "DVLA endorsement code",
+                "value": "TS10"
+              }
+            ],
+            "d20": false,
+            "label": "Driving endorsement to be removed"
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": false,
+  "orderingHearingId": "8520e51d-17a4-48a1-9b2c-d12a9fefa8f0"
+}

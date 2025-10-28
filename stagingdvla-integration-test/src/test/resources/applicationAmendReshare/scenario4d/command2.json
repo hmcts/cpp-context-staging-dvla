@@ -1,0 +1,95 @@
+{
+  "masterDefendantId": "%DEFENDANT_ID%",
+  "orderingCourt": {
+    "address": {
+      "address1": "176A Lavender Hill",
+      "address2": "London",
+      "postcode": "SW11 1JU"
+    },
+    "code": "B01LY00",
+    "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+    "lja": {
+      "ljaCode": "2577",
+      "ljaName": "South West London Magistrates' Court"
+    },
+    "name": "Lavender Hill Magistrates' Court"
+  },
+  "nowContent": {
+    "orderDate": "2023-05-16",
+    "defendant": {
+      "dateOfBirth": "1985-01-20",
+      "gender": "MALE",
+      "title": "MR",
+      "firstName": "Madie",
+      "lastName": "Dach",
+      "name": "Madie Dach",
+      "address": {
+        "line1": "27 Good Place",
+        "line2": "Heaven Avenue",
+        "line4": "Heaven",
+        "postCode": "CV1 2JT"
+      }
+    },
+    "caseApplicationReferences": [
+      "JW133764758"
+    ],
+    "cases": [
+      {
+        "reference": "JW133764758",
+        "caseId": "4a09fbd2-a3e5-474d-8582-2beece4867d3",
+        "defendantCaseOffences": []
+      }
+    ],
+    "courtApplications": [
+      {
+        "applicationType": "Application to reopen case",
+        "applicationReceivedDate": "2023-05-15",
+        "id": "051ccfe7-b19b-4f80-ac70-9603bf4743bc",
+        "applicationReference": "JW133764758",
+        "applicationStatus": "IN_PROGRESS",
+        "results": [
+          {
+            "resultIdentifier": "e3fb46ee-e406-4f73-9bf1-71d513da8cc7",
+            "publishedForNows": false,
+            "prompts": [
+              {
+                "promptIdentifier": "3872ea68-92d9-469f-9929-c676745982ef",
+                "promptReference": "reopenedUnder",
+                "label": "Re-opened under",
+                "value": "Section 155 Powers of Criminal Courts (Sentencing) Act 2000"
+              },
+              {
+                "promptIdentifier": "5797feb0-7678-4193-ad16-944365e9a68a",
+                "promptReference": "convictionAndSentenceImposedOnSpecifiedDateAreSetAside",
+                "label": "Conviction and sentence imposed on specified date are set aside",
+                "value": "16/05/2023"
+              },
+              {
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedOrganisationName",
+                "label": "Prosecutor to be notified organisation name",
+                "value": "Test"
+              },
+              {
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedAddress1",
+                "label": "Prosecutor to be notified address line 1",
+                "value": "1 Main St"
+              },
+              {
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedPostCode",
+                "label": "Prosecutor to be notified post code",
+                "value": "TS1 1AA"
+              }
+            ],
+            "d20": false,
+            "label": "Case reopened"
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": true,
+  "orderingHearingId": "34665de0-fac1-417b-8e8b-308b42b25bbf"
+}

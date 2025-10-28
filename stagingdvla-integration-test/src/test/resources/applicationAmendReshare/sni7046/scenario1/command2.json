@@ -1,0 +1,148 @@
+{
+  "masterDefendantId": "%DEFENDANT_ID%",
+  "orderingCourt": {
+    "address": {
+      "address1": "176A Lavender Hill",
+      "address2": "London",
+      "address3": "",
+      "address4": "",
+      "address5": "",
+      "postcode": "SW11 1JU"
+    },
+    "code": "B01LY00",
+    "courtHearingLocation": "B01LY01",
+    "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+    "lja": {
+      "ljaCode": "2577",
+      "ljaName": "South West London Magistrates' Court"
+    },
+    "name": "Lavender Hill Magistrates' Court",
+    "roomId": "9e4932f7-97b2-3010-b942-ddd2624e4dd8",
+    "roomName": "Courtroom 01"
+  },
+  "nowContent": {
+    "orderDate": "2023-04-23",
+    "defendant": {
+      "dateOfBirth": "2010-09-09",
+      "gender": "MALE",
+      "driverNumber": "ABCDE0,0010BCFAA",
+      "title": "MR",
+      "firstName": "Kody",
+      "middleName": "Jasmine Jasmine",
+      "lastName": "Wisozk",
+      "name": "Kody Jasmine Jasmine Wisozk",
+      "address": {
+        "line1": "56saon",
+        "line2": "56Police House",
+        "line3": "StreetDescription1",
+        "line4": "Locality1",
+        "line5": "New Dulcestad",
+        "postCode": "TW14 9XJ"
+      }
+    },
+    "caseApplicationReferences": [
+      "JW74896350"
+    ],
+    "cases": [
+      {
+        "caseStatus": "INACTIVE",
+        "reference": "JW74896350",
+        "caseId": "349df35b-e046-492f-be05-0652b4236f38",
+        "defendantCaseOffences": [
+          {
+            "title": "Cause use of motor vehicle with no insurance",
+            "civilOffence": false,
+            "dvlaCode": "IN14",
+            "endDate": "2020-09-17",
+            "convictionDate": "2023-04-23",
+            "convictionStatus": "Convicted",
+            "plea": "GUILTY",
+            "vehicleRegistration": "TE4654",
+            "alcoholReadingAmount": 500,
+            "alcoholReadingMethodCode": "A",
+            "alcoholReadingMethodDescription": "Blood",
+            "code": "RT88319",
+            "modeOfTrial": "Summary",
+            "allocationDecision": "Summary-only offence",
+            "endorsableFlag": true,
+            "convictingCourtCode": "2577",
+            "wording": "Has a violent past and fear that he will commit further offences and interfere with witnesse",
+            "startDate": "2020-09-18",
+            "results": [
+              {
+                "resultIdentifier": "4a026ff3-e1aa-407e-aafa-015723c1dbd0",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "0eba630e-a486-439f-8d76-b49b1363067c",
+                    "promptReference": "courtThatMadeTheOriginalOrder",
+                    "label": "Court that made the original order",
+                    "value": "Lavender Hill Magistrates' Court"
+                  },
+                  {
+                    "promptIdentifier": "39355876-d028-48fa-82d8-ccedbe4312f8",
+                    "promptReference": "dateOriginalOrderMade",
+                    "label": "Date original order made",
+                    "value": "23/04/2023"
+                  },
+                  {
+                    "promptIdentifier": "361cee65-0550-4c9a-9fbd-3a234e9431f1",
+                    "promptReference": "theEndDateOfTheOrderHasBeenChangedAndTheRequirementsMustBeCompliedWithBy",
+                    "label": "The end date of the order has been changed and the requirements must be complied with by",
+                    "value": "01/07/2023"
+                  },
+                  {
+                    "promptIdentifier": "27bf0204-a185-4e82-8c34-7317287513c8",
+                    "promptReference": "responsibleOfficerForTheOrder",
+                    "label": "Responsible officer for the order",
+                    "value": "a member of the youth offending team"
+                  },
+                  {
+                    "promptIdentifier": "f4a4f159-779e-4f35-822a-b559a2415ecb",
+                    "promptReference": "supervisingCourt",
+                    "label": "Supervising Court",
+                    "value": "Lavender Hill Magistrates' Court"
+                  },
+                  {
+                    "promptIdentifier": "68c92035-27fd-4ee6-b03c-fe18ea6dbcb0",
+                    "promptReference": "probationteamtobenotifiedOrganisationName",
+                    "label": "Probation team to be notified organisation name",
+                    "value": "South West and Central Division NPS"
+                  },
+                  {
+                    "promptIdentifier": "68c92035-27fd-4ee6-b03c-fe18ea6dbcb0",
+                    "promptReference": "probationteamtobenotifiedEmailAddress1",
+                    "label": "Probation team to be notified email address 1",
+                    "value": "SWSCNPS.Court@justice.gov.uk"
+                  }
+                ],
+                "d20": false,
+                "label": "Community order varied"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "courtApplications": [
+      {
+        "applicationType": "Application within criminal proceedings",
+        "applicationTypeId": "4e281610-96aa-3711-aecf-59df86b6c6bb",
+        "applicationReceivedDate": "2023-04-01",
+        "id": "90f257ff-ef29-4d2b-8a3f-95fad505c44d",
+        "applicationReference": "JW74896350",
+        "applicationStatus": "UN_ALLOCATED",
+        "results": [
+          {
+            "resultIdentifier": "2b3f7c20-8fc1-4fad-9076-df196c24b27e",
+            "publishedForNows": false,
+            "d20": false,
+            "label": "Granted"
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": true,
+  "orderingHearingId": "258bdebd-43ed-4b4e-9c0a-8b9437dac88c"
+}

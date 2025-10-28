@@ -1,0 +1,63 @@
+  #%RAML 0.8
+title: Case Management Command API
+version: 1.0
+baseUri:  http://localhost:8080/stagingdvla-command-api/command/api/rest/stagingdvla
+
+/driver-notification:
+  post:
+      description:  |
+        Driver Notification
+        ...
+        (mapping):
+            requestType: application/vnd.stagingdvla.command.driver-notification+json
+            name: stagingdvla.command.driver-notification
+        ...
+      body:
+        application/vnd.stagingdvla.command.driver-notification+json:
+          example:
+            !include json/stagingdvla.command.driver-notification.json
+          schema:
+            !include json/schema/stagingdvla.command.driver-notification.json
+      responses:
+            202:
+                description: OK
+            500:
+                description: Internal Server Error
+
+/driver-record-search-audit-report/generate:
+  post:
+    description: |
+      Request for generation of driver record search audit report 
+      ...
+      (mapping):
+          requestType: application/vnd.stagingdvla.command.generate-driver-record-search-audit-report+json
+          name: stagingdvla.command.generate-driver-record-search-audit-report
+      ...
+    body:
+      application/vnd.stagingdvla.command.generate-driver-record-search-audit-report+json:
+        example:
+          !include json/stagingdvla.command.generate-driver-record-search-audit-report.json
+        schema:
+          !include json/schema/stagingdvla.command.generate-driver-record-search-audit-report.json
+    responses:
+      202:
+        description: OK
+
+/driver-record-search-audit-report/delete:
+  post:
+    description: |
+      Request for deletion of driver record search audit report 
+      ...
+      (mapping):
+          requestType: application/vnd.stagingdvla.command.delete-driver-record-search-audit-report+json
+          name: stagingdvla.command.delete-driver-record-search-audit-report
+      ...
+    body:
+      application/vnd.stagingdvla.command.delete-driver-record-search-audit-report+json:
+        example:
+          !include json/stagingdvla.command.delete-driver-record-search-audit-report.json
+        schema:
+          !include json/schema/stagingdvla.command.delete-driver-record-search-audit-report.json
+    responses:
+      202:
+        description: OK

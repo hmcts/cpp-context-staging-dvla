@@ -1,0 +1,38 @@
+subscriptions_descriptor:
+  spec_version: 1.0.0
+  service: stagingdvla
+  service_component: EVENT_PROCESSOR
+  subscriptions:
+    - name: event processor subscription
+      events:
+        - name: stagingdvla.event.driver-notified
+          schema_uri: http://justice.gov.uk/cpp/stagingdvla/event/driver-notified.json
+        - name: stagingdvla.event.nows-material-request-recorded
+          schema_uri: http://justice.gov.uk/core/courts/nows-material-request-recorded.json
+        - name: stagingdvla.event.email-notification-sent
+          schema_uri: http://justice.gov.uk/core/courts/email-notification-sent.json
+        - name: stagingdvla.event.driver-search-audit-report-requested
+          schema_uri: http://justice.gov.uk/cpp/stagingdvla/event/driver-search-audit-report-requested.json
+        - name: stagingdvla.event.driver-search-audit-report-created
+          schema_uri: http://justice.gov.uk/cpp/stagingdvla/event/driver-search-audit-report-created.json
+        - name: stagingdvla.event.driver-search-audit-report-deleted
+          schema_uri: http://justice.gov.uk/cpp/stagingdvla/event/driver-search-audit-report-deleted.json
+        - name: stagingdvla.event.driver-search-audit-report-deletion-failed
+          schema_uri: http://justice.gov.uk/cpp/stagingdvla/event/driver-search-audit-report-deletion-failed.json
+
+      event_source_name: stagingdvla
+
+    - name: public event subscription
+      events:
+        - name: material.material-added
+          schema_uri: http://justice.gov.uk/json/schemas/domains/public/material/material-added
+        - name: public.systemdocgenerator.events.document-available
+          schema_uri: http://moj.gov.uk/cpp/json/schemas/systemdocgenerator/events/public/document-available.json
+
+
+          #System doc generator
+        - name: public.systemdocgenerator.events.document-available
+          schema_uri: http://moj.gov.uk/cpp/json/schemas/systemdocgenerator/events/public/document-available.json
+
+
+      event_source_name: public.event.source

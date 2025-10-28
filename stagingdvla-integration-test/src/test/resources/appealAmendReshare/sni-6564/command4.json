@@ -1,0 +1,103 @@
+{
+  "masterDefendantId": "%DEFENDANT_ID%",
+  "orderingCourt": {
+    "address": {
+      "address1": "1 Queen Victoria Street",
+      "address2": "London",
+      "address3": "",
+      "address4": "",
+      "address5": "",
+      "postcode": "EC4N 4XY"
+    },
+    "code": "B01DU00",
+    "courtHearingLocation": "B01DU02",
+    "id": "c133d0de-c989-48b9-bd20-0431943e347e",
+    "lja": {
+      "ljaCode": "2570",
+      "ljaName": "Central London Magistrates' Court"
+    },
+    "name": "City of London Magistrates' Court",
+    "roomId": "6d335b1f-769f-3120-bcda-c5d7c0725d3a",
+    "roomName": "Courtroom 02"
+  },
+  "nowContent": {
+    "orderDate": "2024-09-30",
+    "defendant": {
+      "dateOfBirth": "2000-01-01",
+      "gender": "MALE",
+      "driverNumber": "ULLRI611187XH9ZM",
+      "firstName": "Dayne",
+      "lastName": "Franecki",
+      "name": "Dayne Franecki",
+      "address": {
+        "line1": "FLAT - 25A",
+        "line2": "7354 Arlene Isle",
+        "line3": "Swansea",
+        "line4": "Walsh",
+        "line5": "UK",
+        "postCode": "SA1 1AU"
+      }
+    },
+    "caseApplicationReferences": [
+      "DVLA02022358"
+    ],
+    "cases": [
+      {
+        "reference": "DVLA02022358",
+        "caseId": "d9723314-9138-4980-bd6f-270d6844a192",
+        "defendantCaseOffences": []
+      }
+    ],
+    "courtApplications": [
+      {
+        "applicationType": "Application to suspend disqualification pending appeal",
+        "applicationReceivedDate": "2024-09-01",
+        "id": "858462d9-9aae-47a3-a680-dd7e132140c4",
+        "applicationReference": "DVLA02022358",
+        "applicationStatus": "UN_ALLOCATED",
+        "results": [
+          {
+            "resultIdentifier": "d3ca848c-ab33-4650-a0e6-36f1b86998a2",
+            "publishedForNows": false,
+            "prompts": [
+              {
+                "promptIdentifier": "6e108b9d-bac5-4b01-945e-b0d2c2c7031e",
+                "promptReference": "convictingCourt",
+                "label": "Convicting court",
+                "value": "Aberdeen Sheriff Court District"
+              },
+              {
+                "promptIdentifier": "e3764c59-4e25-4864-a3af-1c2e3390af99",
+                "promptReference": "dateOfConviction",
+                "label": "Date of conviction",
+                "value": "01/01/2024"
+              },
+              {
+                "promptIdentifier": "9c1c1ba5-eb13-45be-a7d3-dcc83debe0ba",
+                "promptReference": "dateOfOffence",
+                "label": "Date of offence",
+                "value": "01/01/2024"
+              },
+              {
+                "promptIdentifier": "9dc27662-6953-4acf-a7ac-9b9165e12e2d",
+                "promptReference": "dVLACodeForOffence",
+                "label": "DVLA code for offence",
+                "value": "SP50"
+              }
+            ],
+            "d20": true,
+            "label": "Driving disqualification suspended pending appeal in a later session"
+          },
+          {
+            "resultIdentifier": "2b3f7c20-8fc1-4fad-9076-df196c24b27e",
+            "publishedForNows": false,
+            "d20": false,
+            "label": "Granted"
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": true,
+  "orderingHearingId": "3fcde5f6-b82f-4122-9477-72b67cdf9fdd"
+}

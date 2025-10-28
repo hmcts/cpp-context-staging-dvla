@@ -1,0 +1,66 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://justice.gov.uk/json/schemas/domains/stagingdvla/stagingdvla.query.driver-audit-records.json",
+  "type": "object",
+  "properties": {
+    "driverAuditRecords": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/driverAuditRecords"
+      },
+      "minItems": 0
+    }
+  },
+  "required": [
+    "driverAuditRecords"
+  ],
+  "definitions": {
+    "driverAuditRecord": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "http://justice.gov.uk/domain/core/common/definitions.json#/definitions/uuid"
+        },
+        "userId": {
+          "$ref": "http://justice.gov.uk/domain/core/common/definitions.json#/definitions/uuid"
+        },
+        "userEmail": {
+          "type": "string"
+        },
+        "dateTime": {
+          "type": "string",
+          "format": "date"
+        },
+        "reasonType": {
+          "type": "string"
+        },
+        "reference": {
+          "type": "string"
+        },
+        "firstNames": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "gender": {
+          "type": "string"
+        },
+        "postcode": {
+          "type": "string"
+        },
+        "dateOfBirth": {
+          "type": "string",
+          "format": "date"
+        }
+      },
+      "required": [
+        "id",
+        "userId",
+        "userEmail",
+        "reasonType",
+        "reference"
+      ]
+    }
+  }
+}

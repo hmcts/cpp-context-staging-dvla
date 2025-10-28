@@ -1,0 +1,102 @@
+{
+  "masterDefendantId": "%DEFENDANT_ID%",
+  "orderingCourt": {
+    "address": {
+      "address1": "176A Lavender Hill",
+      "address2": "London",
+      "address3": "",
+      "address4": "",
+      "address5": "",
+      "postcode": "SW11 1JU"
+    },
+    "code": "B01LY00",
+    "courtHearingLocation": "B01LY02",
+    "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+    "lja": {
+      "ljaCode": "2577",
+      "ljaName": "South West London Magistrates' Court"
+    },
+    "name": "Lavender Hill Magistrates' Court",
+    "roomId": "b4562684-9209-3ec4-a544-7f80dabd94d8",
+    "roomName": "Courtroom 02"
+  },
+  "nowContent": {
+    "orderDate": "2023-05-16",
+    "defendant": {
+      "dateOfBirth": "1985-01-20",
+      "gender": "MALE",
+      "title": "MR",
+      "firstName": "Lavina",
+      "lastName": "Bahringer",
+      "name": "Lavina Bahringer",
+      "address": {
+        "line1": "27 Good Place",
+        "line2": "Heaven Avenue",
+        "line4": "Heaven",
+        "postCode": "CV1 2JT"
+      }
+    },
+    "caseApplicationReferences": [
+      "JW127755221"
+    ],
+    "cases": [
+      {
+        "reference": "JW127755221",
+        "caseId": "962a5eb7-253d-4118-b3bb-bf12f30dabea",
+        "defendantCaseOffences": [
+          {
+            "title": "Possess /    control TV set with intent another use install without a licence",
+            "civilOffence": false,
+            "dvlaCode": "TS30",
+            "convictionDate": "2023-05-16",
+            "convictionStatus": "Convicted",
+            "code": "CA03012",
+            "convictingCourtCode": "2577",
+            "wording": "On 20 Nov 2022, that Josh Austin failed to hand over their ticket for inspection and verification of validity when asked to do so by an authorised person.",
+            "startDate": "2022-11-20",
+            "results": [
+              {
+                "resultIdentifier": "554c2622-c1cc-459e-a98d-b7f317ab065c",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "d3205319-84cf-4c5b-9d7a-7e4bb1865054",
+                    "promptReference": "periodofConditionalDischarge",
+                    "durationSequence": 1,
+                    "label": "Period of conditional discharge",
+                    "value": "6 Months"
+                  }
+                ],
+                "d20": false,
+                "dvlaCode": "E",
+                "label": "Conditional discharge"
+              },
+              {
+                "resultIdentifier": "cee54856-4450-4f28-a8a9-72b688726201",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "a8719de4-7783-448a-b792-e3f94e670ad0",
+                    "promptReference": "PENPT",
+                    "label": "Penalty points for this offence",
+                    "value": "4"
+                  }
+                ],
+                "d20": true,
+                "label": "Driving record endorsed with penalty points"
+              },
+              {
+                "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956",
+                "publishedForNows": true,
+                "d20": false,
+                "label": "0: None or unknown"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": true,
+  "orderingHearingId": "c25cd88f-a189-4708-9739-69d1341cda6a"
+}

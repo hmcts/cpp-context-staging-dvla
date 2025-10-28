@@ -1,0 +1,68 @@
+package uk.gov.moj.cpp.sjp.command.api.accesscontrol;
+
+import uk.gov.moj.cpp.accesscontrol.drools.Outcome;
+import uk.gov.moj.cpp.accesscontrol.drools.Action;
+import uk.gov.moj.cpp.stagingdvla.query.api.accesscontrol.RuleConstants;
+import uk.gov.moj.cpp.stagingdvla.query.api.accesscontrol.PermissionConstants;
+
+global uk.gov.moj.cpp.accesscontrol.common.providers.UserAndGroupProvider userAndGroupProvider;
+
+rule "Command - Rule for Query Person"
+  when
+    $outcome: Outcome();
+    $action: Action(name == "stagingdvla.query.drivernumber");
+    eval(userAndGroupProvider.isMemberOfAnyOfTheSuppliedGroups($action, RuleConstants.getQueryDriverDetails())) or
+    eval(userAndGroupProvider.hasPermission($action, PermissionConstants.getPermissionsForDriverSearch()));
+  then
+    $outcome.setSuccess(true);
+end
+
+rule "Command - Rule for driver detail Person"
+  when
+    $outcome: Outcome();
+    $action: Action(name == "stagingdvla.query.driverdetails");
+    eval(userAndGroupProvider.isMemberOfAnyOfTheSuppliedGroups($action, RuleConstants.getQueryDriverDetails())) or
+    eval(userAndGroupProvider.hasPermission($action, PermissionConstants.getPermissionsForDriverSearch()));
+  then
+    $outcome.setSuccess(true);
+end
+
+rule "Command - Rule for driver image"
+  when
+    $outcome: Outcome();
+    $action: Action(name == "stagingdvla.query.driverimage");
+    eval(userAndGroupProvider.isMemberOfAnyOfTheSuppliedGroups($action, RuleConstants.getQueryDriverDetails())) or
+    eval(userAndGroupProvider.hasPermission($action, PermissionConstants.getPermissionsForDriverSearch()));
+  then
+    $outcome.setSuccess(true);
+end
+
+rule "Query - Rule for Query Driver Audit Details"
+  when
+    $outcome: Outcome();
+    $action: Action(name == "stagingdvla.query.driver-audit-records");
+    eval(userAndGroupProvider.isMemberOfAnyOfTheSuppliedGroups($action, RuleConstants.getQueryDriverSearchAuditDetails()));
+  then
+    $outcome.setSuccess(true);
+end
+
+rule "Query - Rule for Driver Search Audit Reports"
+  when
+    $outcome: Outcome();
+    $action: Action(name == "stagingdvla.query.driver-search-audit-reports");
+    eval(userAndGroupProvider.isMemberOfAnyOfTheSuppliedGroups($action, RuleConstants.getQueryDriverSearchAuditDetails()));
+  then
+    $outcome.setSuccess(true);
+end
+
+rule "Query - Rule for Driver Search Audit Report Download"
+  when
+    $outcome: Outcome();
+    $action: Action(name == "stagingdvla.query.driver-search-audit-report-content");
+    eval(userAndGroupProvider.isMemberOfAnyOfTheSuppliedGroups($action, RuleConstants.getQueryDriverSearchAuditDetails()));
+  then
+    $outcome.setSuccess(true);
+end
+
+
+

@@ -1,0 +1,11 @@
+event_sources:
+  - name: stagingdvla
+    is_default: true
+    location:
+      jms_uri:  jms:topic:stagingdvla.event
+      rest_uri: http://localhost:8080/stagingdvla-service/event-source-api/rest
+      data_source: java:/app/stagingdvla-service/DS.eventstore
+
+  - name: public.event.source
+    location:
+      jms_uri:  jms:topic:public.event

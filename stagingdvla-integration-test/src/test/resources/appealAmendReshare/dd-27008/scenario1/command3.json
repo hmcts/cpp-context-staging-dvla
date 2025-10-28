@@ -1,0 +1,175 @@
+{
+  "masterDefendantId": "%DEFENDANT_ID%",
+  "orderingCourt": {
+    "address": {
+      "address1": "1 Queen Victoria Street",
+      "address2": "London",
+      "address3": "",
+      "address4": "",
+      "address5": "",
+      "postcode": "EC4N 4XY"
+    },
+    "code": "B01DU00",
+    "courtHearingLocation": "B01DU01",
+    "id": "c133d0de-c989-48b9-bd20-0431943e347e",
+    "lja": {
+      "ljaCode": "2570",
+      "ljaName": "Central London Magistrates' Court"
+    },
+    "name": "City of London Magistrates' Court",
+    "roomId": "4294a92c-8827-3296-be53-c74b7e9e31d8",
+    "roomName": "Courtroom 01"
+  },
+  "nowContent": {
+    "orderDate": "2024-10-04",
+    "defendant": {
+      "dateOfBirth": "2000-01-01",
+      "gender": "MALE",
+      "driverNumber": "ULLRI611187XH9ZM",
+      "firstName": "Jillian",
+      "lastName": "Pfannerstill",
+      "name": "Jillian Pfannerstill",
+      "address": {
+        "line1": "FLAT - 25A",
+        "line2": "55464 Earlene Islands",
+        "line3": "Swansea",
+        "line4": "Walsh",
+        "line5": "UK",
+        "postCode": "SA1 1AU"
+      }
+    },
+    "caseApplicationReferences": [
+      "DVLA02022364"
+    ],
+    "cases": [
+      {
+        "reference": "DVLA02022364",
+        "caseId": "ade7da53-fd6b-446f-828f-2bdedfd2be4d",
+        "defendantCaseOffences": [
+          {
+            "title": "Speeding - exceed 40 mph special road / motorway limit - ACD",
+            "civilOffence": false,
+            "dvlaCode": "SP50",
+            "convictionDate": "2024-10-04",
+            "convictionStatus": "Convicted",
+            "plea": "GUILTY",
+            "code": "RR84702",
+            "modeOfTrial": "Summary",
+            "allocationDecision": "Summary-only offence",
+            "endorsableFlag": true,
+            "convictingCourtCode": "2570",
+            "wording": "A fine not exceeding level five on the standard scale.Time limit for prosecutions:6 monthsOn the 12th March 2015 the limit on fines imposed by a Magistrates’ court was removed – as such, the potential fine on summary conviction in relation to an offence committed after this date is unlimited.",
+            "startDate": "2020-07-02",
+            "results": [
+              {
+                "resultIdentifier": "b2d06bbc-e90e-4df8-8851-6e4a70894828",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "11a939b1-71e6-4065-8c29-007e4b52da7a",
+                    "promptReference": "licenceIssueNumber",
+                    "label": "Licence issue number",
+                    "value": "11"
+                  },
+                  {
+                    "promptIdentifier": "2bf54447-328c-4c1b-a123-341adbd52172",
+                    "promptReference": "disqualificationPeriod",
+                    "durationSequence": 1,
+                    "label": "Disqualification period",
+                    "value": "1 Years"
+                  },
+                  {
+                    "promptIdentifier": "81638260-3cd1-41e7-9725-c8e91e23bda1",
+                    "promptReference": "extensionPeriodSection35AImmediateCustodialSentence",
+                    "label": "Extension period section 35A (immediate custodial sentence)",
+                    "value": "aa"
+                  },
+                  {
+                    "promptIdentifier": "0143f821-7cab-4e53-a00b-2fd1c3dc8204",
+                    "promptReference": "extensionPeriodSection35BEffectOfCustodialSentenceNoted",
+                    "label": "Extension period section 35B (effect of custodial sentence noted)",
+                    "value": "bb"
+                  },
+                  {
+                    "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+                    "promptReference": "defendantDrivingLicenceNumber",
+                    "label": "Defendant driving licence number",
+                    "value": "ULLRI611187XH9ZM"
+                  },
+                  {
+                    "promptIdentifier": "7fd83833-178c-48db-866b-33fc9e69a0d1",
+                    "promptReference": "8fdab3f5-fbb4-48db-a99b-b4422afd5680",
+                    "label": "Date of Interim Disqualification",
+                    "value": "Starting from date (date of interim disqualification):31/12/2023"
+                  }
+                ],
+                "resultWording": "Disqualified for holding or obtaining a driving licence. Disqualification obligatory for the offence. Driving record endorsed. Section 34(1) Road Traffic Offenders Act 1988",
+                "d20": true,
+                "label": "Obligatory disqualification"
+              },
+              {
+                "resultIdentifier": "238fc228-f948-430e-b0a1-7c9bdcafac46",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+                    "promptReference": "defendantDrivingLicenceNumber",
+                    "label": "Defendant driving licence number",
+                    "value": "ULLRI611187XH9ZM"
+                  }
+                ],
+                "d20": false,
+                "label": "Driving disqualification suspended pending appeal"
+              },
+              {
+                "resultIdentifier": "969f150c-cd05-46b0-9dd9-30891efcc766",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "7cd1472f-2379-4f5b-9e67-98a43d86e122",
+                    "promptReference": "AOF",
+                    "label": "Amount of fine",
+                    "value": "£121.00"
+                  }
+                ],
+                "resultDefinitionGroup": "Imposition",
+                "d20": false,
+                "label": "Fine"
+              },
+              {
+                "resultIdentifier": "7fd83833-178c-48db-866b-33fc9e69a0d1",
+                "publishedForNows": true,
+                "prompts": [
+                  {
+                    "promptIdentifier": "03fe43ad-1857-4ba1-8481-6c660744b617",
+                    "promptReference": "startingFromDateDateOfInterimDisqualification",
+                    "label": "Starting from date (date of interim disqualification)",
+                    "value": "31/12/2023"
+                  }
+                ],
+                "d20": false,
+                "label": "Date of Interim Disqualification"
+              },
+              {
+                "resultIdentifier": "4b850aa9-984c-4a15-a1ae-b2f861cfcbe8",
+                "publishedForNows": true,
+                "prompts": [
+                  {
+                    "promptIdentifier": "11a939b1-71e6-4065-8c29-007e4b52da7a",
+                    "promptReference": "licenceIssueNumber",
+                    "label": "Licence issue number",
+                    "value": "11"
+                  }
+                ],
+                "d20": false,
+                "label": "1: Prov DVLA produced"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": true,
+  "orderingHearingId": "f07d7e9b-3976-4d6b-acde-d7d55f0ac306"
+}

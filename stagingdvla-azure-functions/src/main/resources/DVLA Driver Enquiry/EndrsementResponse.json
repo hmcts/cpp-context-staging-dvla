@@ -1,0 +1,46 @@
+{
+  "appealCourtCode": "111",
+  "appealDate": "2000-11-10",
+  "convictionDate": "2005-10-01",
+  "convictionCourtCode": "convictionCourtCode1",
+  "disqualification": {
+    "type": "Type 2",
+    "forLife": true,
+    "years": 2001,
+    "months": 1,
+    "days": 15
+  },
+  "disqualificationSuspendedPendingAppealDate": "2011-11-01",
+  "disqualificationReimposedDate": "2012-09-03",
+  "disqualificationRemovalDate": "2013-09-03",
+  "disqualifiedPendingSentence": "Pending",
+  "expiryDate": "2009-05-22",
+  "fine": 1,
+  "fromDate": "2007-09-25",
+  "identifier": "ID 1",
+  "intoxicant": {
+    "intoxicantType": "intoxicant Type 11",
+    "testingMethod": "testing Method 22",
+    "level": 1,
+    "unitType": "unit Type 5"
+  },
+  "markers": {
+    "declaredHardship": true
+  },
+  "nextReportDate": "2022-09-16",
+  "notificationSource": "your notification source",
+  "offenceCode": "offence 555",
+  "offenceLegalLiteral": "Offence Legal Lit",
+  "offenceDate": "2004-09-16",
+  "otherSentence": "other sent",
+  "penaltyPoints": 22,
+  "prisonSentenceSuspendedPeriod": {
+    "years": 2010,
+    "months": 1,
+    "days": 10,
+    "hours": 2200
+  },
+  "rehabilitationCourseCompleted": true,
+  "sentenceDate": "2006-04-01",
+  "sentencingCourtCode": "London Court 3322"
+}

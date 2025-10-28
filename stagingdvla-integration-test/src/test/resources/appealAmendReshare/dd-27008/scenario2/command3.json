@@ -1,0 +1,85 @@
+{
+  "masterDefendantId": "%DEFENDANT_ID%",
+  "orderingCourt": {
+    "address": {
+      "address1": "1 Queen Victoria Street",
+      "address2": "London",
+      "address3": "",
+      "address4": "",
+      "address5": "",
+      "postcode": "EC4N 4XY"
+    },
+    "code": "B01DU00",
+    "courtHearingLocation": "B01DU04",
+    "id": "c133d0de-c989-48b9-bd20-0431943e347e",
+    "lja": {
+      "ljaCode": "2570",
+      "ljaName": "Central London Magistrates' Court"
+    },
+    "name": "City of London Magistrates' Court",
+    "roomId": "91946d83-34e8-3808-bfae-d6f53037ef9b",
+    "roomName": "Courtroom 04"
+  },
+  "nowContent": {
+    "orderDate": "2024-09-25",
+    "defendant": {
+      "dateOfBirth": "2000-01-01",
+      "gender": "MALE",
+      "driverNumber": "ULLRI611187XH9ZM",
+      "firstName": "Dallas",
+      "lastName": "Smith",
+      "name": "Dallas Smith",
+      "address": {
+        "line1": "FLAT - 25A",
+        "line2": "2103 Chad River",
+        "line3": "Swansea",
+        "line4": "Walsh",
+        "line5": "UK",
+        "postCode": "SA1 1AU"
+      }
+    },
+    "caseApplicationReferences": [
+      "DVLA02022362"
+    ],
+    "cases": [
+      {
+        "reference": "DVLA02022362",
+        "caseId": "817916aa-44da-4879-906c-f9d16c679db3",
+        "defendantCaseOffences": []
+      }
+    ],
+    "courtApplications": [
+      {
+        "applicationType": "Appeal against sentence by a Magistrates' Court to the Crown Court",
+        "applicationReceivedDate": "2024-09-01",
+        "id": "099cfff4-f5c0-4b0f-ad7e-b38cfc627b11",
+        "applicationReference": "DVLA02022362",
+        "applicationStatus": "UN_ALLOCATED",
+        "results": [
+          {
+            "resultIdentifier": "48b8ff83-2d5d-4891-bab1-b0f5edcd3822",
+            "publishedForNows": false,
+            "prompts": [
+              {
+                "promptIdentifier": "4ad82d44-41cc-4e47-a2f5-e0dd147320ee",
+                "promptReference": "6059ba59-8f9b-4c05-8d15-51bd3c294422",
+                "label": "Driving disqualification stands",
+                "value": ""
+              }
+            ],
+            "d20": false,
+            "label": "Appeal abandoned"
+          },
+          {
+            "resultIdentifier": "4ad82d44-41cc-4e47-a2f5-e0dd147320ee",
+            "publishedForNows": true,
+            "d20": true,
+            "label": "Driving disqualification stands"
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": true,
+  "orderingHearingId": "7ee1e4be-157b-4fea-913f-9c8b8af1a208"
+}

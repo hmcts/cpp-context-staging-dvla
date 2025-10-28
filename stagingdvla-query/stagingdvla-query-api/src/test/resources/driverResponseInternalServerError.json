@@ -1,0 +1,9 @@
+{
+  "errors": [
+    {
+      "status": "500",
+      "code": "ENQ018",
+      "detail": "For the given drivingLicenceNumber field, no driver record could be found"
+    }
+  ]
+}

@@ -1,0 +1,132 @@
+{
+  "identifier": "IDENTIFIER_ID",
+  "licenceProducedInCourt": "2: Full DVLA produced",
+  "cases": [
+    {
+      "caseId": "8c116550-543f-4eb6-9c5c-29587f66a53d",
+      "defendantCaseOffences": [
+        {
+          "alcoholReadingAmount": "123.45",
+          "alcoholReadingMethodDescription": "method description",
+          "allocationDecision": "Summary-only offence",
+          "alcoholReadingMethodCode": "A",
+          "civilOffence": false,
+          "code": "CA03014",
+          "convictingCourtCode": "COURT_CODE",
+          "convictionDate": "10/03/2021",
+          "convictionStatus": "Convicted",
+          "dateDisqSuspendedPendingAppeal": "2021-05-05",
+          "disqualificationPeriod": "110000",
+          "dttpDtetp": "4",
+          "dvlaCode": "SP30",
+          "startDate": "2021-01-19",
+          "endDate": "2021-03-15",
+          "fine": "£150.00",
+          "interimImposedFinalSentence": "2",
+          "otherSentence": "OTHER_SENTENCE",
+          "penaltyPoints": "12",
+          "sentenceDate": "10/05/2021",
+          "dateFromWhichDisqRemoved": "15/07/2021",
+          "dateDisqSuspendedPendingAppeal": "2021-03-20",
+          "sentencingCourtCode": "SNCC",
+          "suspendedSentence": "12Y",
+          "results": [
+            {
+              "d20": true,
+              "drivingTestStipulation": 9,
+              "dvlaCode": "SP30",
+              "label": "Discretionary disqualification until test passed only",
+              "publishedForNows": false,
+              "resultIdentifier": "cf8a3c59-63f5-4757-8783-88f1e31aa653",
+              "resultWording": "Disqualified until test of competence to drive has been passed. Driving record endorsed. Section 36 Road Traffic Offenders Act 1988",
+              "welshResultWording": "Gwahardd hyd nes bod prawf cymhwyster wedi’i basio. Cofnod gyrru wedi’i ardystio. Adran 36 Deddf Troseddwyr Traffig Ffyrdd 1988"
+            },
+            {
+              "d20": true,
+              "drivingTestStipulation": 9,
+              "dvlaCode": "SP30",
+              "publishedForNows": false,
+              "resultIdentifier": "098569ca-da13-4438-9917-24c3cd773e88",
+              "resultWording": "Disqualified until test of competence to drive has been passed. Driving record endorsed. Section 36 Road Traffic Offenders Act 1988",
+              "label": "Discretionary with disqualification until ordinary test passed. Disqualified for life",
+              "prompts": [
+                {
+                  "label": "Date of Interim Disqualification",
+                  "promptIdentifier": "52dd49e1-5802-4cc4-aad2-9284d7fce426",
+                  "promptReference": "defendantDrivingLicenceNumber",
+                  "value": "MORGA753116SMJIJ",
+                  "welshLabel": "Dyddiad y gwaharddiad dros dro"
+                },
+                {
+                  "label": "Date of Interim Disqualification",
+                  "promptIdentifier": "1a53ac1a-5ac5-4671-94f8-632c8781e4d5",
+                  "promptReference": "licenseIssueNumber",
+                  "value": "35",
+                  "welshLabel": "Dyddiad y gwaharddiad dros dro"
+                }
+              ]
+            }
+          ],
+          "vehicleRegistration": "TE4654",
+          "wording": "Has a violent past and fear that he will commit"
+        }
+      ],
+      "reference": "76GD6405821"
+    }
+  ],
+  "distinctPrompts": [
+    {
+      "label": "Date of Interim Disqualification",
+      "promptIdentifier": "52dd49e1-5802-4cc4-aad2-9284d7fce426",
+      "promptReference": "defendantDrivingLicenceNumber",
+      "value": "MORGA753116SMJIJ",
+      "welshLabel": "Dyddiad y gwaharddiad dros dro"
+    },
+    {
+      "label": "Date of Interim Disqualification",
+      "promptIdentifier": "1a53ac1a-5ac5-4671-94f8-632c8781e4d5",
+      "promptReference": "licenceIssueNumber",
+      "value": "35",
+      "welshLabel": "Dyddiad y gwaharddiad dros dro"
+    }
+  ],
+  "defendant": {
+    "address": {
+      "line1": "Flat 1",
+      "line2": "11 Palace Court",
+      "line3": "London",
+      "line4": "England",
+      "line5": "UK",
+      "postCode": "W2 1AB12345"
+    },
+    "dateOfBirth": "07/03/1983",
+    "driverNumber": "MORGA657054SM9BF",
+    "firstName": "Adam",
+    "gender": "MALE",
+    "lastName": "John",
+    "middleName": "Mark",
+    "name": "Adam Mark John",
+    "title": "Mr"
+  },
+  "orderDate": "2021-03-10",
+  "convictionDate": "2021-03-10",
+  "orderingCourt": {
+    "address": {
+      "address1": "176A Lavender Hill",
+      "address2": "London",
+      "address3": "",
+      "address4": "",
+      "address5": "",
+      "postcode": "SW11 1JU"
+    },
+    "code": "B01LY00",
+    "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+    "lja": {
+      "ljaCode": "2577",
+      "ljaName": "South West London Magistrates' Court"
+    },
+    "name": "Lavender Hill Magistrates' Court",
+    "roomId": "9e4932f7-97b2-3010-b942-ddd2624e4dd8",
+    "roomName": "Courtroom 01"
+  }
+}

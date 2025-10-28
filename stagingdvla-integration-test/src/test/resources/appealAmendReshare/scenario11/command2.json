@@ -1,0 +1,81 @@
+{
+  "masterDefendantId": "%DEFENDANT_ID%",
+  "orderingCourt": {
+    "address": {
+      "address1": "176A Lavender Hill",
+      "address2": "London",
+      "postcode": "SW11 1JU"
+    },
+    "code": "B01LY00",
+    "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+    "lja": {
+      "ljaCode": "2577",
+      "ljaName": "South West London Magistrates' Court"
+    },
+    "name": "Lavender Hill Magistrates' Court"
+  },
+  "nowContent": {
+    "orderDate": "2023-05-05",
+    "defendant": {
+      "dateOfBirth": "2001-08-08",
+      "gender": "MALE",
+      "driverNumber": "ABCDE0,0010BCFAA",
+      "title": "MR",
+      "firstName": "Anastasia",
+      "lastName": "Fadel",
+      "name": "Anastasia Fadel",
+      "address": {
+        "line1": "56saon",
+        "line2": "56Police House",
+        "line3": "StreetDescription1",
+        "line4": "Locality1",
+        "line5": "Town2",
+        "postCode": "TW14 9XD"
+      }
+    },
+    "caseApplicationReferences": [
+      "VT05MAYC009"
+    ],
+    "cases": [
+      {
+        "reference": "VT05MAYC009",
+        "caseId": "aa6dab59-c66f-4aed-983c-78e724dc0458",
+        "defendantCaseOffences": []
+      }
+    ],
+    "courtApplications": [
+      {
+        "applicationType": "Appeal against conviction on indictment to the Court of Appeal",
+        "applicationReceivedDate": "2023-05-05",
+        "id": "e5157e61-e63c-47cf-9da2-f082e0d04996",
+        "applicationReference": "VT05MAYC009",
+        "applicationStatus": "IN_PROGRESS",
+        "results": [
+          {
+            "resultIdentifier": "177f29cd-49e9-41d1-aafb-5730d7414dd4",
+            "publishedForNows": false,
+            "prompts": [
+              {
+                "promptIdentifier": "c10b4c83-1856-4ca9-9592-d8b8183a0324",
+                "promptReference": "reasons",
+                "label": "Reasons",
+                "value": "test"
+              },
+              {
+                "promptIdentifier": "e3764c59-4e25-4864-a3af-1c2e3390af99",
+                "promptReference": "dateOfConviction",
+                "label": "Date of conviction",
+                "value": "05/05/2023"
+              }
+            ],
+            "resultWording": "",
+            "d20": false,
+            "label": "Appeal against conviction allowed "
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": true,
+  "orderingHearingId": "37453a3c-3462-4c37-9a20-9773e6ed386b"
+}

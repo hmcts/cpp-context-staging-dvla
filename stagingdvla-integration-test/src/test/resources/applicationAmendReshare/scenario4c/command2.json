@@ -1,0 +1,107 @@
+{
+  "masterDefendantId": "%DEFENDANT_ID%",
+  "orderingCourt": {
+    "address": {
+      "address1": "176A Lavender Hill",
+      "address2": "London",
+      "address3": "",
+      "address4": "",
+      "address5": "",
+      "postcode": "SW11 1JU"
+    },
+    "code": "B01LY00",
+    "courtHearingLocation": "B01LY02",
+    "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+    "lja": {
+      "ljaCode": "2577",
+      "ljaName": "South West London Magistrates' Court"
+    },
+    "name": "Lavender Hill Magistrates' Court",
+    "roomId": "b4562684-9209-3ec4-a544-7f80dabd94d8",
+    "roomName": "Courtroom 02"
+  },
+  "nowContent": {
+    "orderDate": "2023-05-16",
+    "defendant": {
+      "dateOfBirth": "1985-01-20",
+      "gender": "MALE",
+      "title": "MR",
+      "firstName": "Lavina",
+      "lastName": "Bahringer",
+      "name": "Lavina Bahringer",
+      "address": {
+        "line1": "27 Good Place",
+        "line2": "Heaven Avenue",
+        "line4": "Heaven",
+        "postCode": "CV1 2JT"
+      }
+    },
+    "caseApplicationReferences": [
+      "JW127755221"
+    ],
+    "cases": [
+      {
+        "reference": "JW127755221",
+        "caseId": "962a5eb7-253d-4118-b3bb-bf12f30dabea",
+        "defendantCaseOffences": []
+      }
+    ],
+    "courtApplications": [
+      {
+        "applicationType": "Application to reopen case",
+        "applicationReceivedDate": "2023-05-16",
+        "id": "270c5f38-5083-48c6-9409-65a295dd4c02",
+        "applicationReference": "JW127755221",
+        "applicationStatus": "UN_ALLOCATED",
+        "results": [
+          {
+            "resultIdentifier": "e3fb46ee-e406-4f73-9bf1-71d513da8cc7",
+            "publishedForNows": false,
+            "prompts": [
+              {
+                "promptIdentifier": "3872ea68-92d9-469f-9929-c676745982ef",
+                "promptReference": "reopenedUnder",
+                "label": "Re-opened under",
+                "value": "Section 142 Magistrates' Courts Act 1980"
+              },
+              {
+                "promptIdentifier": "5797feb0-7678-4193-ad16-944365e9a68a",
+                "promptReference": "convictionAndSentenceImposedOnSpecifiedDateAreSetAside",
+                "label": "Conviction and sentence imposed on specified date are set aside",
+                "value": "16/05/2023"
+              },
+              {
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedOrganisationName",
+                "label": "Prosecutor to be notified organisation name",
+                "value": "Test"
+              },
+              {
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedAddress1",
+                "label": "Prosecutor to be notified address line 1",
+                "value": "1 Main St"
+              },
+              {
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedPostCode",
+                "label": "Prosecutor to be notified post code",
+                "value": "TS1 1AA"
+              },
+              {
+                "promptIdentifier": "f42fa098-0f7b-4269-ac4f-b10c9b6832d7",
+                "promptReference": "ffb70c0a-8abc-422b-b8be-779e73ef9c8f",
+                "label": "Driving endorsement to be removed",
+                "value": "Original court code:2905\nOriginal conviction date:16/05/2023\nDVLA endorsement code:TS30\nOriginal offence date:20/11/2022"
+              }
+            ],
+            "d20": false,
+            "label": "Case reopened"
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": true,
+  "orderingHearingId": "69e12bcb-99ca-4c74-acea-d38c8709bbb1"
+}

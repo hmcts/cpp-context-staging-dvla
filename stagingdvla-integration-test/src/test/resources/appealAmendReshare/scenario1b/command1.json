@@ -1,0 +1,129 @@
+{
+  "masterDefendantId": "%DEFENDANT_ID%",
+  "orderingCourt": {
+    "address": {
+      "address1": "176A Lavender Hill",
+      "address2": "London",
+      "address3": "",
+      "address4": "",
+      "address5": "",
+      "postcode": "SW11 1JU"
+    },
+    "code": "B01LY00",
+    "courtHearingLocation": "B01LY01",
+    "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+    "lja": {
+      "ljaCode": "2577",
+      "ljaName": "South West London Magistrates' Court"
+    },
+    "name": "Lavender Hill Magistrates' Court",
+    "roomId": "9e4932f7-97b2-3010-b942-ddd2624e4dd8",
+    "roomName": "Courtroom 01"
+  },
+  "nowContent": {
+    "orderDate": "2023-05-05",
+    "defendant": {
+      "dateOfBirth": "2000-09-09",
+      "gender": "MALE",
+      "driverNumber": "ABCDE0,0010BCFAA",
+      "title": "MR",
+      "firstName": "Lucy",
+      "middleName": "Jasmine Jasmine",
+      "lastName": "Dach",
+      "name": "Lucy Jasmine Jasmine Dach",
+      "address": {
+        "line1": "56saon",
+        "line2": "56Police House",
+        "line3": "StreetDescription1",
+        "line4": "Locality1",
+        "line5": "West Jaden",
+        "postCode": "TW14 9XJ"
+      }
+    },
+    "caseApplicationReferences": [
+      "JW97893281"
+    ],
+    "cases": [
+      {
+        "reference": "JW97893281",
+        "caseId": "046dca03-05c5-499a-8ffc-035759321cdd",
+        "defendantCaseOffences": [
+          {
+            "title": "Drive motor vehicle fail comply with red / green arrow / lane closure traffic light signals - manual detection",
+            "civilOffence": false,
+            "dvlaCode": "TS10",
+            "endDate": "2020-09-17",
+            "convictionStatus": "Not Convicted",
+            "vehicleRegistration": "TE4654",
+            "alcoholReadingAmount": 500,
+            "alcoholReadingMethodCode": "A",
+            "alcoholReadingMethodDescription": "Blood",
+            "code": "RT88971",
+            "modeOfTrial": "Summary",
+            "endorsableFlag": true,
+            "wording": "Has a violent past and fear that he will commit further offences and interfere with witnesse",
+            "startDate": "2020-09-18",
+            "results": [
+              {
+                "resultIdentifier": "b2d06bbc-e90e-4df8-8851-6e4a70894828",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "2bf54447-328c-4c1b-a123-341adbd52172",
+                    "promptReference": "disqualificationPeriod",
+                    "durationSequence": 1,
+                    "label": "Disqualification period",
+                    "value": "2 years 12 Months 2 weeks 6 days"
+                  },
+                  {
+                    "promptIdentifier": "81638260-3cd1-41e7-9725-c8e91e23bda1",
+                    "promptReference": "extensionPeriodSection35AImmediateCustodialSentence",
+                    "label": "Extension period section 35A (immediate custodial sentence)",
+                    "value": "35A"
+                  },
+                  {
+                    "promptIdentifier": "0143f821-7cab-4e53-a00b-2fd1c3dc8204",
+                    "promptReference": "extensionPeriodSection35BEffectOfCustodialSentenceNoted",
+                    "label": "Extension period section 35B (effect of custodial sentence noted)",
+                    "value": "35B"
+                  },
+                  {
+                    "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+                    "promptReference": "defendantDrivingLicenceNumber",
+                    "label": "Defendant driving licence number",
+                    "value": "ABCDE0,0010BCFAA"
+                  }
+                ],
+                "resultWording": "Disqualified for holding or obtaining a driving licence. Disqualification obligatory for the offence. Driving record endorsed. Section 34(1) Road Traffic Offenders Act 1988",
+                "d20": true,
+                "label": "Obligatory disqualification"
+              },
+              {
+                "resultIdentifier": "238fc228-f948-430e-b0a1-7c9bdcafac46",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+                    "promptReference": "defendantDrivingLicenceNumber",
+                    "label": "Defendant driving licence number",
+                    "value": "ABCDE0,0010BCFAA"
+                  }
+                ],
+                "d20": false,
+                "label": "Driving disqualification suspended pending appeal"
+              },
+              {
+                "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956",
+                "publishedForNows": true,
+                "d20": false,
+                "label": "0: None or unknown"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": true,
+  "orderingHearingId": "512b4c7f-b013-47e7-8820-63a9a09b5e56"
+}

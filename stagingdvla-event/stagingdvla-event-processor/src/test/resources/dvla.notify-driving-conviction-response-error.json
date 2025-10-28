@@ -1,0 +1,4 @@
+{
+  "status": 200,
+  "errors": "\"errors\": [\n    {\n      \"status\": 400,\n      \"code\": \"END003\",\n      \"detail\": \"Invalid format for field - Driver Number\"\n    },\n    {\n      \"status\": 400,\n      \"code\": \"END004\",\n      \"detail\": \"Invalid format for field - Driver Name\"\n    }\n  ]ó"
+}

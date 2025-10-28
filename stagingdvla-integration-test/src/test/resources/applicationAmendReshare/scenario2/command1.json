@@ -1,0 +1,220 @@
+{
+  "masterDefendantId": "%DEFENDANT_ID%",
+  "orderingCourt": {
+    "address": {
+      "address1": "176A Lavender Hill",
+      "address2": "London",
+      "address3": "",
+      "address4": "",
+      "address5": "",
+      "postcode": "SW11 1JU"
+    },
+    "code": "B01LY00",
+    "courtHearingLocation": "B01LY01",
+    "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+    "lja": {
+      "ljaCode": "2577",
+      "ljaName": "South West London Magistrates' Court"
+    },
+    "name": "Lavender Hill Magistrates' Court",
+    "roomId": "9e4932f7-97b2-3010-b942-ddd2624e4dd8",
+    "roomName": "Courtroom 01"
+  },
+  "nowContent": {
+    "orderDate": "2023-04-23",
+    "defendant": {
+      "dateOfBirth": "1982-08-14",
+      "gender": "MALE",
+      "driverNumber": "ABCDE0,0010BCFAA",
+      "title": "MR",
+      "firstName": "Fred",
+      "middleName": "Jasmine Jasmine",
+      "lastName": "HEDGES",
+      "name": "Fred Jasmine Jasmine HEDGES",
+      "address": {
+        "line1": "56saon",
+        "line2": "56Police House",
+        "line3": "StreetDescription1",
+        "line4": "Locality1",
+        "line5": "Leeds",
+        "postCode": "TW13 4AD"
+      }
+    },
+    "caseApplicationReferences": [
+      "JW176491903",
+      "JW176470021"
+    ],
+    "cases": [
+      {
+        "reference": "JW176491903",
+        "caseId": "d2a46c6c-7a3c-4c2d-a924-f6903afc0a08",
+        "defendantCaseOffences": [
+          {
+            "title": "Cause use of motor vehicle with no insurance",
+            "civilOffence": false,
+            "dvlaCode": "IN14",
+            "endDate": "2020-09-17",
+            "convictionDate": "2023-04-23",
+            "convictionStatus": "Convicted",
+            "plea": "GUILTY",
+            "vehicleRegistration": "TE4654",
+            "alcoholReadingAmount": 500,
+            "alcoholReadingMethodCode": "A",
+            "alcoholReadingMethodDescription": "Blood",
+            "code": "RT88319",
+            "modeOfTrial": "Summary",
+            "allocationDecision": "Summary-only offence",
+            "endorsableFlag": true,
+            "convictingCourtCode": "2577",
+            "wording": "Has a violent past and fear that he will commit further offences and interfere with witnesse",
+            "startDate": "2020-09-18",
+            "results": [
+              {
+                "resultIdentifier": "418b3aa7-65ab-4a4a-bab9-2f96b698118c",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "d6caa3c4-ec9d-41ec-8f86-2c617ef0d5d9",
+                    "promptReference": "endDate",
+                    "label": "End Date",
+                    "value": "01/08/2023"
+                  },
+                  {
+                    "promptIdentifier": "29f5b3c7-8d15-4606-9dcf-23f32a21b5ef",
+                    "promptReference": "responsibleOfficer",
+                    "label": "Responsible officer",
+                    "value": "a member of the youth offending team"
+                  },
+                  {
+                    "promptIdentifier": "f4a4f159-779e-4f35-822a-b559a2415ecb",
+                    "promptReference": "supervisingCourt",
+                    "label": "Supervising Court",
+                    "value": "Lavender Hill Magistrates' Court"
+                  },
+                  {
+                    "promptIdentifier": "68c92035-27fd-4ee6-b03c-fe18ea6dbcb0",
+                    "promptReference": "probationteamtobenotifiedOrganisationName",
+                    "label": "Probation team to be notified organisation name",
+                    "value": "South West and Central Division NPS"
+                  },
+                  {
+                    "promptIdentifier": "68c92035-27fd-4ee6-b03c-fe18ea6dbcb0",
+                    "promptReference": "probationteamtobenotifiedEmailAddress1",
+                    "label": "Probation team to be notified email address 1",
+                    "value": "SWSCNPS.Court@justice.gov.uk"
+                  }
+                ],
+                "d20": false,
+                "dvlaCode": "M",
+                "label": "Community order England / Wales"
+              },
+              {
+                "resultIdentifier": "65a59f46-61ae-4dac-a040-a25fca647cb2",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "7025bdf4-f438-4b6e-8acf-b7ef38fcbd23",
+                    "promptReference": "address",
+                    "label": "Address",
+                    "value": "1 Main Rd"
+                  },
+                  {
+                    "promptIdentifier": "b17b7df3-064f-492a-b19d-8e0bde43f7c6",
+                    "promptReference": "periodOfResidence",
+                    "label": "Period of residence",
+                    "value": "6 Months"
+                  }
+                ],
+                "resultDefinitionGroup": "Community Requirement",
+                "d20": false,
+                "label": "Residence"
+              },
+              {
+                "resultIdentifier": "cee54856-4450-4f28-a8a9-72b688726201",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "a8719de4-7783-448a-b792-e3f94e670ad0",
+                    "promptReference": "PENPT",
+                    "label": "Penalty points for this offence",
+                    "value": "3"
+                  },
+                  {
+                    "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+                    "promptReference": "defendantDrivingLicenceNumber",
+                    "label": "Defendant driving licence number",
+                    "value": "ABCDE0,0010BCFAA"
+                  }
+                ],
+                "d20": true,
+                "label": "Driving record endorsed with penalty points"
+              },
+              {
+                "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956",
+                "publishedForNows": true,
+                "d20": false,
+                "label": "0: None or unknown"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "reference": "JW176470021",
+        "caseId": "9f992eda-ba94-4aad-8486-dbafb7295f41",
+        "defendantCaseOffences": [
+          {
+            "title": "Cause use of motor vehicle with no insurance",
+            "civilOffence": false,
+            "dvlaCode": "IN14",
+            "endDate": "2020-09-17",
+            "convictionDate": "2023-04-23",
+            "convictionStatus": "Convicted",
+            "plea": "GUILTY",
+            "vehicleRegistration": "TE4654",
+            "alcoholReadingAmount": 500,
+            "alcoholReadingMethodCode": "A",
+            "alcoholReadingMethodDescription": "Blood",
+            "code": "RT88319",
+            "modeOfTrial": "Summary",
+            "allocationDecision": "Summary-only offence",
+            "endorsableFlag": true,
+            "convictingCourtCode": "2577",
+            "wording": "Has a violent past and fear that he will commit further offences and interfere with witnesse",
+            "startDate": "2020-09-18",
+            "results": [
+              {
+                "resultIdentifier": "cee54856-4450-4f28-a8a9-72b688726201",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "a8719de4-7783-448a-b792-e3f94e670ad0",
+                    "promptReference": "PENPT",
+                    "label": "Penalty points for this offence",
+                    "value": "3"
+                  },
+                  {
+                    "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+                    "promptReference": "defendantDrivingLicenceNumber",
+                    "label": "Defendant driving licence number",
+                    "value": "ABCDE0,0010BCFAA"
+                  }
+                ],
+                "d20": true,
+                "label": "Driving record endorsed with penalty points"
+              },
+              {
+                "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956",
+                "publishedForNows": true,
+                "d20": false,
+                "label": "0: None or unknown"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": true,
+  "orderingHearingId": "1b0b2e72-0fa3-41a4-bc0d-fb8b0150cb2d"
+}

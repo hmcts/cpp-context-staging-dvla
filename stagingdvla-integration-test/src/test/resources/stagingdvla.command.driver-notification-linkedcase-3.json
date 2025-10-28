@@ -1,0 +1,285 @@
+{
+  "masterDefendantId": "%DEFENDANT_ID%",
+  "orderingCourt": {
+    "address": {
+      "address1": "The Law Courts",
+      "address2": "Edward Street",
+      "address3": "Brighton",
+      "address4": "",
+      "address5": "",
+      "postcode": "BN2 0LG"
+    },
+    "code": "B47CL00",
+    "courtHearingLocation": "B47CL04",
+    "id": "0140f84c-e7cb-3fba-96a1-1878b42ee546",
+    "lja": {
+      "ljaCode": "2950",
+      "ljaName": "Sussex (Central) Magistrates' Court"
+    },
+    "name": "Brighton Magistrates' Court",
+    "roomId": "8cc5943d-3b6c-3ba7-9394-d4c6be3540b6",
+    "roomName": "Courtroom 04"
+  },
+  "nowContent": {
+    "orderDate": "2022-11-07",
+    "defendant": {
+      "dateOfBirth": "1961-12-26",
+      "gender": "MALE",
+      "title": "Mr",
+      "firstName": "JOHN",
+      "lastName": "WICK",
+      "name": "JOHN WICK",
+      "address": {
+        "line1": "10",
+        "line2": "FLAT",
+        "line3": "DEVONSHIRE ROAD",
+        "line4": "HASTINGS",
+        "line5": "EAST SUSSEX",
+        "postCode": "AB11 1NE"
+      }
+    },
+    "caseApplicationReferences": [
+      "CASE0000001"
+    ],
+    "cases": [
+      {
+        "reference": "CASE0000001",
+        "caseId": "d93cb4ab-d948-46a5-a184-3d77eacd5485",
+        "defendantCaseOffences": [
+          {
+            "title": "Drive motor vehicle with a proportion of a specified controlled drug above the specified limit",
+            "civilOffence": false,
+            "dvlaCode": "DG10",
+            "convictionDate": "2022-11-07",
+            "convictionStatus": "Convicted",
+            "plea": "GUILTY",
+            "alcoholReadingAmount": 29,
+            "alcoholReadingMethodCode": "A",
+            "alcoholReadingMethodDescription": "Blood",
+            "code": "RT88584",
+            "modeOfTrial": "Summary",
+            "allocationDecision": "Summary-only offence",
+            "endorsableFlag": true,
+            "convictingCourtCode": "2950",
+            "wording": "This Offence carries Penalty Points\n\nOn 12/02/2022 at SEAFORD drove a motor vehicle, namely AUDI WJ59NBG, on a road, namely A259 BUCKLE BYPASS, when the proportion of a controlled drug, namely COCAINE, in your blood, namely 29 MICROGRAMS, exceeded the specified limit\n 'Contrary to section 5A(1)(a) and (2) of the Road Traffic Act 1988 and Schedule 2 to the Road Traffic Offenders Act 1988.'",
+            "startDate": "2022-02-12",
+            "results": [
+              {
+                "resultIdentifier": "4d5f25a5-9102-472f-a2da-c58d1eeb9c93",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "3733d3bc-762d-4558-b06f-2844e7305b8a",
+                    "promptReference": "warrantExecutionAllocatedTopol",
+                    "label": "Allocated warrant enforcer is Police",
+                    "value": "Yes"
+                  }
+                ],
+                "resultDefinitionGroup": "WOAEXTEND",
+                "d20": false,
+                "label": "Warrant withdrawn"
+              },
+              {
+                "resultIdentifier": "969f150c-cd05-46b0-9dd9-30891efcc766",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "7cd1472f-2379-4f5b-9e67-98a43d86e122",
+                    "promptReference": "AOF",
+                    "label": "Amount of fine",
+                    "value": "£120.00"
+                  }
+                ],
+                "resultDefinitionGroup": "Imposition",
+                "d20": false,
+                "label": "Fine"
+              },
+              {
+                "resultIdentifier": "9161f3cb-e821-44e5-a9ee-4680b358a037",
+                "publishedForNows": false,
+                "d20": false,
+                "label": "Guilty plea taken into account"
+              },
+              {
+                "resultIdentifier": "b2d06bbc-e90e-4df8-8851-6e4a70894828",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "2bf54447-328c-4c1b-a123-341adbd52172",
+                    "promptReference": "disqualificationPeriod",
+                    "durationSequence": 1,
+                    "label": "Disqualification period",
+                    "value": "12 Months"
+                  },
+                  {
+                    "promptIdentifier": "81638260-3cd1-41e7-9725-c8e91e23bda1",
+                    "promptReference": "extensionPeriodSection35AImmediateCustodialSentence",
+                    "label": "Extension period section 35A (immediate custodial sentence)",
+                    "value": "6 weeks."
+                  }
+                ],
+                "resultWording": "Disqualified for holding or obtaining a driving licence. Disqualification obligatory for the offence. Driving record endorsed. Section 34(1) Road Traffic Offenders Act 1988",
+                "d20": true,
+                "label": "Obligatory disqualification"
+              },
+              {
+                "resultIdentifier": "5c5a693f-c26c-4352-bbb3-ac72dd141e88",
+                "publishedForNows": true,
+                "d20": false,
+                "label": "5: DVLA held not produced"
+              }
+            ]
+          },
+          {
+            "title": "Drive motor vehicle with a proportion of a specified controlled drug above the specified limit",
+            "civilOffence": false,
+            "dvlaCode": "DG10",
+            "convictionDate": "2022-11-07",
+            "convictionStatus": "Convicted",
+            "plea": "GUILTY",
+            "alcoholReadingAmount": 635,
+            "alcoholReadingMethodCode": "A",
+            "alcoholReadingMethodDescription": "Blood",
+            "code": "RT88584",
+            "modeOfTrial": "Summary",
+            "allocationDecision": "Summary-only offence",
+            "endorsableFlag": true,
+            "convictingCourtCode": "2950",
+            "wording": "This Offence carries Penalty Points\n\nOn 12/02/2022 at SEAFORD drove a motor vehicle, namely AUDI WJ59NBG, on a road, namely A259 BUCKLE BYPASS, when the proportion of a controlled drug, namely BENZOYLECGONINE, in your blood, namely >635 MICROGRAMS, exceeded the specified limit\n 'Contrary to section 5A(1)(a) and (2) of the Road Traffic Act 1988 and Schedule 2 to the Road Traffic Offenders Act 1988.'",
+            "startDate": "2022-02-12",
+            "results": [
+              {
+                "resultIdentifier": "9161f3cb-e821-44e5-a9ee-4680b358a037",
+                "publishedForNows": false,
+                "d20": false,
+                "label": "Guilty plea taken into account"
+              },
+              {
+                "resultIdentifier": "49939c7c-750f-403e-9ce1-f82e3e568065",
+                "publishedForNows": false,
+                "d20": false,
+                "dvlaCode": "I",
+                "label": "No separate penalty"
+              },
+              {
+                "resultIdentifier": "b2d06bbc-e90e-4df8-8851-6e4a70894828",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "2bf54447-328c-4c1b-a123-341adbd52172",
+                    "promptReference": "disqualificationPeriod",
+                    "durationSequence": 1,
+                    "label": "Disqualification period",
+                    "value": "12 Months"
+                  },
+                  {
+                    "promptIdentifier": "81638260-3cd1-41e7-9725-c8e91e23bda1",
+                    "promptReference": "extensionPeriodSection35AImmediateCustodialSentence",
+                    "label": "Extension period section 35A (immediate custodial sentence)",
+                    "value": "6 weeks"
+                  }
+                ],
+                "resultWording": "Disqualified for holding or obtaining a driving licence. Disqualification obligatory for the offence. Driving record endorsed. Section 34(1) Road Traffic Offenders Act 1988",
+                "d20": true,
+                "label": "Obligatory disqualification"
+              },
+              {
+                "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956",
+                "publishedForNows": true,
+                "d20": false,
+                "label": "0: None or unknown"
+              }
+            ]
+          },
+          {
+            "title": "Drive a motor vehicle otherwise than in accordance with a licence - endorsable offence",
+            "civilOffence": false,
+            "dvlaCode": "LC20",
+            "convictionDate": "2022-11-07",
+            "convictionStatus": "Convicted",
+            "plea": "GUILTY",
+            "code": "RT88334",
+            "modeOfTrial": "Summary",
+            "allocationDecision": "Summary-only offence",
+            "endorsableFlag": true,
+            "convictingCourtCode": "2950",
+            "wording": "This Offence carries Penalty Points\n\nOn 12/02/2022 at SEAFORD drove a motor vehicle, namely AUDI WJ59NBG on a road, namely A259 BUCKLE BYPASS otherwise than in accordance with a licence authorising you to drive a motor vehicle of that class.\n 'Contrary to section 87(1) of the Road Traffic Act 1988 and Schedule 2 to the Road Traffic Offenders Act 1988.'",
+            "startDate": "2022-02-12",
+            "results": [
+              {
+                "resultIdentifier": "49939c7c-750f-403e-9ce1-f82e3e568065",
+                "publishedForNows": false,
+                "d20": false,
+                "dvlaCode": "I",
+                "label": "No separate penalty"
+              },
+              {
+                "resultIdentifier": "b0aeb4fc-df63-4e2f-af88-97e3f23e847f",
+                "publishedForNows": false,
+                "d20": true,
+                "label": "Driving record endorsed (no points)"
+              },
+              {
+                "resultIdentifier": "9161f3cb-e821-44e5-a9ee-4680b358a037",
+                "publishedForNows": false,
+                "d20": false,
+                "label": "Guilty plea taken into account"
+              },
+              {
+                "resultIdentifier": "5c5a693f-c26c-4352-bbb3-ac72dd141e88",
+                "publishedForNows": true,
+                "d20": false,
+                "label": "5: DVLA held not produced"
+              }
+            ]
+          },
+          {
+            "title": "Use a motor vehicle on a road / public place without third party insurance",
+            "civilOffence": false,
+            "dvlaCode": "IN10",
+            "convictionDate": "2022-11-07",
+            "convictionStatus": "Convicted",
+            "plea": "GUILTY",
+            "code": "RT88191",
+            "modeOfTrial": "Summary",
+            "allocationDecision": "Summary-only offence",
+            "endorsableFlag": true,
+            "convictingCourtCode": "2950",
+            "wording": "This Offence carries Penalty Points\n\nOn 12/02/2022 at SEAFORD used a motor vehicle, namely AUDI WJ59NBG, on a road, or other public place, namely A259 BUCKLE BYPASS, when there was not in force in relation to that use such a policy of insurance or such a security in respect of third party risks as complied with the requirements of Part VI of the Road Traffic Act 1988\n  'Contrary to section 143 of the Road Traffic Act 1988 and Schedule 2 to the Road Traffic Offenders Act 1988.'",
+            "startDate": "2022-02-12",
+            "results": [
+              {
+                "resultIdentifier": "9161f3cb-e821-44e5-a9ee-4680b358a037",
+                "publishedForNows": false,
+                "d20": false,
+                "label": "Guilty plea taken into account"
+              },
+              {
+                "resultIdentifier": "b0aeb4fc-df63-4e2f-af88-97e3f23e847f",
+                "publishedForNows": false,
+                "d20": true,
+                "label": "Driving record endorsed (no points)"
+              },
+              {
+                "resultIdentifier": "49939c7c-750f-403e-9ce1-f82e3e568065",
+                "publishedForNows": false,
+                "d20": false,
+                "dvlaCode": "I",
+                "label": "No separate penalty"
+              },
+              {
+                "resultIdentifier": "5c5a693f-c26c-4352-bbb3-ac72dd141e88",
+                "publishedForNows": true,
+                "d20": false,
+                "label": "5: DVLA held not produced"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "amendmentDate": "2022-11-14"
+  },
+  "isReshare": true,
+  "orderingHearingId": "%HEARING_ID%"
+}

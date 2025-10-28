@@ -1,0 +1,397 @@
+{
+  "driver": {
+    "drivingLicenceNumber": "EA123432DRIVINGLICENCE",
+    "firstNames": "Walter",
+    "lastName": "Black",
+    "title": "Mr",
+    "nameFormat": "Name LastName",
+    "fullModeOfAddress": "15 Live Street, Kensington, London, UK ",
+    "gender": "male",
+    "dateOfBirth": "1958-04-25",
+    "placeOfBirth": "Taiwan",
+    "address": {
+      "unstructuredAddress": {
+        "line1": "Apartment No 30",
+        "line2": "Live Street",
+        "line3": "line 3",
+        "line4": "London",
+        "line5": "UK",
+        "postcode": "S15 93U"
+      }
+    },
+    "disqualifiedUntil": "2021-10-30",
+    "disqualifiedForLife": false,
+    "eyesight": "excellent eyesight",
+    "imagesExist": true,
+    "disqualifiedPendingSentence": true,
+    "retainedC1_D1Entitlement": true,
+    "previousDrivingLicence": [
+      {
+        "previousDrivingLicenceNumber": "DV12341234AU",
+        "previousLastName": "Heisenberg",
+        "previousFirstNames": "Jimmy"
+      },
+      {
+        "previousDrivingLicenceNumber": "CV99999999AA",
+        "previousLastName": "Eye",
+        "previousFirstNames": "Matt"
+      }
+    ],
+    "military": false
+  },
+  "licence": {
+    "type": "Type B",
+    "status": "Active Status",
+    "statusQualifier": "Stat Qualifier 1",
+    "countryToWhichExchanged": "Korea"
+  },
+  "entitlement": [
+    {
+      "categoryCode": "Category 1",
+      "categoryLegalLiteral": "Category Legal Literal 1",
+      "categoryShortLiteral": "Category Short Literal 1",
+      "categoryType": "Category Type Example",
+      "fromDate": "2019-12-31",
+      "expiryDate": "2022-12-31",
+      "categoryStatus": "Status 1",
+      "restrictions": [
+        {
+          "restrictionCode": "Code 123",
+          "restrictionLiteral": "Restriction Lit"
+        },
+        {
+          "restrictionCode": "Code 12",
+          "restrictionLiteral": "Restriction Lit 2"
+        }
+      ],
+      "restrictedToAutomaticTransmission": true,
+      "fromNonGB": false
+    },
+    {
+      "categoryCode": "Category 2",
+      "categoryLegalLiteral": "Category Legal Literal 2",
+      "categoryShortLiteral": "Category Short Literal 2",
+      "categoryType": "Cat Type Example",
+      "fromDate": "2010-12-31",
+      "expiryDate": "2025-12-31",
+      "categoryStatus": "Status 99",
+      "restrictions": [
+        {
+          "restrictionCode": "Code 444",
+          "restrictionLiteral": "Rest Lit"
+        },
+        {
+          "restrictionCode": "Code 999",
+          "restrictionLiteral": "Rest Lit"
+        }
+      ],
+      "restrictedToAutomaticTransmission": true,
+      "fromNonGB": false
+    }
+  ],
+  "testPass": [
+    {
+      "type": "Yearly",
+      "categoryCode": "Cat1",
+      "categoryLegalLiteral": "CatLegLiteral1",
+      "categoryShortLiteral": "CatShortLiteral1",
+      "testDate": "2020-12-10",
+      "status": "Valid",
+      "withAutomaticTransmission": true,
+      "vehicleAdaptations": [
+        "vehicleAdapt1",
+        "vehicleAdapt2"
+      ],
+      "withTrailer": true,
+      "extendedTest": true,
+      "licenceSurrendered": false,
+      "testingAuthority": "London Test Authority"
+    },
+    {
+      "type": "Monthly",
+      "categoryCode": "Cat2",
+      "categoryLegalLiteral": "CatLegLiteral2",
+      "categoryShortLiteral": "CatShortLiteral2",
+      "testDate": "2020-11-10",
+      "status": "InValid",
+      "withAutomaticTransmission": false,
+      "vehicleAdaptations": [
+        "vehicle Adapt 5",
+        "vehicle Adapt 5"
+      ],
+      "withTrailer": true,
+      "extendedTest": false,
+      "licenceSurrendered": false,
+      "testingAuthority": "Manchester Test Authority"
+    }
+  ],
+  "endorsements": [
+    {
+      "appealCourtCode": "111",
+      "appealDate": "2000-11-10",
+      "convictionDate": "2005-10-01",
+      "convictionCourtCode": "CCC-1",
+      "disqualification": {
+        "type": "Type 2",
+        "forLife": true,
+        "years": 2001,
+        "months": 1,
+        "days": 15
+      },
+      "disqualificationSuspendedPendingAppealDate": "2011-11-01",
+      "disqualificationReimposedDate": "2012-09-03",
+      "disqualificationRemovalDate": "2013-09-03",
+      "disqualifiedPendingSentence": "Pending",
+      "expiryDate": "2009-05-22",
+      "fine": 1,
+      "fromDate": "2007-09-25",
+      "identifier": "ID 1",
+      "intoxicant": {
+        "intoxicantType": "intoxicant Type 11",
+        "testingMethod": "testing Method 22",
+        "level": 1
+      },
+      "markers": {
+        "declaredHardship": true
+      },
+      "nextReportDate": "2022-09-16",
+      "notificationSource": "your notification source",
+      "offenceCode": "offence 555",
+      "offenceLegalLiteral": "Offence Legal Lit",
+      "offenceDate": "2004-09-16",
+      "otherSentence": "other sent",
+      "penaltyPoints": 22,
+      "prisonSentenceSuspendedPeriod": {
+        "years": 2010,
+        "months": 1,
+        "days": 10,
+        "hours": 2200
+      },
+      "rehabilitationCourseCompleted": true,
+      "sentenceDate": "2003-04-01",
+      "sentencingCourtCode": "London Court 3322"
+    },
+    {
+      "appealCourtCode": "111",
+      "appealDate": "2020-11-10",
+      "convictionDate": "2015-11-10",
+      "convictionCourtCode": "CCC-2",
+      "disqualification": {
+        "type": "Type 2",
+        "forLife": true,
+        "years": 2010,
+        "months": 11,
+        "days": 15
+      },
+      "disqualificationSuspendedPendingAppealDate": "2019-11-10",
+      "disqualificationReimposedDate": "2018-09-30",
+      "disqualificationRemovalDate": "2018-09-30",
+      "disqualifiedPendingSentence": "PendingSentence",
+      "expiryDate": "2019-05-20",
+      "fine": 1,
+      "fromDate": "2017-09-30",
+      "identifier": "ID 1",
+      "intoxicant": {
+        "intoxicantType": "intoxicant Type",
+        "testingMethod": "testing Method",
+        "level": 1
+      },
+      "markers": {
+        "declaredHardship": true
+      },
+      "nextReportDate": "2022-09-16",
+      "notificationSource": "my notification source",
+      "offenceCode": "offence code 1",
+      "offenceLegalLiteral": "offence Legal Literal",
+      "offenceDate": "2014-09-16",
+      "otherSentence": "other sent",
+      "penaltyPoints": 22,
+      "prisonSentenceSuspendedPeriod": {
+        "years": 2020,
+        "months": 1,
+        "days": 12,
+        "hours": 2200
+      },
+      "rehabilitationCourseCompleted": true,
+      "sentenceDate": "2016-04-01",
+      "sentencingCourtCode": "London Court 1122"
+    },
+    {
+      "appealCourtCode": "111",
+      "appealDate": "2000-11-10",
+      "convictionDate": "2005-10-01",
+      "convictionCourtCode": "CCC-3",
+      "disqualification": {
+        "type": "Type 2",
+        "forLife": true,
+        "years": 2001,
+        "months": 1,
+        "days": 15
+      },
+      "disqualificationSuspendedPendingAppealDate": "2011-11-01",
+      "disqualificationReimposedDate": "2012-09-03",
+      "disqualificationRemovalDate": "2013-09-03",
+      "disqualifiedPendingSentence": "Pending",
+      "expiryDate": "2009-05-22",
+      "fine": 1,
+      "fromDate": "2007-09-25",
+      "identifier": "ID 1",
+      "intoxicant": {
+        "intoxicantType": "intoxicant Type 11",
+        "testingMethod": "testing Method 22",
+        "level": 1
+      },
+      "markers": {
+        "declaredHardship": true
+      },
+      "nextReportDate": "2022-09-16",
+      "notificationSource": "your notification source",
+      "offenceCode": "offence 555",
+      "offenceLegalLiteral": "Offence Legal Lit",
+      "offenceDate": "2004-09-16",
+      "otherSentence": "other sent",
+      "penaltyPoints": 22,
+      "prisonSentenceSuspendedPeriod": {
+        "years": 2010,
+        "months": 1,
+        "days": 10,
+        "hours": 2200
+      },
+      "rehabilitationCourseCompleted": true,
+      "sentenceDate": "2018-05-01",
+      "sentencingCourtCode": "London Court 3322"
+    },
+    {
+      "appealCourtCode": "111",
+      "appealDate": "2000-11-10",
+      "convictionDate": "2006-10-01",
+      "convictionCourtCode": "CCC-4",
+      "disqualification": {
+        "type": "Type 2",
+        "forLife": true,
+        "years": 2001,
+        "months": 1,
+        "days": 15
+      },
+      "disqualificationSuspendedPendingAppealDate": "2011-11-01",
+      "disqualificationReimposedDate": "2012-09-03",
+      "disqualificationRemovalDate": "2013-09-03",
+      "disqualifiedPendingSentence": "Pending",
+      "expiryDate": "2009-05-22",
+      "fine": 1,
+      "fromDate": "2007-09-25",
+      "identifier": "ID 1",
+      "intoxicant": {
+        "intoxicantType": "intoxicant Type 11",
+        "testingMethod": "testing Method 22",
+        "level": 1
+      },
+      "markers": {
+        "declaredHardship": true
+      },
+      "nextReportDate": "2022-09-16",
+      "notificationSource": "your notification source",
+      "offenceCode": "offence 555",
+      "offenceLegalLiteral": "Offence Legal Lit",
+      "offenceDate": "2004-09-16",
+      "otherSentence": "other sent",
+      "penaltyPoints": 22,
+      "prisonSentenceSuspendedPeriod": {
+        "years": 2010,
+        "months": 1,
+        "days": 10,
+        "hours": 2200
+      },
+      "rehabilitationCourseCompleted": true
+    },
+    {
+      "appealCourtCode": "111",
+      "appealDate": "2000-11-10",
+      "convictionDate": "2005-10-01",
+      "convictionCourtCode": "CCC-5",
+      "disqualification": {
+        "type": "Type 2",
+        "forLife": true,
+        "years": 2001,
+        "months": 1,
+        "days": 15
+      },
+      "disqualificationSuspendedPendingAppealDate": "2011-11-01",
+      "disqualificationReimposedDate": "2012-09-03",
+      "disqualificationRemovalDate": "2013-09-03",
+      "disqualifiedPendingSentence": "Pending",
+      "expiryDate": "2009-05-22",
+      "fine": 1,
+      "fromDate": "2007-09-25",
+      "identifier": "ID 1",
+      "intoxicant": {
+        "intoxicantType": "intoxicant Type 11",
+        "testingMethod": "testing Method 22",
+        "level": 1
+      },
+      "markers": {
+        "declaredHardship": true
+      },
+      "nextReportDate": "2022-09-16",
+      "notificationSource": "your notification source",
+      "offenceCode": "offence 555",
+      "offenceLegalLiteral": "Offence Legal Lit",
+      "offenceDate": "2004-09-16",
+      "otherSentence": "other sent",
+      "penaltyPoints": 22,
+      "prisonSentenceSuspendedPeriod": {
+        "years": 2010,
+        "months": 1,
+        "days": 10,
+        "hours": 2200
+      },
+      "rehabilitationCourseCompleted": true,
+      "sentenceDate": "2006-04-01",
+      "sentencingCourtCode": "London Court 3322"
+    },
+    {
+      "convictionCourtCode": "CCC-6",
+      "expiryDate": "2027-01-13",
+      "fromDate": "2022-01-11",
+      "offenceCode": "SP20",
+      "offenceLegalLiteral": "Exceeding speed limit for type of vehicle (excluding goods or passenger vehicles)",
+      "offenceDate": "2023-01-11",
+      "penaltyPoints": 3
+    },
+    {
+      "convictionCourtCode": "CCC-7",
+      "expiryDate": "2027-01-12",
+      "fromDate": "2023-01-15",
+      "offenceCode": "SP20",
+      "offenceLegalLiteral": "Exceeding speed limit for type of vehicle (excluding goods or passenger vehicles)",
+      "offenceDate": "2023-01-11",
+      "penaltyPoints": 3,
+      "convictionDate": "2023-01-31"
+    },
+    {
+      "convictionCourtCode": "CCC-8",
+      "expiryDate": "2028-01-11",
+      "fromDate": "2024-01-11",
+      "offenceCode": "SP20",
+      "offenceLegalLiteral": "Exceeding speed limit for type of vehicle (excluding goods or passenger vehicles)",
+      "offenceDate": "2023-02-11",
+      "penaltyPoints": 3,
+      "convictionDate": "2024-01-31"
+    },
+    {
+      "convictionCourtCode": "CCC-9",
+      "expiryDate": "2029-01-11",
+      "fromDate": "2023-01-12",
+      "offenceCode": "SP20",
+      "offenceLegalLiteral": "Exceeding speed limit for type of vehicle (excluding goods or passenger vehicles)",
+      "offenceDate": "2023-02-11",
+      "penaltyPoints": 3
+    }
+  ],
+  "tokenValidity": {
+    "tokenValidFromDate": "2018-10-15",
+    "tokenValidToDate": "2024-12-15",
+    "tokenIssueNumber": "1234999LL"
+  },
+  "driverRedirect": true
+}

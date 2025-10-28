@@ -1,0 +1,197 @@
+{
+  "masterDefendantId": "%DEFENDANT_ID%",
+  "orderingCourt": {
+    "address": {
+      "address1": "1 Queen Victoria Street",
+      "address2": "London",
+      "address3": "",
+      "address4": "",
+      "address5": "",
+      "postcode": "EC4N 4XY"
+    },
+    "code": "B01DU00",
+    "courtHearingLocation": "B01DU01",
+    "id": "c133d0de-c989-48b9-bd20-0431943e347e",
+    "lja": {
+      "ljaCode": "2570",
+      "ljaName": "Central London Magistrates' Court"
+    },
+    "name": "City of London Magistrates' Court",
+    "roomId": "4294a92c-8827-3296-be53-c74b7e9e31d8",
+    "roomName": "Courtroom 01"
+  },
+  "nowContent": {
+    "orderDate": "2025-03-17",
+    "defendant": {
+      "dateOfBirth": "2000-01-01",
+      "gender": "MALE",
+      "driverNumber": "ULLRI611187XH9ZM",
+      "firstName": "Teagan",
+      "lastName": "Prosacco",
+      "name": "Teagan Prosacco",
+      "address": {
+        "line1": "FLAT - 25A",
+        "line2": "52340 Heath Garden",
+        "line3": "Swansea",
+        "line4": "Walsh",
+        "line5": "UK",
+        "postCode": "SA1 1AU"
+      }
+    },
+    "caseApplicationReferences": [
+      "DVLA02022416"
+    ],
+    "cases": [
+      {
+        "initiationCode": "C",
+        "reference": "DVLA02022416",
+        "caseId": "4b5098a3-d576-494d-88c6-b51074315f33",
+        "defendantCaseOffences": [
+          {
+            "title": "Speeding - exceed 40 mph special road / motorway limit - ACD",
+            "civilOffence": false,
+            "dvlaCode": "SP50",
+            "convictionStatus": "Not Convicted",
+            "code": "RR84702",
+            "modeOfTrial": "Summary",
+            "endorsableFlag": true,
+            "wording": "A fine not exceeding level five on the standard scale.Time limit for prosecutions:6 monthsOn the 12th March 2015 the limit on fines imposed by a Magistrates’ court was removed – as such, the potential fine on summary conviction in relation to an offence committed after this date is unlimited.",
+            "startDate": "2020-07-02",
+            "results": [
+              {
+                "resultIdentifier": "eb2e4c4f-b738-4a4d-9cce-0572cecb7cb8",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "6f305506-9919-4e7b-bd57-c4c352ec3e3e",
+                    "promptReference": "details",
+                    "label": "Details",
+                    "value": "Complaint withdrawn"
+                  }
+                ],
+                "resultDefinitionGroup": "WOAEXTEND",
+                "d20": false,
+                "label": "Withdrawn"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "courtApplications": [
+      {
+        "applicationType": "Appearance to make statutory declaration (SJP case)",
+        "applicationTypeId": "99f6114d-a92b-4c89-986a-ac3ef1294130",
+        "applicationReceivedDate": "2025-03-01",
+        "id": "61589b39-5883-42a8-8fab-2224d14bb1bd",
+        "applicationReference": "DVLA02022416",
+        "applicationStatus": "UN_ALLOCATED",
+        "results": [
+          {
+            "resultIdentifier": "2b3f7c20-8fc1-4fad-9076-df196c24b27e",
+            "publishedForNows": false,
+            "d20": false,
+            "label": "Granted"
+          },
+          {
+            "resultIdentifier": "e2f6e11b-c3a2-4e76-8d29-fbede4174988",
+            "publishedForNows": false,
+            "prompts": [
+              {
+                "promptIdentifier": "7b6ef0ac-2d0b-44e5-a68e-4720b96cc679",
+                "promptReference": "statutoryDeclarationMadeUnder",
+                "label": "Statutory declaration made under",
+                "value": "Section 16E of the Magistrates' Courts Act 1980"
+              },
+              {
+                "promptIdentifier": "36e32c50-dbec-41c4-904b-25eb20c9c54a",
+                "promptReference": "financialPenaltiesToBeWrittenOff",
+                "label": "Financial penalties to be written off",
+                "value": "Yes"
+              },
+              {
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedOrganisationName",
+                "label": "Prosecutor to be notified organisation name",
+                "value": "City of London Police"
+              },
+              {
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedAddress1",
+                "label": "Prosecutor to be notified address line 1",
+                "value": "Bishopsgate police station"
+              },
+              {
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedAddress2",
+                "label": "Prosecutor to be notified address line 2",
+                "value": "182, Bishopsgate"
+              },
+              {
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedAddress5",
+                "label": "Prosecutor to be notified address line 5",
+                "value": "London"
+              },
+              {
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedPostCode",
+                "label": "Prosecutor to be notified post code",
+                "value": "EC2M 4NP"
+              },
+              {
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedEmailAddress1",
+                "label": "Prosecutor to be notified email address 1",
+                "value": "casebuilderscpsmemos@cityoflondon.police.uk"
+              },
+              {
+                "promptIdentifier": "f42fa098-0f7b-4269-ac4f-b10c9b6832d7",
+                "promptReference": "8160d5bd-e63b-42ce-aeaf-5344e1e20903",
+                "label": "Driving endorsement to be removed",
+                "value": "Original court code:1275\nOriginal conviction date:01/01/2024\nDVLA endorsement code:SP56\nOriginal offence date:31/12/2023"
+              }
+            ],
+            "resultDefinitionGroup": "Enforcement",
+            "d20": false,
+            "label": "Statutory Declaration"
+          },
+          {
+            "resultIdentifier": "f42fa098-0f7b-4269-ac4f-b10c9b6832d7",
+            "publishedForNows": true,
+            "prompts": [
+              {
+                "promptIdentifier": "b49bf4fa-0b1e-4079-b85a-c0113a46b91b",
+                "promptReference": "originalCourtCode",
+                "label": "Original court code",
+                "value": "1275"
+              },
+              {
+                "promptIdentifier": "0cd86af5-10d8-4fd1-a78a-8a0e80179034",
+                "promptReference": "originalConvictionDate",
+                "label": "Original conviction date",
+                "value": "01/01/2024"
+              },
+              {
+                "promptIdentifier": "1a2a23ea-c70d-4a5c-afa7-09dc514f84cc",
+                "promptReference": "dVLAEndorsementCode",
+                "label": "DVLA endorsement code",
+                "value": "SP56"
+              },
+              {
+                "promptIdentifier": "37ee2b08-1950-4b04-bea5-f6f66b768bb0",
+                "promptReference": "originalOffenceDate",
+                "label": "Original offence date",
+                "value": "31/12/2023"
+              }
+            ],
+            "d20": false,
+            "label": "Driving endorsement to be removed"
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": true,
+  "orderingHearingId": "4bd51b6e-8568-4588-b9b3-2c82e3870a98"
+}

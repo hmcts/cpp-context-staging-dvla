@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://justice.gov.uk/core/courts/email-notification-sent.json",
+  "type": "object",
+  "properties": {
+    "details":{
+      "$ref": "http://justice.gov.uk/core/courts/materialDetails.json#"
+    }
+  },
+  "required": [
+    "details"
+  ],
+  "additionalProperties": false
+}
+

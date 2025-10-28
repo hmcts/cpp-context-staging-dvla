@@ -1,0 +1,205 @@
+{
+  "masterDefendantId": "%DEFENDANT_ID%",
+  "orderingCourt": {
+    "address": {
+      "address1": "1 Queen Victoria Street",
+      "address2": "London",
+      "address3": "",
+      "address4": "",
+      "address5": "",
+      "postcode": "EC4N 4XY"
+    },
+    "code": "B01DU00",
+    "courtHearingLocation": "B01DU01",
+    "id": "c133d0de-c989-48b9-bd20-0431943e347e",
+    "lja": {
+      "ljaCode": "2570",
+      "ljaName": "Central London Magistrates' Court"
+    },
+    "name": "City of London Magistrates' Court",
+    "roomId": "4294a92c-8827-3296-be53-c74b7e9e31d8",
+    "roomName": "Courtroom 01"
+  },
+  "nowContent": {
+    "orderDate": "2025-04-24",
+    "defendant": {
+      "dateOfBirth": "2000-01-01",
+      "gender": "MALE",
+      "driverNumber": "ULLRI611187XH9ZM",
+      "firstName": "Leon",
+      "lastName": "Rempel",
+      "name": "Leon Rempel",
+      "address": {
+        "line1": "FLAT - 25A",
+        "line2": "9680 Walsh Square",
+        "line3": "Swansea",
+        "line4": "Walsh",
+        "line5": "UK",
+        "postCode": "SA1 1AU"
+      }
+    },
+    "caseApplicationReferences": [
+      "DVLA02022455"
+    ],
+    "cases": [
+      {
+        "caseStatus": "SJP_REFERRAL",
+        "initiationCode": "C",
+        "reference": "DVLA02022455",
+        "caseId": "29c2923c-ed1f-4180-b4f3-7d7498caf1f6",
+        "defendantCaseOffences": [
+          {
+            "title": "Speeding - exceed 40 mph special road / motorway limit - ACD",
+            "civilOffence": false,
+            "dvlaCode": "SP50",
+            "convictionDate": "2025-04-24",
+            "convictionStatus": "Convicted",
+            "plea": "GUILTY",
+            "code": "RR84702",
+            "modeOfTrial": "Summary",
+            "allocationDecision": "Summary-only offence",
+            "endorsableFlag": true,
+            "convictingCourtCode": "2570",
+            "wording": "A fine not exceeding level five on the standard scale.Time limit for prosecutions:6 monthsOn the 12th March 2015 the limit on fines imposed by a Magistrates’ court was removed – as such, the potential fine on summary conviction in relation to an offence committed after this date is unlimited.",
+            "startDate": "2020-07-02",
+            "results": [
+              {
+                "resultIdentifier": "990e8cad-c8e0-4ad9-ba86-13180338986d",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "11a939b1-71e6-4065-8c29-007e4b52da7a",
+                    "promptReference": "licenceIssueNumber",
+                    "label": "Licence issue number",
+                    "value": "55"
+                  },
+                  {
+                    "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+                    "promptReference": "defendantDrivingLicenceNumber",
+                    "label": "Defendant driving licence number",
+                    "value": "ULLRI611187XH9ZM"
+                  },
+                  {
+                    "promptIdentifier": "7326f05d-54b3-450e-92dd-a5bc0710f8f7",
+                    "promptReference": "nameofcourseOrganisationName",
+                    "label": "Name of course organisation name",
+                    "value": "Aspire Driver Development"
+                  },
+                  {
+                    "promptIdentifier": "7326f05d-54b3-450e-92dd-a5bc0710f8f7",
+                    "promptReference": "nameofcourseAddress1",
+                    "label": "Name of course address line 1",
+                    "value": "20 Eversley Road"
+                  },
+                  {
+                    "promptIdentifier": "7326f05d-54b3-450e-92dd-a5bc0710f8f7",
+                    "promptReference": "nameofcourseAddress2",
+                    "label": "Name of course address line 2",
+                    "value": "Bexhill on Sea"
+                  },
+                  {
+                    "promptIdentifier": "7326f05d-54b3-450e-92dd-a5bc0710f8f7",
+                    "promptReference": "nameofcoursePostCode",
+                    "label": "Name of course post code",
+                    "value": "TN40 1HE"
+                  },
+                  {
+                    "promptIdentifier": "7326f05d-54b3-450e-92dd-a5bc0710f8f7",
+                    "promptReference": "nameofcourseEmailAddress1",
+                    "label": "Name of course email address 1",
+                    "value": "referral.orders@aspirecourses.cjsm.net"
+                  },
+                  {
+                    "promptIdentifier": "286cc674-a4f8-408e-aa6d-8dbc175ab968",
+                    "promptReference": "dateByWhichCourseMustBeCompleted",
+                    "label": "Date by which course must be completed",
+                    "value": "31/12/2025"
+                  },
+                  {
+                    "promptIdentifier": "2bf54447-328c-4c1b-a123-341adbd52172",
+                    "promptReference": "disqualificationPeriod",
+                    "durationSequence": 1,
+                    "label": "Disqualification period",
+                    "value": "6 Months"
+                  },
+                  {
+                    "promptIdentifier": "7b36c6fc-eb8e-4651-b88b-944843741c7c",
+                    "promptReference": "disqualificationReductionPeriod",
+                    "label": "Disqualification reduction period",
+                    "value": "3 Months"
+                  },
+                  {
+                    "promptIdentifier": "380d5917-d860-4c6a-9fde-d5e7e1923331",
+                    "promptReference": "defendantsMobileNumber",
+                    "label": "Defendant's mobile number",
+                    "value": "78231231230"
+                  },
+                  {
+                    "promptIdentifier": "e2ae845f-12f4-498e-bddf-a90c8cb499ba",
+                    "promptReference": "defendantsHomeTelephoneNumber",
+                    "label": "Defendant's home telephone number",
+                    "value": "01231231230"
+                  },
+                  {
+                    "promptIdentifier": "7fd83833-178c-48db-866b-33fc9e69a0d1",
+                    "promptReference": "19e89366-f65f-46fc-80d4-8ab7d57441a4",
+                    "label": "Date of Interim Disqualification",
+                    "value": "Starting from date (date of interim disqualification):01/12/2024"
+                  }
+                ],
+                "resultWording": "Disqualified from holding or obtaining a driving licence/ Disqualification obligatory for the offence. Disqualification to be reduced if the defendant satisfactorily completes a course approved by the Secretary of State. The cost of the course will not exceed £250. Driving record endorsed. Sections 34(1) & 34A Road Traffic Offenders Act 1988",
+                "d20": true,
+                "label": "Driving Disq (obligatory) - Reduction for course"
+              },
+              {
+                "resultIdentifier": "969f150c-cd05-46b0-9dd9-30891efcc766",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "7cd1472f-2379-4f5b-9e67-98a43d86e122",
+                    "promptReference": "AOF",
+                    "label": "Amount of fine",
+                    "value": "£111.00"
+                  }
+                ],
+                "resultDefinitionGroup": "Imposition",
+                "d20": false,
+                "label": "Fine"
+              },
+              {
+                "resultIdentifier": "7fd83833-178c-48db-866b-33fc9e69a0d1",
+                "publishedForNows": true,
+                "prompts": [
+                  {
+                    "promptIdentifier": "03fe43ad-1857-4ba1-8481-6c660744b617",
+                    "promptReference": "startingFromDateDateOfInterimDisqualification",
+                    "label": "Starting from date (date of interim disqualification)",
+                    "value": "01/12/2024"
+                  }
+                ],
+                "d20": false,
+                "label": "Date of Interim Disqualification"
+              },
+              {
+                "resultIdentifier": "4b850aa9-984c-4a15-a1ae-b2f861cfcbe8",
+                "publishedForNows": true,
+                "prompts": [
+                  {
+                    "promptIdentifier": "11a939b1-71e6-4065-8c29-007e4b52da7a",
+                    "promptReference": "licenceIssueNumber",
+                    "label": "Licence issue number",
+                    "value": "55"
+                  }
+                ],
+                "d20": false,
+                "label": "1: Prov DVLA produced"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": true,
+  "orderingHearingId": "c004b682-8374-4372-a806-b69fe596a806"
+}

@@ -1,0 +1,81 @@
+{
+  "masterDefendantId": "58d79c70-a1ab-4ef1-bbc3-3697dc8a54ab",
+  "orderingCourt": {
+    "address": {
+      "address1": "1 Queen Victoria Street",
+      "address2": "London",
+      "address3": "",
+      "address4": "",
+      "address5": "",
+      "postcode": "EC4N 4XY"
+    },
+    "code": "B01DU00",
+    "courtHearingLocation": "B01DU01",
+    "id": "c133d0de-c989-48b9-bd20-0431943e347e",
+    "lja": {
+      "ljaCode": "2570",
+      "ljaName": "Central London Magistrates' Court"
+    },
+    "name": "City of London Magistrates' Court",
+    "roomId": "4294a92c-8827-3296-be53-c74b7e9e31d8",
+    "roomName": "Courtroom 01"
+  },
+  "nowContent": {
+    "orderDate": "2025-05-01",
+    "defendant": {
+      "dateOfBirth": "2000-01-01",
+      "gender": "MALE",
+      "driverNumber": "ULLRI611187XH9ZM",
+      "firstName": "Mazie",
+      "lastName": "Cartwright",
+      "name": "Mazie Cartwright",
+      "address": {
+        "line1": "FLAT - 25A",
+        "line2": "8510 Adolf Road",
+        "line3": "Swansea",
+        "line4": "Walsh",
+        "line5": "UK",
+        "postCode": "SA1 1AU"
+      }
+    },
+    "caseApplicationReferences": [
+      "DVLA02022454"
+    ],
+    "cases": [
+      {
+        "initiationCode": "C",
+        "reference": "DVLA02022454",
+        "caseId": "cca55e3d-ba98-4a9e-aa9b-dd02049a1b7b",
+        "defendantCaseOffences": []
+      }
+    ],
+    "courtApplications": [
+      {
+        "applicationType": "Application within criminal proceedings",
+        "applicationTypeId": "fde5dd50-fb49-4100-8c46-4c10096fb136",
+        "applicationReceivedDate": "2025-04-02",
+        "id": "9f355f48-63cd-45d1-b958-381c5186e759",
+        "applicationReference": "DVLA02022454",
+        "applicationStatus": "IN_PROGRESS",
+        "results": [
+          {
+            "resultIdentifier": "c36fed37-b635-4303-b514-2273e9e2594d",
+            "publishedForNows": false,
+            "prompts": [
+              {
+                "promptIdentifier": "af38d17b-46de-4dbb-a5c7-14ac36905c89",
+                "promptReference": "reason",
+                "label": "Reason",
+                "value": "aaa"
+              }
+            ],
+            "d20": false,
+            "label": "Entered in error"
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": true,
+  "orderingHearingId": "41aa9f52-68b8-4f48-937b-9ed5d765901e"
+}

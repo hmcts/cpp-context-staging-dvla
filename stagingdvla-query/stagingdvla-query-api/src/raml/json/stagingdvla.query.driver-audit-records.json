@@ -1,0 +1,30 @@
+{
+  "driverAuditRecords": [
+    {
+      "date": "25th October 2023",
+      "time": "16:00:32",
+      "reason": "Fixed Penalty Enquiry",
+      "reference": "12345678901",
+      "driverNumber": "DRIVER1002101212121",
+      "firstName": "Jack",
+      "lastName": "Dawson",
+      "dateofBirth": "25th October 2023",
+      "gender": "Male",
+      "postcode": "CR0 1PH",
+      "searchedBy": "eltonjohn12345@co.uk"
+    },
+    {
+      "date": "25th October 2023",
+      "time": "16:00:32",
+      "reason": "Fixed Penalty Enquiry",
+      "reference": "12345678901",
+      "driverNumber": "DRIVER1002101212121",
+      "firstName": "Jack",
+      "lastName": "Dawson",
+      "dateofBirth": "25th October 2023",
+      "gender": "Male",
+      "postcode": "CR0 1PH",
+      "searchedBy": "eltonjohn12345@co.uk"
+    }
+  ]
+}

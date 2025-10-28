@@ -1,0 +1,136 @@
+{
+  "masterDefendantId": "%DEFENDANT_ID%",
+  "orderingCourt": {
+    "address": {
+      "address1": "176A Lavender Hill",
+      "address2": "London",
+      "postcode": "SW11 1JU"
+    },
+    "code": "B01LY00",
+    "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+    "lja": {
+      "ljaCode": "2577",
+      "ljaName": "Lavender Hill Magistrates' Court",
+      "welshLjaName": "Llys Ynadon Lavender Hill"
+    },
+    "name": "Lavender Hill Magistrates' Court"
+  },
+  "nowContent": {
+    "orderDate": "2023-01-25",
+    "defendant": {
+      "dateOfBirth": "1985-01-20",
+      "gender": "MALE",
+      "title": "Mr",
+      "firstName": "Maddison",
+      "lastName": "Emard",
+      "name": "Maddison Emard",
+      "address": {
+        "line1": "27 Good Place",
+        "line2": "Heaven Avenue",
+        "line4": "Heaven",
+        "postCode": "CH2 2JT"
+      }
+    },
+    "caseApplicationReferences": [
+      "25JAN000011"
+    ],
+    "cases": [
+      {
+        "reference": "25JAN000011",
+        "caseId": "7d525302-b1d8-4da2-b3d2-b6b684014e6d",
+        "defendantCaseOffences": [
+          {
+            "title": "Speeding - exceed 70 mph motorway limit - automatic camera device",
+            "civilOffence": false,
+            "dvlaCode": "SP50",
+            "convictionDate": "2023-01-25",
+            "convictionStatus": "Convicted",
+            "plea": "GUILTY",
+            "code": "RR84018",
+            "modeOfTrial": "1",
+            "endorsableFlag": true,
+            "convictingCourtCode": "2577",
+            "wording": "On 20 Nov 2022, that Josh Austin failed to hand over their ticket for inspection and verification of validity when asked to do so by an authorised person.",
+            "startDate": "2023-01-10",
+            "results": [
+              {
+                "resultIdentifier": "969f150c-cd05-46b0-9dd9-30891efcc766",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "7cd1472f-2379-4f5b-9e67-98a43d86e122",
+                    "promptReference": "AOF",
+                    "durationSequence": 0,
+                    "label": "Amount of fine",
+                    "value": "£147.00"
+                  }
+                ],
+                "resultDefinitionGroup": "Imposition",
+                "d20": false,
+                "label": "Fine"
+              },
+              {
+                "resultIdentifier": "ae89b99c-e0e3-47b5-b218-24d4fca3ca53",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "26985e5b-fe1f-4d7d-a21a-57207c5966e7",
+                    "promptReference": "AOCOM",
+                    "durationSequence": 0,
+                    "label": "Amount of compensation",
+                    "value": "£3.50"
+                  },
+                  {
+                    "promptIdentifier": "af921cf4-06e7-4f6b-a4ea-dcb58aab0dbe",
+                    "promptReference": "CREDNAME",
+                    "durationSequence": 0,
+                    "label": "Major creditor",
+                    "value": "Driver and Vehicle Licensing Agency"
+                  }
+                ],
+                "resultDefinitionGroup": "Imposition",
+                "d20": false,
+                "label": "Compensation"
+              },
+              {
+                "resultIdentifier": "cee54856-4450-4f28-a8a9-72b688726201",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "a8719de4-7783-448a-b792-e3f94e670ad0",
+                    "promptReference": "PENPT",
+                    "durationSequence": 0,
+                    "label": "Penalty points for this offence",
+                    "value": "5"
+                  },
+                  {
+                    "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+                    "promptReference": "defendantDrivingLicenceNumber",
+                    "durationSequence": 0,
+                    "label": "Defendant driving licence number"
+                  }
+                ],
+                "d20": true,
+                "label": "Driving record endorsed with penalty points"
+              },
+              {
+                "resultIdentifier": "ea1ee5a4-be13-48dc-8411-78f22e01c236",
+                "publishedForNows": false,
+                "d20": false,
+                "label": "Licence produced in court"
+              },
+              {
+                "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956",
+                "publishedForNows": true,
+                "d20": false,
+                "label": "0: None or unknown"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": false,
+  "orderingHearingId": "%HEARING_ID%"
+}
