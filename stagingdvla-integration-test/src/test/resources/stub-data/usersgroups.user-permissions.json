@@ -1,8 +1,0 @@
-{
-  "permissions": [
-    {
-      "object": "Driver Search",
-      "action": "View"
-    }
-  ]
-}

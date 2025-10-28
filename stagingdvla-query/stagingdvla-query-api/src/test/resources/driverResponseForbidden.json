@@ -1,9 +1,0 @@
-{
-  "errors": [
-    {
-      "status": "403",
-      "code": "ENQ018",
-      "detail": "Authorization header requires 'Credential' parameter. Authorization header requires "
-    }
-  ]
-}
