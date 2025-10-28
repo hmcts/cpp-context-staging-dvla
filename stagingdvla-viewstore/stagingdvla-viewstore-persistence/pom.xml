@@ -3,7 +3,7 @@
     <parent>
         <artifactId>stagingdvla-viewstore</artifactId>
         <groupId>uk.gov.moj.cpp.staging.dvla</groupId>
-        <version>17.0.80</version>
+        <version>17.0.81-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
