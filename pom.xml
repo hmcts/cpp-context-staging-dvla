@@ -30,7 +30,7 @@
         <usersgroups.version>17.0.38</usersgroups.version>
         <commons-text.version>1.10.0</commons-text.version>
         <progression.version>17.0.206</progression.version>
-        <sjp.version>17.0.129</sjp.version>
+        <sjp.version>17.0.146</sjp.version>
         <jgitflow.maven.developBranchName>main</jgitflow.maven.developBranchName>
     </properties>
 
