@@ -26,7 +26,7 @@
         <jackson-data-format.version>2.8.8</jackson-data-format.version>
         <systemdocgenerator.version>17.0.57</systemdocgenerator.version>
         <material.version>17.0.57</material.version>
-        <coredomain.version>17.102.11</coredomain.version>
+        <coredomain.version>17.104.0-M5-CCT-2357</coredomain.version>
         <usersgroups.version>17.0.38</usersgroups.version>
         <commons-text.version>1.10.0</commons-text.version>
         <progression.version>17.0.198</progression.version>
