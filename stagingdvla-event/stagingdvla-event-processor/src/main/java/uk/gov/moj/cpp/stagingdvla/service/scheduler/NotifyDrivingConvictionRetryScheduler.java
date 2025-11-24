@@ -5,6 +5,7 @@ import static javax.json.Json.createObjectBuilder;
 import static org.apache.commons.collections.CollectionUtils.isNotEmpty;
 import static uk.gov.justice.services.core.annotation.Component.EVENT_PROCESSOR;
 import static uk.gov.justice.services.messaging.Envelope.metadataBuilder;
+import static uk.gov.justice.services.messaging.Envelope.metadataFrom;
 import static uk.gov.justice.services.messaging.JsonEnvelope.envelopeFrom;
 
 import uk.gov.justice.services.common.converter.JsonObjectToObjectConverter;
@@ -149,11 +150,11 @@ public class NotifyDrivingConvictionRetryScheduler {
     }
 
     private void triggerNextRetryForDriverNotified(final DrivingConvictionRetry drivingConvictionRetry) {
-        sender.send(envelopeFrom(metadataBuilder().withId(randomUUID())
-                        .withUserId("NotifyDrivingConvictionRetryScheduler")
+        sender.sendAsAdmin(Envelope.envelopeFrom(
+                metadataFrom(metadataBuilder().withId(randomUUID())
                         .withName("stagingdvla.command.handler.trigger-next-retry-for-driver-notified")
-                        .build(),
-                createObjectBuilder()
+                        .build())
+                ,  createObjectBuilder()
                         .add("convictionId", drivingConvictionRetry.getConvictionId().toString())
                         .add("masterDefendantId", drivingConvictionRetry.getMasterDefendantId().toString())
                         .build()));
