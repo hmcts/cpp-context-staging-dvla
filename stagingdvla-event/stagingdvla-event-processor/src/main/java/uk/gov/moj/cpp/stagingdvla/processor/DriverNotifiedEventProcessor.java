@@ -40,6 +40,7 @@ import uk.gov.moj.cpp.stagingdvla.service.scheduler.NotifyDrivingConvictionRetry
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import javax.inject.Inject;
@@ -112,10 +113,10 @@ public class DriverNotifiedEventProcessor {
                 LOGGER.info("No endorsement on remaining offence, D20 not attempted in API  ");
             }
         }
-
-        LOGGER.info("DriverNotifiedEventProcessor - Calling to systemdoc for document generation");
-        documentGeneratorService.generateDvlaDocument(envelope, userId, driverNotified);
-
+        if(Optional.ofNullable(driverNotified.getRetrySequence()).orElse(0) == 0) {
+            LOGGER.info("DriverNotifiedEventProcessor - Calling to systemdoc for document generation");
+            documentGeneratorService.generateDvlaDocument(envelope, userId, driverNotified);
+        }
     }
 
     private boolean containsACaseWithOffence(final DriverNotified driverNotified) {
