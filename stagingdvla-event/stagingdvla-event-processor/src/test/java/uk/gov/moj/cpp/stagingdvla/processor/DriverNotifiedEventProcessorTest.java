@@ -11,9 +11,8 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.isA;
-import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -37,7 +36,6 @@ import uk.gov.moj.cpp.stagingdvla.service.NotifyDrivingConvictionService;
 import uk.gov.moj.cpp.stagingdvla.service.scheduler.NotifyDrivingConvictionRetryScheduler;
 
 import java.io.IOException;
-import java.util.UUID;
 
 import javax.json.JsonObject;
 
@@ -164,6 +162,22 @@ public class DriverNotifiedEventProcessorTest {
         verify(notifyDrivingConvictionService, times(1)).notifyDrivingConviction(any(DriverNotified.class));
         verify(scheduler, times(1)).dvlaResponseReceived(NotifyDrivingConvictionRetryScheduler.DvlaResponseType.FAIL);
         verify(documentGeneratorService, times(1)).generateDvlaDocument(any(), any(), any());
+        verify(sender).sendAsAdmin(envelopeArgumentCaptor.capture());
+        assertThat(envelopeArgumentCaptor.getValue().metadata().name(), is("stagingdvla.command.handler.schedule-next-retry-for-driver-notified"));
+    }
+
+    @Test
+    public void shouldNotCreateTheDocumentDuringRetry() throws IOException {
+        when(notifyDrivingConvictionService.notifyDrivingConviction(isA(DriverNotified.class))).thenReturn(notifyDrivingConvictionResponse);
+        when(dvlaApimConfig.getDrivingConvictionMaxRetry()).thenReturn("10");
+        when(notifyDrivingConvictionResponse.getStatus()).thenReturn(SC_INTERNAL_SERVER_ERROR);
+
+        driverNotifiedEventProcessor.handleDriverNotifiedEvent(
+                getRequestPayload(DRIVER_NOTIFIED_NEW_ENDORSEMENT_JSON, STAGINGDVLA_EVENT_DRIVER_NOTIFIED, 1));
+
+        verify(notifyDrivingConvictionService, times(1)).notifyDrivingConviction(any(DriverNotified.class));
+        verify(scheduler, times(1)).dvlaResponseReceived(NotifyDrivingConvictionRetryScheduler.DvlaResponseType.FAIL);
+        verify(documentGeneratorService, never()).generateDvlaDocument(any(), any(), any());
         verify(sender).sendAsAdmin(envelopeArgumentCaptor.capture());
         assertThat(envelopeArgumentCaptor.getValue().metadata().name(), is("stagingdvla.command.handler.schedule-next-retry-for-driver-notified"));
     }
