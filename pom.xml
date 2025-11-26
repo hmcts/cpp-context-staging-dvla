@@ -11,7 +11,7 @@
 
     <groupId>uk.gov.moj.cpp.staging.dvla</groupId>
     <artifactId>stagingdvla-parent</artifactId>
-    <version>17.0.85-SNAPSHOT</version>
+    <version>17.0.85-CCT-2271-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>stagingdvla Context - Parent Module</name>
@@ -26,7 +26,7 @@
         <jackson-data-format.version>2.8.8</jackson-data-format.version>
         <systemdocgenerator.version>17.0.57</systemdocgenerator.version>
         <material.version>17.0.57</material.version>
-        <coredomain.version>17.102.12</coredomain.version>
+        <coredomain.version>17.102.13-CCT-2271-SNAPSHOT</coredomain.version>
         <usersgroups.version>17.0.38</usersgroups.version>
         <commons-text.version>1.10.0</commons-text.version>
         <progression.version>17.0.206</progression.version>
