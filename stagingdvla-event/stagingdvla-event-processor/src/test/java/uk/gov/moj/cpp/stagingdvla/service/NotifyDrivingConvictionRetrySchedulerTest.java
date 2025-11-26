@@ -108,7 +108,7 @@ public class NotifyDrivingConvictionRetrySchedulerTest {
         notifyDrivingConvictionRetryScheduler.expireTimer();
 
         verify(stagingdvlaQueryView, times(1)).findDrivingConvictionRetries(any());
-        verify(sender).send(envelopeArgumentCaptor.capture());
+        verify(sender).sendAsAdmin(envelopeArgumentCaptor.capture());
         verifyNoMoreInteractions(sender);
 
         assertThat(((AtomicReference<NotifyDrivingConvictionRetryScheduler.TimerStatus>) ReflectionUtil.getValueOfField(notifyDrivingConvictionRetryScheduler,"currentStatus", AtomicReference.class)).get(),
@@ -140,7 +140,7 @@ public class NotifyDrivingConvictionRetrySchedulerTest {
         notifyDrivingConvictionRetryScheduler.dvlaResponseReceived(NotifyDrivingConvictionRetryScheduler.DvlaResponseType.SUCCESS);
 
         verify(stagingdvlaQueryView, times(1)).findDrivingConvictionRetries(any());
-        verify(sender, times(3)).send(envelopeArgumentCaptor.capture());
+        verify(sender, times(3)).sendAsAdmin(envelopeArgumentCaptor.capture());
         verifyNoMoreInteractions(sender);
 
         assertThat(((AtomicReference<NotifyDrivingConvictionRetryScheduler.TimerStatus>) ReflectionUtil.getValueOfField(notifyDrivingConvictionRetryScheduler,"currentStatus", AtomicReference.class)).get(),
