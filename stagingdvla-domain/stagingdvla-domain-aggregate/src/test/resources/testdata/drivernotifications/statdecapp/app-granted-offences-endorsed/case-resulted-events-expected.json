@@ -1,0 +1,123 @@
+{
+  "amendmentDate": "2021-05-20",
+  "caseApplicationReferences": [
+    "76GD6405821"
+  ],
+  "cases": [
+    {
+      "caseId": "8c116550-543f-4eb6-9c5c-29587f66a53d",
+      "defendantCaseOffences": [
+        {
+          "allocationDecision": "Summary-only offence",
+          "civilOffence": false,
+          "code": "CA03014",
+          "convictingCourtCode": "12897",
+          "convictionDate": "2021-03-10",
+          "convictionStatus": "Convicted",
+          "dateFromWhichDisqRemoved": "",
+          "dvlaCode": "NE98",
+          "endDate": "2005-05-05",
+          "endorsableFlag": true,
+          "fine": "",
+          "interimImposedFinalSentence": "",
+          "modeOfTrial": "Summary",
+          "otherSentence": "CF",
+          "penaltyPoints": "",
+          "plea": "INDICATED_GUILTY",
+          "results": [
+            {
+              "d20": true,
+              "drivingTestStipulation": 1,
+              "dvlaCode": "C",
+              "label": "Discretionary disqualification until test passed only",
+              "pointsDisqualificationCode": "TT99",
+              "publishedForNows": false,
+              "resultIdentifier": "cf8a3c59-63f5-4757-8783-88f1e31aa653",
+              "resultWording": "Disqualified until test of competence to drive has been passed. Driving record endorsed. Section 36 Road Traffic Offenders Act 1988"
+            },
+            {
+              "d20": true,
+              "dvlaCode": "C",
+              "label": "Discretionary with disqualification until ordinary test passed. Disqualified for life",
+              "prompts": [
+                {
+                  "durationSequence": 1,
+                  "label": "Date of Interim Disqualification",
+                  "promptIdentifier": "7fd83833-178c-48db-866b-33fc9e69a0d1",
+                  "promptReference": "195a0650-4e22-4ff2-afd3-779e55d9903c",
+                  "value": "Starting from date (date of interim disqualification):01/02/2021"
+                }
+              ],
+              "publishedForNows": false,
+              "resultIdentifier": "77aeba67-1191-4cd6-9a05-ad2e737c80ec",
+              "resultWording": "Disqualified for holding or obtaining a driving licence for life. Discretionary disqualification. Driving record endorsed. Disqualified until test of competence has been passed. Sections 34(2) & 36 Road Traffic Offenders Act 1988"
+            }
+          ],
+          "startDate": "1996-05-04",
+          "title": "Fail refuse give assistance to person executing Communications Act search warrant",
+          "vehicleRegistration": "TE4654",
+          "wording": "Has a violent past and fear that he will commit"
+        },
+        {
+          "code": "CA03014TT99",
+          "convictingCourtCode": "12897",
+          "convictionDate": "2021-03-10",
+          "disqualificationPeriod": "999999",
+          "dttpDtetp": "1",
+          "dvlaCode": "TT99",
+          "mainOffenceCode": "CA03014",
+          "wording": "Has a violent past and fear that he will commit"
+        }
+      ],
+      "hasSV": false,
+      "initiationCode": "C",
+      "reference": "76GD6405821"
+    }
+  ],
+  "courtApplications": [],
+  "defendant": {
+    "address": {
+      "line1": "lLUIfPvz4J",
+      "line2": "56Police HouseD",
+      "line3": "StreetDescriptionD",
+      "line4": "LocalityD",
+      "line5": "TownD",
+      "postCode": "TW14 9XD"
+    },
+    "dateOfBirth": "1988-03-07",
+    "driverNumber": "MORGA657054SM9BF",
+    "firstName": "Robert",
+    "gender": "MALE",
+    "lastName": "Smith",
+    "middleName": "PersonGivenName20A PersonGivenName30A",
+    "name": "Robert PersonGivenName20A PersonGivenName30A Smith",
+    "title": "YR"
+  },
+  "distinctPrompts": [],
+  "identifier": "9121db0f-21a0-4ed2-a4b8-cc7aad4f384e",
+  "masterDefendantId": "bbf80f48-970d-4b2c-8167-f048c719c89a",
+  "materialId": "fa043282-7d52-417f-b2c4-61b704adcc86",
+  "orderDate": "2021-03-10",
+  "orderingCourt": {
+    "address": {
+      "address1": "176A Lavender Hill",
+      "address2": "London",
+      "address3": "",
+      "address4": "",
+      "address5": "",
+      "postcode": "SW11 1JU"
+    },
+    "code": "B01LY00",
+    "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+    "lja": {
+      "ljaCode": "2577",
+      "ljaName": "South West London Magistrates' Court"
+    },
+    "name": "Lavender Hill Magistrates' Court",
+    "roomId": "9e4932f7-97b2-3010-b942-ddd2624e4dd8",
+    "roomName": "Courtroom 01"
+  },
+  "orderingCourtCode": "2577",
+  "orderingHearingId": "2b9276a1-4285-4838-96b4-461a60a7cb15",
+  "retrySequence": 0
+}

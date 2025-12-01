@@ -3,7 +3,7 @@
     <parent>
         <artifactId>stagingdvla-domain</artifactId>
         <groupId>uk.gov.moj.cpp.staging.dvla</groupId>
-        <version>17.0.87-SNAPSHOT</version>
+        <version>17.0.87-CCT-2411-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -51,6 +51,16 @@
             <artifactId>mockito-junit-jupiter</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.skyscreamer</groupId>
+            <artifactId>jsonassert</artifactId>
+            <scope>test</scope>
+        </dependency>
 
         <dependency>
             <groupId>org.glassfish</groupId>
@@ -86,6 +96,14 @@
                 <artifactId>catalog-generation-plugin</artifactId>
                 <configuration>
                     <sourceDirectory>${project.basedir}/src/raml/json/schema</sourceDirectory>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
                 </configuration>
             </plugin>
         </plugins>
