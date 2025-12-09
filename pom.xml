@@ -29,7 +29,7 @@
         <coredomain.version>17.103.10</coredomain.version>
         <usersgroups.version>17.0.41</usersgroups.version>
         <commons-text.version>1.10.0</commons-text.version>
-        <progression.version>17.0.211</progression.version>
+        <progression.version>17.0.219</progression.version>
         <sjp.version>17.0.140</sjp.version>
         <jgitflow.maven.developBranchName>main</jgitflow.maven.developBranchName>
         <h2.version>1.4.196</h2.version>
