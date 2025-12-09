@@ -4,7 +4,7 @@
     <parent>
         <artifactId>stagingdvla-viewstore</artifactId>
         <groupId>uk.gov.moj.cpp.staging.dvla</groupId>
-        <version>17.103.87-PEG-2785-SNAPSHOT</version>
+        <version>17.103.88-PEG-2785-SNAPSHOT</version>
     </parent>
 
     <artifactId>stagingdvla-viewstore-liquibase</artifactId>
