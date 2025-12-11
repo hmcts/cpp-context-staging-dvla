@@ -151,7 +151,7 @@ public class DefendantAggregate implements Aggregate {
 
     private boolean areCasesResultsAdjourn(final List<Cases> cases) {
         return cases.stream().allMatch(c->c.getDefendantCaseOffences().stream().allMatch(
-                cdf->cdf.getResults().stream().allMatch(
+                cdf->CollectionUtils.isNotEmpty(cdf.getResults()) && cdf.getResults().stream().allMatch(
                         r->List.of(NEXT_HEARING_RESULT_ID, NEXT_HEARING_IN_CROWN_RESULT_ID, NEXT_HEARING_IN_MAGISTRATE_RESULT_ID, REMUB_RESULT_ID).contains(r.getResultIdentifier()))
         ));
     }
