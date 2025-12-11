@@ -1,1 +1,166 @@
-{  "masterDefendantId": "7f149498-7ab4-4ea0-b103-1375d31b07f7",  "orderingCourt": {    "address": {      "address1": "176A Lavender Hill",      "address2": "London",      "address3": "",      "address4": "",      "address5": "",      "postcode": "SW11 1JU"    },    "code": "B01LY00",    "courtHearingLocation": "B01LY01",    "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",    "lja": {      "ljaCode": "2577",      "ljaName": "South West London Magistrates' Court"    },    "name": "Lavender Hill Magistrates' Court",    "roomId": "9e4932f7-97b2-3010-b942-ddd2624e4dd8",    "roomName": "Courtroom 01"  },  "nowContent": {    "orderDate": "2025-12-11",    "defendant": {      "dateOfBirth": "1983-05-14",      "gender": "MALE",      "title": "Mr",      "firstName": "Mike1",      "middleName": "Jac ",      "lastName": "Blick",      "name": "Mike1 Jac  Blick",      "address": {        "line1": "799",        "line2": "StreetDescription",        "line3": "Locality2O",        "postCode": "TW14 9XA"      }    },    "caseApplicationReferences": [      "89QB632195"    ],    "cases": [      {        "caseStatus": "ACTIVE",        "initiationCode": "C",        "reference": "89QB632195",        "caseId": "03c77559-d9a8-49c9-8bc3-645a45d6ef99",        "defendantCaseOffences": [          {            "title": "Robbery",            "civilOffence": false,            "convictionStatus": "Not Convicted",            "code": "TH68023",            "modeOfTrial": "Indictable",            "endorsableFlag": false,            "wording": "From 13th November 2018, an aggravated version of this offence applies where the offence is committed against an emergency worker acting in the exercise of his / her functions as such a worker, as per section 1 of the Assaults on emergency Workers (Offences) Act 2018; see offence wording document H19568.",            "startDate": "2019-11-28",            "results": [              {                "resultIdentifier": "554c2622-c1cc-459e-a98d-b7f317ab065c",                "publishedForNows": false,                "prompts": [                  {                    "promptIdentifier": "d3205319-84cf-4c5b-9d7a-7e4bb1865054",                    "promptReference": "periodofConditionalDischarge",                    "durationSequence": 1,                    "label": "Period of conditional discharge",                    "value": "6 Months"                  }                ],                "d20": false,                "dvlaCode": "E",                "label": "Conditional discharge"              },              {                "resultIdentifier": "b0aeb4fc-df63-4e2f-af88-97e3f23e847f",                "publishedForNows": false,                "d20": true,                "label": "Driving record endorsed (no points)"              },              {                "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956",                "publishedForNows": true,                "d20": false,                "label": "0: None or unknown"              }            ]          },          {            "title": "Possess / control TV set with intent another use install without a licence",            "civilOffence": false,            "convictionStatus": "Not Convicted",            "code": "CA03012",            "modeOfTrial": "Summary",            "endorsableFlag": false,            "wording": "From 13th November 2018, an aggravated version of this offence applies where the offence is committed against an emergency worker acting in the exercise of his / her functions as such a worker, as per section 1 of the Assaults on emergency Workers (Offences) Act 2018; see offence wording document H19568.",            "startDate": "2019-11-28",            "results": [              {                "resultIdentifier": "554c2622-c1cc-459e-a98d-b7f317ab065c",                "publishedForNows": false,                "prompts": [                  {                    "promptIdentifier": "d3205319-84cf-4c5b-9d7a-7e4bb1865054",                    "promptReference": "periodofConditionalDischarge",                    "durationSequence": 1,                    "label": "Period of conditional discharge",                    "value": "6 Months"                  }                ],                "d20": false,                "dvlaCode": "E",                "label": "Conditional discharge"              },              {                "resultIdentifier": "ccfc452e-ebe4-4cd7-b8a0-4f90768447b4",                "publishedForNows": false,                "prompts": [                  {                    "promptIdentifier": "2bf54447-328c-4c1b-a123-341adbd52172",                    "promptReference": "disqualificationPeriod",                    "durationSequence": 1,                    "label": "Disqualification period",                    "value": "6 Months"                  },                  {                    "promptIdentifier": "7fd83833-178c-48db-866b-33fc9e69a0d1",                    "promptReference": "600704c8-686a-49d1-b0db-3f67e22553ab",                    "label": "Date of Interim Disqualification",                    "value": "Starting from date (date of interim disqualification):01/06/2026"                  }                ],                "resultWording": "Disqualified for holding or obtaining a driving licence. Discretionary disqualification. Driving record endorsed. Section 34(2) Road Traffic Offenders Act 1988",                "d20": true,                "label": "Discretionary with ordinary disqualification"              },              {                "resultIdentifier": "7fd83833-178c-48db-866b-33fc9e69a0d1",                "publishedForNows": true,                "prompts": [                  {                    "promptIdentifier": "03fe43ad-1857-4ba1-8481-6c660744b617",                    "promptReference": "startingFromDateDateOfInterimDisqualification",                    "label": "Starting from date (date of interim disqualification)",                    "value": "01/06/2026"                  }                ],                "d20": false,                "label": "Date of Interim Disqualification"              },              {                "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956",                "publishedForNows": true,                "d20": false,                "label": "0: None or unknown"              }            ]          }        ]      }    ]  },  "isReshare": false,  "orderingHearingId": "43350a82-0405-42c9-8963-39571712afc6"}
+{
+  "masterDefendantId": "7f149498-7ab4-4ea0-b103-1375d31b07f7",
+  "orderingCourt": {
+    "address": {
+      "address1": "176A Lavender Hill",
+      "address2": "London",
+      "address3": "",
+      "address4": "",
+      "address5": "",
+      "postcode": "SW11 1JU"
+    },
+    "code": "B01LY00",
+    "courtHearingLocation": "B01LY01",
+    "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+    "lja": {
+      "ljaCode": "2577",
+      "ljaName": "South West London Magistrates' Court"
+    },
+    "name": "Lavender Hill Magistrates' Court",
+    "roomId": "9e4932f7-97b2-3010-b942-ddd2624e4dd8",
+    "roomName": "Courtroom 01"
+  },
+  "nowContent": {
+    "orderDate": "2025-12-11",
+    "defendant": {
+      "dateOfBirth": "1983-05-14",
+      "gender": "MALE",
+      "title": "Mr",
+      "firstName": "Mike1",
+      "middleName": "Jac ",
+      "lastName": "Blick",
+      "name": "Mike1 Jac  Blick",
+      "address": {
+        "line1": "799",
+        "line2": "StreetDescription",
+        "line3": "Locality2O",
+        "postCode": "TW14 9XA"
+      }
+    },
+    "caseApplicationReferences": [
+      "89QB632195"
+    ],
+    "cases": [
+      {
+        "caseStatus": "ACTIVE",
+        "initiationCode": "C",
+        "reference": "89QB632195",
+        "caseId": "03c77559-d9a8-49c9-8bc3-645a45d6ef99",
+        "defendantCaseOffences": [
+          {
+            "title": "Robbery",
+            "civilOffence": false,
+            "convictionStatus": "Not Convicted",
+            "code": "TH68023",
+            "modeOfTrial": "Indictable",
+            "endorsableFlag": false,
+            "wording": "From 13th November 2018, an aggravated version of this offence applies where the offence is committed against an emergency worker acting in the exercise of his / her functions as such a worker, as per section 1 of the Assaults on emergency Workers (Offences) Act 2018; see offence wording document H19568.",
+            "startDate": "2019-11-28",
+            "results": [
+              {
+                "resultIdentifier": "554c2622-c1cc-459e-a98d-b7f317ab065c",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "d3205319-84cf-4c5b-9d7a-7e4bb1865054",
+                    "promptReference": "periodofConditionalDischarge",
+                    "durationSequence": 1,
+                    "label": "Period of conditional discharge",
+                    "value": "6 Months"
+                  }
+                ],
+                "d20": false,
+                "dvlaCode": "E",
+                "label": "Conditional discharge"
+              },
+              {
+                "resultIdentifier": "b0aeb4fc-df63-4e2f-af88-97e3f23e847f",
+                "publishedForNows": false,
+                "d20": true,
+                "label": "Driving record endorsed (no points)"
+              },
+              {
+                "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956",
+                "publishedForNows": true,
+                "d20": false,
+                "label": "0: None or unknown"
+              }
+            ]
+          },
+          {
+            "title": "Possess / control TV set with intent another use install without a licence",
+            "civilOffence": false,
+            "convictionStatus": "Not Convicted",
+            "code": "CA03012",
+            "modeOfTrial": "Summary",
+            "endorsableFlag": false,
+            "wording": "From 13th November 2018, an aggravated version of this offence applies where the offence is committed against an emergency worker acting in the exercise of his / her functions as such a worker, as per section 1 of the Assaults on emergency Workers (Offences) Act 2018; see offence wording document H19568.",
+            "startDate": "2019-11-28",
+            "results": [
+              {
+                "resultIdentifier": "554c2622-c1cc-459e-a98d-b7f317ab065c",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "d3205319-84cf-4c5b-9d7a-7e4bb1865054",
+                    "promptReference": "periodofConditionalDischarge",
+                    "durationSequence": 1,
+                    "label": "Period of conditional discharge",
+                    "value": "6 Months"
+                  }
+                ],
+                "d20": false,
+                "dvlaCode": "E",
+                "label": "Conditional discharge"
+              },
+              {
+                "resultIdentifier": "ccfc452e-ebe4-4cd7-b8a0-4f90768447b4",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "2bf54447-328c-4c1b-a123-341adbd52172",
+                    "promptReference": "disqualificationPeriod",
+                    "durationSequence": 1,
+                    "label": "Disqualification period",
+                    "value": "6 Months"
+                  },
+                  {
+                    "promptIdentifier": "7fd83833-178c-48db-866b-33fc9e69a0d1",
+                    "promptReference": "600704c8-686a-49d1-b0db-3f67e22553ab",
+                    "label": "Date of Interim Disqualification",
+                    "value": "Starting from date (date of interim disqualification):01/06/2026"
+                  }
+                ],
+                "resultWording": "Disqualified for holding or obtaining a driving licence. Discretionary disqualification. Driving record endorsed. Section 34(2) Road Traffic Offenders Act 1988",
+                "d20": true,
+                "label": "Discretionary with ordinary disqualification"
+              },
+              {
+                "resultIdentifier": "7fd83833-178c-48db-866b-33fc9e69a0d1",
+                "publishedForNows": true,
+                "prompts": [
+                  {
+                    "promptIdentifier": "03fe43ad-1857-4ba1-8481-6c660744b617",
+                    "promptReference": "startingFromDateDateOfInterimDisqualification",
+                    "label": "Starting from date (date of interim disqualification)",
+                    "value": "01/06/2026"
+                  }
+                ],
+                "d20": false,
+                "label": "Date of Interim Disqualification"
+              },
+              {
+                "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956",
+                "publishedForNows": true,
+                "d20": false,
+                "label": "0: None or unknown"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": false,
+  "orderingHearingId": "43350a82-0405-42c9-8963-39571712afc6"
+}
