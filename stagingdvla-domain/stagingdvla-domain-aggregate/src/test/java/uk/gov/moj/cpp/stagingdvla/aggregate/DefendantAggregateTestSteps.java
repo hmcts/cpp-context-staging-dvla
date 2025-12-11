@@ -93,7 +93,7 @@ class DefendantAggregateTestSteps {
                     new NotificationData(
                             nowContent.getString("orderDate"),
                             jsonToObjectConverter.convert(notification.getJsonObject("orderingCourt"), CourtCentre.class),
-                            nowContent.getString("amendmentDate"),
+                            nowContent.containsKey("amendmentDate") ? nowContent.getString("amendmentDate") : null,
                             jsonToObjectConverter.convert(nowContent.getJsonObject("defendant"), Nowdefendant.class),
                             currentCases,
                             UUID.fromString(notification.getString("orderingHearingId")),

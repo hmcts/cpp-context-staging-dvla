@@ -22,6 +22,51 @@ class DefendantAggregateScenariosTest {
                                         "/testdata/drivernotifications/statdecapp/app-granted-offences-endorsed/case-resulted.json",
                                         "/testdata/drivernotifications/statdecapp/app-granted-offences-endorsed/case-resulted-events-expected.json"
                                 )
+                ),
+                Arguments.of("Amend and reshare of application result to refused - original endorsements sent as update notification",
+                        defendantAggregateScenario()
+                                .withNotifyDriverStep(
+                                        "/testdata/drivernotifications/statdecapp/app-granted-offences-endorsed-remove-result/refused/case-resulted.json",
+                                        "/testdata/drivernotifications/statdecapp/app-granted-offences-endorsed-remove-result/refused/case-resulted-events-expected.json"
+                                )
+                                .withNotifyDriverStep(
+                                        "/testdata/drivernotifications/statdecapp/app-granted-offences-endorsed-remove-result/refused/application-hearing-resulted.json",
+                                        "/testdata/drivernotifications/statdecapp/app-granted-offences-endorsed-remove-result/refused/application-hearing-resulted-events-expected.json"
+                                )
+                                .withNotifyDriverStep(
+                                        "/testdata/drivernotifications/statdecapp/app-granted-offences-endorsed-remove-result/refused/application-hearing-resulted-with-refused.json",
+                                        "/testdata/drivernotifications/statdecapp/app-granted-offences-endorsed-remove-result/refused/application-hearing-resulted-with-refused-events-expected.json"
+                                )
+                ),
+                Arguments.of("Amend and reshare of application result to adjourned after granted removed - no result on cloned offences - original endorsements sent as update notification",
+                        defendantAggregateScenario()
+                                .withNotifyDriverStep(
+                                        "/testdata/drivernotifications/statdecapp/app-granted-offences-endorsed-remove-result/nexh/case-resulted.json",
+                                        "/testdata/drivernotifications/statdecapp/app-granted-offences-endorsed-remove-result/nexh/case-resulted-events-expected.json"
+                                )
+                                .withNotifyDriverStep(
+                                        "/testdata/drivernotifications/statdecapp/app-granted-offences-endorsed-remove-result/nexh/application-hearing-resulted.json",
+                                        "/testdata/drivernotifications/statdecapp/app-granted-offences-endorsed-remove-result/nexh/application-hearing-resulted-events-expected.json"
+                                )
+                                .withNotifyDriverStep(
+                                        "/testdata/drivernotifications/statdecapp/app-granted-offences-endorsed-remove-result/nexh/application-hearing-resulted-with-nexh.json",
+                                        "/testdata/drivernotifications/statdecapp/app-granted-offences-endorsed-remove-result/nexh/application-hearing-resulted-with-nexh-events-expected.json"
+                                )
+                ),
+                Arguments.of("Amend and reshare of application result to adjourned and cloned offence results adjourned - original endorsements sent as update notification",
+                        defendantAggregateScenario()
+                                .withNotifyDriverStep(
+                                        "/testdata/drivernotifications/statdecapp/app-granted-offences-endorsed-remove-result/nexh-cloned-offences/case-resulted.json",
+                                        "/testdata/drivernotifications/statdecapp/app-granted-offences-endorsed-remove-result/nexh-cloned-offences/case-resulted-events-expected.json"
+                                )
+                                .withNotifyDriverStep(
+                                        "/testdata/drivernotifications/statdecapp/app-granted-offences-endorsed-remove-result/nexh-cloned-offences/application-hearing-resulted.json",
+                                        "/testdata/drivernotifications/statdecapp/app-granted-offences-endorsed-remove-result/nexh-cloned-offences/application-hearing-resulted-events-expected.json"
+                                )
+                                .withNotifyDriverStep(
+                                        "/testdata/drivernotifications/statdecapp/app-granted-offences-endorsed-remove-result/nexh-cloned-offences/application-hearing-resulted-with-nexh.json",
+                                        "/testdata/drivernotifications/statdecapp/app-granted-offences-endorsed-remove-result/nexh-cloned-offences/application-hearing-resulted-with-nexh-events-expected.json"
+                                )
                 )
                 // Additional scenarios can be added here
         );
