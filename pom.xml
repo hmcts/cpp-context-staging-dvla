@@ -29,7 +29,7 @@
         <coredomain.version>17.102.14-CCT-2357-SNAPSHOT</coredomain.version>
         <usersgroups.version>17.0.38</usersgroups.version>
         <commons-text.version>1.10.0</commons-text.version>
-        <progression.version>17.0.211</progression.version>
+        <progression.version>17.0.219</progression.version>
         <sjp.version>17.0.146</sjp.version>
         <jgitflow.maven.developBranchName>main</jgitflow.maven.developBranchName>
     </properties>
