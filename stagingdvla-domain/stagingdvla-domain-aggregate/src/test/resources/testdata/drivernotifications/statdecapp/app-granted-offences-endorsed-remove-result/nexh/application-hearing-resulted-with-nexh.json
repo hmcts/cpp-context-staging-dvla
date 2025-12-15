@@ -154,6 +154,6 @@
       }
     ]
   },
-  "isReshare": false,
+  "isReshare": true,
   "orderingHearingId": "b7c1d345-2059-427a-a67e-e6a2771a879e"
 }

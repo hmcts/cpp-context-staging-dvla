@@ -65,7 +65,8 @@ public class DriverNotificationHandler {
                         getCases(driverNotification.getNowContent().getCases()),
                         driverNotification.getOrderingHearingId(),
                         getCourtApplications(driverNotification.getNowContent().getCourtApplications()),
-                        driverNotification.getMasterDefendantId());
+                        driverNotification.getMasterDefendantId(),
+                        driverNotification.getIsReshare());
 
         if (nonNull(events)) {
             appendEventsToStream(envelope, eventStream, events);

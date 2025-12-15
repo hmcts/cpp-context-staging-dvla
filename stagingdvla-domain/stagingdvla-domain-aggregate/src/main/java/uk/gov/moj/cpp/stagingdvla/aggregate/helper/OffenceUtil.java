@@ -41,6 +41,7 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.Res
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.DSPAS;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.ERR;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.G;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.REMUB;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.RFSD;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.SV;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.TEXT;
@@ -522,7 +523,7 @@ public class OffenceUtil {
      * @param results
      * @return boolean indicating whether the result is adjournment result or not
      */
-    private static boolean isResultAnAdjournment(final List<Results> results) {
+    public static boolean isResultAnAdjournment(final List<Results> results) {
         final Optional<Results> adjournmentResult = getAdjournmentResult(results);
 
         if (adjournmentResult.isPresent()) {
@@ -533,10 +534,17 @@ public class OffenceUtil {
                     .map(Results::getResultIdentifier)
                     .allMatch(id -> adjournmentResultId.equals(id)
                             || TEXT.id.equals(id)
+                            || REMUB.id.equals(id)
                             || (!adjournmentResultPrompts.isEmpty() && adjournmentResultPrompts.contains(id)));
         }
 
         return false;
+    }
+
+    public boolean isApplicationsRefused(final List<CourtApplications> courtApplications) {
+        return CollectionUtils.isNotEmpty(courtApplications) && courtApplications.stream()
+                .allMatch(c-> CollectionUtils.isNotEmpty(c.getResults()) &&
+                        c.getResults().stream().allMatch(r-> RFSD.id.equals(r.getResultIdentifier())));
     }
 
     private static Set<String> getAdjournmentResultPrompts(final List<Results> results, final String adjournmentResultId) {
@@ -583,7 +591,7 @@ public class OffenceUtil {
         return results;
     }
 
-    private static List<Results> getCaseResults(final Cases currCase) {
+    public static List<Results> getCaseResults(final Cases currCase) {
         if (CollectionUtils.isNotEmpty(currCase.getDefendantCaseOffences())) {
             return currCase.getDefendantCaseOffences().stream()
                     .filter(offence -> CollectionUtils.isNotEmpty(offence.getResults()))
@@ -594,7 +602,7 @@ public class OffenceUtil {
         return Collections.emptyList();
     }
 
-    private static List<Results> getApplicationResults(final List<CourtApplications> courtApplications) {
+    public static List<Results> getApplicationResults(final List<CourtApplications> courtApplications) {
         if (CollectionUtils.isNotEmpty(courtApplications)) {
             return courtApplications.stream()
                     .filter(ca -> CollectionUtils.isNotEmpty(ca.getResults()))
@@ -645,7 +653,7 @@ public class OffenceUtil {
                 INACTIVE.equals(currCase.getCaseStatus());
     }
 
-    private static boolean isRefused(final CourtApplications courtApplication) {
+    public static boolean isRefused(final CourtApplications courtApplication) {
         return courtApplication.getResults().stream()
                 .anyMatch(result -> RFSD.id.equals(result.getResultIdentifier()));
     }

@@ -31,8 +31,11 @@ import javax.json.JsonReader;
 
 import org.apache.commons.io.IOUtils;
 import org.hamcrest.core.IsNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 class DefendantAggregateTestSteps {
+    private static final Logger LOGGER = LoggerFactory.getLogger(DefendantAggregateTestSteps.class);
     private static final StringToJsonObjectConverter stringToJsonConverter = new StringToJsonObjectConverter();
     private static final JsonObjectToObjectConverter jsonToObjectConverter = new JsonObjectToObjectConverter(new ObjectMapperProducer().objectMapper());
     private static final ObjectToJsonObjectConverter objectToJsonObjectConverter = new ObjectToJsonObjectConverter(new ObjectMapperProducer().objectMapper());
@@ -47,6 +50,7 @@ class DefendantAggregateTestSteps {
 
         public void run(final String name, final DefendantAggregate aggregate) {
             for (StepData step : steps) {
+                LOGGER.info("Running {} step", step.stepName);
                 final Stream<Object> eventStream = aggregate.notifyDriver(
                         step.input.orderDate(),
                         step.input.orderingCourt(),
@@ -55,7 +59,8 @@ class DefendantAggregateTestSteps {
                         step.input.currentCases(),
                         step.input.hearingId(),
                         step.input.courtApplications(),
-                        step.input.masterDefendantId()
+                        step.input.masterDefendantId(),
+                        step.input.isReshare
                 );
                 assertThat(name + " - No events were produced", eventStream, IsNull.notNullValue());
                 final List<String> actualEvents = eventStream
@@ -73,8 +78,9 @@ class DefendantAggregateTestSteps {
             }
         }
 
-        public Scenario withNotifyDriverStep(String notificationJsonFile, String expectedEventsJsonFile) {
+        public Scenario withNotifyDriverStep(final String stepName, final String notificationJsonFile, final String expectedEventsJsonFile) {
             final JsonObject notification = stringToJsonConverter.convert(payloadAsString(notificationJsonFile, Map.of()));
+            final Boolean isReshare = notification.getBoolean("isReshare");
             final JsonObject nowContent = notification.getJsonObject("nowContent");
             final JsonArray cases = nowContent.getJsonArray("cases");
             List<Cases> currentCases = new ArrayList<>();
@@ -89,7 +95,7 @@ class DefendantAggregateTestSteps {
                 }
             }
 
-            steps.add(new StepData(
+            steps.add(new StepData(stepName,
                     new NotificationData(
                             nowContent.getString("orderDate"),
                             jsonToObjectConverter.convert(notification.getJsonObject("orderingCourt"), CourtCentre.class),
@@ -98,7 +104,8 @@ class DefendantAggregateTestSteps {
                             currentCases,
                             UUID.fromString(notification.getString("orderingHearingId")),
                             courtApplications,
-                            UUID.fromString(notification.getString("masterDefendantId"))
+                            UUID.fromString(notification.getString("masterDefendantId")),
+                            isReshare
                     ), expectedEventsJsonFile));
             return this;
         }
@@ -117,7 +124,7 @@ class DefendantAggregateTestSteps {
         }
     }
 
-    record StepData(NotificationData input, String expectedEventsJsonFile) {
+    record StepData(String stepName, NotificationData input, String expectedEventsJsonFile) {
     }
 
     record NotificationData(String orderDate,
@@ -127,7 +134,8 @@ class DefendantAggregateTestSteps {
                             List<Cases> currentCases,
                             UUID hearingId,
                             List<CourtApplications> courtApplications,
-                            UUID masterDefendantId) {
+                            UUID masterDefendantId,
+                            Boolean isReshare) {
 
     }
 
