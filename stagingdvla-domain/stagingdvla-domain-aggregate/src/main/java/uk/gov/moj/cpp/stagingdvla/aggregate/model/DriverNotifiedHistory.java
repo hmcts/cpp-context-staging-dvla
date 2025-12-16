@@ -3,7 +3,12 @@ package uk.gov.moj.cpp.stagingdvla.aggregate.model;
 
 import uk.gov.justice.cpp.stagingdvla.event.DriverNotified;
 
-public class DriverNotifiedHistory {
+import java.io.Serializable;
+
+public class DriverNotifiedHistory implements Serializable {
+
+
+    private static final long serialVersionUID = -3768756051224692135L;
 
     private DriverNotified latest;
     private DriverNotified previous;
