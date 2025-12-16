@@ -1,0 +1,121 @@
+{
+  "masterDefendantId": "1fd3d132-e4eb-4c3e-a162-c69a3e3005f4",
+  "orderingCourt": {
+    "address": {
+      "address1": "176A Lavender Hill",
+      "address2": "London",
+      "address3": "",
+      "address4": "",
+      "address5": "",
+      "postcode": "SW11 1JU"
+    },
+    "code": "B01LY00",
+    "courtHearingLocation": "B01LY01",
+    "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+    "lja": {
+      "ljaCode": "2577",
+      "ljaName": "South West London Magistrates' Court"
+    },
+    "name": "Lavender Hill Magistrates' Court",
+    "roomId": "9e4932f7-97b2-3010-b942-ddd2624e4dd8",
+    "roomName": "Courtroom 01"
+  },
+  "nowContent": {
+    "orderDate": "2025-12-12",
+    "defendant": {
+      "dateOfBirth": "1991-02-18",
+      "gender": "MALE",
+      "title": "MR",
+      "firstName": "Napoleon",
+      "lastName": "Reichert",
+      "name": "Napoleon Reichert",
+      "address": {
+        "line1": "21",
+        "line2": "Furnburry Park Road",
+        "line3": "London",
+        "postCode": "SW11 3TQ"
+      }
+    },
+    "caseApplicationReferences": [
+      "28DI8690719"
+    ],
+    "cases": [
+      {
+        "caseStatus": "ACTIVE",
+        "initiationCode": "C",
+        "reference": "28DI8690719",
+        "caseId": "0a5c044a-f0e8-4432-80f3-95a5cb723dc0",
+        "defendantCaseOffences": [
+          {
+            "title": "Possess / control TV set with intent another use install without a licence",
+            "civilOffence": false,
+            "convictionDate": "2025-12-12",
+            "convictionStatus": "Convicted",
+            "plea": "GUILTY",
+            "code": "CA03012",
+            "modeOfTrial": "Summary",
+            "allocationDecision": "Summary-only offence",
+            "endorsableFlag": false,
+            "convictingCourtCode": "2577",
+            "wording": "Napoleon Reichert have set up a TV cable without a valid license.",
+            "startDate": "2022-12-12",
+            "results": [
+              {
+                "resultIdentifier": "554c2622-c1cc-459e-a98d-b7f317ab065c",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "d3205319-84cf-4c5b-9d7a-7e4bb1865054",
+                    "promptReference": "periodofConditionalDischarge",
+                    "durationSequence": 1,
+                    "label": "Period of conditional discharge",
+                    "value": "6 Months"
+                  }
+                ],
+                "d20": false,
+                "dvlaCode": "E",
+                "label": "Conditional discharge"
+              },
+              {
+                "resultIdentifier": "cee54856-4450-4f28-a8a9-72b688726201",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "11a939b1-71e6-4065-8c29-007e4b52da7a",
+                    "promptReference": "licenceIssueNumber",
+                    "label": "Licence issue number",
+                    "value": "23"
+                  },
+                  {
+                    "promptIdentifier": "a8719de4-7783-448a-b792-e3f94e670ad0",
+                    "promptReference": "PENPT",
+                    "label": "Penalty points for this offence",
+                    "value": "6"
+                  }
+                ],
+                "d20": true,
+                "label": "Driving record endorsed with penalty points"
+              },
+              {
+                "resultIdentifier": "4b850aa9-984c-4a15-a1ae-b2f861cfcbe8",
+                "publishedForNows": true,
+                "prompts": [
+                  {
+                    "promptIdentifier": "11a939b1-71e6-4065-8c29-007e4b52da7a",
+                    "promptReference": "licenceIssueNumber",
+                    "label": "Licence issue number",
+                    "value": "23"
+                  }
+                ],
+                "d20": false,
+                "label": "1: Prov DVLA produced"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": false,
+  "orderingHearingId": "29536f9f-fbc2-41b2-9afd-08cc943f7f75"
+}

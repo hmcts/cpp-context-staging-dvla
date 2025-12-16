@@ -30,6 +30,8 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.DisqualificationPeriod
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.MergeUtil.getDistinctPrompts;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.MergeUtil.mergeOffence;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.getAlcoholReadingAmount;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.getApplicationResults;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.getCaseResults;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.getConvictingCourtCode;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.getDateDisqReimposedFollowingAppeal;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.getDateDisqSuspendedPendingAppeal;
@@ -51,6 +53,8 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAppealR
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasD20Endorsement;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasPointsDisqualificationCode;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasResultType;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.isRefused;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.isResultAnAdjournment;
 
 import uk.gov.justice.core.courts.CourtCentre;
 import uk.gov.justice.core.courts.nowdocument.Nowdefendant;
@@ -60,6 +64,8 @@ import uk.gov.justice.cpp.stagingdvla.event.DefendantCaseOffences;
 import uk.gov.justice.cpp.stagingdvla.event.DistinctPrompts;
 import uk.gov.justice.cpp.stagingdvla.event.DriverNotified;
 import uk.gov.justice.cpp.stagingdvla.event.Previous;
+import uk.gov.justice.cpp.stagingdvla.event.Results;
+import uk.gov.moj.cpp.stagingdvla.aggregate.model.DriverNotifiedHistory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -71,6 +77,7 @@ import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 
 @SuppressWarnings({"squid:S1118", "squid:S1602", "squid:S1612", "squid:S1188", "squid:S3776"})
@@ -92,25 +99,27 @@ public class DriverNotifiedEngine {
      * @return
      */
     public static List<DriverNotified> transformDriverNotified(
-            final Map<String, DriverNotified> previousDriverNotifiedByCase,
+            final Map<String, DriverNotifiedHistory> driverNotifiedHistoryByCase,
             final String orderDate,
             final CourtCentre orderingCourt,
             final String amendmentDate,
             final Nowdefendant defendant,
             final List<Cases> currentCases,
             final UUID hearingId,
-            final List<CourtApplications> courtApplications) {
+            final List<CourtApplications> courtApplications,
+            final Boolean isReshare) {
 
         final List<DriverNotified> driverNotifiedList = currentCases
                 .stream()
-                .map(currentCase -> processCase(previousDriverNotifiedByCase.get(currentCase.getReference()),
+                .map(currentCase -> processCase(driverNotifiedHistoryByCase.get(currentCase.getReference()),
                         orderDate,
                         orderingCourt,
                         amendmentDate,
                         defendant,
                         currentCase,
                         hearingId,
-                        courtApplications
+                        courtApplications,
+                        isReshare
                 ))
                 .filter(Objects::nonNull)
                 .collect(toList());
@@ -120,18 +129,31 @@ public class DriverNotifiedEngine {
         return driverNotifiedList;
     }
 
-    private static DriverNotified processCase(final DriverNotified previousDriverNotified,
+    private static DriverNotified processCase(final DriverNotifiedHistory driverNotifiedHistory,
                                               final String orderDate,
                                               final CourtCentre orderingCourt,
                                               final String amendmentDate,
                                               final Nowdefendant defendant,
                                               final Cases currentCase,
                                               final UUID hearingId,
-                                              final List<CourtApplications> courtApplications) {
+                                              final List<CourtApplications> courtApplications,
+                                              final Boolean isReshare) {
 
         LOGGER.info("Processing case: {}", currentCase.getReference());
 
+        if(Boolean.TRUE.equals(isReshare) && hasToUsePreviousEvent(currentCase, courtApplications)){
+            if (nonNull(driverNotifiedHistory) && nonNull(driverNotifiedHistory.getPrevious())) {
+                return DriverNotified.driverNotified()
+                        .withValuesFrom(driverNotifiedHistory.getPrevious())
+                        .withResetNotificationHistory(true)
+                        .build();
+            } else {
+                return null;
+            }
+        }
+
         // Get previous case using reference number
+        final DriverNotified previousDriverNotified = isNull(driverNotifiedHistory) ? null : driverNotifiedHistory.getLatest();
         final Cases previousCase = nonNull(previousDriverNotified) ? previousDriverNotified.getCases()
                 .stream()
                 .filter((aCase -> equalsIgnoreCase(currentCase.getReference(), aCase.getReference())))
@@ -199,6 +221,14 @@ public class DriverNotifiedEngine {
             return builder.build();
         }
         return null;
+    }
+
+    private static boolean hasToUsePreviousEvent( final Cases currentCase, final List<CourtApplications> courtApplications) {
+        final List<Results> caseResults = getCaseResults(currentCase);
+        final List<Results> applicationResults = getApplicationResults(courtApplications);
+        final boolean isRefused = CollectionUtils.isNotEmpty(courtApplications) && courtApplications.stream().allMatch(OffenceUtil::isRefused);
+        return (caseResults.isEmpty() || isResultAnAdjournment(caseResults)) && (
+                isRefused || isResultAnAdjournment(applicationResults));
     }
 
     private static List<Cases> getUpdatedCases(final Cases cases) {

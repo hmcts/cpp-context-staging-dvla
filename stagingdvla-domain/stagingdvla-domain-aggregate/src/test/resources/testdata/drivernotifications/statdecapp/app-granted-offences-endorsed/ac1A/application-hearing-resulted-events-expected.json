@@ -1,0 +1,356 @@
+{
+  "caseApplicationReferences": [
+    "28DI6032316"
+  ],
+  "cases": [
+    {
+      "caseId": "8cf054cb-c3b9-4a38-bc09-d7fbb291eabf",
+      "caseStatus": "INACTIVE",
+      "defendantCaseOffences": [],
+      "hasSV": false,
+      "initiationCode": "C",
+      "reference": "28DI6032316"
+    }
+  ],
+  "courtApplications": [
+    {
+      "applicationReceivedDate": "2025-12-12",
+      "applicationReference": "28DI6032316",
+      "applicationStatus": "FINALISED",
+      "applicationType": "Appearance to make statutory declaration (other than SJP)",
+      "applicationTypeId": "a6663f2a-c900-4bb4-a7d7-4be34cb2f1f7",
+      "id": "3f4521f4-8582-4ddb-ae45-9c7ebb7d4020",
+      "results": [
+        {
+          "d20": false,
+          "label": "Granted",
+          "publishedForNows": false,
+          "resultIdentifier": "2b3f7c20-8fc1-4fad-9076-df196c24b27e"
+        },
+        {
+          "d20": false,
+          "label": "Statutory Declaration",
+          "prompts": [
+            {
+              "label": "Referred to convicting court",
+              "promptIdentifier": "e138b873-4363-4d4d-84a5-62b6c9bb975a",
+              "promptReference": "referredToConvictingCourt",
+              "value": "Test"
+            },
+            {
+              "label": "Purpose of the next hearing",
+              "promptIdentifier": "de9e3c7c-a598-4a00-b3e9-71d2130627d2",
+              "promptReference": "purposeOfTheNextHearing",
+              "value": "This is for a case management hearing. You must attend this hearing"
+            },
+            {
+              "label": "Statutory declaration made under",
+              "promptIdentifier": "7b6ef0ac-2d0b-44e5-a68e-4720b96cc679",
+              "promptReference": "statutoryDeclarationMadeUnder",
+              "value": "Section 14 of the Magistrates' Courts Act 1980"
+            },
+            {
+              "label": "Financial penalties to be written off",
+              "promptIdentifier": "36e32c50-dbec-41c4-904b-25eb20c9c54a",
+              "promptReference": "financialPenaltiesToBeWrittenOff",
+              "value": "No"
+            },
+            {
+              "label": "Prosecutor to be notified organisation name",
+              "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+              "promptReference": "prosecutortobenotifiedOrganisationName",
+              "value": "Derby"
+            },
+            {
+              "label": "Prosecutor to be notified address line 1",
+              "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+              "promptReference": "prosecutortobenotifiedAddress1",
+              "value": "27"
+            },
+            {
+              "label": "Prosecutor to be notified post code",
+              "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+              "promptReference": "prosecutortobenotifiedPostCode",
+              "value": "SL1 1EZ"
+            }
+          ],
+          "publishedForNows": false,
+          "resultDefinitionGroup": "Enforcement",
+          "resultIdentifier": "e2f6e11b-c3a2-4e76-8d29-fbede4174988"
+        },
+        {
+          "d20": false,
+          "label": "Next hearing in magistrates' court",
+          "prompts": [
+            {
+              "label": "Date of hearing",
+              "promptIdentifier": "d27a5d86-d51f-4c6e-914b-cb4b0abc4283",
+              "promptReference": "HDATE",
+              "value": "12/12/2025"
+            },
+            {
+              "label": "Time of hearing",
+              "promptIdentifier": "4d125a5a-acbc-461d-a657-ba5643af85a6",
+              "promptReference": "timeOfHearing",
+              "value": "10:00"
+            },
+            {
+              "label": "Courthouse organisation name",
+              "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+              "promptReference": "hCHOUSEOrganisationName",
+              "value": "Swindon Magistrates' Court"
+            },
+            {
+              "label": "Courthouse address line 1",
+              "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+              "promptReference": "hCHOUSEAddress1",
+              "value": "Princes Street"
+            },
+            {
+              "label": "Courthouse address line 2",
+              "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+              "promptReference": "hCHOUSEAddress2",
+              "value": "Swindon"
+            },
+            {
+              "label": "Courthouse address line 3",
+              "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+              "promptReference": "hCHOUSEAddress3",
+              "value": "Wilts."
+            },
+            {
+              "label": "Courthouse post code",
+              "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+              "promptReference": "hCHOUSEPostCode",
+              "value": "SN1 2JB"
+            },
+            {
+              "label": "Courtroom",
+              "promptIdentifier": "49ec9b26-dd63-4637-b2e9-55ba9948a90f",
+              "promptReference": "HCROOM",
+              "value": "Courtroom 03"
+            },
+            {
+              "label": "Hearing type",
+              "promptIdentifier": "c1116d12-dd35-4171-807a-2cb845357d22",
+              "promptReference": "HTYPE",
+              "value": "Plea"
+            },
+            {
+              "label": "Estimated duration",
+              "promptIdentifier": "d85cc2d7-66c8-471e-b6ff-c1bc60c6cdac",
+              "promptReference": "HEST",
+              "value": "20 MINUTES"
+            },
+            {
+              "label": "Booking reference",
+              "promptIdentifier": "e73e6ab8-9bfe-4135-9fe6-f526544584d6",
+              "promptReference": "bookingReference",
+              "value": "1b64a479-bb7e-4ba8-8821-c12e74cf23ad"
+            }
+          ],
+          "publishedForNows": true,
+          "resultDefinitionGroup": "Next hearing",
+          "resultIdentifier": "70c98fa6-804d-11e8-adc0-fa7ae01bbebc",
+          "resultWording": ""
+        }
+      ]
+    }
+  ],
+  "defendant": {
+    "address": {
+      "line1": "21",
+      "line2": "Furnburry Park Road",
+      "line3": "London",
+      "postCode": "SW11 3TQ"
+    },
+    "dateOfBirth": "1991-02-18",
+    "firstName": "Roosevelt",
+    "gender": "MALE",
+    "lastName": "Wiza",
+    "name": "Roosevelt Wiza",
+    "title": "MR"
+  },
+  "distinctPrompts": [
+    {
+      "label": "Licence issue number",
+      "promptIdentifier": "11a939b1-71e6-4065-8c29-007e4b52da7a",
+      "promptReference": "licenceIssueNumber",
+      "value": "23"
+    }
+  ],
+  "identifier": "3dd5c069-1ee8-462b-968d-3dbcf7452755",
+  "licenceProducedInCourt": "1: Prov DVLA produced",
+  "masterDefendantId": "2a37feb4-0f4f-427d-aab9-bcdc56554089",
+  "materialId": "8ecee3e3-ab3d-4d55-9982-d7a2ad52c8e0",
+  "notificationWasPreviouslySent": true,
+  "orderDate": "2025-12-12",
+  "orderingCourt": {
+    "address": {
+      "address1": "Princes Street",
+      "address2": "Swindon",
+      "address3": "Wilts.",
+      "address4": "",
+      "address5": "",
+      "postcode": "SN1 2JB"
+    },
+    "code": "B54MW00",
+    "courtHearingLocation": "B54MW03",
+    "id": "0f418409-301c-39df-89a2-f3989859f953",
+    "lja": {
+      "ljaCode": "3021",
+      "ljaName": "County of Wiltshire Magistrates' Court"
+    },
+    "name": "Swindon Magistrates' Court",
+    "roomId": "2823a1bf-7a92-3f76-baec-2ff106b3f507",
+    "roomName": "Courtroom 03"
+  },
+  "orderingCourtCode": "3021",
+  "orderingHearingId": "bd93a6e0-11ac-4626-82d6-77b11c7eaabe",
+  "previous": {
+    "caseApplicationReferences": [
+      "28DI6032316"
+    ],
+    "cases": [
+      {
+        "caseId": "8cf054cb-c3b9-4a38-bc09-d7fbb291eabf",
+        "caseStatus": "ACTIVE",
+        "defendantCaseOffences": [
+          {
+            "allocationDecision": "Summary-only offence",
+            "civilOffence": false,
+            "code": "CA03012",
+            "convictingCourtCode": "2577",
+            "convictionDate": "2025-12-12",
+            "convictionStatus": "Convicted",
+            "dateFromWhichDisqRemoved": "",
+            "disqualificationPeriod": "000600",
+            "dttpDtetp": "",
+            "dvlaCode": "NE98",
+            "endorsableFlag": false,
+            "fine": "",
+            "interimImposedFinalSentence": "",
+            "modeOfTrial": "Summary",
+            "otherSentence": "E06M",
+            "penaltyPoints": "",
+            "plea": "GUILTY",
+            "results": [
+              {
+                "d20": false,
+                "dvlaCode": "E",
+                "label": "Conditional discharge",
+                "prompts": [
+                  {
+                    "durationSequence": 1,
+                    "label": "Period of conditional discharge",
+                    "promptIdentifier": "d3205319-84cf-4c5b-9d7a-7e4bb1865054",
+                    "promptReference": "periodofConditionalDischarge",
+                    "value": "6 Months"
+                  }
+                ],
+                "publishedForNows": false,
+                "resultIdentifier": "554c2622-c1cc-459e-a98d-b7f317ab065c"
+              },
+              {
+                "d20": true,
+                "label": "Discretionary with ordinary disqualification",
+                "prompts": [
+                  {
+                    "label": "Licence issue number",
+                    "promptIdentifier": "11a939b1-71e6-4065-8c29-007e4b52da7a",
+                    "promptReference": "licenceIssueNumber",
+                    "value": "23"
+                  },
+                  {
+                    "durationSequence": 1,
+                    "label": "Disqualification period",
+                    "promptIdentifier": "2bf54447-328c-4c1b-a123-341adbd52172",
+                    "promptReference": "disqualificationPeriod",
+                    "value": "6 Months"
+                  }
+                ],
+                "publishedForNows": false,
+                "resultIdentifier": "ccfc452e-ebe4-4cd7-b8a0-4f90768447b4",
+                "resultWording": "Disqualified for holding or obtaining a driving licence. Discretionary disqualification. Driving record endorsed. Section 34(2) Road Traffic Offenders Act 1988"
+              },
+              {
+                "d20": false,
+                "label": "1: Prov DVLA produced",
+                "prompts": [
+                  {
+                    "label": "Licence issue number",
+                    "promptIdentifier": "11a939b1-71e6-4065-8c29-007e4b52da7a",
+                    "promptReference": "licenceIssueNumber",
+                    "value": "23"
+                  }
+                ],
+                "publishedForNows": true,
+                "resultIdentifier": "4b850aa9-984c-4a15-a1ae-b2f861cfcbe8"
+              }
+            ],
+            "startDate": "2022-12-12",
+            "title": "Possess / control TV set with intent another use install without a licence",
+            "wording": "Roosevelt Wiza have set up a TV cable without a valid license."
+          }
+        ],
+        "hasSV": false,
+        "initiationCode": "C",
+        "reference": "28DI6032316"
+      }
+    ],
+    "defendant": {
+      "address": {
+        "line1": "21",
+        "line2": "Furnburry Park Road",
+        "line3": "London",
+        "postCode": "SW11 3TQ"
+      },
+      "dateOfBirth": "1991-02-18",
+      "firstName": "Roosevelt",
+      "gender": "MALE",
+      "lastName": "Wiza",
+      "name": "Roosevelt Wiza",
+      "title": "MR"
+    },
+    "distinctPrompts": [
+      {
+        "label": "Licence issue number",
+        "promptIdentifier": "11a939b1-71e6-4065-8c29-007e4b52da7a",
+        "promptReference": "licenceIssueNumber",
+        "value": "23"
+      }
+    ],
+    "identifier": "57236e34-51ff-40fb-927f-9ad130241d13",
+    "licenceProducedInCourt": "1: Prov DVLA produced",
+    "masterDefendantId": "2a37feb4-0f4f-427d-aab9-bcdc56554089",
+    "materialId": "a796e185-42b1-4e9b-a71f-3d2efe52a064",
+    "orderDate": "2025-12-12",
+    "orderingCourt": {
+      "address": {
+        "address1": "176A Lavender Hill",
+        "address2": "London",
+        "address3": "",
+        "address4": "",
+        "address5": "",
+        "postcode": "SW11 1JU"
+      },
+      "code": "B01LY00",
+      "courtHearingLocation": "B01LY01",
+      "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+      "lja": {
+        "ljaCode": "2577",
+        "ljaName": "South West London Magistrates' Court"
+      },
+      "name": "Lavender Hill Magistrates' Court",
+      "roomId": "9e4932f7-97b2-3010-b942-ddd2624e4dd8",
+      "roomName": "Courtroom 01"
+    },
+    "orderingHearingId": "936644c3-2cac-4b78-bf7a-f03f700fb31d",
+    "retrySequence": 0
+  },
+  "removedEndorsements": [
+    "NE98"
+  ],
+  "retrySequence": 0,
+  "updatedEndorsements": []
+}

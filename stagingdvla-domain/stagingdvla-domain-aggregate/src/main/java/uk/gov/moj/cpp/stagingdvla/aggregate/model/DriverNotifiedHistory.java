@@ -1,0 +1,47 @@
+package uk.gov.moj.cpp.stagingdvla.aggregate.model;
+
+
+import uk.gov.justice.cpp.stagingdvla.event.DriverNotified;
+
+import java.io.Serializable;
+
+public class DriverNotifiedHistory implements Serializable {
+
+
+    private static final long serialVersionUID = -3768756051224692135L;
+
+    private DriverNotified latest;
+    private DriverNotified previous;
+
+    public DriverNotifiedHistory(final DriverNotified latest, final DriverNotified previous) {
+        this.latest = latest;
+        this.previous = previous;
+    }
+
+    public DriverNotified getLatest() {
+        return latest;
+    }
+
+    public void setLatest(final DriverNotified latest) {
+        this.latest = latest;
+    }
+
+    public DriverNotified getPrevious() {
+        return previous;
+    }
+
+    public void setPrevious(final DriverNotified previous) {
+        this.previous = previous;
+    }
+
+    public void reset(final DriverNotified driverNotified) {
+        this.latest = driverNotified;
+        this.previous = null;
+    }
+
+    public void makeLatest(final DriverNotified driverNotified) {
+        this.previous = this.latest;
+        this.latest = driverNotified;
+    }
+
+}

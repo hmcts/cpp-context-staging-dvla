@@ -1,0 +1,223 @@
+{
+  "masterDefendantId": "07a00fbe-c64e-4713-92b8-7eaf1a5dd178",
+  "orderingCourt": {
+    "address": {
+      "address1": "Norwich Place",
+      "address2": "Bexleyheath",
+      "address3": "Kent",
+      "address4": "",
+      "address5": "",
+      "postcode": "DA6 7ND"
+    },
+    "code": "B01BH00",
+    "courtHearingLocation": "B01BH01",
+    "id": "7e967376-eacf-4fca-9b30-21b0c5aad427",
+    "lja": {
+      "ljaCode": "2575",
+      "ljaName": "South East London Magistrates' Court"
+    },
+    "name": "Bexley Magistrates' Court",
+    "roomId": "8e912353-3b5d-36c3-953e-ad3b94b19de3",
+    "roomName": "Courtroom 01"
+  },
+  "nowContent": {
+    "orderDate": "2025-12-11",
+    "defendant": {
+      "dateOfBirth": "1983-05-17",
+      "gender": "MALE",
+      "title": "Mr",
+      "firstName": "Mike1",
+      "middleName": "Jac ",
+      "lastName": "Blick",
+      "name": "Mike1 Jac  Blick",
+      "address": {
+        "line1": "799",
+        "line2": "StreetDescription",
+        "line3": "Locality2O",
+        "postCode": "TW14 9XA"
+      }
+    },
+    "caseApplicationReferences": [
+      "89QB632196"
+    ],
+    "cases": [
+      {
+        "caseStatus": "INACTIVE",
+        "initiationCode": "C",
+        "reference": "89QB632196",
+        "caseId": "89e5a79c-4c6e-4114-b715-a21808ce0876",
+        "defendantCaseOffences": [
+          {
+            "title": "Robbery",
+            "civilOffence": false,
+            "convictionStatus": "Not Convicted",
+            "code": "TH68023",
+            "modeOfTrial": "Indictable",
+            "endorsableFlag": false,
+            "wording": "From 13th November 2018, an aggravated version of this offence applies where the offence is committed against an emergency worker acting in the exercise of his / her functions as such a worker, as per section 1 of the Assaults on emergency Workers (Offences) Act 2018; see offence wording document H19568.",
+            "startDate": "2019-11-28",
+            "results": [
+              {
+                "resultIdentifier": "969f150c-cd05-46b0-9dd9-30891efcc766",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "7cd1472f-2379-4f5b-9e67-98a43d86e122",
+                    "promptReference": "AOF",
+                    "label": "Amount of fine",
+                    "value": "£300.00"
+                  }
+                ],
+                "resultDefinitionGroup": "Imposition",
+                "d20": false,
+                "label": "Fine"
+              },
+              {
+                "resultIdentifier": "cee54856-4450-4f28-a8a9-72b688726201",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "a8719de4-7783-448a-b792-e3f94e670ad0",
+                    "promptReference": "PENPT",
+                    "label": "Penalty points for this offence",
+                    "value": "3"
+                  }
+                ],
+                "d20": true,
+                "label": "Driving record endorsed with penalty points"
+              },
+              {
+                "resultIdentifier": "bcb5a496-f7cf-11e8-8eb2-f2801f1b9fd1",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "ee7d253a-c629-11e8-a355-529269fb1459",
+                    "promptReference": "PBD",
+                    "label": "Date to pay in full by",
+                    "value": "01/02/2026"
+                  }
+                ],
+                "resultDefinitionGroup": "Payment terms",
+                "d20": false,
+                "label": "Pay by date"
+              },
+              {
+                "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956",
+                "publishedForNows": true,
+                "d20": false,
+                "label": "0: None or unknown"
+              }
+            ]
+          },
+          {
+            "title": "Possess / control TV set with intent another use install without a licence",
+            "civilOffence": false,
+            "convictionStatus": "Not Convicted",
+            "code": "CA03012",
+            "modeOfTrial": "Summary",
+            "endorsableFlag": false,
+            "wording": "From 13th November 2018, an aggravated version of this offence applies where the offence is committed against an emergency worker acting in the exercise of his / her functions as such a worker, as per section 1 of the Assaults on emergency Workers (Offences) Act 2018; see offence wording document H19568.",
+            "startDate": "2019-11-28",
+            "results": [
+              {
+                "resultIdentifier": "554c2622-c1cc-459e-a98d-b7f317ab065c",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "d3205319-84cf-4c5b-9d7a-7e4bb1865054",
+                    "promptReference": "periodofConditionalDischarge",
+                    "durationSequence": 1,
+                    "label": "Period of conditional discharge",
+                    "value": "6 Months"
+                  }
+                ],
+                "d20": false,
+                "dvlaCode": "E",
+                "label": "Conditional discharge"
+              },
+              {
+                "resultIdentifier": "cee54856-4450-4f28-a8a9-72b688726201",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "a8719de4-7783-448a-b792-e3f94e670ad0",
+                    "promptReference": "PENPT",
+                    "label": "Penalty points for this offence",
+                    "value": "3"
+                  }
+                ],
+                "d20": true,
+                "label": "Driving record endorsed with penalty points"
+              },
+              {
+                "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956",
+                "publishedForNows": true,
+                "d20": false,
+                "label": "0: None or unknown"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "courtApplications": [
+      {
+        "applicationType": "Appearance to make statutory declaration (other than SJP)",
+        "applicationTypeId": "a6663f2a-c900-4bb4-a7d7-4be34cb2f1f7",
+        "applicationReceivedDate": "2025-12-11",
+        "id": "74aecd1e-df75-4c6a-9e14-4637e8ef9a44",
+        "applicationReference": "89QB632196",
+        "applicationStatus": "FINALISED",
+        "results": [
+          {
+            "resultIdentifier": "2b3f7c20-8fc1-4fad-9076-df196c24b27e",
+            "publishedForNows": false,
+            "d20": false,
+            "label": "Granted"
+          },
+          {
+            "resultIdentifier": "e2f6e11b-c3a2-4e76-8d29-fbede4174988",
+            "publishedForNows": false,
+            "prompts": [
+              {
+                "promptIdentifier": "7b6ef0ac-2d0b-44e5-a68e-4720b96cc679",
+                "promptReference": "statutoryDeclarationMadeUnder",
+                "label": "Statutory declaration made under",
+                "value": "Section 16E of the Magistrates' Courts Act 1980"
+              },
+              {
+                "promptIdentifier": "36e32c50-dbec-41c4-904b-25eb20c9c54a",
+                "promptReference": "financialPenaltiesToBeWrittenOff",
+                "label": "Financial penalties to be written off",
+                "value": "No"
+              },
+              {
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedOrganisationName",
+                "label": "Prosecutor to be notified organisation name",
+                "value": "test"
+              },
+              {
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedAddress1",
+                "label": "Prosecutor to be notified address line 1",
+                "value": "test"
+              },
+              {
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedPostCode",
+                "label": "Prosecutor to be notified post code",
+                "value": "E16 2DQ"
+              }
+            ],
+            "resultDefinitionGroup": "Enforcement",
+            "d20": false,
+            "label": "Statutory Declaration"
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": false,
+  "orderingHearingId": "7c469fe6-76e4-46fb-af77-c5e295932783"
+}

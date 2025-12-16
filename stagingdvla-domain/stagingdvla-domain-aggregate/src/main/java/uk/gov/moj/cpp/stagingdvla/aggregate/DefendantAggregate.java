@@ -1,5 +1,6 @@
 package uk.gov.moj.cpp.stagingdvla.aggregate;
 
+import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 import static org.slf4j.LoggerFactory.getLogger;
 import static uk.gov.justice.domain.aggregate.matcher.EventSwitcher.match;
@@ -15,6 +16,7 @@ import uk.gov.justice.cpp.stagingdvla.event.DriverNotified;
 import uk.gov.justice.cpp.stagingdvla.event.DriverNotifiedNextRetryCancelled;
 import uk.gov.justice.cpp.stagingdvla.event.DriverNotifiedNextRetryScheduled;
 import uk.gov.justice.domain.aggregate.Aggregate;
+import uk.gov.moj.cpp.stagingdvla.aggregate.model.DriverNotifiedHistory;
 
 import java.util.HashMap;
 import java.util.List;
@@ -27,13 +29,13 @@ import org.slf4j.Logger;
 
 @SuppressWarnings("squid:S1602")
 public class DefendantAggregate implements Aggregate {
-    private static final long serialVersionUID = 3L;
+    private static final long serialVersionUID = 4L;
     private static final Logger LOGGER = getLogger(DefendantAggregate.class);
 
     private DriverNotified previousDriverNotified;
     private boolean isWaitingRetryTrigger = false;
     private int retrySequence = 0;
-    private final Map<String, DriverNotified> previousDriverNotifiedByCase = new HashMap<>();
+    private final Map<String, DriverNotifiedHistory> driverNotifiedHistoryByCase = new HashMap<>();
 
     public Stream<Object> notifyDriver(final String orderDate,
                                        final CourtCentre orderingCourt,
@@ -42,18 +44,20 @@ public class DefendantAggregate implements Aggregate {
                                        final List<Cases> currentCases,
                                        final UUID hearingId,
                                        final List<CourtApplications> courtApplications,
-                                       final UUID masterDefendantId) {
+                                       final UUID masterDefendantId,
+                                       final Boolean isReshare) {
 
         // Create a new event for each incoming cases
         final List<DriverNotified> driverNotifiedEvents = transformDriverNotified(
-                this.previousDriverNotifiedByCase,
+                this.driverNotifiedHistoryByCase,
                 orderDate,
                 orderingCourt,
                 amendmentDate,
                 defendant,
                 currentCases,
                 hearingId,
-                courtApplications);
+                courtApplications,
+                isReshare);
 
         if (driverNotifiedEvents.isEmpty()) {
             if (LOGGER.isInfoEnabled()) {
@@ -140,9 +144,7 @@ public class DefendantAggregate implements Aggregate {
 
                     // For each case, get the latest DriverNotifiedEvent. This is required for comparing if
                     // results has been updated
-                    if (nonNull(e.getCases())) {
-                        e.getCases().forEach(c -> previousDriverNotifiedByCase.put(c.getReference(), e));
-                    }
+                    setupDriverBotifiedHistory(e);
 
                     isWaitingRetryTrigger = false;
                     if (nonNull(e.getRetrySequence())) {
@@ -159,5 +161,28 @@ public class DefendantAggregate implements Aggregate {
                     retrySequence = 0;
                 }),
                 otherwiseDoNothing());
+    }
+
+    private void setupDriverBotifiedHistory(final DriverNotified e) {
+        if (nonNull(e.getCases())) {
+            if (Boolean.TRUE.equals(e.getResetNotificationHistory())) {
+                e.getCases().forEach(c -> {
+                    final DriverNotifiedHistory driverNotifiedHistory = driverNotifiedHistoryByCase.get(c.getReference());
+                    driverNotifiedHistory.reset(e);
+                    driverNotifiedHistoryByCase.put(c.getReference(), driverNotifiedHistory);
+                });
+            } else {
+                e.getCases().forEach(c -> {
+                    DriverNotifiedHistory driverNotifiedHistory = driverNotifiedHistoryByCase.get(c.getReference());
+                    if (isNull(driverNotifiedHistory)) {
+                        driverNotifiedHistory = new DriverNotifiedHistory(e, null);
+                    } else {
+                        driverNotifiedHistory.makeLatest(e);
+                    }
+                    driverNotifiedHistoryByCase.put(c.getReference(), driverNotifiedHistory);
+
+                });
+            }
+        }
     }
 }

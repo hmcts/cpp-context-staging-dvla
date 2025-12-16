@@ -73,7 +73,8 @@ public class AggregateConstants {
         G("2b3f7c20-8fc1-4fad-9076-df196c24b27e"),
         TEXT("98138ec8-5dd3-11e8-9c2d-fa7ae01bbebc"),
         ADJ("d278650c-e429-11e8-9f32-f2801f1b9fd1"),
-        ERR("c36fed37-b635-4303-b514-2273e9e2594d");
+        ERR("c36fed37-b635-4303-b514-2273e9e2594d"),
+        REMUB("d076bd4a-17d5-4720-899a-1c6f96e3b35f");
 
         public final String id;
 

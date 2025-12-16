@@ -1,0 +1,141 @@
+{
+  "caseApplicationReferences": [
+    "28DI8690719"
+  ],
+  "cases": [
+    {
+      "caseId": "0a5c044a-f0e8-4432-80f3-95a5cb723dc0",
+      "caseStatus": "ACTIVE",
+      "defendantCaseOffences": [
+        {
+          "allocationDecision": "Summary-only offence",
+          "civilOffence": false,
+          "code": "CA03012",
+          "convictingCourtCode": "2577",
+          "convictionDate": "2025-12-12",
+          "convictionStatus": "Convicted",
+          "dateFromWhichDisqRemoved": "",
+          "disqualificationPeriod": "",
+          "dttpDtetp": "",
+          "dvlaCode": "NE98",
+          "endorsableFlag": false,
+          "fine": "",
+          "interimImposedFinalSentence": "",
+          "modeOfTrial": "Summary",
+          "otherSentence": "E06M",
+          "penaltyPoints": "6",
+          "plea": "GUILTY",
+          "results": [
+            {
+              "d20": false,
+              "dvlaCode": "E",
+              "label": "Conditional discharge",
+              "prompts": [
+                {
+                  "durationSequence": 1,
+                  "label": "Period of conditional discharge",
+                  "promptIdentifier": "d3205319-84cf-4c5b-9d7a-7e4bb1865054",
+                  "promptReference": "periodofConditionalDischarge",
+                  "value": "6 Months"
+                }
+              ],
+              "publishedForNows": false,
+              "resultIdentifier": "554c2622-c1cc-459e-a98d-b7f317ab065c"
+            },
+            {
+              "d20": true,
+              "label": "Driving record endorsed with penalty points",
+              "prompts": [
+                {
+                  "label": "Licence issue number",
+                  "promptIdentifier": "11a939b1-71e6-4065-8c29-007e4b52da7a",
+                  "promptReference": "licenceIssueNumber",
+                  "value": "23"
+                },
+                {
+                  "label": "Penalty points for this offence",
+                  "promptIdentifier": "a8719de4-7783-448a-b792-e3f94e670ad0",
+                  "promptReference": "PENPT",
+                  "value": "6"
+                }
+              ],
+              "publishedForNows": false,
+              "resultIdentifier": "cee54856-4450-4f28-a8a9-72b688726201"
+            },
+            {
+              "d20": false,
+              "label": "1: Prov DVLA produced",
+              "prompts": [
+                {
+                  "label": "Licence issue number",
+                  "promptIdentifier": "11a939b1-71e6-4065-8c29-007e4b52da7a",
+                  "promptReference": "licenceIssueNumber",
+                  "value": "23"
+                }
+              ],
+              "publishedForNows": true,
+              "resultIdentifier": "4b850aa9-984c-4a15-a1ae-b2f861cfcbe8"
+            }
+          ],
+          "startDate": "2022-12-12",
+          "title": "Possess / control TV set with intent another use install without a licence",
+          "wording": "Napoleon Reichert have set up a TV cable without a valid license."
+        }
+      ],
+      "hasSV": false,
+      "initiationCode": "C",
+      "reference": "28DI8690719"
+    }
+  ],
+  "courtApplications": [],
+  "defendant": {
+    "address": {
+      "line1": "21",
+      "line2": "Furnburry Park Road",
+      "line3": "London",
+      "postCode": "SW11 3TQ"
+    },
+    "dateOfBirth": "1991-02-18",
+    "firstName": "Napoleon",
+    "gender": "MALE",
+    "lastName": "Reichert",
+    "name": "Napoleon Reichert",
+    "title": "MR"
+  },
+  "distinctPrompts": [
+    {
+      "label": "Licence issue number",
+      "promptIdentifier": "11a939b1-71e6-4065-8c29-007e4b52da7a",
+      "promptReference": "licenceIssueNumber",
+      "value": "23"
+    }
+  ],
+  "identifier": "39b63ed3-b31c-434e-958e-59803244521b",
+  "licenceProducedInCourt": "1: Prov DVLA produced",
+  "masterDefendantId": "1fd3d132-e4eb-4c3e-a162-c69a3e3005f4",
+  "materialId": "45ddb33d-a9a7-4e45-ba1c-41c4d217f688",
+  "orderDate": "2025-12-12",
+  "orderingCourt": {
+    "address": {
+      "address1": "176A Lavender Hill",
+      "address2": "London",
+      "address3": "",
+      "address4": "",
+      "address5": "",
+      "postcode": "SW11 1JU"
+    },
+    "code": "B01LY00",
+    "courtHearingLocation": "B01LY01",
+    "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+    "lja": {
+      "ljaCode": "2577",
+      "ljaName": "South West London Magistrates' Court"
+    },
+    "name": "Lavender Hill Magistrates' Court",
+    "roomId": "9e4932f7-97b2-3010-b942-ddd2624e4dd8",
+    "roomName": "Courtroom 01"
+  },
+  "orderingCourtCode": "2577",
+  "orderingHearingId": "29536f9f-fbc2-41b2-9afd-08cc943f7f75",
+  "retrySequence": 0
+}
