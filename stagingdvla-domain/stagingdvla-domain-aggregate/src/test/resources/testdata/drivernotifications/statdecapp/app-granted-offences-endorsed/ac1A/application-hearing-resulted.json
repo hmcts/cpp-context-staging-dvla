@@ -1,0 +1,347 @@
+{
+  "masterDefendantId": "2a37feb4-0f4f-427d-aab9-bcdc56554089",
+  "orderingCourt": {
+    "address": {
+      "address1": "Princes Street",
+      "address2": "Swindon",
+      "address3": "Wilts.",
+      "address4": "",
+      "address5": "",
+      "postcode": "SN1 2JB"
+    },
+    "code": "B54MW00",
+    "courtHearingLocation": "B54MW03",
+    "id": "0f418409-301c-39df-89a2-f3989859f953",
+    "lja": {
+      "ljaCode": "3021",
+      "ljaName": "County of Wiltshire Magistrates' Court"
+    },
+    "name": "Swindon Magistrates' Court",
+    "roomId": "2823a1bf-7a92-3f76-baec-2ff106b3f507",
+    "roomName": "Courtroom 03"
+  },
+  "nowContent": {
+    "orderDate": "2025-12-12",
+    "defendant": {
+      "dateOfBirth": "1991-02-18",
+      "gender": "MALE",
+      "title": "MR",
+      "firstName": "Roosevelt",
+      "lastName": "Wiza",
+      "name": "Roosevelt Wiza",
+      "address": {
+        "line1": "21",
+        "line2": "Furnburry Park Road",
+        "line3": "London",
+        "postCode": "SW11 3TQ"
+      }
+    },
+    "caseApplicationReferences": [
+      "28DI6032316"
+    ],
+    "cases": [
+      {
+        "caseStatus": "INACTIVE",
+        "initiationCode": "C",
+        "reference": "28DI6032316",
+        "caseId": "8cf054cb-c3b9-4a38-bc09-d7fbb291eabf",
+        "defendantCaseOffences": [
+          {
+            "title": "Possess / control TV set with intent another use install without a licence",
+            "civilOffence": false,
+            "convictionDate": "2025-12-12",
+            "convictionStatus": "Convicted",
+            "plea": "GUILTY",
+            "code": "CA03012",
+            "modeOfTrial": "Summary",
+            "allocationDecision": "Summary-only offence",
+            "endorsableFlag": false,
+            "convictingCourtCode": "2577",
+            "wording": "Roosevelt Wiza have set up a TV cable without a valid license.",
+            "startDate": "2022-12-12",
+            "results": [
+              {
+                "resultIdentifier": "d278650c-e429-11e8-9f32-f2801f1b9fd1",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "70c98fa6-804d-11e8-adc0-fa7ae01bbebc",
+                    "promptReference": "0b847d6b-9066-43af-92aa-358337f0fb5b",
+                    "label": "Next hearing in magistrates' court",
+                    "value": "Date of hearing:12/12/2025\nTime of hearing:10:00\nCourthouse organisation name:Swindon Magistrates' Court\nCourthouse address line 1:Princes Street\nCourthouse address line 2:Swindon\nCourthouse address line 3:Wilts.\nCourthouse post code:SN1 2JB\nCourtroom:Courtroom 03\nHearing type:Plea\nEstimated duration:20 MINUTES\nBooking reference:1b64a479-bb7e-4ba8-8821-c12e74cf23ad"
+                  },
+                  {
+                    "promptIdentifier": "fbed768b-ee95-4434-87c8-e81cbc8d24c8",
+                    "promptReference": "7a054521-add5-4a08-9419-447ca5004c0d",
+                    "label": "Next hearing in Crown Court",
+                    "value": "Fixed Date:12/12/2025\nTime of hearing:10:30\nCourthouse organisation name:Swindon Crown Court\nCourthouse address line 1:Swindon Combined Court Centre\nCourthouse address line 2:The Law Courts\nCourthouse address line 3:Islington Street\nCourthouse address line 4:Swindon\nCourthouse address line 5:Wilts.\nCourthouse post code:SN1 2HG\nHearing type:Trial - no witnesses\nEstimated duration:2 HOURS"
+                  },
+                  {
+                    "promptIdentifier": "61f951c3-f18d-4a44-ae4a-0cad4efb4133",
+                    "promptReference": "defendantToAttendTheNextHearing",
+                    "label": "Defendant to attend the next hearing",
+                    "value": "Yes"
+                  },
+                  {
+                    "promptIdentifier": "1d55fdeb-7dbc-46ec-b3ff-7b15fe08a476",
+                    "promptReference": "9e8a40e7-add2-478c-8904-064a46d7a7db",
+                    "label": "At request of the prosecution",
+                    "value": "Reason:s"
+                  },
+                  {
+                    "promptIdentifier": "7fc17a01-2f5a-4433-aae9-28e0c959f73b",
+                    "promptReference": "633e9b2f-e3e8-4fde-b609-8510594a0fe0",
+                    "label": "Adjournment reasons",
+                    "value": ""
+                  }
+                ],
+                "resultWording": "",
+                "d20": false,
+                "label": "Adjournment"
+              },
+              {
+                "resultIdentifier": "fbed768b-ee95-4434-87c8-e81cbc8d24c8",
+                "publishedForNows": true,
+                "prompts": [
+                  {
+                    "promptIdentifier": "aea2ee79-47b4-4023-9a95-1b327e6e03d5",
+                    "promptReference": "fixedDate",
+                    "label": "Fixed Date",
+                    "value": "12/12/2025"
+                  },
+                  {
+                    "promptIdentifier": "4d125a5a-acbc-461d-a657-ba5643af85a6",
+                    "promptReference": "timeOfHearing",
+                    "label": "Time of hearing",
+                    "value": "10:30"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEOrganisationName",
+                    "label": "Courthouse organisation name",
+                    "value": "Swindon Crown Court"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEAddress1",
+                    "label": "Courthouse address line 1",
+                    "value": "Swindon Combined Court Centre"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEAddress2",
+                    "label": "Courthouse address line 2",
+                    "value": "The Law Courts"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEAddress3",
+                    "label": "Courthouse address line 3",
+                    "value": "Islington Street"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEAddress4",
+                    "label": "Courthouse address line 4",
+                    "value": "Swindon"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEAddress5",
+                    "label": "Courthouse address line 5",
+                    "value": "Wilts."
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEPostCode",
+                    "label": "Courthouse post code",
+                    "value": "SN1 2HG"
+                  },
+                  {
+                    "promptIdentifier": "c1116d12-dd35-4171-807a-2cb845357d22",
+                    "promptReference": "HTYPE",
+                    "label": "Hearing type",
+                    "value": "Trial - no witnesses"
+                  },
+                  {
+                    "promptIdentifier": "d85cc2d7-66c8-471e-b6ff-c1bc60c6cdac",
+                    "promptReference": "HEST",
+                    "label": "Estimated duration",
+                    "value": "2 HOURS"
+                  }
+                ],
+                "resultWording": "",
+                "resultDefinitionGroup": "Next hearing",
+                "d20": false,
+                "label": "Next hearing in Crown Court"
+              },
+              {
+                "resultIdentifier": "1d55fdeb-7dbc-46ec-b3ff-7b15fe08a476",
+                "publishedForNows": true,
+                "prompts": [
+                  {
+                    "promptIdentifier": "8c144a05-5804-4478-a419-12bab06748cc",
+                    "promptReference": "reason",
+                    "label": "Reason",
+                    "value": "s"
+                  }
+                ],
+                "resultWording": "",
+                "resultDefinitionGroup": "Adjournment reasons",
+                "d20": false,
+                "label": "At request of the prosecution"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "courtApplications": [
+      {
+        "applicationType": "Appearance to make statutory declaration (other than SJP)",
+        "applicationTypeId": "a6663f2a-c900-4bb4-a7d7-4be34cb2f1f7",
+        "applicationReceivedDate": "2025-12-12",
+        "id": "3f4521f4-8582-4ddb-ae45-9c7ebb7d4020",
+        "applicationReference": "28DI6032316",
+        "applicationStatus": "FINALISED",
+        "results": [
+          {
+            "resultIdentifier": "2b3f7c20-8fc1-4fad-9076-df196c24b27e",
+            "publishedForNows": false,
+            "d20": false,
+            "label": "Granted"
+          },
+          {
+            "resultIdentifier": "e2f6e11b-c3a2-4e76-8d29-fbede4174988",
+            "publishedForNows": false,
+            "prompts": [
+              {
+                "promptIdentifier": "e138b873-4363-4d4d-84a5-62b6c9bb975a",
+                "promptReference": "referredToConvictingCourt",
+                "label": "Referred to convicting court",
+                "value": "Test"
+              },
+              {
+                "promptIdentifier": "de9e3c7c-a598-4a00-b3e9-71d2130627d2",
+                "promptReference": "purposeOfTheNextHearing",
+                "label": "Purpose of the next hearing",
+                "value": "This is for a case management hearing. You must attend this hearing"
+              },
+              {
+                "promptIdentifier": "7b6ef0ac-2d0b-44e5-a68e-4720b96cc679",
+                "promptReference": "statutoryDeclarationMadeUnder",
+                "label": "Statutory declaration made under",
+                "value": "Section 14 of the Magistrates' Courts Act 1980"
+              },
+              {
+                "promptIdentifier": "36e32c50-dbec-41c4-904b-25eb20c9c54a",
+                "promptReference": "financialPenaltiesToBeWrittenOff",
+                "label": "Financial penalties to be written off",
+                "value": "No"
+              },
+              {
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedOrganisationName",
+                "label": "Prosecutor to be notified organisation name",
+                "value": "Derby"
+              },
+              {
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedAddress1",
+                "label": "Prosecutor to be notified address line 1",
+                "value": "27"
+              },
+              {
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedPostCode",
+                "label": "Prosecutor to be notified post code",
+                "value": "SL1 1EZ"
+              }
+            ],
+            "resultDefinitionGroup": "Enforcement",
+            "d20": false,
+            "label": "Statutory Declaration"
+          },
+          {
+            "resultIdentifier": "70c98fa6-804d-11e8-adc0-fa7ae01bbebc",
+            "publishedForNows": true,
+            "prompts": [
+              {
+                "promptIdentifier": "d27a5d86-d51f-4c6e-914b-cb4b0abc4283",
+                "promptReference": "HDATE",
+                "label": "Date of hearing",
+                "value": "12/12/2025"
+              },
+              {
+                "promptIdentifier": "4d125a5a-acbc-461d-a657-ba5643af85a6",
+                "promptReference": "timeOfHearing",
+                "label": "Time of hearing",
+                "value": "10:00"
+              },
+              {
+                "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                "promptReference": "hCHOUSEOrganisationName",
+                "label": "Courthouse organisation name",
+                "value": "Swindon Magistrates' Court"
+              },
+              {
+                "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                "promptReference": "hCHOUSEAddress1",
+                "label": "Courthouse address line 1",
+                "value": "Princes Street"
+              },
+              {
+                "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                "promptReference": "hCHOUSEAddress2",
+                "label": "Courthouse address line 2",
+                "value": "Swindon"
+              },
+              {
+                "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                "promptReference": "hCHOUSEAddress3",
+                "label": "Courthouse address line 3",
+                "value": "Wilts."
+              },
+              {
+                "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                "promptReference": "hCHOUSEPostCode",
+                "label": "Courthouse post code",
+                "value": "SN1 2JB"
+              },
+              {
+                "promptIdentifier": "49ec9b26-dd63-4637-b2e9-55ba9948a90f",
+                "promptReference": "HCROOM",
+                "label": "Courtroom",
+                "value": "Courtroom 03"
+              },
+              {
+                "promptIdentifier": "c1116d12-dd35-4171-807a-2cb845357d22",
+                "promptReference": "HTYPE",
+                "label": "Hearing type",
+                "value": "Plea"
+              },
+              {
+                "promptIdentifier": "d85cc2d7-66c8-471e-b6ff-c1bc60c6cdac",
+                "promptReference": "HEST",
+                "label": "Estimated duration",
+                "value": "20 MINUTES"
+              },
+              {
+                "promptIdentifier": "e73e6ab8-9bfe-4135-9fe6-f526544584d6",
+                "promptReference": "bookingReference",
+                "label": "Booking reference",
+                "value": "1b64a479-bb7e-4ba8-8821-c12e74cf23ad"
+              }
+            ],
+            "resultWording": "",
+            "resultDefinitionGroup": "Next hearing",
+            "d20": false,
+            "label": "Next hearing in magistrates' court"
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": false,
+  "orderingHearingId": "bd93a6e0-11ac-4626-82d6-77b11c7eaabe"
+}

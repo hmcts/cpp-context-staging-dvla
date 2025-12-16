@@ -1,0 +1,402 @@
+{
+  "masterDefendantId": "4f5cab64-cfab-4ad9-a806-855f441841c7",
+  "orderingCourt": {
+    "address": {
+      "address1": "176A Lavender Hill",
+      "address2": "London",
+      "address3": "",
+      "address4": "",
+      "address5": "",
+      "postcode": "SW11 1JU"
+    },
+    "code": "B01LY00",
+    "courtHearingLocation": "B01LY01",
+    "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+    "lja": {
+      "ljaCode": "2577",
+      "ljaName": "South West London Magistrates' Court"
+    },
+    "name": "Lavender Hill Magistrates' Court",
+    "roomId": "9e4932f7-97b2-3010-b942-ddd2624e4dd8",
+    "roomName": "Courtroom 01"
+  },
+  "nowContent": {
+    "orderDate": "2025-12-16",
+    "defendant": {
+      "dateOfBirth": "1991-11-11",
+      "gender": "MALE",
+      "driverNumber": "VANFL002222OW9PH",
+      "title": "Mr",
+      "firstName": "Darion",
+      "lastName": "Anderson",
+      "name": "Darion Anderson",
+      "address": {
+        "line1": "9999A9999AAAA",
+        "line2": "Woodlane",
+        "line3": "addressline 3",
+        "line4": "Bristol",
+        "line5": "Avon",
+        "postCode": "SW11 3TQ"
+      }
+    },
+    "caseApplicationReferences": [
+      "28DI3699953"
+    ],
+    "cases": [
+      {
+        "caseStatus": "INACTIVE",
+        "initiationCode": "C",
+        "reference": "28DI3699953",
+        "caseId": "f9a3c6c2-3c54-459f-8658-066c97c643bc",
+        "defendantCaseOffences": [
+          {
+            "title": "Robbery",
+            "civilOffence": false,
+            "convictionDate": "2025-12-15",
+            "convictionStatus": "Convicted",
+            "plea": "GUILTY",
+            "code": "TH68023",
+            "modeOfTrial": "Indictable",
+            "allocationDecision": "Indictable-only offence",
+            "endorsableFlag": false,
+            "convictingCourtCode": "2577",
+            "wording": "From 13th November 2018, an aggravated version of this offence applies where the offence is committed against an emergency worker acting in the exercise of his / her functions as such a worker, as per section 1 of the Assaults on emergency Workers (Offences) Act 2018; see offence wording document H19568.",
+            "startDate": "2022-12-12",
+            "results": [
+              {
+                "resultIdentifier": "d278650c-e429-11e8-9f32-f2801f1b9fd1",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "70c98fa6-804d-11e8-adc0-fa7ae01bbebc",
+                    "promptReference": "5b755e21-4ccd-4132-9590-b8706f4a0e87",
+                    "label": "Next hearing in magistrates' court",
+                    "value": "Date of hearing:17/12/2025\nTime of hearing:09:33\nCourthouse organisation name:Lavender Hill Magistrates' Court\nCourthouse address line 1:176A Lavender Hill\nCourthouse address line 2:London\nCourthouse post code:SW11 1JU\nCourtroom:Courtroom 01\nHearing type:Application\nEstimated duration:20 MINUTES\nBooking reference:af89cede-39ec-42ae-b19f-710a057d0dc7"
+                  },
+                  {
+                    "promptIdentifier": "61f951c3-f18d-4a44-ae4a-0cad4efb4133",
+                    "promptReference": "defendantToAttendTheNextHearing",
+                    "label": "Defendant to attend the next hearing",
+                    "value": "Yes"
+                  },
+                  {
+                    "promptIdentifier": "9c1dcdfa-ec44-4167-bbd4-d29c3a63a7fc",
+                    "promptReference": "1f51fc96-6546-409a-8e8d-c4ce8d7519f9",
+                    "label": "Unexpected circumstances meant that the case could not be heard",
+                    "value": ""
+                  },
+                  {
+                    "promptIdentifier": "7fc17a01-2f5a-4433-aae9-28e0c959f73b",
+                    "promptReference": "3f94e44d-4109-429e-b4ab-3a3f787980ff",
+                    "label": "Adjournment reasons",
+                    "value": ""
+                  }
+                ],
+                "resultWording": "",
+                "d20": false,
+                "label": "Adjournment"
+              },
+              {
+                "resultIdentifier": "70c98fa6-804d-11e8-adc0-fa7ae01bbebc",
+                "publishedForNows": true,
+                "prompts": [
+                  {
+                    "promptIdentifier": "d27a5d86-d51f-4c6e-914b-cb4b0abc4283",
+                    "promptReference": "HDATE",
+                    "label": "Date of hearing",
+                    "value": "17/12/2025"
+                  },
+                  {
+                    "promptIdentifier": "4d125a5a-acbc-461d-a657-ba5643af85a6",
+                    "promptReference": "timeOfHearing",
+                    "label": "Time of hearing",
+                    "value": "09:33"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEOrganisationName",
+                    "label": "Courthouse organisation name",
+                    "value": "Lavender Hill Magistrates' Court"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEAddress1",
+                    "label": "Courthouse address line 1",
+                    "value": "176A Lavender Hill"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEAddress2",
+                    "label": "Courthouse address line 2",
+                    "value": "London"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEPostCode",
+                    "label": "Courthouse post code",
+                    "value": "SW11 1JU"
+                  },
+                  {
+                    "promptIdentifier": "49ec9b26-dd63-4637-b2e9-55ba9948a90f",
+                    "promptReference": "HCROOM",
+                    "label": "Courtroom",
+                    "value": "Courtroom 01"
+                  },
+                  {
+                    "promptIdentifier": "c1116d12-dd35-4171-807a-2cb845357d22",
+                    "promptReference": "HTYPE",
+                    "label": "Hearing type",
+                    "value": "Application"
+                  },
+                  {
+                    "promptIdentifier": "d85cc2d7-66c8-471e-b6ff-c1bc60c6cdac",
+                    "promptReference": "HEST",
+                    "label": "Estimated duration",
+                    "value": "20 MINUTES"
+                  },
+                  {
+                    "promptIdentifier": "e73e6ab8-9bfe-4135-9fe6-f526544584d6",
+                    "promptReference": "bookingReference",
+                    "label": "Booking reference",
+                    "value": "af89cede-39ec-42ae-b19f-710a057d0dc7"
+                  }
+                ],
+                "resultWording": "",
+                "resultDefinitionGroup": "Next hearing",
+                "d20": false,
+                "label": "Next hearing in magistrates' court"
+              },
+              {
+                "resultIdentifier": "9c1dcdfa-ec44-4167-bbd4-d29c3a63a7fc",
+                "publishedForNows": true,
+                "resultWording": "",
+                "resultDefinitionGroup": "Adjournment reasons",
+                "d20": false,
+                "label": "Unexpected circumstances meant that the case could not be heard"
+              }
+            ]
+          },
+          {
+            "title": "Public service vehicles - passenger failing to pay fare",
+            "civilOffence": false,
+            "convictionDate": "2025-12-15",
+            "convictionStatus": "Convicted",
+            "plea": "GUILTY",
+            "code": "PS90015",
+            "modeOfTrial": "Summary",
+            "allocationDecision": "Summary-only offence",
+            "endorsableFlag": false,
+            "convictingCourtCode": "2577",
+            "wording": "Public service vehicles - passenger failing to pay fare",
+            "startDate": "2022-11-28",
+            "results": [
+              {
+                "resultIdentifier": "554c2622-c1cc-459e-a98d-b7f317ab065c",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "d3205319-84cf-4c5b-9d7a-7e4bb1865054",
+                    "promptReference": "periodofConditionalDischarge",
+                    "durationSequence": 1,
+                    "label": "Period of conditional discharge",
+                    "value": "12 Months"
+                  }
+                ],
+                "d20": false,
+                "dvlaCode": "E",
+                "label": "Conditional discharge"
+              },
+              {
+                "resultIdentifier": "cee54856-4450-4f28-a8a9-72b688726201",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "11a939b1-71e6-4065-8c29-007e4b52da7a",
+                    "promptReference": "licenceIssueNumber",
+                    "label": "Licence issue number",
+                    "value": "23"
+                  },
+                  {
+                    "promptIdentifier": "a8719de4-7783-448a-b792-e3f94e670ad0",
+                    "promptReference": "PENPT",
+                    "label": "Penalty points for this offence",
+                    "value": "3"
+                  },
+                  {
+                    "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+                    "promptReference": "defendantDrivingLicenceNumber",
+                    "label": "Defendant driving licence number",
+                    "value": "VANFL002222OW9PH"
+                  }
+                ],
+                "d20": true,
+                "label": "Driving record endorsed with penalty points"
+              },
+              {
+                "resultIdentifier": "4b850aa9-984c-4a15-a1ae-b2f861cfcbe8",
+                "publishedForNows": true,
+                "prompts": [
+                  {
+                    "promptIdentifier": "11a939b1-71e6-4065-8c29-007e4b52da7a",
+                    "promptReference": "licenceIssueNumber",
+                    "label": "Licence issue number",
+                    "value": "23"
+                  }
+                ],
+                "d20": false,
+                "label": "1: Prov DVLA produced"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "courtApplications": [
+      {
+        "applicationType": "Appearance to make statutory declaration (other than SJP)",
+        "applicationTypeId": "a6663f2a-c900-4bb4-a7d7-4be34cb2f1f7",
+        "applicationReceivedDate": "2025-12-15",
+        "id": "f2e8b14d-7327-451a-bee4-a5473e72ae4d",
+        "applicationReference": "28DI3699953",
+        "applicationStatus": "FINALISED",
+        "results": [
+          {
+            "resultIdentifier": "2b3f7c20-8fc1-4fad-9076-df196c24b27e",
+            "publishedForNows": false,
+            "d20": false,
+            "label": "Granted"
+          },
+          {
+            "resultIdentifier": "e2f6e11b-c3a2-4e76-8d29-fbede4174988",
+            "publishedForNows": false,
+            "prompts": [
+              {
+                "promptIdentifier": "e138b873-4363-4d4d-84a5-62b6c9bb975a",
+                "promptReference": "referredToConvictingCourt",
+                "label": "Referred to convicting court",
+                "value": "Test"
+              },
+              {
+                "promptIdentifier": "de9e3c7c-a598-4a00-b3e9-71d2130627d2",
+                "promptReference": "purposeOfTheNextHearing",
+                "label": "Purpose of the next hearing",
+                "value": "This is for a case management hearing. You must attend this hearing"
+              },
+              {
+                "promptIdentifier": "70c98fa6-804d-11e8-adc0-fa7ae01bbebc",
+                "promptReference": "208f9d3d-8f58-4f54-bca5-3c4850ce0dec",
+                "label": "Next hearing in magistrates' court",
+                "value": "Date of hearing:17/12/2025\nTime of hearing:09:33\nCourthouse organisation name:Lavender Hill Magistrates' Court\nCourthouse address line 1:176A Lavender Hill\nCourthouse address line 2:London\nCourthouse post code:SW11 1JU\nCourtroom:Courtroom 01\nHearing type:Application\nEstimated duration:20 MINUTES\nBooking reference:77c7df52-833b-4c59-bf84-fba98cad5989"
+              },
+              {
+                "promptIdentifier": "7b6ef0ac-2d0b-44e5-a68e-4720b96cc679",
+                "promptReference": "statutoryDeclarationMadeUnder",
+                "label": "Statutory declaration made under",
+                "value": "Section 14 of the Magistrates' Courts Act 1980"
+              },
+              {
+                "promptIdentifier": "36e32c50-dbec-41c4-904b-25eb20c9c54a",
+                "promptReference": "financialPenaltiesToBeWrittenOff",
+                "label": "Financial penalties to be written off",
+                "value": "No"
+              },
+              {
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedOrganisationName",
+                "label": "Prosecutor to be notified organisation name",
+                "value": "Derby Police"
+              },
+              {
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedAddress1",
+                "label": "Prosecutor to be notified address line 1",
+                "value": "1 Test St"
+              },
+              {
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedPostCode",
+                "label": "Prosecutor to be notified post code",
+                "value": "SL1 2EZ"
+              }
+            ],
+            "resultDefinitionGroup": "Enforcement",
+            "d20": false,
+            "label": "Statutory Declaration"
+          },
+          {
+            "resultIdentifier": "70c98fa6-804d-11e8-adc0-fa7ae01bbebc",
+            "publishedForNows": true,
+            "prompts": [
+              {
+                "promptIdentifier": "d27a5d86-d51f-4c6e-914b-cb4b0abc4283",
+                "promptReference": "HDATE",
+                "label": "Date of hearing",
+                "value": "17/12/2025"
+              },
+              {
+                "promptIdentifier": "4d125a5a-acbc-461d-a657-ba5643af85a6",
+                "promptReference": "timeOfHearing",
+                "label": "Time of hearing",
+                "value": "09:33"
+              },
+              {
+                "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                "promptReference": "hCHOUSEOrganisationName",
+                "label": "Courthouse organisation name",
+                "value": "Lavender Hill Magistrates' Court"
+              },
+              {
+                "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                "promptReference": "hCHOUSEAddress1",
+                "label": "Courthouse address line 1",
+                "value": "176A Lavender Hill"
+              },
+              {
+                "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                "promptReference": "hCHOUSEAddress2",
+                "label": "Courthouse address line 2",
+                "value": "London"
+              },
+              {
+                "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                "promptReference": "hCHOUSEPostCode",
+                "label": "Courthouse post code",
+                "value": "SW11 1JU"
+              },
+              {
+                "promptIdentifier": "49ec9b26-dd63-4637-b2e9-55ba9948a90f",
+                "promptReference": "HCROOM",
+                "label": "Courtroom",
+                "value": "Courtroom 01"
+              },
+              {
+                "promptIdentifier": "c1116d12-dd35-4171-807a-2cb845357d22",
+                "promptReference": "HTYPE",
+                "label": "Hearing type",
+                "value": "Application"
+              },
+              {
+                "promptIdentifier": "d85cc2d7-66c8-471e-b6ff-c1bc60c6cdac",
+                "promptReference": "HEST",
+                "label": "Estimated duration",
+                "value": "20 MINUTES"
+              },
+              {
+                "promptIdentifier": "e73e6ab8-9bfe-4135-9fe6-f526544584d6",
+                "promptReference": "bookingReference",
+                "label": "Booking reference",
+                "value": "77c7df52-833b-4c59-bf84-fba98cad5989"
+              }
+            ],
+            "resultWording": "",
+            "resultDefinitionGroup": "Next hearing",
+            "d20": false,
+            "label": "Next hearing in magistrates' court"
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": false,
+  "orderingHearingId": "cc42314d-6eee-4cbc-9ada-08a49f81c8ae"
+}

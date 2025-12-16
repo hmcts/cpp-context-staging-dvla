@@ -1,0 +1,461 @@
+{
+  "caseApplicationReferences": [
+    "28DI7056936"
+  ],
+  "cases": [
+    {
+      "caseId": "c6d1ff12-0e3f-4979-83d4-cdc05b472421",
+      "caseStatus": "INACTIVE",
+      "defendantCaseOffences": [],
+      "hasSV": false,
+      "initiationCode": "C",
+      "reference": "28DI7056936"
+    }
+  ],
+  "courtApplications": [
+    {
+      "applicationReceivedDate": "2025-12-12",
+      "applicationReference": "28DI7056936",
+      "applicationStatus": "FINALISED",
+      "applicationType": "Appearance to make statutory declaration (other than SJP)",
+      "applicationTypeId": "a6663f2a-c900-4bb4-a7d7-4be34cb2f1f7",
+      "id": "95ed984a-38d3-4a7d-aa8c-05261bbaa05e",
+      "results": [
+        {
+          "d20": false,
+          "label": "Granted",
+          "publishedForNows": false,
+          "resultIdentifier": "2b3f7c20-8fc1-4fad-9076-df196c24b27e"
+        },
+        {
+          "d20": false,
+          "label": "Statutory Declaration",
+          "prompts": [
+            {
+              "label": "Referred to convicting court",
+              "promptIdentifier": "e138b873-4363-4d4d-84a5-62b6c9bb975a",
+              "promptReference": "referredToConvictingCourt",
+              "value": "yes"
+            },
+            {
+              "label": "Purpose of the next hearing",
+              "promptIdentifier": "de9e3c7c-a598-4a00-b3e9-71d2130627d2",
+              "promptReference": "purposeOfTheNextHearing",
+              "value": "This is for a case management hearing. You must attend this hearing"
+            },
+            {
+              "label": "Statutory declaration made under",
+              "promptIdentifier": "7b6ef0ac-2d0b-44e5-a68e-4720b96cc679",
+              "promptReference": "statutoryDeclarationMadeUnder",
+              "value": "Section 14 of the Magistrates' Courts Act 1980"
+            },
+            {
+              "label": "Financial penalties to be written off",
+              "promptIdentifier": "36e32c50-dbec-41c4-904b-25eb20c9c54a",
+              "promptReference": "financialPenaltiesToBeWrittenOff",
+              "value": "No"
+            },
+            {
+              "label": "Prosecutor to be notified organisation name",
+              "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+              "promptReference": "prosecutortobenotifiedOrganisationName",
+              "value": "derbey"
+            },
+            {
+              "label": "Prosecutor to be notified address line 1",
+              "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+              "promptReference": "prosecutortobenotifiedAddress1",
+              "value": "27"
+            },
+            {
+              "label": "Prosecutor to be notified post code",
+              "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+              "promptReference": "prosecutortobenotifiedPostCode",
+              "value": "SL1 1EZ"
+            }
+          ],
+          "publishedForNows": false,
+          "resultDefinitionGroup": "Enforcement",
+          "resultIdentifier": "e2f6e11b-c3a2-4e76-8d29-fbede4174988"
+        },
+        {
+          "d20": false,
+          "label": "Next hearing in magistrates' court",
+          "prompts": [
+            {
+              "label": "Date of hearing",
+              "promptIdentifier": "d27a5d86-d51f-4c6e-914b-cb4b0abc4283",
+              "promptReference": "HDATE",
+              "value": "12/12/2025"
+            },
+            {
+              "label": "Time of hearing",
+              "promptIdentifier": "4d125a5a-acbc-461d-a657-ba5643af85a6",
+              "promptReference": "timeOfHearing",
+              "value": "10:00"
+            },
+            {
+              "label": "Courthouse organisation name",
+              "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+              "promptReference": "hCHOUSEOrganisationName",
+              "value": "Swindon Magistrates' Court"
+            },
+            {
+              "label": "Courthouse address line 1",
+              "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+              "promptReference": "hCHOUSEAddress1",
+              "value": "Princes Street"
+            },
+            {
+              "label": "Courthouse address line 2",
+              "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+              "promptReference": "hCHOUSEAddress2",
+              "value": "Swindon"
+            },
+            {
+              "label": "Courthouse address line 3",
+              "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+              "promptReference": "hCHOUSEAddress3",
+              "value": "Wilts."
+            },
+            {
+              "label": "Courthouse post code",
+              "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+              "promptReference": "hCHOUSEPostCode",
+              "value": "SN1 2JB"
+            },
+            {
+              "label": "Courtroom",
+              "promptIdentifier": "49ec9b26-dd63-4637-b2e9-55ba9948a90f",
+              "promptReference": "HCROOM",
+              "value": "Courtroom 03"
+            },
+            {
+              "label": "Hearing type",
+              "promptIdentifier": "c1116d12-dd35-4171-807a-2cb845357d22",
+              "promptReference": "HTYPE",
+              "value": "Plea"
+            },
+            {
+              "label": "Estimated duration",
+              "promptIdentifier": "d85cc2d7-66c8-471e-b6ff-c1bc60c6cdac",
+              "promptReference": "HEST",
+              "value": "20 MINUTES"
+            },
+            {
+              "label": "Booking reference",
+              "promptIdentifier": "e73e6ab8-9bfe-4135-9fe6-f526544584d6",
+              "promptReference": "bookingReference",
+              "value": "239f99c1-f5d9-4eff-858b-51b7dec88fea"
+            }
+          ],
+          "publishedForNows": true,
+          "resultDefinitionGroup": "Next hearing",
+          "resultIdentifier": "70c98fa6-804d-11e8-adc0-fa7ae01bbebc",
+          "resultWording": ""
+        }
+      ]
+    }
+  ],
+  "defendant": {
+    "address": {
+      "line1": "9999A9999AAAA",
+      "line2": "Woodlane",
+      "line3": "addressline 3",
+      "line4": "Bristol",
+      "line5": "Avon",
+      "postCode": "SW11 3TQ"
+    },
+    "dateOfBirth": "1991-11-11",
+    "driverNumber": "VANFL002222OW9PH",
+    "firstName": "Lyric",
+    "gender": "MALE",
+    "lastName": "Davis",
+    "name": "Lyric Davis",
+    "title": "Mr"
+  },
+  "distinctPrompts": [
+    {
+      "label": "Defendant driving licence number",
+      "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+      "promptReference": "defendantDrivingLicenceNumber",
+      "value": "VANFL002222OW9PH"
+    },
+    {
+      "label": "Licence issue number",
+      "promptIdentifier": "11a939b1-71e6-4065-8c29-007e4b52da7a",
+      "promptReference": "licenceIssueNumber",
+      "value": "23"
+    }
+  ],
+  "identifier": "de77b564-d04d-43fe-a23f-23dad5ac9e41",
+  "licenceProducedInCourt": "1: Prov DVLA produced",
+  "masterDefendantId": "6476e00f-dbfd-4538-b1e3-6beca129539d",
+  "materialId": "693907f9-8bb7-4638-a5ab-c9480d70ab46",
+  "notificationWasPreviouslySent": true,
+  "orderDate": "2025-12-12",
+  "orderingCourt": {
+    "address": {
+      "address1": "Princes Street",
+      "address2": "Swindon",
+      "address3": "Wilts.",
+      "address4": "",
+      "address5": "",
+      "postcode": "SN1 2JB"
+    },
+    "code": "B54MW00",
+    "courtHearingLocation": "B54MW03",
+    "id": "0f418409-301c-39df-89a2-f3989859f953",
+    "lja": {
+      "ljaCode": "3021",
+      "ljaName": "County of Wiltshire Magistrates' Court"
+    },
+    "name": "Swindon Magistrates' Court",
+    "roomId": "2823a1bf-7a92-3f76-baec-2ff106b3f507",
+    "roomName": "Courtroom 03"
+  },
+  "orderingCourtCode": "3021",
+  "orderingHearingId": "62bda0ae-5b4a-4c5b-ad89-f7f7563a4bc1",
+  "previous": {
+    "caseApplicationReferences": [
+      "28DI7056936"
+    ],
+    "cases": [
+      {
+        "caseId": "c6d1ff12-0e3f-4979-83d4-cdc05b472421",
+        "caseStatus": "ACTIVE",
+        "defendantCaseOffences": [
+          {
+            "allocationDecision": "Indictable-only offence",
+            "civilOffence": false,
+            "code": "TH68023",
+            "convictingCourtCode": "2577",
+            "convictionDate": "2025-12-12",
+            "convictionStatus": "Convicted",
+            "dateFromWhichDisqRemoved": "",
+            "disqualificationPeriod": "",
+            "dttpDtetp": "",
+            "dvlaCode": "NE98",
+            "endorsableFlag": false,
+            "fine": "",
+            "interimImposedFinalSentence": "",
+            "modeOfTrial": "Indictable",
+            "otherSentence": "E06M",
+            "penaltyPoints": "",
+            "plea": "GUILTY",
+            "results": [
+              {
+                "d20": false,
+                "dvlaCode": "E",
+                "label": "Conditional discharge",
+                "prompts": [
+                  {
+                    "durationSequence": 1,
+                    "label": "Period of conditional discharge",
+                    "promptIdentifier": "d3205319-84cf-4c5b-9d7a-7e4bb1865054",
+                    "promptReference": "periodofConditionalDischarge",
+                    "value": "6 Months"
+                  }
+                ],
+                "publishedForNows": false,
+                "resultIdentifier": "554c2622-c1cc-459e-a98d-b7f317ab065c"
+              },
+              {
+                "d20": true,
+                "label": "Driving record endorsed (no points)",
+                "prompts": [
+                  {
+                    "label": "Licence issue number",
+                    "promptIdentifier": "11a939b1-71e6-4065-8c29-007e4b52da7a",
+                    "promptReference": "licenceIssueNumber",
+                    "value": "23"
+                  }
+                ],
+                "publishedForNows": false,
+                "resultIdentifier": "b0aeb4fc-df63-4e2f-af88-97e3f23e847f"
+              },
+              {
+                "d20": false,
+                "label": "1: Prov DVLA produced",
+                "prompts": [
+                  {
+                    "label": "Licence issue number",
+                    "promptIdentifier": "11a939b1-71e6-4065-8c29-007e4b52da7a",
+                    "promptReference": "licenceIssueNumber",
+                    "value": "23"
+                  }
+                ],
+                "publishedForNows": true,
+                "resultIdentifier": "4b850aa9-984c-4a15-a1ae-b2f861cfcbe8"
+              }
+            ],
+            "startDate": "2022-12-12",
+            "title": "Robbery",
+            "wording": "From 13th November 2018, an aggravated version of this offence applies where the offence is committed against an emergency worker acting in the exercise of his / her functions as such a worker, as per section 1 of the Assaults on emergency Workers (Offences) Act 2018; see offence wording document H19568."
+          },
+          {
+            "allocationDecision": "Summary-only offence",
+            "civilOffence": false,
+            "code": "PS90015",
+            "convictingCourtCode": "2577",
+            "convictionDate": "2025-12-12",
+            "convictionStatus": "Convicted",
+            "dateFromWhichDisqRemoved": "",
+            "disqualificationPeriod": "000600",
+            "dttpDtetp": "",
+            "dvlaCode": "NE98",
+            "endorsableFlag": false,
+            "fine": "",
+            "interimImposedFinalSentence": "",
+            "modeOfTrial": "Summary",
+            "otherSentence": "E06M",
+            "penaltyPoints": "",
+            "plea": "GUILTY",
+            "results": [
+              {
+                "d20": false,
+                "dvlaCode": "E",
+                "label": "Conditional discharge",
+                "prompts": [
+                  {
+                    "durationSequence": 1,
+                    "label": "Period of conditional discharge",
+                    "promptIdentifier": "d3205319-84cf-4c5b-9d7a-7e4bb1865054",
+                    "promptReference": "periodofConditionalDischarge",
+                    "value": "6 Months"
+                  }
+                ],
+                "publishedForNows": false,
+                "resultIdentifier": "554c2622-c1cc-459e-a98d-b7f317ab065c"
+              },
+              {
+                "d20": true,
+                "label": "Discretionary with ordinary disqualification",
+                "prompts": [
+                  {
+                    "label": "Licence issue number",
+                    "promptIdentifier": "11a939b1-71e6-4065-8c29-007e4b52da7a",
+                    "promptReference": "licenceIssueNumber",
+                    "value": "23"
+                  },
+                  {
+                    "durationSequence": 1,
+                    "label": "Disqualification period",
+                    "promptIdentifier": "2bf54447-328c-4c1b-a123-341adbd52172",
+                    "promptReference": "disqualificationPeriod",
+                    "value": "6 Months"
+                  },
+                  {
+                    "label": "Extension period section 35A (immediate custodial sentence)",
+                    "promptIdentifier": "81638260-3cd1-41e7-9725-c8e91e23bda1",
+                    "promptReference": "extensionPeriodSection35AImmediateCustodialSentence",
+                    "value": "tes"
+                  },
+                  {
+                    "label": "Extension period section 35B (effect of custodial sentence noted)",
+                    "promptIdentifier": "0143f821-7cab-4e53-a00b-2fd1c3dc8204",
+                    "promptReference": "extensionPeriodSection35BEffectOfCustodialSentenceNoted",
+                    "value": "tes"
+                  },
+                  {
+                    "label": "Defendant driving licence number",
+                    "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+                    "promptReference": "defendantDrivingLicenceNumber",
+                    "value": "VANFL002222OW9PH"
+                  }
+                ],
+                "publishedForNows": false,
+                "resultIdentifier": "ccfc452e-ebe4-4cd7-b8a0-4f90768447b4",
+                "resultWording": "Disqualified for holding or obtaining a driving licence. Discretionary disqualification. Driving record endorsed. Section 34(2) Road Traffic Offenders Act 1988"
+              },
+              {
+                "d20": false,
+                "label": "1: Prov DVLA produced",
+                "prompts": [
+                  {
+                    "label": "Licence issue number",
+                    "promptIdentifier": "11a939b1-71e6-4065-8c29-007e4b52da7a",
+                    "promptReference": "licenceIssueNumber",
+                    "value": "23"
+                  }
+                ],
+                "publishedForNows": true,
+                "resultIdentifier": "4b850aa9-984c-4a15-a1ae-b2f861cfcbe8"
+              }
+            ],
+            "startDate": "2022-11-28",
+            "title": "Public service vehicles - passenger failing to pay fare",
+            "wording": "Public service vehicles - passenger failing to pay fare"
+          }
+        ],
+        "hasSV": false,
+        "initiationCode": "C",
+        "reference": "28DI7056936"
+      }
+    ],
+    "defendant": {
+      "address": {
+        "line1": "9999A9999AAAA",
+        "line2": "Woodlane",
+        "line3": "addressline 3",
+        "line4": "Bristol",
+        "line5": "Avon",
+        "postCode": "SW11 3TQ"
+      },
+      "dateOfBirth": "1991-11-11",
+      "driverNumber": "VANFL002222OW9PH",
+      "firstName": "Lyric",
+      "gender": "MALE",
+      "lastName": "Davis",
+      "name": "Lyric Davis",
+      "title": "Mr"
+    },
+    "distinctPrompts": [
+      {
+        "label": "Defendant driving licence number",
+        "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+        "promptReference": "defendantDrivingLicenceNumber",
+        "value": "VANFL002222OW9PH"
+      },
+      {
+        "label": "Licence issue number",
+        "promptIdentifier": "11a939b1-71e6-4065-8c29-007e4b52da7a",
+        "promptReference": "licenceIssueNumber",
+        "value": "23"
+      }
+    ],
+    "identifier": "a9496776-0459-4a6b-8697-8a4db593c613",
+    "licenceProducedInCourt": "1: Prov DVLA produced",
+    "masterDefendantId": "6476e00f-dbfd-4538-b1e3-6beca129539d",
+    "materialId": "3117d7c4-f63c-4194-9a26-6d2d3a0dfc7d",
+    "orderDate": "2025-12-12",
+    "orderingCourt": {
+      "address": {
+        "address1": "176A Lavender Hill",
+        "address2": "London",
+        "address3": "",
+        "address4": "",
+        "address5": "",
+        "postcode": "SW11 1JU"
+      },
+      "code": "B01LY00",
+      "courtHearingLocation": "B01LY01",
+      "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+      "lja": {
+        "ljaCode": "2577",
+        "ljaName": "South West London Magistrates' Court"
+      },
+      "name": "Lavender Hill Magistrates' Court",
+      "roomId": "9e4932f7-97b2-3010-b942-ddd2624e4dd8",
+      "roomName": "Courtroom 01"
+    },
+    "orderingHearingId": "ac6e40c6-6302-4f36-aa76-dec2dc5ce684",
+    "retrySequence": 0
+  },
+  "removedEndorsements": [
+    "NE98",
+    "NE98"
+  ],
+  "retrySequence": 0,
+  "updatedEndorsements": []
+}

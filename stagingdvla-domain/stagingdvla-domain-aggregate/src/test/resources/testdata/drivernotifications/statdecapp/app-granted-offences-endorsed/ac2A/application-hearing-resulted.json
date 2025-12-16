@@ -1,0 +1,395 @@
+{
+  "masterDefendantId": "6476e00f-dbfd-4538-b1e3-6beca129539d",
+  "orderingCourt": {
+    "address": {
+      "address1": "Princes Street",
+      "address2": "Swindon",
+      "address3": "Wilts.",
+      "address4": "",
+      "address5": "",
+      "postcode": "SN1 2JB"
+    },
+    "code": "B54MW00",
+    "courtHearingLocation": "B54MW03",
+    "id": "0f418409-301c-39df-89a2-f3989859f953",
+    "lja": {
+      "ljaCode": "3021",
+      "ljaName": "County of Wiltshire Magistrates' Court"
+    },
+    "name": "Swindon Magistrates' Court",
+    "roomId": "2823a1bf-7a92-3f76-baec-2ff106b3f507",
+    "roomName": "Courtroom 03"
+  },
+  "nowContent": {
+    "orderDate": "2025-12-12",
+    "defendant": {
+      "dateOfBirth": "1991-11-11",
+      "gender": "MALE",
+      "driverNumber": "VANFL002222OW9PH",
+      "title": "Mr",
+      "firstName": "Lyric",
+      "lastName": "Davis",
+      "name": "Lyric Davis",
+      "address": {
+        "line1": "9999A9999AAAA",
+        "line2": "Woodlane",
+        "line3": "addressline 3",
+        "line4": "Bristol",
+        "line5": "Avon",
+        "postCode": "SW11 3TQ"
+      }
+    },
+    "caseApplicationReferences": [
+      "28DI7056936"
+    ],
+    "cases": [
+      {
+        "caseStatus": "INACTIVE",
+        "initiationCode": "C",
+        "reference": "28DI7056936",
+        "caseId": "c6d1ff12-0e3f-4979-83d4-cdc05b472421",
+        "defendantCaseOffences": [
+          {
+            "title": "Robbery",
+            "civilOffence": false,
+            "convictionDate": "2025-12-12",
+            "convictionStatus": "Convicted",
+            "plea": "GUILTY",
+            "code": "TH68023",
+            "modeOfTrial": "Indictable",
+            "allocationDecision": "Indictable-only offence",
+            "endorsableFlag": false,
+            "convictingCourtCode": "2577",
+            "wording": "From 13th November 2018, an aggravated version of this offence applies where the offence is committed against an emergency worker acting in the exercise of his / her functions as such a worker, as per section 1 of the Assaults on emergency Workers (Offences) Act 2018; see offence wording document H19568.",
+            "startDate": "2022-12-12",
+            "results": [
+              {
+                "resultIdentifier": "d278650c-e429-11e8-9f32-f2801f1b9fd1",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "70c98fa6-804d-11e8-adc0-fa7ae01bbebc",
+                    "promptReference": "24622c8a-344e-40e3-b61a-b482fd10fccd",
+                    "label": "Next hearing in magistrates' court",
+                    "value": "Date of hearing:12/12/2025\nTime of hearing:10:00\nCourthouse organisation name:Swindon Magistrates' Court\nCourthouse address line 1:Princes Street\nCourthouse address line 2:Swindon\nCourthouse address line 3:Wilts.\nCourthouse post code:SN1 2JB\nCourtroom:Courtroom 03\nHearing type:Plea\nEstimated duration:20 MINUTES\nBooking reference:239f99c1-f5d9-4eff-858b-51b7dec88fea"
+                  },
+                  {
+                    "promptIdentifier": "70c98fa6-804d-11e8-adc0-fa7ae01bbebc",
+                    "promptReference": "f39c76de-68b3-4da1-86fd-02bcc8daaa7e",
+                    "label": "Next hearing in magistrates' court",
+                    "value": "Date of hearing:12/12/2025\nTime of hearing:10:00\nCourthouse organisation name:Swindon Magistrates' Court\nCourthouse address line 1:Princes Street\nCourthouse address line 2:Swindon\nCourthouse address line 3:Wilts.\nCourthouse post code:SN1 2JB\nCourtroom:Courtroom 03\nHearing type:Bail Application\nEstimated duration:20 MINUTES\nBooking reference:330e76e1-8f42-4e7c-adb1-a9cbcc64814d"
+                  },
+                  {
+                    "promptIdentifier": "61f951c3-f18d-4a44-ae4a-0cad4efb4133",
+                    "promptReference": "defendantToAttendTheNextHearing",
+                    "label": "Defendant to attend the next hearing",
+                    "value": "Yes"
+                  },
+                  {
+                    "promptIdentifier": "1d55fdeb-7dbc-46ec-b3ff-7b15fe08a476",
+                    "promptReference": "76e8cb5d-83b7-472c-be2b-becc97954077",
+                    "label": "At request of the prosecution",
+                    "value": "Reason:s"
+                  },
+                  {
+                    "promptIdentifier": "9c1dcdfa-ec44-4167-bbd4-d29c3a63a7fc",
+                    "promptReference": "dfbe9107-4e8a-4c39-be5e-a617dee40e54",
+                    "label": "Unexpected circumstances meant that the case could not be heard",
+                    "value": ""
+                  },
+                  {
+                    "promptIdentifier": "7fc17a01-2f5a-4433-aae9-28e0c959f73b",
+                    "promptReference": "cf256ddc-97dd-4171-b93b-d8f75e76e7f7",
+                    "label": "Adjournment reasons",
+                    "value": ""
+                  }
+                ],
+                "resultWording": "",
+                "d20": false,
+                "label": "Adjournment"
+              },
+              {
+                "resultIdentifier": "70c98fa6-804d-11e8-adc0-fa7ae01bbebc",
+                "publishedForNows": true,
+                "prompts": [
+                  {
+                    "promptIdentifier": "d27a5d86-d51f-4c6e-914b-cb4b0abc4283",
+                    "promptReference": "HDATE",
+                    "label": "Date of hearing",
+                    "value": "12/12/2025"
+                  },
+                  {
+                    "promptIdentifier": "4d125a5a-acbc-461d-a657-ba5643af85a6",
+                    "promptReference": "timeOfHearing",
+                    "label": "Time of hearing",
+                    "value": "10:00"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEOrganisationName",
+                    "label": "Courthouse organisation name",
+                    "value": "Swindon Magistrates' Court"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEAddress1",
+                    "label": "Courthouse address line 1",
+                    "value": "Princes Street"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEAddress2",
+                    "label": "Courthouse address line 2",
+                    "value": "Swindon"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEAddress3",
+                    "label": "Courthouse address line 3",
+                    "value": "Wilts."
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEPostCode",
+                    "label": "Courthouse post code",
+                    "value": "SN1 2JB"
+                  },
+                  {
+                    "promptIdentifier": "49ec9b26-dd63-4637-b2e9-55ba9948a90f",
+                    "promptReference": "HCROOM",
+                    "label": "Courtroom",
+                    "value": "Courtroom 03"
+                  },
+                  {
+                    "promptIdentifier": "c1116d12-dd35-4171-807a-2cb845357d22",
+                    "promptReference": "HTYPE",
+                    "label": "Hearing type",
+                    "value": "Bail Application"
+                  },
+                  {
+                    "promptIdentifier": "d85cc2d7-66c8-471e-b6ff-c1bc60c6cdac",
+                    "promptReference": "HEST",
+                    "label": "Estimated duration",
+                    "value": "20 MINUTES"
+                  },
+                  {
+                    "promptIdentifier": "e73e6ab8-9bfe-4135-9fe6-f526544584d6",
+                    "promptReference": "bookingReference",
+                    "label": "Booking reference",
+                    "value": "330e76e1-8f42-4e7c-adb1-a9cbcc64814d"
+                  }
+                ],
+                "resultWording": "",
+                "resultDefinitionGroup": "Next hearing",
+                "d20": false,
+                "label": "Next hearing in magistrates' court"
+              },
+              {
+                "resultIdentifier": "1d55fdeb-7dbc-46ec-b3ff-7b15fe08a476",
+                "publishedForNows": true,
+                "prompts": [
+                  {
+                    "promptIdentifier": "8c144a05-5804-4478-a419-12bab06748cc",
+                    "promptReference": "reason",
+                    "label": "Reason",
+                    "value": "s"
+                  }
+                ],
+                "resultWording": "",
+                "resultDefinitionGroup": "Adjournment reasons",
+                "d20": false,
+                "label": "At request of the prosecution"
+              },
+              {
+                "resultIdentifier": "9c1dcdfa-ec44-4167-bbd4-d29c3a63a7fc",
+                "publishedForNows": true,
+                "resultWording": "",
+                "resultDefinitionGroup": "Adjournment reasons",
+                "d20": false,
+                "label": "Unexpected circumstances meant that the case could not be heard"
+              }
+            ]
+          },
+          {
+            "title": "Public service vehicles - passenger failing to pay fare",
+            "civilOffence": false,
+            "convictionDate": "2025-12-12",
+            "convictionStatus": "Convicted",
+            "plea": "GUILTY",
+            "code": "PS90015",
+            "modeOfTrial": "Summary",
+            "allocationDecision": "Summary-only offence",
+            "endorsableFlag": false,
+            "convictingCourtCode": "2577",
+            "wording": "Public service vehicles - passenger failing to pay fare",
+            "startDate": "2022-11-28",
+            "results": [
+              {
+                "resultIdentifier": "eb2e4c4f-b738-4a4d-9cce-0572cecb7cb8",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "6f305506-9919-4e7b-bd57-c4c352ec3e3e",
+                    "promptReference": "details",
+                    "label": "Details",
+                    "value": "Complaint withdrawn"
+                  }
+                ],
+                "resultDefinitionGroup": "WOAEXTEND",
+                "d20": false,
+                "label": "Withdrawn"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "courtApplications": [
+      {
+        "applicationType": "Appearance to make statutory declaration (other than SJP)",
+        "applicationTypeId": "a6663f2a-c900-4bb4-a7d7-4be34cb2f1f7",
+        "applicationReceivedDate": "2025-12-12",
+        "id": "95ed984a-38d3-4a7d-aa8c-05261bbaa05e",
+        "applicationReference": "28DI7056936",
+        "applicationStatus": "FINALISED",
+        "results": [
+          {
+            "resultIdentifier": "2b3f7c20-8fc1-4fad-9076-df196c24b27e",
+            "publishedForNows": false,
+            "d20": false,
+            "label": "Granted"
+          },
+          {
+            "resultIdentifier": "e2f6e11b-c3a2-4e76-8d29-fbede4174988",
+            "publishedForNows": false,
+            "prompts": [
+              {
+                "promptIdentifier": "e138b873-4363-4d4d-84a5-62b6c9bb975a",
+                "promptReference": "referredToConvictingCourt",
+                "label": "Referred to convicting court",
+                "value": "yes"
+              },
+              {
+                "promptIdentifier": "de9e3c7c-a598-4a00-b3e9-71d2130627d2",
+                "promptReference": "purposeOfTheNextHearing",
+                "label": "Purpose of the next hearing",
+                "value": "This is for a case management hearing. You must attend this hearing"
+              },
+              {
+                "promptIdentifier": "7b6ef0ac-2d0b-44e5-a68e-4720b96cc679",
+                "promptReference": "statutoryDeclarationMadeUnder",
+                "label": "Statutory declaration made under",
+                "value": "Section 14 of the Magistrates' Courts Act 1980"
+              },
+              {
+                "promptIdentifier": "36e32c50-dbec-41c4-904b-25eb20c9c54a",
+                "promptReference": "financialPenaltiesToBeWrittenOff",
+                "label": "Financial penalties to be written off",
+                "value": "No"
+              },
+              {
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedOrganisationName",
+                "label": "Prosecutor to be notified organisation name",
+                "value": "derbey"
+              },
+              {
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedAddress1",
+                "label": "Prosecutor to be notified address line 1",
+                "value": "27"
+              },
+              {
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedPostCode",
+                "label": "Prosecutor to be notified post code",
+                "value": "SL1 1EZ"
+              }
+            ],
+            "resultDefinitionGroup": "Enforcement",
+            "d20": false,
+            "label": "Statutory Declaration"
+          },
+          {
+            "resultIdentifier": "70c98fa6-804d-11e8-adc0-fa7ae01bbebc",
+            "publishedForNows": true,
+            "prompts": [
+              {
+                "promptIdentifier": "d27a5d86-d51f-4c6e-914b-cb4b0abc4283",
+                "promptReference": "HDATE",
+                "label": "Date of hearing",
+                "value": "12/12/2025"
+              },
+              {
+                "promptIdentifier": "4d125a5a-acbc-461d-a657-ba5643af85a6",
+                "promptReference": "timeOfHearing",
+                "label": "Time of hearing",
+                "value": "10:00"
+              },
+              {
+                "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                "promptReference": "hCHOUSEOrganisationName",
+                "label": "Courthouse organisation name",
+                "value": "Swindon Magistrates' Court"
+              },
+              {
+                "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                "promptReference": "hCHOUSEAddress1",
+                "label": "Courthouse address line 1",
+                "value": "Princes Street"
+              },
+              {
+                "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                "promptReference": "hCHOUSEAddress2",
+                "label": "Courthouse address line 2",
+                "value": "Swindon"
+              },
+              {
+                "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                "promptReference": "hCHOUSEAddress3",
+                "label": "Courthouse address line 3",
+                "value": "Wilts."
+              },
+              {
+                "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                "promptReference": "hCHOUSEPostCode",
+                "label": "Courthouse post code",
+                "value": "SN1 2JB"
+              },
+              {
+                "promptIdentifier": "49ec9b26-dd63-4637-b2e9-55ba9948a90f",
+                "promptReference": "HCROOM",
+                "label": "Courtroom",
+                "value": "Courtroom 03"
+              },
+              {
+                "promptIdentifier": "c1116d12-dd35-4171-807a-2cb845357d22",
+                "promptReference": "HTYPE",
+                "label": "Hearing type",
+                "value": "Plea"
+              },
+              {
+                "promptIdentifier": "d85cc2d7-66c8-471e-b6ff-c1bc60c6cdac",
+                "promptReference": "HEST",
+                "label": "Estimated duration",
+                "value": "20 MINUTES"
+              },
+              {
+                "promptIdentifier": "e73e6ab8-9bfe-4135-9fe6-f526544584d6",
+                "promptReference": "bookingReference",
+                "label": "Booking reference",
+                "value": "239f99c1-f5d9-4eff-858b-51b7dec88fea"
+              }
+            ],
+            "resultWording": "",
+            "resultDefinitionGroup": "Next hearing",
+            "d20": false,
+            "label": "Next hearing in magistrates' court"
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": false,
+  "orderingHearingId": "62bda0ae-5b4a-4c5b-ad89-f7f7563a4bc1"
+}

@@ -184,5 +184,5 @@
   "orderingCourtCode": "2577",
   "orderingHearingId": "9d5be0fc-f9e4-4817-a438-c4da871955de",
   "retrySequence": 0,
-  "isCopiedFromPrevious": true
+  "resetNotificationHistory": true
 }

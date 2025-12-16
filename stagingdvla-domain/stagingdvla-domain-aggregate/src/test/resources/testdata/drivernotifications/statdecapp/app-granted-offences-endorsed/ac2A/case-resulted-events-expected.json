@@ -1,16 +1,19 @@
 {
   "caseApplicationReferences": [
-    "89QB632195"
+    "28DI7056936"
   ],
   "cases": [
     {
-      "caseId": "03c77559-d9a8-49c9-8bc3-645a45d6ef99",
+      "caseId": "c6d1ff12-0e3f-4979-83d4-cdc05b472421",
       "caseStatus": "ACTIVE",
       "defendantCaseOffences": [
         {
+          "allocationDecision": "Indictable-only offence",
           "civilOffence": false,
           "code": "TH68023",
-          "convictionStatus": "Not Convicted",
+          "convictingCourtCode": "2577",
+          "convictionDate": "2025-12-12",
+          "convictionStatus": "Convicted",
           "dateFromWhichDisqRemoved": "",
           "disqualificationPeriod": "",
           "dttpDtetp": "",
@@ -21,6 +24,7 @@
           "modeOfTrial": "Indictable",
           "otherSentence": "E06M",
           "penaltyPoints": "",
+          "plea": "GUILTY",
           "results": [
             {
               "d20": false,
@@ -41,34 +45,54 @@
             {
               "d20": true,
               "label": "Driving record endorsed (no points)",
+              "prompts": [
+                {
+                  "label": "Licence issue number",
+                  "promptIdentifier": "11a939b1-71e6-4065-8c29-007e4b52da7a",
+                  "promptReference": "licenceIssueNumber",
+                  "value": "23"
+                }
+              ],
               "publishedForNows": false,
               "resultIdentifier": "b0aeb4fc-df63-4e2f-af88-97e3f23e847f"
             },
             {
               "d20": false,
-              "label": "0: None or unknown",
+              "label": "1: Prov DVLA produced",
+              "prompts": [
+                {
+                  "label": "Licence issue number",
+                  "promptIdentifier": "11a939b1-71e6-4065-8c29-007e4b52da7a",
+                  "promptReference": "licenceIssueNumber",
+                  "value": "23"
+                }
+              ],
               "publishedForNows": true,
-              "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956"
+              "resultIdentifier": "4b850aa9-984c-4a15-a1ae-b2f861cfcbe8"
             }
           ],
-          "startDate": "2019-11-28",
+          "startDate": "2022-12-12",
           "title": "Robbery",
           "wording": "From 13th November 2018, an aggravated version of this offence applies where the offence is committed against an emergency worker acting in the exercise of his / her functions as such a worker, as per section 1 of the Assaults on emergency Workers (Offences) Act 2018; see offence wording document H19568."
         },
         {
+          "allocationDecision": "Summary-only offence",
           "civilOffence": false,
-          "code": "CA03012",
-          "convictionStatus": "Not Convicted",
+          "code": "PS90015",
+          "convictingCourtCode": "2577",
+          "convictionDate": "2025-12-12",
+          "convictionStatus": "Convicted",
           "dateFromWhichDisqRemoved": "",
           "disqualificationPeriod": "000600",
           "dttpDtetp": "",
           "dvlaCode": "NE98",
           "endorsableFlag": false,
           "fine": "",
-          "interimImposedFinalSentence": "2",
+          "interimImposedFinalSentence": "",
           "modeOfTrial": "Summary",
           "otherSentence": "E06M",
           "penaltyPoints": "",
+          "plea": "GUILTY",
           "results": [
             {
               "d20": false,
@@ -91,6 +115,12 @@
               "label": "Discretionary with ordinary disqualification",
               "prompts": [
                 {
+                  "label": "Licence issue number",
+                  "promptIdentifier": "11a939b1-71e6-4065-8c29-007e4b52da7a",
+                  "promptReference": "licenceIssueNumber",
+                  "value": "23"
+                },
+                {
                   "durationSequence": 1,
                   "label": "Disqualification period",
                   "promptIdentifier": "2bf54447-328c-4c1b-a123-341adbd52172",
@@ -98,10 +128,22 @@
                   "value": "6 Months"
                 },
                 {
-                  "label": "Date of Interim Disqualification",
-                  "promptIdentifier": "7fd83833-178c-48db-866b-33fc9e69a0d1",
-                  "promptReference": "600704c8-686a-49d1-b0db-3f67e22553ab",
-                  "value": "Starting from date (date of interim disqualification):01/06/2026"
+                  "label": "Extension period section 35A (immediate custodial sentence)",
+                  "promptIdentifier": "81638260-3cd1-41e7-9725-c8e91e23bda1",
+                  "promptReference": "extensionPeriodSection35AImmediateCustodialSentence",
+                  "value": "tes"
+                },
+                {
+                  "label": "Extension period section 35B (effect of custodial sentence noted)",
+                  "promptIdentifier": "0143f821-7cab-4e53-a00b-2fd1c3dc8204",
+                  "promptReference": "extensionPeriodSection35BEffectOfCustodialSentenceNoted",
+                  "value": "tes"
+                },
+                {
+                  "label": "Defendant driving licence number",
+                  "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+                  "promptReference": "defendantDrivingLicenceNumber",
+                  "value": "VANFL002222OW9PH"
                 }
               ],
               "publishedForNows": false,
@@ -110,57 +152,66 @@
             },
             {
               "d20": false,
-              "label": "Date of Interim Disqualification",
+              "label": "1: Prov DVLA produced",
               "prompts": [
                 {
-                  "label": "Starting from date (date of interim disqualification)",
-                  "promptIdentifier": "03fe43ad-1857-4ba1-8481-6c660744b617",
-                  "promptReference": "startingFromDateDateOfInterimDisqualification",
-                  "value": "01/06/2026"
+                  "label": "Licence issue number",
+                  "promptIdentifier": "11a939b1-71e6-4065-8c29-007e4b52da7a",
+                  "promptReference": "licenceIssueNumber",
+                  "value": "23"
                 }
               ],
               "publishedForNows": true,
-              "resultIdentifier": "7fd83833-178c-48db-866b-33fc9e69a0d1"
-            },
-            {
-              "d20": false,
-              "label": "0: None or unknown",
-              "publishedForNows": true,
-              "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956"
+              "resultIdentifier": "4b850aa9-984c-4a15-a1ae-b2f861cfcbe8"
             }
           ],
-          "startDate": "2019-11-28",
-          "title": "Possess / control TV set with intent another use install without a licence",
-          "wording": "From 13th November 2018, an aggravated version of this offence applies where the offence is committed against an emergency worker acting in the exercise of his / her functions as such a worker, as per section 1 of the Assaults on emergency Workers (Offences) Act 2018; see offence wording document H19568."
+          "startDate": "2022-11-28",
+          "title": "Public service vehicles - passenger failing to pay fare",
+          "wording": "Public service vehicles - passenger failing to pay fare"
         }
       ],
       "hasSV": false,
       "initiationCode": "C",
-      "reference": "89QB632195"
+      "reference": "28DI7056936"
     }
   ],
   "courtApplications": [],
   "defendant": {
     "address": {
-      "line1": "799",
-      "line2": "StreetDescription",
-      "line3": "Locality2O",
-      "postCode": "TW14 9XA"
+      "line1": "9999A9999AAAA",
+      "line2": "Woodlane",
+      "line3": "addressline 3",
+      "line4": "Bristol",
+      "line5": "Avon",
+      "postCode": "SW11 3TQ"
     },
-    "dateOfBirth": "1983-05-14",
-    "firstName": "Mike1",
+    "dateOfBirth": "1991-11-11",
+    "driverNumber": "VANFL002222OW9PH",
+    "firstName": "Lyric",
     "gender": "MALE",
-    "lastName": "Blick",
-    "middleName": "Jac ",
-    "name": "Mike1 Jac  Blick",
+    "lastName": "Davis",
+    "name": "Lyric Davis",
     "title": "Mr"
   },
-  "distinctPrompts": [],
-  "identifier": "45eae45e-5fc4-4d08-a735-86404da25bad",
-  "licenceProducedInCourt": "0: None or unknown",
-  "masterDefendantId": "7f149498-7ab4-4ea0-b103-1375d31b07f7",
-  "materialId": "7d457ec3-0538-4873-a13d-0d158bf73d06",
-  "orderDate": "2025-12-11",
+  "distinctPrompts": [
+    {
+      "label": "Defendant driving licence number",
+      "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+      "promptReference": "defendantDrivingLicenceNumber",
+      "value": "VANFL002222OW9PH"
+    },
+    {
+      "label": "Licence issue number",
+      "promptIdentifier": "11a939b1-71e6-4065-8c29-007e4b52da7a",
+      "promptReference": "licenceIssueNumber",
+      "value": "23"
+    }
+  ],
+  "identifier": "6ce1c610-3f44-4406-9d7b-d104fc8651c7",
+  "licenceProducedInCourt": "1: Prov DVLA produced",
+  "masterDefendantId": "6476e00f-dbfd-4538-b1e3-6beca129539d",
+  "materialId": "bbdfa173-2e76-435b-b3a4-70322b45b5f3",
+  "orderDate": "2025-12-12",
   "orderingCourt": {
     "address": {
       "address1": "176A Lavender Hill",
@@ -182,7 +233,6 @@
     "roomName": "Courtroom 01"
   },
   "orderingCourtCode": "2577",
-  "orderingHearingId": "43350a82-0405-42c9-8963-39571712afc6",
-  "retrySequence": 0,
-  "isCopiedFromPrevious": true
+  "orderingHearingId": "ac6e40c6-6302-4f36-aa76-dec2dc5ce684",
+  "retrySequence": 0
 }

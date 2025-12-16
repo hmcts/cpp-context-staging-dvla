@@ -97,8 +97,9 @@
     "previous": {
       "$ref": "#/definitions/now"
     },
-    "isCopiedFromPrevious": {
-      "type": "boolean"
+    "resetNotificationHistory": {
+      "type": "boolean",
+      "description": "Indicates that this becomes latest DVLA notification and will be used as orginal for future amendments. This happens when application is amened to refuse DVLA endorsments"
     }
   },
   "required": [

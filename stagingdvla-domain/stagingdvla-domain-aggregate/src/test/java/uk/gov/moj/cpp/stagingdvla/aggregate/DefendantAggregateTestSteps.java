@@ -1,6 +1,7 @@
 package uk.gov.moj.cpp.stagingdvla.aggregate;
 
 import static java.nio.charset.Charset.defaultCharset;
+import static java.util.Objects.isNull;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import uk.gov.justice.core.courts.CourtCentre;
@@ -62,19 +63,24 @@ class DefendantAggregateTestSteps {
                         step.input.masterDefendantId(),
                         step.input.isReshare
                 );
-                assertThat(name + " - No events were produced", eventStream, IsNull.notNullValue());
-                final List<String> actualEvents = eventStream
-                        .map(objectToJsonObjectConverter::convert)
-                        .map(Object::toString)
-                        .toList();
-                final String expectedEventsJson = payloadAsString(step.expectedEventsJsonFile(), Map.of());
-                final JsonArray expectedEventsArray = jsonStringToArray(expectedEventsJson);
-                assertThat(actualEvents.size() + " events were produced, expected " + expectedEventsArray.size() + "\nactualEvents:\n" + String.join("\n", actualEvents), actualEvents.size() == expectedEventsArray.size());
-                for (int i = 0; i < expectedEventsArray.size(); i++) {
-                    final String expectedEventPayload = objectToJsonObjectConverter.convert(expectedEventsArray.getJsonObject(i)).toString();
-                    final String actualEventPayload = actualEvents.get(i);
-                    assertThat(actualEventPayload, JsonMatcher.matchesJson(expectedEventPayload, FIELDS_TO_CHECK_PRESENCE_ONLY));
+                if(isNull(step.expectedEventsJsonFile)){
+                    assertThat(name + " - No events were produced", eventStream, IsNull.nullValue());
+                }else{
+                    assertThat(name + " - No events were produced", eventStream, IsNull.notNullValue());
+                    final List<String> actualEvents = eventStream
+                            .map(objectToJsonObjectConverter::convert)
+                            .map(Object::toString)
+                            .toList();
+                    final String expectedEventsJson = payloadAsString(step.expectedEventsJsonFile(), Map.of());
+                    final JsonArray expectedEventsArray = jsonStringToArray(expectedEventsJson);
+                    assertThat(actualEvents.size() + " events were produced, expected " + expectedEventsArray.size() + "\nactualEvents:\n" + String.join("\n", actualEvents), actualEvents.size() == expectedEventsArray.size());
+                    for (int i = 0; i < expectedEventsArray.size(); i++) {
+                        final String expectedEventPayload = objectToJsonObjectConverter.convert(expectedEventsArray.getJsonObject(i)).toString();
+                        final String actualEventPayload = actualEvents.get(i);
+                        assertThat(actualEventPayload, JsonMatcher.matchesJson(expectedEventPayload, FIELDS_TO_CHECK_PRESENCE_ONLY));
+                    }
                 }
+
             }
         }
 

@@ -65,6 +65,7 @@ import uk.gov.justice.cpp.stagingdvla.event.DistinctPrompts;
 import uk.gov.justice.cpp.stagingdvla.event.DriverNotified;
 import uk.gov.justice.cpp.stagingdvla.event.Previous;
 import uk.gov.justice.cpp.stagingdvla.event.Results;
+import uk.gov.moj.cpp.stagingdvla.aggregate.model.DriverNotifiedHistory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -98,8 +99,7 @@ public class DriverNotifiedEngine {
      * @return
      */
     public static List<DriverNotified> transformDriverNotified(
-            final Map<String, DriverNotified> previousDriverNotifiedByCase,
-            final Map<String, DriverNotified> previousPreviousDriverNotifiedByCase,
+            final Map<String, DriverNotifiedHistory> driverNotifiedHistoryByCase,
             final String orderDate,
             final CourtCentre orderingCourt,
             final String amendmentDate,
@@ -111,8 +111,7 @@ public class DriverNotifiedEngine {
 
         final List<DriverNotified> driverNotifiedList = currentCases
                 .stream()
-                .map(currentCase -> processCase(previousDriverNotifiedByCase.get(currentCase.getReference()),
-                        previousPreviousDriverNotifiedByCase.get(currentCase.getReference()),
+                .map(currentCase -> processCase(driverNotifiedHistoryByCase.get(currentCase.getReference()),
                         orderDate,
                         orderingCourt,
                         amendmentDate,
@@ -130,8 +129,7 @@ public class DriverNotifiedEngine {
         return driverNotifiedList;
     }
 
-    private static DriverNotified processCase(final DriverNotified previousDriverNotified,
-                                              final DriverNotified previousPreviousDriverNotified,
+    private static DriverNotified processCase(final DriverNotifiedHistory driverNotifiedHistory,
                                               final String orderDate,
                                               final CourtCentre orderingCourt,
                                               final String amendmentDate,
@@ -144,11 +142,10 @@ public class DriverNotifiedEngine {
         LOGGER.info("Processing case: {}", currentCase.getReference());
 
         if(Boolean.TRUE.equals(isReshare) && hasToUsePreviousEvent(currentCase, courtApplications)){
-            if (nonNull(previousPreviousDriverNotified)) {
+            if (nonNull(driverNotifiedHistory) && nonNull(driverNotifiedHistory.getPrevious())) {
                 return DriverNotified.driverNotified()
-                        .withValuesFrom(previousPreviousDriverNotified)
-                        //endorsement
-                        .withIsCopiedFromPrevious(true)
+                        .withValuesFrom(driverNotifiedHistory.getPrevious())
+                        .withResetNotificationHistory(true)
                         .build();
             } else {
                 return null;
@@ -156,6 +153,7 @@ public class DriverNotifiedEngine {
         }
 
         // Get previous case using reference number
+        final DriverNotified previousDriverNotified = isNull(driverNotifiedHistory) ? null : driverNotifiedHistory.getLatest();
         final Cases previousCase = nonNull(previousDriverNotified) ? previousDriverNotified.getCases()
                 .stream()
                 .filter((aCase -> equalsIgnoreCase(currentCase.getReference(), aCase.getReference())))

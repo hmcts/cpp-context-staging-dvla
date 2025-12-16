@@ -1,10 +1,10 @@
 {
   "caseApplicationReferences": [
-    "89QB632194"
+    "89QB632195"
   ],
   "cases": [
     {
-      "caseId": "7933c3c9-d3e4-44e1-a06c-4e79a13a1b73",
+      "caseId": "03c77559-d9a8-49c9-8bc3-645a45d6ef99",
       "caseStatus": "ACTIVE",
       "defendantCaseOffences": [
         {
@@ -60,14 +60,14 @@
           "code": "CA03012",
           "convictionStatus": "Not Convicted",
           "dateFromWhichDisqRemoved": "",
-          "disqualificationPeriod": "000700",
+          "disqualificationPeriod": "000600",
           "dttpDtetp": "",
           "dvlaCode": "NE98",
           "endorsableFlag": false,
           "fine": "",
           "interimImposedFinalSentence": "2",
           "modeOfTrial": "Summary",
-          "otherSentence": "E07M",
+          "otherSentence": "E06M",
           "penaltyPoints": "",
           "results": [
             {
@@ -80,7 +80,7 @@
                   "label": "Period of conditional discharge",
                   "promptIdentifier": "d3205319-84cf-4c5b-9d7a-7e4bb1865054",
                   "promptReference": "periodofConditionalDischarge",
-                  "value": "7 Months"
+                  "value": "6 Months"
                 }
               ],
               "publishedForNows": false,
@@ -95,13 +95,13 @@
                   "label": "Disqualification period",
                   "promptIdentifier": "2bf54447-328c-4c1b-a123-341adbd52172",
                   "promptReference": "disqualificationPeriod",
-                  "value": "7 Months"
+                  "value": "6 Months"
                 },
                 {
                   "label": "Date of Interim Disqualification",
                   "promptIdentifier": "7fd83833-178c-48db-866b-33fc9e69a0d1",
-                  "promptReference": "af155da6-0086-4188-861c-473eb6f91f7a",
-                  "value": "Starting from date (date of interim disqualification):01/01/2026"
+                  "promptReference": "600704c8-686a-49d1-b0db-3f67e22553ab",
+                  "value": "Starting from date (date of interim disqualification):01/06/2026"
                 }
               ],
               "publishedForNows": false,
@@ -116,7 +116,7 @@
                   "label": "Starting from date (date of interim disqualification)",
                   "promptIdentifier": "03fe43ad-1857-4ba1-8481-6c660744b617",
                   "promptReference": "startingFromDateDateOfInterimDisqualification",
-                  "value": "01/01/2026"
+                  "value": "01/06/2026"
                 }
               ],
               "publishedForNows": true,
@@ -136,7 +136,7 @@
       ],
       "hasSV": false,
       "initiationCode": "C",
-      "reference": "89QB632194"
+      "reference": "89QB632195"
     }
   ],
   "courtApplications": [],
@@ -147,7 +147,7 @@
       "line3": "Locality2O",
       "postCode": "TW14 9XA"
     },
-    "dateOfBirth": "1983-05-13",
+    "dateOfBirth": "1983-05-14",
     "firstName": "Mike1",
     "gender": "MALE",
     "lastName": "Blick",
@@ -156,10 +156,10 @@
     "title": "Mr"
   },
   "distinctPrompts": [],
-  "identifier": "601e768c-aa0f-4693-87fb-d1a94b110495",
+  "identifier": "45eae45e-5fc4-4d08-a735-86404da25bad",
   "licenceProducedInCourt": "0: None or unknown",
-  "masterDefendantId": "87a19ebf-5b57-4018-8a2d-c22e065cdf12",
-  "materialId": "b1983317-fbc3-4913-acf4-c1a3ddfbd75c",
+  "masterDefendantId": "7f149498-7ab4-4ea0-b103-1375d31b07f7",
+  "materialId": "7d457ec3-0538-4873-a13d-0d158bf73d06",
   "orderDate": "2025-12-11",
   "orderingCourt": {
     "address": {
@@ -182,7 +182,7 @@
     "roomName": "Courtroom 01"
   },
   "orderingCourtCode": "2577",
-  "orderingHearingId": "30a0c366-ae56-46dc-a7e2-16818d13de3a",
+  "orderingHearingId": "43350a82-0405-42c9-8963-39571712afc6",
   "retrySequence": 0,
-  "isCopiedFromPrevious": true
+  "resetNotificationHistory": true
 }

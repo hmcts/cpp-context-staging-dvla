@@ -77,6 +77,7 @@ import uk.gov.justice.cpp.stagingdvla.event.DriverNotified;
 import uk.gov.justice.cpp.stagingdvla.event.Prompts;
 import uk.gov.justice.cpp.stagingdvla.event.Results;
 import uk.gov.justice.services.test.utils.core.reflection.ReflectionUtil;
+import uk.gov.moj.cpp.stagingdvla.aggregate.model.DriverNotifiedHistory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -110,8 +111,7 @@ public class DriverNotifiedEngineTest {
     private final static List<Cases> casesNotConvicted = getCases(prefix, false, null, getPrompt("5"), null, 3);
     private final static List<String> caseReferences = getCaseReferences();
     private final static DriverNotified previous = getPreviousDriverNotified(prefixForPrevious, true, previousConvictionDate, false, previousOrderDate);
-    private final static Map<String, DriverNotified> previousByCase = new HashMap<>();
-    private final static Map<String, DriverNotified> previousPreviousByCase = new HashMap<>();
+    private final static Map<String, DriverNotifiedHistory> previousByCase = new HashMap<>();
     private final static UUID hearingId = randomUUID();
 
     private final static String promptValue1 = "4 months";
@@ -163,10 +163,10 @@ public class DriverNotifiedEngineTest {
 
     @Test
     public void shouldTransformDriverNotified() {
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
 
         List<DriverNotified> driverNotifiedList = transformDriverNotified(
-                previousByCase, previousPreviousByCase, orderDate, crownCourt, amendmentDate, defendant,
+                previousByCase, orderDate, crownCourt, amendmentDate, defendant,
                 cases, hearingId, null, false);
 
         final DriverNotified transformed = driverNotifiedList.get(0);
@@ -208,7 +208,7 @@ public class DriverNotifiedEngineTest {
     @Test
     public void shouldTransformDriverNotifiedWithCorrectOrderingAndConvictingCourtAndDateInformation() {
         DriverNotified previousNullCurrentConvictedCrown = transformDriverNotified(
-                previousByCase, previousPreviousByCase, orderDate, crownCourt, null, defendant,
+                previousByCase, orderDate, crownCourt, null, defendant,
                 casesConvicted, hearingId, null, false).get(0);
 
         assertThat(previousNullCurrentConvictedCrown.getOrderDate(), is(equalTo(orderDate)));
@@ -216,7 +216,7 @@ public class DriverNotifiedEngineTest {
         assertThat(previousNullCurrentConvictedCrown.getOrderingCourtCode(), is(equalTo(crownCourt.getCourtLocationCode())));
 
         DriverNotified previousNullCurrentAmendedConvictedMags = transformDriverNotified(
-                previousByCase, previousPreviousByCase, orderDate, magsCourt, orderDate, defendant,
+                previousByCase, orderDate, magsCourt, orderDate, defendant,
                 casesConvicted, hearingId, null, false).get(0);
 
         assertThat(previousNullCurrentAmendedConvictedMags.getOrderDate(), is(equalTo(orderDate)));
@@ -224,7 +224,7 @@ public class DriverNotifiedEngineTest {
         assertThat(previousNullCurrentAmendedConvictedMags.getOrderingCourtCode(), is(equalTo(magsCourt.getLja().getLjaCode())));
 
         DriverNotified previousNullCurrentNotConvictedCrown = transformDriverNotified(
-                previousByCase, previousPreviousByCase, orderDate, crownCourt, amendmentDate, defendant,
+                previousByCase, orderDate, crownCourt, amendmentDate, defendant,
                 casesNotConvicted, hearingId, null, false).get(0);
 
         assertThat(previousNullCurrentNotConvictedCrown.getOrderDate(), is(equalTo(orderDate)));
@@ -235,7 +235,7 @@ public class DriverNotifiedEngineTest {
 
 
         DriverNotified previousNullCurrentConvictedInDifferentDateCrown = transformDriverNotified(
-                previousByCase, previousPreviousByCase, orderDate, crownCourt, null, defendant,
+                previousByCase, orderDate, crownCourt, null, defendant,
                 getCases(prefix, true, previousConvictionDate, null, null, 3), hearingId, null, false).get(0);
 
         assertThat(previousNullCurrentConvictedInDifferentDateCrown.getOrderDate(), is(equalTo(orderDate)));
@@ -244,7 +244,7 @@ public class DriverNotifiedEngineTest {
 
 
         DriverNotified previousNullCurrentConvictedAmendedInDifferentDateCrown = transformDriverNotified(
-                previousByCase, previousPreviousByCase, orderDate, crownCourt, amendmentDate, defendant,
+                previousByCase, orderDate, crownCourt, amendmentDate, defendant,
                 getCases(prefix, true, previousConvictionDate, null, null, 3), hearingId, null, false).get(0);
 
         assertThat(previousNullCurrentConvictedAmendedInDifferentDateCrown.getOrderDate(), is(equalTo(orderDate)));
@@ -253,10 +253,10 @@ public class DriverNotifiedEngineTest {
 
 
         DriverNotified previous1 = getPreviousDriverNotified(prefixForPrevious, true, previousConvictionDate, true, previousOrderDate);
-        previousByCase.put(previous1.getCases().get(0).getReference(),  previous1);
+        previousByCase.put(previous1.getCases().get(0).getReference(),  new DriverNotifiedHistory(previous1, null));
 
         DriverNotified previousNotNullAndBothConvictedMags = transformDriverNotified(
-                previousByCase, previousPreviousByCase, orderDate, magsCourt, null, defendant,
+                previousByCase, orderDate, magsCourt, null, defendant,
                 casesConvicted, hearingId, null, false).get(0);
 
         assertThat(previousNotNullAndBothConvictedMags.getOrderDate(), is(equalTo(orderDate)));
@@ -266,10 +266,10 @@ public class DriverNotifiedEngineTest {
 
 
         DriverNotified previous2 = getPreviousDriverNotified(prefixForPrevious, false, null, false, previousOrderDate);
-        previousByCase.put(previous2.getCases().get(0).getReference(),  previous2);
+        previousByCase.put(previous2.getCases().get(0).getReference(),  new DriverNotifiedHistory(previous2, null));
 
         DriverNotified previousNotNullAndBothNotConvictedCrown = transformDriverNotified(
-                previousByCase, previousPreviousByCase, orderDate, crownCourt, amendmentDate, defendant,
+                previousByCase, orderDate, crownCourt, amendmentDate, defendant,
                 casesNotConvicted, hearingId, null, false).get(0);
 
         assertThat(previousNotNullAndBothNotConvictedCrown.getOrderDate(), is(equalTo(orderDate)));
@@ -293,10 +293,10 @@ public class DriverNotifiedEngineTest {
                         Prompts.prompts().withPromptReference(DATE_OF_CONVICTION).withValue(prefixForPrevious.concat(DATE_OF_CONVICTION)).build(),
                         Prompts.prompts().withPromptReference(CONVICTING_COURT).withValue(prefixForPrevious.concat(CONVICTING_COURT)).build()), false, previousOrderDate);
 
-        previousByCase.put(previous1.getCases().get(0).getReference(),  previous1);
+        previousByCase.put(previous1.getCases().get(0).getReference(),  new DriverNotifiedHistory(previous1, null));
 
         DriverNotified transformed = transformDriverNotified(
-                previousByCase, previousPreviousByCase, orderDate, crownCourt, amendmentDate, defendant,
+                previousByCase, orderDate, crownCourt, amendmentDate, defendant,
                 cases1, hearingId, null, false).get(0);
 
         assertThat(transformed.getDistinctPrompts().size(), is(equalTo(5)));
@@ -318,10 +318,10 @@ public class DriverNotifiedEngineTest {
     public void shouldTransformWithNoDistinctPrompts() {
         List<Cases> cases1 = getCases(prefix, true, previousConvictionDate);
         DriverNotified previous1 = getPreviousDriverNotified(prefixForPrevious, true, previousConvictionDate, false,  previousOrderDate);
-        previousByCase.put(previous1.getCases().get(0).getReference(),  previous1);
+        previousByCase.put(previous1.getCases().get(0).getReference(),  new DriverNotifiedHistory(previous1, null));
 
         DriverNotified transformed = transformDriverNotified(
-                previousByCase, previousPreviousByCase, orderDate, crownCourt, amendmentDate, defendant,
+                previousByCase, orderDate, crownCourt, amendmentDate, defendant,
                 cases1, hearingId, null, false).get(0);
 
         assertThat(transformed.getDistinctPrompts().size(), is(equalTo(0)));
@@ -336,10 +336,10 @@ public class DriverNotifiedEngineTest {
 
         DriverNotified previous1 = getPreviousDriverNotified(prefixForPrevious, true, previousConvictionDate, false,
                 asList(Prompts.prompts().withPromptReference(LICENCE_ISSUE_NUMBER).withValue(prefixForPrevious.concat(LICENCE_ISSUE_NUMBER)).build()), 2, false, previousOrderDate);
-        previousByCase.put(previous1.getCases().get(0).getReference(),  previous1);
+        previousByCase.put(previous1.getCases().get(0).getReference(),  new DriverNotifiedHistory(previous1, null));
 
         DriverNotified transformed = transformDriverNotified(
-                previousByCase, previousPreviousByCase, orderDate, crownCourt, null, defendant,
+                previousByCase, orderDate, crownCourt, null, defendant,
                 cases1, hearingId, null, false).get(0);
 
         assertThat(transformed.getCases().get(0).getDefendantCaseOffences().get(0).getResults().get(0).getPrompts().size(), is(equalTo(2)));
@@ -367,10 +367,10 @@ public class DriverNotifiedEngineTest {
         DriverNotified previous1 = getPreviousDriverNotified(prefixForPrevious, true, previousConvictionDate, false,
                 asList(Prompts.prompts().withPromptReference(DEFENDANT_DRIVING_LICENCE_NUMBER).withValue(prefix.concat(DEFENDANT_DRIVING_LICENCE_NUMBER)).build(),
                         Prompts.prompts().withPromptReference(LICENCE_PRODUCED_IN_COURT).withValue(prefix.concat(LICENCE_PRODUCED_IN_COURT)).build()), false, previousOrderDate);
-        previousByCase.put(previous1.getCases().get(0).getReference(),  previous1);
+        previousByCase.put(previous1.getCases().get(0).getReference(),  new DriverNotifiedHistory(previous1, null));
 
         DriverNotified transformed = transformDriverNotified(
-                previousByCase, previousPreviousByCase, orderDate, crownCourt, null, defendant,
+                previousByCase, orderDate, crownCourt, null, defendant,
                 cases1, hearingId, null, false).get(0);
 
         assertThat(transformed.getCases().get(0).getDefendantCaseOffences().get(0).getResults().get(0).getPrompts().size(), is(equalTo(1)));
@@ -445,10 +445,10 @@ public class DriverNotifiedEngineTest {
         DriverNotified previous1 = getPreviousDriverNotified(prefixForPrevious, true, previousConvictionDate, false,
                 asList(Prompts.prompts().withPromptReference(DEFENDANT_DRIVING_LICENCE_NUMBER).withValue(prefixForPrevious.concat(DEFENDANT_DRIVING_LICENCE_NUMBER)).build(),
                         Prompts.prompts().withPromptReference(LICENCE_ISSUE_NUMBER).withValue(prefixForPrevious.concat(LICENCE_ISSUE_NUMBER)).build()), false, previousOrderDate);
-        previousByCase.put(previous1.getCases().get(0).getReference(),  previous1);
+        previousByCase.put(previous1.getCases().get(0).getReference(),  new DriverNotifiedHistory(previous1, null));
 
         DriverNotified transformed = transformDriverNotified(
-                previousByCase, previousPreviousByCase, orderDate, crownCourt, null, defendant,
+                previousByCase, orderDate, crownCourt, null, defendant,
                 cases1, hearingId, null, false).get(0);
 
         List<Prompts> promptList = transformed.getCases().get(0).getDefendantCaseOffences().get(0).getResults().get(0).getPrompts();
@@ -474,7 +474,7 @@ public class DriverNotifiedEngineTest {
                 null, 1);
 
         DriverNotified transformed = transformDriverNotified(
-                previousByCase, previousPreviousByCase, orderDate, crownCourt, null, defendant,
+                previousByCase, orderDate, crownCourt, null, defendant,
                 cases1, hearingId, null, false).get(0);
 
         assertTrue(transformed.getCases().get(0).getDefendantCaseOffences().get(0).getDvlaCode().equalsIgnoreCase("currentcurrentDVLACode1"));
@@ -489,7 +489,7 @@ public class DriverNotifiedEngineTest {
                 null, 2);
 
         DriverNotified transformed = transformDriverNotified(
-                previousByCase, previousPreviousByCase, orderDate, crownCourt, null, defendant,
+                previousByCase, orderDate, crownCourt, null, defendant,
                 cases1, hearingId, null, false).get(0);
 
         assertTrue(transformed.getCases().get(0).getDefendantCaseOffences().get(0).getDvlaCode().equalsIgnoreCase("dvlaCodeInPrompt"));
@@ -503,7 +503,7 @@ public class DriverNotifiedEngineTest {
                 null, 2);
 
         DriverNotified transformed = transformDriverNotified(
-                previousByCase, previousPreviousByCase, orderDate, crownCourt, null, defendant,
+                previousByCase, orderDate, crownCourt, null, defendant,
                 cases1, hearingId, null, false).get(0);
 
         assertTrue(transformed.getCases().get(0).getDefendantCaseOffences().get(0).getDvlaCode().equalsIgnoreCase(DEFAULT_DVLA_CODE));
@@ -518,9 +518,9 @@ public class DriverNotifiedEngineTest {
                         Prompts.prompts().withPromptReference(NOTIONAL_PENALTY_POINTS).withValue(VALUE3).build())),
                 POINTS_DISQUALIFICATION_CODE);
 
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
 
-        DriverNotified transformed = transformDriverNotified(previousByCase, previousPreviousByCase, orderDate,
+        DriverNotified transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, NORMAL_FORMATTED_DATE, defendant, cases2, hearingId, null, false).get(0);
 
         DefendantCaseOffences mainOffence = transformed.getCases().get(0).getDefendantCaseOffences().get(0);
@@ -549,9 +549,9 @@ public class DriverNotifiedEngineTest {
                         Prompts.prompts().withPromptReference(NOTIONAL_PENALTY_POINTS).withValue(VALUE3).build())),
                 POINTS_DISQUALIFICATION_CODE);
 
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
 
-        DriverNotified transformed = transformDriverNotified(previousByCase, previousPreviousByCase, orderDate,
+        DriverNotified transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, NORMAL_FORMATTED_DATE, defendant, cases2, hearingId, null, false).get(0);
 
         DefendantCaseOffences mainOffence = transformed.getCases().get(0).getDefendantCaseOffences().get(0);
@@ -580,9 +580,9 @@ public class DriverNotifiedEngineTest {
                         Prompts.prompts().withPromptReference(NOTIONAL_PENALTY_POINTS).withValue(VALUE3).build())),
                 POINTS_DISQUALIFICATION_CODE);
 
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
 
-        DriverNotified transformed = transformDriverNotified(previousByCase, previousPreviousByCase, orderDate,
+        DriverNotified transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, NORMAL_FORMATTED_DATE, defendant, cases2, hearingId, null, false).get(0);
 
         DefendantCaseOffences mainOffence = transformed.getCases().get(0).getDefendantCaseOffences().get(0);
@@ -602,9 +602,9 @@ public class DriverNotifiedEngineTest {
                         Prompts.prompts().withPromptReference(NOTIONAL_PENALTY_POINTS).withValue(VALUE3).build())),
                 POINTS_DISQUALIFICATION_CODE);
 
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
 
-        DriverNotified transformed = transformDriverNotified(previousByCase, previousPreviousByCase, orderDate,
+        DriverNotified transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, NORMAL_FORMATTED_DATE, defendant, cases2, hearingId, null, false).get(0);
 
         DefendantCaseOffences mainOffence = transformed.getCases().get(0).getDefendantCaseOffences().get(0);
@@ -627,9 +627,9 @@ public class DriverNotifiedEngineTest {
                         Prompts.prompts().withPromptReference(NOTIONAL_PENALTY_POINTS).withValue(VALUE3).build())),
                 POINTS_DISQUALIFICATION_CODE);
 
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
 
-        DriverNotified transformed = transformDriverNotified(previousByCase, previousPreviousByCase, orderDate,
+        DriverNotified transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, NORMAL_FORMATTED_DATE, defendant, cases2, hearingId, null, false).get(0);
 
         DefendantCaseOffences mainOffence = transformed.getCases().get(0).getDefendantCaseOffences().get(0);
@@ -650,8 +650,8 @@ public class DriverNotifiedEngineTest {
         DriverNotified previous1 = getPreviousDriverNotified(prefixForPrevious, true, previousConvictionDate, false,
                 asList(Prompts.prompts().withPromptReference(LICENCE_PRODUCED_IN_COURT).withValue(prefixForPrevious.concat(VALUE1)).build()), false, previousOrderDate);
 
-        previousByCase.put(previous1.getCases().get(0).getReference(), previous1);
-        DriverNotified transformedPrevious = transformDriverNotified(previousByCase, previousPreviousByCase, orderDate,
+        previousByCase.put(previous1.getCases().get(0).getReference(), new DriverNotifiedHistory(previous1, null));
+        DriverNotified transformedPrevious = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, NORMAL_FORMATTED_DATE, defendant, cases1, hearingId, null, false).get(0);
 
         String distinctPromptReferencePrevious = transformedPrevious.getDistinctPrompts().get(0).getPromptReference();
@@ -663,9 +663,9 @@ public class DriverNotifiedEngineTest {
                 asList(Prompts.prompts().withPromptReference(LICENCE_PRODUCED_IN_COURT).withValue(VALUE1).build()), null);
 
         previousByCase.clear();
-        previousByCase.put(transformedPrevious.getCases().get(0).getReference(), previous1);
+        previousByCase.put(transformedPrevious.getCases().get(0).getReference(), new DriverNotifiedHistory(previous1, null));
 
-        DriverNotified transformed = transformDriverNotified(previousByCase, previousPreviousByCase, orderDate,
+        DriverNotified transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, NORMAL_FORMATTED_DATE, defendant, cases2, hearingId, null, false).get(0);
 
         String distinctPromptReference = transformed.getDistinctPrompts().get(0).getPromptReference();
@@ -676,9 +676,9 @@ public class DriverNotifiedEngineTest {
 
     @Test
     public void shouldTransformDriverNotifiedWithDurationSequenceNull() {
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
         DriverNotified transformed = transformDriverNotified(
-                previousByCase, previousPreviousByCase, orderDate, crownCourt, amendmentDate, defendant,
+                previousByCase, orderDate, crownCourt, amendmentDate, defendant,
                 casesWithDurationSeqOneNullPrompt, hearingId, null, false).get(0);
 
         assertThat(transformed.getCases().get(0).getDefendantCaseOffences().get(0).getOtherSentence(), is(equalTo("A000")));
@@ -687,9 +687,9 @@ public class DriverNotifiedEngineTest {
 
     @Test
     public void shouldTransformDriverNotifiedWithDurationSequenceOne() {
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
         DriverNotified transformed = transformDriverNotified(
-                previousByCase, previousPreviousByCase, orderDate, crownCourt, amendmentDate, defendant,
+                previousByCase, orderDate, crownCourt, amendmentDate, defendant,
                 casesWithDurationSeqOnePrompt, hearingId, null, false).get(0);
 
         assertThat(transformed.getCases().get(0).getDefendantCaseOffences().get(0).getOtherSentence(), is(equalTo("A04M")));
@@ -698,9 +698,9 @@ public class DriverNotifiedEngineTest {
 
     @Test
     public void shouldTransformDriverNotifiedWithNullDurationSequenceOne() {
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
         DriverNotified transformed = transformDriverNotified(
-                previousByCase, previousPreviousByCase, orderDate, crownCourt, amendmentDate, defendant,
+                previousByCase, orderDate, crownCourt, amendmentDate, defendant,
                 casesWithDurationSeqOneNullPrompt, hearingId, null, false).get(0);
 
         assertThat(transformed.getCases().get(0).getDefendantCaseOffences().get(0).getOtherSentence(), is(equalTo("A000")));
@@ -709,9 +709,9 @@ public class DriverNotifiedEngineTest {
 
     @Test
     public void shouldTransformDriverNotifiedWithWrongFormatDurationSequenceOne() {
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
         DriverNotified transformed = transformDriverNotified(
-                previousByCase, previousPreviousByCase, orderDate, crownCourt, amendmentDate, defendant,
+                previousByCase, orderDate, crownCourt, amendmentDate, defendant,
                 casesWithDurationSeqOneWrongFormatPrompt, hearingId, null, false).get(0);
 
         assertThat(transformed.getCases().get(0).getDefendantCaseOffences().get(0).getOtherSentence(), is(equalTo("A000")));
@@ -720,9 +720,9 @@ public class DriverNotifiedEngineTest {
 
     @Test
     public void shouldTransformDriverNotifiedWithDurationSequenceTwoDvlaCodeA() {
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
         DriverNotified transformed = transformDriverNotified(
-                previousByCase, previousPreviousByCase, orderDate, crownCourt, amendmentDate, defendant,
+                previousByCase, orderDate, crownCourt, amendmentDate, defendant,
                 casesWithDurationSeqTwoPromptDvlaCodeA, hearingId, null, false).get(0);
 
         assertThat(transformed.getCases().get(0).getDefendantCaseOffences().get(0).getOtherSentence(), is(equalTo("A04M")));
@@ -731,9 +731,9 @@ public class DriverNotifiedEngineTest {
 
     @Test
     public void shouldTransformDriverNotifiedWithDurationSequenceTwoDvlaCodeC() {
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
         DriverNotified transformed = transformDriverNotified(
-                previousByCase, previousPreviousByCase, orderDate, crownCourt, amendmentDate, defendant,
+                previousByCase, orderDate, crownCourt, amendmentDate, defendant,
                 casesWithDurationSeqTwoPromptDvlaCodeC, hearingId, null, false).get(0);
 
         assertThat(transformed.getCases().get(0).getDefendantCaseOffences().get(0).getOtherSentence(), is(equalTo("C04M")));
@@ -744,9 +744,9 @@ public class DriverNotifiedEngineTest {
     public void shouldTransformWithCorrectUpdatedAndRemovedEndorsementsList() {
         List<Cases> cases = getCasesWithMultipleOffences(1, EMPTY, asList(Boolean.FALSE), asList(C_DVLA1), false, null, null, null, 1, false);
         DriverNotified previous = getPreviousDriverNotified(2, EMPTY, asList(Boolean.TRUE, Boolean.TRUE), asList(P_DVLA1, P_DVLA2), false, null, false, null, 1, false, previousOrderDate);
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
 
-        DriverNotified transformed = transformDriverNotified(previousByCase, previousPreviousByCase, orderDate,
+        DriverNotified transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, NORMAL_FORMATTED_DATE, defendant, cases, hearingId, null, false).get(0);
 
         assertThat(transformed.getUpdatedEndorsements().size(), is(equalTo(0)));
@@ -755,9 +755,9 @@ public class DriverNotifiedEngineTest {
 
         cases = getCasesWithMultipleOffences(2, EMPTY, asList(Boolean.TRUE, Boolean.FALSE), asList(C_DVLA1, C_DVLA2), false, null, null, null, 1, false);
         previous = getPreviousDriverNotified(3, EMPTY, asList(Boolean.TRUE, Boolean.TRUE, Boolean.TRUE), asList(P_DVLA1, P_DVLA2, P_DVLA3), false, null, false, null, 1, false, previousOrderDate);
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
 
-        transformed = transformDriverNotified(previousByCase, previousPreviousByCase, orderDate,
+        transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, null, defendant, cases, hearingId, null, false).get(0);
 
         assertThat(transformed.getUpdatedEndorsements().size(), is(equalTo(1)));
@@ -768,9 +768,9 @@ public class DriverNotifiedEngineTest {
 
         cases = getCasesWithMultipleOffences(2, EMPTY, asList(Boolean.FALSE, Boolean.TRUE), null, false, null, null, null, 2, false);
         previous = getPreviousDriverNotified(3, EMPTY, asList(Boolean.TRUE, Boolean.TRUE, Boolean.TRUE), asList(P_DVLA1, P_DVLA2, P_DVLA3), false, null, false, null, 1, false, previousOrderDate);
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
 
-        transformed = transformDriverNotified(previousByCase, previousPreviousByCase, orderDate,
+        transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, null, defendant, cases, hearingId, null, false).get(0);
 
         assertThat(transformed.getUpdatedEndorsements().size(), is(equalTo(1)));
@@ -780,9 +780,9 @@ public class DriverNotifiedEngineTest {
 
         cases = getCasesWithMultipleOffences(2, EMPTY, asList(Boolean.FALSE, Boolean.FALSE), asList(C_DVLA1, C_DVLA2), false, null, null, null, 2, false);
         previous = getPreviousDriverNotified(3, EMPTY, asList(Boolean.TRUE, Boolean.TRUE, Boolean.TRUE), asList(P_DVLA1, P_DVLA2, P_DVLA3), false, null, false, null, 1, false, previousOrderDate);
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
 
-        transformed = transformDriverNotified(previousByCase, previousPreviousByCase, orderDate,
+        transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, NORMAL_FORMATTED_DATE, defendant, cases, hearingId, null, false).get(0);
 
         assertThat(transformed.getUpdatedEndorsements().size(), is(equalTo(0)));
@@ -793,9 +793,9 @@ public class DriverNotifiedEngineTest {
 
         cases = getCasesWithMultipleOffences(1, EMPTY, asList(Boolean.TRUE), asList(C_DVLA1), false, null, null, null, 1, false);
         previous = getPreviousDriverNotified(2, EMPTY, asList(Boolean.TRUE, Boolean.TRUE), null, false, null, false, null, 2, false, previousOrderDate);
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
 
-        transformed = transformDriverNotified(previousByCase, previousPreviousByCase, orderDate,
+        transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, null, defendant, cases, hearingId, null, false).get(0);
 
         assertThat(transformed.getUpdatedEndorsements().size(), is(equalTo(1)));
@@ -805,9 +805,9 @@ public class DriverNotifiedEngineTest {
 
         cases = getCasesWithMultipleOffences(2, EMPTY, asList(Boolean.FALSE, Boolean.FALSE), null, false, null, null, null, 2, false);
         previous = getPreviousDriverNotified(2, EMPTY, asList(Boolean.TRUE, Boolean.TRUE), null, false, null, false, null, 2, false, previousOrderDate);
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
 
-        transformed = transformDriverNotified(previousByCase, previousPreviousByCase, orderDate,
+        transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, NORMAL_FORMATTED_DATE, defendant, cases, hearingId, null, false).get(0);
 
         assertThat(transformed.getUpdatedEndorsements().size(), is(equalTo(0)));
@@ -818,9 +818,9 @@ public class DriverNotifiedEngineTest {
 
         cases = getCasesWithMultipleOffences(1, EMPTY, asList(Boolean.FALSE), asList(C_DVLA1), false, null, null, null, 1, false);
         previous = getPreviousDriverNotified(2, EMPTY, asList(Boolean.TRUE, Boolean.TRUE), asList(P_DVLA1, P_DVLA2), false, null, false, null, 1, false, previousOrderDate);
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
 
-        transformed = transformDriverNotified(previousByCase, previousPreviousByCase, orderDate,
+        transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, NORMAL_FORMATTED_DATE, defendant, cases, hearingId, null, false).get(0);
 
         assertThat(transformed.getUpdatedEndorsements().size(), is(equalTo(0)));
@@ -830,9 +830,9 @@ public class DriverNotifiedEngineTest {
 
         cases = getCasesWithMultipleOffences(2, EMPTY, asList(Boolean.TRUE, Boolean.FALSE), asList(C_DVLA1, C_DVLA2), false, null, null, null, 1, false);
         previous = getPreviousDriverNotified(3, EMPTY, asList(Boolean.TRUE, Boolean.TRUE, Boolean.TRUE), asList(P_DVLA1, P_DVLA2, P_DVLA3), false, null, false, null, 1, false, previousOrderDate);
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
 
-        transformed = transformDriverNotified(previousByCase, previousPreviousByCase, orderDate,
+        transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, null, defendant, cases, hearingId, null, false).get(0);
 
         assertThat(transformed.getUpdatedEndorsements().size(), is(equalTo(1)));
@@ -843,7 +843,7 @@ public class DriverNotifiedEngineTest {
 
         cases = getCasesWithMultipleOffences(2, EMPTY, asList(Boolean.FALSE, Boolean.TRUE), asList(C_DVLA1, C_DVLA2), false, null, null, null, 1, false);
         previous = getPreviousDriverNotified(3, EMPTY, asList(Boolean.TRUE, Boolean.TRUE, Boolean.TRUE), asList(P_DVLA1, P_DVLA2, P_DVLA3), false, null, false, null, 1, false, previousOrderDate);
-        transformed = transformDriverNotified(previousByCase, previousPreviousByCase, orderDate,
+        transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, null, defendant, cases, hearingId, null, false).get(0);
 
         assertThat(transformed.getUpdatedEndorsements().size(), is(equalTo(1)));
@@ -854,9 +854,9 @@ public class DriverNotifiedEngineTest {
 
         cases = getCasesWithMultipleOffences(3, EMPTY, asList(Boolean.TRUE, Boolean.FALSE, Boolean.TRUE), asList(C_DVLA1, C_DVLA2, C_DVLA3), false, null, null, null, 1, false);
         previous = getPreviousDriverNotified(3, EMPTY, asList(Boolean.TRUE, Boolean.TRUE, Boolean.TRUE), null, false, null, false, null, 2, false, previousOrderDate);
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
 
-        transformed = transformDriverNotified(previousByCase, previousPreviousByCase, orderDate,
+        transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, null, defendant, cases, hearingId, null, false).get(0);
 
         assertThat(transformed.getUpdatedEndorsements().size(), is(equalTo(2)));
@@ -868,9 +868,9 @@ public class DriverNotifiedEngineTest {
 
         cases = getCasesWithMultipleOffences(3, EMPTY, asList(Boolean.TRUE, Boolean.FALSE, Boolean.TRUE), null, false, null, null, null, 2, false);
         previous = getPreviousDriverNotified(2, EMPTY, asList(Boolean.TRUE, Boolean.TRUE), asList(P_DVLA1, P_DVLA2), false, null, false, null, 1, false, previousOrderDate);
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
 
-        transformed = transformDriverNotified(previousByCase, previousPreviousByCase, orderDate,
+        transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, null, defendant, cases, hearingId, null, false).get(0);
 
         assertThat(transformed.getUpdatedEndorsements().size(), is(equalTo(1)));
@@ -881,9 +881,9 @@ public class DriverNotifiedEngineTest {
 
         cases = getCasesWithMultipleOffences(3, EMPTY, asList(Boolean.TRUE, Boolean.FALSE, Boolean.TRUE), null, false, null, null, null, 2, false);
         previous = getPreviousDriverNotified(2, EMPTY, asList(Boolean.TRUE, Boolean.TRUE), null, false, null, false, null, 2, false, previousOrderDate);
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
 
-        transformed = transformDriverNotified(previousByCase, previousPreviousByCase, orderDate,
+        transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, null, defendant, cases, hearingId, null, false).get(0);
 
         assertThat(transformed.getUpdatedEndorsements().size(), is(equalTo(1)));
@@ -896,9 +896,9 @@ public class DriverNotifiedEngineTest {
                 asList(SS50, SS60), asList(OFF3, OFF4), asList(OFF3, OFF4), false, null, null, null, 1, false, null);
         previous = getPreviousDriverNotified(2, EMPTY, asList(Boolean.TRUE, Boolean.TRUE),
                 asList(SS30, SS40), asList(OFF1, "v"), asList(OFF1, OFF2), false, null, false, null, 1, false, null, previousOrderDate, null);
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
 
-        transformed = transformDriverNotified(previousByCase, previousPreviousByCase, orderDate,
+        transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, NORMAL_FORMATTED_DATE, defendant, cases, hearingId, null, false).get(0);
 
         assertThat(transformed.getUpdatedEndorsements().size(), is(equalTo(0)));
@@ -911,9 +911,9 @@ public class DriverNotifiedEngineTest {
                 asList(SS30, SS50), asList(OFF1, OFF3), asList(OFF1, OFF3), false, null, null, POINTS_DISQUALIFICATION_CODE, 1, false, null);
         DriverNotified previous = getPreviousDriverNotified(4, EMPTY, asList(Boolean.TRUE, Boolean.TRUE, Boolean.TRUE, Boolean.TRUE),
                 asList(SS30, TT99, SS40, TT99), asList(OFF1, OFF1, OFF2, OFF2), asList(OFF1, OFF1_TT99, OFF2, OFF2_TT99), false, null, false, null, 1, false, null, previousOrderDate, null);
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
 
-        DriverNotified transformed = transformDriverNotified(previousByCase, previousPreviousByCase, orderDate,
+        DriverNotified transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, NORMAL_FORMATTED_DATE, defendant, cases, hearingId, null, false).get(0);
 
         assertThat(transformed.getUpdatedEndorsements().size(), is(equalTo(2)));
@@ -930,8 +930,8 @@ public class DriverNotifiedEngineTest {
                 asList(SS40), asList(OFF2), asList(OFF2), false, null, null, POINTS_DISQUALIFICATION_CODE, 1, false, null);
         previous = getPreviousDriverNotified(2, EMPTY, asList(Boolean.TRUE, Boolean.TRUE),
                 asList(SS30, TT99), asList(OFF1, OFF1), asList(OFF1, OFF1_TT99), false, null, false, null, 1, false, null, previousOrderDate, null);
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
-        transformed = transformDriverNotified(previousByCase, previousPreviousByCase, orderDate,
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
+        transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, NORMAL_FORMATTED_DATE, defendant, cases, hearingId, null, false).get(0);
 
         assertThat(transformed.getUpdatedEndorsements().size(), is(equalTo(0)));
@@ -944,9 +944,9 @@ public class DriverNotifiedEngineTest {
                 asList(SS30), asList(OFF1), asList(OFF1), true, previousConvictionDate, true, null, 1, false, asList(DDRAL.id), previousOrderDate, null);
         List<Cases> cases = getCasesWithMultipleOffences(1, EMPTY, asList(Boolean.FALSE),
                 asList(SS30), asList(OFF1), asList(OFF1), false, null, null, null, 1, false, null);
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
 
-        DriverNotified transformed = transformDriverNotified(previousByCase, previousPreviousByCase, orderDate,
+        DriverNotified transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, amendmentDate, defendant, cases, hearingId, null, false).get(0);
 
         assertThat(transformed.getUpdatedEndorsements().size(), is(equalTo(0)));
@@ -960,8 +960,8 @@ public class DriverNotifiedEngineTest {
                 asList(SS30), asList(OFF1), asList(OFF1), false, null, getPrompt("5"), null, 1, false, asList(DDRAL.id));
 
         assertOffenceAttributesBeforeTransform(cases);
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
-        transformed = transformDriverNotified(previousByCase, previousPreviousByCase, orderDate,
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
+        transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, amendmentDate, defendant, cases, hearingId, null, false).get(0);
 
         assertThat(transformed.getUpdatedEndorsements().size(), is(equalTo(1)));
@@ -978,9 +978,9 @@ public class DriverNotifiedEngineTest {
                 asList(SS30), asList(OFF1), asList(OFF1), true, previousConvictionDate, true, null, 1, false, asList(DDRAL.id), previousOrderDate, null);
         List<Cases> cases = getCasesWithMultipleOffences(1, EMPTY, asList(Boolean.FALSE),
                 asList(SS30), asList(OFF1), asList(OFF1), false, null, null, null, 1, false, null);
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
 
-        final List<DriverNotified> driverNotified = transformDriverNotified(previousByCase, previousPreviousByCase, orderDate,
+        final List<DriverNotified> driverNotified = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, amendmentDate, defendant, cases, hearingId, courtApplications, false);
 
        assertThat(driverNotified.size(), is(equalTo(0)));
@@ -993,9 +993,9 @@ public class DriverNotifiedEngineTest {
         List<Cases> cases = getCasesWithMultipleOffences(1, EMPTY, asList(Boolean.FALSE),
                 asList(SS30), asList(OFF1), asList(OFF1), false, null, null, null, 1, false, null);
 
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
 
-        List<DriverNotified> transformedList = transformDriverNotified(previousByCase, previousPreviousByCase, orderDate,
+        List<DriverNotified> transformedList = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, null, defendant, cases, hearingId, null, false);
 
         assertThat(transformedList.size(), equalTo(1));
@@ -1007,9 +1007,9 @@ public class DriverNotifiedEngineTest {
 
         assertOffenceAttributesBeforeTransform(cases);
 
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
 
-        DriverNotified transformed = transformDriverNotified(previousByCase, previousPreviousByCase, orderDate,
+        DriverNotified transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, null, defendant, cases, hearingId, null, false).get(0);
 
         assertThat(transformed.getUpdatedEndorsements().size(), is(equalTo(1)));
@@ -1025,9 +1025,9 @@ public class DriverNotifiedEngineTest {
                 asList(SS30), asList(OFF1), asList(OFF1), false, null, null, null, 1, false, asList(DDOTEL.id));
 
         assertOffenceAttributesBeforeTransform(cases);
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
 
-        transformed = transformDriverNotified(previousByCase, previousPreviousByCase, orderDate,
+        transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, null, defendant, cases, hearingId, courtApplications, false).get(0);
 
         assertThat(transformed.getUpdatedEndorsements().size(), is(equalTo(1)));
@@ -1043,9 +1043,9 @@ public class DriverNotifiedEngineTest {
                 asList(SS30), asList(OFF1), asList(OFF1), false, null, null, null, 1, false, asList(SV.id));
 
         assertOffenceAttributesBeforeTransform(cases);
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
 
-        transformed = transformDriverNotified(previousByCase, previousPreviousByCase, orderDate,
+        transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, null, defendant, cases, hearingId, courtApplications, false).get(0);
 
         assertThat(transformed.getUpdatedEndorsements().size(), is(equalTo(1)));
@@ -1061,9 +1061,9 @@ public class DriverNotifiedEngineTest {
         List<CourtApplications> courtApplications = getCourtApplications(asList(APP1), prefix, false, null, null, SS30, 1, asList(AACA.id));
         List<Cases> cases = getCasesWithMultipleOffences(1, EMPTY, asList(Boolean.TRUE),
                 asList(SS30), asList(OFF1), asList(OFF1), false, null, null, null, 1, false, asList(DDOTEL.id));
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
 
-        DriverNotified transformed = transformDriverNotified(previousByCase, previousPreviousByCase, orderDate,
+        DriverNotified transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, null, defendant, cases, hearingId, courtApplications, false).get(0);
 
         assertThat(transformed.getUpdatedEndorsements().size(), is(equalTo(0)));
@@ -1077,9 +1077,9 @@ public class DriverNotifiedEngineTest {
         courtApplications = getCourtApplications(asList(APP1), prefix, false, null, null, SS30, 1, asList(AACA.id, DDRE.id));
         cases = getCasesWithMultipleOffences(1, EMPTY, asList(Boolean.TRUE),
                 asList(SS30), asList(OFF1), asList(OFF1), true, convictionDate, null, null, 1, false, asList(SV.id, DDDTL.id));
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
 
-        transformed = transformDriverNotified(previousByCase, previousPreviousByCase, orderDate,
+        transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, null, defendant, cases, hearingId, courtApplications, false).get(0);
 
         assertThat(transformed.getUpdatedEndorsements().size(), is(equalTo(0)));
@@ -1097,9 +1097,9 @@ public class DriverNotifiedEngineTest {
         List<CourtApplications> courtApplications = getCourtApplications(asList(APP1), prefix, false, null, null, SS30, 1, asList(AACD.id));
         List<Cases> cases = getCasesWithMultipleOffences(1, EMPTY, asList(Boolean.TRUE),
                 asList(SS30), asList(OFF1), asList(OFF1), false, null, null, null, 1, false, asList(SV.id));
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
 
-        DriverNotified transformed = transformDriverNotified(previousByCase, previousPreviousByCase, orderDate,
+        DriverNotified transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, null, defendant, cases, hearingId, courtApplications, false).get(0);
 
         assertThat(transformed.getUpdatedEndorsements().size(), is(equalTo(1)));
@@ -1116,9 +1116,9 @@ public class DriverNotifiedEngineTest {
                 asList(SS30), asList(OFF1), asList(OFF1), false, null, null, null, 1, false, asList(SV.id, DDDTL.id));
 
         assertOffenceAttributesBeforeTransform(cases);
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
 
-        transformed = transformDriverNotified(previousByCase, previousPreviousByCase, orderDate,
+        transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, null, defendant, cases, hearingId, courtApplications, false).get(0);
 
         assertThat(transformed.getUpdatedEndorsements().size(), is(equalTo(0)));
@@ -1134,9 +1134,9 @@ public class DriverNotifiedEngineTest {
                 asList(SS30), asList(OFF1), asList(OFF1), false, null, null, null, 1, false, asList(SV.id));
 
         assertOffenceAttributesBeforeTransform(cases);
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
 
-        transformed = transformDriverNotified(previousByCase, previousPreviousByCase, orderDate,
+        transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, null, defendant, cases, hearingId, courtApplications, false).get(0);
 
         assertThat(transformed.getUpdatedEndorsements().size(), is(equalTo(1)));
@@ -1155,9 +1155,9 @@ public class DriverNotifiedEngineTest {
                 asList(SS30), asList(OFF1), asList(OFF1), false, null, null, null, 1, false, asList(DDPL.id));
 
         assertOffenceAttributesBeforeTransform(cases);
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
 
-        DriverNotified transformed = transformDriverNotified(previousByCase, previousPreviousByCase, orderDate,
+        DriverNotified transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, null, defendant, cases, hearingId, courtApplications, false).get(0);
 
         assertThat(transformed.getUpdatedEndorsements().size(), is(equalTo(1)));
@@ -1174,9 +1174,9 @@ public class DriverNotifiedEngineTest {
                 asList(SS30), asList(OFF1), asList(OFF1), false, null, null, null, 1, false, asList(DDPL.id));
 
         assertOffenceAttributesBeforeTransform(cases);
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
 
-        transformed = transformDriverNotified(previousByCase, previousPreviousByCase, orderDate,
+        transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, null, defendant, cases, hearingId, courtApplications, false).get(0);
 
         assertThat(transformed.getUpdatedEndorsements().size(), is(equalTo(1)));
@@ -1191,9 +1191,9 @@ public class DriverNotifiedEngineTest {
         courtApplications = getCourtApplications(asList(APP1), prefix, true, null, null, SS30, 1, asList(AACD.id));
         cases = getCasesWithMultipleOffences(1, EMPTY, asList(Boolean.FALSE),
                 asList(SS30), asList(OFF1), asList(OFF1), false, null, null, null, 1, false, asList(DDPL.id));
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
 
-        List<DriverNotified> transformed2 = transformDriverNotified(previousByCase, previousPreviousByCase, orderDate,
+        List<DriverNotified> transformed2 = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, null, defendant, cases, hearingId, courtApplications, false);
 
         assertThat(transformed2.size(), is(equalTo(1)));
@@ -1224,9 +1224,9 @@ public class DriverNotifiedEngineTest {
     public void shouldTransformWithCorrectRemovedEndorsementsListWhenEndorsementRemovedFollowingAppeal() {
         List<Cases> cases = getCasesWithMultipleOffences(1, prefix, asList(Boolean.FALSE), asList(C_DVLA1), true, convictionDate, null, null, 1, false);
         DriverNotified previous = getPreviousDriverNotified(1, prefixForPrevious, asList(Boolean.TRUE), asList(P_DVLA1), false, null, false, null, 1, false, previousOrderDate);
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
 
-        DriverNotified transformed = transformDriverNotified(previousByCase, previousPreviousByCase, orderDate,
+        DriverNotified transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, NORMAL_FORMATTED_DATE, defendant, cases, hearingId, null, false).get(0);
 
         assertThat(transformed.getRemovedEndorsements().size(), is(equalTo(1)));
@@ -1242,9 +1242,9 @@ public class DriverNotifiedEngineTest {
                 asList(Prompts.prompts().withPromptReference(PENALTY_POINTS).withValue(prefixForPrevious.concat(VALUE1)).build(),
                         Prompts.prompts().withPromptReference(LICENCE_ISSUE_NUMBER).withValue(prefixForPrevious.concat(LICENCE_ISSUE_NUMBER)).build()),
                 1, false, previousOrderDate);
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
 
-        DriverNotified transformed = transformDriverNotified(previousByCase, previousPreviousByCase, orderDate,
+        DriverNotified transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, NORMAL_FORMATTED_DATE, defendant, cases, hearingId, null, false).get(0);
 
         assertThat(transformed.getRemovedEndorsements().size(), is(equalTo(1)));
@@ -1261,9 +1261,9 @@ public class DriverNotifiedEngineTest {
                         Prompts.prompts().withPromptReference(CONVICTING_COURT).withValue(prefixForPrevious.concat(CONVICTING_COURT)).build()),
                 1, false, previousOrderDate);
 
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
 
-        DriverNotified transformed = transformDriverNotified(previousByCase, previousPreviousByCase, orderDate,
+        DriverNotified transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, NORMAL_FORMATTED_DATE, defendant, cases, hearingId, null, false).get(0);
 
         assertThat(transformed.getRemovedEndorsements().size(), is(equalTo(1)));
@@ -1283,7 +1283,7 @@ public class DriverNotifiedEngineTest {
     public void shouldTransformWithCorrectSentenceDateAndCourtCodeWhenOrderDateIsDifferentToConvictionDate() {
         List<Cases> cases = getCasesWithMultipleOffences(1, prefix, asList(Boolean.TRUE), asList(C_DVLA1), true, previousConvictionDate, null, null, 1, false);
 
-        DriverNotified transformed = transformDriverNotified(previousByCase, previousPreviousByCase, orderDate,
+        DriverNotified transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, null, defendant, cases, hearingId, null, false).get(0);
 
         transformed.getCases().stream()
@@ -1300,9 +1300,9 @@ public class DriverNotifiedEngineTest {
                 asList(Prompts.prompts().withPromptReference(STARTING_FROM_DATE_DATE_OF_INTERIM_DISQUALIFICATION).withValue("2").build()),
                 1, true, previousOrderDate);
 
-        previousByCase.put(previous1.getCases().get(0).getReference(), previous1);
+        previousByCase.put(previous1.getCases().get(0).getReference(), new DriverNotifiedHistory(previous1, null));
 
-        DriverNotified transformed = transformDriverNotified(previousByCase, previousPreviousByCase, orderDate,
+        DriverNotified transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, null, defendant, cases, hearingId, null, false).get(0);
 
         transformed.getCases().stream()
@@ -1322,7 +1322,7 @@ public class DriverNotifiedEngineTest {
                         Prompts.prompts().withPromptReference(NOTIONAL_PENALTY_POINTS).withValue(VALUE3).build())),
                 POINTS_DISQUALIFICATION_CODE, 1, asList(DSPA.id));
 
-        DriverNotified transformed = transformDriverNotified(previousByCase, previousPreviousByCase, orderDate,
+        DriverNotified transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, null, defendant, cases2, hearingId, null, false).get(0);
 
         DefendantCaseOffences mainOffence = transformed.getCases().get(0).getDefendantCaseOffences().get(0);
@@ -1365,8 +1365,8 @@ public class DriverNotifiedEngineTest {
         List<Cases> cases = getCasesWithMultipleOffences(1, EMPTY, asList(Boolean.TRUE),
                 asList(SS30), asList(OFF1), asList(OFF1), false, null, null, null, 1, false, null);
 
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
-        DriverNotified transformed = transformDriverNotified(previousByCase, previousPreviousByCase, orderDate,
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
+        DriverNotified transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, null, defendant, cases, hearingId, courtApplications, false).get(0);
 
         assertThat(transformed, is(notNullValue()));
@@ -1382,8 +1382,8 @@ public class DriverNotifiedEngineTest {
         List<Cases> cases = getCasesWithMultipleOffences(1, EMPTY, asList(Boolean.FALSE),
                 asList(SS30), asList(OFF1), asList(OFF1), false, null, null, null, 1, false, null);
 
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
-        DriverNotified transformed = transformDriverNotified(previousByCase, previousPreviousByCase, orderDate,
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
+        DriverNotified transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, null, defendant, cases, hearingId, courtApplications, false).get(0);
 
         assertThat(transformed.getUpdatedEndorsements().stream().sorted().toArray(), is(equalTo(asList(SS30, TT99).stream().sorted().toArray())));
@@ -1402,8 +1402,8 @@ public class DriverNotifiedEngineTest {
         List<Cases> cases = getCasesWithMultipleOffences(1, EMPTY, asList(Boolean.TRUE),
                 asList(SS30), asList(OFF1), asList(OFF1), false, null, null, null, 1, false, null);
 
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
-        DriverNotified transformed = transformDriverNotified(previousByCase, previousPreviousByCase, orderDate,
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
+        DriverNotified transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, NORMAL_FORMATTED_DATE, defendant, cases, hearingId, courtApplications, false).get(0);
 
         assertThat(transformed.getOrderDate(), is(equalTo(orderDate)));
@@ -1417,8 +1417,8 @@ public class DriverNotifiedEngineTest {
         List<Cases> cases = getCasesWithMultipleOffences(1, EMPTY, asList(Boolean.FALSE),
                 asList("AD"), asList(OFF1), asList(OFF1), false, null, null, null, 1, false, asList(ADJ.id));
 
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
-        List<DriverNotified> transformed = transformDriverNotified(previousByCase, previousPreviousByCase, orderDate,
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
+        List<DriverNotified> transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, null, defendant, cases, hearingId, null, false);
 
         assertThat(transformed.size(), is(0));
@@ -1432,8 +1432,8 @@ public class DriverNotifiedEngineTest {
         List<Cases> cases = getCasesWithMultipleOffences(0, EMPTY, asList(Boolean.FALSE),
                 asList("AD"), asList(OFF1), asList(OFF1), false, null, null, null, 1, false, null);
 
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
-        List<DriverNotified> transformed = transformDriverNotified(previousByCase, previousPreviousByCase, orderDate,
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
+        List<DriverNotified> transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, null, defendant, cases, hearingId, null, false);
 
         assertThat(transformed, is(notNullValue()));
@@ -1472,8 +1472,8 @@ public class DriverNotifiedEngineTest {
                                                         false,
                                                         null,
                                                         null, null, 3, false, asList("AD"));
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
-        DriverNotified transformed = transformDriverNotified(previousByCase, previousPreviousByCase,
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
+        DriverNotified transformed = transformDriverNotified(previousByCase,
                                                              orderDate,
                                                              crownCourt,
                                                              null,
@@ -1517,10 +1517,9 @@ public class DriverNotifiedEngineTest {
                                                         null,
                                                         null,
                                                         null, 1, false, singletonList(ADJ.id));
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
 
         List<DriverNotified> transformed = transformDriverNotified(previousByCase,
-                                                             previousPreviousByCase,
                                                              orderDate,
                                                              crownCourt,
                                                              null,
@@ -1562,9 +1561,9 @@ public class DriverNotifiedEngineTest {
                 null,
                 null,
                 null, 3, false, asList(DDRI.id));
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
 
-        List<DriverNotified> transformed = transformDriverNotified(previousByCase, previousPreviousByCase,
+        List<DriverNotified> transformed = transformDriverNotified(previousByCase,
                 orderDate,
                 crownCourt,
                 null,
@@ -1608,9 +1607,9 @@ public class DriverNotifiedEngineTest {
                 null,
                 null,
                 null, 1, asList(DDRNL.id));
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
 
-        DriverNotified transformed = transformDriverNotified(previousByCase, previousPreviousByCase,
+        DriverNotified transformed = transformDriverNotified(previousByCase,
                 orderDate,
                 crownCourt,
                 null,
@@ -1654,8 +1653,8 @@ public class DriverNotifiedEngineTest {
                                                         null,
                                                         null,
                                                         null, 1, false, asList(DDRNL.id));
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
-        List<DriverNotified> transformed = transformDriverNotified(previousByCase, previousPreviousByCase,
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
+        List<DriverNotified> transformed = transformDriverNotified(previousByCase,
                                                              orderDate,
                                                              crownCourt,
                                                              null,
@@ -1678,7 +1677,7 @@ public class DriverNotifiedEngineTest {
                                                         null,
                                                         null, 1, false, asList(DDRNL.id));
 
-        DriverNotified transformed = transformDriverNotified(previousByCase, previousPreviousByCase,
+        DriverNotified transformed = transformDriverNotified(previousByCase,
                                                              orderDate,
                                                              crownCourt,
                                                              null,
@@ -1715,8 +1714,8 @@ public class DriverNotifiedEngineTest {
                                             null,
                                             null, 1, false, asList(DDRNL.id));
 
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
-        transformed = transformDriverNotified(previousByCase, previousPreviousByCase,
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
+        transformed = transformDriverNotified(previousByCase,
                                              orderDate,
                                              crownCourt,
                                              null,
@@ -1735,9 +1734,9 @@ public class DriverNotifiedEngineTest {
 
         List<Cases> cases = getMultipleCases(3, prefix, asList(Boolean.FALSE, Boolean.TRUE, Boolean.FALSE), false, null, null, null, 3, null);
 
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
 
-        List<DriverNotified> transformed = transformDriverNotified(previousByCase, previousPreviousByCase, orderDate,
+        List<DriverNotified> transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, null, defendant, cases, hearingId, null, false);
 
         assertThat(transformed.size(), equalTo(1));
@@ -1752,8 +1751,8 @@ public class DriverNotifiedEngineTest {
         DriverNotified previous = getPreviousDriverNotified(1, prefixForPrevious, asList(Boolean.TRUE), asList(P_DVLA1), false, null, false,
                 asList(Prompts.prompts().withPromptReference(STARTING_FROM_DATE_DATE_OF_INTERIM_DISQUALIFICATION).withValue("2").build()),
                 1, true, previousOrderDate);
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
-        DriverNotified transformed = transformDriverNotified(previousByCase, previousPreviousByCase, orderDate,
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
+        DriverNotified transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, null, defendant, cases, hearingId, null, false).get(0);
 
         assertThat(transformed.getCases().get(0).getDefendantCaseOffences().get(0).getAlcoholReadingAmount(), equalTo(null));
@@ -1763,9 +1762,9 @@ public class DriverNotifiedEngineTest {
         previous = getPreviousDriverNotified(1, prefixForPrevious, asList(Boolean.TRUE), asList(P_DVLA1), false, null, false,
                 asList(Prompts.prompts().withPromptReference(STARTING_FROM_DATE_DATE_OF_INTERIM_DISQUALIFICATION).withValue("2").build()),
                 1, true, previousOrderDate);
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
 
-        transformed = transformDriverNotified(previousByCase, previousPreviousByCase, orderDate,
+        transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, null, defendant, cases, hearingId, null, false).get(0);
 
         assertThat(transformed.getCases().get(0).getDefendantCaseOffences().get(0).getAlcoholReadingAmount(), equalTo("002"));
@@ -1775,9 +1774,9 @@ public class DriverNotifiedEngineTest {
         previous = getPreviousDriverNotified(1, prefixForPrevious, asList(Boolean.TRUE), asList(P_DVLA1), true, previousConvictionDate, false,
                 asList(Prompts.prompts().withPromptReference(STARTING_FROM_DATE_DATE_OF_INTERIM_DISQUALIFICATION).withValue("2").build()),
                 1, true, previousOrderDate);
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
 
-        transformed = transformDriverNotified(previousByCase, previousPreviousByCase, orderDate,
+        transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, null, defendant, cases, hearingId, null, false).get(0);
 
         assertThat(transformed.getCases().get(0).getDefendantCaseOffences().get(0).getAlcoholReadingAmount(), equalTo("022"));
@@ -1787,8 +1786,8 @@ public class DriverNotifiedEngineTest {
         previous = getPreviousDriverNotified(1, prefixForPrevious, asList(Boolean.TRUE), asList(P_DVLA1), true, previousConvictionDate, false,
                 asList(Prompts.prompts().withPromptReference(STARTING_FROM_DATE_DATE_OF_INTERIM_DISQUALIFICATION).withValue("2").build()),
                 333, true, previousOrderDate);
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
-        transformed = transformDriverNotified(previousByCase, previousPreviousByCase, orderDate,
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
+        transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, null, defendant, cases, hearingId, null, false).get(0);
 
         assertThat(transformed.getCases().get(0).getDefendantCaseOffences().get(0).getAlcoholReadingAmount(), equalTo("222"));
@@ -1798,9 +1797,9 @@ public class DriverNotifiedEngineTest {
         previous = getPreviousDriverNotified(1, prefixForPrevious, asList(Boolean.TRUE), asList(P_DVLA1), false, null, false,
                 asList(Prompts.prompts().withPromptReference(STARTING_FROM_DATE_DATE_OF_INTERIM_DISQUALIFICATION).withValue("2").build()),
                 333, false, previousOrderDate);
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
 
-        transformed = transformDriverNotified(previousByCase, previousPreviousByCase, orderDate,
+        transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, null, defendant, cases, hearingId, null, false).get(0);
 
         assertThat(transformed.getCases().get(0).getDefendantCaseOffences().get(0).getAlcoholReadingAmount(), equalTo("999"));
@@ -1810,9 +1809,9 @@ public class DriverNotifiedEngineTest {
         previous = getPreviousDriverNotified(1, prefixForPrevious, asList(Boolean.TRUE), asList(P_DVLA1), false, null, false,
                 asList(Prompts.prompts().withPromptReference(STARTING_FROM_DATE_DATE_OF_INTERIM_DISQUALIFICATION).withValue("2").build()),
                 333, true, previousOrderDate);
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
 
-        transformed = transformDriverNotified(previousByCase, previousPreviousByCase, orderDate,
+        transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, null, defendant, cases, hearingId, null, false).get(0);
 
         assertThat(transformed.getCases().get(0).getDefendantCaseOffences().get(0).getAlcoholReadingAmount(), equalTo("333"));
@@ -1828,7 +1827,7 @@ public class DriverNotifiedEngineTest {
                 POINTS_DISQUALIFICATION_CODE, 0, asList(DSPA.id));
 
         List<DriverNotified> driverNotifiedList = transformDriverNotified(
-                previousByCase, previousPreviousByCase, orderDate, crownCourt, amendmentDate, defendant,
+                previousByCase, orderDate, crownCourt, amendmentDate, defendant,
                 cases, hearingId, null, false);
 
         assertThat(driverNotifiedList.size(), equalTo(1));
@@ -1842,7 +1841,7 @@ public class DriverNotifiedEngineTest {
         cases.get(0).getDefendantCaseOffences().get(0).getResults().clear();
 
         List<DriverNotified> driverNotifiedList = transformDriverNotified(
-                previousByCase, previousPreviousByCase, orderDate, crownCourt, null, defendant,
+                previousByCase, orderDate, crownCourt, null, defendant,
                 cases, hearingId, null, false);
 
         assertThat(driverNotifiedList.size(), equalTo(0));
@@ -1856,7 +1855,7 @@ public class DriverNotifiedEngineTest {
                 .build());
 
         driverNotifiedList = transformDriverNotified(
-                previousByCase, previousPreviousByCase, orderDate, crownCourt, null, defendant,
+                previousByCase, orderDate, crownCourt, null, defendant,
                 cases, hearingId, null, false);
 
         assertThat(driverNotifiedList.size(), equalTo(0));
@@ -1896,9 +1895,9 @@ public class DriverNotifiedEngineTest {
                 null,
                 null,
                 "3 Months", 1, false, asList(SV.id));
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
 
-        DriverNotified transformed = transformDriverNotified(previousByCase, previousPreviousByCase,
+        DriverNotified transformed = transformDriverNotified(previousByCase,
                 orderDate,
                 crownCourt,
                 null,
@@ -1946,9 +1945,9 @@ public class DriverNotifiedEngineTest {
                 null,
                 null,
                 "3 Months", 1, false, asList(SV.id));
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
 
-        DriverNotified transformed = transformDriverNotified(previousByCase, previousPreviousByCase,
+        DriverNotified transformed = transformDriverNotified(previousByCase,
                 orderDate,
                 crownCourt,
                 null,
@@ -1969,11 +1968,11 @@ public class DriverNotifiedEngineTest {
             DriverNotified previous = getPreviousDriverNotified(1, EMPTY, singletonList(Boolean.TRUE),
                     singletonList(SS30), singletonList(OFF1), singletonList(OFF1), true, previousConvictionDate, true, null, 1, false, singletonList(DSPAS.id), previousOrderDate, null);
             List<Cases> cases = asList(Cases.cases().withDefendantCaseOffences(new ArrayList<>()).withCaseId(CASE_ID).withReference("CaseReference").build());
-            previousByCase.put(previous.getCases().get(0).getReference(), previous);
+            previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
 
             List<CourtApplications> courtApplications = getCourtApplications(singletonList(APP1), prefix, false, null, null, SS30, 1, singletonList(AACA.id));
 
-            DriverNotified transformed = transformDriverNotified(previousByCase, previousPreviousByCase, orderDate,
+            DriverNotified transformed = transformDriverNotified(previousByCase, orderDate,
                     crownCourt, amendmentDate, defendant, cases, hearingId, courtApplications, false).get(0);
 
             assertThat(transformed.getUpdatedEndorsements().size(), is(equalTo(0)));
@@ -1986,11 +1985,11 @@ public class DriverNotifiedEngineTest {
         DriverNotified previous = getPreviousDriverNotified(1, EMPTY, singletonList(Boolean.TRUE),
                 singletonList(SS30), singletonList(OFF1), singletonList(OFF1), true, previousConvictionDate, true, null, 1, false, singletonList(DSPAS.id), previousOrderDate, null);
         List<Cases> cases = singletonList(Cases.cases().withDefendantCaseOffences(new ArrayList<>()).withCaseId(CASE_ID).withReference("CaseReference").build());
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
 
         List<CourtApplications> courtApplications = getCourtApplications(singletonList(APP1), prefix, false, null, null, SS30, 1, singletonList(AASA.id));
 
-        DriverNotified transformed = transformDriverNotified(previousByCase, previousPreviousByCase, orderDate,
+        DriverNotified transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, amendmentDate, defendant, cases, hearingId, courtApplications, false).get(0);
 
         assertThat(transformed.getUpdatedEndorsements().size(), is(equalTo(0)));
@@ -2003,11 +2002,11 @@ public class DriverNotifiedEngineTest {
         DriverNotified previous = getPreviousDriverNotified(1, EMPTY, singletonList(Boolean.TRUE),
                 singletonList(SS30), singletonList(OFF1), singletonList(OFF1), true, previousConvictionDate, true, null, 1, false, singletonList(DSPAS.id), previousOrderDate, null);
         List<Cases> cases = singletonList(Cases.cases().withDefendantCaseOffences(new ArrayList<>()).withCaseId(CASE_ID).withReference("CaseReference").build());
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
 
         List<CourtApplications> courtApplications = getCourtApplications(singletonList(APP1), prefix, false, null, null, SS30, 1, singletonList(AACD.id));
 
-        DriverNotified transformed = transformDriverNotified(previousByCase, previousPreviousByCase, orderDate,
+        DriverNotified transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, null, defendant, cases, hearingId, courtApplications, false).get(0);
 
         assertThat(transformed.getUpdatedEndorsements().size(), is(equalTo(1)));
@@ -2020,11 +2019,11 @@ public class DriverNotifiedEngineTest {
         DriverNotified previous = getPreviousDriverNotified(1, EMPTY, singletonList(Boolean.TRUE),
                 singletonList(SS30), singletonList(OFF1), singletonList(OFF1), true, previousConvictionDate, true, null, 1, false, singletonList(DSPAS.id), previousOrderDate, null);
         List<Cases> cases = singletonList(Cases.cases().withDefendantCaseOffences(new ArrayList<>()).withCaseId(CASE_ID).withReference("CaseReference").build());
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
 
         List<CourtApplications> courtApplications = getCourtApplications(singletonList(APP1), prefix, false, null, null, SS30, 1, singletonList(AASD.id));
 
-        DriverNotified transformed = transformDriverNotified(previousByCase, previousPreviousByCase, orderDate,
+        DriverNotified transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, null, defendant, cases, hearingId, courtApplications, false).get(0);
 
         assertThat(transformed.getUpdatedEndorsements().size(), is(equalTo(1)));
@@ -2037,11 +2036,11 @@ public class DriverNotifiedEngineTest {
         DriverNotified previous = getPreviousDriverNotified(1, EMPTY, singletonList(Boolean.TRUE),
                 singletonList(SS30), singletonList(OFF1), singletonList(OFF1), true, previousConvictionDate, true, null, 1, false, singletonList(DSPAS.id), previousOrderDate, null);
         List<Cases> cases = singletonList(Cases.cases().withDefendantCaseOffences(new ArrayList<>()).withCaseId(CASE_ID).withReference("CaseReference").build());
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
 
         List<CourtApplications> courtApplications = getCourtApplications(singletonList(APP1), prefix, false, null, null, SS30, 1, singletonList(ACSD.id));
 
-        DriverNotified transformed = transformDriverNotified(previousByCase, previousPreviousByCase, orderDate,
+        DriverNotified transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, null, defendant, cases, hearingId, courtApplications, false).get(0);
 
         assertThat(transformed.getUpdatedEndorsements().size(), is(equalTo(1)));
@@ -2054,11 +2053,11 @@ public class DriverNotifiedEngineTest {
         DriverNotified previous = getPreviousDriverNotified(1, EMPTY, singletonList(Boolean.TRUE),
                 singletonList(SS30), singletonList(OFF1), singletonList(OFF1), true, previousConvictionDate, true, null, 1, false, singletonList(DSPAS.id), previousOrderDate, null);
         List<Cases> cases = singletonList(Cases.cases().withDefendantCaseOffences(new ArrayList<>()).withCaseId(CASE_ID).withReference("CaseReference").build());
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
 
         List<CourtApplications> courtApplications = getCourtApplications(singletonList(APP1), prefix, false, null, null, SS30, 1, singletonList(APA.id));
 
-        DriverNotified transformed = transformDriverNotified(previousByCase, previousPreviousByCase, orderDate,
+        DriverNotified transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, null, defendant, cases, hearingId, courtApplications, false).get(0);
 
         assertThat(transformed.getUpdatedEndorsements().size(), is(equalTo(1)));
@@ -2071,11 +2070,11 @@ public class DriverNotifiedEngineTest {
         DriverNotified previous = getPreviousDriverNotified(1, EMPTY, singletonList(Boolean.TRUE),
                 singletonList(SS30), singletonList(OFF1), singletonList(OFF1), true, previousConvictionDate, true, null, 1, false, singletonList(DSPAS.id), previousOrderDate, null);
         List<Cases> cases = singletonList(Cases.cases().withDefendantCaseOffences(new ArrayList<>()).withCaseId(CASE_ID).withReference("CaseReference").build());
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
 
         List<CourtApplications> courtApplications = getCourtApplications(singletonList(APP1), prefix, false, null, null, SS30, 1, singletonList(ASV.id));
 
-        DriverNotified transformed = transformDriverNotified(previousByCase,previousPreviousByCase,  orderDate,
+        DriverNotified transformed = transformDriverNotified(previousByCase,  orderDate,
                 crownCourt, null, defendant, cases, hearingId, courtApplications, false).get(0);
 
         assertThat(transformed.getUpdatedEndorsements().size(), is(equalTo(1)));
@@ -2088,11 +2087,11 @@ public class DriverNotifiedEngineTest {
         DriverNotified previous = getPreviousDriverNotified(1, EMPTY, singletonList(Boolean.TRUE),
                 singletonList(SS30), singletonList(OFF1), singletonList(OFF1), true, previousConvictionDate, true, null, 1, false, singletonList(DSPAS.id), previousOrderDate, null);
         List<Cases> cases = singletonList(Cases.cases().withDefendantCaseOffences(new ArrayList<>()).withCaseId(CASE_ID).withReference("CaseReference").build());
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
 
         List<CourtApplications> courtApplications = getCourtApplications(singletonList(APP1), prefix, false, null, null, SS30, 1, singletonList(AW.id));
 
-        DriverNotified transformed = transformDriverNotified(previousByCase, previousPreviousByCase, orderDate,
+        DriverNotified transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, null, defendant, cases, hearingId, courtApplications, false).get(0);
 
         assertThat(transformed.getUpdatedEndorsements().size(), is(equalTo(1)));
@@ -2105,11 +2104,11 @@ public class DriverNotifiedEngineTest {
         DriverNotified previous = getPreviousDriverNotified(1, EMPTY, singletonList(Boolean.TRUE),
                 singletonList(SS30), singletonList(OFF1), singletonList(OFF1), true, previousConvictionDate, true, null, 1, false, singletonList(DSPAS.id), previousOrderDate, null);
         List<Cases> cases = singletonList(Cases.cases().withDefendantCaseOffences(new ArrayList<>()).withCaseId(CASE_ID).withReference("CaseReference").build());
-        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+        previousByCase.put(previous.getCases().get(0).getReference(), new DriverNotifiedHistory(previous, null));
 
         List<CourtApplications> courtApplications = getCourtApplications(singletonList(APP1), prefix, false, null, null, SS30, 1, singletonList(DDRE.id));
 
-        DriverNotified transformed = transformDriverNotified(previousByCase, previousPreviousByCase, orderDate,
+        DriverNotified transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, null, defendant, cases, hearingId, courtApplications, false).get(0);
 
         assertThat(transformed.getUpdatedEndorsements().size(), is(equalTo(1)));

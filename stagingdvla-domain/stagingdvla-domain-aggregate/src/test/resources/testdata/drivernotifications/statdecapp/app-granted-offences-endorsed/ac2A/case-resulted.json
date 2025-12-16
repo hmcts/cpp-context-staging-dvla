@@ -1,0 +1,204 @@
+{
+  "masterDefendantId": "6476e00f-dbfd-4538-b1e3-6beca129539d",
+  "orderingCourt": {
+    "address": {
+      "address1": "176A Lavender Hill",
+      "address2": "London",
+      "address3": "",
+      "address4": "",
+      "address5": "",
+      "postcode": "SW11 1JU"
+    },
+    "code": "B01LY00",
+    "courtHearingLocation": "B01LY01",
+    "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+    "lja": {
+      "ljaCode": "2577",
+      "ljaName": "South West London Magistrates' Court"
+    },
+    "name": "Lavender Hill Magistrates' Court",
+    "roomId": "9e4932f7-97b2-3010-b942-ddd2624e4dd8",
+    "roomName": "Courtroom 01"
+  },
+  "nowContent": {
+    "orderDate": "2025-12-12",
+    "defendant": {
+      "dateOfBirth": "1991-11-11",
+      "gender": "MALE",
+      "driverNumber": "VANFL002222OW9PH",
+      "title": "Mr",
+      "firstName": "Lyric",
+      "lastName": "Davis",
+      "name": "Lyric Davis",
+      "address": {
+        "line1": "9999A9999AAAA",
+        "line2": "Woodlane",
+        "line3": "addressline 3",
+        "line4": "Bristol",
+        "line5": "Avon",
+        "postCode": "SW11 3TQ"
+      }
+    },
+    "caseApplicationReferences": [
+      "28DI7056936"
+    ],
+    "cases": [
+      {
+        "caseStatus": "ACTIVE",
+        "initiationCode": "C",
+        "reference": "28DI7056936",
+        "caseId": "c6d1ff12-0e3f-4979-83d4-cdc05b472421",
+        "defendantCaseOffences": [
+          {
+            "title": "Robbery",
+            "civilOffence": false,
+            "convictionDate": "2025-12-12",
+            "convictionStatus": "Convicted",
+            "plea": "GUILTY",
+            "code": "TH68023",
+            "modeOfTrial": "Indictable",
+            "allocationDecision": "Indictable-only offence",
+            "endorsableFlag": false,
+            "convictingCourtCode": "2577",
+            "wording": "From 13th November 2018, an aggravated version of this offence applies where the offence is committed against an emergency worker acting in the exercise of his / her functions as such a worker, as per section 1 of the Assaults on emergency Workers (Offences) Act 2018; see offence wording document H19568.",
+            "startDate": "2022-12-12",
+            "results": [
+              {
+                "resultIdentifier": "554c2622-c1cc-459e-a98d-b7f317ab065c",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "d3205319-84cf-4c5b-9d7a-7e4bb1865054",
+                    "promptReference": "periodofConditionalDischarge",
+                    "durationSequence": 1,
+                    "label": "Period of conditional discharge",
+                    "value": "6 Months"
+                  }
+                ],
+                "d20": false,
+                "dvlaCode": "E",
+                "label": "Conditional discharge"
+              },
+              {
+                "resultIdentifier": "b0aeb4fc-df63-4e2f-af88-97e3f23e847f",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "11a939b1-71e6-4065-8c29-007e4b52da7a",
+                    "promptReference": "licenceIssueNumber",
+                    "label": "Licence issue number",
+                    "value": "23"
+                  }
+                ],
+                "d20": true,
+                "label": "Driving record endorsed (no points)"
+              },
+              {
+                "resultIdentifier": "4b850aa9-984c-4a15-a1ae-b2f861cfcbe8",
+                "publishedForNows": true,
+                "prompts": [
+                  {
+                    "promptIdentifier": "11a939b1-71e6-4065-8c29-007e4b52da7a",
+                    "promptReference": "licenceIssueNumber",
+                    "label": "Licence issue number",
+                    "value": "23"
+                  }
+                ],
+                "d20": false,
+                "label": "1: Prov DVLA produced"
+              }
+            ]
+          },
+          {
+            "title": "Public service vehicles - passenger failing to pay fare",
+            "civilOffence": false,
+            "convictionDate": "2025-12-12",
+            "convictionStatus": "Convicted",
+            "plea": "GUILTY",
+            "code": "PS90015",
+            "modeOfTrial": "Summary",
+            "allocationDecision": "Summary-only offence",
+            "endorsableFlag": false,
+            "convictingCourtCode": "2577",
+            "wording": "Public service vehicles - passenger failing to pay fare",
+            "startDate": "2022-11-28",
+            "results": [
+              {
+                "resultIdentifier": "554c2622-c1cc-459e-a98d-b7f317ab065c",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "d3205319-84cf-4c5b-9d7a-7e4bb1865054",
+                    "promptReference": "periodofConditionalDischarge",
+                    "durationSequence": 1,
+                    "label": "Period of conditional discharge",
+                    "value": "6 Months"
+                  }
+                ],
+                "d20": false,
+                "dvlaCode": "E",
+                "label": "Conditional discharge"
+              },
+              {
+                "resultIdentifier": "ccfc452e-ebe4-4cd7-b8a0-4f90768447b4",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "11a939b1-71e6-4065-8c29-007e4b52da7a",
+                    "promptReference": "licenceIssueNumber",
+                    "label": "Licence issue number",
+                    "value": "23"
+                  },
+                  {
+                    "promptIdentifier": "2bf54447-328c-4c1b-a123-341adbd52172",
+                    "promptReference": "disqualificationPeriod",
+                    "durationSequence": 1,
+                    "label": "Disqualification period",
+                    "value": "6 Months"
+                  },
+                  {
+                    "promptIdentifier": "81638260-3cd1-41e7-9725-c8e91e23bda1",
+                    "promptReference": "extensionPeriodSection35AImmediateCustodialSentence",
+                    "label": "Extension period section 35A (immediate custodial sentence)",
+                    "value": "tes"
+                  },
+                  {
+                    "promptIdentifier": "0143f821-7cab-4e53-a00b-2fd1c3dc8204",
+                    "promptReference": "extensionPeriodSection35BEffectOfCustodialSentenceNoted",
+                    "label": "Extension period section 35B (effect of custodial sentence noted)",
+                    "value": "tes"
+                  },
+                  {
+                    "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+                    "promptReference": "defendantDrivingLicenceNumber",
+                    "label": "Defendant driving licence number",
+                    "value": "VANFL002222OW9PH"
+                  }
+                ],
+                "resultWording": "Disqualified for holding or obtaining a driving licence. Discretionary disqualification. Driving record endorsed. Section 34(2) Road Traffic Offenders Act 1988",
+                "d20": true,
+                "label": "Discretionary with ordinary disqualification"
+              },
+              {
+                "resultIdentifier": "4b850aa9-984c-4a15-a1ae-b2f861cfcbe8",
+                "publishedForNows": true,
+                "prompts": [
+                  {
+                    "promptIdentifier": "11a939b1-71e6-4065-8c29-007e4b52da7a",
+                    "promptReference": "licenceIssueNumber",
+                    "label": "Licence issue number",
+                    "value": "23"
+                  }
+                ],
+                "d20": false,
+                "label": "1: Prov DVLA produced"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": false,
+  "orderingHearingId": "ac6e40c6-6302-4f36-aa76-dec2dc5ce684"
+}
