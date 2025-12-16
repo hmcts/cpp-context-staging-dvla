@@ -108,7 +108,7 @@ class DefendantAggregateScenariosTest {
                                         "/testdata/drivernotifications/statdecapp/app-granted-offences-endorsed-remove-result/ac4A/application-hearing-resulted-with-nexh-events-expected.json"
                                 )
                                 .withNotifyDriverStep(
-                                        "application hearing reshared with adjourned result",
+                                        "application hearing reshared with change adjurn hearing date",
                                         "/testdata/drivernotifications/statdecapp/app-granted-offences-endorsed-remove-result/ac4A/application-hearing-resulted-with-nexh1.json",
                                         null
                                 )

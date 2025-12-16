@@ -63,9 +63,9 @@ class DefendantAggregateTestSteps {
                         step.input.masterDefendantId(),
                         step.input.isReshare
                 );
-                if(isNull(step.expectedEventsJsonFile)){
+                if (isNull(step.expectedEventsJsonFile)) {
                     assertThat(name + " - No events were produced", eventStream, IsNull.nullValue());
-                }else{
+                } else {
                     assertThat(name + " - No events were produced", eventStream, IsNull.notNullValue());
                     final List<String> actualEvents = eventStream
                             .map(objectToJsonObjectConverter::convert)

@@ -144,28 +144,7 @@ public class DefendantAggregate implements Aggregate {
 
                     // For each case, get the latest DriverNotifiedEvent. This is required for comparing if
                     // results has been updated
-                    if (nonNull(e.getCases())) {
-                        if (Boolean.TRUE.equals(e.getResetNotificationHistory())) {
-                            e.getCases().forEach(c -> {
-                                final DriverNotifiedHistory driverNotifiedHistory = driverNotifiedHistoryByCase.get(c.getReference());
-                                driverNotifiedHistory.setLatest(driverNotifiedHistory.getPrevious());
-                                driverNotifiedHistory.setPrevious(null);
-                                driverNotifiedHistoryByCase.put(c.getReference(), driverNotifiedHistory);
-                            });
-                        } else {
-                            e.getCases().forEach(c -> {
-                                DriverNotifiedHistory driverNotifiedHistory = driverNotifiedHistoryByCase.get(c.getReference());
-                                if (isNull(driverNotifiedHistory)) {
-                                    driverNotifiedHistory = new DriverNotifiedHistory(e, null);
-                                } else {
-                                    driverNotifiedHistory.setPrevious(driverNotifiedHistory.getLatest());
-                                    driverNotifiedHistory.setLatest(e);
-                                }
-                                driverNotifiedHistoryByCase.put(c.getReference(), driverNotifiedHistory);
-
-                            });
-                        }
-                    }
+                    setupDriverBotifiedHistory(e);
 
                     isWaitingRetryTrigger = false;
                     if (nonNull(e.getRetrySequence())) {
@@ -182,5 +161,28 @@ public class DefendantAggregate implements Aggregate {
                     retrySequence = 0;
                 }),
                 otherwiseDoNothing());
+    }
+
+    private void setupDriverBotifiedHistory(final DriverNotified e) {
+        if (nonNull(e.getCases())) {
+            if (Boolean.TRUE.equals(e.getResetNotificationHistory())) {
+                e.getCases().forEach(c -> {
+                    final DriverNotifiedHistory driverNotifiedHistory = driverNotifiedHistoryByCase.get(c.getReference());
+                    driverNotifiedHistory.reset(e);
+                    driverNotifiedHistoryByCase.put(c.getReference(), driverNotifiedHistory);
+                });
+            } else {
+                e.getCases().forEach(c -> {
+                    DriverNotifiedHistory driverNotifiedHistory = driverNotifiedHistoryByCase.get(c.getReference());
+                    if (isNull(driverNotifiedHistory)) {
+                        driverNotifiedHistory = new DriverNotifiedHistory(e, null);
+                    } else {
+                        driverNotifiedHistory.makeLatest(e);
+                    }
+                    driverNotifiedHistoryByCase.put(c.getReference(), driverNotifiedHistory);
+
+                });
+            }
+        }
     }
 }
