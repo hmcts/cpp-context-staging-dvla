@@ -75,6 +75,10 @@
     "notificationWasPreviouslySent": {
       "type": "boolean"
     },
+    "notificationType": {
+      "type": "string",
+      "enum": ["New", "Update", "Remove"]
+    },
     "removedEndorsements": {
       "type": "array",
       "items": {

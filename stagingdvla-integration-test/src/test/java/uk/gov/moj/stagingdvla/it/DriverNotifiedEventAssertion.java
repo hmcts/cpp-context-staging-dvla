@@ -36,11 +36,6 @@ public class DriverNotifiedEventAssertion {
         return new DriverNotifiedEventAssertion(notifiedEvent);
     }
 
-    public DriverNotifiedEventAssertion hasOneCase() {
-        assertThat(notifiedEvent.getCases(), hasSize(1));
-        return this;
-    }
-
     public DriverNotifiedEventAssertion hasCaseReference(String reference) {
         assertThat(notifiedEvent.getCases().get(0).getReference(), equalTo(reference));
         return this;
@@ -54,19 +49,6 @@ public class DriverNotifiedEventAssertion {
     public DriverNotifiedEventAssertion hasUpdatedEndorsements() {
         assertThat(notifiedEvent.getUpdatedEndorsements(), not(empty()));
         return this;
-    }
-
-    public DriverNotifiedEventAssertion hasEmptyUpdatedEndorsements() {
-        return isEmpty(notifiedEvent::getUpdatedEndorsements);
-    }
-
-    public DriverNotifiedEventAssertion hasRemovedEndorsements() {
-        assertThat(notifiedEvent.getRemovedEndorsements(), not(empty()));
-        return this;
-    }
-
-    public DriverNotifiedEventAssertion hasEmptyRemovedEndorsements() {
-        return isEmpty(notifiedEvent::getRemovedEndorsements);
     }
 
     public DriverNotifiedEventAssertion hasNoRemovedEndorsements() {
