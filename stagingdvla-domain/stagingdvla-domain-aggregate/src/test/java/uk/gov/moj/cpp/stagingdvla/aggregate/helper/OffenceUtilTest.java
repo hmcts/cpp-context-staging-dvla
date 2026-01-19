@@ -1,6 +1,7 @@
 package uk.gov.moj.cpp.stagingdvla.aggregate.helper;
 
 import static java.util.Arrays.asList;
+import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -10,19 +11,18 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.App
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.REMOVE;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.UPDATE_MERGE;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.AACA;
-import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.AACD;
-import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.AASA;
-import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.AASD;
-import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.ACSD;
-import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.APA;
-import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.ASV;
-import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.AW;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.COV;
-import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.DDRE;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.DINE;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.DINI;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.DISC;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.DISCH;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.DISM;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.DSPAS;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.ERR;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.G;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.RFSD;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.WDRN;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.WDRNOFF;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAnyResultOrPromptModified;
 
 import uk.gov.justice.cpp.stagingdvla.event.Cases;
@@ -241,90 +241,72 @@ class OffenceUtilTest {
     void shouldGetEndorsementStatusDSPAS() {
         final List<CourtApplications> courtApplications = getCourtApplications(DSPAS);
 
-        final AggregateConstants.EndorsementStatus endorsementStatus = OffenceUtil.getEndorsementStatus(false, null, courtApplications);
+        final AggregateConstants.EndorsementStatus endorsementStatus = OffenceUtil.getEndorsementStatus(false, null, null, courtApplications, emptyList());
 
         assertThat(endorsementStatus, is(UPDATE_MERGE));
     }
 
     @Test
-    void shouldGetEndorsementStatusAACA() {
-        final List<CourtApplications> courtApplications = getCourtApplications(AACA);
+    void shouldGetEndorsementStatusDISM() {
+        final List<CourtApplications> courtApplications = getCourtApplications(DISM);
 
-        final AggregateConstants.EndorsementStatus endorsementStatus = OffenceUtil.getEndorsementStatus(false, null, courtApplications);
+        final AggregateConstants.EndorsementStatus endorsementStatus = OffenceUtil.getEndorsementStatus(false, null, null, courtApplications, emptyList());
 
         assertThat(endorsementStatus, is(REMOVE));
     }
 
     @Test
-    void shouldGetEndorsementStatusAASA() {
-        final List<CourtApplications> courtApplications = getCourtApplications(AASA);
+    void shouldGetEndorsementStatusDINE() {
+        final List<CourtApplications> courtApplications = getCourtApplications(DINE);
 
-        final AggregateConstants.EndorsementStatus endorsementStatus = OffenceUtil.getEndorsementStatus(false, null, courtApplications);
+        final AggregateConstants.EndorsementStatus endorsementStatus = OffenceUtil.getEndorsementStatus(false, null, null, courtApplications, emptyList());
 
         assertThat(endorsementStatus, is(REMOVE));
     }
 
     @Test
-    void shouldGetEndorsementStatusAACD() {
-        final List<CourtApplications> courtApplications = getCourtApplications(AACD);
+    void shouldGetEndorsementStatusDINI() {
+        final List<CourtApplications> courtApplications = getCourtApplications(DINI);
 
-        final AggregateConstants.EndorsementStatus endorsementStatus = OffenceUtil.getEndorsementStatus(false, null, courtApplications);
+        final AggregateConstants.EndorsementStatus endorsementStatus = OffenceUtil.getEndorsementStatus(false, null, null, courtApplications, emptyList());
 
-        assertThat(endorsementStatus, is(UPDATE_MERGE));
+        assertThat(endorsementStatus, is(REMOVE));
     }
 
     @Test
-    void shouldGetEndorsementStatusAASD() {
-        final List<CourtApplications> courtApplications = getCourtApplications(AASD);
+    void shouldGetEndorsementStatusDISC() {
+        final List<CourtApplications> courtApplications = getCourtApplications(DISC);
 
-        final AggregateConstants.EndorsementStatus endorsementStatus = OffenceUtil.getEndorsementStatus(false, null, courtApplications);
+        final AggregateConstants.EndorsementStatus endorsementStatus = OffenceUtil.getEndorsementStatus(false, null, null, courtApplications, emptyList());
 
-        assertThat(endorsementStatus, is(UPDATE_MERGE));
+        assertThat(endorsementStatus, is(REMOVE));
     }
 
     @Test
-    void shouldGetEndorsementStatusACSD() {
-        final List<CourtApplications> courtApplications = getCourtApplications(ACSD);
+    void shouldGetEndorsementStatusDISCH() {
+        final List<CourtApplications> courtApplications = getCourtApplications(DISCH);
 
-        final AggregateConstants.EndorsementStatus endorsementStatus = OffenceUtil.getEndorsementStatus(false, null, courtApplications);
+        final AggregateConstants.EndorsementStatus endorsementStatus = OffenceUtil.getEndorsementStatus(false, null, null, courtApplications, emptyList());
 
-        assertThat(endorsementStatus, is(UPDATE_MERGE));
+        assertThat(endorsementStatus, is(REMOVE));
     }
 
     @Test
-    void shouldGetEndorsementStatusAPA() {
-        final List<CourtApplications> courtApplications = getCourtApplications(APA);
+    void shouldGetEndorsementStatusWDRN() {
+        final List<CourtApplications> courtApplications = getCourtApplications(WDRN);
 
-        final AggregateConstants.EndorsementStatus endorsementStatus = OffenceUtil.getEndorsementStatus(false, null, courtApplications);
+        final AggregateConstants.EndorsementStatus endorsementStatus = OffenceUtil.getEndorsementStatus(false, null, null, courtApplications, emptyList());
 
-        assertThat(endorsementStatus, is(UPDATE_MERGE));
+        assertThat(endorsementStatus, is(REMOVE));
     }
 
     @Test
-    void shouldGetEndorsementStatusASV() {
-        final List<CourtApplications> courtApplications = getCourtApplications(ASV);
+    void shouldGetEndorsementStatusWDRNOFF() {
+        final List<CourtApplications> courtApplications = getCourtApplications(WDRNOFF);
 
-        final AggregateConstants.EndorsementStatus endorsementStatus = OffenceUtil.getEndorsementStatus(false, null, courtApplications);
+        final AggregateConstants.EndorsementStatus endorsementStatus = OffenceUtil.getEndorsementStatus(false, null, null, courtApplications, emptyList());
 
-        assertThat(endorsementStatus, is(UPDATE_MERGE));
-    }
-
-    @Test
-    void shouldGetEndorsementStatusAW() {
-        final List<CourtApplications> courtApplications = getCourtApplications(AW);
-
-        final AggregateConstants.EndorsementStatus endorsementStatus = OffenceUtil.getEndorsementStatus(false, null, courtApplications);
-
-        assertThat(endorsementStatus, is(UPDATE_MERGE));
-    }
-
-    @Test
-    void shouldGetEndorsementStatusDDRE() {
-        final List<CourtApplications> courtApplications = getCourtApplications(DDRE);
-
-        final AggregateConstants.EndorsementStatus endorsementStatus = OffenceUtil.getEndorsementStatus(false, null, courtApplications);
-
-        assertThat(endorsementStatus, is(UPDATE_MERGE));
+        assertThat(endorsementStatus, is(REMOVE));
     }
 
     private Cases buildCases(String resultIdentifier, boolean d20) {
@@ -377,7 +359,7 @@ class OffenceUtilTest {
                 .build();
     }
 
-    private List<CourtApplications> getCourtApplications (final AggregateConstants.ResultType resultType) {
+    private List<CourtApplications> getCourtApplications(final AggregateConstants.ResultType resultType) {
         final CourtApplications applications = CourtApplications.courtApplications().withResults(singletonList(results()
                 .withD20(Boolean.TRUE)
                 .withResultIdentifier(resultType.id)

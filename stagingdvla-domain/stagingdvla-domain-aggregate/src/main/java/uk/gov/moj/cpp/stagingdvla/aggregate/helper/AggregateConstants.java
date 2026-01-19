@@ -34,11 +34,8 @@ public class AggregateConstants {
     public static final String PERIOD_LIFETIME = "999999";
     public static final String POINTS_DISQUALIFICATION_CODE = "TT99";
 
-    public static final String UPDATED = "UPDATED";
-    public static final String REMOVED = "REMOVED";
-
     public enum EndorsementStatus {
-        UPDATE_MERGE, UPDATE_NOMERGE, REMOVE
+        OATS_RESULT, UPDATE_MERGE, UPDATE_NOMERGE, REMOVE
     }
 
     public enum ResultType {
@@ -73,7 +70,15 @@ public class AggregateConstants {
         G("2b3f7c20-8fc1-4fad-9076-df196c24b27e"),
         TEXT("98138ec8-5dd3-11e8-9c2d-fa7ae01bbebc"),
         ADJ("d278650c-e429-11e8-9f32-f2801f1b9fd1"),
-        ERR("c36fed37-b635-4303-b514-2273e9e2594d");
+        ERR("c36fed37-b635-4303-b514-2273e9e2594d"),
+        OATS("3e859586-bc86-407d-bd8e-c9a01d40d147"),
+        DISM("14d66587-8fbe-424f-a369-b1144f1684e3"),
+        DINE("f8bd4d1f-1467-4903-b1e6-d2249ccc8c25"),
+        DINI("07dc4087-c9cb-4b2e-9a80-85778689c401"),
+        DISC("4850390f-13b3-4aa0-bae5-2dd0427b97eb"),
+        DISCH("d3139b79-696b-4cb7-a39d-7f06fcc24f4a"),
+        WDRN("eb2e4c4f-b738-4a4d-9cce-0572cecb7cb8"),
+        WDRNOFF("e0ae61f5-bbfa-4562-bc6d-ac59a484a06b");
 
         public final String id;
 
@@ -83,7 +88,7 @@ public class AggregateConstants {
     }
 
     public enum ApplicationType {
-        ACP("4e281610-96aa-3711-aecf-59df86b6c6bb","Application within criminal proceedings"),
+        ACP("4e281610-96aa-3711-aecf-59df86b6c6bb", "Application within criminal proceedings"),
         APPRO("44c238d9-3bc2-3cf3-a2eb-a7d1437b8383", "Application to reopen case");
 
         public final String id;
