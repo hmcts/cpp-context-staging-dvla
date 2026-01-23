@@ -38,7 +38,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import javax.json.Json;
+import uk.gov.justice.services.messaging.JsonObjects;
 import javax.json.JsonObject;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -208,7 +208,7 @@ public class DriverSearchAuditReportEventProcessorTest {
         final UUID id = randomUUID();
 
 
-        final JsonObject searchAuditReportDeletionFailed = Json.createObjectBuilder()
+        final JsonObject searchAuditReportDeletionFailed = JsonObjects.createObjectBuilder()
                 .add("id", id.toString())
                 .build();
         final JsonEnvelope requestMessage = envelopeFrom(

@@ -25,7 +25,7 @@ import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.UUID;
 
-import javax.json.Json;
+import uk.gov.justice.services.messaging.JsonObjects;
 import javax.json.JsonObject;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -87,7 +87,7 @@ public class DriverAuditEventListenerTest {
                 .withPostcode("ER1 05UA")
                 .build();
 
-        final JsonObject payload = Json.createObjectBuilder()
+        final JsonObject payload = JsonObjects.createObjectBuilder()
                 .add("id", ID.toString())
                 .add("userId", USER_ID.toString())
                 .add("userEmail", "peter@gmail.com")
@@ -153,7 +153,7 @@ public class DriverAuditEventListenerTest {
                 .withPostcode("ER1 05UA")
                 .build();
 
-        final JsonObject payload = Json.createObjectBuilder()
+        final JsonObject payload = JsonObjects.createObjectBuilder()
                 .add("id", ID.toString())
                 .add("userId", USER_ID.toString())
                 .add("userEmail", "peter@gmail.com")
