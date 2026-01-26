@@ -428,6 +428,9 @@
         },
         "dvlaCode": {
           "type": "string"
+        },
+        "judicialResultCategory": {
+          "$ref": "http://justice.gov.uk/core/courts/courtsDefinitions.json#/definitions/judicialResultCategory"
         }
       },
       "required": [
