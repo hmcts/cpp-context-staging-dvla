@@ -1,6 +1,6 @@
 package uk.gov.moj.cpp.stagingdvla.processor;
 
-import static javax.json.Json.createObjectBuilder;
+import static uk.gov.justice.services.messaging.JsonObjects.createObjectBuilder;
 import static org.mockito.Mockito.verify;
 import static uk.gov.justice.services.messaging.JsonEnvelope.envelopeFrom;
 import static uk.gov.justice.services.test.utils.core.messaging.MetadataBuilderFactory.metadataWithRandomUUID;
@@ -13,7 +13,7 @@ import uk.gov.moj.cpp.stagingdvla.service.MaterialService;
 
 import java.util.UUID;
 
-import javax.json.Json;
+import uk.gov.justice.services.messaging.JsonObjects;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -60,7 +60,7 @@ public class NowsMaterialStatusEventProcessorTest {
                                 .add("userId", materialId.toString())
                                 .add("firstClassLetter", false)
                                 .add("secondClassLetter", false)
-                                .add("emailNotifications", Json.createArrayBuilder()
+                                .add("emailNotifications", JsonObjects.createArrayBuilder()
                                         .add(createObjectBuilder()
                                                 .add("sendToAddress", "sendToAddress")
                                                 .build())

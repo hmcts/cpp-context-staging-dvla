@@ -2,7 +2,7 @@ package uk.gov.moj.cpp.stagingdvla.service;
 
 import static java.util.Objects.isNull;
 import static java.util.UUID.fromString;
-import static javax.json.Json.createObjectBuilder;
+import static uk.gov.justice.services.messaging.JsonObjects.createObjectBuilder;
 import static uk.gov.justice.services.core.annotation.Component.EVENT_PROCESSOR;
 import static uk.gov.justice.services.messaging.JsonEnvelope.envelopeFrom;
 import static uk.gov.justice.services.messaging.JsonEnvelope.metadataFrom;
@@ -21,7 +21,7 @@ import uk.gov.moj.cpp.stagingdvla.exception.UserNotFoundException;
 import java.util.UUID;
 
 import javax.inject.Inject;
-import javax.json.Json;
+import uk.gov.justice.services.messaging.JsonObjects;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 
@@ -54,22 +54,22 @@ public class MaterialService {
     private Enveloper enveloper;
 
     public static Metadata createMetadataWithProcessIdAndUserId(final String id, final String name, final String userId) {
-        return metadataFrom(Json.createObjectBuilder()
+        return metadataFrom(JsonObjects.createObjectBuilder()
                 .add(ID, id)
                 .add(NAME, name)
                 .add(SOURCE, ORIGINATOR_VALUE)
-                .add(CONTEXT, Json.createObjectBuilder()
+                .add(CONTEXT, JsonObjects.createObjectBuilder()
                         .add(USER_ID, userId))
                 .build()).build();
     }
 
     public static Metadata createMetadataWithProcessIdAndUserIdAndSource(final String processId, final String name, final String userId, final String source) {
-        return metadataFrom(Json.createObjectBuilder()
+        return metadataFrom(JsonObjects.createObjectBuilder()
                 .add(ID, UUID.randomUUID().toString())
                 .add(NAME, name)
                 .add(SOURCE, source)
                 .add(PROCESS_ID, processId)
-                .add(CONTEXT, Json.createObjectBuilder()
+                .add(CONTEXT, JsonObjects.createObjectBuilder()
                         .add(USER_ID, userId))
                 .build()).build();
     }
@@ -87,7 +87,7 @@ public class MaterialService {
     }
 
     private static JsonObject addMetadataToPayload(final JsonObject load, final Metadata metadata) {
-        final JsonObjectBuilder job = Json.createObjectBuilder();
+        final JsonObjectBuilder job = JsonObjects.createObjectBuilder();
         load.entrySet().forEach(entry -> job.add(entry.getKey(), entry.getValue()));
         job.add(JsonEnvelope.METADATA, metadata.asJsonObject());
         return job.build();
@@ -103,7 +103,7 @@ public class MaterialService {
             throw new UserNotFoundException(MISSING_USER_ID);
         }
         LOGGER.info("material being uploaded '{}' file service id '{}'", materialId, fileServiceId);
-        final JsonObject uploadMaterialPayload = Json.createObjectBuilder()
+        final JsonObject uploadMaterialPayload = JsonObjects.createObjectBuilder()
                 .add(MATERIAL_ID, materialId.toString())
                 .add(FILE_SERVICE_ID, fileServiceId.toString())
                 .build();
@@ -118,7 +118,7 @@ public class MaterialService {
             throw new UserNotFoundException(MISSING_USER_ID);
         }
         LOGGER.info("material being uploaded '{}' file service id '{}'", materialId, fileServiceId);
-        final JsonObject uploadMaterialPayload = Json.createObjectBuilder()
+        final JsonObject uploadMaterialPayload = JsonObjects.createObjectBuilder()
                 .add(MATERIAL_ID, materialId.toString())
                 .add(FILE_SERVICE_ID, fileServiceId.toString())
                 .build();

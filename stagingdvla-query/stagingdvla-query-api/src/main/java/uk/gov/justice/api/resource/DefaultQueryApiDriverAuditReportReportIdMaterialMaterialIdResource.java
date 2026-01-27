@@ -11,7 +11,7 @@ import uk.gov.moj.cpp.stagingdvla.query.view.StagingdvlaQueryView;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.json.Json;
+import uk.gov.justice.services.messaging.JsonObjects;
 import javax.json.JsonObject;
 import javax.ws.rs.core.Response;
 
@@ -40,7 +40,7 @@ public class DefaultQueryApiDriverAuditReportReportIdMaterialMaterialIdResource 
 
     private Response processedMaterialResponse(final Response materialResponse) {
         final String url = materialResponse.readEntity(String.class);
-        final JsonObject jsonObject = Json.createObjectBuilder()
+        final JsonObject jsonObject = JsonObjects.createObjectBuilder()
                 .add("url", url)
                 .build();
 
