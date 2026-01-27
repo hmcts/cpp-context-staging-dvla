@@ -15,9 +15,11 @@ import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 import static org.slf4j.LoggerFactory.getLogger;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.C_FOR_CROWN;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus;
-import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.NO_UPDATE;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.NO_UPDATE_PREV_ENDORSED;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.NO_UPDATE_PREV_NOT_ENDORSED;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.REMOVE;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.UPDATE_MERGE;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.UPDATE_NOMERGE;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.POINTS_DISQUALIFICATION_CODE;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.LPIC1;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.LPIC2;
@@ -229,8 +231,7 @@ public class DriverNotifiedEngine {
         final List<DefendantCaseOffences> updatedOffences = new ArrayList<>();
         if (isNotEmpty(currentCase.getDefendantCaseOffences())) {
             currentCase.getDefendantCaseOffences().forEach(currentOffence -> {
-                final DefendantCaseOffences previousOffence = nonNull(previousCase) && isNotEmpty(previousCase.getDefendantCaseOffences()) ?
-                        previousCase.getDefendantCaseOffences().stream().filter(aOffence -> currentOffence.getCode().equalsIgnoreCase(aOffence.getCode())).findFirst().orElse(null) : null;
+                final DefendantCaseOffences previousOffence = getMatchingOffence(previousCase, currentOffence);
                 final DefendantCaseOffences updatedOffence = updateOffence(currentOffence, courtApplications, previousOffence, amendmentDate, orderDate, orderingCourtCode);
                 if (hasPointsDisqualificationCode(updatedOffence.getResults())) {
                     updatedOffences.add(DefendantCaseOffences.defendantCaseOffences()
@@ -266,6 +267,15 @@ public class DriverNotifiedEngine {
             defendantCaseOffences.clear();
             defendantCaseOffences.addAll(updatedOffences);
         }
+    }
+
+    private static DefendantCaseOffences getMatchingOffence(final Cases aCase, final DefendantCaseOffences offenceToMatch) {
+        return nonNull(aCase) && isNotEmpty(aCase.getDefendantCaseOffences()) ?
+                aCase.getDefendantCaseOffences().stream()
+                        .filter(offence -> offenceToMatch.getCode().equalsIgnoreCase(offence.getCode()))
+                        .findFirst()
+                        .orElse(null)
+                : null;
     }
 
     private static DefendantCaseOffences updateOffence(DefendantCaseOffences currentOffence, final List<CourtApplications> courtApplications, final DefendantCaseOffences previousOffence, final String amendmentDate, final String orderDate, final String orderingCourtCode) {
@@ -387,9 +397,7 @@ public class DriverNotifiedEngine {
             final Cases currentCase = cases.stream()
                     .filter(aCase -> previousCase.getCaseId().equals(aCase.getCaseId())).findFirst().orElse(null);
             previousCase.getDefendantCaseOffences().forEach(previousOffence -> {
-                final DefendantCaseOffences currentOffence = nonNull(currentCase) ? currentCase.getDefendantCaseOffences().stream()
-                        .filter(aOffence -> previousOffence.getCode().equalsIgnoreCase(aOffence.getCode())).findFirst().orElse(null)
-                        : null;
+                final DefendantCaseOffences currentOffence = getMatchingOffence(currentCase, previousOffence);
                 final EndorsementStatus endorsementStatus = getEndorsementStatus(isNotEmpty(amendmentDate),
                         currentOffence, previousOffence, courtApplications, nonEndorsableOffenceCodes);
                 final String dvlaCode = getDvlaCode(previousOffence);
@@ -399,14 +407,18 @@ public class DriverNotifiedEngine {
                         removeConvictionDataFromOffence(currentOffence, currentCase);
                     }
                 } else {
-                    if (NO_UPDATE.equals(endorsementStatus)) {
+                    if (NO_UPDATE_PREV_ENDORSED.equals(endorsementStatus)) {
                         noUpdateOffences.add(dvlaCode);
-                    } else {
+                    } else if (UPDATE_MERGE.equals(endorsementStatus)
+                            || UPDATE_NOMERGE.equals(endorsementStatus)) {
                         updatedEndorsements.add(dvlaCode);
                     }
+
                     if (UPDATE_MERGE.equals(endorsementStatus)
-                            || NO_UPDATE.equals(endorsementStatus)) {
+                            || NO_UPDATE_PREV_ENDORSED.equals(endorsementStatus)) {
                         mergeOffences(currentCase, currentOffence, previousOffence, courtApplications, orderDate);
+                    } else if (NO_UPDATE_PREV_NOT_ENDORSED.equals(endorsementStatus) && nonNull(currentOffence)) {
+                        currentCase.getDefendantCaseOffences().remove(currentOffence);
                     }
                 }
             });
@@ -499,19 +511,15 @@ public class DriverNotifiedEngine {
             while (caseOffencesIterator.hasNext()) {
                 final DefendantCaseOffences offence = caseOffencesIterator.next();
                 if (hasAppealResultOrGranted(courtApplications)) {
-                    final DefendantCaseOffences previousOffence = nonNull(previousCase) && isNotEmpty(previousCase.getDefendantCaseOffences()) ?
-                            previousCase.getDefendantCaseOffences().stream()
-                                    .filter(aOffence -> offence.getMainOffenceCode().equalsIgnoreCase(aOffence.getMainOffenceCode()))
-                                    .findFirst()
-                                    .orElse(null) : null;
-                    if (!hasD20Endorsement(offence.getResults()) && (nonNull(previousOffence) && !hasD20Endorsement(previousOffence.getResults()))) {
+                    final DefendantCaseOffences previousOffence = getMatchingOffence(previousCase, offence);
+                    if (!hasD20Endorsement(offence) && !hasD20Endorsement(previousOffence)) {
                         removedOffences.add(offence.getDvlaCode());
                         caseOffencesIterator.remove();
                     }
                 }
                 // remove only if: offence does not have any result provided in resultTypes and do not have D20 endorsement.
                 else if (!(hasAnyResultType(offence.getResults(), resultTypes)
-                        || hasD20Endorsement(offence.getResults()))) {
+                        || hasD20Endorsement(offence))) {
                     removedOffences.add(offence.getDvlaCode());
                     caseOffencesIterator.remove();
                 }
