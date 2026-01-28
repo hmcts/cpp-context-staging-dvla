@@ -2165,7 +2165,9 @@ public class DriverNotifiedEngineTest {
                 crownCourt, null, defendant, cases, hearingId, courtApplications).get(0);
 
         assertThat(transformed, is(notNullValue()));
-        assertThat(transformed.getCases().get(0).getDefendantCaseOffences().size(), is(equalTo(2)));
+        assertThat(transformed.getCases().get(0).getDefendantCaseOffences().size(), is(equalTo(1)));
+        assertThat(transformed.getCases().get(0).getDefendantCaseOffences().get(0).getCode(), is(equalTo(OFF1)));
+        assertThat(transformed.getCases().get(0).getDefendantCaseOffences().get(0).getMainOffenceCode(), is(equalTo(OFF1)));
     }
 
     @Test

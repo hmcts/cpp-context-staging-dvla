@@ -20,7 +20,8 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.DAT
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.DEFAULT_DVLA_CODE;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.DVLACODE_FOR_OFFENCE;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus;
-import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.NO_UPDATE;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.NO_UPDATE_PREV_ENDORSED;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.NO_UPDATE_PREV_NOT_ENDORSED;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.REMOVE;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.UPDATE_MERGE;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.UPDATE_NOMERGE;
@@ -112,7 +113,7 @@ public class OffenceUtil {
         boolean nonEndorsable = nonEndorsableOffenceCodes.contains(getDvlaCode(previousOffence));
 
         if (hasAppealResultOrGranted(courtApplications)) {
-            return getEndorsementStatus(currentOffence, courtApplications);
+            return getEndorsementStatus(currentOffence, previousOffence, courtApplications);
         } else if (!nonEndorsable && isAmendment) {
             return isNull(currentOffence) ? REMOVE : UPDATE_NOMERGE;
         } else if (!nonEndorsable && applicationHasResult(courtApplications, DSPAS)) {
@@ -124,15 +125,19 @@ public class OffenceUtil {
         }
     }
 
-    private static EndorsementStatus getEndorsementStatus(final DefendantCaseOffences currentOffence, final List<CourtApplications> courtApplications) {
+    private static EndorsementStatus getEndorsementStatus(final DefendantCaseOffences currentOffence, final DefendantCaseOffences previousOffence, final List<CourtApplications> courtApplications) {
         if (nonNull(currentOffence)) {
             if (offenceHasAnyResult(currentOffence, asList(DISM, DINE, DINI, DISC, DISCH, WDRN, WDRNOFF))) {
                 return REMOVE;
             } else if (offenceHasResult(currentOffence, OATS)
                     || offenceHasResult(currentOffence, ADJ)
                     || isEmpty(currentOffence.getResults())) {
-                return NO_UPDATE;
-            } else if (hasD20Endorsement(currentOffence.getResults())) {
+                if (hasD20Endorsement(previousOffence)) {
+                    return NO_UPDATE_PREV_ENDORSED;
+                } else {
+                    return NO_UPDATE_PREV_NOT_ENDORSED;
+                }
+            } else if (hasD20Endorsement(currentOffence)) {
                 return UPDATE_NOMERGE;
             } else if (offenceHasResult(currentOffence, SV)) {
                 if (hasAnyOtherEndorsement(currentOffence, SV)) {
@@ -146,7 +151,11 @@ public class OffenceUtil {
                 return UPDATE_MERGE;
             }
         } else if (hasAppealResult(courtApplications)) {
-            return UPDATE_MERGE;
+            if (hasD20Endorsement(previousOffence)) {
+                return UPDATE_MERGE;
+            } else {
+                return NO_UPDATE_PREV_NOT_ENDORSED;
+            }
         } else {
             return REMOVE;
         }
@@ -446,6 +455,10 @@ public class OffenceUtil {
                 && offence.getResults().stream().anyMatch(result -> !resultType.id.equalsIgnoreCase(result.getResultIdentifier()) && result.getD20());
     }
 
+    public static boolean hasD20Endorsement(final DefendantCaseOffences offence) {
+        return nonNull(offence) && hasD20Endorsement(offence.getResults());
+    }
+
     public static boolean hasD20Endorsement(final List<Results> results) {
         return isNotEmpty(results) && results.stream()
                 .anyMatch(r -> nonNull(r.getD20()) && r.getD20());
@@ -491,7 +504,7 @@ public class OffenceUtil {
 
                 return prevCase.getDefendantCaseOffences().
                         stream().
-                        anyMatch(prevOffence -> hasD20Endorsement(prevOffence.getResults()));
+                        anyMatch(prevOffence -> hasD20Endorsement(prevOffence));
             } else {
                 LOGGER.info("[Case Id:{}], searching for D20 removals", currCase.getCaseId());
 
@@ -508,7 +521,7 @@ public class OffenceUtil {
                                             orElse(null);
 
                             return isNull(currOffence)
-                                    ? hasD20Endorsement(prevOffence.getResults())
+                                    ? hasD20Endorsement(prevOffence)
                                     : hasOffenceD20Removed(currOffence, prevOffence);
                         });
             }
@@ -730,7 +743,7 @@ public class OffenceUtil {
         final boolean d20Removed;
         if (isNotEmpty(prevOffence.getResults())) {
             if (isEmpty(currOffence.getResults())) {
-                d20Removed = hasD20Endorsement(prevOffence.getResults());
+                d20Removed = hasD20Endorsement(prevOffence);
             } else {
                 final Stream<Results> removedResults =
                         prevOffence.
