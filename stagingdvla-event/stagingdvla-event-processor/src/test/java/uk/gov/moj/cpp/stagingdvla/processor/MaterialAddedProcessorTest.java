@@ -1,6 +1,6 @@
 package uk.gov.moj.cpp.stagingdvla.processor;
 
-import static javax.json.Json.createObjectBuilder;
+import static uk.gov.justice.services.messaging.JsonObjects.createObjectBuilder;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.verify;
@@ -27,7 +27,7 @@ import uk.gov.justice.services.messaging.MetadataBuilder;
 import java.util.List;
 import java.util.UUID;
 
-import javax.json.Json;
+import uk.gov.justice.services.messaging.JsonObjects;
 import javax.json.JsonObject;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -68,12 +68,12 @@ public class MaterialAddedProcessorTest {
 
     @Test
     public void shouldProcessMaterialAddedEvent() {
-        final JsonObject metaDataJson = Json.createObjectBuilder()
+        final JsonObject metaDataJson =createObjectBuilder()
                 .add(ID, UUID.randomUUID().toString())
                 .add(NAME, "material.material-added")
                 .add(SOURCE, AUDIT_REPORT_ORIGINATOR_VALUE)
                 .add(PROCESS_ID, UUID.randomUUID().toString())
-                .add(CONTEXT, Json.createObjectBuilder()
+                .add(CONTEXT,createObjectBuilder()
                         .add(USER_ID, UUID.randomUUID().toString()))
                 .build();
 

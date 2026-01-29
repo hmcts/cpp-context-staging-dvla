@@ -8,6 +8,8 @@ import static javax.servlet.http.HttpServletResponse.SC_FORBIDDEN;
 import static javax.servlet.http.HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
 import static javax.servlet.http.HttpServletResponse.SC_NOT_FOUND;
 import static org.apache.commons.lang3.StringUtils.substring;
+import static uk.gov.justice.services.messaging.JsonObjects.createObjectBuilder;
+import static uk.gov.justice.services.messaging.JsonObjects.createReader;
 
 import uk.gov.justice.services.common.configuration.Value;
 import uk.gov.justice.services.common.converter.jackson.ObjectMapperProducer;
@@ -28,7 +30,6 @@ import java.util.function.UnaryOperator;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.json.JsonReader;
@@ -73,7 +74,7 @@ public class DriverService {
         DriverResponse driverResponse = new DriverResponse.Builder().build();
         try {
             final String findByDriverNumberUrl = dvlaEnquiryApimUrl.concat(FIND_BY_DRIVER_NUMBER_URL);
-            final String payload = Json.createObjectBuilder().add("drivingLicenceNumber", driverNumberFunc.apply(queryParameters.getDriverNumber())).build().toString();
+            final String payload = createObjectBuilder().add("drivingLicenceNumber", driverNumberFunc.apply(queryParameters.getDriverNumber())).build().toString();
             final Response response = restEasyClientService.post(findByDriverNumberUrl, payload, subscriptionKey);
             LOGGER.info(AZURE_LOGS, findByDriverNumberUrl, response.getStatus());
             driverResponse = transformDriverResponse(response);
@@ -120,8 +121,8 @@ public class DriverService {
         DriverImageResponse driverImageResponse = new DriverImageResponse.Builder().build();
         try {
             final String findDriverImageUrl = dvlaEnquiryApimUrl.concat(FIND_DRIVER_IMAGE_URL);
-            final JsonObjectBuilder builder = Json.createObjectBuilder().add("drivingLicenceNumber", driverNumberFunc.apply(queryParameters.getDriverNumber()));
-            if(queryParameters.getRequiredImage() != null){
+            final JsonObjectBuilder builder = createObjectBuilder().add("drivingLicenceNumber", driverNumberFunc.apply(queryParameters.getDriverNumber()));
+            if (queryParameters.getRequiredImage() != null) {
                 builder.add("requiredImage", queryParameters.getRequiredImage());
             }
             final String payload = builder.build().toString();
@@ -134,7 +135,7 @@ public class DriverService {
         return driverImageResponse;
     }
 
-    private Response getClientServiceResponse(Map<String, Object> params){
+    private Response getClientServiceResponse(Map<String, Object> params) {
         final String findByDriverDetailsUrl = dvlaEnquiryApimUrl.concat(FIND_BY_DRIVER_DETAILS_URL);
         final String jsonPayload = prepareJsonPayload(params);
         final Response response = restEasyClientService.post(findByDriverDetailsUrl, jsonPayload, subscriptionKey);
@@ -198,7 +199,7 @@ public class DriverService {
 
     private Error getErrorMessage(final String responseAsString) {
         final Error.Builder builder = new Error.Builder();
-        try (final JsonReader jsonReader = Json.createReader(new StringReader(responseAsString))) {
+        try (final JsonReader jsonReader = createReader(new StringReader(responseAsString))) {
             final JsonObject jsonObject = jsonReader.readObject();
             if (jsonObject.containsKey(ERRORS)) {
                 final JsonObject errorJson = jsonObject.getJsonArray(ERRORS).getJsonObject(0);
@@ -217,9 +218,9 @@ public class DriverService {
     }
 
     private String prepareJsonPayload(final Map<String, Object> params) {
-        final JsonObjectBuilder builder = Json.createObjectBuilder();
-        final JsonObjectBuilder criteria = Json.createObjectBuilder();
-        final JsonObjectBuilder optionsBuilder = Json.createObjectBuilder();
+        final JsonObjectBuilder builder = createObjectBuilder();
+        final JsonObjectBuilder criteria = createObjectBuilder();
+        final JsonObjectBuilder optionsBuilder = createObjectBuilder();
 
         params.entrySet().forEach(entry -> {
             if ("exactFirstNamesMatch".equals(entry.getKey())) {
