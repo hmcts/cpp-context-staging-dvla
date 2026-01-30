@@ -2,12 +2,12 @@ package uk.gov.moj.cpp.stagingdvla.query.view.service;
 
 import static java.time.ZonedDateTime.now;
 import static java.util.UUID.randomUUID;
-import static uk.gov.justice.services.messaging.JsonObjects.createObjectBuilder;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.Is.is;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentCaptor.forClass;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -17,6 +17,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.quality.Strictness.LENIENT;
 import static uk.gov.justice.services.messaging.JsonEnvelope.envelopeFrom;
+import static uk.gov.justice.services.messaging.JsonObjects.createObjectBuilder;
 import static uk.gov.justice.services.test.utils.core.messaging.MetadataBuilderFactory.metadataWithRandomUUID;
 import static uk.gov.justice.services.test.utils.core.reflection.ReflectionUtil.setField;
 
@@ -25,6 +26,7 @@ import uk.gov.justice.services.common.converter.JsonObjectToObjectConverter;
 import uk.gov.justice.services.common.converter.ListToJsonArrayConverter;
 import uk.gov.justice.services.common.converter.StringToJsonObjectConverter;
 import uk.gov.justice.services.common.converter.jackson.ObjectMapperProducer;
+import uk.gov.justice.services.common.exception.ForbiddenRequestException;
 import uk.gov.justice.services.core.enveloper.Enveloper;
 import uk.gov.justice.services.messaging.Envelope;
 import uk.gov.justice.services.messaging.JsonEnvelope;
@@ -46,10 +48,10 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 import java.util.UUID;
 
 import javax.json.JsonObject;
+import javax.ws.rs.core.Response;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -80,6 +82,9 @@ class StagingdvlaQueryViewTest {
     @Mock
     private DrivingConvictionRetryConverter drivingConvictionRetryConverter;
 
+    @Mock
+    private MaterialService materialService;
+
     @Spy
     private ListToJsonArrayConverter listToJsonArrayConverter;
 
@@ -109,7 +114,7 @@ class StagingdvlaQueryViewTest {
     }
 
     @Test
-     void shouldReturnRetryRecordsWhen1ItemRequested() throws IOException {
+    void shouldReturnRetryRecordsWhen1ItemRequested() throws IOException {
         List<DrivingConvictionRetryEntity> oneRetryEntity = getDrivingConvictionRetryEntities(1);
         List<DrivingConvictionRetryEntity> allRetryEntities = getDrivingConvictionRetryEntities(10);
 
@@ -194,6 +199,7 @@ class StagingdvlaQueryViewTest {
         assertThat(jsonObject.getString("postcode"), is("CR0 5UA"));
         assertThat(jsonObject.getString("searchedBy"), is("Perter21@co.uk"));
     }
+
     @Test
     void shouldReturnDvlaAuditRecordsWithCaseInsensitiveEmail() {
         //given
@@ -345,6 +351,39 @@ class StagingdvlaQueryViewTest {
         assertThat(jsonObject.getString("materialId"), is(materialId.toString()));
 
 
+    }
+
+    @Test
+    public void shouldReturnDriverAuditReportByMaterialId() {
+        final UUID id = randomUUID();
+        final UUID materialId = randomUUID();
+        final UUID userId = randomUUID();
+        final DriverAuditReportEntity driverAuditReportEntity = new DriverAuditReportEntity(id, userId, now(),
+                "reportSearchCriteria", "In progress", "reportFileId", materialId);
+        final Response expectedResponse = Response.ok().build();
+
+        when(driverAuditReportRepository.findByIdAndUserIdAndMaterialId(id, userId, materialId))
+                .thenReturn(driverAuditReportEntity);
+        when(materialService.getMaterialResource(materialId.toString())).thenReturn(expectedResponse);
+
+        final Response response = stagingdvlaQueryView.getDriverAuditReportByMaterialId(id.toString(),
+                materialId.toString(), userId.toString());
+
+        assertThat(response, is(expectedResponse));
+    }
+
+    @Test
+    public void shouldThrowForbiddenRequestExceptionWhenDriverAuditReportNotFound() {
+        final UUID id = randomUUID();
+        final UUID materialId = randomUUID();
+        final UUID userId = randomUUID();
+
+        when(driverAuditReportRepository.findByIdAndUserIdAndMaterialId(id, userId, materialId))
+                .thenReturn(null);
+
+        assertThrows(ForbiddenRequestException.class,
+                () -> stagingdvlaQueryView.getDriverAuditReportByMaterialId(id.toString(),
+                        materialId.toString(), userId.toString()));
     }
 
     private Envelope<DriverAuditQueryParameters> createDriverQueryParameter(DriverAuditQueryParameters driverAuditQueryParameters) {
