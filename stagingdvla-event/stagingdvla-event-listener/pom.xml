@@ -3,7 +3,7 @@
     <parent>
         <artifactId>stagingdvla-event</artifactId>
         <groupId>uk.gov.moj.cpp.staging.dvla</groupId>
-        <version>17.103.89-CIMD-3224-SNAPSHOT</version>
+        <version>17.103.90-CIMD-3224-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
