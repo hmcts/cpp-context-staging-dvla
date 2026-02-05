@@ -14,6 +14,7 @@ import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static uk.gov.justice.services.messaging.JsonEnvelope.envelopeFrom;
+import static uk.gov.justice.services.messaging.JsonObjects.createObjectBuilder;
 import static uk.gov.justice.services.test.utils.core.messaging.MetadataBuilderFactory.metadataWithRandomUUID;
 
 import uk.gov.justice.cpp.stagingdvla.command.handler.DriverRecordSearchAuditReportCreated;
@@ -37,18 +38,16 @@ import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 import java.util.UUID;
 
-import javax.json.Json;
 import javax.json.JsonObject;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.io.Resources;
-import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -113,7 +112,7 @@ public class SystemDocGeneratorEventProcessorTest {
                 .withId(id)
                 .withReportFileId(documentFileServiceId.toString())
                 .build();
-        final JsonObject jsonObject = Json.createObjectBuilder()
+        final JsonObject jsonObject = createObjectBuilder()
                 .add("originatingSource", "DvlaAuditRecords")
                 .add("documentFileServiceId", documentFileServiceId.toString())
                 .add("sourceCorrelationId", sourceCorrelationId.toString())
@@ -139,7 +138,7 @@ public class SystemDocGeneratorEventProcessorTest {
         final UUID sourceCorrelationId = randomUUID();
         final UUID documentFileServiceId = randomUUID();
 
-        final JsonObject documentAvailablePayload = Json.createObjectBuilder()
+        final JsonObject documentAvailablePayload = createObjectBuilder()
                 .add("originatingSource", DVLA_DOCUMENT_ORDER)
                 .add("documentFileServiceId", documentFileServiceId.toString())
                 .add("sourceCorrelationId", sourceCorrelationId.toString())
@@ -151,7 +150,7 @@ public class SystemDocGeneratorEventProcessorTest {
                 documentAvailablePayload);
 
 
-        final JsonObject fileMetadata = Json.createObjectBuilder()
+        final JsonObject fileMetadata = createObjectBuilder()
                 .add("fileName", "DVLADocumentOrder_20250108114536")
                 .build();
         // when
@@ -183,7 +182,7 @@ public class SystemDocGeneratorEventProcessorTest {
         final UUID sourceCorrelationId = randomUUID();
         final UUID documentFileServiceId = randomUUID();
 
-        final JsonObject documentAvailablePayload = Json.createObjectBuilder()
+        final JsonObject documentAvailablePayload = createObjectBuilder()
                 .add("originatingSource", DVLA_DOCUMENT_ORDER)
                 .add("documentFileServiceId", documentFileServiceId.toString())
                 .add("sourceCorrelationId", sourceCorrelationId.toString())
@@ -195,7 +194,7 @@ public class SystemDocGeneratorEventProcessorTest {
                 documentAvailablePayload);
 
 
-        final JsonObject fileMetadata = Json.createObjectBuilder()
+        final JsonObject fileMetadata = createObjectBuilder()
                 .add("fileName", "DVLADocumentOrder_20250108114536")
                 .build();
         // when
@@ -225,7 +224,7 @@ public class SystemDocGeneratorEventProcessorTest {
         final UUID sourceCorrelationId = randomUUID();
         final UUID documentFileServiceId = randomUUID();
 
-        final JsonObject documentAvailablePayload = Json.createObjectBuilder()
+        final JsonObject documentAvailablePayload = createObjectBuilder()
                 .add("originatingSource", DVLA_DOCUMENT_ORDER)
                 .add("documentFileServiceId", documentFileServiceId.toString())
                 .add("sourceCorrelationId", sourceCorrelationId.toString())
@@ -237,7 +236,7 @@ public class SystemDocGeneratorEventProcessorTest {
                 documentAvailablePayload);
 
 
-        final JsonObject fileMetadata = Json.createObjectBuilder()
+        final JsonObject fileMetadata = createObjectBuilder()
                 .add("fileName", "DVLADocumentOrder_20250108114536")
                 .build();
         // when
@@ -270,7 +269,7 @@ public class SystemDocGeneratorEventProcessorTest {
         final UUID sourceCorrelationId = randomUUID();
         final UUID documentFileServiceId = randomUUID();
 
-        final JsonObject documentAvailablePayload = Json.createObjectBuilder()
+        final JsonObject documentAvailablePayload = createObjectBuilder()
                 .add("originatingSource", DVLA_DOCUMENT_ORDER)
                 .add("documentFileServiceId", documentFileServiceId.toString())
                 .add("sourceCorrelationId", sourceCorrelationId.toString())
@@ -282,7 +281,7 @@ public class SystemDocGeneratorEventProcessorTest {
                 documentAvailablePayload);
 
 
-        final JsonObject fileMetadata = Json.createObjectBuilder()
+        final JsonObject fileMetadata = createObjectBuilder()
                 .add("fileName", "DVLADocumentOrder_20250108114536")
                 .build();
         // when
