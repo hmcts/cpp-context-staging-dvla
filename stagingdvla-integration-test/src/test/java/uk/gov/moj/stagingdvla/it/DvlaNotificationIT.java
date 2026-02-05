@@ -44,7 +44,6 @@ import io.restassured.response.Response;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 public class DvlaNotificationIT extends AbstractIntegrationTest {
@@ -72,7 +71,7 @@ public class DvlaNotificationIT extends AbstractIntegrationTest {
     private final String DRIVER_NOTIFICATION_COMMAND_PAYLOAD_LINKED_CASE_2 = "stagingdvla.command.driver-notification-linkedcase-2.json";
     private final String DRIVER_NOTIFICATION_COMMAND_PAYLOAD_LINKED_CASE_3 = "stagingdvla.command.driver-notification-linkedcase-3.json";
     private final String DRIVER_NOTIFICATION_COMMAND_PAYLOAD_SJP_GENERATE_D20 = "stagingdvla.command.driver-notification-sjp-generate-d20.json";
-    private final String DRIVER_NOTIFICATION_COMMAND_PAYLOAD_SJP_REMOVE_D20 = "stagingdvla.command.driver-notification-sjp-remove-d20.json";
+    private final String DRIVER_NOTIFICATION_COMMAND_PAYLOAD_SJP_APPLICATION_GRANTED = "stagingdvla.command.driver-notification-sjp-application-granted.json";
 
     private static final String STAGINGDVLA_CONTEXT = "stagingdvla";
 
@@ -268,8 +267,7 @@ public class DvlaNotificationIT extends AbstractIntegrationTest {
     }
 
     @Test
-    @Disabled
-    public void shouldGenerateAndRemoveD20ForSJPCase() throws IOException {
+    public void shouldGenerateAndUpdateD20ForSJPCase() throws IOException {
         // Generate D20 for SJP case
         final String body1 = getPayload(DRIVER_NOTIFICATION_COMMAND_PAYLOAD_SJP_GENERATE_D20);
         final Response writeResponse1 = postCommandWithUserId(getWriteUrl("/driver-notification"),
@@ -286,8 +284,8 @@ public class DvlaNotificationIT extends AbstractIntegrationTest {
         assertThat(driverNotified1.getRemovedEndorsements(), is(nullValue()));
         assertThat(driverNotified1.getUpdatedEndorsements(), is(nullValue()));
 
-        // Remove D20 for above SJP case
-        final String body2 = getPayload(DRIVER_NOTIFICATION_COMMAND_PAYLOAD_SJP_REMOVE_D20);
+        // Application Granted for above SJP case
+        final String body2 = getPayload(DRIVER_NOTIFICATION_COMMAND_PAYLOAD_SJP_APPLICATION_GRANTED);
         final Response writeResponse2 = postCommandWithUserId(getWriteUrl("/driver-notification"),
                 DRIVER_NOTIFICATION_MEDIA_TYPE, body2, USER_GROUP);
         assertThat(writeResponse2.getStatusCode(), equalTo(SC_ACCEPTED));
@@ -298,8 +296,9 @@ public class DvlaNotificationIT extends AbstractIntegrationTest {
         assertThat(driverNotified2, is(notNullValue()));
         assertThat(driverNotified2.getCases().size(), equalTo(1));
         assertThat(driverNotified2.getCases().get(0).getReference(), equalTo("25JAN000011"));
-        assertThat(driverNotified2.getRemovedEndorsements().size(), equalTo(1));
-        assertThat(driverNotified2.getUpdatedEndorsements(), is(nullValue()));
+        assertThat(driverNotified2.getRemovedEndorsements(), is(nullValue()));
+        assertThat(driverNotified2.getUpdatedEndorsements().size(), equalTo(1));
+        assertThat(driverNotified2.getUpdatedEndorsements().get(0), is(equalTo("SP50")));
 
         verifyDVLANotificationCommandInvoked();
         verifyGenerateDocumentStubCommandInvoked();
