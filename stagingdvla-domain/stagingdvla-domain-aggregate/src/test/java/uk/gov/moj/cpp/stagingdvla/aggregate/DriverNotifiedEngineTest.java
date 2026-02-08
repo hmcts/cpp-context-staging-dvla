@@ -23,6 +23,7 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.DEF
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.DEFENDANT_DRIVING_LICENCE_NUMBER;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.DISQUALIFICATION_PERIOD;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.DVLACODE_FOR_OFFENCE;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.DVLA_ENDORSEMENT_CODE;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.FINE;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.LICENCE_ISSUE_NUMBER;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.LICENCE_PRODUCED_IN_COURT;
@@ -46,6 +47,7 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.Res
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.DDRI;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.DDRNL;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.DDRVL;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.DER;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.DSPA;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.DSPAS;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.G;
@@ -762,13 +764,14 @@ public class DriverNotifiedEngineTest {
         transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, null, defendant, cases, hearingId, null).get(0);
 
-        assertThat(transformed.getUpdatedEndorsements().size(), is(equalTo(1)));
+        assertThat(transformed.getUpdatedEndorsements().size(), is(equalTo(2)));
         assertThat(transformed.getUpdatedEndorsements().get(0), is(equalTo(P_DVLA1)));
+        assertThat(transformed.getUpdatedEndorsements().get(1), is(equalTo(C_DVLA1)));
         assertThat(transformed.getRemovedEndorsements().size(), is(equalTo(1)));
         assertThat(transformed.getRemovedEndorsements().get(0), is(equalTo(P_DVLA2)));
 
 
-        cases = getCasesWithMultipleOffences(2, EMPTY, asList(Boolean.FALSE, Boolean.TRUE), null, false, null, null, null, 2, false);
+        cases = getCasesWithMultipleOffences(2, EMPTY, asList(Boolean.FALSE, Boolean.TRUE), asList(P_DVLA1, P_DVLA2), false, null, null, null, 1, false);
         previous = getPreviousDriverNotified(3, EMPTY, asList(Boolean.TRUE, Boolean.TRUE, Boolean.TRUE), asList(P_DVLA1, P_DVLA2, P_DVLA3), false, null, false, null, 1, false, previousOrderDate);
         previousByCase.put(previous.getCases().get(0).getReference(), previous);
 
@@ -794,14 +797,14 @@ public class DriverNotifiedEngineTest {
 
 
         cases = getCasesWithMultipleOffences(1, EMPTY, asList(Boolean.TRUE), asList(C_DVLA1), false, null, null, null, 1, false);
-        previous = getPreviousDriverNotified(2, EMPTY, asList(Boolean.TRUE, Boolean.TRUE), null, false, null, false, null, 2, false, previousOrderDate);
+        previous = getPreviousDriverNotified(2, EMPTY, asList(Boolean.TRUE, Boolean.TRUE), asList(C_DVLA1, C_DVLA2), false, null, false, null, 1, false, previousOrderDate);
         previousByCase.put(previous.getCases().get(0).getReference(), previous);
 
         transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, null, defendant, cases, hearingId, null).get(0);
 
         assertThat(transformed.getUpdatedEndorsements().size(), is(equalTo(1)));
-        assertThat(transformed.getUpdatedEndorsements().get(0), is(equalTo(DEFAULT_DVLA_CODE)));
+        assertThat(transformed.getUpdatedEndorsements().get(0), is(equalTo(C_DVLA1)));
         assertThat(transformed.getRemovedEndorsements(), is(nullValue()));
 
 
@@ -830,7 +833,7 @@ public class DriverNotifiedEngineTest {
         assertThat(transformed.getRemovedEndorsements().get(0), is(equalTo(P_DVLA1)));
 
 
-        cases = getCasesWithMultipleOffences(2, EMPTY, asList(Boolean.TRUE, Boolean.FALSE), asList(C_DVLA1, C_DVLA2), false, null, null, null, 1, false);
+        cases = getCasesWithMultipleOffences(2, EMPTY, asList(Boolean.TRUE, Boolean.FALSE), asList(P_DVLA1, P_DVLA2), false, null, null, null, 1, false);
         previous = getPreviousDriverNotified(3, EMPTY, asList(Boolean.TRUE, Boolean.TRUE, Boolean.TRUE), asList(P_DVLA1, P_DVLA2, P_DVLA3), false, null, false, null, 1, false, previousOrderDate);
         previousByCase.put(previous.getCases().get(0).getReference(), previous);
 
@@ -843,7 +846,7 @@ public class DriverNotifiedEngineTest {
         assertThat(transformed.getRemovedEndorsements().get(0), is(equalTo(P_DVLA2)));
 
 
-        cases = getCasesWithMultipleOffences(2, EMPTY, asList(Boolean.FALSE, Boolean.TRUE), asList(C_DVLA1, C_DVLA2), false, null, null, null, 1, false);
+        cases = getCasesWithMultipleOffences(2, EMPTY, asList(Boolean.FALSE, Boolean.TRUE), asList(P_DVLA1, P_DVLA2), false, null, null, null, 1, false);
         previous = getPreviousDriverNotified(3, EMPTY, asList(Boolean.TRUE, Boolean.TRUE, Boolean.TRUE), asList(P_DVLA1, P_DVLA2, P_DVLA3), false, null, false, null, 1, false, previousOrderDate);
         transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, null, defendant, cases, hearingId, null).get(0);
@@ -855,64 +858,65 @@ public class DriverNotifiedEngineTest {
 
 
         cases = getCasesWithMultipleOffences(3, EMPTY, asList(Boolean.TRUE, Boolean.FALSE, Boolean.TRUE), asList(C_DVLA1, C_DVLA2, C_DVLA3), false, null, null, null, 1, false);
-        previous = getPreviousDriverNotified(3, EMPTY, asList(Boolean.TRUE, Boolean.TRUE, Boolean.TRUE), null, false, null, false, null, 2, false, previousOrderDate);
+        previous = getPreviousDriverNotified(3, EMPTY, asList(Boolean.TRUE, Boolean.TRUE, Boolean.TRUE), asList(C_DVLA1, C_DVLA2, C_DVLA3), false, null, false, null, 1, false, previousOrderDate);
         previousByCase.put(previous.getCases().get(0).getReference(), previous);
 
         transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, null, defendant, cases, hearingId, null).get(0);
 
         assertThat(transformed.getUpdatedEndorsements().size(), is(equalTo(2)));
-        assertThat(transformed.getUpdatedEndorsements().get(0), is(equalTo(DEFAULT_DVLA_CODE)));
-        assertThat(transformed.getUpdatedEndorsements().get(1), is(equalTo(DEFAULT_DVLA_CODE)));
+        assertThat(transformed.getUpdatedEndorsements().get(0), is(equalTo(C_DVLA1)));
+        assertThat(transformed.getUpdatedEndorsements().get(1), is(equalTo(C_DVLA3)));
         assertThat(transformed.getRemovedEndorsements().size(), is(equalTo(1)));
-        assertThat(transformed.getRemovedEndorsements().get(0), is(equalTo(DEFAULT_DVLA_CODE)));
+        assertThat(transformed.getRemovedEndorsements().get(0), is(equalTo(C_DVLA2)));
 
 
-        cases = getCasesWithMultipleOffences(3, EMPTY, asList(Boolean.TRUE, Boolean.FALSE, Boolean.TRUE), null, false, null, null, null, 2, false);
+        cases = getCasesWithMultipleOffences(3, EMPTY, asList(Boolean.TRUE, Boolean.FALSE, Boolean.TRUE), asList(P_DVLA1, P_DVLA2, P_DVLA3), false, null, null, null, 1, false);
         previous = getPreviousDriverNotified(2, EMPTY, asList(Boolean.TRUE, Boolean.TRUE), asList(P_DVLA1, P_DVLA2), false, null, false, null, 1, false, previousOrderDate);
         previousByCase.put(previous.getCases().get(0).getReference(), previous);
 
         transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, null, defendant, cases, hearingId, null).get(0);
 
-        assertThat(transformed.getUpdatedEndorsements().size(), is(equalTo(1)));
-        assertThat(transformed.getUpdatedEndorsements().get(0), is(equalTo(previous.getCases().get(0).getDefendantCaseOffences().get(0).getDvlaCode())));
+        assertThat(transformed.getUpdatedEndorsements().size(), is(equalTo(2)));
+        assertThat(transformed.getUpdatedEndorsements().get(0), is(equalTo(P_DVLA1)));
+        assertThat(transformed.getUpdatedEndorsements().get(1), is(equalTo(P_DVLA3)));
         assertThat(transformed.getRemovedEndorsements().size(), is(equalTo(1)));
         assertThat(transformed.getRemovedEndorsements().get(0), is(equalTo(P_DVLA2)));
 
 
-        cases = getCasesWithMultipleOffences(3, EMPTY, asList(Boolean.TRUE, Boolean.FALSE, Boolean.TRUE), null, false, null, null, null, 2, false);
-        previous = getPreviousDriverNotified(2, EMPTY, asList(Boolean.TRUE, Boolean.TRUE), null, false, null, false, null, 2, false, previousOrderDate);
+        cases = getCasesWithMultipleOffences(3, EMPTY, asList(Boolean.TRUE, Boolean.TRUE, Boolean.TRUE), asList(P_DVLA1, P_DVLA2, P_DVLA3), false, null, null, null, 1, false);
+        previous = getPreviousDriverNotified(2, EMPTY, asList(Boolean.TRUE, Boolean.FALSE), asList(P_DVLA1, P_DVLA2), false, null, false, null, 1, false, previousOrderDate);
         previousByCase.put(previous.getCases().get(0).getReference(), previous);
 
         transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, null, defendant, cases, hearingId, null).get(0);
 
-        assertThat(transformed.getUpdatedEndorsements().size(), is(equalTo(1)));
-        assertThat(transformed.getUpdatedEndorsements().get(0), is(equalTo(DEFAULT_DVLA_CODE)));
-        assertThat(transformed.getRemovedEndorsements().size(), is(equalTo(1)));
-        assertThat(transformed.getRemovedEndorsements().get(0), is(equalTo(DEFAULT_DVLA_CODE)));
+        assertThat(transformed.getUpdatedEndorsements().size(), is(equalTo(3)));
+        assertThat(transformed.getUpdatedEndorsements().get(0), is(equalTo(P_DVLA1)));
+        assertThat(transformed.getUpdatedEndorsements().get(1), is(equalTo(P_DVLA2)));
+        assertThat(transformed.getUpdatedEndorsements().get(2), is(equalTo(P_DVLA3)));
 
 
         cases = getCasesWithMultipleOffences(2, EMPTY, asList(Boolean.TRUE, Boolean.TRUE),
                 asList(SS50, SS60), asList(OFF3, OFF4), asList(OFF3, OFF4), false, null, null, null, 1, false, null);
         previous = getPreviousDriverNotified(2, EMPTY, asList(Boolean.TRUE, Boolean.TRUE),
-                asList(SS30, SS40), asList(OFF1, "v"), asList(OFF1, OFF2), false, null, false, null, 1, false, null, previousOrderDate, null);
+                asList(SS30, SS40), asList(OFF1, OFF2), asList(OFF1, OFF2), false, null, false, null, 1, false, null, previousOrderDate, null);
         previousByCase.put(previous.getCases().get(0).getReference(), previous);
 
         transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, NORMAL_FORMATTED_DATE, defendant, cases, hearingId, null).get(0);
 
-        assertThat(transformed.getUpdatedEndorsements(), is(nullValue()));
-        assertThat(transformed.getRemovedEndorsements().size(), is(equalTo(2)));
+        assertThat(transformed.getUpdatedEndorsements(), is(equalTo(asList(SS50, SS60))));
+        assertThat(transformed.getRemovedEndorsements(), is(equalTo(asList(SS30, SS40))));
     }
 
     @Test
     public void shouldTransformRemovedAndUpdatedEndorsementCorrectly_WhenPointsDisqualitifactionExists() {
         List<Cases> cases = getCasesWithMultipleOffences(2, EMPTY, asList(Boolean.TRUE, Boolean.TRUE),
-                asList(SS30, SS50), asList(OFF1, OFF3), asList(OFF1, OFF3), false, null, null, POINTS_DISQUALIFICATION_CODE, 1, false, null);
+                asList(SS30, TT99), asList(OFF1, OFF3), asList(OFF1, OFF3), false, null, null, POINTS_DISQUALIFICATION_CODE, 1, false, null);
         DriverNotified previous = getPreviousDriverNotified(4, EMPTY, asList(Boolean.TRUE, Boolean.TRUE, Boolean.TRUE, Boolean.TRUE),
-                asList(SS30, TT99, SS40, TT99), asList(OFF1, OFF1, OFF2, OFF2), asList(OFF1, OFF1_TT99, OFF2, OFF2_TT99), false, null, false, null, 1, false, null, previousOrderDate, null);
+                asList(SS30, TT99, SS40, TT99), asList(OFF1, OFF3, OFF2, OFF2), asList(OFF1, OFF1_TT99, OFF2, OFF2_TT99), false, null, false, null, 1, false, null, previousOrderDate, null);
         previousByCase.put(previous.getCases().get(0).getReference(), previous);
 
         DriverNotified transformed = transformDriverNotified(previousByCase, orderDate,
@@ -928,7 +932,7 @@ public class DriverNotifiedEngineTest {
         assertThat(transformed.getRemovedEndorsements().size(), is(equalTo(2)));
 
 
-        cases = getCasesWithMultipleOffences(1, EMPTY, asList(Boolean.TRUE),
+        cases = getCasesWithMultipleOffences(1, EMPTY, asList(Boolean.FALSE),
                 asList(SS40), asList(OFF2), asList(OFF2), false, null, null, POINTS_DISQUALIFICATION_CODE, 1, false, null);
         previous = getPreviousDriverNotified(2, EMPTY, asList(Boolean.TRUE, Boolean.TRUE),
                 asList(SS30, TT99), asList(OFF1, OFF1), asList(OFF1, OFF1_TT99), false, null, false, null, 1, false, null, previousOrderDate, null);
@@ -2166,6 +2170,58 @@ public class DriverNotifiedEngineTest {
 
         assertThat(transformed, is(notNullValue()));
         assertThat(transformed.getCases().get(0).getDefendantCaseOffences().size(), is(equalTo(1)));
+        assertThat(transformed.getCases().get(0).getDefendantCaseOffences().get(0).getCode(), is(equalTo(OFF1)));
+        assertThat(transformed.getCases().get(0).getDefendantCaseOffences().get(0).getMainOffenceCode(), is(equalTo(OFF1)));
+    }
+
+
+    @Test
+    public void shouldNotRemoveDEROffencesWithAppealResultsWhenNoPromptSubmitted() {
+        DriverNotified previous = getPreviousDriverNotified(2, EMPTY, asList(Boolean.TRUE, Boolean.TRUE),
+                asList(SS30, SS40), asList(OFF1, OFF2), asList(OFF1, OFF2), true, previousConvictionDate, true, null, 1, false, singletonList(DSPAS.id), previousOrderDate, null);
+
+        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+
+        List<Cases> cases = getCasesWithMultipleOffences(2, EMPTY, asList(Boolean.TRUE, Boolean.TRUE),
+                asList(SS30, SS40), asList(OFF1, OFF2), asList(OFF1, OFF2), false, null, null, null, 1, false, null);
+
+        List<CourtApplications> courtApplications = getCourtApplications(singletonList(APP1), prefix, false, null, null, SS30, 1, asList(AACA.id, DER.id));
+
+        DriverNotified transformed = transformDriverNotified(previousByCase, orderDate,
+                crownCourt, null, defendant, cases, hearingId, courtApplications).get(0);
+
+        assertThat(transformed, is(notNullValue()));
+        assertThat(transformed.getUpdatedEndorsements().size(), is(equalTo(2)));
+        assertThat(transformed.getUpdatedEndorsements().get(0), is(equalTo(SS30)));
+        assertThat(transformed.getUpdatedEndorsements().get(1), is(equalTo(SS40)));
+        assertThat(transformed.getRemovedEndorsements(), is(nullValue()));
+        assertThat(transformed.getCases().get(0).getDefendantCaseOffences().size(), is(equalTo(2)));
+        assertThat(transformed.getCases().get(0).getDefendantCaseOffences().get(0).getCode(), is(equalTo(OFF1)));
+        assertThat(transformed.getCases().get(0).getDefendantCaseOffences().get(0).getMainOffenceCode(), is(equalTo(OFF1)));
+    }
+
+    @Test
+    public void shouldRemoveDEROffencesWithAppealResultsWhenPromptSubmitted() {
+        DriverNotified previous = getPreviousDriverNotified(2, EMPTY, asList(Boolean.TRUE, Boolean.TRUE),
+                asList(SS30, SS40), asList(OFF1, OFF2), asList(OFF1, OFF2), true, previousConvictionDate, true, null, 1, false, singletonList(DSPAS.id), previousOrderDate, null);
+
+        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+
+        List<Cases> cases = getCasesWithMultipleOffences(2, EMPTY, asList(Boolean.TRUE, Boolean.TRUE),
+                asList(SS30, SS40), asList(OFF1, OFF2), asList(OFF1, OFF2), false, null, null, null, 1, false, null);
+
+        List<CourtApplications> courtApplications = getCourtApplications(singletonList(APP1), prefix, false,
+                asList(Prompts.prompts().withPromptReference(DVLA_ENDORSEMENT_CODE).withValue(SS40).build()), null, SS30, 1, asList(DER.id, AACA.id));
+
+        DriverNotified transformed = transformDriverNotified(previousByCase, orderDate,
+                crownCourt, null, defendant, cases, hearingId, courtApplications).get(0);
+
+        assertThat(transformed, is(notNullValue()));
+        assertThat(transformed.getUpdatedEndorsements().size(), is(equalTo(1)));
+        assertThat(transformed.getUpdatedEndorsements().get(0), is(equalTo(SS30)));
+        assertThat(transformed.getRemovedEndorsements().size(), is(equalTo(1)));
+        assertThat(transformed.getRemovedEndorsements().get(0), is(equalTo(SS40)));
+        assertThat(transformed.getCases().get(0).getDefendantCaseOffences().size(), is(equalTo(2)));
         assertThat(transformed.getCases().get(0).getDefendantCaseOffences().get(0).getCode(), is(equalTo(OFF1)));
         assertThat(transformed.getCases().get(0).getDefendantCaseOffences().get(0).getMainOffenceCode(), is(equalTo(OFF1)));
     }
