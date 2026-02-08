@@ -14,6 +14,7 @@ import static org.apache.commons.lang3.StringUtils.isEmpty;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 import static org.slf4j.LoggerFactory.getLogger;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.C_FOR_CROWN;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.DVLA_ENDORSEMENT_CODE;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.NO_UPDATE_PREV_ENDORSED;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.NO_UPDATE_PREV_NOT_ENDORSED;
@@ -21,6 +22,7 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.End
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.UPDATE_MERGE;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.UPDATE_NOMERGE;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.POINTS_DISQUALIFICATION_CODE;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.DER;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.LPIC1;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.LPIC2;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.LPIC3;
@@ -30,6 +32,7 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.Res
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.DisqualificationPeriodHelper.getDisqualificationPeriod;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.MergeUtil.getDistinctPrompts;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.MergeUtil.mergeOffence;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.applicationHasResult;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.getAlcoholReadingAmount;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.getConvictingCourtCode;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.getDateDisqReimposedFollowingAppeal;
@@ -64,6 +67,7 @@ import uk.gov.justice.cpp.stagingdvla.event.DistinctPrompts;
 import uk.gov.justice.cpp.stagingdvla.event.DriverNotified;
 import uk.gov.justice.cpp.stagingdvla.event.NotificationType;
 import uk.gov.justice.cpp.stagingdvla.event.Previous;
+import uk.gov.justice.cpp.stagingdvla.event.Prompts;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -424,6 +428,19 @@ public class DriverNotifiedEngine {
             });
         });
 
+        updatedEndorsements.addAll(getNewEndorsements(cases, previousDriverNotified));
+
+        if (hasAppealResultOrGranted(courtApplications) && applicationHasResult(courtApplications, DER)) {
+            final List<String> removedDvlaCodes = getRemovedDvlaCodesWithDER(courtApplications);
+            if (isNotEmpty(removedDvlaCodes)) {
+                removedDvlaCodes.forEach(dvlaCode -> {
+                    noUpdateOffences.remove(dvlaCode);
+                    updatedEndorsements.remove(dvlaCode);
+                    removedEndorsements.add(dvlaCode);
+                });
+            }
+        }
+
         if (isNotEmpty(removedEndorsements) || isNotEmpty(updatedEndorsements)) {
             updatedEndorsements.addAll(noUpdateOffences);
             assignEndorsements(builder, courtApplications, removedEndorsements, updatedEndorsements);
@@ -443,6 +460,40 @@ public class DriverNotifiedEngine {
         currentCase.getDefendantCaseOffences().add(defendantCaseOffence);
     }
 
+    private static List<String> getNewEndorsements(final List<Cases> cases, final DriverNotified previousDriverNotified) {
+        final List<String> newEndorsements = new ArrayList<>();
+        cases.stream().filter(aCase -> isNotEmpty(aCase.getDefendantCaseOffences()))
+                .forEach(aCase -> aCase.getDefendantCaseOffences().stream()
+                        .filter(offence -> isNotEmpty(offence.getDvlaCode()) && hasD20Endorsement(offence))
+                        .forEach(offence -> {
+                            if ((isNull(previousDriverNotified) ||
+                                    previousDriverNotified.getCases().stream()
+                                            .filter(prevCase -> prevCase.getDefendantCaseOffences().stream()
+                                                    .noneMatch(prevOffence -> offence.getDvlaCode().equalsIgnoreCase(prevOffence.getDvlaCode())))
+                                            .findFirst().orElse(null) != null)) {
+                                newEndorsements.add(offence.getDvlaCode());
+                            }
+                        })
+                );
+        return newEndorsements;
+    }
+
+    private static List<String> getRemovedDvlaCodesWithDER(List<CourtApplications> courtApplications) {
+        if (courtApplications == null) {
+            return List.of();
+        }
+
+        return courtApplications.stream()
+                .filter(app -> nonNull(app.getResults()))
+                .flatMap(app -> app.getResults().stream())
+                .filter(result ->  nonNull(result.getPrompts()))
+                .flatMap(result -> result.getPrompts().stream())
+                .filter(prompt -> DVLA_ENDORSEMENT_CODE.equals(prompt.getPromptReference()))
+                .map(Prompts::getValue)
+                .filter(value -> isNotEmpty(value))
+                .toList();
+    }
+
     private static void assignEndorsements(final DriverNotified.Builder builder, final List<CourtApplications> courtApplications, final List<String> removedEndorsements, final List<String> updatedEndorsements) {
         if (isNotEmpty(removedEndorsements)) {
             builder.withRemovedEndorsements(removedEndorsements);
@@ -453,8 +504,14 @@ public class DriverNotifiedEngine {
         }
 
         if (hasAppealResultOrGranted(courtApplications)) {
-            builder.withNotificationType(isNotEmpty(updatedEndorsements)
-                    ? NotificationType.UPDATE : NotificationType.REMOVE);
+            if (applicationHasResult(courtApplications, DER)) {
+                builder.withNotificationType(isNotEmpty(removedEndorsements)
+                        ? NotificationType.REMOVE : NotificationType.UPDATE);
+            } else {
+                builder.withNotificationType(isNotEmpty(updatedEndorsements)
+                        ? NotificationType.UPDATE : NotificationType.REMOVE);
+            }
+
         } else {
             builder.withNotificationType(isNotEmpty(removedEndorsements)
                     ? NotificationType.REMOVE : NotificationType.UPDATE);
