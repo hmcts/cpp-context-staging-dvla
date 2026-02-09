@@ -12,6 +12,7 @@ public class AggregateConstants {
     public static final String DATE_OF_CONVICTION = "dateOfConviction";
     public static final String CONVICTING_COURT = "convictingCourt";
     public static final String DVLACODE_FOR_OFFENCE = "dVLACodeForOffence";
+    public static final String DVLA_ENDORSEMENT_CODE = "dVLAEndorsementCode";
 
     public static final String DISQUALIFICATION_PERIOD = "disqualificationPeriod";
     public static final String STARTING_FROM_DATE_DATE_OF_INTERIM_DISQUALIFICATION = "startingFromDateDateOfInterimDisqualification";
@@ -79,7 +80,7 @@ public class AggregateConstants {
         DISCH("d3139b79-696b-4cb7-a39d-7f06fcc24f4a"),
         WDRN("eb2e4c4f-b738-4a4d-9cce-0572cecb7cb8"),
         WDRNOFF("e0ae61f5-bbfa-4562-bc6d-ac59a484a06b"),
-        QDER("4754a25f-90f2-44c2-9c89-0a07964f3ad5");
+        DER("f42fa098-0f7b-4269-ac4f-b10c9b6832d7");
 
         public final String id;
 
