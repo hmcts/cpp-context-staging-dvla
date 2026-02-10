@@ -1164,31 +1164,25 @@ public class DriverNotifiedEngineTest {
         assertOffenceAttributesBeforeTransform(cases);
         previousByCase.put(previous.getCases().get(0).getReference(), previous);
 
-        DriverNotified transformed = transformDriverNotified(previousByCase, orderDate,
-                crownCourt, null, defendant, cases, hearingId, courtApplications).get(0);
-
-        assertThat(transformed.getUpdatedEndorsements().size(), is(equalTo(1)));
-        assertThat(transformed.getUpdatedEndorsements().stream().sorted().toArray(), is(equalTo(asList(SS30).stream().sorted().toArray())));
-        assertOffenceAttributesMerged(cases, previous, transformed);
-        assertThat(transformed.getRemovedEndorsements(), is(nullValue()));
-        assertThat(transformed.getCases().get(0).getHasSV(), is(equalTo(false)));
+        assertThat(transformDriverNotified(previousByCase, orderDate,
+                crownCourt, null, defendant, cases, hearingId, courtApplications), is(emptyList()));
 
 
         previous = getPreviousDriverNotified(1, EMPTY, asList(Boolean.TRUE),
                 asList(SS30), asList(OFF1), asList(OFF1), true, previousConvictionDate, true, null, 1, false, asList(DDPL.id), previousOrderDate, null);
         courtApplications = getCourtApplications(asList(APP1), prefix, false, null, null, SS30, 1, asList(AACA.id));
-        cases = getCasesWithMultipleOffences(1, EMPTY, asList(Boolean.FALSE),
+        cases = getCasesWithMultipleOffences(1, EMPTY, asList(Boolean.TRUE),
                 asList(SS30), asList(OFF1), asList(OFF1), false, null, null, null, 1, false, asList(DDPL.id));
 
         assertOffenceAttributesBeforeTransform(cases);
         previousByCase.put(previous.getCases().get(0).getReference(), previous);
 
-        transformed = transformDriverNotified(previousByCase, orderDate,
+        DriverNotified transformed = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, null, defendant, cases, hearingId, courtApplications).get(0);
 
         assertThat(transformed.getUpdatedEndorsements().size(), is(equalTo(1)));
         assertThat(transformed.getUpdatedEndorsements().stream().sorted().toArray(), is(equalTo(asList(SS30).stream().sorted().toArray())));
-        assertOffenceAttributesMerged(cases, previous, transformed);
+        assertOffenceAttributesNotMerged(cases, previous, transformed);
         assertThat(transformed.getRemovedEndorsements(), is(nullValue()));
         assertThat(transformed.getCases().get(0).getHasSV(), is(equalTo(false)));
 
@@ -1203,7 +1197,7 @@ public class DriverNotifiedEngineTest {
         List<DriverNotified> transformed2 = transformDriverNotified(previousByCase, orderDate,
                 crownCourt, null, defendant, cases, hearingId, courtApplications);
 
-        assertThat(transformed2.size(), is(equalTo(1)));
+        assertThat(transformed2.size(), is(equalTo(0)));
     }
 
     private void assertOffenceAttributesBeforeTransform(List<Cases> cases) {

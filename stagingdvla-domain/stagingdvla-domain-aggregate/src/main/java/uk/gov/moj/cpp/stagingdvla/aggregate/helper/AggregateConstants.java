@@ -36,7 +36,7 @@ public class AggregateConstants {
     public static final String POINTS_DISQUALIFICATION_CODE = "TT99";
 
     public enum EndorsementStatus {
-        NO_UPDATE_PREV_ENDORSED, NO_UPDATE_PREV_NOT_ENDORSED, UPDATE_MERGE, UPDATE_NOMERGE, REMOVE
+        NO_UPDATE_PREV_ENDORSED, NO_UPDATE_PREV_NOT_ENDORSED, SPECIAL_REASON, UPDATE_MERGE, UPDATE_NOMERGE, REMOVE
     }
 
     public enum ResultType {
@@ -80,7 +80,9 @@ public class AggregateConstants {
         DISCH("d3139b79-696b-4cb7-a39d-7f06fcc24f4a"),
         WDRN("eb2e4c4f-b738-4a4d-9cce-0572cecb7cb8"),
         WDRNOFF("e0ae61f5-bbfa-4562-bc6d-ac59a484a06b"),
-        DER("f42fa098-0f7b-4269-ac4f-b10c9b6832d7");
+        DER("f42fa098-0f7b-4269-ac4f-b10c9b6832d7"),
+        NESR("f121db73-57fb-4f74-9ab1-0843aabe4605"),
+        NDSR("808313d1-f450-4410-b2f1-97409d7b4074");
 
         public final String id;
 

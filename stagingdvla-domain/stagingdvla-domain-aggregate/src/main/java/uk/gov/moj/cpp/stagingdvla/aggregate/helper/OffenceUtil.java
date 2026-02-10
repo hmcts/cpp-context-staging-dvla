@@ -23,6 +23,7 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.End
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.NO_UPDATE_PREV_ENDORSED;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.NO_UPDATE_PREV_NOT_ENDORSED;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.REMOVE;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.SPECIAL_REASON;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.UPDATE_MERGE;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.UPDATE_NOMERGE;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.NOTIONAL_PENALTY_POINTS;
@@ -50,6 +51,8 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.Res
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.DSPAS;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.ERR;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.G;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.NDSR;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.NESR;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.OATS;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.RFSD;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.SV;
@@ -129,6 +132,8 @@ public class OffenceUtil {
         if (nonNull(currentOffence)) {
             if (offenceHasAnyResult(currentOffence, asList(DISM, DINE, DINI, DISC, DISCH, WDRN, WDRNOFF))) {
                 return REMOVE;
+            } else if (offenceHasAnyResult(currentOffence, asList(NESR, NDSR)) && !hasD20Endorsement(currentOffence)) {
+                return SPECIAL_REASON;
             } else if (offenceHasResult(currentOffence, OATS)
                     || offenceHasResult(currentOffence, ADJ)
                     || isEmpty(currentOffence.getResults())) {
@@ -147,6 +152,8 @@ public class OffenceUtil {
                 } else {
                     return REMOVE;
                 }
+            } else if (!hasD20Endorsement(currentOffence) && hasD20Endorsement(previousOffence)) {
+                return NO_UPDATE_PREV_ENDORSED;
             } else {
                 return UPDATE_MERGE;
             }
