@@ -107,7 +107,8 @@
                     "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
                     "promptReference": "defendantDrivingLicenceNumber",
                     "durationSequence": 0,
-                    "label": "Defendant driving licence number"
+                    "label": "Defendant driving licence number",
+                    "value": "VANFL002222OW9PH"
                   }
                 ],
                 "d20": true,

@@ -19,6 +19,7 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.End
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.NO_UPDATE_PREV_ENDORSED;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.NO_UPDATE_PREV_NOT_ENDORSED;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.REMOVE;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.SPECIAL_REASON;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.UPDATE_MERGE;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.UPDATE_NOMERGE;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.POINTS_DISQUALIFICATION_CODE;
@@ -396,6 +397,7 @@ public class DriverNotifiedEngine {
         final List<String> removedEndorsements = new ArrayList<>();
         final List<String> updatedEndorsements = new ArrayList<>();
         final List<String> noUpdateOffences = new ArrayList<>();
+        final AtomicBoolean specialReasonExists = new AtomicBoolean(false);
 
         previousDriverNotified.getCases().forEach(previousCase -> {
             final Cases currentCase = cases.stream()
@@ -421,8 +423,13 @@ public class DriverNotifiedEngine {
                     if (UPDATE_MERGE.equals(endorsementStatus)
                             || NO_UPDATE_PREV_ENDORSED.equals(endorsementStatus)) {
                         mergeOffences(currentCase, currentOffence, previousOffence, courtApplications, orderDate);
-                    } else if (NO_UPDATE_PREV_NOT_ENDORSED.equals(endorsementStatus) && nonNull(currentOffence)) {
+                    } else if ((NO_UPDATE_PREV_NOT_ENDORSED.equals(endorsementStatus)
+                            || SPECIAL_REASON.equals(endorsementStatus))
+                            && nonNull(currentOffence)) {
                         currentCase.getDefendantCaseOffences().remove(currentOffence);
+                        if (SPECIAL_REASON.equals(endorsementStatus)) {
+                            specialReasonExists.set(true);
+                        }
                     }
                 }
             });
@@ -441,13 +448,14 @@ public class DriverNotifiedEngine {
             }
         }
 
-        if (isNotEmpty(removedEndorsements) || isNotEmpty(updatedEndorsements)) {
+        if (isNotEmpty(removedEndorsements) || isNotEmpty(updatedEndorsements) || specialReasonExists.get()) {
             updatedEndorsements.addAll(noUpdateOffences);
-            assignEndorsements(builder, courtApplications, removedEndorsements, updatedEndorsements);
-            return true;
-        } else {
-            return false;
+            if (isNotEmpty(removedEndorsements) || isNotEmpty(updatedEndorsements)) {
+                assignEndorsements(builder, courtApplications, removedEndorsements, updatedEndorsements);
+                return true;
+            }
         }
+        return false;
     }
 
     private static void removeConvictionDataFromOffence(final DefendantCaseOffences currentOffence, final Cases currentCase) {
