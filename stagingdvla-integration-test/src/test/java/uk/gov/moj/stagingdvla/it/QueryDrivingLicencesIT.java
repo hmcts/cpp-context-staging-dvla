@@ -77,19 +77,19 @@ public class QueryDrivingLicencesIT extends AbstractIntegrationTest {
     @Test
     void shouldReceiveBadRequestForInvalidDOB() {
         final String result = pollForResponseWithBadRequest("/drivers?lastName=Harrison&firstNames=Walter&dateOfBirth=81-07-31&exactFirstNamesMatch=true&reasonType=CE&reference=CASEURN", "application/vnd.stagingdvla.query.driverdetails+json", USER_ID);
-        assertThat(result, CoreMatchers.is(""));
+        assertThat(result, CoreMatchers.is(null));
     }
 
     @Test
     void shouldReceiveBadRequestForInvalidPostCode() {
         final String result = pollForResponseWithBadRequest("/drivers?lastName=Harrison&firstNames=Walter&dateOfBirth=1971-06-22&exactFirstNamesMatch=true&reasonType=CE&reference=CASEURN&postcode=\"AB24 3QB,\"", "application/vnd.stagingdvla.query.driverdetails+json", USER_ID);
-        assertThat(result, CoreMatchers.is(""));
+        assertThat(result, CoreMatchers.is(null));
     }
 
     @Test
     void shouldReceiveBadRequestForInvalidDriverNumber() {
         final String result = pollForResponseWithBadRequest("/driver/AUPSU711267IE9ZKK?reasonType=CE&reference=CASEURN", "application/vnd.stagingdvla.query.drivernumber+json", USER_ID);
-        assertThat(result, CoreMatchers.is(""));
+        assertThat(result, CoreMatchers.is(null));
     }
 
     @Test
