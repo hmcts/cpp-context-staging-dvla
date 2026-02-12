@@ -397,6 +397,7 @@ public class DriverNotifiedEngine {
         final List<String> removedEndorsements = new ArrayList<>();
         final List<String> updatedEndorsements = new ArrayList<>();
         final List<String> noUpdateOffences = new ArrayList<>();
+        final List<String> specialReasonOffences = new ArrayList<>();
         final AtomicBoolean specialReasonExists = new AtomicBoolean(false);
 
         previousDriverNotified.getCases().forEach(previousCase -> {
@@ -418,7 +419,9 @@ public class DriverNotifiedEngine {
                     } else if (UPDATE_MERGE.equals(endorsementStatus)
                             || UPDATE_NOMERGE.equals(endorsementStatus)) {
                         updatedEndorsements.add(dvlaCode);
-                    }
+                    } else if (SPECIAL_REASON.equals(endorsementStatus)) {
+                        specialReasonOffences.add(dvlaCode);
+                     }
 
                     if (UPDATE_MERGE.equals(endorsementStatus)
                             || NO_UPDATE_PREV_ENDORSED.equals(endorsementStatus)) {
@@ -450,10 +453,11 @@ public class DriverNotifiedEngine {
 
         if (isNotEmpty(removedEndorsements) || isNotEmpty(updatedEndorsements) || specialReasonExists.get()) {
             updatedEndorsements.addAll(noUpdateOffences);
-            if (isNotEmpty(removedEndorsements) || isNotEmpty(updatedEndorsements)) {
-                assignEndorsements(builder, courtApplications, removedEndorsements, updatedEndorsements);
-                return true;
+            if (isEmpty(removedEndorsements) && isEmpty(updatedEndorsements)) {
+                removedEndorsements.addAll(specialReasonOffences);
             }
+            assignEndorsements(builder, courtApplications, removedEndorsements, updatedEndorsements);
+            return true;
         }
         return false;
     }
