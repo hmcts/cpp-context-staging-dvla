@@ -1225,9 +1225,12 @@ public class DriverNotifiedEngineTest {
         assertOffenceAttributesBeforeTransform(cases);
         previousByCase.put(previous.getCases().get(0).getReference(), previous);
 
-        assertThat(transformDriverNotified(previousByCase, orderDate,
-                crownCourt, null, defendant, cases, hearingId, courtApplications), is(emptyList()));
+        DriverNotified transformed = transformDriverNotified(previousByCase, orderDate,
+                crownCourt, null, defendant, cases, hearingId, courtApplications).get(0);
 
+        assertThat(transformed.getUpdatedEndorsements(), is(nullValue()));
+        assertThat(transformed.getRemovedEndorsements().size(), is(equalTo(1)));
+        assertThat(transformed.getRemovedEndorsements().stream().sorted().toArray(), is(equalTo(asList(SS30).stream().sorted().toArray())));
     }
 
     @Test
