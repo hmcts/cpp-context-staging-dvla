@@ -2233,7 +2233,7 @@ public class DriverNotifiedEngineTest {
 
 
     @Test
-    public void shouldNotRemoveDEROffencesWithAppealResultsWhenNoPromptSubmitted() {
+    public void shouldStillRemoveDEROffencesWithAppealResultsWhenNoPromptSubmitted() {
         DriverNotified previous = getPreviousDriverNotified(2, EMPTY, asList(Boolean.TRUE, Boolean.TRUE),
                 asList(SS30, SS40), asList(OFF1, OFF2), asList(OFF1, OFF2), true, previousConvictionDate, true, null, 1, false, singletonList(DSPAS.id), previousOrderDate, null);
 
@@ -2248,9 +2248,7 @@ public class DriverNotifiedEngineTest {
                 crownCourt, null, defendant, cases, hearingId, courtApplications).get(0);
 
         assertThat(transformed, is(notNullValue()));
-        assertThat(transformed.getUpdatedEndorsements().size(), is(equalTo(2)));
-        assertThat(transformed.getUpdatedEndorsements().get(0), is(equalTo(SS30)));
-        assertThat(transformed.getUpdatedEndorsements().get(1), is(equalTo(SS40)));
+        assertThat(transformed.getUpdatedEndorsements(), is(nullValue()));
         assertThat(transformed.getRemovedEndorsements(), is(nullValue()));
         assertThat(transformed.getCases().get(0).getDefendantCaseOffences().size(), is(equalTo(2)));
         assertThat(transformed.getCases().get(0).getDefendantCaseOffences().get(0).getCode(), is(equalTo(OFF1)));
@@ -2258,7 +2256,7 @@ public class DriverNotifiedEngineTest {
     }
 
     @Test
-    public void shouldRemoveDEROffencesWithAppealResultsWhenPromptSubmitted() {
+    public void shouldRemoveDEROffencesWithAppealResultsWhenPromptSubmittedWithAACA() {
         DriverNotified previous = getPreviousDriverNotified(2, EMPTY, asList(Boolean.TRUE, Boolean.TRUE),
                 asList(SS30, SS40), asList(OFF1, OFF2), asList(OFF1, OFF2), true, previousConvictionDate, true, null, 1, false, singletonList(DSPAS.id), previousOrderDate, null);
 
@@ -2274,10 +2272,34 @@ public class DriverNotifiedEngineTest {
                 crownCourt, null, defendant, cases, hearingId, courtApplications).get(0);
 
         assertThat(transformed, is(notNullValue()));
-        assertThat(transformed.getUpdatedEndorsements().size(), is(equalTo(1)));
-        assertThat(transformed.getUpdatedEndorsements().get(0), is(equalTo(SS30)));
         assertThat(transformed.getRemovedEndorsements().size(), is(equalTo(1)));
         assertThat(transformed.getRemovedEndorsements().get(0), is(equalTo(SS40)));
+        assertThat(transformed.getUpdatedEndorsements(), is(nullValue()));
+        assertThat(transformed.getCases().get(0).getDefendantCaseOffences().size(), is(equalTo(2)));
+        assertThat(transformed.getCases().get(0).getDefendantCaseOffences().get(0).getCode(), is(equalTo(OFF1)));
+        assertThat(transformed.getCases().get(0).getDefendantCaseOffences().get(0).getMainOffenceCode(), is(equalTo(OFF1)));
+    }
+
+    @Test
+    public void shouldRemoveDEROffencesWithAppealResultsWhenPromptSubmittedWithAASD() {
+        DriverNotified previous = getPreviousDriverNotified(2, EMPTY, asList(Boolean.TRUE, Boolean.TRUE),
+                asList(SS30, SS40), asList(OFF1, OFF2), asList(OFF1, OFF2), true, previousConvictionDate, true, null, 1, false, singletonList(DSPAS.id), previousOrderDate, null);
+
+        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+
+        List<Cases> cases = getCasesWithMultipleOffences(2, EMPTY, asList(Boolean.TRUE, Boolean.TRUE),
+                asList(SS30, SS40), asList(OFF1, OFF2), asList(OFF1, OFF2), false, null, null, null, 1, false, null);
+
+        List<CourtApplications> courtApplications = getCourtApplications(singletonList(APP1), prefix, false,
+                asList(Prompts.prompts().withPromptReference(DVLA_ENDORSEMENT_CODE).withValue(SS40).build()), null, SS30, 1, asList(DER.id, AASD.id));
+
+        DriverNotified transformed = transformDriverNotified(previousByCase, orderDate,
+                crownCourt, null, defendant, cases, hearingId, courtApplications).get(0);
+
+        assertThat(transformed, is(notNullValue()));
+        assertThat(transformed.getRemovedEndorsements().size(), is(equalTo(1)));
+        assertThat(transformed.getRemovedEndorsements().get(0), is(equalTo(SS40)));
+        assertThat(transformed.getUpdatedEndorsements(), is(nullValue()));
         assertThat(transformed.getCases().get(0).getDefendantCaseOffences().size(), is(equalTo(2)));
         assertThat(transformed.getCases().get(0).getDefendantCaseOffences().get(0).getCode(), is(equalTo(OFF1)));
         assertThat(transformed.getCases().get(0).getDefendantCaseOffences().get(0).getMainOffenceCode(), is(equalTo(OFF1)));

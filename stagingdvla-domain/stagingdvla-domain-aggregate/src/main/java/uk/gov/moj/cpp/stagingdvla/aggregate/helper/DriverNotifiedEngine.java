@@ -390,7 +390,11 @@ public class DriverNotifiedEngine {
                                                               final DriverNotified previousDriverNotified,
                                                               final List<Cases> cases, final List<CourtApplications> courtApplications,
                                                               final List<String> nonEndorsableOffenceCodes) {
-        if (hasAppealRefusedResult(courtApplications)) {
+        if (applicationHasResult(courtApplications, DER)) {
+            builder.withRemovedEndorsements(getRemovedDvlaCodesWithDER(courtApplications));
+            builder.withNotificationType(NotificationType.REMOVE);
+            return true;
+        } else if (hasAppealRefusedResult(courtApplications)) {
             return false;
         }
 
@@ -440,17 +444,6 @@ public class DriverNotifiedEngine {
 
         updatedEndorsements.addAll(getNewEndorsements(cases, previousDriverNotified));
 
-        if (hasAppealResultOrGranted(courtApplications) && applicationHasResult(courtApplications, DER)) {
-            final List<String> removedDvlaCodes = getRemovedDvlaCodesWithDER(courtApplications);
-            if (isNotEmpty(removedDvlaCodes)) {
-                removedDvlaCodes.forEach(dvlaCode -> {
-                    noUpdateOffences.remove(dvlaCode);
-                    updatedEndorsements.remove(dvlaCode);
-                    removedEndorsements.add(dvlaCode);
-                });
-            }
-        }
-
         if (isNotEmpty(removedEndorsements) || isNotEmpty(updatedEndorsements) || specialReasonExists.get()) {
             updatedEndorsements.addAll(noUpdateOffences);
             if (isEmpty(removedEndorsements) && isEmpty(updatedEndorsements)) {
@@ -491,20 +484,20 @@ public class DriverNotifiedEngine {
     }
 
     private static List<String> getRemovedDvlaCodesWithDER(List<CourtApplications> courtApplications) {
-        if (courtApplications == null) {
-            return List.of();
+        List<String> dvlaCodes = new ArrayList<>();
+        if (nonNull(courtApplications)) {
+           dvlaCodes = courtApplications.stream()
+                    .filter(app -> nonNull(app.getResults()))
+                    .flatMap(app -> app.getResults().stream())
+                    .filter(result -> nonNull(result.getPrompts()))
+                    .flatMap(result -> result.getPrompts().stream())
+                    .filter(prompt -> DVLA_ENDORSEMENT_CODE.equals(prompt.getPromptReference()))
+                    .map(Prompts::getValue)
+                    .filter(value -> isNotEmpty(value))
+                    .distinct()
+                    .toList();
         }
-
-        return courtApplications.stream()
-                .filter(app -> nonNull(app.getResults()))
-                .flatMap(app -> app.getResults().stream())
-                .filter(result ->  nonNull(result.getPrompts()))
-                .flatMap(result -> result.getPrompts().stream())
-                .filter(prompt -> DVLA_ENDORSEMENT_CODE.equals(prompt.getPromptReference()))
-                .map(Prompts::getValue)
-                .filter(value -> isNotEmpty(value))
-                .distinct()
-                .toList();
+        return isNotEmpty(dvlaCodes) ? dvlaCodes : null;
     }
 
     private static void assignEndorsements(final DriverNotified.Builder builder, final List<CourtApplications> courtApplications, final List<String> removedEndorsements, final List<String> updatedEndorsements) {
@@ -517,13 +510,8 @@ public class DriverNotifiedEngine {
         }
 
         if (hasAppealResultOrGranted(courtApplications)) {
-            if (applicationHasResult(courtApplications, DER)) {
-                builder.withNotificationType(isNotEmpty(removedEndorsements)
-                        ? NotificationType.REMOVE : NotificationType.UPDATE);
-            } else {
-                builder.withNotificationType(isNotEmpty(updatedEndorsements)
-                        ? NotificationType.UPDATE : NotificationType.REMOVE);
-            }
+            builder.withNotificationType(isNotEmpty(updatedEndorsements)
+                    ? NotificationType.UPDATE : NotificationType.REMOVE);
 
         } else {
             builder.withNotificationType(isNotEmpty(removedEndorsements)
