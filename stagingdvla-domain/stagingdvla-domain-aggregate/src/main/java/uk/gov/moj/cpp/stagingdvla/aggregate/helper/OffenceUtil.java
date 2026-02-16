@@ -137,7 +137,9 @@ public class OffenceUtil {
             } else if (offenceHasResult(currentOffence, OATS)
                     || offenceHasResult(currentOffence, ADJ)
                     || isEmpty(currentOffence.getResults())) {
-                if (hasD20Endorsement(previousOffence)) {
+                if (hasD20Endorsement(previousOffence)
+                        || offenceHasResult(previousOffence, OATS)
+                        || offenceHasResult(previousOffence, ADJ)) {
                     return NO_UPDATE_PREV_ENDORSED;
                 } else {
                     return NO_UPDATE_PREV_NOT_ENDORSED;
@@ -153,9 +155,11 @@ public class OffenceUtil {
             } else if (hasD20Endorsement(currentOffence)) {
                 return UPDATE_NOMERGE;
             } else {
-                // if both previous and current did not have endorsement,
-                // it would already be removed in DriverNotifiedEngine.removeNonEndorsableOffences
-                return NO_UPDATE_PREV_ENDORSED;
+                if (hasD20Endorsement(previousOffence)) {
+                    return NO_UPDATE_PREV_ENDORSED;
+                } else {
+                    return NO_UPDATE_PREV_NOT_ENDORSED;
+                }
             }
         } else if (hasAppealResult(courtApplications)) {
             if (hasD20Endorsement(previousOffence)) {

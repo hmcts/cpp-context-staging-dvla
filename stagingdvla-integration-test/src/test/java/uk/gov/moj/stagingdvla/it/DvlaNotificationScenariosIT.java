@@ -1322,7 +1322,7 @@ public class DvlaNotificationScenariosIT extends AbstractIntegrationTest {
                 .hasCourtApplications(1)
                 .hasNoUpdatedEndorsements()
                 .hasRemovedEndorsementContains("TS10")
-                .hasOffences(1)
+                .hasOffences(0)
                 .hasPreviousCase();
 
         verifyDVLANotificationCommandInvoked(driverNotifiedList);
@@ -1376,7 +1376,7 @@ public class DvlaNotificationScenariosIT extends AbstractIntegrationTest {
                 .hasCourtApplications(1)
                 .hasOffences(2)
                 .hasOffenceCode("RT88971")
-                .hasDVLACode("TS10")
+                .hasDVLACode(1, "TS10")
                 .hasDrugLevel("500")
                 .hasPenaltyPoints("3")
                 .hasAmountOfFine(EMPTY_STRING)
@@ -1767,7 +1767,7 @@ public class DvlaNotificationScenariosIT extends AbstractIntegrationTest {
                 .hasCourtApplications(1)
                 .hasNoUpdatedEndorsements()
                 .hasRemovedEndorsementContains("MW10","TT99")
-                .hasOffences(1)
+                .hasOffences(0)
                 .hasPreviousCase();
 
         verifyDVLANotificationCommandInvoked(driverNotifiedList);
