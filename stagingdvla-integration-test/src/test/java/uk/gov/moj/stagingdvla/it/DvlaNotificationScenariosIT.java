@@ -1984,9 +1984,9 @@ public class DvlaNotificationScenariosIT extends AbstractIntegrationTest {
         DriverNotifiedEventAssertion.with(driverNotifieds.get(0))
                 .hasCaseReference("DVLA02022416")
                 .hasNoUpdatedEndorsements()
-                .hasRemovedEndorsementContains("SP56")
+                .hasRemovedEndorsementContains("SP50")
                 .hasCourtApplications(1)
-                .hasOffences(1)
+                .hasOffences(0)
                 .hasPreviousCase();
 
     }

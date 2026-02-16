@@ -23,7 +23,6 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.End
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.UPDATE_MERGE;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.UPDATE_NOMERGE;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.POINTS_DISQUALIFICATION_CODE;
-import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.DER;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.LPIC1;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.LPIC2;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.LPIC3;
@@ -390,11 +389,7 @@ public class DriverNotifiedEngine {
                                                               final DriverNotified previousDriverNotified,
                                                               final List<Cases> cases, final List<CourtApplications> courtApplications,
                                                               final List<String> nonEndorsableOffenceCodes) {
-        if (applicationHasResult(courtApplications, DER)) {
-            builder.withRemovedEndorsements(getRemovedDvlaCodesWithDER(courtApplications));
-            builder.withNotificationType(NotificationType.REMOVE);
-            return true;
-        } else if (hasAppealRefusedResult(courtApplications)) {
+        if (hasAppealRefusedResult(courtApplications)) {
             return false;
         }
 
@@ -499,23 +494,6 @@ public class DriverNotifiedEngine {
                 });
 
         return newEndorsements;
-    }
-
-    private static List<String> getRemovedDvlaCodesWithDER(List<CourtApplications> courtApplications) {
-        List<String> dvlaCodes = new ArrayList<>();
-        if (nonNull(courtApplications)) {
-           dvlaCodes = courtApplications.stream()
-                    .filter(app -> nonNull(app.getResults()))
-                    .flatMap(app -> app.getResults().stream())
-                    .filter(result -> nonNull(result.getPrompts()))
-                    .flatMap(result -> result.getPrompts().stream())
-                    .filter(prompt -> DVLA_ENDORSEMENT_CODE.equals(prompt.getPromptReference()))
-                    .map(Prompts::getValue)
-                    .filter(value -> isNotEmpty(value))
-                    .distinct()
-                    .toList();
-        }
-        return isNotEmpty(dvlaCodes) ? dvlaCodes : null;
     }
 
     private static void assignEndorsements(final DriverNotified.Builder builder, final List<CourtApplications> courtApplications, final List<String> removedEndorsements, final List<String> updatedEndorsements) {
