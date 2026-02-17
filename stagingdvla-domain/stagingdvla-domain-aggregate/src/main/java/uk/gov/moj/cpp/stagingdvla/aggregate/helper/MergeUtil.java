@@ -1,9 +1,14 @@
 package uk.gov.moj.cpp.stagingdvla.aggregate.helper;
 
+import static java.util.Arrays.asList;
 import static java.util.Objects.nonNull;
+import static org.apache.commons.collections.CollectionUtils.isEmpty;
 import static org.apache.commons.collections.CollectionUtils.isNotEmpty;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.ADJ;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.OATS;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.getDistinctPromptReferences;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAnyResultType;
 
 import uk.gov.justice.core.courts.nowdocument.NowText;
 import uk.gov.justice.cpp.stagingdvla.event.Cases;
@@ -59,7 +64,11 @@ public class MergeUtil {
     }
 
     private static List<Results> mergeResults(final List<Results> results, final List<Results> previousResults) {
-        if (isNotEmpty(results) && isNotEmpty(previousResults)) {
+        if (isEmpty(results) || hasAnyResultType(results, asList(ADJ, OATS))) {
+            return previousResults;
+        } else if (isEmpty(previousResults)) {
+            return results;
+        } else {
             final List<Results> mergedResults = new ArrayList<>();
             results.forEach(result -> {
                 if (isNotEmpty(result.getResultIdentifier())) {
@@ -75,8 +84,6 @@ public class MergeUtil {
                 }
             });
             return mergedResults;
-        } else {
-            return results;
         }
     }
 
