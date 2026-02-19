@@ -1655,9 +1655,9 @@ public class DvlaNotificationScenariosIT extends AbstractIntegrationTest {
                 .hasDVLACode("TS10")
                 .hasDisqualificationPeriod(EMPTY_STRING)
                 .hasDrugLevel("500")
-                .hasPenaltyPoints("3")
+                .hasPenaltyPoints("6")
                 .hasAmountOfFine(EMPTY_STRING)
-                .hasResults(2)
+                .hasResults(3)
                 .hasWording("Has a violent past and fear that he will commit further offences and interfere with witnesse")
                 .hasPreviousCase();
 
@@ -3637,17 +3637,23 @@ public class DvlaNotificationScenariosIT extends AbstractIntegrationTest {
 
         final List<DriverNotified> driverNotifiedList = new ArrayList<>();
 
-        for(int i = 0; i < expectedEventCount; i++){
-            Optional<JsonObject> jsonObject = retrieveMessageAsJsonObject(consumerForDriverNotified);
+        if (expectedEventCount > 0) {
+            for (int i = 0; i < expectedEventCount; i++) {
+                Optional<JsonObject> jsonObject = retrieveMessageAsJsonObject(consumerForDriverNotified);
 
-            if (jsonObject.isPresent()) {
-                driverNotifiedList.add(jsonToObjectConverter.convert(jsonObject.get(), DriverNotified.class));
+                if (jsonObject.isPresent()) {
+                    driverNotifiedList.add(jsonToObjectConverter.convert(jsonObject.get(), DriverNotified.class));
+                }
             }
+
+            assertThat(driverNotifiedList.size(), equalTo(expectedEventCount));
+
+            return driverNotifiedList;
+        } else {
+            Optional<JsonObject> jsonObject = retrieveMessageAsJsonObject(consumerForDriverNotified);
+            assertThat(jsonObject.isEmpty(), is(true));
+            return driverNotifiedList;
         }
-
-        assertThat(driverNotifiedList.size(), equalTo(expectedEventCount));
-
-        return driverNotifiedList;
     }
 
     private void verify(final DriverNotified driverNotified,

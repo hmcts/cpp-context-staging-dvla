@@ -10,6 +10,7 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.Res
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.getDistinctPromptReferences;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAnyResultType;
 
+import uk.gov.justice.core.courts.JudicialResultCategory;
 import uk.gov.justice.core.courts.nowdocument.NowText;
 import uk.gov.justice.cpp.stagingdvla.event.Cases;
 import uk.gov.justice.cpp.stagingdvla.event.DefendantCaseOffences;
@@ -21,8 +22,10 @@ import uk.gov.justice.cpp.stagingdvla.event.Results;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @SuppressWarnings({"squid:S1118", "squid:S1188"})
 public class MergeUtil {
@@ -64,18 +67,21 @@ public class MergeUtil {
     }
 
     private static List<Results> mergeResults(final List<Results> results, final List<Results> previousResults) {
-        if (isEmpty(results) || hasAnyResultType(results, asList(ADJ, OATS))) {
+        if (isEmpty(results) || hasAnyResultType(results, asList(OATS, ADJ))) {
             return previousResults;
         } else if (isEmpty(previousResults)) {
             return results;
         } else {
             final List<Results> mergedResults = new ArrayList<>();
+            final Set<String> matchedResultIds = new HashSet<>();
+
             results.forEach(result -> {
                 if (isNotEmpty(result.getResultIdentifier())) {
                     final Results previousResult = previousResults.stream()
                             .filter(bResult -> result.getResultIdentifier().equals(bResult.getResultIdentifier())).findFirst().orElse(null);
                     if (nonNull(previousResult)) {
                         mergedResults.add(mergeResult(result, previousResult));
+                        matchedResultIds.add(previousResult.getResultIdentifier());
                     } else {
                         mergedResults.add(result);
                     }
@@ -83,6 +89,12 @@ public class MergeUtil {
                     mergedResults.add(result);
                 }
             });
+
+            previousResults.stream()
+                    .filter(previousResult -> !matchedResultIds.contains(previousResult.getResultIdentifier()))
+                    .filter(previousResult -> Boolean.TRUE.equals(previousResult.getD20()))
+                    .forEach(mergedResults::add);
+
             return mergedResults;
         }
     }
@@ -100,6 +112,7 @@ public class MergeUtil {
                 .withPointsDisqualificationCode((String) mergeValue(result.getPointsDisqualificationCode(), previousResult.getPointsDisqualificationCode()))
                 .withDrivingTestStipulation((Integer) mergeValue(result.getDrivingTestStipulation(), previousResult.getDrivingTestStipulation()))
                 .withDvlaCode((String) mergeValue(result.getDvlaCode(), previousResult.getDvlaCode()))
+                .withJudicialResultCategory((JudicialResultCategory) mergeValue(result.getJudicialResultCategory(), previousResult.getJudicialResultCategory()))
                 .build();
     }
 
