@@ -38,11 +38,11 @@ public class QueueUtil {
 
     private static final String QUEUE_URI = System.getProperty("queueUri", "tcp://" + HOST + ":61616");
 
-    private static final long RETRIEVE_TIMEOUT = 10000;
+    private static final long RETRIEVE_TIMEOUT = 1000;
     private static final long CLEAR_TIMEOUT = 100;
-    private static final long MESSAGE_RETRIEVE_TRIAL_TIMEOUT = 10000;
+    private static final long MESSAGE_RETRIEVE_TRIAL_TIMEOUT = 1000;
     private static final int RETRY_TIMEOUT_IN_MILLIS = 5000;
-    private static final int DEFAULT_POLL_TIMEOUT_IN_MILLIS = 30000;
+    private static final int DEFAULT_POLL_TIMEOUT_IN_MILLIS = 3000;
 
     private Session session;
 
