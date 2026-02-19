@@ -10,6 +10,7 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.Res
 
 import uk.gov.justice.core.courts.Address;
 import uk.gov.justice.core.courts.CourtCentre;
+import uk.gov.justice.core.courts.JudicialResultCategory;
 import uk.gov.justice.core.courts.LjaDetails;
 import uk.gov.justice.core.courts.nowdocument.NowText;
 import uk.gov.justice.core.courts.nowdocument.Nowaddress;
@@ -278,6 +279,7 @@ public class AggregateTestHelper {
                 .withPointsDisqualificationCode(pointsDisqualificationCode)
                 .withDrivingTestStipulation(option == ONE ? 1 : null)
                 .withDvlaCode(option == ONE ? prefix.concat(dvlaCode) : EMPTY)
+                .withJudicialResultCategory(JudicialResultCategory.FINAL)
                 .build();
     }
 

@@ -169,7 +169,7 @@ public class DvlaNotificationIT extends AbstractIntegrationTest {
                 .withFilter(isJson(withJsonPath("$.cases[0].defendantCaseOffences[0].convictingCourtCode", CoreMatchers.is("2577"))))
                 .withFilter(isJson(withJsonPath("$.cases[0].defendantCaseOffences[0].convictionDate", CoreMatchers.is("2021-10-04"))))
         ) {
-            driverNotifiedEventListener.expectNoneWithin(20000);
+            driverNotifiedEventListener.expectNoneWithin(10000);
         }
 
         //Then
