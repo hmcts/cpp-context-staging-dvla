@@ -466,13 +466,13 @@ public class DriverNotifiedEngine {
                 .filter(aCase -> isNotEmpty(aCase.getDefendantCaseOffences()))
                 .forEach(aCase -> {
                     List<DefendantCaseOffences> offencesToProcess = aCase.getDefendantCaseOffences().stream()
-                            .filter(offence -> isNotEmpty(offence.getDvlaCode()) && !POINTS_DISQUALIFICATION_CODE.equals(offence.getDvlaCode()))
+                            .filter(offence -> isNotEmpty(offence.getCode()) && isNotEmpty(offence.getDvlaCode()) && !POINTS_DISQUALIFICATION_CODE.equals(offence.getDvlaCode()))
                             .filter(offence -> isNull(previousDriverNotified)
                                     || isEmpty(previousDriverNotified.getCases())
                                     || previousDriverNotified.getCases().stream()
                                     .filter(prevCase -> isNotEmpty(prevCase.getDefendantCaseOffences()))
                                     .flatMap(prevCase -> prevCase.getDefendantCaseOffences().stream())
-                                    .noneMatch(prevOffence -> offence.getDvlaCode().equalsIgnoreCase(prevOffence.getDvlaCode())))
+                                    .noneMatch(prevOffence -> offence.getCode().equalsIgnoreCase(prevOffence.getCode())))
                             .toList();
 
                     if (isNotEmpty(offencesToProcess)) {

@@ -14,6 +14,7 @@ import uk.gov.justice.cpp.stagingdvla.event.DefendantCaseOffences;
 import uk.gov.justice.cpp.stagingdvla.event.DriverNotified;
 import uk.gov.justice.cpp.stagingdvla.event.NotificationType;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -68,12 +69,14 @@ public class DriverNotifiedEventAssertion {
 
     public DriverNotifiedEventAssertion hasUpdatedEndorsementContains(String...updatedEndorsements) {
         Objects.requireNonNull(updatedEndorsements);
-        assertThat(notifiedEvent.getUpdatedEndorsements(), hasItems(updatedEndorsements));
+        assertThat(notifiedEvent.getUpdatedEndorsements().stream().sorted().toArray(),
+                is(equalTo(Arrays.stream(updatedEndorsements).sorted().toArray())));
         return this;
     }
 
     public DriverNotifiedEventAssertion hasRemovedEndorsementContains(String...removedEndorsements) {
-        assertThat(notifiedEvent.getRemovedEndorsements(), hasItems(removedEndorsements));
+        assertThat(notifiedEvent.getRemovedEndorsements().stream().sorted().toArray(),
+                is(equalTo(Arrays.stream(removedEndorsements).sorted().toArray())));
         return this;
     }
     public DriverNotifiedEventAssertion hasResults(int size) {

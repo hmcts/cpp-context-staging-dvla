@@ -86,7 +86,8 @@ public class MergeUtil {
                     .withDttpDtetp(getDttpDtetp(mergedOffence.getResults()))
                     .withInterimImposedFinalSentence(getInterimImposedFinalSentence(mergedOffence.getResults()))
                     .withDateFromWhichDisqRemoved(getDateFromWhichDisqRemoved(mergedOffence.getResults()))
-                    .withSentenceDate(isNotEmpty(mergedOffence.getSentenceDate()) ? orderDate : null)
+                    .withSentenceDate(isNotEmpty(mergedOffence.getConvictionDate())
+                            && !orderDate.equalsIgnoreCase(mergedOffence.getConvictionDate()) ? orderDate : null)
                     .build();
         } else {
             return mergedOffence;

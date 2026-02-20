@@ -147,7 +147,7 @@ public class OffenceUtil {
             } else if (hasD20Endorsement(currentOffence)) {
                 if (hasD20Endorsement(previousOffence)) {
                     return UPDATE_MERGE;
-                }else {
+                } else {
                     return UPDATE_NOMERGE;
                 }
             } else if (hasD20Endorsement(previousOffence)) {
