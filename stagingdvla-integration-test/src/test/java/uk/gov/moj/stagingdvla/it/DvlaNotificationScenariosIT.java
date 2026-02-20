@@ -3214,7 +3214,7 @@ public class DvlaNotificationScenariosIT extends AbstractIntegrationTest {
 
         DriverNotifiedEventAssertion.with(driverNotifiedList.get(0))
                 .hasCaseReference("JW179778064")
-                .hasUpdatedEndorsementContains()
+                .hasNoUpdatedEndorsements()
                 .hasNoRemovedEndorsements()
                 .hasOffences(2)
                 .hasOffenceCode("RT88045")
@@ -3478,7 +3478,7 @@ public class DvlaNotificationScenariosIT extends AbstractIntegrationTest {
         List<DriverNotified> driverNotifiedList2 = sendAndVerifyEvent("nonendorsable/scenario12/command2.json", 1);
         DriverNotifiedEventAssertion.with(driverNotifiedList2.get(0))
                 .hasCaseReference("JW48022584")
-                .hasUpdatedEndorsementContains("TS10")
+                .hasUpdatedEndorsementContains("TS10", "TS20")
                 .hasNoRemovedEndorsements()
                 .hasCourtApplications(1)
                 .hasOffences(2)
