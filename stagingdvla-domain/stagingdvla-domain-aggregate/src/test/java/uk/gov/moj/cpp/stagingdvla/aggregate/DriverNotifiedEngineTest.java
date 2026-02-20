@@ -1137,7 +1137,7 @@ public class DriverNotifiedEngineTest {
                 crownCourt, null, defendant, cases, hearingId, courtApplications), is(emptyList()));
 
 
-        previous = getPreviousDriverNotified(1, EMPTY, asList(Boolean.TRUE),
+        previous = getPreviousDriverNotified(1, EMPTY, asList(Boolean.FALSE),
                 asList(SS30), asList(OFF1), asList(OFF1), true, previousConvictionDate, true, null, 1, false, asList(DDPL.id), previousOrderDate, null);
         courtApplications = getCourtApplications(asList(APP1), prefix, false, null, null, SS30, 1, asList(AACA.id));
         cases = getCasesWithMultipleOffences(1, EMPTY, asList(Boolean.TRUE),

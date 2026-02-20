@@ -12,6 +12,7 @@ import static org.apache.commons.lang3.StringUtils.isEmpty;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 import static org.apache.commons.lang3.StringUtils.isNumeric;
 import static org.slf4j.LoggerFactory.getLogger;
+import static uk.gov.justice.core.courts.JudicialResultCategory.ANCILLARY;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ALCOHOL_DRUG_MAX_LEVEL;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.AOF;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ApplicationType.ACP;
@@ -119,7 +120,7 @@ public class OffenceUtil {
             return getEndorsementStatusForAppeal(currentOffence, previousOffence, courtApplications);
         } else if (!nonEndorsable && isAmendment) {
             return isNull(currentOffence) ? REMOVE : UPDATE_NOMERGE;
-        } else if (!nonEndorsable && applicationHasResult(courtApplications, DSPAS)) {
+        } else if (!nonEndorsable && hasResultType(courtApplications, DSPAS)) {
             return UPDATE_MERGE;
         } else if (nonEndorsable) {
             return REMOVE;
@@ -137,16 +138,20 @@ public class OffenceUtil {
             } else if (hasSpecialReason(currentOffence)
                     && hasNoD20Endorsement(currentOffence)) {
                 return SPECIAL_REASON;
-            } else if (isEmptyResult(currentOffence)) {
-                if (isEmptyResult(previousOffence) || hasD20Endorsement(previousOffence)) {
+            } else if (hasNoResult(currentOffence)) {
+                if (hasD20Endorsement(previousOffence)) {
                     return NO_UPDATE_PREV_ENDORSED;
                 } else {
                     return NO_UPDATE_PREV_NOT_ENDORSED;
                 }
             } else if (hasD20Endorsement(currentOffence)) {
-                return UPDATE_NOMERGE;
+                if (hasD20Endorsement(previousOffence)) {
+                    return UPDATE_MERGE;
+                }else {
+                    return UPDATE_NOMERGE;
+                }
             } else if (hasD20Endorsement(previousOffence)) {
-                if (hasResultCategoryOnly(currentOffence, JudicialResultCategory.ANCILLARY)) {
+                if (hasResultCategoryOnly(currentOffence, ANCILLARY)) {
                     return NO_UPDATE_PREV_ENDORSED;
                 } else {
                     return UPDATE_MERGE;
@@ -200,11 +205,11 @@ public class OffenceUtil {
         }
     }
 
-    public static String getFine(DefendantCaseOffences offence) {
+    public static String getFine(final List<Results> results) {
         final AtomicReference<String> fine = new AtomicReference<>(EMPTY);
 
-        if (nonNull(offence) && isNotEmpty(offence.getResults())) {
-            offence.getResults().stream().filter(result -> isNotEmpty(result.getPrompts()))
+        if (isNotEmpty(results)) {
+            results.stream().filter(result -> isNotEmpty(result.getPrompts()))
                     .forEach(result -> result.getPrompts().forEach(prompt -> {
                         if (AOF.equalsIgnoreCase(prompt.getPromptReference())) {
                             fine.set(prompt.getValue());
@@ -215,11 +220,11 @@ public class OffenceUtil {
         return fine.get();
     }
 
-    public static String getPenaltyPoints(DefendantCaseOffences offence) {
+    public static String getPenaltyPoints(final List<Results> results) {
         final AtomicReference<String> penaltyPoints = new AtomicReference<>(EMPTY);
 
-        if (nonNull(offence) && isNotEmpty(offence.getResults())) {
-            offence.getResults().stream().filter(result -> isNotEmpty(result.getPrompts()))
+        if (isNotEmpty(results)) {
+            results.stream().filter(result -> isNotEmpty(result.getPrompts()))
                     .forEach(result -> result.getPrompts().forEach(prompt -> {
                         if ((NOTIONAL_PENALTY_POINTS.equalsIgnoreCase(prompt.getPromptReference()) && TT99.equalsIgnoreCase(result.getPointsDisqualificationCode()))
                                 || PENALTY_POINTS.equalsIgnoreCase(prompt.getPromptReference())) {
@@ -302,11 +307,11 @@ public class OffenceUtil {
         return NO_DURATION_VALUE;
     }
 
-    public static String getDttpDtetp(DefendantCaseOffences offence) {
+    public static String getDttpDtetp(final List<Results> results) {
         final AtomicReference<String> dttpDtetp = new AtomicReference<>(EMPTY);
 
-        if (nonNull(offence) && isNotEmpty(offence.getResults())) {
-            offence.getResults().forEach(result -> {
+        if (isNotEmpty(results)) {
+            results.forEach(result -> {
                 if (nonNull(result.getDrivingTestStipulation())
                         && result.getDrivingTestStipulation() > 0) {
                     dttpDtetp.set(result.getDrivingTestStipulation().toString());
@@ -317,11 +322,11 @@ public class OffenceUtil {
         return dttpDtetp.get();
     }
 
-    public static String getInterimImposedFinalSentence(DefendantCaseOffences offence) {
-        if (nonNull(offence) && isNotEmpty(offence.getResults())) {
-            if (offence.getResults().stream().anyMatch(result -> DDRI.id.equalsIgnoreCase(result.getResultIdentifier()))) {
+    public static String getInterimImposedFinalSentence(final List<Results> results) {
+        if (isNotEmpty(results)) {
+            if (results.stream().anyMatch(result -> DDRI.id.equalsIgnoreCase(result.getResultIdentifier()))) {
                 return "1";
-            } else if (offence.getResults().stream().anyMatch(result ->
+            } else if (results.stream().anyMatch(result ->
                     isNotEmpty(result.getPrompts()) &&
                             result.getPrompts().stream().anyMatch(prompt -> STARTING_FROM_DATE_DATE_OF_INTERIM_DISQUALIFICATION.equalsIgnoreCase(prompt.getPromptReference())))) {
                 return "2";
@@ -332,7 +337,7 @@ public class OffenceUtil {
     }
 
     public static String getSentencingCourtCode(final DefendantCaseOffences offence, final List<CourtApplications> courtApplications, final DefendantCaseOffences previousOffence, final String amendmentDate, final String orderDate, final String orderingCourtCode) {
-        if (isNotEmpty(amendmentDate) && offenceHasResult(offence, DDRI)) {
+        if (isNotEmpty(amendmentDate) && hasResultType(offence, DDRI)) {
             return null;
         } else if (nonNull(previousOffence) && isNotEmpty(previousOffence.getSentencingCourtCode())) {
             return previousOffence.getSentencingCourtCode();
@@ -344,7 +349,7 @@ public class OffenceUtil {
     }
 
     public static String getSentenceDate(final DefendantCaseOffences offence, final List<CourtApplications> courtApplications, final DefendantCaseOffences previousOffence, final String amendmentDate, final String orderDate) {
-        if (isNotEmpty(amendmentDate) && offenceHasResult(offence, DDRI)) {
+        if (isNotEmpty(amendmentDate) && hasResultType(offence, DDRI)) {
             return null;
         } else if (nonNull(previousOffence) && isNotEmpty(previousOffence.getSentenceDate())) {
             return previousOffence.getSentenceDate();
@@ -356,7 +361,7 @@ public class OffenceUtil {
     }
 
     private static boolean isSentenced(final DefendantCaseOffences offence, final List<CourtApplications> courtApplications, final String orderDate) {
-        if (hasAppealResult(courtApplications) || offenceHasResult(offence, DDRI)) {
+        if (hasAppealResult(courtApplications) || hasResultType(offence, DDRI)) {
             return false;
         } else if (nonNull(offence) && isNotEmpty(orderDate) && isNotEmpty(offence.getConvictionDate())) {
             return !orderDate.equalsIgnoreCase(offence.getConvictionDate());
@@ -365,11 +370,11 @@ public class OffenceUtil {
         }
     }
 
-    public static String getDateFromWhichDisqRemoved(DefendantCaseOffences offence) {
+    public static String getDateFromWhichDisqRemoved(final List<Results> results) {
         final AtomicReference<String> dateDisqualificationEnds = new AtomicReference<>(EMPTY);
 
-        if (nonNull(offence) && isNotEmpty(offence.getResults())) {
-            offence.getResults().stream().filter(result -> isNotEmpty(result.getPrompts()))
+        if (isNotEmpty(results)) {
+            results.stream().filter(result -> isNotEmpty(result.getPrompts()))
                     .forEach(result -> result.getPrompts().forEach(prompt -> {
                         if (DATE_DISQUALIFICATION_ENDS.equalsIgnoreCase(prompt.getPromptReference())) {
                             dateDisqualificationEnds.set(prompt.getValue());
@@ -381,7 +386,7 @@ public class OffenceUtil {
     }
 
     public static String getDateDisqSuspendedPendingAppeal(final DefendantCaseOffences offence, final List<CourtApplications> courtApplications, final DefendantCaseOffences previousOffence, final String amendmentDate, final String orderDate) {
-        if (offenceHasResult(offence, DSPA) || offenceHasResult(offence, DSPAS)) {
+        if (hasResultType(offence, DSPA) || hasResultType(offence, DSPAS)) {
             return orderDate;
         } else if (isEmpty(amendmentDate) && isNotEmpty(courtApplications) && nonNull(previousOffence)) {
             return previousOffence.getDateDisqSuspendedPendingAppeal();
@@ -391,7 +396,7 @@ public class OffenceUtil {
     }
 
     public static String getDateDisqReimposedFollowingAppeal(final List<CourtApplications> courtApplications, final String orderDate) {
-        if (applicationHasResult(courtApplications, DDRE)) {
+        if (hasResultType(courtApplications, DDRE)) {
             return orderDate;
         } else {
             return null;
@@ -399,7 +404,7 @@ public class OffenceUtil {
     }
 
     public static boolean hasAppealResultOrGranted(List<CourtApplications> courtApplications) {
-        return hasAppealResult(courtApplications) || applicationHasResult(courtApplications, G);
+        return hasAppealResult(courtApplications) || hasResultType(courtApplications, G);
     }
 
     public static boolean hasAppealRefusedResult(List<CourtApplications> courtApplications) {
@@ -416,9 +421,9 @@ public class OffenceUtil {
                         .anyMatch(result -> APPEAL_RESULTS.stream().anyMatch(result.getResultIdentifier()::equalsIgnoreCase)));
     }
 
-    public static boolean offenceHasAnyResult(final DefendantCaseOffences offence, final List<ResultType> resultTypes) {
+    public static boolean hasAnyResult(final DefendantCaseOffences offence, final List<ResultType> resultTypes) {
         for (final ResultType resultType : resultTypes) {
-            if (offenceHasResult(offence, resultType)) {
+            if (hasResultType(offence, resultType)) {
                 return true;
             }
         }
@@ -430,12 +435,12 @@ public class OffenceUtil {
                 offence.getResults().stream().allMatch(result -> judicialResultCategory.equals(result.getJudicialResultCategory()));
     }
 
-    public static boolean offenceHasResult(final DefendantCaseOffences offence, final ResultType resultType) {
+    public static boolean hasResultType(final DefendantCaseOffences offence, final ResultType resultType) {
         return nonNull(offence) && isNotEmpty(offence.getResults()) &&
                 offence.getResults().stream().anyMatch(result -> resultType.id.equalsIgnoreCase(result.getResultIdentifier()));
     }
 
-    public static boolean applicationHasResult(final List<CourtApplications> courtApplications, final ResultType resultType) {
+    public static boolean hasResultType(final List<CourtApplications> courtApplications, final ResultType resultType) {
         return isNotEmpty(courtApplications) &&
                 courtApplications.stream().anyMatch(courtApplication -> isNotEmpty(courtApplication.getResults()) &&
                         courtApplication.getResults().stream().anyMatch(result -> resultType.id.equalsIgnoreCase(result.getResultIdentifier())));
@@ -460,16 +465,16 @@ public class OffenceUtil {
     }
 
     private static boolean hasRemoveResultType(final DefendantCaseOffences offence) {
-        return offenceHasAnyResult(offence, asList(DISM, DINE, DINI, DISC, DISCH, WDRN, WDRNOFF));
+        return hasAnyResult(offence, asList(DISM, DINE, DINI, DISC, DISCH, WDRN, WDRNOFF));
     }
 
     private static boolean hasSpecialReason(final DefendantCaseOffences offence) {
-        return offenceHasAnyResult(offence, asList(NESR, NDSR));
+        return hasAnyResult(offence, asList(NESR, NDSR));
     }
 
-    private static boolean isEmptyResult(final DefendantCaseOffences offence) {
-        return offenceHasResult(offence, OATS)
-                || offenceHasResult(offence, ADJ)
+    private static boolean hasNoResult(final DefendantCaseOffences offence) {
+        return hasResultType(offence, OATS)
+                || hasResultType(offence, ADJ)
                 || isEmpty(offence.getResults());
     }
 

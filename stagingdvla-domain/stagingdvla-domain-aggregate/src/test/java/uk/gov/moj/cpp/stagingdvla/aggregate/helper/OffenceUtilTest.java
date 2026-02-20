@@ -33,7 +33,17 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.Res
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.TEXT;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.WDRN;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.WDRNOFF;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.getEndorsementStatus;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAnyD20Removed;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAnyResult;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAnyResultOrPromptModified;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAnyResultType;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAppealRefusedResult;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAppealResult;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAppealResultOrGranted;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasD20Endorsement;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasPointsDisqualificationCode;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasResultType;
 
 import uk.gov.justice.cpp.stagingdvla.event.Cases;
 import uk.gov.justice.cpp.stagingdvla.event.CourtApplications;
@@ -57,7 +67,7 @@ class OffenceUtilTest {
         Cases previousCases = buildCases(RESULT_IDENTIFIER, Boolean.TRUE);
         Cases currentCases = buildCases(RESULT_IDENTIFIER, Boolean.FALSE);
 
-        boolean d20Removed = OffenceUtil.hasAnyD20Removed(previousCases, currentCases, null);
+        boolean d20Removed = hasAnyD20Removed(previousCases, currentCases, null);
 
         assertThat(d20Removed, is(false));
     }
@@ -70,7 +80,7 @@ class OffenceUtilTest {
         final List<Results> results = singletonList(results().withResultIdentifier(RFSD.id).build());
         final List<CourtApplications> courtApplications = singletonList(CourtApplications.courtApplications().withResults(results).build());
 
-        boolean isApplicationRefused = OffenceUtil.hasAnyD20Removed(previousCases, currentCases, courtApplications);
+        boolean isApplicationRefused = hasAnyD20Removed(previousCases, currentCases, courtApplications);
 
         assertThat(isApplicationRefused, is(false));
     }
@@ -83,7 +93,7 @@ class OffenceUtilTest {
         final List<Results> results = singletonList(results().withResultIdentifier(ERR.id).build());
         final List<CourtApplications> courtApplications = singletonList(CourtApplications.courtApplications().withResults(results).build());
 
-        boolean isApplicationRefused = OffenceUtil.hasAnyD20Removed(previousCases, currentCases, courtApplications);
+        boolean isApplicationRefused = hasAnyD20Removed(previousCases, currentCases, courtApplications);
 
         assertThat(isApplicationRefused, is(false));
     }
@@ -104,7 +114,7 @@ class OffenceUtilTest {
         final List<Results> results = singletonList(results().withResultIdentifier(AACA.id).build());
         final List<CourtApplications> courtApplications = singletonList(CourtApplications.courtApplications().withResults(results).build());
 
-        boolean isApplicationRefused = OffenceUtil.hasAnyD20Removed(previousCases, currentCases, courtApplications);
+        boolean isApplicationRefused = hasAnyD20Removed(previousCases, currentCases, courtApplications);
 
         assertThat(isApplicationRefused, is(true));
     }
@@ -117,7 +127,7 @@ class OffenceUtilTest {
         final List<Results> results = asList(results().withResultIdentifier(G.id).build(), results().withResultIdentifier(COV.id).build());
         final List<CourtApplications> courtApplications = singletonList(CourtApplications.courtApplications().withResults(results).build());
 
-        boolean hasAnyD20Removed = OffenceUtil.hasAnyD20Removed(previousCases, currentCases, courtApplications);
+        boolean hasAnyD20Removed = hasAnyD20Removed(previousCases, currentCases, courtApplications);
 
         assertThat(hasAnyD20Removed, is(false));
     }
@@ -138,7 +148,7 @@ class OffenceUtilTest {
         final List<Results> results = singletonList(results().withResultIdentifier(G.id).build());
         final List<CourtApplications> courtApplications = singletonList(CourtApplications.courtApplications().withResults(results).build());
 
-        boolean hasAnyD20Removed = OffenceUtil.hasAnyD20Removed(previousCases, currentCases, courtApplications);
+        boolean hasAnyD20Removed = hasAnyD20Removed(previousCases, currentCases, courtApplications);
 
         assertThat(hasAnyD20Removed, is(true));
     }
@@ -148,7 +158,7 @@ class OffenceUtilTest {
         final Cases currentCases = Cases.cases().withReference(caseReference).withCaseStatus("INACTIVE").build();
         final List<CourtApplications> courtApplications = singletonList(CourtApplications.courtApplications().withApplicationTypeId(ACP.id).build());
 
-        boolean hasAnyD20Removed = OffenceUtil.hasAnyD20Removed(null, currentCases, courtApplications);
+        boolean hasAnyD20Removed = hasAnyD20Removed(null, currentCases, courtApplications);
 
         assertThat(hasAnyD20Removed, is(false));
     }
@@ -160,7 +170,7 @@ class OffenceUtilTest {
         final Cases currentCases = Cases.cases().withReference(caseReference).withCaseStatus("ACTIVE").build();
         final List<CourtApplications> courtApplications = singletonList(CourtApplications.courtApplications().withResults(results).withApplicationType("Appearance to make statutory declaration (other than SJP)").build());
 
-        boolean hasAnyD20Removed = OffenceUtil.hasAnyD20Removed(previousCases, currentCases, courtApplications);
+        boolean hasAnyD20Removed = hasAnyD20Removed(previousCases, currentCases, courtApplications);
 
         assertThat(hasAnyD20Removed, is(true));
     }
@@ -242,7 +252,7 @@ class OffenceUtilTest {
 
         Cases currentCases = buildCases("RI02", Boolean.FALSE);
 
-        boolean d20Removed = OffenceUtil.hasAnyD20Removed(previousCases, currentCases, null);
+        boolean d20Removed = hasAnyD20Removed(previousCases, currentCases, null);
 
         assertThat(d20Removed, is(true));
     }
@@ -251,7 +261,7 @@ class OffenceUtilTest {
     void shouldGetEndorsementStatusDSPAS() {
         final List<CourtApplications> courtApplications = getCourtApplications(DSPAS);
 
-        final AggregateConstants.EndorsementStatus endorsementStatus = OffenceUtil.getEndorsementStatus(false, null, null, courtApplications, emptyList());
+        final AggregateConstants.EndorsementStatus endorsementStatus = getEndorsementStatus(false, null, null, courtApplications, emptyList());
 
         assertThat(endorsementStatus, is(UPDATE_MERGE));
     }
@@ -260,7 +270,7 @@ class OffenceUtilTest {
     void shouldGetEndorsementStatusDISM() {
         final List<CourtApplications> courtApplications = getCourtApplications(DISM);
 
-        final AggregateConstants.EndorsementStatus endorsementStatus = OffenceUtil.getEndorsementStatus(false, null, null, courtApplications, emptyList());
+        final AggregateConstants.EndorsementStatus endorsementStatus = getEndorsementStatus(false, null, null, courtApplications, emptyList());
 
         assertThat(endorsementStatus, is(REMOVE));
     }
@@ -269,7 +279,7 @@ class OffenceUtilTest {
     void shouldGetEndorsementStatusDINE() {
         final List<CourtApplications> courtApplications = getCourtApplications(DINE);
 
-        final AggregateConstants.EndorsementStatus endorsementStatus = OffenceUtil.getEndorsementStatus(false, null, null, courtApplications, emptyList());
+        final AggregateConstants.EndorsementStatus endorsementStatus = getEndorsementStatus(false, null, null, courtApplications, emptyList());
 
         assertThat(endorsementStatus, is(REMOVE));
     }
@@ -278,7 +288,7 @@ class OffenceUtilTest {
     void shouldGetEndorsementStatusDINI() {
         final List<CourtApplications> courtApplications = getCourtApplications(DINI);
 
-        final AggregateConstants.EndorsementStatus endorsementStatus = OffenceUtil.getEndorsementStatus(false, null, null, courtApplications, emptyList());
+        final AggregateConstants.EndorsementStatus endorsementStatus = getEndorsementStatus(false, null, null, courtApplications, emptyList());
 
         assertThat(endorsementStatus, is(REMOVE));
     }
@@ -287,7 +297,7 @@ class OffenceUtilTest {
     void shouldGetEndorsementStatusDISC() {
         final List<CourtApplications> courtApplications = getCourtApplications(DISC);
 
-        final AggregateConstants.EndorsementStatus endorsementStatus = OffenceUtil.getEndorsementStatus(false, null, null, courtApplications, emptyList());
+        final AggregateConstants.EndorsementStatus endorsementStatus = getEndorsementStatus(false, null, null, courtApplications, emptyList());
 
         assertThat(endorsementStatus, is(REMOVE));
     }
@@ -296,7 +306,7 @@ class OffenceUtilTest {
     void shouldGetEndorsementStatusDISCH() {
         final List<CourtApplications> courtApplications = getCourtApplications(DISCH);
 
-        final AggregateConstants.EndorsementStatus endorsementStatus = OffenceUtil.getEndorsementStatus(false, null, null, courtApplications, emptyList());
+        final AggregateConstants.EndorsementStatus endorsementStatus = getEndorsementStatus(false, null, null, courtApplications, emptyList());
 
         assertThat(endorsementStatus, is(REMOVE));
     }
@@ -305,7 +315,7 @@ class OffenceUtilTest {
     void shouldGetEndorsementStatusWDRN() {
         final List<CourtApplications> courtApplications = getCourtApplications(WDRN);
 
-        final AggregateConstants.EndorsementStatus endorsementStatus = OffenceUtil.getEndorsementStatus(false, null, null, courtApplications, emptyList());
+        final AggregateConstants.EndorsementStatus endorsementStatus = getEndorsementStatus(false, null, null, courtApplications, emptyList());
 
         assertThat(endorsementStatus, is(REMOVE));
     }
@@ -314,7 +324,7 @@ class OffenceUtilTest {
     void shouldGetEndorsementStatusWDRNOFF() {
         final List<CourtApplications> courtApplications = getCourtApplications(WDRNOFF);
 
-        final AggregateConstants.EndorsementStatus endorsementStatus = OffenceUtil.getEndorsementStatus(false, null, null, courtApplications, emptyList());
+        final AggregateConstants.EndorsementStatus endorsementStatus = getEndorsementStatus(false, null, null, courtApplications, emptyList());
 
         assertThat(endorsementStatus, is(REMOVE));
     }
@@ -387,10 +397,6 @@ class OffenceUtilTest {
                         .build()
         );
 
-        boolean isCaseReopen = OffenceUtil.hasAnyD20Removed(null, 
-                Cases.cases().withReference(caseReference).build(), 
-                courtApplications);
-
         assertThat(courtApplications.get(0).getApplicationTypeId(), is(APPRO.id));
     }
 
@@ -418,7 +424,7 @@ class OffenceUtilTest {
                         .build()
         );
 
-        boolean hasAnyD20Removed = OffenceUtil.hasAnyD20Removed(previousCases, currentCases, courtApplications);
+        boolean hasAnyD20Removed = hasAnyD20Removed(previousCases, currentCases, courtApplications);
 
         assertThat(hasAnyD20Removed, is(true));
     }
@@ -435,7 +441,7 @@ class OffenceUtilTest {
                         .build()
         );
 
-        boolean hasAnyD20Removed = OffenceUtil.hasAnyD20Removed(null, currentCases, courtApplications);
+        boolean hasAnyD20Removed = hasAnyD20Removed(null, currentCases, courtApplications);
 
         assertThat(hasAnyD20Removed, is(false));
     }
@@ -452,7 +458,7 @@ class OffenceUtilTest {
                         .build()
         );
 
-        boolean hasAnyD20Removed = OffenceUtil.hasAnyD20Removed(null, currentCases, courtApplications);
+        boolean hasAnyD20Removed = hasAnyD20Removed(null, currentCases, courtApplications);
 
         assertThat(hasAnyD20Removed, is(false));
     }
@@ -482,7 +488,7 @@ class OffenceUtilTest {
                         .build()
         );
 
-        boolean hasAnyD20Removed = OffenceUtil.hasAnyD20Removed(previousCases, currentCases, courtApplications);
+        boolean hasAnyD20Removed = hasAnyD20Removed(previousCases, currentCases, courtApplications);
 
         assertThat(hasAnyD20Removed, is(true));
     }
@@ -494,7 +500,7 @@ class OffenceUtilTest {
                 CourtApplications.courtApplications().withResults(results).build()
         );
 
-        boolean hasAppealResult = OffenceUtil.hasAppealResult(courtApplications);
+        boolean hasAppealResult = hasAppealResult(courtApplications);
 
         assertThat(hasAppealResult, is(true));
     }
@@ -506,7 +512,7 @@ class OffenceUtilTest {
                 CourtApplications.courtApplications().withResults(results).build()
         );
 
-        boolean hasAppealResult = OffenceUtil.hasAppealResult(courtApplications);
+        boolean hasAppealResult = hasAppealResult(courtApplications);
 
         assertThat(hasAppealResult, is(true));
     }
@@ -518,7 +524,7 @@ class OffenceUtilTest {
                 CourtApplications.courtApplications().withResults(results).build()
         );
 
-        boolean hasAppealResult = OffenceUtil.hasAppealResult(courtApplications);
+        boolean hasAppealResult = hasAppealResult(courtApplications);
 
         assertThat(hasAppealResult, is(false));
     }
@@ -530,7 +536,7 @@ class OffenceUtilTest {
                 CourtApplications.courtApplications().withResults(results).build()
         );
 
-        boolean hasAppealRefusedResult = OffenceUtil.hasAppealRefusedResult(courtApplications);
+        boolean hasAppealRefusedResult = hasAppealRefusedResult(courtApplications);
 
         assertThat(hasAppealRefusedResult, is(true));
     }
@@ -542,7 +548,7 @@ class OffenceUtilTest {
                 CourtApplications.courtApplications().withResults(results).build()
         );
 
-        boolean hasAppealRefusedResult = OffenceUtil.hasAppealRefusedResult(courtApplications);
+        boolean hasAppealRefusedResult = hasAppealRefusedResult(courtApplications);
 
         assertThat(hasAppealRefusedResult, is(true));
     }
@@ -554,7 +560,7 @@ class OffenceUtilTest {
                 CourtApplications.courtApplications().withResults(results).build()
         );
 
-        boolean hasAppealRefusedResult = OffenceUtil.hasAppealRefusedResult(courtApplications);
+        boolean hasAppealRefusedResult = hasAppealRefusedResult(courtApplications);
 
         assertThat(hasAppealRefusedResult, is(true));
     }
@@ -566,7 +572,7 @@ class OffenceUtilTest {
                 CourtApplications.courtApplications().withResults(results).build()
         );
 
-        boolean hasAppealRefusedResult = OffenceUtil.hasAppealRefusedResult(courtApplications);
+        boolean hasAppealRefusedResult = hasAppealRefusedResult(courtApplications);
 
         assertThat(hasAppealRefusedResult, is(true));
     }
@@ -578,7 +584,7 @@ class OffenceUtilTest {
                 CourtApplications.courtApplications().withResults(results).build()
         );
 
-        boolean hasAppealRefusedResult = OffenceUtil.hasAppealRefusedResult(courtApplications);
+        boolean hasAppealRefusedResult = hasAppealRefusedResult(courtApplications);
 
         assertThat(hasAppealRefusedResult, is(false));
     }
@@ -590,7 +596,7 @@ class OffenceUtilTest {
                 CourtApplications.courtApplications().withResults(results).build()
         );
 
-        boolean hasAppealResultOrGranted = OffenceUtil.hasAppealResultOrGranted(courtApplications);
+        boolean hasAppealResultOrGranted = hasAppealResultOrGranted(courtApplications);
 
         assertThat(hasAppealResultOrGranted, is(true));
     }
@@ -602,7 +608,7 @@ class OffenceUtilTest {
                 CourtApplications.courtApplications().withResults(results).build()
         );
 
-        boolean hasAppealResultOrGranted = OffenceUtil.hasAppealResultOrGranted(courtApplications);
+        boolean hasAppealResultOrGranted = hasAppealResultOrGranted(courtApplications);
 
         assertThat(hasAppealResultOrGranted, is(true));
     }
@@ -614,7 +620,7 @@ class OffenceUtilTest {
                 CourtApplications.courtApplications().withResults(results).build()
         );
 
-        boolean hasAppealResultOrGranted = OffenceUtil.hasAppealResultOrGranted(courtApplications);
+        boolean hasAppealResultOrGranted = hasAppealResultOrGranted(courtApplications);
 
         assertThat(hasAppealResultOrGranted, is(false));
     }
@@ -625,7 +631,7 @@ class OffenceUtilTest {
                 .withResults(singletonList(results().withResultIdentifier(SV.id).build()))
                 .build();
 
-        boolean hasResult = OffenceUtil.offenceHasResult(offence, SV);
+        boolean hasResult = hasResultType(offence, SV);
 
         assertThat(hasResult, is(true));
     }
@@ -636,7 +642,7 @@ class OffenceUtilTest {
                 .withResults(singletonList(results().withResultIdentifier(OATS.id).build()))
                 .build();
 
-        boolean hasResult = OffenceUtil.offenceHasResult(offence, SV);
+        boolean hasResult = hasResultType(offence, SV);
 
         assertThat(hasResult, is(false));
     }
@@ -647,7 +653,7 @@ class OffenceUtilTest {
                 .withResults(singletonList(results().withResultIdentifier(DISM.id).build()))
                 .build();
 
-        boolean hasAnyResult = OffenceUtil.offenceHasAnyResult(offence, asList(DISM, DINE, WDRN));
+        boolean hasAnyResult = hasAnyResult(offence, asList(DISM, DINE, WDRN));
 
         assertThat(hasAnyResult, is(true));
     }
@@ -658,7 +664,7 @@ class OffenceUtilTest {
                 .withResults(singletonList(results().withResultIdentifier(ADJ.id).build()))
                 .build();
 
-        boolean hasAnyResult = OffenceUtil.offenceHasAnyResult(offence, asList(DISM, DINE, WDRN));
+        boolean hasAnyResult = hasAnyResult(offence, asList(DISM, DINE, WDRN));
 
         assertThat(hasAnyResult, is(false));
     }
@@ -671,7 +677,7 @@ class OffenceUtilTest {
                         .build()
         );
 
-        boolean hasResult = OffenceUtil.applicationHasResult(courtApplications, RFSD);
+        boolean hasResult = hasResultType(courtApplications, RFSD);
 
         assertThat(hasResult, is(true));
     }
@@ -684,7 +690,7 @@ class OffenceUtilTest {
                         .build()
         );
 
-        boolean hasResult = OffenceUtil.applicationHasResult(courtApplications, RFSD);
+        boolean hasResult = hasResultType(courtApplications, RFSD);
 
         assertThat(hasResult, is(false));
     }
@@ -693,7 +699,7 @@ class OffenceUtilTest {
     void shouldReturnFalseWhenApplicationListIsEmpty() {
         final List<CourtApplications> courtApplications = emptyList();
 
-        boolean hasResult = OffenceUtil.applicationHasResult(courtApplications, RFSD);
+        boolean hasResult = hasResultType(courtApplications, RFSD);
 
         assertThat(hasResult, is(false));
     }
@@ -706,7 +712,7 @@ class OffenceUtilTest {
                 results().withResultIdentifier(OATS.id).build()
         );
 
-        boolean hasAnyResultType = OffenceUtil.hasAnyResultType(results, asList(OATS, ADJ));
+        boolean hasAnyResultType = hasAnyResultType(results, asList(OATS, ADJ));
 
         assertThat(hasAnyResultType, is(true));
     }
@@ -718,7 +724,7 @@ class OffenceUtilTest {
                 results().withResultIdentifier(ERR.id).build()
         );
 
-        boolean hasAnyResultType = OffenceUtil.hasAnyResultType(results, asList(OATS, ADJ));
+        boolean hasAnyResultType = hasAnyResultType(results, asList(OATS, ADJ));
 
         assertThat(hasAnyResultType, is(false));
     }
@@ -727,7 +733,7 @@ class OffenceUtilTest {
     void shouldReturnTrueWhenSingleResultMatchesAnyOfTheSpecifiedTypes() {
         final Results result = results().withResultIdentifier(ADJ.id).build();
 
-        boolean hasAnyResultType = OffenceUtil.hasAnyResultType(result, asList(OATS, ADJ));
+        boolean hasAnyResultType = hasAnyResultType(result, asList(OATS, ADJ));
 
         assertThat(hasAnyResultType, is(true));
     }
@@ -736,7 +742,7 @@ class OffenceUtilTest {
     void shouldReturnFalseWhenSingleResultDoesNotMatchAnyOfTheSpecifiedTypes() {
         final Results result = results().withResultIdentifier(TEXT.id).build();
 
-        boolean hasAnyResultType = OffenceUtil.hasAnyResultType(result, asList(OATS, ADJ));
+        boolean hasAnyResultType = hasAnyResultType(result, asList(OATS, ADJ));
 
         assertThat(hasAnyResultType, is(false));
     }
@@ -748,7 +754,7 @@ class OffenceUtilTest {
                 results().withD20(true).build()
         );
 
-        boolean hasD20 = OffenceUtil.hasD20Endorsement(results);
+        boolean hasD20 = hasD20Endorsement(results);
 
         assertThat(hasD20, is(true));
     }
@@ -760,7 +766,7 @@ class OffenceUtilTest {
                 results().withD20(false).build()
         );
 
-        boolean hasD20 = OffenceUtil.hasD20Endorsement(results);
+        boolean hasD20 = hasD20Endorsement(results);
 
         assertThat(hasD20, is(false));
     }
@@ -772,7 +778,7 @@ class OffenceUtilTest {
                 results().build()
         );
 
-        boolean hasPointsDisqCode = OffenceUtil.hasPointsDisqualificationCode(results);
+        boolean hasPointsDisqCode = hasPointsDisqualificationCode(results);
 
         assertThat(hasPointsDisqCode, is(true));
     }
@@ -784,28 +790,28 @@ class OffenceUtilTest {
                 results().build()
         );
 
-        boolean hasPointsDisqCode = OffenceUtil.hasPointsDisqualificationCode(results);
+        boolean hasPointsDisqCode = hasPointsDisqualificationCode(results);
 
         assertThat(hasPointsDisqCode, is(false));
     }
 
     @Test
     void shouldHandleNullCourtApplicationsInHasAppealResult() {
-        boolean hasAppealResult = OffenceUtil.hasAppealResult(null);
+        boolean hasAppealResult = hasAppealResult(null);
 
         assertThat(hasAppealResult, is(false));
     }
 
     @Test
     void shouldHandleEmptyCourtApplicationsInHasAppealResult() {
-        boolean hasAppealResult = OffenceUtil.hasAppealResult(emptyList());
+        boolean hasAppealResult = hasAppealResult(emptyList());
 
         assertThat(hasAppealResult, is(false));
     }
 
     @Test
     void shouldHandleNullOffenceInOffenceHasResult() {
-        boolean hasResult = OffenceUtil.offenceHasResult(null, SV);
+        boolean hasResult = hasResultType((DefendantCaseOffences) null, SV);
 
         assertThat(hasResult, is(false));
     }
@@ -814,7 +820,7 @@ class OffenceUtilTest {
     void shouldHandleOffenceWithNullResultsInOffenceHasResult() {
         final DefendantCaseOffences offence = DefendantCaseOffences.defendantCaseOffences().build();
 
-        boolean hasResult = OffenceUtil.offenceHasResult(offence, SV);
+        boolean hasResult = hasResultType(offence, SV);
 
         assertThat(hasResult, is(false));
     }

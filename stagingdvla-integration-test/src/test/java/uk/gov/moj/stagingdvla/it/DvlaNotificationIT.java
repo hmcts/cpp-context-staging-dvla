@@ -85,6 +85,7 @@ public class DvlaNotificationIT extends AbstractIntegrationTest {
         stubFeaturesFor(STAGINGDVLA_CONTEXT, features);
     }
 
+    @Override
     @BeforeEach
     public void setup() {
         hearingId = randomUUID().toString();
@@ -267,7 +268,7 @@ public class DvlaNotificationIT extends AbstractIntegrationTest {
     }
 
     @Test
-    public void shouldGenerateAndUpdateD20ForSJPCase() throws IOException {
+    void shouldGenerateAndUpdateD20ForSJPCase() throws IOException {
         // Generate D20 for SJP case
         final String body1 = getPayload(DRIVER_NOTIFICATION_COMMAND_PAYLOAD_SJP_GENERATE_D20);
         final Response writeResponse1 = postCommandWithUserId(getWriteUrl("/driver-notification"),
