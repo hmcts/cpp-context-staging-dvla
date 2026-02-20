@@ -1,0 +1,214 @@
+{
+  "masterDefendantId": "%DEFENDANT_ID%",
+  "orderingCourt": {
+    "address": {
+      "address1": "176A Lavender Hill",
+      "address2": "London",
+      "postcode": "SW11 1JU"
+    },
+    "code": "B01LY00",
+    "courtHearingLocation": "B01LY02",
+    "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+    "lja": {
+      "ljaCode": "2577",
+      "ljaName": "South West London Magistrates' Court"
+    },
+    "name": "Lavender Hill Magistrates' Court",
+    "roomId": "b4562684-9209-3ec4-a544-7f80dabd94d8",
+    "roomName": "Courtroom 02"
+  },
+  "nowContent": {
+    "orderDate": "2023-05-16",
+    "defendant": {
+      "dateOfBirth": "2000-09-09",
+      "gender": "MALE",
+      "driverNumber": "ABCDE00010BCFAA",
+      "title": "MR",
+      "firstName": "Liana",
+      "middleName": "Jasmine Jasmine",
+      "lastName": "Powlowski",
+      "name": "Liana Jasmine Jasmine Powlowski",
+      "address": {
+        "line1": "56saon",
+        "line2": "56Police House",
+        "line3": "StreetDescription1",
+        "line4": "Locality1",
+        "line5": "Fayborough",
+        "postCode": "TW14 9XJ"
+      }
+    },
+    "caseApplicationReferences": [
+      "JW29150867"
+    ],
+    "cases": [
+      {
+        "reference": "JW29150867",
+        "caseId": "a0738dff-4498-4b4b-95e3-189b1b7e91a2",
+        "defendantCaseOffences": [
+          {
+            "allocationDecision": "Summary-only offence",
+            "civilOffence": false,
+            "code": "RA88001",
+            "convictingCourtCode": "2577",
+            "convictionDate": "2026-02-06",
+            "convictionStatus": "Convicted",
+            "dvlaCode": "IN10",
+            "endorsableFlag": true,
+            "modeOfTrial": "Summary",
+            "plea": "GUILTY",
+            "results": [
+              {
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "Costs to Crown Prosecution Service",
+                "prompts": [
+                  {
+                    "label": "Amount of costs",
+                    "promptIdentifier": "f63b0bb5-7d93-4dab-bc3d-b4bd27152871",
+                    "promptReference": "AOC",
+                    "value": "£85.00"
+                  }
+                ],
+                "publishedForNows": false,
+                "resultDefinitionGroup": "Imposition",
+                "resultIdentifier": "f5d492b8-a09b-4f70-9ceb-aa06c306a7dc"
+              }
+            ],
+            "startDate": "2025-12-08",
+            "title": "Use a motor vehicle on a road / public place without third party insurance",
+            "wording": "Use a motor vehicle on a road / public place without third party insurance"
+          },
+          {
+            "allocationDecision": "Summary-only offence",
+            "civilOffence": false,
+            "code": "RA88002",
+            "convictingCourtCode": "2577",
+            "convictionDate": "2026-02-06",
+            "convictionStatus": "Convicted",
+            "dvlaCode": "IN20",
+            "endorsableFlag": true,
+            "modeOfTrial": "Summary",
+            "plea": "GUILTY",
+            "results": [
+              {
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "Compensation",
+                "prompts": [
+                  {
+                    "label": "Amount of compensation",
+                    "promptIdentifier": "26985e5b-fe1f-4d7d-a21a-57207c5966e7",
+                    "promptReference": "AOCOM",
+                    "value": "£100.00"
+                  },
+                  {
+                    "label": "Major creditor organisation name",
+                    "promptIdentifier": "af921cf4-06e7-4f6b-a4ea-dcb58aab0dbe",
+                    "promptReference": "cREDNAMEOrganisationName",
+                    "value": "Driver and Vehicle Licensing Agency"
+                  },
+                  {
+                    "label": "Major creditor address line 1",
+                    "promptIdentifier": "af921cf4-06e7-4f6b-a4ea-dcb58aab0dbe",
+                    "promptReference": "cREDNAMEAddress1",
+                    "value": "Finance Operations"
+                  },
+                  {
+                    "label": "Major creditor address line 2",
+                    "promptIdentifier": "af921cf4-06e7-4f6b-a4ea-dcb58aab0dbe",
+                    "promptReference": "cREDNAMEAddress2",
+                    "value": "C3 East"
+                  },
+                  {
+                    "label": "Major creditor address line 3",
+                    "promptIdentifier": "af921cf4-06e7-4f6b-a4ea-dcb58aab0dbe",
+                    "promptReference": "cREDNAMEAddress3",
+                    "value": "DVLA"
+                  },
+                  {
+                    "label": "Major creditor address line 4",
+                    "promptIdentifier": "af921cf4-06e7-4f6b-a4ea-dcb58aab0dbe",
+                    "promptReference": "cREDNAMEAddress4",
+                    "value": "Longview Road"
+                  },
+                  {
+                    "label": "Major creditor address line 5",
+                    "promptIdentifier": "af921cf4-06e7-4f6b-a4ea-dcb58aab0dbe",
+                    "promptReference": "cREDNAMEAddress5",
+                    "value": "Swansea"
+                  },
+                  {
+                    "label": "Major creditor post code",
+                    "promptIdentifier": "af921cf4-06e7-4f6b-a4ea-dcb58aab0dbe",
+                    "promptReference": "cREDNAMEPostCode",
+                    "value": "SA6 7JL"
+                  }
+                ],
+                "publishedForNows": false,
+                "resultDefinitionGroup": "Imposition",
+                "resultIdentifier": "ae89b99c-e0e3-47b5-b218-24d4fca3ca53"
+              }
+            ],
+            "startDate": "2025-12-08",
+            "title": "Drive a motor vehicle otherwise than in accordance with a licence - endorsable offence",
+            "wording": "Drive a motor vehicle otherwise than in accordance with a licence - endorsable offence"
+          },
+          {
+            "allocationDecision": "Summary-only offence",
+            "civilOffence": false,
+            "code": "RA88002",
+            "convictingCourtCode": "2577",
+            "convictionDate": "2026-02-06",
+            "convictionStatus": "Convicted",
+            "dvlaCode": "IN30",
+            "endorsableFlag": true,
+            "modeOfTrial": "Summary",
+            "plea": "GUILTY",
+            "results": [
+              {
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "Surcharge",
+                "prompts": [
+                  {
+                    "label": "Amount of surcharge",
+                    "promptIdentifier": "629a971e-9d7a-4526-838d-0a4cb922b5cb",
+                    "promptReference": "AOS",
+                    "value": "£130.00"
+                  }
+                ],
+                "publishedForNows": false,
+                "resultIdentifier": "e866cd11-6073-4fdf-a229-51c9d694e1d0"
+              }
+            ],
+            "startDate": "2025-12-08",
+            "title": "Drive motor vehicle with a proportion of a specified controlled drug above the specified limit",
+            "wording": "Drive motor vehicle with a proportion of a specified controlled drug above the specified limit"
+          }
+        ]
+      }
+    ],
+    "courtApplications": [
+      {
+        "applicationReceivedDate": "2026-02-05",
+        "applicationReference": "SG821225728",
+        "applicationStatus": "FINALISED",
+        "applicationType": "Appeal against conviction and sentence by a Magistrates' Court to the Crown Court",
+        "applicationTypeId": "abc05494-05d7-4289-b4bc-a92726257a4b",
+        "id": "922eb0f2-4b94-448b-8c0c-9deb06b82484",
+        "results": [
+          {
+            "d20": false,
+            "label": "Appeal against sentence allowed",
+            "prompts": [],
+            "publishedForNows": false,
+            "resultIdentifier": "d861586a-df88-440d-98d4-63cc2a680ae1",
+            "resultWording": ""
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": true,
+  "orderingHearingId": "93bc6155-952f-4909-a36a-b9f277da3b85"
+}
