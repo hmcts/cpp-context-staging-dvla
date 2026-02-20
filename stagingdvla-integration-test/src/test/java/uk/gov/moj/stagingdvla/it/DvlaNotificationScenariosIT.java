@@ -1,6 +1,9 @@
 package uk.gov.moj.stagingdvla.it;
 
 import static java.util.Arrays.asList;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static uk.gov.moj.stagingdvla.it.DriverNotifiedEventAssertion.EMPTY_STRING;
 import static uk.gov.moj.stagingdvla.stubs.DVLANotificationStub.verifyDVLANotificationCommandInvoked;
 import static uk.gov.moj.stagingdvla.stubs.DocumentGeneratorStub.verifyGenerateDocumentStubCommandInvoked;
@@ -1215,7 +1218,7 @@ public class DvlaNotificationScenariosIT extends AbstractIntegrationTest {
      */
 
     @Test
-    public void appealAmendReshareScenario1cAppealAgainstSentenceAllowed() throws IOException {
+    void appealAmendReshareScenario1cAppealAgainstSentenceAllowed() throws IOException {
         List<DriverNotified> driverNotifiedList = sendAndVerifyEvent("appealAmendReshare/scenario1c/command1.json",  1);
 
         DriverNotifiedEventAssertion.with(driverNotifiedList.get(0))
@@ -1267,7 +1270,7 @@ public class DvlaNotificationScenariosIT extends AbstractIntegrationTest {
      * @throws IOException
      */
     @Test
-    public void appealAmendReshareScenario2() throws IOException {
+    void appealAmendReshareScenario2() throws IOException {
         List<DriverNotified> driverNotifiedList = sendAndVerifyEvent("appealAmendReshare/scenario2/command1.json",  1);
 
         DriverNotifiedEventAssertion.with(driverNotifiedList.get(0))
@@ -1326,7 +1329,7 @@ public class DvlaNotificationScenariosIT extends AbstractIntegrationTest {
      * @throws IOException
      */
     @Test
-    public void appealAmendReshareScenario2a() throws IOException {
+    void appealAmendReshareScenario2a() throws IOException {
         List<DriverNotified> driverNotifiedList = sendAndVerifyEvent("appealAmendReshare/scenario2a/command1.json",  1);
 
         DriverNotifiedEventAssertion.with(driverNotifiedList.get(0))
@@ -2413,7 +2416,7 @@ public class DvlaNotificationScenariosIT extends AbstractIntegrationTest {
         verifyGenerateDocumentStubCommandInvoked(driverNotifiedList);
 
         driverNotifiedList = sendAndVerifyEvent("applicationAmendReshare/scenario4g/command2.json",  1);
-        verify(driverNotifiedList.get(0), "JW33206369", NOT_NULL_VALUE, NULL_VALUE, null, NOT_NULL_VALUE, asList("TS10"));
+        verify(driverNotifiedList.get(0), "JW33206369", is(notNullValue()), is(nullValue()), null, is(notNullValue()), asList("TS10"));
         DriverNotifiedEventAssertion.with(driverNotifiedList.get(0))
                 .hasCaseReference("JW33206369")
                 .hasNoUpdatedEndorsements()
@@ -2426,7 +2429,7 @@ public class DvlaNotificationScenariosIT extends AbstractIntegrationTest {
         verifyGenerateDocumentStubCommandInvoked(driverNotifiedList);
 
         driverNotifiedList = sendAndVerifyEvent("applicationAmendReshare/scenario4g/command3.json",  1);
-        verify(driverNotifiedList.get(0), "JW33206369", NOT_NULL_VALUE, NULL_VALUE, null, NULL_VALUE, null);
+        verify(driverNotifiedList.get(0), "JW33206369", is(notNullValue()), is(nullValue()), null, is(nullValue()), null);
         DriverNotifiedEventAssertion.with(driverNotifiedList.get(0))
                 .hasCaseReference("JW33206369")
                 .hasNoUpdatedEndorsements()

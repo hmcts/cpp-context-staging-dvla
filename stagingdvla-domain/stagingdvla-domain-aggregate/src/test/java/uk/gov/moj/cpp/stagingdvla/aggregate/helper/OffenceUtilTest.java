@@ -397,10 +397,6 @@ class OffenceUtilTest {
                         .build()
         );
 
-        boolean isCaseReopen = hasAnyD20Removed(null, 
-                Cases.cases().withReference(caseReference).build(), 
-                courtApplications);
-
         assertThat(courtApplications.get(0).getApplicationTypeId(), is(APPRO.id));
     }
 

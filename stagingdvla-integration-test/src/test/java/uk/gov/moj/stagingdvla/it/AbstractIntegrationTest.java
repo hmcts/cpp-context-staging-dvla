@@ -9,7 +9,6 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.nullValue;
 import static uk.gov.justice.services.test.utils.core.http.RequestParamsBuilder.requestParams;
 import static uk.gov.justice.services.test.utils.core.http.RestPoller.poll;
 import static uk.gov.justice.services.test.utils.core.matchers.ResponseStatusMatcher.status;
@@ -69,8 +68,6 @@ public abstract class AbstractIntegrationTest {
     private static final String PORT = "8080";
     private static final String BASE_URI = SCHEME + "://" + HOST + ":" + PORT;
     private static final String WRITE_BASE_URL = "/stagingdvla-service/command/api/rest/stagingdvla";
-    final Matcher NOT_NULL_VALUE = notNullValue();
-    final Matcher NULL_VALUE = nullValue();
 
     private static final MessageConsumer consumerForDriverNotified = privateEvents.createPrivateConsumer("stagingdvla.event.driver-notified");
     private static final ObjectMapper objectMapper = new ObjectMapperProducer().objectMapper();
@@ -78,8 +75,8 @@ public abstract class AbstractIntegrationTest {
     private static final ObjectToJsonObjectConverter objectToJsonObjectConverter = new ObjectToJsonObjectConverter(objectMapper);
 
     protected MultivaluedMap<String, Object> headers = new MultivaluedHashMap<>();
-    private static String USER_GROUP = UUID.randomUUID().toString();
-    private static UUID USER_ID = UUID.randomUUID();
+    private static final String USER_GROUP = UUID.randomUUID().toString();
+    private static final UUID USER_ID = UUID.randomUUID();
     private static String hearingId;
     private static String defendantId;
 
@@ -114,7 +111,7 @@ public abstract class AbstractIntegrationTest {
         final ImmutableMap<String, Boolean> features = of("driverOut", true);
         stubFeaturesFor(STAGINGDVLA_CONTEXT, features);
 
-        LOGGER.info("Running scenario with Defendant Id: " + defendantId);
+        LOGGER.info("Running scenario with Defendant Id: {}", defendantId);
     }
 
     public static void waitForStubToBeReady(final String resource, final String mediaType) {
@@ -176,7 +173,7 @@ public abstract class AbstractIntegrationTest {
                 final Matcher<Object> removedMatcher,
                 final List<String> removedEndorsements) {
 
-        assertThat(driverNotified.getCases(), NOT_NULL_VALUE);
+        assertThat(driverNotified.getCases(), is(notNullValue()));
         assertThat(driverNotified.getCases().size(), equalTo(1));
         assertThat(driverNotified.getCases().get(0).getReference(), equalTo(expectedCaseReference));
 
