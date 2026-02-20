@@ -5,12 +5,14 @@ import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 
 import uk.gov.justice.cpp.stagingdvla.event.DefendantCaseOffences;
 import uk.gov.justice.cpp.stagingdvla.event.DriverNotified;
+import uk.gov.justice.cpp.stagingdvla.event.NotificationType;
 
 import java.util.Collection;
 import java.util.List;
@@ -46,6 +48,11 @@ public class DriverNotifiedEventAssertion {
         return this;
     }
 
+    public DriverNotifiedEventAssertion hasNotificationType(NotificationType notificationType) {
+        assertThat(notifiedEvent.getNotificationType(), is(equalTo(notificationType)));
+        return this;
+    }
+
     public DriverNotifiedEventAssertion hasUpdatedEndorsements() {
         assertThat(notifiedEvent.getUpdatedEndorsements(), not(empty()));
         return this;
@@ -78,6 +85,10 @@ public class DriverNotifiedEventAssertion {
 
     public DriverNotifiedEventAssertion hasPenaltyPoints(String penaltyPoints) {
         return hasPenaltyPoints(1, penaltyPoints);
+    }
+
+    public DriverNotifiedEventAssertion hasSentenceDate(String sentenceDate) {
+        return hasSentenceDate(1, sentenceDate);
     }
 
     public DriverNotifiedEventAssertion hasDVLACode(String dvlaCode) {
@@ -121,6 +132,10 @@ public class DriverNotifiedEventAssertion {
 
     public DriverNotifiedEventAssertion hasPenaltyPoints(int offenceNumber, String penaltyPoints) {
         return validate(getOffence(offenceNumber), DefendantCaseOffences::getPenaltyPoints, penaltyPoints);
+    }
+
+    public DriverNotifiedEventAssertion hasSentenceDate(int offenceNumber, String sentenceDate) {
+        return validate(getOffence(offenceNumber), DefendantCaseOffences::getSentenceDate, sentenceDate);
     }
 
     public DriverNotifiedEventAssertion hasDVLACode(int offenceNumber, String dvlaCode) {
@@ -173,11 +188,6 @@ public class DriverNotifiedEventAssertion {
 
     private <T, R> DriverNotifiedEventAssertion validate(T input, Function<T, R> getFunction, R expectedValue) {
         assertThat(getFunction.apply(input), equalTo(expectedValue));
-        return this;
-    }
-
-    private DriverNotifiedEventAssertion isEmpty(Supplier<Collection<?>> getValues) {
-        assertThat(getValues.get(), empty());
         return this;
     }
 

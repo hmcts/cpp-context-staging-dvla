@@ -1,97 +1,18 @@
 package uk.gov.moj.stagingdvla.it;
 
-import static com.google.common.collect.ImmutableMap.of;
 import static java.util.Arrays.asList;
-import static java.util.Objects.isNull;
-import static java.util.UUID.randomUUID;
-import static org.apache.http.HttpStatus.SC_ACCEPTED;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.nullValue;
-import static uk.gov.justice.services.test.utils.core.reflection.ReflectionUtil.setField;
-import static uk.gov.moj.cpp.platform.test.feature.toggle.FeatureStubber.stubFeaturesFor;
 import static uk.gov.moj.stagingdvla.it.DriverNotifiedEventAssertion.EMPTY_STRING;
 import static uk.gov.moj.stagingdvla.stubs.DVLANotificationStub.verifyDVLANotificationCommandInvoked;
-import static uk.gov.moj.stagingdvla.stubs.DocumentGeneratorStub.stubDocumentCreate;
-import static uk.gov.moj.stagingdvla.stubs.DocumentGeneratorStub.stubGenerateDocument;
 import static uk.gov.moj.stagingdvla.stubs.DocumentGeneratorStub.verifyGenerateDocumentStubCommandInvoked;
-import static uk.gov.moj.stagingdvla.stubs.ProgressionStub.stubProgressionAddCourtDocument;
-import static uk.gov.moj.stagingdvla.util.QueueUtil.clearMessages;
-import static uk.gov.moj.stagingdvla.util.QueueUtil.privateEvents;
-import static uk.gov.moj.stagingdvla.util.QueueUtil.retrieveMessageAsJsonObject;
-import static uk.gov.moj.stagingdvla.util.RestHelper.postCommandWithUserId;
-import static uk.gov.moj.stagingdvla.util.WireMockStubUtils.setupAsAuthorisedUser;
 
 import uk.gov.justice.cpp.stagingdvla.event.DriverNotified;
-import uk.gov.justice.services.common.converter.JsonObjectToObjectConverter;
-import uk.gov.justice.services.common.converter.ObjectToJsonObjectConverter;
-import uk.gov.justice.services.common.converter.jackson.ObjectMapperProducer;
-import uk.gov.moj.stagingdvla.util.FileUtil;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-
-import javax.jms.MessageConsumer;
-import javax.json.JsonObject;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.collect.ImmutableMap;
-import io.restassured.response.Response;
-import org.hamcrest.Matcher;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-
+@SuppressWarnings("java:S2699")
 public class DvlaNotificationScenariosIT extends AbstractIntegrationTest {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(DvlaNotificationScenariosIT.class.getName());
-
-    public static final String USER_GROUP = UUID.randomUUID().toString();
-    private String hearingId;
-    private String defendantId;
-
-    private final ObjectMapper objectMapper = new ObjectMapperProducer().objectMapper();
-    private final JsonObjectToObjectConverter jsonToObjectConverter = new JsonObjectToObjectConverter(objectMapper);
-    private final ObjectToJsonObjectConverter objectToJsonObjectConverter = new ObjectToJsonObjectConverter(objectMapper);
-    private final MessageConsumer consumerForDriverNotified = privateEvents.createPrivateConsumer("stagingdvla.event.driver-notified");
-    private final String DRIVER_NOTIFICATION_MEDIA_TYPE = "application/vnd.stagingdvla.command.driver-notification+json";
-
-    private static final String STAGINGDVLA_CONTEXT = "stagingdvla";
-
-    private final Matcher NOT_NULL_VALUE = notNullValue();
-    private final Matcher NULL_VALUE = nullValue();
-
-
-    @BeforeAll
-    public static void init() {
-        setupAsAuthorisedUser(UUID.fromString(USER_GROUP), "stub-data/usersgroups.get-specific-groups-by-user.json");
-        stubDocumentCreate("Dummy");
-        stubGenerateDocument("Dummy");
-        stubProgressionAddCourtDocument();
-    }
-
-    @BeforeEach
-    public void setup() {
-        clearMessages(consumerForDriverNotified);
-
-        defendantId = randomUUID().toString();
-        setField(this.objectToJsonObjectConverter, "mapper", new ObjectMapperProducer().objectMapper());
-        setField(this.jsonToObjectConverter, "objectMapper", new ObjectMapperProducer().objectMapper());
-
-        final ImmutableMap<String, Boolean> features = of("driverOut", true);
-        stubFeaturesFor(STAGINGDVLA_CONTEXT, features);
-
-        LOGGER.info("Running scenario with Defendant Id: " + defendantId);
-    }
-
 
     // D20 Simple scenarios - start
 
@@ -1267,11 +1188,11 @@ public class DvlaNotificationScenariosIT extends AbstractIntegrationTest {
                 .hasOffences(1)
                 .hasOffenceCode("RT88971")
                 .hasDVLACode("TS10")
-                .hasDisqualificationPeriod(EMPTY_STRING)
+                .hasDisqualificationPeriod("021220")
                 .hasDrugLevel("500")
                 .hasPenaltyPoints("3")
                 .hasAmountOfFine(EMPTY_STRING)
-                .hasResults(3)
+                .hasResults(4)
                 .hasWording("Has a violent past and fear that he will commit further offences and interfere with witnesse");
 
         verifyDVLANotificationCommandInvoked(driverNotifiedList);
@@ -1374,11 +1295,11 @@ public class DvlaNotificationScenariosIT extends AbstractIntegrationTest {
                 .hasUpdatedEndorsementContains("TS10")
                 .hasNoRemovedEndorsements()
                 .hasCourtApplications(1)
-                .hasOffences(2)
+                .hasOffences(1)
                 .hasOffenceCode("RT88971")
                 .hasDVLACode(1, "TS10")
                 .hasDrugLevel("500")
-                .hasPenaltyPoints("3")
+                .hasPenaltyPoints("9")
                 .hasAmountOfFine(EMPTY_STRING)
                 .hasResults(3)
                 .hasWording("Has a violent past and fear that he will commit further offences and interfere with witnesse");
@@ -1442,7 +1363,7 @@ public class DvlaNotificationScenariosIT extends AbstractIntegrationTest {
                 .hasDrugLevel("500")
                 .hasPenaltyPoints("3")
                 .hasAmountOfFine(EMPTY_STRING)
-                .hasResults(4)
+                .hasResults(5)
                 .hasWording("Has a violent past and fear that he will commit further offences and interfere with witnesse");
 
         verifyDVLANotificationCommandInvoked(driverNotifiedList);
@@ -3539,7 +3460,7 @@ public class DvlaNotificationScenariosIT extends AbstractIntegrationTest {
                 .hasResults(3)
                 .hasOffenceCode(2, "RT88971")
                 .hasDisqualificationPeriod(2, "000200")
-                .hasDVLACode(2, "TS10")
+                .hasDVLACode(2, "TS20")
                 .hasDrugLevel(2, "500")
                 .hasPenaltyPoints(2, EMPTY_STRING)
                 .hasConvictingCourt(2, "2577")
@@ -3560,12 +3481,13 @@ public class DvlaNotificationScenariosIT extends AbstractIntegrationTest {
                 .hasOffences(2)
                 .hasOffenceCode("RT88971")
                 .hasDVLACode("TS10")
-                .hasDisqualificationPeriod("000300")
+                .hasDisqualificationPeriod("000100")
                 .hasDrugLevel("500")
                 .hasPenaltyPoints(EMPTY_STRING)
                 .hasConvictingCourt("2577")
                 .hasConvictionDate("2023-10-16")
-                .hasAmountOfFine("£250.00")
+                .hasAmountOfFine(1, "£200.00")
+                .hasAmountOfFine(2, "£250.00")
                 .hasWording("Has a violent past and fear that he will commit further offences and interfere with witnesse")
                 .hasResults(4)
                 .hasPreviousCase();
@@ -3626,71 +3548,5 @@ public class DvlaNotificationScenariosIT extends AbstractIntegrationTest {
         verifyGenerateDocumentStubCommandInvoked();
 
     }
-    // D20 Scenarios for non-endorsable - End
-    private List<DriverNotified> sendAndVerifyEvent(final String filePath, final int expectedEventCount) throws IOException {
-
-        final String body = getPayload(filePath);
-        final Response writeResponse = postCommandWithUserId(getWriteUrl("/driver-notification"),
-                DRIVER_NOTIFICATION_MEDIA_TYPE, body, USER_GROUP);
-
-        assertThat(writeResponse.getStatusCode(), equalTo(SC_ACCEPTED));
-
-        final List<DriverNotified> driverNotifiedList = new ArrayList<>();
-
-        if (expectedEventCount > 0) {
-            for (int i = 0; i < expectedEventCount; i++) {
-                Optional<JsonObject> jsonObject = retrieveMessageAsJsonObject(consumerForDriverNotified);
-
-                if (jsonObject.isPresent()) {
-                    driverNotifiedList.add(jsonToObjectConverter.convert(jsonObject.get(), DriverNotified.class));
-                }
-            }
-
-            assertThat(driverNotifiedList.size(), equalTo(expectedEventCount));
-
-            return driverNotifiedList;
-        } else {
-            Optional<JsonObject> jsonObject = retrieveMessageAsJsonObject(consumerForDriverNotified);
-            assertThat(jsonObject.isEmpty(), is(true));
-            return driverNotifiedList;
-        }
-    }
-
-    private void verify(final DriverNotified driverNotified,
-                        final String expectedCaseReference,
-                        final Matcher<Object> driverNotifiedMatcher,
-                        final Matcher<Object> updatedMatcher,
-                        final List<String> updatedEndorsements,
-                        final Matcher<Object> removedMatcher,
-                        final List<String> removedEndorsements) {
-
-        assertThat(driverNotified.getCases(), NOT_NULL_VALUE);
-        assertThat(driverNotified.getCases().size(), equalTo(1));
-        assertThat(driverNotified.getCases().get(0).getReference(), equalTo(expectedCaseReference));
-
-        assertThat(driverNotified, is(driverNotifiedMatcher));
-        assertThat(driverNotified.getUpdatedEndorsements(), is(updatedMatcher));
-        assertThat(driverNotified.getRemovedEndorsements(), is(removedMatcher));
-
-        if (!isNull(driverNotified.getUpdatedEndorsements())) {
-            assertThat(driverNotified.getUpdatedEndorsements(), is(updatedEndorsements));
-        }
-
-        if (!isNull(driverNotified.getRemovedEndorsements())) {
-            assertThat(driverNotified.getRemovedEndorsements(), is(removedEndorsements));
-        }
-
-    }
-
-    private String getPayload(String fileName) {
-        hearingId = randomUUID().toString();
-
-        String body = FileUtil.getPayload(fileName);
-        body = body.replaceAll("%HEARING_ID%", hearingId)
-                .replaceAll("%DEFENDANT_ID%", defendantId);
-
-        return body;
-    }
-
 }
 
