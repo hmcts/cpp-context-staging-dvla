@@ -10,7 +10,7 @@
     "courtHearingLocation": "B01LY02",
     "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
     "lja": {
-      "ljaCode": "2577",
+      "ljaCode": "2589",
       "ljaName": "South West London Magistrates' Court"
     },
     "name": "Lavender Hill Magistrates' Court",
@@ -18,7 +18,7 @@
     "roomName": "Courtroom 02"
   },
   "nowContent": {
-    "orderDate": "2023-05-16",
+    "orderDate": "2026-10-17",
     "defendant": {
       "dateOfBirth": "2000-09-09",
       "gender": "MALE",
@@ -50,7 +50,7 @@
             "civilOffence": false,
             "code": "RA88001",
             "convictingCourtCode": "2577",
-            "convictionDate": "2026-02-06",
+            "convictionDate": "2026-06-06",
             "convictionStatus": "Convicted",
             "dvlaCode": "IN10",
             "endorsableFlag": true,
@@ -129,7 +129,7 @@
             "civilOffence": false,
             "code": "RA88002",
             "convictingCourtCode": "2577",
-            "convictionDate": "2026-02-06",
+            "convictionDate": "2026-06-06",
             "convictionStatus": "Convicted",
             "dvlaCode": "IN20",
             "endorsableFlag": true,
@@ -163,7 +163,7 @@
             "civilOffence": false,
             "code": "RA88003",
             "convictingCourtCode": "2577",
-            "convictionDate": "2026-02-06",
+            "convictionDate": "2026-06-06",
             "convictionStatus": "Convicted",
             "dvlaCode": "IN30",
             "endorsableFlag": true,

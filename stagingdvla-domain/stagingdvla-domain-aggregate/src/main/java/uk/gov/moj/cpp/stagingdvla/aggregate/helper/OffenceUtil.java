@@ -336,32 +336,32 @@ public class OffenceUtil {
         return EMPTY;
     }
 
-    public static String getSentencingCourtCode(final DefendantCaseOffences offence, final List<CourtApplications> courtApplications, final DefendantCaseOffences previousOffence, final String amendmentDate, final String orderDate, final String orderingCourtCode) {
+    public static String getSentencingCourtCode(final DefendantCaseOffences offence, final DefendantCaseOffences previousOffence, final String amendmentDate, final String orderDate, final String orderingCourtCode) {
         if (isNotEmpty(amendmentDate) && hasResultType(offence, DDRI)) {
             return null;
         } else if (nonNull(previousOffence) && isNotEmpty(previousOffence.getSentencingCourtCode())) {
             return previousOffence.getSentencingCourtCode();
-        } else if (nonNull(offence) && isSentenced(offence, courtApplications, orderDate)) {
+        } else if (nonNull(offence) && isSentenced(offence, orderDate)) {
             return orderingCourtCode;
         } else {
             return null;
         }
     }
 
-    public static String getSentenceDate(final DefendantCaseOffences offence, final List<CourtApplications> courtApplications, final DefendantCaseOffences previousOffence, final String amendmentDate, final String orderDate) {
+    public static String getSentenceDate(final DefendantCaseOffences offence, final DefendantCaseOffences previousOffence, final String amendmentDate, final String orderDate) {
         if (isNotEmpty(amendmentDate) && hasResultType(offence, DDRI)) {
             return null;
         } else if (nonNull(previousOffence) && isNotEmpty(previousOffence.getSentenceDate())) {
             return previousOffence.getSentenceDate();
-        } else if (isSentenced(offence, courtApplications, orderDate)) {
+        } else if (isSentenced(offence, orderDate)) {
             return orderDate;
         } else {
             return null;
         }
     }
 
-    private static boolean isSentenced(final DefendantCaseOffences offence, final List<CourtApplications> courtApplications, final String orderDate) {
-        if (hasAppealResult(courtApplications) || hasResultType(offence, DDRI)) {
+    private static boolean isSentenced(final DefendantCaseOffences offence, final String orderDate) {
+        if (hasResultType(offence, DDRI)) {
             return false;
         } else if (nonNull(offence) && isNotEmpty(orderDate) && isNotEmpty(offence.getConvictionDate())) {
             return !orderDate.equalsIgnoreCase(offence.getConvictionDate());

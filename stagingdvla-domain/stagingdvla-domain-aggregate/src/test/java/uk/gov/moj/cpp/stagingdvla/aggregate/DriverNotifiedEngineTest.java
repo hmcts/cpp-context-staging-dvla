@@ -1445,6 +1445,23 @@ public class DriverNotifiedEngineTest {
     }
 
     @Test
+    public void shouldTransformDriverNotified_WhenPreviousD20Exists_CurrentNoResults_WhenAACA_AndSentenceDateNotChanging() {
+        DriverNotified previous = getPreviousDriverNotified(1, EMPTY, asList(Boolean.TRUE, Boolean.TRUE, Boolean.TRUE, Boolean.TRUE),
+                asList(SS30), asList(OFF1), asList(OFF1), true, previousConvictionDate, true, null, 1, true, asList(DDPL.id), previousOrderDate, null);
+        List<CourtApplications> courtApplications = getCourtApplications(asList(APP1), prefix, false, null, null, SS30, 1, asList(AACA.id));
+        List<Cases> cases = getCasesWithMultipleOffences(1, EMPTY, asList(Boolean.FALSE),
+                asList(SS30), asList(OFF1), asList(OFF1), false, null, null, null, 1, false, null);
+
+        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+        DriverNotified transformed = transformDriverNotified(previousByCase, orderDate,
+                crownCourt, NORMAL_FORMATTED_DATE, defendant, cases, hearingId, courtApplications).get(0);
+
+        assertThat(transformed.getOrderDate(), is(equalTo(orderDate)));
+        assertThat(transformed.getCases().get(0).getDefendantCaseOffences().get(0).getSentenceDate(), is(equalTo("SentenceDate")));
+        assertThat(transformed.getCases().get(0).getDefendantCaseOffences().get(0).getSentencingCourtCode(), is(equalTo("SentencingCourtCode")));
+    }
+
+    @Test
     public void shouldNotTransformDriverNotified_WhenPreviousD20ExistsAndAdjourned_CurrentNoEndorsements() {
         DriverNotified previous = getPreviousDriverNotified(1, EMPTY, asList(Boolean.TRUE, Boolean.TRUE, Boolean.TRUE, Boolean.TRUE),
                 asList(SS30), asList(OFF1), asList(OFF1), true, previousConvictionDate, true, null, 1, false, asList(DDPL.id), previousOrderDate, NORMAL_FORMATTED_DATE);
