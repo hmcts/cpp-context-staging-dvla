@@ -186,7 +186,7 @@ public class DriverNotifiedEngine {
             if (previousHasOffence(previousDriverNotified)) {
                 builder.withPrevious(getPrevious(previousDriverNotified));
                 builder.withNotificationWasPreviouslySent(true);
-                boolean sendNotification = setEndorsementsAndNotificationType(builder, amendmentDate, orderDate, previousDriverNotified, cases, courtApplications, nonEndorsableOffenceCodes);
+                boolean sendNotification = setEndorsementsAndNotificationType(builder, amendmentDate, orderDate, orderingCourtCode, previousDriverNotified, cases, courtApplications, nonEndorsableOffenceCodes);
                 if (!sendNotification) {
                     return null;
                 }
@@ -293,8 +293,8 @@ public class DriverNotifiedEngine {
                 .withSuspendedSentence(getSuspendedSentence(currentOffence.getResults()))
                 .withDttpDtetp(getDttpDtetp(currentOffence.getResults()))
                 .withInterimImposedFinalSentence(getInterimImposedFinalSentence(currentOffence.getResults()))
-                .withSentencingCourtCode(getSentencingCourtCode(currentOffence, courtApplications, previousOffence, amendmentDate, orderDate, orderingCourtCode))
-                .withSentenceDate(getSentenceDate(currentOffence, courtApplications, previousOffence, amendmentDate, orderDate))
+                .withSentencingCourtCode(getSentencingCourtCode(currentOffence, previousOffence, amendmentDate, orderDate, orderingCourtCode))
+                .withSentenceDate(getSentenceDate(currentOffence, previousOffence, amendmentDate, orderDate))
                 .withDateFromWhichDisqRemoved(getDateFromWhichDisqRemoved(currentOffence.getResults()))
                 .withDateDisqSuspendedPendingAppeal(getDateDisqSuspendedPendingAppeal(currentOffence, courtApplications, previousOffence, amendmentDate, orderDate))
                 .withDateDisqReimposedFollowingAppeal(getDateDisqReimposedFollowingAppeal(courtApplications, orderDate))
@@ -381,7 +381,7 @@ public class DriverNotifiedEngine {
     }
 
     private static boolean setEndorsementsAndNotificationType(final DriverNotified.Builder builder,
-                                                              final String amendmentDate, final String orderDate,
+                                                              final String amendmentDate, final String orderDate, final String orderingCourtCode,
                                                               final DriverNotified previousDriverNotified,
                                                               final List<Cases> cases, final List<CourtApplications> courtApplications,
                                                               final List<String> nonEndorsableOffenceCodes) {
@@ -418,7 +418,7 @@ public class DriverNotifiedEngine {
                     }
                 } else {
                     if (UPDATE_MERGE.equals(endorsementStatus) || NO_UPDATE_PREV_ENDORSED.equals(endorsementStatus)) {
-                        mergeOffences(currentCase, currentOffence, previousOffence, courtApplications, orderDate, hasAppealResultOrGranted(courtApplications));
+                        mergeOffences(currentCase, currentOffence, previousOffence, courtApplications, orderDate, orderingCourtCode, hasAppealResultOrGranted(courtApplications));
                     } else if (SPECIAL_REASON.equals(endorsementStatus) || NO_UPDATE_PREV_NOT_ENDORSED.equals(endorsementStatus)) {
                         removeOffence(currentOffence, currentCase);
                     }
@@ -510,14 +510,14 @@ public class DriverNotifiedEngine {
 
     private static void mergeOffences(final Cases currentCase, final DefendantCaseOffences currentOffence,
                                       final DefendantCaseOffences previousOffence, final List<CourtApplications> courtApplications,
-                                      final String orderDate, final boolean hasAppealResultOrGranted) {
+                                      final String orderDate, final String orderingCourtCode, final boolean hasAppealResultOrGranted) {
         if (isNull(currentOffence)) {
             currentCase.getDefendantCaseOffences().add(DefendantCaseOffences.defendantCaseOffences()
                     .withValuesFrom(previousOffence)
                     .withDateDisqReimposedFollowingAppeal(getDateDisqReimposedFollowingAppeal(courtApplications, orderDate))
                     .build());
         } else if (nonNull(previousOffence)) {
-            final DefendantCaseOffences mergedOffence = mergeOffence(currentOffence, previousOffence, orderDate, hasAppealResultOrGranted);
+            final DefendantCaseOffences mergedOffence = mergeOffence(currentOffence, previousOffence, orderDate, orderingCourtCode, hasAppealResultOrGranted);
             currentCase.getDefendantCaseOffences().remove(currentOffence);
             currentCase.getDefendantCaseOffences().add(mergedOffence);
         }

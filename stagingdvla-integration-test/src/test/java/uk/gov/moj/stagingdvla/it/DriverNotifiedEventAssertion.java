@@ -90,10 +90,6 @@ public class DriverNotifiedEventAssertion {
         return hasPenaltyPoints(1, penaltyPoints);
     }
 
-    public DriverNotifiedEventAssertion hasSentenceDate(String sentenceDate) {
-        return hasSentenceDate(1, sentenceDate);
-    }
-
     public DriverNotifiedEventAssertion hasDVLACode(String dvlaCode) {
         return hasDVLACode(1, dvlaCode);
     }
@@ -139,6 +135,10 @@ public class DriverNotifiedEventAssertion {
 
     public DriverNotifiedEventAssertion hasSentenceDate(int offenceNumber, String sentenceDate) {
         return validate(getOffence(offenceNumber), DefendantCaseOffences::getSentenceDate, sentenceDate);
+    }
+
+    public DriverNotifiedEventAssertion hasSentencingCourtCode(int offenceNumber, String sentencingCourtCode) {
+        return validate(getOffence(offenceNumber), DefendantCaseOffences::getSentencingCourtCode, sentencingCourtCode);
     }
 
     public DriverNotifiedEventAssertion hasDVLACode(int offenceNumber, String dvlaCode) {

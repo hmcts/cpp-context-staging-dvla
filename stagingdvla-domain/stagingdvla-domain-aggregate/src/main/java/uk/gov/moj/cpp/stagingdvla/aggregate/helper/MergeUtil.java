@@ -1,6 +1,7 @@
 package uk.gov.moj.cpp.stagingdvla.aggregate.helper;
 
 import static java.util.Arrays.asList;
+import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 import static org.apache.commons.collections.CollectionUtils.isEmpty;
 import static org.apache.commons.collections.CollectionUtils.isNotEmpty;
@@ -17,6 +18,7 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.getOtherSe
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.getPenaltyPoints;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.getSuspendedSentence;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAnyResultType;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasD20Endorsement;
 
 import uk.gov.justice.core.courts.JudicialResultCategory;
 import uk.gov.justice.core.courts.nowdocument.NowText;
@@ -40,7 +42,7 @@ public class MergeUtil {
 
     public static DefendantCaseOffences mergeOffence(final DefendantCaseOffences offence,
                                                      final DefendantCaseOffences previousOffence,
-                                                     final String orderDate, final boolean hasAppealResultOrGranted) {
+                                                     final String orderDate, final String orderingCourtCode, final boolean hasAppealResultOrGranted) {
         final DefendantCaseOffences mergedOffence = DefendantCaseOffences.defendantCaseOffences()
                 .withValuesFrom(offence)
                 .withTitle((String) mergeValue(offence.getTitle(), previousOffence.getTitle()))
@@ -76,7 +78,7 @@ public class MergeUtil {
                 .build();
 
         if (hasAppealResultOrGranted) {
-            return DefendantCaseOffences.defendantCaseOffences()
+            final DefendantCaseOffences.Builder mergedOffenceWithAttributes = DefendantCaseOffences.defendantCaseOffences()
                     .withValuesFrom(mergedOffence)
                     .withFine(getFine(mergedOffence.getResults()))
                     .withPenaltyPoints(getPenaltyPoints(mergedOffence.getResults()))
@@ -85,10 +87,19 @@ public class MergeUtil {
                     .withSuspendedSentence(getSuspendedSentence(mergedOffence.getResults()))
                     .withDttpDtetp(getDttpDtetp(mergedOffence.getResults()))
                     .withInterimImposedFinalSentence(getInterimImposedFinalSentence(mergedOffence.getResults()))
-                    .withDateFromWhichDisqRemoved(getDateFromWhichDisqRemoved(mergedOffence.getResults()))
-                    .withSentenceDate(isNotEmpty(mergedOffence.getConvictionDate())
-                            && !orderDate.equalsIgnoreCase(mergedOffence.getConvictionDate()) ? orderDate : null)
-                    .build();
+                    .withDateFromWhichDisqRemoved(getDateFromWhichDisqRemoved(mergedOffence.getResults()));
+
+            if (isNotEmpty(mergedOffence.getConvictionDate())
+                    && !orderDate.equalsIgnoreCase(mergedOffence.getConvictionDate())
+                    && (isNull(previousOffence) || hasD20Endorsement(offence))) {
+                mergedOffenceWithAttributes.withSentenceDate(orderDate);
+                mergedOffenceWithAttributes.withSentencingCourtCode(orderingCourtCode);
+            } else if (isNotEmpty(offence.getSentenceDate())) {
+                mergedOffenceWithAttributes.withSentenceDate(offence.getSentenceDate());
+                mergedOffenceWithAttributes.withSentencingCourtCode(offence.getSentencingCourtCode());
+            }
+
+            return mergedOffenceWithAttributes.build();
         } else {
             return mergedOffence;
         }
