@@ -1,7 +1,6 @@
 package uk.gov.moj.cpp.stagingdvla.aggregate.helper;
 
 import static java.util.Arrays.asList;
-import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 import static org.apache.commons.collections.CollectionUtils.isEmpty;
 import static org.apache.commons.collections.CollectionUtils.isNotEmpty;
@@ -89,14 +88,13 @@ public class MergeUtil {
                     .withInterimImposedFinalSentence(getInterimImposedFinalSentence(mergedOffence.getResults()))
                     .withDateFromWhichDisqRemoved(getDateFromWhichDisqRemoved(mergedOffence.getResults()));
 
-            if (isNotEmpty(mergedOffence.getConvictionDate())
-                    && !orderDate.equalsIgnoreCase(mergedOffence.getConvictionDate())
-                    && (isNull(previousOffence) || hasD20Endorsement(offence))) {
+            if (!hasD20Endorsement(offence)) {
+                mergedOffenceWithAttributes.withSentenceDate(nonNull(previousOffence) ? previousOffence.getSentenceDate() : null);
+                mergedOffenceWithAttributes.withSentencingCourtCode(nonNull(previousOffence) ? previousOffence.getSentencingCourtCode() : null);
+            } else if (isNotEmpty(mergedOffence.getConvictionDate())
+                    && !orderDate.equalsIgnoreCase(mergedOffence.getConvictionDate())) {
                 mergedOffenceWithAttributes.withSentenceDate(orderDate);
                 mergedOffenceWithAttributes.withSentencingCourtCode(orderingCourtCode);
-            } else if (isNotEmpty(offence.getSentenceDate())) {
-                mergedOffenceWithAttributes.withSentenceDate(offence.getSentenceDate());
-                mergedOffenceWithAttributes.withSentencingCourtCode(offence.getSentencingCourtCode());
             }
 
             return mergedOffenceWithAttributes.build();

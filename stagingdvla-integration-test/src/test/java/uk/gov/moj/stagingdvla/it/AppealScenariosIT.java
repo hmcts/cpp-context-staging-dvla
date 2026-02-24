@@ -227,6 +227,48 @@ public class AppealScenariosIT extends AbstractIntegrationTest {
     }
 
     @Test
+    public void cimd_3235_ac1_sentenceDate() throws IOException {
+        List<DriverNotified> driverNotifiedList = sendAndVerifyEvent("appealAmendReshare/cimd_3235_ac1_sentenceDate/command1.json", 1);
+
+        DriverNotifiedEventAssertion.with(driverNotifiedList.get(0))
+                .hasCaseReference("JW29150867")
+                .hasNotificationType(NotificationType.NEW)
+                .hasNoUpdatedEndorsements()
+                .hasNoRemovedEndorsements()
+                .hasCourtApplications(0)
+                .hasOffences(2)
+                .hasSentenceDate(1, null)
+                .hasSentenceDate(2, "2026-05-16")
+                .hasSentencingCourtCode(1, null)
+                .hasSentencingCourtCode(2, "2577")
+                .hasResults(1, 2)
+                .hasResults(2, 2)
+                .hasWording(1, "Use a motor vehicle on a road / public place without third party insurance")
+                .hasWording(2, "Drive a motor vehicle otherwise than in accordance with a licence - endorsable offence");
+
+        verifyDVLANotificationCommandInvoked(driverNotifiedList);
+        verifyGenerateDocumentStubCommandInvoked(driverNotifiedList);
+
+        driverNotifiedList = sendAndVerifyEvent("appealAmendReshare/cimd_3235_ac1_sentenceDate/command2.json", 1);
+
+        DriverNotifiedEventAssertion.with(driverNotifiedList.get(0))
+                .hasCaseReference("JW29150867")
+                .hasNotificationType(NotificationType.UPDATE)
+                .hasUpdatedEndorsementContains("IN10", "IN20")
+                .hasNoRemovedEndorsements()
+                .hasCourtApplications(1)
+                .hasOffences(2)
+                .hasSentenceDate(1, null)
+                .hasSentenceDate(2, "2026-05-16")
+                .hasSentencingCourtCode(1, null)
+                .hasSentencingCourtCode(2, "2577")
+                .hasResults(1, 3)
+                .hasResults(2, 2)
+                .hasWording(1, "Use a motor vehicle on a road / public place without third party insurance")
+                .hasWording(2, "Drive a motor vehicle otherwise than in accordance with a licence - endorsable offence");
+    }
+
+    @Test
     public void cimd_3235_ac2() throws IOException {
         List<DriverNotified> driverNotifiedList = sendAndVerifyEvent("appealAmendReshare/cimd_3235_ac2/command1.json", 1);
 
