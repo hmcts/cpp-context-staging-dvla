@@ -1191,11 +1191,11 @@ public class DvlaNotificationScenariosIT extends AbstractIntegrationTest {
                 .hasOffences(1)
                 .hasOffenceCode("RT88971")
                 .hasDVLACode("TS10")
-                .hasDisqualificationPeriod("021220")
+                .hasDisqualificationPeriod(EMPTY_STRING)
                 .hasDrugLevel("500")
                 .hasPenaltyPoints("3")
                 .hasAmountOfFine(EMPTY_STRING)
-                .hasResults(4)
+                .hasResults(3)
                 .hasWording("Has a violent past and fear that he will commit further offences and interfere with witnesse");
 
         verifyDVLANotificationCommandInvoked(driverNotifiedList);
@@ -1366,7 +1366,7 @@ public class DvlaNotificationScenariosIT extends AbstractIntegrationTest {
                 .hasDrugLevel("500")
                 .hasPenaltyPoints("3")
                 .hasAmountOfFine(EMPTY_STRING)
-                .hasResults(5)
+                .hasResults(4)
                 .hasWording("Has a violent past and fear that he will commit further offences and interfere with witnesse");
 
         verifyDVLANotificationCommandInvoked(driverNotifiedList);

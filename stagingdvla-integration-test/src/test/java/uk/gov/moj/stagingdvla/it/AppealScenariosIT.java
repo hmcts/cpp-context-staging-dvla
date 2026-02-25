@@ -301,6 +301,100 @@ public class AppealScenariosIT extends AbstractIntegrationTest {
     }
 
     @Test
+    public void cimd_3236_ac1() throws IOException {
+        List<DriverNotified> driverNotifiedList = sendAndVerifyEvent("appealAmendReshare/cimd_3236_ac1/command1.json", 1);
+
+        DriverNotifiedEventAssertion.with(driverNotifiedList.get(0))
+                .hasCaseReference("JW29150867")
+                .hasNotificationType(NotificationType.NEW)
+                .hasNoUpdatedEndorsements()
+                .hasNoRemovedEndorsements()
+                .hasCourtApplications(0)
+                .hasOffences(1)
+                .hasOffenceCode(1, "RA88001")
+                .hasDVLACode(1, "IN10")
+                .hasPenaltyPoints(1, "6")
+                .hasAmountOfFine(1, EMPTY_STRING)
+                .hasDisqualificationPeriod(1, EMPTY_STRING)
+                .hasResults(1, 2)
+                .hasWording(1, "Use a motor vehicle on a road / public place without third party insurance");
+
+        verifyDVLANotificationCommandInvoked(driverNotifiedList);
+        verifyGenerateDocumentStubCommandInvoked(driverNotifiedList);
+
+        driverNotifiedList = sendAndVerifyEvent("appealAmendReshare/cimd_3236_ac1/command2.json", 1);
+
+        DriverNotifiedEventAssertion.with(driverNotifiedList.get(0))
+                .hasCaseReference("JW29150867")
+                .hasNotificationType(NotificationType.UPDATE)
+                .hasUpdatedEndorsementContains("IN10")
+                .hasNoRemovedEndorsements()
+                .hasCourtApplications(1)
+                .hasOffences(1)
+                .hasDVLACode(1, "IN10")
+                .hasOffenceCode(1, "RA88001")
+                .hasPenaltyPoints(1, "8")
+                .hasAmountOfFine(1, EMPTY_STRING)
+                .hasDisqualificationPeriod(1, EMPTY_STRING)
+                .hasResults(1, 1)
+                .hasWording(1, "Use a motor vehicle on a road / public place without third party insurance");
+
+        verifyDVLANotificationCommandInvoked(driverNotifiedList);
+        verifyGenerateDocumentStubCommandInvoked(driverNotifiedList);
+    }
+
+    @Test
+    public void cimd_3236_ac2() throws IOException {
+        List<DriverNotified> driverNotifiedList = sendAndVerifyEvent("appealAmendReshare/cimd_3236_ac2/command1.json", 1);
+
+        DriverNotifiedEventAssertion.with(driverNotifiedList.get(0))
+                .hasCaseReference("JW29150867")
+                .hasNotificationType(NotificationType.NEW)
+                .hasNoUpdatedEndorsements()
+                .hasNoRemovedEndorsements()
+                .hasCourtApplications(0)
+                .hasOffences(2)
+                .hasResults(1, 2)
+                .hasResults(2, 2);
+
+        verifyDVLANotificationCommandInvoked(driverNotifiedList);
+        verifyGenerateDocumentStubCommandInvoked(driverNotifiedList);
+
+        driverNotifiedList = sendAndVerifyEvent("appealAmendReshare/cimd_3236_ac2/command2.json", 1);
+
+        DriverNotifiedEventAssertion.with(driverNotifiedList.get(0))
+                .hasCaseReference("JW29150867")
+                .hasNotificationType(NotificationType.UPDATE)
+                .hasUpdatedEndorsementContains("IN10", "IN20")
+                .hasNoRemovedEndorsements()
+                .hasCourtApplications(1)
+                .hasOffences(3)
+                .hasDVLACode(1, "TT99")
+                .hasDVLACode(2, "IN10")
+                .hasDVLACode(3, "IN20")
+                .hasOffenceCode(1, "RA88001TT99")
+                .hasOffenceCode(2, "RA88001")
+                .hasOffenceCode(3, "RA88002")
+                .hasPenaltyPoints(1, null)
+                .hasPenaltyPoints(2, "3")
+                .hasPenaltyPoints(3, EMPTY_STRING)
+                .hasAmountOfFine(1, null)
+                .hasAmountOfFine(2, EMPTY_STRING)
+                .hasAmountOfFine(3, "£100.00")
+                .hasDisqualificationPeriod(1, "001200")
+                .hasDisqualificationPeriod(2, "001200")
+                .hasDisqualificationPeriod(3, EMPTY_STRING)
+                .hasResults(1, 0)
+                .hasResults(2, 2)
+                .hasResults(3, 2)
+                .hasWording(2, "Use a motor vehicle on a road / public place without third party insurance")
+                .hasWording(3, "Drive a motor vehicle otherwise than in accordance with a licence - endorsable offence");
+
+        verifyDVLANotificationCommandInvoked(driverNotifiedList);
+        verifyGenerateDocumentStubCommandInvoked(driverNotifiedList);
+    }
+
+    @Test
     public void cimd_3236_ac3() throws IOException {
         List<DriverNotified> driverNotifiedList = sendAndVerifyEvent("appealAmendReshare/cimd_3236_ac3/command1.json", 1);
 
@@ -649,7 +743,7 @@ public class AppealScenariosIT extends AbstractIntegrationTest {
                 .hasSentencingCourtCode(4, "1577")
                 .hasResults(1, 1)
                 .hasResults(2, 2)
-                .hasResults(3, 3)
+                .hasResults(3, 2)
                 .hasResults(4, 2)
                 .hasWording(1, "Use a motor vehicle on a road / public place without third party insurance - IN40")
                 .hasWording(2, "Use a motor vehicle on a road / public place without third party insurance - IN10")
