@@ -1,9 +1,9 @@
 package uk.gov.moj.stagingdvla.it;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
@@ -121,10 +121,16 @@ public class DriverNotifiedEventAssertion {
     public DriverNotifiedEventAssertion hasOffenceCode(String offenceCode) {
         return validate(getOffence(1), DefendantCaseOffences::getCode, offenceCode);
     }
-    public DriverNotifiedEventAssertion hasResults(int offenceNumber,int size) {
-        assertThat(getOffence(offenceNumber).getResults(), hasSize(size));
+
+    public DriverNotifiedEventAssertion hasResults(int offenceNumber, int size) {
+        if (size == 0) {
+            assertThat(getOffence(offenceNumber).getResults(), anyOf(nullValue(), empty()));
+        } else {
+            assertThat(getOffence(offenceNumber).getResults(), hasSize(size));
+        }
         return this;
     }
+
     public DriverNotifiedEventAssertion hasAmountOfFine(int offenceNumber, String fineAmount) {
         return validate(getOffence(offenceNumber), DefendantCaseOffences::getFine, fineAmount);
     }

@@ -127,10 +127,12 @@ public class MergeUtil {
                 }
             });
 
-            previousResults.stream()
-                    .filter(previousResult -> !matchedResultIds.contains(previousResult.getResultIdentifier()))
-                    .filter(previousResult -> Boolean.TRUE.equals(previousResult.getD20()))
-                    .forEach(mergedResults::add);
+            if (!hasD20Endorsement(results)) {
+                previousResults.stream()
+                        .filter(previousResult -> !matchedResultIds.contains(previousResult.getResultIdentifier()))
+                        .filter(previousResult -> Boolean.TRUE.equals(previousResult.getD20()))
+                        .forEach(mergedResults::add);
+            }
 
             return mergedResults;
         }
