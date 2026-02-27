@@ -1,5 +1,7 @@
 package uk.gov.moj.cpp.stagingdvla.aggregate.helper;
 
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
 import static java.util.Arrays.asList;
 import static java.util.Objects.nonNull;
 import static org.apache.commons.collections.CollectionUtils.isEmpty;
@@ -18,6 +20,7 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.getPenalty
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.getSuspendedSentence;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAnyResultType;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasD20Endorsement;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasNonD20Endorsement;
 
 import uk.gov.justice.core.courts.JudicialResultCategory;
 import uk.gov.justice.core.courts.nowdocument.NowText;
@@ -61,7 +64,9 @@ public class MergeUtil {
                 .withAlcoholReadingMethodCode((String) mergeValue(offence.getAlcoholReadingMethodCode(), previousOffence.getAlcoholReadingMethodCode()))
                 .withAlcoholReadingMethodDescription((String) mergeValue(offence.getAlcoholReadingMethodDescription(), previousOffence.getAlcoholReadingMethodDescription()))
                 .withEndorsableFlag((Boolean) mergeValue(offence.getEndorsableFlag(), previousOffence.getEndorsableFlag()))
-                .withResults(mergeResults(offence.getResults(), previousOffence.getResults()))
+                .withResults(hasAppealResultOrGranted
+                        ? mergeResultsV2(offence.getResults(), previousOffence.getResults())
+                        : mergeResultsV1(offence.getResults(), previousOffence.getResults()))
                 .withFine((String) mergeValue(offence.getFine(), previousOffence.getFine()))
                 .withPenaltyPoints((String) mergeValue(offence.getPenaltyPoints(), previousOffence.getPenaltyPoints()))
                 .withDisqualificationPeriod((String) mergeValue(offence.getDisqualificationPeriod(), previousOffence.getDisqualificationPeriod()))
@@ -103,7 +108,29 @@ public class MergeUtil {
         }
     }
 
-    private static List<Results> mergeResults(final List<Results> results, final List<Results> previousResults) {
+    private static List<Results> mergeResultsV1(final List<Results> results, final List<Results> previousResults) {
+        if (isNotEmpty(results) && isNotEmpty(previousResults)) {
+            final List<Results> mergedResults = new ArrayList<>();
+            results.forEach(result -> {
+                if (isNotEmpty(result.getResultIdentifier())) {
+                    final Results previousResult = previousResults.stream()
+                            .filter(bResult -> result.getResultIdentifier().equals(bResult.getResultIdentifier())).findFirst().orElse(null);
+                    if (nonNull(previousResult)) {
+                        mergedResults.add(mergeResult(result, previousResult));
+                    } else {
+                        mergedResults.add(result);
+                    }
+                } else {
+                    mergedResults.add(result);
+                }
+            });
+            return mergedResults;
+        } else {
+            return results;
+        }
+    }
+
+    private static List<Results> mergeResultsV2(final List<Results> results, final List<Results> previousResults) {
         if (isEmpty(results) || hasAnyResultType(results, asList(OATS, ADJ))) {
             return previousResults;
         } else if (isEmpty(previousResults)) {
@@ -127,10 +154,22 @@ public class MergeUtil {
                 }
             });
 
-            if (!hasD20Endorsement(results)) {
+            boolean hasD20Results = hasD20Endorsement(results);
+            boolean hasNonD20Results = hasNonD20Endorsement(results);
+
+            if (hasD20Results && hasNonD20Results) {
+                // do nothing - DO NOT carry forward any non-matching previous results
+            } else if (hasD20Results) {
+                // carry forward non-matching previousResults where D20 = false (non-D20)
                 previousResults.stream()
                         .filter(previousResult -> !matchedResultIds.contains(previousResult.getResultIdentifier()))
-                        .filter(previousResult -> Boolean.TRUE.equals(previousResult.getD20()))
+                        .filter(previousResult -> FALSE.equals(previousResult.getD20()))
+                        .forEach(mergedResults::add);
+            } else {
+                // carry forward non-matching previousResults where D20 = true
+                previousResults.stream()
+                        .filter(previousResult -> !matchedResultIds.contains(previousResult.getResultIdentifier()))
+                        .filter(previousResult -> TRUE.equals(previousResult.getD20()))
                         .forEach(mergedResults::add);
             }
 

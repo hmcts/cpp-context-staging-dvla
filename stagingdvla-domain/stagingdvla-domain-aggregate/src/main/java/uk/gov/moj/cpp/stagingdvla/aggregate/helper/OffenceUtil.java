@@ -1,5 +1,7 @@
 package uk.gov.moj.cpp.stagingdvla.aggregate.helper;
 
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
 import static java.util.Objects.isNull;
@@ -52,6 +54,11 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.Res
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.DSPAS;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.ERR;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.G;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.LPIC1;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.LPIC2;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.LPIC3;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.LPIC4;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.LPIC5;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.NDSR;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.NESR;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.OATS;
@@ -96,6 +103,9 @@ public class OffenceUtil {
     );
     private static final List<String> APPEAL_REFUSED_RESULTS = asList(
             AACD.id, AASD.id, ACSD.id, APA.id, AW.id
+    );
+    private static final Set<String> EXCLUDED_RESULTS_FROM_NON_D20_CHECK = Set.of(
+            LPIC1.id, LPIC2.id, LPIC3.id, LPIC4.id, LPIC5.id
     );
 
     private static final List<String> COV_G_RESULTS = asList(COV.id, G.id);
@@ -488,7 +498,13 @@ public class OffenceUtil {
 
     public static boolean hasD20Endorsement(final List<Results> results) {
         return isNotEmpty(results) && results.stream()
-                .anyMatch(r -> nonNull(r.getD20()) && r.getD20());
+                .anyMatch(r -> nonNull(r.getD20()) && TRUE.equals(r.getD20()));
+    }
+
+    public static boolean hasNonD20Endorsement(final List<Results> results) {
+        return isNotEmpty(results) && results.stream()
+                .filter(r -> !EXCLUDED_RESULTS_FROM_NON_D20_CHECK.contains(r.getResultIdentifier()))
+                .anyMatch(r -> isNull(r.getD20()) || FALSE.equals(r.getD20()));
     }
 
     public static boolean hasPointsDisqualificationCode(final List<Results> results) {
