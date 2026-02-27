@@ -1,0 +1,174 @@
+{
+  "masterDefendantId": "%DEFENDANT_ID%",
+  "orderingCourt": {
+    "address": {
+      "address1": "176A Lavender Hill",
+      "address2": "London",
+      "postcode": "SW11 1JU"
+    },
+    "code": "B01LY00",
+    "courtHearingLocation": "B01LY02",
+    "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+    "lja": {
+      "ljaCode": "2577",
+      "ljaName": "South West London Magistrates' Court"
+    },
+    "name": "Lavender Hill Magistrates' Court",
+    "roomId": "b4562684-9209-3ec4-a544-7f80dabd94d8",
+    "roomName": "Courtroom 02"
+  },
+  "nowContent": {
+    "orderDate": "2026-10-27",
+    "defendant": {
+      "dateOfBirth": "2000-09-09",
+      "gender": "MALE",
+      "driverNumber": "ABCDE00010BCFAA",
+      "title": "MR",
+      "firstName": "Liana",
+      "middleName": "Jasmine Jasmine",
+      "lastName": "Powlowski",
+      "name": "Liana Jasmine Jasmine Powlowski",
+      "address": {
+        "line1": "56saon",
+        "line2": "56Police House",
+        "line3": "StreetDescription1",
+        "line4": "Locality1",
+        "line5": "Fayborough",
+        "postCode": "TW14 9XJ"
+      }
+    },
+    "caseApplicationReferences": [
+      "JW29150867"
+    ],
+    "cases": [
+      {
+        "reference": "JW29150867",
+        "caseId": "a0738dff-4498-4b4b-95e3-189b1b7e91a2",
+        "defendantCaseOffences": [
+          {
+            "allocationDecision": "Summary-only offence",
+            "civilOffence": false,
+            "code": "RA88001",
+            "convictingCourtCode": "2577",
+            "convictionDate": "2026-06-05",
+            "convictionStatus": "Convicted",
+            "dvlaCode": "IN10",
+            "endorsableFlag": true,
+            "modeOfTrial": "Summary",
+            "plea": "GUILTY",
+            "results": [
+              {
+                "d20": true,
+                "label": "Driving record endorsed (no points)",
+                "prompts": [],
+                "publishedForNows": false,
+                "resultIdentifier": "b0aeb4fc-df63-4e2f-af88-97e3f23e847f"
+              },
+              {
+                "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956",
+                "publishedForNows": true,
+                "d20": false,
+                "label": "0: None or unknown"
+              }
+            ],
+            "startDate": "2025-12-07",
+            "title": "Use a motor vehicle on a road / public place without third party insurance",
+            "wording": "Use a motor vehicle on a road / public place without third party insurance"
+          },
+          {
+            "allocationDecision": "Summary-only offence",
+            "civilOffence": false,
+            "code": "RA88002",
+            "convictingCourtCode": "2577",
+            "convictionDate": "2026-06-05",
+            "convictionStatus": "Convicted",
+            "dvlaCode": "IN20",
+            "endorsableFlag": true,
+            "modeOfTrial": "Summary",
+            "plea": "GUILTY",
+            "results": [
+              {
+                "resultIdentifier": "ccfc452e-ebe4-4cd7-b8a0-4f90768447b4",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "2bf54447-328c-4c1b-a123-341adbd52172",
+                    "promptReference": "disqualificationPeriod",
+                    "durationSequence": 1,
+                    "label": "Disqualification period",
+                    "value": "12 Months"
+                  },
+                  {
+                    "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+                    "promptReference": "defendantDrivingLicenceNumber",
+                    "label": "Defendant driving licence number",
+                    "value": "ABCDE00010BCFAA"
+                  }
+                ],
+                "resultWording": "Disqualified for holding or obtaining a driving licence. Discretionary disqualification. Driving record endorsed. Section 34(2) Road Traffic Offenders Act 1988",
+                "d20": true,
+                "label": "Discretionary with ordinary disqualification"
+              },
+              {
+                "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956",
+                "publishedForNows": true,
+                "d20": false,
+                "label": "0: None or unknown"
+              }
+            ],
+            "startDate": "2025-12-07",
+            "title": "Drive a motor vehicle otherwise than in accordance with a licence - endorsable offence",
+            "wording": "Drive a motor vehicle otherwise than in accordance with a licence - endorsable offence"
+          },
+          {
+            "allocationDecision": "Summary-only offence",
+            "civilOffence": false,
+            "code": "RA88003",
+            "convictingCourtCode": "2577",
+            "convictionDate": "2026-06-05",
+            "convictionStatus": "Convicted",
+            "dvlaCode": "IN30",
+            "endorsableFlag": true,
+            "modeOfTrial": "Summary",
+            "plea": "GUILTY",
+            "results": [
+              {
+                "d20": false,
+                "dvlaCode": "E",
+                "label": "Offence not dealt with as part of application - original adjudication to stand",
+                "prompts": [],
+                "publishedForNows": false,
+                "resultIdentifier": "3e859586-bc86-407d-bd8e-c9a01d40d147"
+              }
+            ],
+            "startDate": "2025-12-07",
+            "title": "Drive motor vehicle fail comply with red / green arrow / lane closure traffic light signals - manual detection",
+            "wording": "Has a violent past and fear that he will commit further offences and interfere with witnesse"
+          }
+        ]
+      }
+    ],
+    "courtApplications": [
+      {
+        "applicationReceivedDate": "2026-02-05",
+        "applicationReference": "SG821225728",
+        "applicationStatus": "FINALISED",
+        "applicationType": "Appeal against conviction and sentence by a Magistrates' Court to the Crown Court",
+        "applicationTypeId": "abc05494-05d7-4289-b4bc-a92726257a4b",
+        "id": "922eb0f2-4b94-448b-8c0c-9deb06b82484",
+        "results": [
+          {
+            "d20": false,
+            "label": "Appeal against sentence allowed",
+            "prompts": [],
+            "publishedForNows": false,
+            "resultIdentifier": "d861586a-df88-440d-98d4-63cc2a680ae1",
+            "resultWording": ""
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": true,
+  "orderingHearingId": "93bc6155-952f-4909-a36a-b9f277da3b85"
+}

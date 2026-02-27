@@ -432,9 +432,7 @@ public class DriverNotifiedEngine {
 
         if (isNotEmpty(removedEndorsements) || isNotEmpty(updatedEndorsements) || isNotEmpty(specialReasonOffences)) {
             updatedEndorsements.addAll(noUpdateOffences);
-            if (isEmpty(removedEndorsements) && isEmpty(updatedEndorsements)) {
-                removedEndorsements.addAll(specialReasonOffences);
-            }
+            removedEndorsements.addAll(specialReasonOffences);
             assignEndorsements(builder, courtApplications, removedEndorsements, updatedEndorsements);
             return true;
         }
