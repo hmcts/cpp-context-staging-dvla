@@ -15,21 +15,18 @@ import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 import static org.slf4j.LoggerFactory.getLogger;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.C_FOR_CROWN;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.NO_RESULT_PREV_ENDORSED;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.NO_UPDATE_PREV_ENDORSED;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.NO_UPDATE_PREV_NOT_ENDORSED;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.REMOVE;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.SPECIAL_REASON;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.UPDATE_MERGE;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.POINTS_DISQUALIFICATION_CODE;
-import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.LPIC1;
-import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.LPIC2;
-import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.LPIC3;
-import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.LPIC4;
-import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.LPIC5;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.SV;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.DisqualificationPeriodHelper.getDisqualificationPeriod;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.MergeUtil.getDistinctPrompts;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.MergeUtil.mergeOffence;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.LICENCE_PRODUCED_IN_COURT_RESULTS;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.getAlcoholReadingAmount;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.getConvictingCourtCode;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.getDateDisqReimposedFollowingAppeal;
@@ -154,7 +151,7 @@ public class DriverNotifiedEngine {
             removeNonMatchingOffencesFromPrevious(currentCase, previousDriverNotified);
         }
 
-        removeNonEndorsableOffences(previousCase, currentCase, courtApplications, asList(SV));
+        removeNonEndorsableOffences(previousCase, currentCase, courtApplications, asList(SV.id));
 
         boolean hasResultOrPromptModified = false;
 
@@ -363,7 +360,7 @@ public class DriverNotifiedEngine {
             cases.stream().filter(aCase -> isNotEmpty(aCase.getDefendantCaseOffences())).forEach(aCase -> {
                 aCase.getDefendantCaseOffences().stream().filter(offence -> isNotEmpty(offence.getResults())).forEach(offence -> {
                     offence.getResults().forEach(result -> {
-                        if (hasAnyResultType(result, asList(LPIC1, LPIC2, LPIC3, LPIC4, LPIC5))) {
+                        if (hasAnyResultType(result, LICENCE_PRODUCED_IN_COURT_RESULTS)) {
                             licenceProducedInCourt.set(result.getLabel());
                         }
                     });
@@ -392,6 +389,7 @@ public class DriverNotifiedEngine {
         final List<String> removedEndorsements = new ArrayList<>();
         final List<String> updatedEndorsements = new ArrayList<>();
         final List<String> noUpdateOffences = new ArrayList<>();
+        final List<String> emptyResultOffences = new ArrayList<>();
         final List<String> specialReasonOffences = new ArrayList<>();
 
         previousDriverNotified.getCases().forEach(previousCase -> {
@@ -407,6 +405,7 @@ public class DriverNotifiedEngine {
                     case REMOVE -> removedEndorsements.add(dvlaCode);
                     case UPDATE_MERGE, UPDATE_NOMERGE -> updatedEndorsements.add(dvlaCode);
                     case NO_UPDATE_PREV_ENDORSED -> noUpdateOffences.add(dvlaCode);
+                    case NO_RESULT_PREV_ENDORSED -> emptyResultOffences.add(dvlaCode);
                     case SPECIAL_REASON -> specialReasonOffences.add(dvlaCode);
                 }
 
@@ -417,7 +416,7 @@ public class DriverNotifiedEngine {
                         removeConvictionDataFromOffence(currentOffence, currentCase);
                     }
                 } else {
-                    if (UPDATE_MERGE.equals(endorsementStatus) || NO_UPDATE_PREV_ENDORSED.equals(endorsementStatus)) {
+                    if (UPDATE_MERGE.equals(endorsementStatus) || NO_UPDATE_PREV_ENDORSED.equals(endorsementStatus) || NO_RESULT_PREV_ENDORSED.equals(endorsementStatus)) {
                         mergeOffences(currentCase, currentOffence, previousOffence, courtApplications, orderDate, orderingCourtCode, hasAppealResultOrGranted(courtApplications));
                     } else if (SPECIAL_REASON.equals(endorsementStatus) || NO_UPDATE_PREV_NOT_ENDORSED.equals(endorsementStatus)) {
                         removeOffence(currentOffence, currentCase);
@@ -426,12 +425,13 @@ public class DriverNotifiedEngine {
             });
         });
 
-        if(hasAppealResultOrGranted(courtApplications)) {
+        if (hasAppealResultOrGranted(courtApplications)) {
             updatedEndorsements.addAll(checkOffencesThatDoesNotExistInPrevious(cases, previousDriverNotified));
         }
 
         if (isNotEmpty(removedEndorsements) || isNotEmpty(updatedEndorsements) || isNotEmpty(specialReasonOffences)) {
             updatedEndorsements.addAll(noUpdateOffences);
+            updatedEndorsements.addAll(emptyResultOffences);
             removedEndorsements.addAll(specialReasonOffences);
             assignEndorsements(builder, courtApplications, removedEndorsements, updatedEndorsements);
             return true;
@@ -551,7 +551,7 @@ public class DriverNotifiedEngine {
         return removeNonEndorsableOffences(previousCase, currentCase, courtApplications, null);
     }
 
-    private static List<String> removeNonEndorsableOffences(final Cases previousCase, final Cases currentCase, final List<CourtApplications> courtApplications, final List<AggregateConstants.ResultType> resultTypes) {
+    private static List<String> removeNonEndorsableOffences(final Cases previousCase, final Cases currentCase, final List<CourtApplications> courtApplications, final List<String> resultTypes) {
         final List<String> removedOffences = new ArrayList<>();
         if (nonNull(currentCase) && isNotEmpty(currentCase.getDefendantCaseOffences())) {
             final Iterator<DefendantCaseOffences> caseOffencesIterator = currentCase.getDefendantCaseOffences().iterator();

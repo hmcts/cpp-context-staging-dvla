@@ -135,7 +135,7 @@ public class MergeUtil {
     }
 
     private static List<Results> mergeResultsV2(final List<Results> results, final List<Results> previousResults) {
-        if (isEmpty(results) || hasAnyResultType(results, asList(OATS, ADJ))) {
+        if (isEmpty(results) || hasAnyResultType(results, asList(OATS.id, ADJ.id))) {
             return previousResults;
         } else if (isEmpty(previousResults)) {
             return results;

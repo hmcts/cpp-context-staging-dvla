@@ -23,6 +23,8 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.DAT
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.DEFAULT_DVLA_CODE;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.DVLACODE_FOR_OFFENCE;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.NO_RESULT_PREV_ENDORSED;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.NO_RESULT_PREV_NOT_ENDORSED;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.NO_UPDATE_PREV_ENDORSED;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.NO_UPDATE_PREV_NOT_ENDORSED;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.REMOVE;
@@ -98,17 +100,17 @@ public class OffenceUtil {
     private static final String INACTIVE = "INACTIVE";
     private static final String ST_DEC = "STATUTORY DECLARATION";
     private static final String NEXT_HEARING_GROUP = "NEXT HEARING";
-    private static final List<String> APPEAL_RESULTS = asList(
+    public static final List<String> APPEAL_RESULTS = asList(
             AACA.id, AACD.id, AASA.id, AASD.id, ACSD.id, APA.id, ASV.id, AW.id, DDRE.id
     );
-    private static final List<String> APPEAL_REFUSED_RESULTS = asList(
+    public static final List<String> APPEAL_REFUSED_RESULTS = asList(
             AACD.id, AASD.id, ACSD.id, APA.id, AW.id
     );
-    private static final Set<String> EXCLUDED_RESULTS_FROM_NON_D20_CHECK = Set.of(
+    public static final List<String> LICENCE_PRODUCED_IN_COURT_RESULTS = asList(
             LPIC1.id, LPIC2.id, LPIC3.id, LPIC4.id, LPIC5.id
     );
 
-    private static final List<String> COV_G_RESULTS = asList(COV.id, G.id);
+    public static final List<String> COV_G_RESULTS = asList(COV.id, G.id);
 
     public static String getConvictingCourtCode(final DefendantCaseOffences currentOffence,
                                                 final DefendantCaseOffences previousOffence) {
@@ -149,6 +151,12 @@ public class OffenceUtil {
                     && hasNoD20Endorsement(currentOffence)) {
                 return SPECIAL_REASON;
             } else if (hasNoResult(currentOffence)) {
+                if (hasD20Endorsement(previousOffence)) {
+                    return NO_RESULT_PREV_ENDORSED;
+                } else {
+                    return NO_RESULT_PREV_NOT_ENDORSED;
+                }
+            } else if (hasOatsOrAdj(currentOffence)) {
                 if (hasD20Endorsement(previousOffence)) {
                     return NO_UPDATE_PREV_ENDORSED;
                 } else {
@@ -457,18 +465,18 @@ public class OffenceUtil {
     }
 
 
-    public static boolean hasAnyResultType(final List<Results> results, final List<ResultType> resultTypes) {
+    public static boolean hasAnyResultType(final List<Results> results, final List<String> resultTypes) {
         if (isNotEmpty(results) && isNotEmpty(resultTypes)) {
             return results.stream().anyMatch(result -> resultTypes.stream()
-                    .anyMatch(resultType -> resultType.id.equalsIgnoreCase(result.getResultIdentifier())));
+                    .anyMatch(resultType -> resultType.equalsIgnoreCase(result.getResultIdentifier())));
         } else {
             return false;
         }
     }
 
-    public static boolean hasAnyResultType(final Results result, final List<ResultType> resultTypes) {
+    public static boolean hasAnyResultType(final Results result, final List<String> resultTypes) {
         if (nonNull(result) && isNotEmpty(resultTypes)) {
-            return resultTypes.stream().anyMatch(resultType -> resultType.id.equalsIgnoreCase(result.getResultIdentifier()));
+            return resultTypes.stream().anyMatch(resultType -> resultType.equalsIgnoreCase(result.getResultIdentifier()));
         } else {
             return false;
         }
@@ -483,9 +491,13 @@ public class OffenceUtil {
     }
 
     private static boolean hasNoResult(final DefendantCaseOffences offence) {
+        return isEmpty(offence.getResults())
+                || (offence.getResults().size() == 1 && hasAnyResultType(offence.getResults(), LICENCE_PRODUCED_IN_COURT_RESULTS));
+    }
+
+    private static boolean hasOatsOrAdj(final DefendantCaseOffences offence) {
         return hasResultType(offence, OATS)
-                || hasResultType(offence, ADJ)
-                || isEmpty(offence.getResults());
+                || hasResultType(offence, ADJ);
     }
 
     public static boolean hasD20Endorsement(final DefendantCaseOffences offence) {
@@ -503,7 +515,7 @@ public class OffenceUtil {
 
     public static boolean hasNonD20Endorsement(final List<Results> results) {
         return isNotEmpty(results) && results.stream()
-                .filter(r -> !EXCLUDED_RESULTS_FROM_NON_D20_CHECK.contains(r.getResultIdentifier()))
+                .filter(r -> !LICENCE_PRODUCED_IN_COURT_RESULTS.contains(r.getResultIdentifier()))
                 .anyMatch(r -> isNull(r.getD20()) || FALSE.equals(r.getD20()));
     }
 
