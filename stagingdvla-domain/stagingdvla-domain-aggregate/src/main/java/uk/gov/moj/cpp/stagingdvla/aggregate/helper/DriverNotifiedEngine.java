@@ -407,6 +407,9 @@ public class DriverNotifiedEngine {
                     case NO_UPDATE_PREV_ENDORSED -> noUpdateOffences.add(dvlaCode);
                     case NO_RESULT_PREV_ENDORSED -> emptyResultOffences.add(dvlaCode);
                     case SPECIAL_REASON -> specialReasonOffences.add(dvlaCode);
+                    default -> {
+                        // Do nothing for all other cases
+                    }
                 }
 
                 if (REMOVE.equals(endorsementStatus)) {
