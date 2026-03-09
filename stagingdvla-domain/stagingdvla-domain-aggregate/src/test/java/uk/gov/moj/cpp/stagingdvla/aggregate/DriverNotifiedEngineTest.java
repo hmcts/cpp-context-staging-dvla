@@ -51,6 +51,8 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.Res
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.DSPA;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.DSPAS;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.G;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.LPIC1;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.LPIC2;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.NESR;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.OATS;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.RFSD;
@@ -2354,6 +2356,35 @@ public class DriverNotifiedEngineTest {
                 singletonList(SS30), singletonList(OFF1), singletonList(OFF1), true, convictionDate, null, null, 1, false, singletonList(OATS.id));
 
         List<CourtApplications> courtApplications = getCourtApplications(singletonList(APP1), prefix, false, null, null, SS30, 1, asList(G.id, AASA.id));
+
+        assertThat(transformDriverNotified(previousByCase, orderDate,
+                crownCourt, null, defendant, cases, hearingId, courtApplications), is(emptyList()));
+    }
+
+    @Test
+    public void shouldNotSendNotificationWhenAllEmptyResult() {
+        DriverNotified previous = getPreviousDriverNotified(1, EMPTY, singletonList(Boolean.TRUE),
+                singletonList(SS30), singletonList(OFF1), singletonList(OFF1), true, previousConvictionDate, true, null, 1, false, singletonList(DSPAS.id), previousOrderDate, null);
+
+        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+
+        List<Cases> cases = getCasesWithMultipleOffences(1, EMPTY, singletonList(Boolean.FALSE),
+                singletonList(SS30), singletonList(OFF1), singletonList(OFF1), true, convictionDate, null, null, 1, false, singletonList(LPIC1.id));
+
+        List<CourtApplications> courtApplications = getCourtApplications(singletonList(APP1), prefix, false, null, null, SS30, 1, asList(G.id, AASA.id));
+
+        assertThat(transformDriverNotified(previousByCase, orderDate,
+                crownCourt, null, defendant, cases, hearingId, courtApplications), is(emptyList()));
+
+        previous = getPreviousDriverNotified(1, EMPTY, singletonList(Boolean.FALSE),
+                singletonList(SS30), singletonList(OFF1), singletonList(OFF1), true, previousConvictionDate, true, null, 1, false, singletonList(LPIC1.id), previousOrderDate, null);
+
+        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+
+        cases = getCasesWithMultipleOffences(1, EMPTY, singletonList(Boolean.FALSE),
+                singletonList(SS30), singletonList(OFF1), singletonList(OFF1), true, convictionDate, null, null, 1, false, singletonList(LPIC2.id));
+
+        courtApplications = getCourtApplications(singletonList(APP1), prefix, false, null, null, SS30, 1, asList(G.id, AASA.id));
 
         assertThat(transformDriverNotified(previousByCase, orderDate,
                 crownCourt, null, defendant, cases, hearingId, courtApplications), is(emptyList()));

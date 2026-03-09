@@ -712,7 +712,7 @@ class OffenceUtilTest {
                 results().withResultIdentifier(OATS.id).build()
         );
 
-        boolean hasAnyResultType = hasAnyResultType(results, asList(OATS, ADJ));
+        boolean hasAnyResultType = hasAnyResultType(results, asList(OATS.id, ADJ.id));
 
         assertThat(hasAnyResultType, is(true));
     }
@@ -724,7 +724,7 @@ class OffenceUtilTest {
                 results().withResultIdentifier(ERR.id).build()
         );
 
-        boolean hasAnyResultType = hasAnyResultType(results, asList(OATS, ADJ));
+        boolean hasAnyResultType = hasAnyResultType(results, asList(OATS.id, ADJ.id));
 
         assertThat(hasAnyResultType, is(false));
     }
@@ -733,7 +733,7 @@ class OffenceUtilTest {
     void shouldReturnTrueWhenSingleResultMatchesAnyOfTheSpecifiedTypes() {
         final Results result = results().withResultIdentifier(ADJ.id).build();
 
-        boolean hasAnyResultType = hasAnyResultType(result, asList(OATS, ADJ));
+        boolean hasAnyResultType = hasAnyResultType(result, asList(OATS.id, ADJ.id));
 
         assertThat(hasAnyResultType, is(true));
     }
@@ -742,7 +742,7 @@ class OffenceUtilTest {
     void shouldReturnFalseWhenSingleResultDoesNotMatchAnyOfTheSpecifiedTypes() {
         final Results result = results().withResultIdentifier(TEXT.id).build();
 
-        boolean hasAnyResultType = hasAnyResultType(result, asList(OATS, ADJ));
+        boolean hasAnyResultType = hasAnyResultType(result, asList(OATS.id, ADJ.id));
 
         assertThat(hasAnyResultType, is(false));
     }
