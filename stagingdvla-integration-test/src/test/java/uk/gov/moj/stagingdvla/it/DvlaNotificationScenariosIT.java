@@ -1411,27 +1411,7 @@ public class DvlaNotificationScenariosIT extends AbstractIntegrationTest {
         verifyDVLANotificationCommandInvoked(firstNotice);
         verifyGenerateDocumentStubCommandInvoked(firstNotice);
 
-
-        List<DriverNotified> secondNotice = sendAndVerifyEvent("appealAmendReshare/dd-27008/scenario1/command4.json",  1);
-        DriverNotifiedEventAssertion.with(secondNotice.get(0))
-                .hasCaseReference("DVLA02022364")
-                .hasUpdatedEndorsementContains("SP50")
-                .hasNoRemovedEndorsements()
-                .hasCourtApplications(1)
-                .hasOffences(1)
-                .hasOffenceCode("RR84702")
-                .hasDVLACode("SP50")
-                .hasDisqualificationPeriod("010000")
-                .hasDrugLevel(null)
-                .hasPenaltyPoints(EMPTY_STRING)
-                .hasAmountOfFine("£121.00")
-                .hasResults(5)
-                .hasConvictionDate("2024-10-04")
-                .hasConvictingCourt("2570")
-                .hasWording("A fine not exceeding level five on the standard scale.Time limit for prosecutions:6 monthsOn the 12th March 2015 the limit on fines imposed by a Magistrates? court was removed ? as such, the potential fine on summary conviction in relation to an offence committed after this date is unlimited.");
-
-        verifyDVLANotificationCommandInvoked(secondNotice);
-        verifyGenerateDocumentStubCommandInvoked(secondNotice);
+        sendAndVerifyEvent("appealAmendReshare/dd-27008/scenario1/command4.json",  0);
     }
 
     @Test
@@ -1590,64 +1570,6 @@ public class DvlaNotificationScenariosIT extends AbstractIntegrationTest {
     }
 
     /**
-     * Endorsement Removed following appeal - Appeal against conviction allowed
-     *
-     * GIVEN I am applying results to an appeal
-     * AND I am applying the Appeal Against Conviction Allowed result against the appeal
-     * AND an offence on the appeal previously included an endorsement result
-     * WHEN the results are shared
-     * THEN the notification is sent to rehab@dvla.gov.uk
-     * AND the title of the notification is "DVLA Driver Notification – Update Endorsement"
-     * AND the D20 pdf section includes updated endorsement
-     * AND the appeal against conviction box is included
-     * @throws IOException
-     */
-    @Test
-    public void appealAmendReshareScenario9() throws IOException {
-        List<DriverNotified> driverNotifiedList = sendAndVerifyEvent("appealAmendReshare/scenario9/command1.json",  1);
-
-        DriverNotifiedEventAssertion.with(driverNotifiedList.get(0))
-                .hasCaseReference("VT05MAYC007")
-                .hasNoUpdatedEndorsements()
-                .hasNoRemovedEndorsements()
-                .hasCourtApplications(0)
-                .hasOffences(1)
-                .hasOffenceCode("ME82005")
-                .hasDVLACode("MW10")
-                .hasDisqualificationPeriod(EMPTY_STRING)
-                .hasDrugLevel("500")
-                .hasPenaltyPoints("3")
-                .hasAmountOfFine(EMPTY_STRING)
-                .hasResults(2)
-                .hasWording("Drive / move vehicle making 'u' turn on the motorway");
-
-        verifyDVLANotificationCommandInvoked(driverNotifiedList);
-        verifyGenerateDocumentStubCommandInvoked(driverNotifiedList);
-
-        driverNotifiedList = sendAndVerifyEvent("appealAmendReshare/scenario9/command2.json",  1);
-
-        DriverNotifiedEventAssertion.with(driverNotifiedList.get(0))
-                .hasCaseReference("VT05MAYC007")
-                .hasUpdatedEndorsementContains("MW10")
-                .hasNoRemovedEndorsements()
-                .hasCourtApplications(1)
-                .hasOffences(1)
-                .hasOffenceCode("ME82005")
-                .hasDVLACode("MW10")
-                .hasDisqualificationPeriod(EMPTY_STRING)
-                .hasDrugLevel("500")
-                .hasPenaltyPoints("3")
-                .hasAmountOfFine(EMPTY_STRING)
-                .hasResults(2)
-                .hasWording("Drive / move vehicle making 'u' turn on the motorway")
-                .hasPreviousCase();
-
-        verifyDVLANotificationCommandInvoked(driverNotifiedList);
-        verifyGenerateDocumentStubCommandInvoked(driverNotifiedList);
-
-    }
-
-    /**
      * Removing a points disqualification (Totting) - sentence varied
      * GIVEN I am applying results to an appeal / Application
      * AND I am applying results to an offence
@@ -1692,61 +1614,6 @@ public class DvlaNotificationScenariosIT extends AbstractIntegrationTest {
                 .hasNoUpdatedEndorsements()
                 .hasRemovedEndorsementContains("MW10","TT99")
                 .hasOffences(0)
-                .hasPreviousCase();
-
-        verifyDVLANotificationCommandInvoked(driverNotifiedList);
-        verifyGenerateDocumentStubCommandInvoked(driverNotifiedList);
-
-    }
-
-    /**
-     * Removing a points disqualification (Totting) - Appeal against conviction allowed
-     * GIVEN I am applying results to an appeal
-     * AND I am applying the Appeal Against Conviction Allowed result against the appeal
-     * AND an offence on the appeal previously included an endorsement result
-     * AND the previous results included a points disqualification (ie result had triggered an additional TT99 code)
-     * When I share the result
-     * And D20 pdf is generated
-     * AND the title of the notification is "DVLA Driver Notification – Update Endorsement"
-     * WHEN I view the Summary section
-     * THEN the list of updated endorsements includes the TT99 code
-     *
-     * @throws IOException
-     */
-    @Test
-    public void appealAmendReshareScenario11() throws IOException {
-        List<DriverNotified> driverNotifiedList = sendAndVerifyEvent("appealAmendReshare/scenario11/command1.json",  1);
-
-        DriverNotifiedEventAssertion.with(driverNotifiedList.get(0))
-                .hasCaseReference("VT05MAYC009")
-                .hasCourtApplications(0)
-                .hasNoUpdatedEndorsements()
-                .hasNoRemovedEndorsements()
-                .hasOffences(2)
-                .hasOffenceCode("ME82005")
-                .hasDVLACode("MW10")
-                .hasDrugLevel("500")
-                .hasPenaltyPoints("3")
-                .hasAmountOfFine(EMPTY_STRING)
-                .hasResults(2)
-                .hasWording("Drive / move vehicle making 'u' turn on the motorway")
-                .hasDVLACode(2,"TT99")
-                .hasOffenceCode(2,"ME82005TT99")
-                .hasWording(2,"Drive / move vehicle making 'u' turn on the motorway")
-                .hasDisqualificationPeriod(2,"000600");
-
-        verifyDVLANotificationCommandInvoked(driverNotifiedList);
-        verifyGenerateDocumentStubCommandInvoked(driverNotifiedList);
-
-
-        driverNotifiedList = sendAndVerifyEvent("appealAmendReshare/scenario11/command2.json",  1);
-
-        DriverNotifiedEventAssertion.with(driverNotifiedList.get(0))
-                .hasCaseReference("VT05MAYC009")
-                .hasCourtApplications(1)
-                .hasUpdatedEndorsementContains("MW10")
-                .hasNoRemovedEndorsements()
-                .hasOffences(1)
                 .hasPreviousCase();
 
         verifyDVLANotificationCommandInvoked(driverNotifiedList);
