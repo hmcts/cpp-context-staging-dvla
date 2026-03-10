@@ -179,9 +179,9 @@ public class OffenceUtil {
             }
         } else if (hasAppealResult(courtApplications)) {
             if (hasD20Endorsement(previousOffence)) {
-                return UPDATE_MERGE;
+                return NO_RESULT_PREV_ENDORSED;
             } else {
-                return NO_UPDATE_PREV_NOT_ENDORSED;
+                return NO_RESULT_PREV_NOT_ENDORSED;
             }
         } else {
             return REMOVE;

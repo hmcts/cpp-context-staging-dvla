@@ -674,8 +674,8 @@ public class AppealScenariosIT extends AbstractIntegrationTest {
                 .hasAmountOfFine(2, "£200.00")
                 .hasDisqualificationPeriod(1, EMPTY_STRING)
                 .hasDisqualificationPeriod(2, "001200")
-                .hasResults(1, 2)
-                .hasResults(2, 2)
+                .hasResults(1, 3)
+                .hasResults(2, 3)
                 .hasWording(1, "Use a motor vehicle on a road / public place without third party insurance")
                 .hasWording(2, "Drive a motor vehicle otherwise than in accordance with a licence - endorsable offence");
 
@@ -683,6 +683,38 @@ public class AppealScenariosIT extends AbstractIntegrationTest {
         verifyGenerateDocumentStubCommandInvoked(driverNotifiedList);
 
         sendAndVerifyEvent("appealAmendReshare/cimd_3238_ac2/command2.json", 0);
+    }
+
+    @Test
+    public void cimd_3238_ac3() throws IOException {
+        List<DriverNotified> driverNotifiedList = sendAndVerifyEvent("appealAmendReshare/cimd_3238_ac3/command1.json", 1);
+
+        DriverNotifiedEventAssertion.with(driverNotifiedList.get(0))
+                .hasCaseReference("JW29150867")
+                .hasNotificationType(NotificationType.NEW)
+                .hasNoUpdatedEndorsements()
+                .hasNoRemovedEndorsements()
+                .hasCourtApplications(0)
+                .hasOffences(2)
+                .hasOffenceCode(1, "RA88001")
+                .hasOffenceCode(2, "RA88002")
+                .hasDVLACode(1, "IN10")
+                .hasDVLACode(2, "IN20")
+                .hasPenaltyPoints(1, EMPTY_STRING)
+                .hasPenaltyPoints(2, EMPTY_STRING)
+                .hasAmountOfFine(1, EMPTY_STRING)
+                .hasAmountOfFine(2, "£200.00")
+                .hasDisqualificationPeriod(1, EMPTY_STRING)
+                .hasDisqualificationPeriod(2, "001200")
+                .hasResults(1, 3)
+                .hasResults(2, 3)
+                .hasWording(1, "Use a motor vehicle on a road / public place without third party insurance")
+                .hasWording(2, "Drive a motor vehicle otherwise than in accordance with a licence - endorsable offence");
+
+        verifyDVLANotificationCommandInvoked(driverNotifiedList);
+        verifyGenerateDocumentStubCommandInvoked(driverNotifiedList);
+
+        sendAndVerifyEvent("appealAmendReshare/cimd_3238_ac3/command2.json", 0);
     }
 
     @Test
