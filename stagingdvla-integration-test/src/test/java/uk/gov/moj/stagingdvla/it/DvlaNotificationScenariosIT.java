@@ -1142,7 +1142,28 @@ public class DvlaNotificationScenariosIT extends AbstractIntegrationTest {
         verifyDVLANotificationCommandInvoked(driverNotifiedList);
         verifyGenerateDocumentStubCommandInvoked(driverNotifiedList);
 
-        sendAndVerifyEvent("appealAmendReshare/scenario1a/command2.json", 0);
+
+        driverNotifiedList = sendAndVerifyEvent("appealAmendReshare/scenario1a/command2.json",  1);
+
+        DriverNotifiedEventAssertion.with(driverNotifiedList.get(0))
+                .hasCaseReference("JW97425483")
+                .hasCourtApplications(1)
+                .hasUpdatedEndorsementContains("TS10")
+                .hasNoRemovedEndorsements()
+                .hasOffences(1)
+                .hasOffenceCode("RT88971")
+                .hasDVLACode("TS10")
+                .hasDisqualificationPeriod("001200")
+                .hasDrugLevel("500")
+                .hasPenaltyPoints(EMPTY_STRING)
+                .hasAmountOfFine(EMPTY_STRING)
+                .hasResults(3)
+                .hasWording("Has a violent past and fear that he will commit further offences and interfere with witnesse")
+                .hasPreviousCase();
+
+        verifyDVLANotificationCommandInvoked(driverNotifiedList);
+        verifyGenerateDocumentStubCommandInvoked(driverNotifiedList);
+
     }
 
     /**
@@ -1411,7 +1432,27 @@ public class DvlaNotificationScenariosIT extends AbstractIntegrationTest {
         verifyDVLANotificationCommandInvoked(firstNotice);
         verifyGenerateDocumentStubCommandInvoked(firstNotice);
 
-        sendAndVerifyEvent("appealAmendReshare/dd-27008/scenario1/command4.json",  0);
+
+        List<DriverNotified> secondNotice = sendAndVerifyEvent("appealAmendReshare/dd-27008/scenario1/command4.json",  1);
+        DriverNotifiedEventAssertion.with(secondNotice.get(0))
+                .hasCaseReference("DVLA02022364")
+                .hasUpdatedEndorsementContains("SP50")
+                .hasNoRemovedEndorsements()
+                .hasCourtApplications(1)
+                .hasOffences(1)
+                .hasOffenceCode("RR84702")
+                .hasDVLACode("SP50")
+                .hasDisqualificationPeriod("010000")
+                .hasDrugLevel(null)
+                .hasPenaltyPoints(EMPTY_STRING)
+                .hasAmountOfFine("£121.00")
+                .hasResults(5)
+                .hasConvictionDate("2024-10-04")
+                .hasConvictingCourt("2570")
+                .hasWording("A fine not exceeding level five on the standard scale.Time limit for prosecutions:6 monthsOn the 12th March 2015 the limit on fines imposed by a Magistrates? court was removed ? as such, the potential fine on summary conviction in relation to an offence committed after this date is unlimited.");
+
+        verifyDVLANotificationCommandInvoked(secondNotice);
+        verifyGenerateDocumentStubCommandInvoked(secondNotice);
     }
 
     @Test
@@ -1504,8 +1545,25 @@ public class DvlaNotificationScenariosIT extends AbstractIntegrationTest {
         verifyDVLANotificationCommandInvoked(secondNotice);
         verifyGenerateDocumentStubCommandInvoked(secondNotice);
 
-        // Appeal abandoned
-        sendAndVerifyEvent("appealAmendReshare/dd-27008/scenario2/command3.json",  0);
+        List<DriverNotified> thirdNotice = sendAndVerifyEvent("appealAmendReshare/dd-27008/scenario2/command3.json",  1);
+        DriverNotifiedEventAssertion.with(thirdNotice.get(0))
+                .hasCaseReference("DVLA02022362")
+                .hasUpdatedEndorsementContains("SP50")
+                .hasNoRemovedEndorsements()
+                .hasCourtApplications(1)
+                .hasOffences(1)
+                .hasOffenceCode("RR84702")
+                .hasDVLACode("SP50")
+                .hasDisqualificationPeriod("000600")
+                .hasDrugLevel(null)
+                .hasPenaltyPoints(EMPTY_STRING)
+                .hasAmountOfFine("£1111.00")
+                .hasResults(4)
+                .hasWording("A fine not exceeding level five on the standard scale.Time limit for prosecutions:6 monthsOn the 12th March 2015 the limit on fines imposed by a Magistrates? court was removed ? as such, the potential fine on summary conviction in relation to an offence committed after this date is unlimited.");
+
+        verifyDVLANotificationCommandInvoked(thirdNotice);
+        verifyGenerateDocumentStubCommandInvoked(thirdNotice);
+
     }
 
     /**

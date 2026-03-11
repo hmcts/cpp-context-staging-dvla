@@ -22,6 +22,7 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.End
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.SPECIAL_REASON;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.UPDATE_MERGE;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.POINTS_DISQUALIFICATION_CODE;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.DDRE;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.SV;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.DisqualificationPeriodHelper.getDisqualificationPeriod;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.MergeUtil.getDistinctPrompts;
@@ -382,7 +383,7 @@ public class DriverNotifiedEngine {
                                                               final DriverNotified previousDriverNotified,
                                                               final List<Cases> cases, final List<CourtApplications> courtApplications,
                                                               final List<String> nonEndorsableOffenceCodes) {
-        if (hasAppealRefusedResult(courtApplications)) {
+        if (hasAppealRefusedResult(courtApplications) && !hasResultType(courtApplications, DDRE)) {
             return false;
         }
 
