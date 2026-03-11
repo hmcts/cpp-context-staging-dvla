@@ -1428,7 +1428,23 @@ public class DriverNotifiedEngineTest {
         assertThat(transformed.getUpdatedEndorsements().stream().sorted().toArray(), is(equalTo(asList(SS30).stream().sorted().toArray())));
         assertThat(transformed.getCases().get(0).getDefendantCaseOffences().size(), is(equalTo(1)));
         assertThat(transformed.getCases().get(0).getDefendantCaseOffences().get(0).getDvlaCode(), is(equalTo(SS30)));
-        assertThat(transformed.getCases().get(0).getDefendantCaseOffences().get(0).getCode(), is(equalTo(OFF1)));;
+        assertThat(transformed.getCases().get(0).getDefendantCaseOffences().get(0).getCode(), is(equalTo(OFF1)));
+
+
+        previous = getPreviousDriverNotified(2, EMPTY, asList(Boolean.TRUE, Boolean.FALSE),
+                asList(SS30, SS40), asList(OFF1, OFF2), asList(OFF1, OFF2), true, previousConvictionDate, true, null, 1, false, null, previousOrderDate, null);
+        courtApplications = getCourtApplications(asList(APP1), prefix, false, null, null, SS30, 1, asList(AASD.id, DDRE.id));
+        cases = getCasesWithMultipleOffences(1, EMPTY, asList(Boolean.FALSE),
+                asList(SS30), asList(OFF1), asList(OFF1), false, null, null, null, 1, false, asList(LPIC1.id));
+
+        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+        transformed = transformDriverNotified(previousByCase, orderDate,
+                crownCourt, null, defendant, cases, hearingId, courtApplications).get(0);
+
+        assertThat(transformed.getUpdatedEndorsements().stream().sorted().toArray(), is(equalTo(asList(SS30).stream().sorted().toArray())));
+        assertThat(transformed.getCases().get(0).getDefendantCaseOffences().size(), is(equalTo(1)));
+        assertThat(transformed.getCases().get(0).getDefendantCaseOffences().get(0).getDvlaCode(), is(equalTo(SS30)));
+        assertThat(transformed.getCases().get(0).getDefendantCaseOffences().get(0).getCode(), is(equalTo(OFF1)));
     }
 
     @Test

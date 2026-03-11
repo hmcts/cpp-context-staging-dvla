@@ -159,6 +159,10 @@ public class DriverNotifiedEventAssertion {
         return validate(getOffence(offenceNumber), DefendantCaseOffences::getDisqualificationPeriod, disQualificationPeriod);
     }
 
+    public DriverNotifiedEventAssertion hasDateDisqReimposedFollowingAppeal(int offenceNumber, String dateDisqReimposedFollowingAppeal) {
+        return validate(getOffence(offenceNumber), DefendantCaseOffences::getDateDisqReimposedFollowingAppeal, dateDisqReimposedFollowingAppeal);
+    }
+
     public DriverNotifiedEventAssertion hasConvictionDate(int offenceNumber, String convictionDate) {
         return validate(getOffence(offenceNumber), DefendantCaseOffences::getConvictionDate, convictionDate);
     }

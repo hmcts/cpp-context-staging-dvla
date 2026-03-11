@@ -167,6 +167,78 @@ public class AppealScenariosIT extends AbstractIntegrationTest {
     }
 
     @Test
+    public void cimd_3233_ac1() throws IOException {
+        List<DriverNotified> driverNotifiedList = sendAndVerifyEvent("appealAmendReshare/cimd_3233_ac1/command1.json", 1);
+
+        DriverNotifiedEventAssertion.with(driverNotifiedList.get(0))
+                .hasCaseReference("JW29150867")
+                .hasNotificationType(NotificationType.NEW)
+                .hasNoUpdatedEndorsements()
+                .hasNoRemovedEndorsements()
+                .hasCourtApplications(0)
+                .hasOffences(1)
+                .hasOffenceCode(1, "RA88001")
+                .hasDVLACode(1, "IN10")
+                .hasPenaltyPoints(1, EMPTY_STRING)
+                .hasAmountOfFine(1, EMPTY_STRING)
+                .hasAmountOfFine(1, EMPTY_STRING)
+                .hasSentenceDate(1, "2023-05-16")
+                .hasSentencingCourtCode(1, "2577")
+                .hasResults(1, 6)
+                .hasWording(1, "Use a motor vehicle on a road / public place without third party insurance");
+
+        verifyDVLANotificationCommandInvoked(driverNotifiedList);
+        verifyGenerateDocumentStubCommandInvoked(driverNotifiedList);
+
+        sendAndVerifyEvent("appealAmendReshare/cimd_3233_ac1/command2.json", 0);
+    }
+
+    @Test
+    public void cimd_3233_ac2() throws IOException {
+        List<DriverNotified> driverNotifiedList = sendAndVerifyEvent("appealAmendReshare/cimd_3233_ac2/command1.json", 1);
+
+        DriverNotifiedEventAssertion.with(driverNotifiedList.get(0))
+                .hasCaseReference("JW29150867")
+                .hasNotificationType(NotificationType.NEW)
+                .hasNoUpdatedEndorsements()
+                .hasNoRemovedEndorsements()
+                .hasCourtApplications(0)
+                .hasOffences(1)
+                .hasOffenceCode(1, "RA88001")
+                .hasDVLACode(1, "IN10")
+                .hasPenaltyPoints(1, EMPTY_STRING)
+                .hasAmountOfFine(1, EMPTY_STRING)
+                .hasAmountOfFine(1, EMPTY_STRING)
+                .hasSentenceDate(1, "2026-09-09")
+                .hasSentencingCourtCode(1, "2577")
+                .hasResults(1, 6)
+                .hasWording(1, "Use a motor vehicle on a road / public place without third party insurance");
+
+        verifyDVLANotificationCommandInvoked(driverNotifiedList);
+        verifyGenerateDocumentStubCommandInvoked(driverNotifiedList);
+
+        driverNotifiedList = sendAndVerifyEvent("appealAmendReshare/cimd_3233_ac2/command2.json", 1);
+
+        DriverNotifiedEventAssertion.with(driverNotifiedList.get(0))
+                .hasCaseReference("JW29150867")
+                .hasNotificationType(NotificationType.UPDATE)
+                .hasUpdatedEndorsementContains("IN10")
+                .hasNoRemovedEndorsements()
+                .hasCourtApplications(1)
+                .hasOffences(1)
+                .hasOffenceCode(1, "RA88001")
+                .hasDVLACode(1, "IN10")
+                .hasPenaltyPoints(1, EMPTY_STRING)
+                .hasAmountOfFine(1, EMPTY_STRING)
+                .hasAmountOfFine(1, EMPTY_STRING)
+                .hasSentenceDate(1, "2026-09-09")
+                .hasSentencingCourtCode(1, "2577")
+                .hasDateDisqReimposedFollowingAppeal(1, "2026-10-10")
+                .hasResults(1, 6)
+                .hasWording(1, "Use a motor vehicle on a road / public place without third party insurance");
+    }
+
+    @Test
     public void cimd_3235_ac1() throws IOException {
         List<DriverNotified> driverNotifiedList = sendAndVerifyEvent("appealAmendReshare/cimd_3235_ac1/command1.json", 1);
 

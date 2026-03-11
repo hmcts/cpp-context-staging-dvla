@@ -152,7 +152,11 @@ public class OffenceUtil {
                 return SPECIAL_REASON;
             } else if (hasNoResult(currentOffence)) {
                 if (hasD20Endorsement(previousOffence)) {
-                    return NO_RESULT_PREV_ENDORSED;
+                    if (hasResultType(courtApplications, DDRE)) {
+                        return UPDATE_MERGE;
+                    } else {
+                        return NO_RESULT_PREV_ENDORSED;
+                    }
                 } else {
                     return NO_RESULT_PREV_NOT_ENDORSED;
                 }
@@ -179,7 +183,11 @@ public class OffenceUtil {
             }
         } else if (hasAppealResult(courtApplications)) {
             if (hasD20Endorsement(previousOffence)) {
-                return NO_RESULT_PREV_ENDORSED;
+                if (hasResultType(courtApplications, DDRE)) {
+                    return UPDATE_MERGE;
+                } else {
+                    return NO_RESULT_PREV_ENDORSED;
+                }
             } else {
                 return NO_RESULT_PREV_NOT_ENDORSED;
             }
@@ -482,20 +490,20 @@ public class OffenceUtil {
         }
     }
 
-    private static boolean hasRemoveResultType(final DefendantCaseOffences offence) {
+    public static boolean hasRemoveResultType(final DefendantCaseOffences offence) {
         return hasAnyResult(offence, asList(DISM, DINE, DINI, DISC, DISCH, WDRN, WDRNOFF));
     }
 
-    private static boolean hasSpecialReason(final DefendantCaseOffences offence) {
+    public static boolean hasSpecialReason(final DefendantCaseOffences offence) {
         return hasAnyResult(offence, asList(NESR, NDSR));
     }
 
-    private static boolean hasNoResult(final DefendantCaseOffences offence) {
+    public static boolean hasNoResult(final DefendantCaseOffences offence) {
         return isEmpty(offence.getResults())
                 || (offence.getResults().size() == 1 && hasAnyResultType(offence.getResults(), LICENCE_PRODUCED_IN_COURT_RESULTS));
     }
 
-    private static boolean hasOatsOrAdj(final DefendantCaseOffences offence) {
+    public static boolean hasOatsOrAdj(final DefendantCaseOffences offence) {
         return hasResultType(offence, OATS)
                 || hasResultType(offence, ADJ);
     }
