@@ -674,8 +674,8 @@ public class AppealScenariosIT extends AbstractIntegrationTest {
                 .hasAmountOfFine(2, "£200.00")
                 .hasDisqualificationPeriod(1, EMPTY_STRING)
                 .hasDisqualificationPeriod(2, "001200")
-                .hasResults(1, 3)
-                .hasResults(2, 3)
+                .hasResults(1, 2)
+                .hasResults(2, 2)
                 .hasWording(1, "Use a motor vehicle on a road / public place without third party insurance")
                 .hasWording(2, "Drive a motor vehicle otherwise than in accordance with a licence - endorsable offence");
 
@@ -706,8 +706,8 @@ public class AppealScenariosIT extends AbstractIntegrationTest {
                 .hasAmountOfFine(2, "£200.00")
                 .hasDisqualificationPeriod(1, EMPTY_STRING)
                 .hasDisqualificationPeriod(2, "001200")
-                .hasResults(1, 3)
-                .hasResults(2, 3)
+                .hasResults(1, 2)
+                .hasResults(2, 2)
                 .hasWording(1, "Use a motor vehicle on a road / public place without third party insurance")
                 .hasWording(2, "Drive a motor vehicle otherwise than in accordance with a licence - endorsable offence");
 
