@@ -20,6 +20,7 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.getPenalty
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.getSuspendedSentence;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAnyResultType;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasD20Endorsement;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasNoResult;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasNonD20Endorsement;
 
 import uk.gov.justice.core.courts.JudicialResultCategory;
@@ -65,7 +66,8 @@ public class MergeUtil {
                 .withAlcoholReadingMethodDescription((String) mergeValue(offence.getAlcoholReadingMethodDescription(), previousOffence.getAlcoholReadingMethodDescription()))
                 .withEndorsableFlag((Boolean) mergeValue(offence.getEndorsableFlag(), previousOffence.getEndorsableFlag()))
                 .withResults(hasAppealResultOrGranted
-                        ? mergeResultsV2(offence.getResults(), previousOffence.getResults())
+                        ? ((hasNoResult(offence) || hasAnyResultType(offence.getResults(), asList(OATS.id, ADJ.id)))
+                        ? previousOffence.getResults() : mergeResultsV2(offence.getResults(), previousOffence.getResults()))
                         : mergeResultsV1(offence.getResults(), previousOffence.getResults()))
                 .withFine((String) mergeValue(offence.getFine(), previousOffence.getFine()))
                 .withPenaltyPoints((String) mergeValue(offence.getPenaltyPoints(), previousOffence.getPenaltyPoints()))
@@ -135,9 +137,7 @@ public class MergeUtil {
     }
 
     private static List<Results> mergeResultsV2(final List<Results> results, final List<Results> previousResults) {
-        if (isEmpty(results) || hasAnyResultType(results, asList(OATS.id, ADJ.id))) {
-            return previousResults;
-        } else if (isEmpty(previousResults)) {
+        if (isEmpty(previousResults)) {
             return results;
         } else {
             return getMergedResultsV2(results, previousResults);
