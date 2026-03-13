@@ -150,7 +150,8 @@ public class AppealScenariosIT extends AbstractIntegrationTest {
         DriverNotifiedEventAssertion.with(driverNotifiedList.get(0))
                 .hasCaseReference("JW29150867")
                 .hasNotificationType(NotificationType.UPDATE)
-                .hasUpdatedEndorsementContains("IN20")
+                .hasNoUpdatedEndorsements()
+                .hasOatsEndorsementContains("IN20")
                 .hasRemovedEndorsementContains("IN10")
                 .hasCourtApplications(1)
                 .hasOffences(1)
@@ -493,7 +494,8 @@ public class AppealScenariosIT extends AbstractIntegrationTest {
         DriverNotifiedEventAssertion.with(driverNotifiedList.get(0))
                 .hasCaseReference("JW29150867")
                 .hasNotificationType(NotificationType.UPDATE)
-                .hasUpdatedEndorsementContains("IN10", "IN20")
+                .hasUpdatedEndorsementContains( "IN20")
+                .hasOatsEndorsementContains("IN10")
                 .hasNoRemovedEndorsements()
                 .hasCourtApplications(1)
                 .hasOffences(2)
@@ -604,7 +606,8 @@ public class AppealScenariosIT extends AbstractIntegrationTest {
         DriverNotifiedEventAssertion.with(driverNotifiedList.get(0))
                 .hasCaseReference("JW29150867")
                 .hasNotificationType(NotificationType.UPDATE)
-                .hasUpdatedEndorsementContains("IN10", "IN20", "IN30")
+                .hasUpdatedEndorsementContains("IN30")
+                .hasOatsEndorsementContains("IN10", "IN20")
                 .hasNoRemovedEndorsements()
                 .hasCourtApplications(1)
                 .hasOffences(3)
@@ -852,7 +855,8 @@ public class AppealScenariosIT extends AbstractIntegrationTest {
                 .hasCaseReference("JW29150867")
                 .hasCourtApplications(1)
                 .hasNotificationType(NotificationType.UPDATE)
-                .hasUpdatedEndorsementContains("IN10", "IN10", "IN20", "IN60")
+                .hasUpdatedEndorsementContains("IN10", "IN20", "IN60")
+                .hasOatsEndorsementContains("IN10")
                 .hasRemovedEndorsementContains("IN30", "IN70")
                 .hasOffences(4)
                 .hasOffenceCode(1, "RA88004")
@@ -1100,7 +1104,8 @@ public class AppealScenariosIT extends AbstractIntegrationTest {
         DriverNotifiedEventAssertion.with(driverNotifiedList.get(0))
                 .hasCaseReference("JW29150867")
                 .hasNotificationType(NotificationType.UPDATE)
-                .hasUpdatedEndorsementContains("IN20")
+                .hasNoUpdatedEndorsements()
+                .hasOatsEndorsementContains("IN20")
                 .hasRemovedEndorsementContains("IN10")
                 .hasCourtApplications(1)
                 .hasOffences(1)
@@ -1110,6 +1115,126 @@ public class AppealScenariosIT extends AbstractIntegrationTest {
                 .hasAmountOfFine(1, "£200.00")
                 .hasResults(1, 2)
                 .hasWording(1, "Drive a motor vehicle otherwise than in accordance with a licence - endorsable offence");
+
+        verifyDVLANotificationCommandInvoked(driverNotifiedList);
+        verifyGenerateDocumentStubCommandInvoked(driverNotifiedList);
+    }
+
+    @Test
+    public void cimd_3573_ac1_sv() throws IOException {
+        List<DriverNotified> driverNotifiedList = sendAndVerifyEvent("appealAmendReshare/cimd_3573_ac1/command1.json", 1);
+
+        DriverNotifiedEventAssertion.with(driverNotifiedList.get(0))
+                .hasCaseReference("JW29150867")
+                .hasNotificationType(NotificationType.NEW)
+                .hasNoUpdatedEndorsements()
+                .hasNoRemovedEndorsements()
+                .hasCourtApplications(0)
+                .hasOffences(3)
+                .hasOffenceCode(1, "RA88001")
+                .hasOffenceCode(2, "RA88002")
+                .hasOffenceCode(3, "RA88003")
+                .hasDVLACode(1, "IN10")
+                .hasDVLACode(2, "IN20")
+                .hasDVLACode(3, "IN30")
+                .hasPenaltyPoints(1, EMPTY_STRING)
+                .hasPenaltyPoints(2, "8")
+                .hasPenaltyPoints(3, EMPTY_STRING)
+                .hasAmountOfFine(1, "£100.00")
+                .hasAmountOfFine(2, "£400.00")
+                .hasAmountOfFine(3, "£100.00")
+                .hasResults(1, 2)
+                .hasResults(2, 2)
+                .hasResults(3, 2);
+
+        verifyDVLANotificationCommandInvoked(driverNotifiedList);
+        verifyGenerateDocumentStubCommandInvoked(driverNotifiedList);
+
+        driverNotifiedList = sendAndVerifyEvent("appealAmendReshare/cimd_3573_ac1/command2.json", 1);
+
+        DriverNotifiedEventAssertion.with(driverNotifiedList.get(0))
+                .hasCaseReference("JW29150867")
+                .hasNotificationType(NotificationType.UPDATE)
+                .hasUpdatedEndorsementContains("IN20")
+                .hasOatsEndorsementContains("IN10", "IN30")
+                .hasNoRemovedEndorsements()
+                .hasCourtApplications(1)
+                .hasOffences(3)
+                .hasOffenceCode(1, "RA88001")
+                .hasOffenceCode(2, "RA88002")
+                .hasOffenceCode(3, "RA88003")
+                .hasDVLACode(1, "IN10")
+                .hasDVLACode(2, "IN20")
+                .hasDVLACode(3, "IN30")
+                .hasPenaltyPoints(1, EMPTY_STRING)
+                .hasPenaltyPoints(2, "6")
+                .hasPenaltyPoints(3, EMPTY_STRING)
+                .hasAmountOfFine(1, "£100.00")
+                .hasAmountOfFine(2, "£500.00")
+                .hasAmountOfFine(3, "£100.00")
+                .hasResults(1, 2)
+                .hasResults(2, 3)
+                .hasResults(3, 2);
+
+        verifyDVLANotificationCommandInvoked(driverNotifiedList);
+        verifyGenerateDocumentStubCommandInvoked(driverNotifiedList);
+    }
+
+    @Test
+    public void cimd_3573_ac2_asv() throws IOException {
+        List<DriverNotified> driverNotifiedList = sendAndVerifyEvent("appealAmendReshare/cimd_3573_ac1/command1.json", 1);
+
+        DriverNotifiedEventAssertion.with(driverNotifiedList.get(0))
+                .hasCaseReference("JW29150867")
+                .hasNotificationType(NotificationType.NEW)
+                .hasNoUpdatedEndorsements()
+                .hasNoRemovedEndorsements()
+                .hasCourtApplications(0)
+                .hasOffences(3)
+                .hasOffenceCode(1, "RA88001")
+                .hasOffenceCode(2, "RA88002")
+                .hasOffenceCode(3, "RA88003")
+                .hasDVLACode(1, "IN10")
+                .hasDVLACode(2, "IN20")
+                .hasDVLACode(3, "IN30")
+                .hasPenaltyPoints(1, EMPTY_STRING)
+                .hasPenaltyPoints(2, "8")
+                .hasPenaltyPoints(3, EMPTY_STRING)
+                .hasAmountOfFine(1, "£100.00")
+                .hasAmountOfFine(2, "£400.00")
+                .hasAmountOfFine(3, "£100.00")
+                .hasResults(1, 2)
+                .hasResults(2, 2)
+                .hasResults(3, 2);
+
+        verifyDVLANotificationCommandInvoked(driverNotifiedList);
+        verifyGenerateDocumentStubCommandInvoked(driverNotifiedList);
+
+        driverNotifiedList = sendAndVerifyEvent("appealAmendReshare/cimd_3573_ac1/command2.json", 1);
+
+        DriverNotifiedEventAssertion.with(driverNotifiedList.get(0))
+                .hasCaseReference("JW29150867")
+                .hasNotificationType(NotificationType.UPDATE)
+                .hasUpdatedEndorsementContains("IN20")
+                .hasOatsEndorsementContains("IN10", "IN30")
+                .hasNoRemovedEndorsements()
+                .hasCourtApplications(1)
+                .hasOffences(3)
+                .hasOffenceCode(1, "RA88001")
+                .hasOffenceCode(2, "RA88002")
+                .hasOffenceCode(3, "RA88003")
+                .hasDVLACode(1, "IN10")
+                .hasDVLACode(2, "IN20")
+                .hasDVLACode(3, "IN30")
+                .hasPenaltyPoints(1, EMPTY_STRING)
+                .hasPenaltyPoints(2, "6")
+                .hasPenaltyPoints(3, EMPTY_STRING)
+                .hasAmountOfFine(1, "£100.00")
+                .hasAmountOfFine(2, "£500.00")
+                .hasAmountOfFine(3, "£100.00")
+                .hasResults(1, 2)
+                .hasResults(2, 3)
+                .hasResults(3, 2);
 
         verifyDVLANotificationCommandInvoked(driverNotifiedList);
         verifyGenerateDocumentStubCommandInvoked(driverNotifiedList);

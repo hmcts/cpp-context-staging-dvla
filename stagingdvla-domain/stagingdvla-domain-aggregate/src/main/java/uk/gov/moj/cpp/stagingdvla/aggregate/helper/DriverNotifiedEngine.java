@@ -18,6 +18,7 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.End
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.NO_RESULT_PREV_ENDORSED;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.NO_UPDATE_PREV_ENDORSED;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.NO_UPDATE_PREV_NOT_ENDORSED;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.OATS_PREV_ENDORSED;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.REMOVE;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.SPECIAL_REASON;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.UPDATE_MERGE;
@@ -212,6 +213,10 @@ public class DriverNotifiedEngine {
         return updatedCases;
     }
 
+    private static boolean hasSV(final List<Cases> cases) {
+        return cases.stream().anyMatch(DriverNotifiedEngine::hasSV);
+    }
+
     private static boolean hasSV(final Cases aCase) {
         return isNotEmpty(aCase.getDefendantCaseOffences())
                 && aCase.getDefendantCaseOffences().stream().anyMatch(offence -> hasResultType(offence, SV));
@@ -383,12 +388,14 @@ public class DriverNotifiedEngine {
                                                               final DriverNotified previousDriverNotified,
                                                               final List<Cases> cases, final List<CourtApplications> courtApplications,
                                                               final List<String> nonEndorsableOffenceCodes) {
-        if (hasAppealRefusedResult(courtApplications) && !hasResultType(courtApplications, DDRE)) {
+        if (hasAppealRefusedResult(courtApplications)
+                && !(hasResultType(courtApplications, DDRE) || hasSV(cases))) {
             return false;
         }
 
         final List<String> removedEndorsements = new ArrayList<>();
         final List<String> updatedEndorsements = new ArrayList<>();
+        final List<String> oatsOffences = new ArrayList<>();
         final List<String> noUpdateOffences = new ArrayList<>();
         final List<String> emptyResultOffences = new ArrayList<>();
         final List<String> specialReasonOffences = new ArrayList<>();
@@ -405,6 +412,7 @@ public class DriverNotifiedEngine {
                 switch (endorsementStatus) {
                     case REMOVE -> removedEndorsements.add(dvlaCode);
                     case UPDATE_MERGE, UPDATE_NOMERGE -> updatedEndorsements.add(dvlaCode);
+                    case OATS_PREV_ENDORSED -> oatsOffences.add(dvlaCode);
                     case NO_UPDATE_PREV_ENDORSED -> noUpdateOffences.add(dvlaCode);
                     case NO_RESULT_PREV_ENDORSED -> emptyResultOffences.add(dvlaCode);
                     case SPECIAL_REASON -> specialReasonOffences.add(dvlaCode);
@@ -420,7 +428,8 @@ public class DriverNotifiedEngine {
                         removeConvictionDataFromOffence(currentOffence, currentCase);
                     }
                 } else {
-                    if (UPDATE_MERGE.equals(endorsementStatus) || NO_UPDATE_PREV_ENDORSED.equals(endorsementStatus) || NO_RESULT_PREV_ENDORSED.equals(endorsementStatus)) {
+                    if (UPDATE_MERGE.equals(endorsementStatus) || OATS_PREV_ENDORSED.equals(endorsementStatus)
+                            || NO_UPDATE_PREV_ENDORSED.equals(endorsementStatus) || NO_RESULT_PREV_ENDORSED.equals(endorsementStatus)) {
                         mergeOffences(currentCase, currentOffence, previousOffence, courtApplications, orderDate, orderingCourtCode, hasAppealResultOrGranted(courtApplications));
                     } else if (SPECIAL_REASON.equals(endorsementStatus) || NO_UPDATE_PREV_NOT_ENDORSED.equals(endorsementStatus)) {
                         removeOffence(currentOffence, currentCase);
@@ -437,7 +446,7 @@ public class DriverNotifiedEngine {
             updatedEndorsements.addAll(noUpdateOffences);
             updatedEndorsements.addAll(emptyResultOffences);
             removedEndorsements.addAll(specialReasonOffences);
-            assignEndorsements(builder, courtApplications, removedEndorsements, updatedEndorsements);
+            assignEndorsements(builder, courtApplications, removedEndorsements, updatedEndorsements, oatsOffences);
             return true;
         }
         return false;
@@ -491,7 +500,7 @@ public class DriverNotifiedEngine {
         return newEndorsements;
     }
 
-    private static void assignEndorsements(final DriverNotified.Builder builder, final List<CourtApplications> courtApplications, final List<String> removedEndorsements, final List<String> updatedEndorsements) {
+    private static void assignEndorsements(final DriverNotified.Builder builder, final List<CourtApplications> courtApplications, final List<String> removedEndorsements, final List<String> updatedEndorsements, final List<String> oatsOffences) {
         if (isNotEmpty(removedEndorsements)) {
             builder.withRemovedEndorsements(removedEndorsements);
         }
@@ -500,8 +509,12 @@ public class DriverNotifiedEngine {
             builder.withUpdatedEndorsements(updatedEndorsements);
         }
 
+        if (isNotEmpty(oatsOffences)) {
+            builder.withOatsEndorsements(oatsOffences);
+        }
+
         if (hasAppealResultOrGranted(courtApplications)) {
-            builder.withNotificationType(isNotEmpty(updatedEndorsements)
+            builder.withNotificationType(isNotEmpty(updatedEndorsements) || isNotEmpty(oatsOffences)
                     ? NotificationType.UPDATE : NotificationType.REMOVE);
 
         } else {
