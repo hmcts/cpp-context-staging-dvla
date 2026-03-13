@@ -74,6 +74,13 @@ public class DriverNotifiedEventAssertion {
         return this;
     }
 
+    public DriverNotifiedEventAssertion hasOatsEndorsementContains(String...oatsEndorsements) {
+        Objects.requireNonNull(oatsEndorsements);
+        assertThat(notifiedEvent.getOatsEndorsements().stream().sorted().toArray(),
+                is(equalTo(Arrays.stream(oatsEndorsements).sorted().toArray())));
+        return this;
+    }
+
     public DriverNotifiedEventAssertion hasRemovedEndorsementContains(String...removedEndorsements) {
         assertThat(notifiedEvent.getRemovedEndorsements().stream().sorted().toArray(),
                 is(equalTo(Arrays.stream(removedEndorsements).sorted().toArray())));

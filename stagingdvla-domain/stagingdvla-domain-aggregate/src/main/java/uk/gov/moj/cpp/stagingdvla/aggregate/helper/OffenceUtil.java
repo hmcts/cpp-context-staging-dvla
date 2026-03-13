@@ -27,6 +27,8 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.End
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.NO_RESULT_PREV_NOT_ENDORSED;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.NO_UPDATE_PREV_ENDORSED;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.NO_UPDATE_PREV_NOT_ENDORSED;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.OATS_PREV_ENDORSED;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.OATS_PREV_NOT_ENDORSED;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.REMOVE;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.SPECIAL_REASON;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.UPDATE_MERGE;
@@ -160,7 +162,13 @@ public class OffenceUtil {
                 } else {
                     return NO_RESULT_PREV_NOT_ENDORSED;
                 }
-            } else if (hasOatsOrAdj(currentOffence)) {
+            } else if (hasResultType(currentOffence, OATS)) {
+                if (hasD20Endorsement(previousOffence)) {
+                    return OATS_PREV_ENDORSED;
+                } else {
+                    return OATS_PREV_NOT_ENDORSED;
+                }
+            } else if (hasResultType(currentOffence, ADJ)) {
                 if (hasD20Endorsement(previousOffence)) {
                     return NO_UPDATE_PREV_ENDORSED;
                 } else {
@@ -501,11 +509,6 @@ public class OffenceUtil {
     public static boolean hasNoResult(final DefendantCaseOffences offence) {
         return isEmpty(offence.getResults())
                 || (offence.getResults().size() == 1 && hasAnyResultType(offence.getResults(), LICENCE_PRODUCED_IN_COURT_RESULTS));
-    }
-
-    public static boolean hasOatsOrAdj(final DefendantCaseOffences offence) {
-        return hasResultType(offence, OATS)
-                || hasResultType(offence, ADJ);
     }
 
     public static boolean hasD20Endorsement(final DefendantCaseOffences offence) {
