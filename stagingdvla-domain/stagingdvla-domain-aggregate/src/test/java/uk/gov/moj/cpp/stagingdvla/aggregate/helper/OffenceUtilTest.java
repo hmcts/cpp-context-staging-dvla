@@ -29,6 +29,7 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.Res
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.G;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.OATS;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.RFSD;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.ROPENED;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.SV;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.TEXT;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.WDRN;
@@ -40,7 +41,7 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAnyResu
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAnyResultType;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAppealRefusedResult;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAppealResult;
-import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAppealResultOrGranted;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAppealResultOrGrantedOrReopened;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasD20Endorsement;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasPointsDisqualificationCode;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasResultType;
@@ -590,13 +591,13 @@ class OffenceUtilTest {
     }
 
     @Test
-    void shouldReturnTrueForHasAppealResultOrGrantedWithAppealResult() {
+    void shouldReturnTrueForHasAppealResultOrGrantedWithAppealOrReopenResult() {
         final List<Results> results = singletonList(results().withResultIdentifier(AACA.id).build());
         final List<CourtApplications> courtApplications = singletonList(
                 CourtApplications.courtApplications().withResults(results).build()
         );
 
-        boolean hasAppealResultOrGranted = hasAppealResultOrGranted(courtApplications);
+        boolean hasAppealResultOrGranted = hasAppealResultOrGrantedOrReopened(courtApplications);
 
         assertThat(hasAppealResultOrGranted, is(true));
     }
@@ -608,19 +609,30 @@ class OffenceUtilTest {
                 CourtApplications.courtApplications().withResults(results).build()
         );
 
-        boolean hasAppealResultOrGranted = hasAppealResultOrGranted(courtApplications);
+        boolean hasAppealResultOrGranted = hasAppealResultOrGrantedOrReopened(courtApplications);
+
+        assertThat(hasAppealResultOrGranted, is(true));
+    }
+    @Test
+    void shouldReturnTrueForHasAppealResultOrGrantedWithReopenResult() {
+        final List<Results> results = singletonList(results().withResultIdentifier(ROPENED.id).build());
+        final List<CourtApplications> courtApplications = singletonList(
+                CourtApplications.courtApplications().withResults(results).build()
+        );
+
+        boolean hasAppealResultOrGranted = hasAppealResultOrGrantedOrReopened(courtApplications);
 
         assertThat(hasAppealResultOrGranted, is(true));
     }
 
     @Test
-    void shouldReturnFalseForHasAppealResultOrGrantedWithOtherResult() {
+    void shouldReturnFalseForHasAppealResultOrGrantedWithOtherOrReopenResult() {
         final List<Results> results = singletonList(results().withResultIdentifier(OATS.id).build());
         final List<CourtApplications> courtApplications = singletonList(
                 CourtApplications.courtApplications().withResults(results).build()
         );
 
-        boolean hasAppealResultOrGranted = hasAppealResultOrGranted(courtApplications);
+        boolean hasAppealResultOrGranted = hasAppealResultOrGrantedOrReopened(courtApplications);
 
         assertThat(hasAppealResultOrGranted, is(false));
     }

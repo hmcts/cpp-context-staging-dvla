@@ -72,6 +72,7 @@ public class AggregateConstants {
         RFSD("d3902789-4cc8-4753-a15f-7e26dd39f6ae"),
         COV("4a026ff3-e1aa-407e-aafa-015723c1dbd0"),
         G("2b3f7c20-8fc1-4fad-9076-df196c24b27e"),
+        ROPENED("e3fb46ee-e406-4f73-9bf1-71d513da8cc7"),
         TEXT("98138ec8-5dd3-11e8-9c2d-fa7ae01bbebc"),
         ADJ("d278650c-e429-11e8-9f32-f2801f1b9fd1"),
         ERR("c36fed37-b635-4303-b514-2273e9e2594d"),
