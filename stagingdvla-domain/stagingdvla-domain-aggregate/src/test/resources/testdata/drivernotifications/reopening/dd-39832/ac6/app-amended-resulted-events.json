@@ -1,0 +1,417 @@
+{
+  "caseApplicationReferences": [
+    "28DI9426159"
+  ],
+  "cases": [
+    {
+      "caseId": "7d121198-5071-4731-99ab-f20d88224307",
+      "caseStatus": "INACTIVE",
+      "defendantCaseOffences": [
+        {
+          "civilOffence": false,
+          "code": "OF61102C",
+          "convictionStatus": "Not Convicted",
+          "dateFromWhichDisqRemoved": "",
+          "disqualificationPeriod": "",
+          "dttpDtetp": "",
+          "dvlaCode": "NE98",
+          "endorsableFlag": false,
+          "fine": "",
+          "interimImposedFinalSentence": "",
+          "modeOfTrial": "Indictable",
+          "otherSentence": "E12M",
+          "penaltyPoints": "",
+          "results": [
+            {
+              "d20": false,
+              "dvlaCode": "E",
+              "label": "Conditional discharge",
+              "prompts": [
+                {
+                  "durationSequence": 1,
+                  "label": "Period of conditional discharge",
+                  "promptIdentifier": "d3205319-84cf-4c5b-9d7a-7e4bb1865054",
+                  "promptReference": "periodofConditionalDischarge",
+                  "value": "12 Months"
+                }
+              ],
+              "publishedForNows": false,
+              "resultIdentifier": "554c2622-c1cc-459e-a98d-b7f317ab065c"
+            },
+            {
+              "d20": true,
+              "label": "Driving record endorsed (no points)",
+              "publishedForNows": false,
+              "resultIdentifier": "b0aeb4fc-df63-4e2f-af88-97e3f23e847f"
+            },
+            {
+              "d20": false,
+              "label": "0: None or unknown",
+              "publishedForNows": true,
+              "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956"
+            }
+          ],
+          "startDate": "2022-12-12",
+          "title": "Conspire to assault a person thereby occasioning them actual bodily harm",
+          "wording": "Kamryn Block at Johnathon Ranch, conspired together with Alberta Hegmann to assault Ms. Eddie Prosacco, thereby occasioning actual bodily harm."
+        },
+        {
+          "civilOffence": false,
+          "code": "PS90015",
+          "convictionStatus": "Not Convicted",
+          "dateFromWhichDisqRemoved": "",
+          "disqualificationPeriod": "",
+          "dttpDtetp": "",
+          "dvlaCode": "NE98",
+          "endorsableFlag": false,
+          "fine": "£100.00",
+          "interimImposedFinalSentence": "",
+          "modeOfTrial": "Summary",
+          "penaltyPoints": "8",
+          "results": [
+            {
+              "d20": true,
+              "label": "Driving record endorsed with penalty points",
+              "prompts": [
+                {
+                  "label": "Penalty points for this offence",
+                  "promptIdentifier": "a8719de4-7783-448a-b792-e3f94e670ad0",
+                  "promptReference": "PENPT",
+                  "value": "8"
+                },
+                {
+                  "label": "Defendant driving licence number",
+                  "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+                  "promptReference": "defendantDrivingLicenceNumber",
+                  "value": "VANFL002222OW9PH"
+                }
+              ],
+              "publishedForNows": false,
+              "resultIdentifier": "cee54856-4450-4f28-a8a9-72b688726201"
+            },
+            {
+              "d20": false,
+              "label": "0: None or unknown",
+              "publishedForNows": true,
+              "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956"
+            },
+            {
+              "d20": false,
+              "label": "Fine",
+              "prompts": [
+                {
+                  "label": "Amount of fine",
+                  "promptIdentifier": "7cd1472f-2379-4f5b-9e67-98a43d86e122",
+                  "promptReference": "AOF",
+                  "value": "£100.00"
+                }
+              ],
+              "publishedForNows": false,
+              "resultDefinitionGroup": "Imposition",
+              "resultIdentifier": "969f150c-cd05-46b0-9dd9-30891efcc766"
+            }
+          ],
+          "startDate": "2022-11-28",
+          "title": "Public service vehicles - passenger failing to pay fare",
+          "wording": "Public service vehicles - passenger failing to pay fare"
+        }
+      ],
+      "hasSV": false,
+      "initiationCode": "C",
+      "reference": "28DI9426159"
+    }
+  ],
+  "courtApplications": [
+    {
+      "applicationReceivedDate": "2026-03-25",
+      "applicationReference": "28DI9426159",
+      "applicationStatus": "FINALISED",
+      "applicationType": "Application to reopen case",
+      "applicationTypeId": "9d2ae0fe-d4d0-43ca-ab7a-7a2556cafe5e",
+      "id": "ce9ea5bc-5a52-4f82-9457-554e8e7ed1d8",
+      "results": [
+        {
+          "d20": false,
+          "label": "Granted",
+          "publishedForNows": false,
+          "resultIdentifier": "2b3f7c20-8fc1-4fad-9076-df196c24b27e"
+        },
+        {
+          "d20": false,
+          "label": "Case reopened",
+          "prompts": [
+            {
+              "label": "Re-opened under",
+              "promptIdentifier": "3872ea68-92d9-469f-9929-c676745982ef",
+              "promptReference": "reopenedUnder",
+              "value": "Section 142 Magistrates' Courts Act 1980"
+            },
+            {
+              "label": "Conviction and sentence imposed on specified date are set aside",
+              "promptIdentifier": "5797feb0-7678-4193-ad16-944365e9a68a",
+              "promptReference": "convictionAndSentenceImposedOnSpecifiedDateAreSetAside",
+              "value": "03/03/2027"
+            },
+            {
+              "label": "Prosecutor to be notified organisation name",
+              "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+              "promptReference": "prosecutortobenotifiedOrganisationName",
+              "value": "test"
+            },
+            {
+              "label": "Prosecutor to be notified address line 1",
+              "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+              "promptReference": "prosecutortobenotifiedAddress1",
+              "value": "test"
+            },
+            {
+              "label": "Prosecutor to be notified post code",
+              "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+              "promptReference": "prosecutortobenotifiedPostCode",
+              "value": "MK3 4AF"
+            }
+          ],
+          "publishedForNows": false,
+          "resultIdentifier": "e3fb46ee-e406-4f73-9bf1-71d513da8cc7"
+        }
+      ]
+    }
+  ],
+  "defendant": {
+    "address": {
+      "line1": "9999A9999AAAA",
+      "line2": "Woodlane",
+      "line3": "addressline 3",
+      "line4": "Bristol",
+      "line5": "Avon",
+      "postCode": "SW11 3TQ"
+    },
+    "dateOfBirth": "2005-11-11",
+    "driverNumber": "VANFL002222OW9PH",
+    "firstName": "Kamryn",
+    "gender": "MALE",
+    "lastName": "Block",
+    "name": "Kamryn Block",
+    "title": "Mr"
+  },
+  "distinctPrompts": [
+    {
+      "label": "Defendant driving licence number",
+      "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+      "promptReference": "defendantDrivingLicenceNumber",
+      "value": "VANFL002222OW9PH"
+    }
+  ],
+  "identifier": "c4046178-abb9-49ad-95f2-0203f57579d0",
+  "licenceProducedInCourt": "0: None or unknown",
+  "masterDefendantId": "72ac3217-3d71-42f0-a670-1474264aea4b",
+  "materialId": "f4ea78ee-f327-4295-9ab3-028d4071a59d",
+  "notificationType": "Update",
+  "notificationWasPreviouslySent": true,
+  "oatsEndorsements": [
+    "NE98"
+  ],
+  "orderDate": "2026-03-26",
+  "orderingCourt": {
+    "address": {
+      "address1": "The Magistrates' Court",
+      "address2": "Barclay Road",
+      "address3": "Croydon",
+      "address4": "",
+      "address5": "",
+      "postcode": "CR9 3NG"
+    },
+    "code": "B01EF00",
+    "courtHearingLocation": "B01EF01",
+    "id": "31b3d313-7a7c-4598-bb4b-c1bff9b00e26",
+    "lja": {
+      "ljaCode": "2576",
+      "ljaName": "South London Magistrates' Court"
+    },
+    "name": "Croydon Magistrates' Court",
+    "roomId": "bfb67c13-789c-373b-b442-52b82faf863e",
+    "roomName": "Courtroom 01"
+  },
+  "orderingCourtCode": "2576",
+  "orderingHearingId": "7dfa470e-793a-4387-9230-2abae121e812",
+  "previous": {
+    "caseApplicationReferences": [
+      "28DI9426159"
+    ],
+    "cases": [
+      {
+        "caseId": "7d121198-5071-4731-99ab-f20d88224307",
+        "caseStatus": "ACTIVE",
+        "defendantCaseOffences": [
+          {
+            "civilOffence": false,
+            "code": "OF61102C",
+            "convictionStatus": "Not Convicted",
+            "dateFromWhichDisqRemoved": "",
+            "disqualificationPeriod": "",
+            "dttpDtetp": "",
+            "dvlaCode": "NE98",
+            "endorsableFlag": false,
+            "fine": "",
+            "interimImposedFinalSentence": "",
+            "modeOfTrial": "Indictable",
+            "otherSentence": "E12M",
+            "penaltyPoints": "",
+            "results": [
+              {
+                "d20": false,
+                "dvlaCode": "E",
+                "label": "Conditional discharge",
+                "prompts": [
+                  {
+                    "durationSequence": 1,
+                    "label": "Period of conditional discharge",
+                    "promptIdentifier": "d3205319-84cf-4c5b-9d7a-7e4bb1865054",
+                    "promptReference": "periodofConditionalDischarge",
+                    "value": "12 Months"
+                  }
+                ],
+                "publishedForNows": false,
+                "resultIdentifier": "554c2622-c1cc-459e-a98d-b7f317ab065c"
+              },
+              {
+                "d20": true,
+                "label": "Driving record endorsed (no points)",
+                "publishedForNows": false,
+                "resultIdentifier": "b0aeb4fc-df63-4e2f-af88-97e3f23e847f"
+              },
+              {
+                "d20": false,
+                "label": "0: None or unknown",
+                "publishedForNows": true,
+                "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956"
+              }
+            ],
+            "startDate": "2022-12-12",
+            "title": "Conspire to assault a person thereby occasioning them actual bodily harm",
+            "wording": "Kamryn Block at Johnathon Ranch, conspired together with Alberta Hegmann to assault Ms. Eddie Prosacco, thereby occasioning actual bodily harm."
+          },
+          {
+            "civilOffence": false,
+            "code": "PS90015",
+            "convictionStatus": "Not Convicted",
+            "dateFromWhichDisqRemoved": "",
+            "disqualificationPeriod": "",
+            "dttpDtetp": "",
+            "dvlaCode": "NE98",
+            "endorsableFlag": false,
+            "fine": "£100.00",
+            "interimImposedFinalSentence": "",
+            "modeOfTrial": "Summary",
+            "penaltyPoints": "6",
+            "results": [
+              {
+                "d20": false,
+                "label": "Fine",
+                "prompts": [
+                  {
+                    "label": "Amount of fine",
+                    "promptIdentifier": "7cd1472f-2379-4f5b-9e67-98a43d86e122",
+                    "promptReference": "AOF",
+                    "value": "£100.00"
+                  }
+                ],
+                "publishedForNows": false,
+                "resultDefinitionGroup": "Imposition",
+                "resultIdentifier": "969f150c-cd05-46b0-9dd9-30891efcc766"
+              },
+              {
+                "d20": true,
+                "label": "Driving record endorsed with penalty points",
+                "prompts": [
+                  {
+                    "label": "Penalty points for this offence",
+                    "promptIdentifier": "a8719de4-7783-448a-b792-e3f94e670ad0",
+                    "promptReference": "PENPT",
+                    "value": "6"
+                  },
+                  {
+                    "label": "Defendant driving licence number",
+                    "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+                    "promptReference": "defendantDrivingLicenceNumber",
+                    "value": "VANFL002222OW9PH"
+                  }
+                ],
+                "publishedForNows": false,
+                "resultIdentifier": "cee54856-4450-4f28-a8a9-72b688726201"
+              },
+              {
+                "d20": false,
+                "label": "0: None or unknown",
+                "publishedForNows": true,
+                "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956"
+              }
+            ],
+            "startDate": "2022-11-28",
+            "title": "Public service vehicles - passenger failing to pay fare",
+            "wording": "Public service vehicles - passenger failing to pay fare"
+          }
+        ],
+        "hasSV": false,
+        "initiationCode": "C",
+        "reference": "28DI9426159"
+      }
+    ],
+    "defendant": {
+      "address": {
+        "line1": "9999A9999AAAA",
+        "line2": "Woodlane",
+        "line3": "addressline 3",
+        "line4": "Bristol",
+        "line5": "Avon",
+        "postCode": "SW11 3TQ"
+      },
+      "dateOfBirth": "2005-11-11",
+      "driverNumber": "VANFL002222OW9PH",
+      "firstName": "Kamryn",
+      "gender": "MALE",
+      "lastName": "Block",
+      "name": "Kamryn Block",
+      "title": "Mr"
+    },
+    "distinctPrompts": [
+      {
+        "label": "Defendant driving licence number",
+        "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+        "promptReference": "defendantDrivingLicenceNumber",
+        "value": "VANFL002222OW9PH"
+      }
+    ],
+    "identifier": "529ccf0c-5823-4805-8f33-32b982ad0706",
+    "licenceProducedInCourt": "0: None or unknown",
+    "masterDefendantId": "72ac3217-3d71-42f0-a670-1474264aea4b",
+    "materialId": "ea8ff379-1818-4f10-9612-8a1d827cf3ea",
+    "orderDate": "2026-03-25",
+    "orderingCourt": {
+      "address": {
+        "address1": "176A Lavender Hill",
+        "address2": "London",
+        "address3": "",
+        "address4": "",
+        "address5": "",
+        "postcode": "SW11 1JU"
+      },
+      "code": "B01LY00",
+      "courtHearingLocation": "B01LY01",
+      "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+      "lja": {
+        "ljaCode": "2577",
+        "ljaName": "South West London Magistrates' Court"
+      },
+      "name": "Lavender Hill Magistrates' Court",
+      "roomId": "9e4932f7-97b2-3010-b942-ddd2624e4dd8",
+      "roomName": "Courtroom 01"
+    },
+    "orderingHearingId": "44514470-903c-40cc-944a-bf6d556923bd",
+    "retrySequence": 0
+  },
+  "retrySequence": 0,
+  "updatedEndorsements": [
+    "NE98"
+  ]
+}

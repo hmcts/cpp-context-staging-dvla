@@ -67,6 +67,7 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.Res
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.NESR;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.OATS;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.RFSD;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.ROPENED;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.TEXT;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.WDRN;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.WDRNOFF;
@@ -130,8 +131,8 @@ public class OffenceUtil {
                                                          final List<String> nonEndorsableOffenceCodes) {
         boolean nonEndorsable = nonEndorsableOffenceCodes.contains(getDvlaCode(previousOffence));
 
-        if (hasAppealResultOrGranted(courtApplications)) {
-            return getEndorsementStatusForAppeal(currentOffence, previousOffence, courtApplications);
+        if (hasAppealResultOrGrantedOrReopened(courtApplications)) {
+            return getEndorsementStatusForAppealOrReopening(currentOffence, previousOffence, courtApplications);
         } else if (!nonEndorsable && isAmendment) {
             return isNull(currentOffence) ? REMOVE : UPDATE_NOMERGE;
         } else if (!nonEndorsable && hasResultType(courtApplications, DSPAS)) {
@@ -143,9 +144,9 @@ public class OffenceUtil {
         }
     }
 
-    private static EndorsementStatus getEndorsementStatusForAppeal(final DefendantCaseOffences currentOffence,
-                                                                   final DefendantCaseOffences previousOffence,
-                                                                   final List<CourtApplications> courtApplications) {
+    private static EndorsementStatus getEndorsementStatusForAppealOrReopening(final DefendantCaseOffences currentOffence,
+                                                                              final DefendantCaseOffences previousOffence,
+                                                                              final List<CourtApplications> courtApplications) {
         if (nonNull(currentOffence)) {
             if (hasRemoveResultType(currentOffence)) {
                 return REMOVE;
@@ -437,8 +438,8 @@ public class OffenceUtil {
         }
     }
 
-    public static boolean hasAppealResultOrGranted(List<CourtApplications> courtApplications) {
-        return hasAppealResult(courtApplications) || hasResultType(courtApplications, G);
+    public static boolean hasAppealResultOrGrantedOrReopened(List<CourtApplications> courtApplications) {
+        return hasAppealResult(courtApplications) ||  hasResultType(courtApplications, G) || hasResultType(courtApplications, ROPENED);
     }
 
     public static boolean hasAppealRefusedResult(List<CourtApplications> courtApplications) {

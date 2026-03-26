@@ -1,0 +1,162 @@
+{
+  "masterDefendantId": "cbdd8d6a-7b44-4c13-ba99-b8b4fa325b0d",
+  "orderingCourt": {
+    "address": {
+      "address1": "The Magistrates' Court",
+      "address2": "Barclay Road",
+      "address3": "Croydon",
+      "address4": "",
+      "address5": "",
+      "postcode": "CR9 3NG"
+    },
+    "code": "B01EF00",
+    "courtHearingLocation": "B01EF01",
+    "id": "31b3d313-7a7c-4598-bb4b-c1bff9b00e26",
+    "lja": {
+      "ljaCode": "2576",
+      "ljaName": "South London Magistrates' Court"
+    },
+    "name": "Croydon Magistrates' Court",
+    "roomId": "bfb67c13-789c-373b-b442-52b82faf863e",
+    "roomName": "Courtroom 01"
+  },
+  "nowContent": {
+    "orderDate": "2026-03-25",
+    "defendant": {
+      "dateOfBirth": "2005-11-11",
+      "gender": "MALE",
+      "driverNumber": "VANFL002222OW9PH",
+      "title": "Mr",
+      "firstName": "Vernie",
+      "lastName": "Turcotte",
+      "name": "Vernie Turcotte",
+      "address": {
+        "line1": "9999A9999AAAA",
+        "line2": "Woodlane",
+        "line3": "addressline 3",
+        "line4": "Bristol",
+        "line5": "Avon",
+        "postCode": "SW11 3TQ"
+      }
+    },
+    "caseApplicationReferences": [
+      "28DI1818813"
+    ],
+    "cases": [
+      {
+        "caseStatus": "INACTIVE",
+        "initiationCode": "C",
+        "reference": "28DI1818813",
+        "caseId": "d73f960d-3c46-4622-9ea3-bc3891b5f60a",
+        "defendantCaseOffences": [
+          {
+            "title": "Conspire to assault a person thereby occasioning them actual bodily harm",
+            "civilOffence": false,
+            "convictionStatus": "Not Convicted",
+            "code": "OF61102C",
+            "modeOfTrial": "Indictable",
+            "endorsableFlag": false,
+            "wording": "Vernie Turcotte at Block Rue, conspired together with Ms. Marcella Cruickshank to assault Ryan Morar, thereby occasioning actual bodily harm.",
+            "startDate": "2022-12-12",
+            "results": [
+              {
+                "resultIdentifier": "3e859586-bc86-407d-bd8e-c9a01d40d147",
+                "publishedForNows": false,
+                "d20": false,
+                "label": "Offence not dealt with as part of application - original adjudication to stand"
+              }
+            ]
+          },
+          {
+            "title": "Public service vehicles - passenger failing to pay fare",
+            "civilOffence": false,
+            "convictionStatus": "Not Convicted",
+            "code": "PS90015",
+            "modeOfTrial": "Summary",
+            "endorsableFlag": false,
+            "wording": "Public service vehicles - passenger failing to pay fare",
+            "startDate": "2022-11-28",
+            "results": [
+              {
+                "resultIdentifier": "969f150c-cd05-46b0-9dd9-30891efcc766",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "7cd1472f-2379-4f5b-9e67-98a43d86e122",
+                    "promptReference": "AOF",
+                    "label": "Amount of fine",
+                    "value": "£300.00"
+                  }
+                ],
+                "resultDefinitionGroup": "Imposition",
+                "d20": false,
+                "label": "Fine"
+              },
+              {
+                "resultIdentifier": "cee54856-4450-4f28-a8a9-72b688726201",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "a8719de4-7783-448a-b792-e3f94e670ad0",
+                    "promptReference": "PENPT",
+                    "label": "Penalty points for this offence",
+                    "value": "8"
+                  },
+                  {
+                    "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+                    "promptReference": "defendantDrivingLicenceNumber",
+                    "label": "Defendant driving licence number",
+                    "value": "VANFL002222OW9PH"
+                  }
+                ],
+                "d20": true,
+                "label": "Driving record endorsed with penalty points"
+              },
+              {
+                "resultIdentifier": "bcb5a496-f7cf-11e8-8eb2-f2801f1b9fd1",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "ee7d253a-c629-11e8-a355-529269fb1459",
+                    "promptReference": "PBD",
+                    "label": "Date to pay in full by",
+                    "value": "03/03/2027"
+                  }
+                ],
+                "resultDefinitionGroup": "Payment terms",
+                "d20": false,
+                "label": "Pay by date"
+              },
+              {
+                "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956",
+                "publishedForNows": true,
+                "d20": false,
+                "label": "0: None or unknown"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "courtApplications": [
+      {
+        "applicationType": "Application to reopen case",
+        "applicationTypeId": "9d2ae0fe-d4d0-43ca-ab7a-7a2556cafe5e",
+        "applicationReceivedDate": "2026-03-24",
+        "id": "1fa151cf-8b81-41cd-869c-2f67cd16c5bd",
+        "applicationReference": "28DI1818813",
+        "applicationStatus": "FINALISED",
+        "results": [
+          {
+            "resultIdentifier": "2b3f7c20-8fc1-4fad-9076-df196c24b27e",
+            "publishedForNows": false,
+            "d20": false,
+            "label": "Granted"
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": false,
+  "orderingHearingId": "3d49f62c-b2fb-4c48-af41-f54163695229"
+}
