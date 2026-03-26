@@ -8,12 +8,10 @@ import uk.gov.moj.cpp.stagingdvla.aggregate.DefendantAggregateTestSteps.Scenario
 
 import java.util.stream.Stream;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-@Disabled
 class DefendantAggregateScenariosTest {
 
     public static Stream<Arguments> simpleScenario() {

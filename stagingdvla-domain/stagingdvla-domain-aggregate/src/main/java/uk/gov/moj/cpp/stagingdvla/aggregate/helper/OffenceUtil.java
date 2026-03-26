@@ -132,7 +132,7 @@ public class OffenceUtil {
         boolean nonEndorsable = nonEndorsableOffenceCodes.contains(getDvlaCode(previousOffence));
 
         if (hasAppealResultOrGrantedOrReopened(courtApplications)) {
-            return getEndorsementStatusForAppealOrReopening(currentOffence, previousOffence, courtApplications);
+            return getEndorsementStatusForAppealOrReopened(currentOffence, previousOffence, courtApplications);
         } else if (!nonEndorsable && isAmendment) {
             return isNull(currentOffence) ? REMOVE : UPDATE_NOMERGE;
         } else if (!nonEndorsable && hasResultType(courtApplications, DSPAS)) {
@@ -144,9 +144,9 @@ public class OffenceUtil {
         }
     }
 
-    private static EndorsementStatus getEndorsementStatusForAppealOrReopening(final DefendantCaseOffences currentOffence,
-                                                                              final DefendantCaseOffences previousOffence,
-                                                                              final List<CourtApplications> courtApplications) {
+    private static EndorsementStatus getEndorsementStatusForAppealOrReopened(final DefendantCaseOffences currentOffence,
+                                                                             final DefendantCaseOffences previousOffence,
+                                                                             final List<CourtApplications> courtApplications) {
         if (nonNull(currentOffence)) {
             if (hasRemoveResultType(currentOffence)) {
                 return REMOVE;
