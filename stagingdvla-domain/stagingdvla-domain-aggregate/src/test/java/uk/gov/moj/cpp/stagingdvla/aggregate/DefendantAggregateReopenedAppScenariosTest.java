@@ -12,7 +12,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-class DefendantAggregateScenariosTest {
+class DefendantAggregateReopenedAppScenariosTest {
 
     public static Stream<Arguments> simpleScenario() {
         return Stream.of(
@@ -122,14 +122,44 @@ class DefendantAggregateScenariosTest {
                                         "/testdata/drivernotifications/reopening/dd-39832/ac7/app-resulted.json",
                                         "/testdata/drivernotifications/reopening/dd-39832/ac7/app-resulted-events.json"
                                 )
+                ),
+                Arguments.of("DD-40326-ac1",
+                        defendantAggregateScenario()
+                                .withNotifyDriverStep(
+                                        "case hearing resulted",
+                                        "/testdata/drivernotifications/reopening/dd-40326/ac1/case-resulted.json",
+                                        "/testdata/drivernotifications/reopening/dd-40326/ac1/case-resulted-events.json"
+                                )
+                                .withNotifyDriverStep(
+                                        "application hearing resulted",
+                                        "/testdata/drivernotifications/reopening/dd-40326/ac1/app-resulted.json",
+                                        "/testdata/drivernotifications/reopening/dd-40326/ac1/app-resulted-events.json"
+                                )
+                ),
+                Arguments.of("DD-40326-ac2",
+                        defendantAggregateScenario()
+                                .withNotifyDriverStep(
+                                        "case hearing resulted",
+                                        "/testdata/drivernotifications/reopening/dd-40326/ac2/case-resulted.json",
+                                        "/testdata/drivernotifications/reopening/dd-40326/ac2/case-resulted-events.json"
+                                )
+                                .withNotifyDriverStep(
+                                        "application hearing resulted",
+                                        "/testdata/drivernotifications/reopening/dd-40326/ac2/app-resulted.json",
+                                        null
+                                )
+//                ),
+//                Arguments.of("DD-40326-ac3", will be added later
+
                 )
+
                 // Additional scenarios can be added here
         );
     }
 
     @ParameterizedTest(name = "{index} => {0}")
     @MethodSource("simpleScenario")
-    void shouldCreateNCESNotificationForFinCaseSingleOffenceAppAmendments(final String name, final Scenario scenario) {
+    void shouldCreateDVLANotificationForReopeningApplication(final String name, final Scenario scenario) {
         assertDoesNotThrow(() -> scenario.run(name, new DefendantAggregate()));
     }
 }
