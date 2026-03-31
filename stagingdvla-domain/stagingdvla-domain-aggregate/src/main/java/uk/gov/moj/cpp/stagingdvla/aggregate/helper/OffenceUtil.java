@@ -17,6 +17,9 @@ import static org.slf4j.LoggerFactory.getLogger;
 import static uk.gov.justice.core.courts.JudicialResultCategory.ANCILLARY;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ALCOHOL_DRUG_MAX_LEVEL;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.AOF;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ApplicationType.AACMC;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ApplicationType.AACSMC;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ApplicationType.AASMC;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ApplicationType.ACP;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ApplicationType.APPRO;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.DATE_DISQUALIFICATION_ENDS;
@@ -437,8 +440,19 @@ public class OffenceUtil {
         }
     }
 
-    public static boolean hasAppealResultOrGranted(List<CourtApplications> courtApplications) {
-        return hasAppealResult(courtApplications) || hasResultType(courtApplications, G);
+    public static boolean hasAppealResultOrGranted(final List<CourtApplications> courtApplications) {
+        return hasAppealResult(courtApplications) || isGrantedWithAppealApplicationCode(courtApplications);
+    }
+
+    public static boolean isGrantedWithAppealApplicationCode(final List<CourtApplications> courtApplications) {
+        if (isNotEmpty(courtApplications))
+            return courtApplications.stream()
+                    .anyMatch(application -> hasResultType(application, G)
+                            && (AASMC.code.equalsIgnoreCase(application.getApplicationCode())
+                            || AACMC.code.equals(application.getApplicationCode())
+                            || AACSMC.code.equals(application.getApplicationCode())));
+
+        return false;
     }
 
     public static boolean hasAppealRefusedResult(List<CourtApplications> courtApplications) {
@@ -478,6 +492,12 @@ public class OffenceUtil {
         return isNotEmpty(courtApplications) &&
                 courtApplications.stream().anyMatch(courtApplication -> isNotEmpty(courtApplication.getResults()) &&
                         courtApplication.getResults().stream().anyMatch(result -> resultType.id.equalsIgnoreCase(result.getResultIdentifier())));
+    }
+
+    public static boolean hasResultType(final CourtApplications courtApplication, final ResultType resultType) {
+        return nonNull(courtApplication)
+                && isNotEmpty(courtApplication.getResults())
+                && courtApplication.getResults().stream().anyMatch(result -> resultType.id.equalsIgnoreCase(result.getResultIdentifier()));
     }
 
 

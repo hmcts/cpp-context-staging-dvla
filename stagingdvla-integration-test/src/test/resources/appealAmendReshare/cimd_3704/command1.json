@@ -7,15 +7,15 @@
       "postcode": "SW11 1JU"
     },
     "code": "B01LY00",
-    "courtHearingLocation": "B01LY02",
+    "courtHearingLocation": "B01LY01",
     "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
     "lja": {
       "ljaCode": "2577",
       "ljaName": "South West London Magistrates' Court"
     },
     "name": "Lavender Hill Magistrates' Court",
-    "roomId": "b4562684-9209-3ec4-a544-7f80dabd94d8",
-    "roomName": "Courtroom 02"
+    "roomId": "9e4932f7-97b2-3010-b942-ddd2624e4dd8",
+    "roomName": "Courtroom 01"
   },
   "nowContent": {
     "orderDate": "2023-05-16",
@@ -43,6 +43,7 @@
     "cases": [
       {
         "reference": "JW29150867",
+        "initiationCode": "C",
         "caseId": "a0738dff-4498-4b4b-95e3-189b1b7e91a2",
         "defendantCaseOffences": [
           {
@@ -56,37 +57,21 @@
             "endorsableFlag": true,
             "modeOfTrial": "Summary",
             "plea": "GUILTY",
-            "results": [],
-            "startDate": "2025-12-08",
-            "title": "Use a motor vehicle on a road / public place without third party insurance",
-            "wording": "Use a motor vehicle on a road / public place without third party insurance"
-          },
-          {
-            "allocationDecision": "Summary-only offence",
-            "civilOffence": false,
-            "code": "RA88002",
-            "convictingCourtCode": "2577",
-            "convictionDate": "2026-02-06",
-            "convictionStatus": "Convicted",
-            "dvlaCode": "IN20",
-            "endorsableFlag": true,
-            "modeOfTrial": "Summary",
-            "plea": "GUILTY",
             "results": [
               {
-                "d20": false,
-                "label": "Fine",
+                "resultIdentifier": "969f150c-cd05-46b0-9dd9-30891efcc766",
+                "publishedForNows": false,
                 "prompts": [
                   {
-                    "label": "Amount of fine",
                     "promptIdentifier": "7cd1472f-2379-4f5b-9e67-98a43d86e122",
                     "promptReference": "AOF",
-                    "value": "£200.00"
+                    "label": "Amount of fine",
+                    "value": "£100.00"
                   }
                 ],
-                "publishedForNows": false,
                 "resultDefinitionGroup": "Imposition",
-                "resultIdentifier": "969f150c-cd05-46b0-9dd9-30891efcc766"
+                "d20": false,
+                "label": "Fine"
               },
               {
                 "resultIdentifier": "cee54856-4450-4f28-a8a9-72b688726201",
@@ -96,7 +81,7 @@
                     "promptIdentifier": "a8719de4-7783-448a-b792-e3f94e670ad0",
                     "promptReference": "PENPT",
                     "label": "Penalty points for this offence",
-                    "value": "8"
+                    "value": "1"
                   },
                   {
                     "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
@@ -108,34 +93,16 @@
                 "d20": true,
                 "label": "Driving record endorsed with penalty points"
               }
+
             ],
             "startDate": "2025-12-08",
-            "title": "Drive a motor vehicle otherwise than in accordance with a licence - endorsable offence",
-            "wording": "Drive a motor vehicle otherwise than in accordance with a licence - endorsable offence"
-          }
-        ]
-      }
-    ],
-    "courtApplications": [
-      {
-        "applicationReceivedDate": "2026-02-05",
-        "applicationReference": "SG821225728",
-        "applicationStatus": "FINALISED",
-        "applicationType": "Appeal against conviction and sentence by a Magistrates' Court to the Crown Court",
-        "applicationCode": "MC80801",
-        "applicationTypeId": "abc05494-05d7-4289-b4bc-a92726257a4b",
-        "id": "922eb0f2-4b94-448b-8c0c-9deb06b82484",
-        "results": [
-          {
-            "resultIdentifier": "2b3f7c20-8fc1-4fad-9076-df196c24b27e",
-            "publishedForNows": false,
-            "d20": false,
-            "label": "Granted"
+            "title": "Use a motor vehicle on a road / public place without third party insurance",
+            "wording": "Use a motor vehicle on a road / public place without third party insurance"
           }
         ]
       }
     ]
   },
   "isReshare": true,
-  "orderingHearingId": "93bc6155-952f-4909-a36a-b9f277da3b85"
+  "orderingHearingId": "4282cfaf-ce25-4054-9e0e-830a9365a7d9"
 }

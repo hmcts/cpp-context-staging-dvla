@@ -1,0 +1,107 @@
+{
+  "masterDefendantId": "%DEFENDANT_ID%",
+  "orderingCourt": {
+    "address": {
+      "address1": "176A Lavender Hill",
+      "address2": "London",
+      "postcode": "SW11 1JU"
+    },
+    "code": "B01LY00",
+    "courtHearingLocation": "B01LY02",
+    "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+    "lja": {
+      "ljaCode": "2577",
+      "ljaName": "South West London Magistrates' Court"
+    },
+    "name": "Lavender Hill Magistrates' Court",
+    "roomId": "b4562684-9209-3ec4-a544-7f80dabd94d8",
+    "roomName": "Courtroom 02"
+  },
+  "nowContent": {
+    "orderDate": "2023-05-16",
+    "defendant": {
+      "dateOfBirth": "2000-09-09",
+      "gender": "MALE",
+      "driverNumber": "ABCDE00010BCFAA",
+      "title": "MR",
+      "firstName": "Liana",
+      "middleName": "Jasmine Jasmine",
+      "lastName": "Powlowski",
+      "name": "Liana Jasmine Jasmine Powlowski",
+      "address": {
+        "line1": "56saon",
+        "line2": "56Police House",
+        "line3": "StreetDescription1",
+        "line4": "Locality1",
+        "line5": "Fayborough",
+        "postCode": "TW14 9XJ"
+      }
+    },
+    "caseApplicationReferences": [
+      "JW29150867"
+    ],
+    "cases": [
+      {
+        "reference": "JW29150867",
+        "caseId": "a0738dff-4498-4b4b-95e3-189b1b7e91a2",
+        "defendantCaseOffences": [
+          {
+            "allocationDecision": "Summary-only offence",
+            "civilOffence": false,
+            "code": "RA88001",
+            "convictingCourtCode": "2577",
+            "convictionDate": "2026-02-06",
+            "convictionStatus": "Convicted",
+            "dvlaCode": "IN10",
+            "endorsableFlag": true,
+            "modeOfTrial": "Summary",
+            "plea": "GUILTY",
+            "results": [
+              {
+                "d20": false,
+                "dvlaCode": "E",
+                "label": "Conditional discharge",
+                "prompts": [
+                  {
+                    "durationSequence": 1,
+                    "label": "Period of conditional discharge",
+                    "promptIdentifier": "d3205319-84cf-4c5b-9d7a-7e4bb1865054",
+                    "promptReference": "periodofConditionalDischarge",
+                    "value": "6 Months"
+                  }
+                ],
+                "publishedForNows": false,
+                "resultIdentifier": "554c2622-c1cc-459e-a98d-b7f317ab065c"
+              }
+            ],
+            "startDate": "2025-12-08",
+            "title": "Use a motor vehicle on a road / public place without third party insurance",
+            "wording": "Use a motor vehicle on a road / public place without third party insurance"
+          }
+        ]
+      }
+    ],
+    "courtApplications": [
+      {
+        "applicationReceivedDate": "2026-02-05",
+        "applicationReference": "SG821225728",
+        "applicationStatus": "FINALISED",
+        "applicationType": "Application to reopen case",
+        "applicationTypeId": "9d2ae0fe-d4d0-43ca-ab7a-7a2556cafe5e",
+        "applicationCode": "APPRO",
+        "id": "94896086-b08e-4544-9e6e-7a06ec1fac75",
+        "results": [
+          {
+            "d20": false,
+            "label": "Granted",
+            "prompts": [],
+            "publishedForNows": false,
+            "resultIdentifier": "2b3f7c20-8fc1-4fad-9076-df196c24b27e"
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": true,
+  "orderingHearingId": "93bc6155-952f-4909-a36a-b9f277da3b85"
+}
