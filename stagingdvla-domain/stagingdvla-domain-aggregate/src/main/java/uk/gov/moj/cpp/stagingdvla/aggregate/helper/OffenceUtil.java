@@ -17,6 +17,9 @@ import static org.slf4j.LoggerFactory.getLogger;
 import static uk.gov.justice.core.courts.JudicialResultCategory.ANCILLARY;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ALCOHOL_DRUG_MAX_LEVEL;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.AOF;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ApplicationType.AACMC;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ApplicationType.AACSMC;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ApplicationType.AASMC;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ApplicationType.ACP;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ApplicationType.APPRO;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.DATE_DISQUALIFICATION_ENDS;
@@ -102,17 +105,17 @@ public class OffenceUtil {
     private static final String INACTIVE = "INACTIVE";
     private static final String ST_DEC = "STATUTORY DECLARATION";
     private static final String NEXT_HEARING_GROUP = "NEXT HEARING";
-    public static final List<String> APPEAL_RESULTS = asList(
+    protected static final List<String> APPEAL_RESULTS = asList(
             AACA.id, AACD.id, AASA.id, AASD.id, ACSD.id, APA.id, ASV.id, AW.id, DDRE.id
     );
-    public static final List<String> APPEAL_REFUSED_RESULTS = asList(
+    protected static final List<String> APPEAL_REFUSED_RESULTS = asList(
             AACD.id, AASD.id, ACSD.id, APA.id, AW.id
     );
-    public static final List<String> LICENCE_PRODUCED_IN_COURT_RESULTS = asList(
+    protected static final List<String> LICENCE_PRODUCED_IN_COURT_RESULTS = asList(
             LPIC1.id, LPIC2.id, LPIC3.id, LPIC4.id, LPIC5.id
     );
 
-    public static final List<String> COV_G_RESULTS = asList(COV.id, G.id);
+    protected static final List<String> COV_G_RESULTS = asList(COV.id, G.id);
 
     public static String getConvictingCourtCode(final DefendantCaseOffences currentOffence,
                                                 final DefendantCaseOffences previousOffence) {
@@ -437,8 +440,19 @@ public class OffenceUtil {
         }
     }
 
-    public static boolean hasAppealResultOrGranted(List<CourtApplications> courtApplications) {
-        return hasAppealResult(courtApplications) || hasResultType(courtApplications, G);
+    public static boolean hasAppealResultOrGranted(final List<CourtApplications> courtApplications) {
+        return hasAppealResult(courtApplications) || isGrantedWithAppealApplicationCode(courtApplications);
+    }
+
+    public static boolean isGrantedWithAppealApplicationCode(final List<CourtApplications> courtApplications) {
+        if (isNotEmpty(courtApplications))
+            return courtApplications.stream()
+                    .anyMatch(application -> hasResultType(application, G)
+                            && (AASMC.code.equalsIgnoreCase(application.getApplicationCode())
+                            || AACMC.code.equals(application.getApplicationCode())
+                            || AACSMC.code.equals(application.getApplicationCode())));
+
+        return false;
     }
 
     public static boolean hasAppealRefusedResult(List<CourtApplications> courtApplications) {
@@ -478,6 +492,12 @@ public class OffenceUtil {
         return isNotEmpty(courtApplications) &&
                 courtApplications.stream().anyMatch(courtApplication -> isNotEmpty(courtApplication.getResults()) &&
                         courtApplication.getResults().stream().anyMatch(result -> resultType.id.equalsIgnoreCase(result.getResultIdentifier())));
+    }
+
+    public static boolean hasResultType(final CourtApplications courtApplication, final ResultType resultType) {
+        return nonNull(courtApplication)
+                && isNotEmpty(courtApplication.getResults())
+                && courtApplication.getResults().stream().anyMatch(result -> resultType.id.equalsIgnoreCase(result.getResultIdentifier()));
     }
 
 

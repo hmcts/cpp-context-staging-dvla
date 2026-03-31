@@ -7,6 +7,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static uk.gov.justice.cpp.stagingdvla.event.Prompts.prompts;
 import static uk.gov.justice.cpp.stagingdvla.event.Results.results;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ApplicationType.AACMC;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ApplicationType.ACP;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ApplicationType.APPRO;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.REMOVE;
@@ -605,7 +606,7 @@ class OffenceUtilTest {
     void shouldReturnTrueForHasAppealResultOrGrantedWithGrantedResult() {
         final List<Results> results = singletonList(results().withResultIdentifier(G.id).build());
         final List<CourtApplications> courtApplications = singletonList(
-                CourtApplications.courtApplications().withResults(results).build()
+                CourtApplications.courtApplications().withApplicationCode(AACMC.code).withResults(results).build()
         );
 
         boolean hasAppealResultOrGranted = hasAppealResultOrGranted(courtApplications);
