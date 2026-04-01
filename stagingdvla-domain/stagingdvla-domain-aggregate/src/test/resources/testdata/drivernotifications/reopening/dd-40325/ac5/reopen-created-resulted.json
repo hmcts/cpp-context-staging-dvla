@@ -1,0 +1,446 @@
+{
+  "masterDefendantId": "49d5fbac-79e0-4f46-a647-513f6a760b12",
+  "orderingCourt": {
+    "address": {
+      "address1": "Grove Street",
+      "address2": "Redditch",
+      "address3": "Worcestershire",
+      "postcode": "B98 8DB"
+    },
+    "code": "B22KS00",
+    "id": "39fe3360-b3b5-3285-a3df-a75feb4e463c",
+    "lja": {
+      "ljaCode": "1894",
+      "ljaName": "Redditch Magistrates' Court",
+      "welshLjaName": "Llys Ynadon Redditch"
+    },
+    "name": "Redditch Magistrates' Court"
+  },
+  "nowContent": {
+    "orderDate": "2026-03-31",
+    "defendant": {
+      "dateOfBirth": "1989-03-31",
+      "gender": "MALE",
+      "title": "MR",
+      "firstName": "FlmcI6y0",
+      "lastName": "SmithhL1Y6",
+      "name": "FlmcI6y0 SmithhL1Y6",
+      "address": {
+        "line1": "FLAT - 25A",
+        "line2": "Constable Street",
+        "line3": "Bristol",
+        "line4": "England",
+        "line5": "UK",
+        "postCode": "IG1 1YY"
+      }
+    },
+    "caseApplicationReferences": [
+      "SJ142255147"
+    ],
+    "cases": [
+      {
+        "caseStatus": "INACTIVE",
+        "initiationCode": "J",
+        "reference": "SJ142255147",
+        "caseId": "f70773c6-e955-4d25-97a6-f41cadb21f6e",
+        "defendantCaseOffences": [
+          {
+            "title": "Keep a vehicle without a valid vehicle licence",
+            "civilOffence": false,
+            "convictionDate": "2026-03-31",
+            "convictionStatus": "Convicted",
+            "code": "VE94015",
+            "wording": "Keeping a vehicle without a valid vehicle licence",
+            "startDate": "2026-03-31",
+            "results": [
+              {
+                "resultIdentifier": "600edfc3-a584-4f9f-a52e-5bb8a99646c1",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "bca4e07c-17e0-48f1-84f4-7b6ff8bab5e2",
+                    "promptReference": "reasonsForReferringToCourt",
+                    "durationSequence": 0,
+                    "label": "Reasons for referring to court",
+                    "value": "For trial"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEOrganisationName",
+                    "durationSequence": 0,
+                    "label": "Courthouse organisation name",
+                    "value": "Lavender Hill Magistrates' Court"
+                  },
+                  {
+                    "promptIdentifier": "49ec9b26-dd63-4637-b2e9-55ba9948a90f",
+                    "promptReference": "HCROOM",
+                    "durationSequence": 0,
+                    "label": "Courtroom",
+                    "value": "Courtroom 01"
+                  },
+                  {
+                    "promptIdentifier": "d85cc2d7-66c8-471e-b6ff-c1bc60c6cdac",
+                    "promptReference": "HEST",
+                    "durationSequence": 0,
+                    "label": "Estimated duration",
+                    "value": "30"
+                  },
+                  {
+                    "promptIdentifier": "4d125a5a-acbc-461d-a657-ba5643af85a6",
+                    "promptReference": "timeOfHearing",
+                    "durationSequence": 0,
+                    "label": "Time of hearing",
+                    "value": "09:00"
+                  },
+                  {
+                    "promptIdentifier": "d27a5d86-d51f-4c6e-914b-cb4b0abc4283",
+                    "promptReference": "HDATE",
+                    "durationSequence": 0,
+                    "label": "Date of hearing",
+                    "value": "2026-04-21"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEAddress1",
+                    "durationSequence": 0,
+                    "label": "Courthouse address line 1",
+                    "value": "176A Lavender Hill"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEAddress2",
+                    "durationSequence": 0,
+                    "label": "Courthouse address line 2",
+                    "value": "London"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEPostCode",
+                    "durationSequence": 0,
+                    "label": "Courthouse post code",
+                    "value": "SW11 1JU"
+                  }
+                ],
+                "d20": false,
+                "judicialResultCategory": "INTERMEDIARY",
+                "label": "Refer for a full court hearing"
+              }
+            ]
+          },
+          {
+            "title": "Cause use of motor vehicle with no insurance",
+            "civilOffence": false,
+            "dvlaCode": "IN14",
+            "convictionDate": "2026-03-31",
+            "convictionStatus": "Convicted",
+            "code": "RA88002",
+            "wording": "Cause use of motor vehicle with no insurance",
+            "startDate": "2026-03-16",
+            "results": [
+              {
+                "resultIdentifier": "600edfc3-a584-4f9f-a52e-5bb8a99646c1",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "bca4e07c-17e0-48f1-84f4-7b6ff8bab5e2",
+                    "promptReference": "reasonsForReferringToCourt",
+                    "durationSequence": 0,
+                    "label": "Reasons for referring to court",
+                    "value": "For trial"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEOrganisationName",
+                    "durationSequence": 0,
+                    "label": "Courthouse organisation name",
+                    "value": "Lavender Hill Magistrates' Court"
+                  },
+                  {
+                    "promptIdentifier": "49ec9b26-dd63-4637-b2e9-55ba9948a90f",
+                    "promptReference": "HCROOM",
+                    "durationSequence": 0,
+                    "label": "Courtroom",
+                    "value": "Courtroom 01"
+                  },
+                  {
+                    "promptIdentifier": "d85cc2d7-66c8-471e-b6ff-c1bc60c6cdac",
+                    "promptReference": "HEST",
+                    "durationSequence": 0,
+                    "label": "Estimated duration",
+                    "value": "30"
+                  },
+                  {
+                    "promptIdentifier": "4d125a5a-acbc-461d-a657-ba5643af85a6",
+                    "promptReference": "timeOfHearing",
+                    "durationSequence": 0,
+                    "label": "Time of hearing",
+                    "value": "09:00"
+                  },
+                  {
+                    "promptIdentifier": "d27a5d86-d51f-4c6e-914b-cb4b0abc4283",
+                    "promptReference": "HDATE",
+                    "durationSequence": 0,
+                    "label": "Date of hearing",
+                    "value": "2026-04-21"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEAddress1",
+                    "durationSequence": 0,
+                    "label": "Courthouse address line 1",
+                    "value": "176A Lavender Hill"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEAddress2",
+                    "durationSequence": 0,
+                    "label": "Courthouse address line 2",
+                    "value": "London"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEPostCode",
+                    "durationSequence": 0,
+                    "label": "Courthouse post code",
+                    "value": "SW11 1JU"
+                  }
+                ],
+                "d20": false,
+                "judicialResultCategory": "INTERMEDIARY",
+                "label": "Refer for a full court hearing"
+              }
+            ]
+          },
+          {
+            "title": "Vehicle defect - permit use of a motor vehicle / trailer with defective brakes",
+            "civilOffence": false,
+            "dvlaCode": "CU10",
+            "convictionDate": "2026-03-31",
+            "convictionStatus": "Convicted",
+            "code": "RC86851",
+            "wording": "Vehicle defect - permit use of a motor vehicle / trailer with defective brakes",
+            "startDate": "2026-02-19",
+            "results": [
+              {
+                "resultIdentifier": "600edfc3-a584-4f9f-a52e-5bb8a99646c1",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "bca4e07c-17e0-48f1-84f4-7b6ff8bab5e2",
+                    "promptReference": "reasonsForReferringToCourt",
+                    "durationSequence": 0,
+                    "label": "Reasons for referring to court",
+                    "value": "For trial"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEOrganisationName",
+                    "durationSequence": 0,
+                    "label": "Courthouse organisation name",
+                    "value": "Lavender Hill Magistrates' Court"
+                  },
+                  {
+                    "promptIdentifier": "49ec9b26-dd63-4637-b2e9-55ba9948a90f",
+                    "promptReference": "HCROOM",
+                    "durationSequence": 0,
+                    "label": "Courtroom",
+                    "value": "Courtroom 01"
+                  },
+                  {
+                    "promptIdentifier": "d85cc2d7-66c8-471e-b6ff-c1bc60c6cdac",
+                    "promptReference": "HEST",
+                    "durationSequence": 0,
+                    "label": "Estimated duration",
+                    "value": "30"
+                  },
+                  {
+                    "promptIdentifier": "4d125a5a-acbc-461d-a657-ba5643af85a6",
+                    "promptReference": "timeOfHearing",
+                    "durationSequence": 0,
+                    "label": "Time of hearing",
+                    "value": "09:00"
+                  },
+                  {
+                    "promptIdentifier": "d27a5d86-d51f-4c6e-914b-cb4b0abc4283",
+                    "promptReference": "HDATE",
+                    "durationSequence": 0,
+                    "label": "Date of hearing",
+                    "value": "2026-04-21"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEAddress1",
+                    "durationSequence": 0,
+                    "label": "Courthouse address line 1",
+                    "value": "176A Lavender Hill"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEAddress2",
+                    "durationSequence": 0,
+                    "label": "Courthouse address line 2",
+                    "value": "London"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEPostCode",
+                    "durationSequence": 0,
+                    "label": "Courthouse post code",
+                    "value": "SW11 1JU"
+                  }
+                ],
+                "d20": false,
+                "judicialResultCategory": "INTERMEDIARY",
+                "label": "Refer for a full court hearing"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "courtApplications": [
+      {
+        "applicationType": "Application to reopen case",
+        "applicationTypeId": "9d2ae0fe-d4d0-43ca-ab7a-7a2556cafe5e",
+        "applicationReceivedDate": "2026-03-31",
+        "id": "9c8197e0-4274-4b40-961f-8747c27c1608",
+        "applicationReference": "ZRTGPRLLUN",
+        "applicationStatus": "FINALISED",
+        "results": [
+          {
+            "resultIdentifier": "e3fb46ee-e406-4f73-9bf1-71d513da8cc7",
+            "publishedForNows": false,
+            "prompts": [
+              {
+                "promptIdentifier": "3872ea68-92d9-469f-9929-c676745982ef",
+                "promptReference": "reopenedUnder",
+                "durationSequence": 0,
+                "label": "Re-opened under",
+                "value": "Section 14 of the Magistrates' Courts Act 1980"
+              },
+              {
+                "promptIdentifier": "36e32c50-dbec-41c4-904b-25eb20c9c54a",
+                "promptReference": "financialPenaltiesToBeWrittenOff",
+                "durationSequence": 0,
+                "label": "Financial penalties to be written off",
+                "value": "Yes"
+              },
+              {
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedOrganisationName",
+                "durationSequence": 0,
+                "label": "Prosecutor to be notified organisation name",
+                "value": "West Mercia Police"
+              },
+              {
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedOrganisationName",
+                "durationSequence": 0,
+                "label": "Prosecutor to be notified organisation name",
+                "value": "PO Box 55"
+              },
+              {
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedOrganisationName",
+                "durationSequence": 0,
+                "label": "Prosecutor to be notified organisation name",
+                "value": "Hindlip"
+              },
+              {
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedOrganisationName",
+                "durationSequence": 0,
+                "label": "Prosecutor to be notified organisation name",
+                "value": "Worcester"
+              },
+              {
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedOrganisationName",
+                "durationSequence": 0,
+                "label": "Prosecutor to be notified organisation name",
+                "value": "WR3 8SP"
+              },
+              {
+                "promptIdentifier": "beb6bcb8-544c-4b83-943f-167d391e3ebd",
+                "promptReference": "sentenceImposedOnTheSpecifiedDateIsSetAside",
+                "durationSequence": 0,
+                "label": "Sentence imposed on the specified date is set aside",
+                "value": "2026-03-31T11:29:09.506Z[UTC]"
+              }
+            ],
+            "d20": false,
+            "judicialResultCategory": "FINAL",
+            "label": "Case reopened"
+          },
+          {
+            "resultIdentifier": "f42fa098-0f7b-4269-ac4f-b10c9b6832d7",
+            "publishedForNows": true,
+            "prompts": [
+              {
+                "promptIdentifier": "b49bf4fa-0b1e-4079-b85a-c0113a46b91b",
+                "promptReference": "originalCourtCode",
+                "durationSequence": 0,
+                "label": "Original court code",
+                "value": "1894"
+              },
+              {
+                "promptIdentifier": "0cd86af5-10d8-4fd1-a78a-8a0e80179034",
+                "promptReference": "originalConvictionDate",
+                "durationSequence": 0,
+                "label": "Original conviction date",
+                "value": "2026-03-31"
+              },
+              {
+                "promptIdentifier": "37ee2b08-1950-4b04-bea5-f6f66b768bb0",
+                "promptReference": "originalOffenceDate",
+                "durationSequence": 0,
+                "label": "Original offence date",
+                "value": "2026-02-19"
+              },
+              {
+                "promptIdentifier": "1a2a23ea-c70d-4a5c-afa7-09dc514f84cc",
+                "promptReference": "dVLAEndorsementCode",
+                "durationSequence": 0,
+                "label": "DVLA endorsement code",
+                "value": "CU10"
+              },
+              {
+                "promptIdentifier": "1a1e18f9-3278-4f68-98f9-05ab461426f4",
+                "promptReference": "originalCourtCode2",
+                "durationSequence": 0,
+                "label": "Original court code (2)",
+                "value": "1894"
+              },
+              {
+                "promptIdentifier": "67f2500c-41e4-4546-b6ae-b17baa995dfd",
+                "promptReference": "originalConvictionDate2",
+                "durationSequence": 0,
+                "label": "Original conviction date (2)",
+                "value": "2026-03-31"
+              },
+              {
+                "promptIdentifier": "baaf944d-e5bf-466e-a6f3-3de3e5dc36eb",
+                "promptReference": "originalOffenceDate2",
+                "durationSequence": 0,
+                "label": "Original offence date (2)",
+                "value": "2026-03-16"
+              },
+              {
+                "promptIdentifier": "77653f51-5363-4f8d-a732-89a695b29dc2",
+                "promptReference": "dVLAEndorsementCode2",
+                "durationSequence": 0,
+                "label": "DVLA endorsement code (2)",
+                "value": "IN14"
+              }
+            ],
+            "d20": false,
+            "judicialResultCategory": "ANCILLARY",
+            "label": "Driving endorsement to be removed"
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": false,
+  "orderingHearingId": "f8b3c556-4e9d-4dd4-9a34-b84b959ecd4b"
+}

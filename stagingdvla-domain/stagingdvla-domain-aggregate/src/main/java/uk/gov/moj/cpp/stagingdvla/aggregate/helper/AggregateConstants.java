@@ -86,7 +86,8 @@ public class AggregateConstants {
         WDRNOFF("e0ae61f5-bbfa-4562-bc6d-ac59a484a06b"),
         DER("f42fa098-0f7b-4269-ac4f-b10c9b6832d7"),
         NESR("f121db73-57fb-4f74-9ab1-0843aabe4605"),
-        NDSR("808313d1-f450-4410-b2f1-97409d7b4074");
+        NDSR("808313d1-f450-4410-b2f1-97409d7b4074"),
+        SUMRCC("600edfc3-a584-4f9f-a52e-5bb8a99646c1");
 
         public final String id;
 

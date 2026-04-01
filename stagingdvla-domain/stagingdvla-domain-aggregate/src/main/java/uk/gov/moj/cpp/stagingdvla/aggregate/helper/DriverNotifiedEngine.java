@@ -310,7 +310,7 @@ public class DriverNotifiedEngine {
                 if (isNotEmpty(previousCase.getDefendantCaseOffences())) {
                     if (nonNull(currentCase) && isNotEmpty(currentCase.getDefendantCaseOffences())) {
                         previousCase.getDefendantCaseOffences().removeIf(previousOffence -> currentCase.getDefendantCaseOffences().stream()
-                                .noneMatch(currentOffence -> previousOffence.getMainOffenceCode().equalsIgnoreCase(currentOffence.getMainOffenceCode())));
+                                .noneMatch(currentOffence -> equalsIgnoreCase(previousOffence.getMainOffenceCode(), currentOffence.getMainOffenceCode())));
                     } else {
                         previousCase.getDefendantCaseOffences().clear();
                     }

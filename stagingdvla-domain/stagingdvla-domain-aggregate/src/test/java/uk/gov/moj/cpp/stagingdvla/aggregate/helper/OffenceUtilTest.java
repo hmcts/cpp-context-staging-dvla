@@ -34,6 +34,7 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.Res
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.TEXT;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.WDRN;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.WDRNOFF;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.REOPENED_APPLICATION_TYPE;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.getEndorsementStatus;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAnyD20Removed;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAnyResult;
@@ -44,8 +45,11 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAppealR
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAppealResultOrGrantedOrReopened;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasD20Endorsement;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasPointsDisqualificationCode;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasResultCategoryOnly;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasResultType;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.isApplicationReopenedAndInterimResult;
 
+import uk.gov.justice.core.courts.JudicialResultCategory;
 import uk.gov.justice.cpp.stagingdvla.event.Cases;
 import uk.gov.justice.cpp.stagingdvla.event.CourtApplications;
 import uk.gov.justice.cpp.stagingdvla.event.DefendantCaseOffences;
@@ -53,6 +57,7 @@ import uk.gov.justice.cpp.stagingdvla.event.Prompts;
 import uk.gov.justice.cpp.stagingdvla.event.Results;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
 
@@ -835,5 +840,52 @@ class OffenceUtilTest {
         boolean hasResult = hasResultType(offence, SV);
 
         assertThat(hasResult, is(false));
+    }
+
+    @Test
+    void shouldHasResultCategoryOnlyReturnTrueWhenAtLeastOneMatches() {
+        final DefendantCaseOffences offence = DefendantCaseOffences.defendantCaseOffences()
+                .withResults(singletonList(results().withJudicialResultCategory(JudicialResultCategory.ANCILLARY).build()))
+                .build();
+        assertThat(hasResultCategoryOnly(offence, JudicialResultCategory.ANCILLARY, JudicialResultCategory.INTERMEDIARY), is(true));
+    }
+
+    @Test
+    void shouldHasResultCategoryOnlyReturnFalseWhenNoMatches() {
+        final DefendantCaseOffences offence = DefendantCaseOffences.defendantCaseOffences()
+                .withResults(singletonList(results().withJudicialResultCategory(JudicialResultCategory.FINAL).build()))
+                .build();
+        assertThat(hasResultCategoryOnly(offence, JudicialResultCategory.ANCILLARY, JudicialResultCategory.INTERMEDIARY), is(false));
+    }
+
+    @Test
+    void shouldApplicationReopenedAndInterimResultReturnTrue() {
+        final List<CourtApplications> courtApplications = singletonList(CourtApplications.courtApplications()
+                .withApplicationTypeId(REOPENED_APPLICATION_TYPE)
+                .withResults(List.of(results().withJudicialResultCategory(JudicialResultCategory.INTERMEDIARY).build(),
+                        results().withJudicialResultCategory(JudicialResultCategory.ANCILLARY).build()))
+                .build());
+        assertThat(isApplicationReopenedAndInterimResult(courtApplications), is(true));
+    }
+
+    @Test
+    void shouldApplicationReopenedAndInterimResultReturnFalseWhenHasFinalResult() {
+        final List<CourtApplications> courtApplications = singletonList(CourtApplications.courtApplications()
+                .withApplicationTypeId(REOPENED_APPLICATION_TYPE)
+                .withResults(List.of(results().withJudicialResultCategory(JudicialResultCategory.INTERMEDIARY).build(),
+                        results().withJudicialResultCategory(JudicialResultCategory.ANCILLARY).build(),
+                        results().withJudicialResultCategory(JudicialResultCategory.FINAL).build()))
+                .build());
+        assertThat(isApplicationReopenedAndInterimResult(courtApplications), is(false));
+    }
+
+    @Test
+    void shouldApplicationReopenedAndInterimResultReturnFalseWhenApplicationIsNotReopen() {
+        final List<CourtApplications> courtApplications = singletonList(CourtApplications.courtApplications()
+                .withApplicationTypeId(UUID.randomUUID().toString())
+                .withResults(List.of(results().withJudicialResultCategory(JudicialResultCategory.INTERMEDIARY).build(),
+                        results().withJudicialResultCategory(JudicialResultCategory.ANCILLARY).build()))
+                .build());
+        assertThat(isApplicationReopenedAndInterimResult(courtApplications), is(false));
     }
 }
