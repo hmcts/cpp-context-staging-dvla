@@ -183,6 +183,7 @@
       {
         "applicationType": "Appearance to make statutory declaration (SJP case)",
         "applicationTypeId" : "f3a6e917-7cc8-3c66-83dd-d958abd6a6e4",
+        "applicationSubType": "MC80528",
         "applicationReceivedDate": "2023-05-16",
         "id": "0d047d1d-3849-41da-9bd4-44cc847395ee",
         "applicationReference": "JW126523173",

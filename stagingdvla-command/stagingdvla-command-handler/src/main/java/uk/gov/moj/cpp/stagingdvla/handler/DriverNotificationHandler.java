@@ -151,6 +151,7 @@ public class DriverNotificationHandler {
                     .withPointsDisqualificationCode(aResult.getPointsDisqualificationCode())
                     .withDrivingTestStipulation(aResult.getDrivingTestStipulation())
                     .withDvlaCode(aResult.getDvlaCode())
+                    .withJudicialResultCategory(aResult.getJudicialResultCategory())
                     .build()));
         }
         return resultsList;

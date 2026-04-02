@@ -22,12 +22,14 @@ import static uk.gov.justice.services.test.utils.core.messaging.MetadataBuilderF
 
 import org.apache.commons.lang3.StringUtils;
 import uk.gov.justice.core.courts.CourtCentre;
+import uk.gov.justice.core.courts.JudicialResultCategory;
 import uk.gov.justice.core.courts.nowdocument.Nowdefendant;
 import uk.gov.justice.cpp.stagingdvla.command.handler.Cases;
 import uk.gov.justice.cpp.stagingdvla.command.handler.CourtApplications;
 import uk.gov.justice.cpp.stagingdvla.command.handler.DefendantCaseOffences;
 import uk.gov.justice.cpp.stagingdvla.command.handler.DriverNotification;
 import uk.gov.justice.cpp.stagingdvla.command.handler.NowContent;
+import uk.gov.justice.cpp.stagingdvla.command.handler.Prompts;
 import uk.gov.justice.cpp.stagingdvla.command.handler.Results;
 import uk.gov.justice.cpp.stagingdvla.event.DriverNotified;
 import uk.gov.justice.services.core.aggregate.AggregateService;
@@ -39,6 +41,7 @@ import uk.gov.justice.services.messaging.Envelope;
 import uk.gov.justice.services.messaging.JsonEnvelope;
 import uk.gov.moj.cpp.stagingdvla.aggregate.DefendantAggregate;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
@@ -180,9 +183,23 @@ public class DriverNotificationHandlerTest {
     private static List<Results> getOffenceResults() {
         return Collections.singletonList((Results.results()
                 .withD20(true)
+                .withJudicialResultCategory(JudicialResultCategory.FINAL)
                 .withDrivingTestStipulation(1)
                 .withPointsDisqualificationCode("TT99")
                 .withResultIdentifier(randomUUID().toString())
+                .withPrompts(getPrompts())
+                .build()));
+    }
+
+    private static List<Prompts> getPrompts() {
+        return Collections.singletonList((Prompts.prompts()
+                .withPromptIdentifier(randomUUID().toString())
+                .withPromptReference("testPromptReference")
+                .withDurationSequence(BigDecimal.ONE)
+                .withLabel("Test Prompt")
+                .withValue("Test Value")
+                .withWelshLabel("Test Welsh Label")
+                .withWelshValue("Test Welsh Value")
                 .build()));
     }
 

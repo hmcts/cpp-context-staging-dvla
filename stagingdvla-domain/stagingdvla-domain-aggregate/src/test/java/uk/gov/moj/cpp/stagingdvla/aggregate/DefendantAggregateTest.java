@@ -83,7 +83,7 @@ public class DefendantAggregateTest {
         assertThat(eventStream.size(), is(1));
         assertThat(eventStream.get(0).getClass(), is(equalTo(DriverNotified.class)));
         assertThat(((DriverNotified) eventStream.get(0)).getUpdatedEndorsements().size(), is(equalTo(1)));
-        assertThat(((DriverNotified) eventStream.get(0)).getRemovedEndorsements().size(), is(equalTo(0)));
+        assertThat(((DriverNotified) eventStream.get(0)).getRemovedEndorsements(), is(nullValue()));
     }
 
     @Test
@@ -180,7 +180,7 @@ public class DefendantAggregateTest {
 
         assertThat(eventStream.size(), is(1));
         assertThat(eventStream.get(0).getClass(), is(equalTo(DriverNotified.class)));
-        assertThat(((DriverNotified) eventStream.get(0)).getUpdatedEndorsements().size(), is(equalTo(0)));
+        assertThat(((DriverNotified) eventStream.get(0)).getUpdatedEndorsements(), is(nullValue()));
         assertThat(((DriverNotified) eventStream.get(0)).getRemovedEndorsements().size(), is(equalTo(1)));
     }
 

@@ -190,6 +190,7 @@
       {
         "applicationType": "Appearance to make statutory declaration",
         "applicationTypeId" : "f3a6e917-7cc8-3c66-83dd-d958abd6a6e4",
+        "applicationCode": "MC80527",
         "applicationReceivedDate": "2023-05-04",
         "id": "dfc0c0c6-7dcd-4202-8bcd-4c1a40cf2458",
         "applicationReference": "JW27684335",
