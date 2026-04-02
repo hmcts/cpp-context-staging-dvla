@@ -117,6 +117,7 @@
                   }
                 ],
                 "d20": false,
+                "judicialResultCategory": "ANCILLARY",
                 "label": "Community order varied"
               }
             ]

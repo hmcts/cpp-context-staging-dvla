@@ -116,7 +116,7 @@
           {
             "title": "Drive motor vehicle fail comply with red / green arrow / lane closure traffic light signals - manual detection",
             "civilOffence": false,
-            "dvlaCode": "TS10",
+            "dvlaCode": "TS20",
             "endDate": "2020-09-17",
             "convictionDate": "2023-10-16",
             "convictionStatus": "Convicted",

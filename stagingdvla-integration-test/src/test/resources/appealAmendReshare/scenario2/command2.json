@@ -65,35 +65,6 @@
             "startDate": "2020-09-18",
             "results": [
               {
-                "resultIdentifier": "73fe22ca-76bd-4aba-bdea-6dfef8ee03a2",
-                "publishedForNows": false,
-                "prompts": [
-                  {
-                    "promptIdentifier": "2bf54447-328c-4c1b-a123-341adbd52172",
-                    "promptReference": "disqualificationPeriod",
-                    "durationSequence": 1,
-                    "label": "Disqualification period",
-                    "value": "12 Months"
-                  },
-                  {
-                    "promptIdentifier": "462d5ba8-7a1c-44a0-a732-6c75601bd6af",
-                    "promptReference": "notionalPenaltyPoints",
-                    "label": "Notional penalty points",
-                    "value": "3"
-                  },
-                  {
-                    "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
-                    "promptReference": "defendantDrivingLicenceNumber",
-                    "label": "Defendant driving licence number",
-                    "value": "ABCDE0,0010BCFAA"
-                  }
-                ],
-                "resultWording": "Disqualified for holding or obtaining a driving licence. Disqualification obligatory due to repeat offending. Driving record endorsed. Section 35(1) Road Traffic Offenders Act 1988",
-                "d20": true,
-                "pointsDisqualificationCode": "TT99",
-                "label": "Points disqualification"
-              },
-              {
                 "resultIdentifier": "55f15ecf-ea80-40f4-848d-29e7b8d73ae2",
                 "publishedForNows": false,
                 "prompts": [
@@ -127,7 +98,7 @@
         "applicationStatus": "UN_ALLOCATED",
         "results": [
           {
-            "resultIdentifier": "573b195d-5795-43f1-92bb-204de1305b8b",
+            "resultIdentifier": "d861586a-df88-440d-98d4-63cc2a680ae1",
             "publishedForNows": false,
             "prompts": [
               {
@@ -144,7 +115,7 @@
               }
             ],
             "d20": false,
-            "label": "Appeal against sentence dismissed "
+            "label": "Appeal against sentence allowed"
           }
         ]
       }

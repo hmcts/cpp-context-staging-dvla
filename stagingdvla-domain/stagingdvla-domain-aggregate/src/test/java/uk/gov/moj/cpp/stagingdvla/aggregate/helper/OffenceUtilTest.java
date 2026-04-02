@@ -1,29 +1,50 @@
 package uk.gov.moj.cpp.stagingdvla.aggregate.helper;
 
 import static java.util.Arrays.asList;
+import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static uk.gov.justice.cpp.stagingdvla.event.Prompts.prompts;
 import static uk.gov.justice.cpp.stagingdvla.event.Results.results;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ApplicationType.AACMC;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ApplicationType.ACP;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ApplicationType.APPRO;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.REMOVE;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.UPDATE_MERGE;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.AACA;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.AACD;
-import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.AASA;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.AASD;
-import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.ACSD;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.ADJ;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.APA;
-import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.ASV;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.AW;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.COV;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.DDRE;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.DINE;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.DINI;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.DISC;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.DISCH;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.DISM;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.DSPAS;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.ERR;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.G;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.OATS;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.RFSD;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.SV;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.TEXT;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.WDRN;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.WDRNOFF;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.getEndorsementStatus;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAnyD20Removed;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAnyResult;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAnyResultOrPromptModified;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAnyResultType;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAppealRefusedResult;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAppealResult;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAppealResultOrGranted;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasD20Endorsement;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasPointsDisqualificationCode;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasResultType;
 
 import uk.gov.justice.cpp.stagingdvla.event.Cases;
 import uk.gov.justice.cpp.stagingdvla.event.CourtApplications;
@@ -47,7 +68,7 @@ class OffenceUtilTest {
         Cases previousCases = buildCases(RESULT_IDENTIFIER, Boolean.TRUE);
         Cases currentCases = buildCases(RESULT_IDENTIFIER, Boolean.FALSE);
 
-        boolean d20Removed = OffenceUtil.hasAnyD20Removed(previousCases, currentCases, null);
+        boolean d20Removed = hasAnyD20Removed(previousCases, currentCases, null);
 
         assertThat(d20Removed, is(false));
     }
@@ -60,7 +81,7 @@ class OffenceUtilTest {
         final List<Results> results = singletonList(results().withResultIdentifier(RFSD.id).build());
         final List<CourtApplications> courtApplications = singletonList(CourtApplications.courtApplications().withResults(results).build());
 
-        boolean isApplicationRefused = OffenceUtil.hasAnyD20Removed(previousCases, currentCases, courtApplications);
+        boolean isApplicationRefused = hasAnyD20Removed(previousCases, currentCases, courtApplications);
 
         assertThat(isApplicationRefused, is(false));
     }
@@ -73,7 +94,7 @@ class OffenceUtilTest {
         final List<Results> results = singletonList(results().withResultIdentifier(ERR.id).build());
         final List<CourtApplications> courtApplications = singletonList(CourtApplications.courtApplications().withResults(results).build());
 
-        boolean isApplicationRefused = OffenceUtil.hasAnyD20Removed(previousCases, currentCases, courtApplications);
+        boolean isApplicationRefused = hasAnyD20Removed(previousCases, currentCases, courtApplications);
 
         assertThat(isApplicationRefused, is(false));
     }
@@ -94,7 +115,7 @@ class OffenceUtilTest {
         final List<Results> results = singletonList(results().withResultIdentifier(AACA.id).build());
         final List<CourtApplications> courtApplications = singletonList(CourtApplications.courtApplications().withResults(results).build());
 
-        boolean isApplicationRefused = OffenceUtil.hasAnyD20Removed(previousCases, currentCases, courtApplications);
+        boolean isApplicationRefused = hasAnyD20Removed(previousCases, currentCases, courtApplications);
 
         assertThat(isApplicationRefused, is(true));
     }
@@ -107,7 +128,7 @@ class OffenceUtilTest {
         final List<Results> results = asList(results().withResultIdentifier(G.id).build(), results().withResultIdentifier(COV.id).build());
         final List<CourtApplications> courtApplications = singletonList(CourtApplications.courtApplications().withResults(results).build());
 
-        boolean hasAnyD20Removed = OffenceUtil.hasAnyD20Removed(previousCases, currentCases, courtApplications);
+        boolean hasAnyD20Removed = hasAnyD20Removed(previousCases, currentCases, courtApplications);
 
         assertThat(hasAnyD20Removed, is(false));
     }
@@ -128,7 +149,7 @@ class OffenceUtilTest {
         final List<Results> results = singletonList(results().withResultIdentifier(G.id).build());
         final List<CourtApplications> courtApplications = singletonList(CourtApplications.courtApplications().withResults(results).build());
 
-        boolean hasAnyD20Removed = OffenceUtil.hasAnyD20Removed(previousCases, currentCases, courtApplications);
+        boolean hasAnyD20Removed = hasAnyD20Removed(previousCases, currentCases, courtApplications);
 
         assertThat(hasAnyD20Removed, is(true));
     }
@@ -138,7 +159,7 @@ class OffenceUtilTest {
         final Cases currentCases = Cases.cases().withReference(caseReference).withCaseStatus("INACTIVE").build();
         final List<CourtApplications> courtApplications = singletonList(CourtApplications.courtApplications().withApplicationTypeId(ACP.id).build());
 
-        boolean hasAnyD20Removed = OffenceUtil.hasAnyD20Removed(null, currentCases, courtApplications);
+        boolean hasAnyD20Removed = hasAnyD20Removed(null, currentCases, courtApplications);
 
         assertThat(hasAnyD20Removed, is(false));
     }
@@ -150,7 +171,7 @@ class OffenceUtilTest {
         final Cases currentCases = Cases.cases().withReference(caseReference).withCaseStatus("ACTIVE").build();
         final List<CourtApplications> courtApplications = singletonList(CourtApplications.courtApplications().withResults(results).withApplicationType("Appearance to make statutory declaration (other than SJP)").build());
 
-        boolean hasAnyD20Removed = OffenceUtil.hasAnyD20Removed(previousCases, currentCases, courtApplications);
+        boolean hasAnyD20Removed = hasAnyD20Removed(previousCases, currentCases, courtApplications);
 
         assertThat(hasAnyD20Removed, is(true));
     }
@@ -232,7 +253,7 @@ class OffenceUtilTest {
 
         Cases currentCases = buildCases("RI02", Boolean.FALSE);
 
-        boolean d20Removed = OffenceUtil.hasAnyD20Removed(previousCases, currentCases, null);
+        boolean d20Removed = hasAnyD20Removed(previousCases, currentCases, null);
 
         assertThat(d20Removed, is(true));
     }
@@ -241,90 +262,72 @@ class OffenceUtilTest {
     void shouldGetEndorsementStatusDSPAS() {
         final List<CourtApplications> courtApplications = getCourtApplications(DSPAS);
 
-        final AggregateConstants.EndorsementStatus endorsementStatus = OffenceUtil.getEndorsementStatus(false, null, courtApplications);
+        final AggregateConstants.EndorsementStatus endorsementStatus = getEndorsementStatus(false, null, null, courtApplications, emptyList());
 
         assertThat(endorsementStatus, is(UPDATE_MERGE));
     }
 
     @Test
-    void shouldGetEndorsementStatusAACA() {
-        final List<CourtApplications> courtApplications = getCourtApplications(AACA);
+    void shouldGetEndorsementStatusDISM() {
+        final List<CourtApplications> courtApplications = getCourtApplications(DISM);
 
-        final AggregateConstants.EndorsementStatus endorsementStatus = OffenceUtil.getEndorsementStatus(false, null, courtApplications);
+        final AggregateConstants.EndorsementStatus endorsementStatus = getEndorsementStatus(false, null, null, courtApplications, emptyList());
 
         assertThat(endorsementStatus, is(REMOVE));
     }
 
     @Test
-    void shouldGetEndorsementStatusAASA() {
-        final List<CourtApplications> courtApplications = getCourtApplications(AASA);
+    void shouldGetEndorsementStatusDINE() {
+        final List<CourtApplications> courtApplications = getCourtApplications(DINE);
 
-        final AggregateConstants.EndorsementStatus endorsementStatus = OffenceUtil.getEndorsementStatus(false, null, courtApplications);
+        final AggregateConstants.EndorsementStatus endorsementStatus = getEndorsementStatus(false, null, null, courtApplications, emptyList());
 
         assertThat(endorsementStatus, is(REMOVE));
     }
 
     @Test
-    void shouldGetEndorsementStatusAACD() {
-        final List<CourtApplications> courtApplications = getCourtApplications(AACD);
+    void shouldGetEndorsementStatusDINI() {
+        final List<CourtApplications> courtApplications = getCourtApplications(DINI);
 
-        final AggregateConstants.EndorsementStatus endorsementStatus = OffenceUtil.getEndorsementStatus(false, null, courtApplications);
+        final AggregateConstants.EndorsementStatus endorsementStatus = getEndorsementStatus(false, null, null, courtApplications, emptyList());
 
-        assertThat(endorsementStatus, is(UPDATE_MERGE));
+        assertThat(endorsementStatus, is(REMOVE));
     }
 
     @Test
-    void shouldGetEndorsementStatusAASD() {
-        final List<CourtApplications> courtApplications = getCourtApplications(AASD);
+    void shouldGetEndorsementStatusDISC() {
+        final List<CourtApplications> courtApplications = getCourtApplications(DISC);
 
-        final AggregateConstants.EndorsementStatus endorsementStatus = OffenceUtil.getEndorsementStatus(false, null, courtApplications);
+        final AggregateConstants.EndorsementStatus endorsementStatus = getEndorsementStatus(false, null, null, courtApplications, emptyList());
 
-        assertThat(endorsementStatus, is(UPDATE_MERGE));
+        assertThat(endorsementStatus, is(REMOVE));
     }
 
     @Test
-    void shouldGetEndorsementStatusACSD() {
-        final List<CourtApplications> courtApplications = getCourtApplications(ACSD);
+    void shouldGetEndorsementStatusDISCH() {
+        final List<CourtApplications> courtApplications = getCourtApplications(DISCH);
 
-        final AggregateConstants.EndorsementStatus endorsementStatus = OffenceUtil.getEndorsementStatus(false, null, courtApplications);
+        final AggregateConstants.EndorsementStatus endorsementStatus = getEndorsementStatus(false, null, null, courtApplications, emptyList());
 
-        assertThat(endorsementStatus, is(UPDATE_MERGE));
+        assertThat(endorsementStatus, is(REMOVE));
     }
 
     @Test
-    void shouldGetEndorsementStatusAPA() {
-        final List<CourtApplications> courtApplications = getCourtApplications(APA);
+    void shouldGetEndorsementStatusWDRN() {
+        final List<CourtApplications> courtApplications = getCourtApplications(WDRN);
 
-        final AggregateConstants.EndorsementStatus endorsementStatus = OffenceUtil.getEndorsementStatus(false, null, courtApplications);
+        final AggregateConstants.EndorsementStatus endorsementStatus = getEndorsementStatus(false, null, null, courtApplications, emptyList());
 
-        assertThat(endorsementStatus, is(UPDATE_MERGE));
+        assertThat(endorsementStatus, is(REMOVE));
     }
 
     @Test
-    void shouldGetEndorsementStatusASV() {
-        final List<CourtApplications> courtApplications = getCourtApplications(ASV);
+    void shouldGetEndorsementStatusWDRNOFF() {
+        final List<CourtApplications> courtApplications = getCourtApplications(WDRNOFF);
 
-        final AggregateConstants.EndorsementStatus endorsementStatus = OffenceUtil.getEndorsementStatus(false, null, courtApplications);
+        final AggregateConstants.EndorsementStatus endorsementStatus = getEndorsementStatus(false, null, null, courtApplications, emptyList());
 
-        assertThat(endorsementStatus, is(UPDATE_MERGE));
-    }
-
-    @Test
-    void shouldGetEndorsementStatusAW() {
-        final List<CourtApplications> courtApplications = getCourtApplications(AW);
-
-        final AggregateConstants.EndorsementStatus endorsementStatus = OffenceUtil.getEndorsementStatus(false, null, courtApplications);
-
-        assertThat(endorsementStatus, is(UPDATE_MERGE));
-    }
-
-    @Test
-    void shouldGetEndorsementStatusDDRE() {
-        final List<CourtApplications> courtApplications = getCourtApplications(DDRE);
-
-        final AggregateConstants.EndorsementStatus endorsementStatus = OffenceUtil.getEndorsementStatus(false, null, courtApplications);
-
-        assertThat(endorsementStatus, is(UPDATE_MERGE));
+        assertThat(endorsementStatus, is(REMOVE));
     }
 
     private Cases buildCases(String resultIdentifier, boolean d20) {
@@ -377,7 +380,7 @@ class OffenceUtilTest {
                 .build();
     }
 
-    private List<CourtApplications> getCourtApplications (final AggregateConstants.ResultType resultType) {
+    private List<CourtApplications> getCourtApplications(final AggregateConstants.ResultType resultType) {
         final CourtApplications applications = CourtApplications.courtApplications().withResults(singletonList(results()
                 .withD20(Boolean.TRUE)
                 .withResultIdentifier(resultType.id)
@@ -385,5 +388,441 @@ class OffenceUtilTest {
                 .build())).build();
 
         return singletonList(applications);
+    }
+
+    @Test
+    void shouldReturnTrueForCaseReopenWithAPPROApplicationTypeId() {
+        final List<CourtApplications> courtApplications = singletonList(
+                CourtApplications.courtApplications()
+                        .withApplicationTypeId(APPRO.id)
+                        .build()
+        );
+
+        assertThat(courtApplications.get(0).getApplicationTypeId(), is(APPRO.id));
+    }
+
+    @Test
+    void shouldReturnTrueForCaseReopenWithAPPROApplicationType() {
+        final List<CourtApplications> courtApplications = singletonList(
+                CourtApplications.courtApplications()
+                        .withApplicationType(APPRO.appType)
+                        .build()
+        );
+
+        assertThat(courtApplications.get(0).getApplicationType(), is("Application to reopen case"));
+    }
+
+    @Test
+    void shouldHandleCaseReopenWithGrantedResult() {
+        final Cases previousCases = buildCases(RESULT_IDENTIFIER, Boolean.TRUE);
+        final Cases currentCases = Cases.cases().withReference(caseReference).build();
+
+        final List<Results> results = singletonList(results().withResultIdentifier(G.id).build());
+        final List<CourtApplications> courtApplications = singletonList(
+                CourtApplications.courtApplications()
+                        .withApplicationTypeId(APPRO.id)
+                        .withResults(results)
+                        .build()
+        );
+
+        boolean hasAnyD20Removed = hasAnyD20Removed(previousCases, currentCases, courtApplications);
+
+        assertThat(hasAnyD20Removed, is(true));
+    }
+
+    @Test
+    void shouldIgnoreD20SearchWhenCaseInactiveAndApplicationTypeIsACPWithId() {
+        final Cases currentCases = Cases.cases()
+                .withReference(caseReference)
+                .withCaseStatus("INACTIVE")
+                .build();
+        final List<CourtApplications> courtApplications = singletonList(
+                CourtApplications.courtApplications()
+                        .withApplicationTypeId(ACP.id)
+                        .build()
+        );
+
+        boolean hasAnyD20Removed = hasAnyD20Removed(null, currentCases, courtApplications);
+
+        assertThat(hasAnyD20Removed, is(false));
+    }
+
+    @Test
+    void shouldIgnoreD20SearchWhenCaseInactiveAndApplicationTypeIsACPWithAppType() {
+        final Cases currentCases = Cases.cases()
+                .withReference(caseReference)
+                .withCaseStatus("INACTIVE")
+                .build();
+        final List<CourtApplications> courtApplications = singletonList(
+                CourtApplications.courtApplications()
+                        .withApplicationType(ACP.appType)
+                        .build()
+        );
+
+        boolean hasAnyD20Removed = hasAnyD20Removed(null, currentCases, courtApplications);
+
+        assertThat(hasAnyD20Removed, is(false));
+    }
+
+    @Test
+    void shouldProcessD20WhenCaseActiveAndApplicationTypeIsACP() {
+        final Cases previousCases = buildCases(RESULT_IDENTIFIER, Boolean.TRUE);
+        final Cases currentCases = Cases.cases()
+                .withReference(caseReference)
+                .withCaseStatus("ACTIVE")
+                .withDefendantCaseOffences(singletonList(
+                        DefendantCaseOffences.defendantCaseOffences()
+                                .withMainOffenceCode(MAIN_OFFENCE_CODE)
+                                .withResults(singletonList(
+                                        results()
+                                                .withD20(true)
+                                                .withResultIdentifier(AACA.id)
+                                                .build()))
+                                .build()))
+                .build();
+
+        final List<Results> results = singletonList(results().withResultIdentifier(AACA.id).build());
+        final List<CourtApplications> courtApplications = singletonList(
+                CourtApplications.courtApplications()
+                        .withApplicationTypeId(ACP.id)
+                        .withResults(results)
+                        .build()
+        );
+
+        boolean hasAnyD20Removed = hasAnyD20Removed(previousCases, currentCases, courtApplications);
+
+        assertThat(hasAnyD20Removed, is(true));
+    }
+
+    @Test
+    void shouldReturnTrueForHasAppealResultWithAACA() {
+        final List<Results> results = singletonList(results().withResultIdentifier(AACA.id).build());
+        final List<CourtApplications> courtApplications = singletonList(
+                CourtApplications.courtApplications().withResults(results).build()
+        );
+
+        boolean hasAppealResult = hasAppealResult(courtApplications);
+
+        assertThat(hasAppealResult, is(true));
+    }
+
+    @Test
+    void shouldReturnTrueForHasAppealResultWithDDRE() {
+        final List<Results> results = singletonList(results().withResultIdentifier(DDRE.id).build());
+        final List<CourtApplications> courtApplications = singletonList(
+                CourtApplications.courtApplications().withResults(results).build()
+        );
+
+        boolean hasAppealResult = hasAppealResult(courtApplications);
+
+        assertThat(hasAppealResult, is(true));
+    }
+
+    @Test
+    void shouldReturnFalseForHasAppealResultWithNonAppealResult() {
+        final List<Results> results = singletonList(results().withResultIdentifier(OATS.id).build());
+        final List<CourtApplications> courtApplications = singletonList(
+                CourtApplications.courtApplications().withResults(results).build()
+        );
+
+        boolean hasAppealResult = hasAppealResult(courtApplications);
+
+        assertThat(hasAppealResult, is(false));
+    }
+
+    @Test
+    void shouldReturnTrueForHasAppealRefusedResultWithAACD() {
+        final List<Results> results = singletonList(results().withResultIdentifier(AACD.id).build());
+        final List<CourtApplications> courtApplications = singletonList(
+                CourtApplications.courtApplications().withResults(results).build()
+        );
+
+        boolean hasAppealRefusedResult = hasAppealRefusedResult(courtApplications);
+
+        assertThat(hasAppealRefusedResult, is(true));
+    }
+
+    @Test
+    void shouldReturnTrueForHasAppealRefusedResultWithAASD() {
+        final List<Results> results = singletonList(results().withResultIdentifier(AASD.id).build());
+        final List<CourtApplications> courtApplications = singletonList(
+                CourtApplications.courtApplications().withResults(results).build()
+        );
+
+        boolean hasAppealRefusedResult = hasAppealRefusedResult(courtApplications);
+
+        assertThat(hasAppealRefusedResult, is(true));
+    }
+
+    @Test
+    void shouldReturnTrueForHasAppealRefusedResultWithAPA() {
+        final List<Results> results = singletonList(results().withResultIdentifier(APA.id).build());
+        final List<CourtApplications> courtApplications = singletonList(
+                CourtApplications.courtApplications().withResults(results).build()
+        );
+
+        boolean hasAppealRefusedResult = hasAppealRefusedResult(courtApplications);
+
+        assertThat(hasAppealRefusedResult, is(true));
+    }
+
+    @Test
+    void shouldReturnTrueForHasAppealRefusedResultWithAW() {
+        final List<Results> results = singletonList(results().withResultIdentifier(AW.id).build());
+        final List<CourtApplications> courtApplications = singletonList(
+                CourtApplications.courtApplications().withResults(results).build()
+        );
+
+        boolean hasAppealRefusedResult = hasAppealRefusedResult(courtApplications);
+
+        assertThat(hasAppealRefusedResult, is(true));
+    }
+
+    @Test
+    void shouldReturnFalseForHasAppealRefusedResultWithNonRefusedResult() {
+        final List<Results> results = singletonList(results().withResultIdentifier(AACA.id).build());
+        final List<CourtApplications> courtApplications = singletonList(
+                CourtApplications.courtApplications().withResults(results).build()
+        );
+
+        boolean hasAppealRefusedResult = hasAppealRefusedResult(courtApplications);
+
+        assertThat(hasAppealRefusedResult, is(false));
+    }
+
+    @Test
+    void shouldReturnTrueForHasAppealResultOrGrantedWithAppealResult() {
+        final List<Results> results = singletonList(results().withResultIdentifier(AACA.id).build());
+        final List<CourtApplications> courtApplications = singletonList(
+                CourtApplications.courtApplications().withResults(results).build()
+        );
+
+        boolean hasAppealResultOrGranted = hasAppealResultOrGranted(courtApplications);
+
+        assertThat(hasAppealResultOrGranted, is(true));
+    }
+
+    @Test
+    void shouldReturnTrueForHasAppealResultOrGrantedWithGrantedResult() {
+        final List<Results> results = singletonList(results().withResultIdentifier(G.id).build());
+        final List<CourtApplications> courtApplications = singletonList(
+                CourtApplications.courtApplications().withApplicationCode(AACMC.code).withResults(results).build()
+        );
+
+        boolean hasAppealResultOrGranted = hasAppealResultOrGranted(courtApplications);
+
+        assertThat(hasAppealResultOrGranted, is(true));
+    }
+
+    @Test
+    void shouldReturnFalseForHasAppealResultOrGrantedWithOtherResult() {
+        final List<Results> results = singletonList(results().withResultIdentifier(OATS.id).build());
+        final List<CourtApplications> courtApplications = singletonList(
+                CourtApplications.courtApplications().withResults(results).build()
+        );
+
+        boolean hasAppealResultOrGranted = hasAppealResultOrGranted(courtApplications);
+
+        assertThat(hasAppealResultOrGranted, is(false));
+    }
+
+    @Test
+    void shouldReturnTrueWhenOffenceHasSpecificResult() {
+        final DefendantCaseOffences offence = DefendantCaseOffences.defendantCaseOffences()
+                .withResults(singletonList(results().withResultIdentifier(SV.id).build()))
+                .build();
+
+        boolean hasResult = hasResultType(offence, SV);
+
+        assertThat(hasResult, is(true));
+    }
+
+    @Test
+    void shouldReturnFalseWhenOffenceDoesNotHaveSpecificResult() {
+        final DefendantCaseOffences offence = DefendantCaseOffences.defendantCaseOffences()
+                .withResults(singletonList(results().withResultIdentifier(OATS.id).build()))
+                .build();
+
+        boolean hasResult = hasResultType(offence, SV);
+
+        assertThat(hasResult, is(false));
+    }
+
+    @Test
+    void shouldReturnTrueWhenOffenceHasAnyOfTheSpecifiedResults() {
+        final DefendantCaseOffences offence = DefendantCaseOffences.defendantCaseOffences()
+                .withResults(singletonList(results().withResultIdentifier(DISM.id).build()))
+                .build();
+
+        boolean hasAnyResult = hasAnyResult(offence, asList(DISM, DINE, WDRN));
+
+        assertThat(hasAnyResult, is(true));
+    }
+
+    @Test
+    void shouldReturnFalseWhenOffenceDoesNotHaveAnyOfTheSpecifiedResults() {
+        final DefendantCaseOffences offence = DefendantCaseOffences.defendantCaseOffences()
+                .withResults(singletonList(results().withResultIdentifier(ADJ.id).build()))
+                .build();
+
+        boolean hasAnyResult = hasAnyResult(offence, asList(DISM, DINE, WDRN));
+
+        assertThat(hasAnyResult, is(false));
+    }
+
+    @Test
+    void shouldReturnTrueWhenApplicationHasSpecificResult() {
+        final List<CourtApplications> courtApplications = singletonList(
+                CourtApplications.courtApplications()
+                        .withResults(singletonList(results().withResultIdentifier(RFSD.id).build()))
+                        .build()
+        );
+
+        boolean hasResult = hasResultType(courtApplications, RFSD);
+
+        assertThat(hasResult, is(true));
+    }
+
+    @Test
+    void shouldReturnFalseWhenApplicationDoesNotHaveSpecificResult() {
+        final List<CourtApplications> courtApplications = singletonList(
+                CourtApplications.courtApplications()
+                        .withResults(singletonList(results().withResultIdentifier(G.id).build()))
+                        .build()
+        );
+
+        boolean hasResult = hasResultType(courtApplications, RFSD);
+
+        assertThat(hasResult, is(false));
+    }
+
+    @Test
+    void shouldReturnFalseWhenApplicationListIsEmpty() {
+        final List<CourtApplications> courtApplications = emptyList();
+
+        boolean hasResult = hasResultType(courtApplications, RFSD);
+
+        assertThat(hasResult, is(false));
+    }
+
+    // Tests for hasAnyResultType
+    @Test
+    void shouldReturnTrueWhenResultsContainAnyOfTheSpecifiedTypes() {
+        final List<Results> results = asList(
+                results().withResultIdentifier(TEXT.id).build(),
+                results().withResultIdentifier(OATS.id).build()
+        );
+
+        boolean hasAnyResultType = hasAnyResultType(results, asList(OATS.id, ADJ.id));
+
+        assertThat(hasAnyResultType, is(true));
+    }
+
+    @Test
+    void shouldReturnFalseWhenResultsDoNotContainAnyOfTheSpecifiedTypes() {
+        final List<Results> results = asList(
+                results().withResultIdentifier(TEXT.id).build(),
+                results().withResultIdentifier(ERR.id).build()
+        );
+
+        boolean hasAnyResultType = hasAnyResultType(results, asList(OATS.id, ADJ.id));
+
+        assertThat(hasAnyResultType, is(false));
+    }
+
+    @Test
+    void shouldReturnTrueWhenSingleResultMatchesAnyOfTheSpecifiedTypes() {
+        final Results result = results().withResultIdentifier(ADJ.id).build();
+
+        boolean hasAnyResultType = hasAnyResultType(result, asList(OATS.id, ADJ.id));
+
+        assertThat(hasAnyResultType, is(true));
+    }
+
+    @Test
+    void shouldReturnFalseWhenSingleResultDoesNotMatchAnyOfTheSpecifiedTypes() {
+        final Results result = results().withResultIdentifier(TEXT.id).build();
+
+        boolean hasAnyResultType = hasAnyResultType(result, asList(OATS.id, ADJ.id));
+
+        assertThat(hasAnyResultType, is(false));
+    }
+
+    @Test
+    void shouldReturnTrueWhenResultsHaveD20Endorsement() {
+        final List<Results> results = asList(
+                results().withD20(false).build(),
+                results().withD20(true).build()
+        );
+
+        boolean hasD20 = hasD20Endorsement(results);
+
+        assertThat(hasD20, is(true));
+    }
+
+    @Test
+    void shouldReturnFalseWhenResultsDoNotHaveD20Endorsement() {
+        final List<Results> results = asList(
+                results().withD20(false).build(),
+                results().withD20(false).build()
+        );
+
+        boolean hasD20 = hasD20Endorsement(results);
+
+        assertThat(hasD20, is(false));
+    }
+
+    @Test
+    void shouldReturnTrueWhenResultsHavePointsDisqualificationCode() {
+        final List<Results> results = asList(
+                results().withPointsDisqualificationCode("TT99").build(),
+                results().build()
+        );
+
+        boolean hasPointsDisqCode = hasPointsDisqualificationCode(results);
+
+        assertThat(hasPointsDisqCode, is(true));
+    }
+
+    @Test
+    void shouldReturnFalseWhenResultsDoNotHavePointsDisqualificationCode() {
+        final List<Results> results = asList(
+                results().build(),
+                results().build()
+        );
+
+        boolean hasPointsDisqCode = hasPointsDisqualificationCode(results);
+
+        assertThat(hasPointsDisqCode, is(false));
+    }
+
+    @Test
+    void shouldHandleNullCourtApplicationsInHasAppealResult() {
+        boolean hasAppealResult = hasAppealResult(null);
+
+        assertThat(hasAppealResult, is(false));
+    }
+
+    @Test
+    void shouldHandleEmptyCourtApplicationsInHasAppealResult() {
+        boolean hasAppealResult = hasAppealResult(emptyList());
+
+        assertThat(hasAppealResult, is(false));
+    }
+
+    @Test
+    void shouldHandleNullOffenceInOffenceHasResult() {
+        boolean hasResult = hasResultType((DefendantCaseOffences) null, SV);
+
+        assertThat(hasResult, is(false));
+    }
+
+    @Test
+    void shouldHandleOffenceWithNullResultsInOffenceHasResult() {
+        final DefendantCaseOffences offence = DefendantCaseOffences.defendantCaseOffences().build();
+
+        boolean hasResult = hasResultType(offence, SV);
+
+        assertThat(hasResult, is(false));
     }
 }

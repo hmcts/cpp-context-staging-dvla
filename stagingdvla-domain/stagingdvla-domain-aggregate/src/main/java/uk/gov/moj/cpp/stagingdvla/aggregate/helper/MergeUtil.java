@@ -1,10 +1,29 @@
 package uk.gov.moj.cpp.stagingdvla.aggregate.helper;
 
+import static java.lang.Boolean.FALSE;
+import static java.lang.Boolean.TRUE;
+import static java.util.Arrays.asList;
 import static java.util.Objects.nonNull;
+import static org.apache.commons.collections.CollectionUtils.isEmpty;
 import static org.apache.commons.collections.CollectionUtils.isNotEmpty;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.ADJ;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.OATS;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.getDistinctPromptReferences;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.DisqualificationPeriodHelper.getDisqualificationPeriod;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.getDateFromWhichDisqRemoved;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.getDttpDtetp;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.getFine;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.getInterimImposedFinalSentence;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.getOtherSentence;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.getPenaltyPoints;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.getSuspendedSentence;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAnyResultType;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasD20Endorsement;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasNoResult;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasNonD20Endorsement;
 
+import uk.gov.justice.core.courts.JudicialResultCategory;
 import uk.gov.justice.core.courts.nowdocument.NowText;
 import uk.gov.justice.cpp.stagingdvla.event.Cases;
 import uk.gov.justice.cpp.stagingdvla.event.DefendantCaseOffences;
@@ -16,14 +35,18 @@ import uk.gov.justice.cpp.stagingdvla.event.Results;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
-@SuppressWarnings({"squid:S1118", "squid:S1188"})
+@SuppressWarnings({"squid:S1118", "squid:S1188", "java:S3776"})
 public class MergeUtil {
 
-    public static DefendantCaseOffences mergeOffence(DefendantCaseOffences offence, DefendantCaseOffences previousOffence) {
-        return DefendantCaseOffences.defendantCaseOffences()
+    public static DefendantCaseOffences mergeOffence(final DefendantCaseOffences offence,
+                                                     final DefendantCaseOffences previousOffence,
+                                                     final String orderDate, final String orderingCourtCode, final boolean hasAppealResultOrGranted) {
+        final DefendantCaseOffences mergedOffence = DefendantCaseOffences.defendantCaseOffences()
                 .withValuesFrom(offence)
                 .withTitle((String) mergeValue(offence.getTitle(), previousOffence.getTitle()))
                 .withCivilOffence((Boolean) mergeValue(offence.getCivilOffence(), previousOffence.getCivilOffence()))
@@ -42,7 +65,10 @@ public class MergeUtil {
                 .withAlcoholReadingMethodCode((String) mergeValue(offence.getAlcoholReadingMethodCode(), previousOffence.getAlcoholReadingMethodCode()))
                 .withAlcoholReadingMethodDescription((String) mergeValue(offence.getAlcoholReadingMethodDescription(), previousOffence.getAlcoholReadingMethodDescription()))
                 .withEndorsableFlag((Boolean) mergeValue(offence.getEndorsableFlag(), previousOffence.getEndorsableFlag()))
-                .withResults(mergeResults(offence.getResults(), previousOffence.getResults()))
+                .withResults(hasAppealResultOrGranted
+                        ? ((hasNoResult(offence) || hasAnyResultType(offence.getResults(), asList(OATS.id, ADJ.id)))
+                        ? previousOffence.getResults() : mergeResultsV2(offence.getResults(), previousOffence.getResults()))
+                        : mergeResultsV1(offence.getResults(), previousOffence.getResults()))
                 .withFine((String) mergeValue(offence.getFine(), previousOffence.getFine()))
                 .withPenaltyPoints((String) mergeValue(offence.getPenaltyPoints(), previousOffence.getPenaltyPoints()))
                 .withDisqualificationPeriod((String) mergeValue(offence.getDisqualificationPeriod(), previousOffence.getDisqualificationPeriod()))
@@ -56,27 +82,114 @@ public class MergeUtil {
                 .withDateDisqSuspendedPendingAppeal((String) mergeValue(offence.getDateDisqSuspendedPendingAppeal(), previousOffence.getDateDisqSuspendedPendingAppeal()))
                 .withDateDisqReimposedFollowingAppeal((String) mergeValue(offence.getDateDisqReimposedFollowingAppeal(), previousOffence.getDateDisqReimposedFollowingAppeal()))
                 .build();
+
+        if (hasAppealResultOrGranted) {
+            final DefendantCaseOffences.Builder mergedOffenceWithAttributes = DefendantCaseOffences.defendantCaseOffences()
+                    .withValuesFrom(mergedOffence)
+                    .withFine(getFine(mergedOffence.getResults()))
+                    .withPenaltyPoints(getPenaltyPoints(mergedOffence.getResults()))
+                    .withDisqualificationPeriod(getDisqualificationPeriod(mergedOffence.getResults(), orderDate))
+                    .withOtherSentence(getOtherSentence(mergedOffence.getResults()))
+                    .withSuspendedSentence(getSuspendedSentence(mergedOffence.getResults()))
+                    .withDttpDtetp(getDttpDtetp(mergedOffence.getResults()))
+                    .withInterimImposedFinalSentence(getInterimImposedFinalSentence(mergedOffence.getResults()))
+                    .withDateFromWhichDisqRemoved(getDateFromWhichDisqRemoved(mergedOffence.getResults()));
+
+            if (!hasD20Endorsement(offence)) {
+                mergedOffenceWithAttributes.withSentenceDate(nonNull(previousOffence) ? previousOffence.getSentenceDate() : null);
+                mergedOffenceWithAttributes.withSentencingCourtCode(nonNull(previousOffence) ? previousOffence.getSentencingCourtCode() : null);
+            } else if (isNotEmpty(mergedOffence.getConvictionDate())
+                    && !orderDate.equalsIgnoreCase(mergedOffence.getConvictionDate())) {
+                mergedOffenceWithAttributes.withSentenceDate(orderDate);
+                mergedOffenceWithAttributes.withSentencingCourtCode(orderingCourtCode);
+            }
+
+            return mergedOffenceWithAttributes.build();
+        } else {
+            return mergedOffence;
+        }
     }
 
-    private static List<Results> mergeResults(final List<Results> results, final List<Results> previousResults) {
+    private static List<Results> mergeResultsV1(final List<Results> results, final List<Results> previousResults) {
         if (isNotEmpty(results) && isNotEmpty(previousResults)) {
-            final List<Results> mergedResults = new ArrayList<>();
-            results.forEach(result -> {
-                if (isNotEmpty(result.getResultIdentifier())) {
-                    final Results previousResult = previousResults.stream()
-                            .filter(bResult -> result.getResultIdentifier().equals(bResult.getResultIdentifier())).findFirst().orElse(null);
-                    if (nonNull(previousResult)) {
-                        mergedResults.add(mergeResult(result, previousResult));
-                    } else {
-                        mergedResults.add(result);
-                    }
+            return getMergedResultsV1(results, previousResults);
+        } else {
+            return results;
+        }
+    }
+
+    private static List<Results> getMergedResultsV1(final List<Results> results, final List<Results> previousResults) {
+        final List<Results> mergedResults = new ArrayList<>();
+        results.forEach(result -> {
+            if (isNotEmpty(result.getResultIdentifier())) {
+                final Results previousResult = previousResults.stream()
+                        .filter(bResult -> result.getResultIdentifier().equals(bResult.getResultIdentifier())).findFirst().orElse(null);
+                if (nonNull(previousResult)) {
+                    mergedResults.add(mergeResult(result, previousResult));
                 } else {
                     mergedResults.add(result);
                 }
-            });
-            return mergedResults;
-        } else {
+            } else {
+                mergedResults.add(result);
+            }
+        });
+        return mergedResults;
+    }
+
+    private static List<Results> mergeResultsV2(final List<Results> results, final List<Results> previousResults) {
+        if (isEmpty(previousResults)) {
             return results;
+        } else {
+            return getMergedResultsV2(results, previousResults);
+        }
+    }
+
+    private static List<Results> getMergedResultsV2(final List<Results> results, final List<Results> previousResults) {
+        final List<Results> mergedResults = new ArrayList<>();
+        final Set<String> matchedResultIds = new HashSet<>();
+
+        mergeResultsWithPrevious(results, previousResults, mergedResults, matchedResultIds);
+
+        bringNonMatchingResultsFromPrevious(results, previousResults, mergedResults, matchedResultIds);
+
+        return mergedResults;
+    }
+
+    private static void mergeResultsWithPrevious(final List<Results> results, final List<Results> previousResults, final List<Results> mergedResults, final Set<String> matchedResultIds) {
+        results.forEach(result -> {
+            if (isNotEmpty(result.getResultIdentifier())) {
+                final Results previousResult = previousResults.stream()
+                        .filter(bResult -> result.getResultIdentifier().equals(bResult.getResultIdentifier())).findFirst().orElse(null);
+                if (nonNull(previousResult)) {
+                    mergedResults.add(mergeResult(result, previousResult));
+                    matchedResultIds.add(previousResult.getResultIdentifier());
+                } else {
+                    mergedResults.add(result);
+                }
+            } else {
+                mergedResults.add(result);
+            }
+        });
+    }
+
+    private static void bringNonMatchingResultsFromPrevious(final List<Results> results, final List<Results> previousResults, final List<Results> mergedResults, final Set<String> matchedResultIds) {
+        boolean hasD20Results = hasD20Endorsement(results);
+        boolean hasNonD20Results = hasNonD20Endorsement(results);
+
+        if (hasD20Results && hasNonD20Results) {
+            // do nothing - DO NOT carry forward any non-matching previous results
+        } else if (hasD20Results) {
+            // carry forward non-matching previousResults where D20 = false (non-D20)
+            previousResults.stream()
+                    .filter(previousResult -> !matchedResultIds.contains(previousResult.getResultIdentifier()))
+                    .filter(previousResult -> FALSE.equals(previousResult.getD20()))
+                    .forEach(mergedResults::add);
+        } else {
+            // carry forward non-matching previousResults where D20 = true
+            previousResults.stream()
+                    .filter(previousResult -> !matchedResultIds.contains(previousResult.getResultIdentifier()))
+                    .filter(previousResult -> TRUE.equals(previousResult.getD20()))
+                    .forEach(mergedResults::add);
         }
     }
 
@@ -93,6 +206,7 @@ public class MergeUtil {
                 .withPointsDisqualificationCode((String) mergeValue(result.getPointsDisqualificationCode(), previousResult.getPointsDisqualificationCode()))
                 .withDrivingTestStipulation((Integer) mergeValue(result.getDrivingTestStipulation(), previousResult.getDrivingTestStipulation()))
                 .withDvlaCode((String) mergeValue(result.getDvlaCode(), previousResult.getDvlaCode()))
+                .withJudicialResultCategory((JudicialResultCategory) mergeValue(result.getJudicialResultCategory(), previousResult.getJudicialResultCategory()))
                 .build();
     }
 

@@ -1,5 +1,5 @@
 {
-  "masterDefendantId": "58d79c70-a1ab-4ef1-bbc3-3697dc8a54ab",
+  "masterDefendantId": "%DEFENDANT_ID%",
   "orderingCourt": {
     "address": {
       "address1": "1 Queen Victoria Street",
@@ -62,6 +62,26 @@
             "wording": "A fine not exceeding level five on the standard scale.Time limit for prosecutions:6 monthsOn the 12th March 2015 the limit on fines imposed by a Magistrates’ court was removed – as such, the potential fine on summary conviction in relation to an offence committed after this date is unlimited.",
             "startDate": "2020-07-02",
             "results": [
+              {
+                "d20": true,
+                "label": "Driving record endorsed with penalty points",
+                "prompts": [
+                  {
+                    "label": "Penalty points for this offence",
+                    "promptIdentifier": "a8719de4-7783-448a-b792-e3f94e670ad0",
+                    "promptReference": "PENPT",
+                    "value": "6"
+                  },
+                  {
+                    "label": "Defendant driving licence number",
+                    "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+                    "promptReference": "defendantDrivingLicenceNumber",
+                    "value": "ULLRI611187XH9ZM"
+                  }
+                ],
+                "publishedForNows": false,
+                "resultIdentifier": "cee54856-4450-4f28-a8a9-72b688726201"
+              },
               {
                 "resultIdentifier": "969f150c-cd05-46b0-9dd9-30891efcc766",
                 "publishedForNows": false,

@@ -4,9 +4,6 @@
     "address": {
       "address1": "176A Lavender Hill",
       "address2": "London",
-      "address3": "",
-      "address4": "",
-      "address5": "",
       "postcode": "SW11 1JU"
     },
     "code": "B01LY00",
@@ -21,48 +18,61 @@
     "roomName": "Courtroom 01"
   },
   "nowContent": {
-    "orderDate": "2023-05-05",
+    "orderDate": "2023-05-16",
     "defendant": {
-      "dateOfBirth": "2001-08-08",
+      "dateOfBirth": "2000-09-09",
       "gender": "MALE",
-      "driverNumber": "ABCDE0,0010BCFAA",
+      "driverNumber": "ABCDE00010BCFAA",
       "title": "MR",
-      "firstName": "Breanne",
-      "lastName": "Bins",
-      "name": "Breanne Bins",
+      "firstName": "Liana",
+      "middleName": "Jasmine Jasmine",
+      "lastName": "Powlowski",
+      "name": "Liana Jasmine Jasmine Powlowski",
       "address": {
         "line1": "56saon",
         "line2": "56Police House",
         "line3": "StreetDescription1",
         "line4": "Locality1",
-        "line5": "Town2",
-        "postCode": "TW14 9XD"
+        "line5": "Fayborough",
+        "postCode": "TW14 9XJ"
       }
     },
     "caseApplicationReferences": [
-      "VT05MAYC007"
+      "JW29150867"
     ],
     "cases": [
       {
-        "reference": "VT05MAYC007",
-        "caseId": "a33857da-3c48-433a-b96f-e82f63c5135c",
+        "reference": "JW29150867",
+        "initiationCode": "C",
+        "caseId": "a0738dff-4498-4b4b-95e3-189b1b7e91a2",
         "defendantCaseOffences": [
           {
-            "title": "Drive / move vehicle making 'u' turn on the motorway",
+            "allocationDecision": "Summary-only offence",
             "civilOffence": false,
-            "dvlaCode": "MW10",
-            "endDate": "2020-09-17",
-            "convictionStatus": "Not Convicted",
-            "vehicleRegistration": "TE4654",
-            "alcoholReadingAmount": 500,
-            "alcoholReadingMethodCode": "A",
-            "alcoholReadingMethodDescription": "Blood",
-            "code": "ME82005",
-            "modeOfTrial": "Summary",
+            "code": "RA88001",
+            "convictingCourtCode": "2577",
+            "convictionDate": "2026-02-06",
+            "convictionStatus": "Convicted",
+            "dvlaCode": "IN10",
             "endorsableFlag": true,
-            "wording": "Drive / move vehicle making 'u' turn on the motorway",
-            "startDate": "2020-09-18",
+            "modeOfTrial": "Summary",
+            "plea": "GUILTY",
             "results": [
+              {
+                "resultIdentifier": "969f150c-cd05-46b0-9dd9-30891efcc766",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "7cd1472f-2379-4f5b-9e67-98a43d86e122",
+                    "promptReference": "AOF",
+                    "label": "Amount of fine",
+                    "value": "£100.00"
+                  }
+                ],
+                "resultDefinitionGroup": "Imposition",
+                "d20": false,
+                "label": "Fine"
+              },
               {
                 "resultIdentifier": "cee54856-4450-4f28-a8a9-72b688726201",
                 "publishedForNows": false,
@@ -71,30 +81,28 @@
                     "promptIdentifier": "a8719de4-7783-448a-b792-e3f94e670ad0",
                     "promptReference": "PENPT",
                     "label": "Penalty points for this offence",
-                    "value": "3"
+                    "value": "1"
                   },
                   {
                     "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
                     "promptReference": "defendantDrivingLicenceNumber",
                     "label": "Defendant driving licence number",
-                    "value": "ABCDE0,0010BCFAA"
+                    "value": "ABCDE00010BCFAA"
                   }
                 ],
                 "d20": true,
                 "label": "Driving record endorsed with penalty points"
-              },
-              {
-                "resultIdentifier": "5c5a693f-c26c-4352-bbb3-ac72dd141e88",
-                "publishedForNows": true,
-                "d20": false,
-                "label": "5: DVLA held not produced"
               }
-            ]
+
+            ],
+            "startDate": "2025-12-08",
+            "title": "Use a motor vehicle on a road / public place without third party insurance",
+            "wording": "Use a motor vehicle on a road / public place without third party insurance"
           }
         ]
       }
     ]
   },
   "isReshare": true,
-  "orderingHearingId": "8c895667-75fb-423c-a0f3-3801a7799daf"
+  "orderingHearingId": "4282cfaf-ce25-4054-9e0e-830a9365a7d9"
 }
