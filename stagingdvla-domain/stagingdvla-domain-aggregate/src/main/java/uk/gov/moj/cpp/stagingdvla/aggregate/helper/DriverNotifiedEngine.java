@@ -49,10 +49,11 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAnyResu
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAnyResultType;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAppealRefusedResult;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAppealResult;
-import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAppealResultOrGrantedOrReopened;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAppealResultOrGranted;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasD20Endorsement;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasPointsDisqualificationCode;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasResultType;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.isApplicationReopenedAndResultIsReopenedOrInterim;
 
 import uk.gov.justice.core.courts.CourtCentre;
 import uk.gov.justice.core.courts.nowdocument.Nowdefendant;
@@ -422,7 +423,7 @@ public class DriverNotifiedEngine {
                 }
 
                 if (REMOVE.equals(endorsementStatus)) {
-                    if (hasAppealResultOrGrantedOrReopened(courtApplications)) {
+                    if (hasAppealResultOrGranted(courtApplications) || isApplicationReopenedAndResultIsReopenedOrInterim(courtApplications)) {
                         removeOffence(currentOffence, currentCase);
                     } else {
                         removeConvictionDataFromOffence(currentOffence, currentCase);
@@ -430,7 +431,8 @@ public class DriverNotifiedEngine {
                 } else {
                     if (UPDATE_MERGE.equals(endorsementStatus) || OATS_PREV_ENDORSED.equals(endorsementStatus)
                             || NO_UPDATE_PREV_ENDORSED.equals(endorsementStatus) || NO_RESULT_PREV_ENDORSED.equals(endorsementStatus)) {
-                        mergeOffences(currentCase, currentOffence, previousOffence, courtApplications, orderDate, orderingCourtCode, hasAppealResultOrGrantedOrReopened(courtApplications));
+                        mergeOffences(currentCase, currentOffence, previousOffence, courtApplications, orderDate, orderingCourtCode,
+                                hasAppealResultOrGranted(courtApplications), isApplicationReopenedAndResultIsReopenedOrInterim(courtApplications));
                     } else if (SPECIAL_REASON.equals(endorsementStatus) || NO_UPDATE_PREV_NOT_ENDORSED.equals(endorsementStatus)) {
                         removeOffence(currentOffence, currentCase);
                     }
@@ -438,7 +440,7 @@ public class DriverNotifiedEngine {
             });
         });
 
-        if (hasAppealResultOrGrantedOrReopened(courtApplications)) {
+        if (hasAppealResultOrGranted(courtApplications) || isApplicationReopenedAndResultIsReopenedOrInterim(courtApplications)) {
             updatedEndorsements.addAll(checkOffencesThatDoesNotExistInPrevious(cases, previousDriverNotified));
         }
 
@@ -513,7 +515,7 @@ public class DriverNotifiedEngine {
             builder.withOatsEndorsements(oatsOffences);
         }
 
-        if (hasAppealResultOrGrantedOrReopened(courtApplications)) {
+        if (hasAppealResultOrGranted(courtApplications) || isApplicationReopenedAndResultIsReopenedOrInterim(courtApplications)) {
             builder.withNotificationType(isNotEmpty(updatedEndorsements) || isNotEmpty(oatsOffences)
                     ? NotificationType.UPDATE : NotificationType.REMOVE);
 
@@ -525,14 +527,15 @@ public class DriverNotifiedEngine {
 
     private static void mergeOffences(final Cases currentCase, final DefendantCaseOffences currentOffence,
                                       final DefendantCaseOffences previousOffence, final List<CourtApplications> courtApplications,
-                                      final String orderDate, final String orderingCourtCode, final boolean hasAppealResultOrGranted) {
+                                      final String orderDate, final String orderingCourtCode, final boolean hasAppealResultOrGranted,
+                                      final boolean isReopenedAppReopenedOrInterimResult) {
         if (isNull(currentOffence)) {
             currentCase.getDefendantCaseOffences().add(DefendantCaseOffences.defendantCaseOffences()
                     .withValuesFrom(previousOffence)
                     .withDateDisqReimposedFollowingAppeal(getDateDisqReimposedFollowingAppeal(courtApplications, orderDate))
                     .build());
         } else if (nonNull(previousOffence)) {
-            final DefendantCaseOffences mergedOffence = mergeOffence(currentOffence, previousOffence, orderDate, orderingCourtCode, hasAppealResultOrGranted);
+            final DefendantCaseOffences mergedOffence = mergeOffence(currentOffence, previousOffence, orderDate, orderingCourtCode, hasAppealResultOrGranted, isReopenedAppReopenedOrInterimResult);
             currentCase.getDefendantCaseOffences().remove(currentOffence);
             currentCase.getDefendantCaseOffences().add(mergedOffence);
         }
@@ -575,7 +578,7 @@ public class DriverNotifiedEngine {
             while (caseOffencesIterator.hasNext()) {
                 final DefendantCaseOffences offence = caseOffencesIterator.next();
                 // remove only if: offence does not have any result provided in resultTypes and do not have D20 endorsement.
-                if (!hasAppealResultOrGrantedOrReopened(courtApplications)
+                if (!hasAppealResultOrGranted(courtApplications) && !isApplicationReopenedAndResultIsReopenedOrInterim(courtApplications)
                         && !(hasAnyResultType(offence.getResults(), resultTypes) || hasD20Endorsement(offence))) {
                     removedOffences.add(offence.getDvlaCode());
                     caseOffencesIterator.remove();

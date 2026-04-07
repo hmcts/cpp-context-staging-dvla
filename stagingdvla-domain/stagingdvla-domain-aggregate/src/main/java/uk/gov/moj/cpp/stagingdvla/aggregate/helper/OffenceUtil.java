@@ -135,9 +135,9 @@ public class OffenceUtil {
                                                          final List<String> nonEndorsableOffenceCodes) {
         boolean nonEndorsable = nonEndorsableOffenceCodes.contains(getDvlaCode(previousOffence));
 
-        if (hasAppealResultOrGrantedOrReopened(courtApplications)) {
+        if (hasAppealResultOrGranted(courtApplications)) {
             return getEndorsementStatusForAppealOrReopened(currentOffence, previousOffence, courtApplications);
-        } else if(isApplicationReopenedAndInterimResult(courtApplications)) {
+        } else if(isApplicationReopenedAndResultIsReopenedOrInterim(courtApplications)) {
             return getEndorsementStatusForAppealOrReopened(currentOffence, previousOffence, courtApplications);
         } else if (!nonEndorsable && isAmendment) {
             return isNull(currentOffence) ? REMOVE : UPDATE_NOMERGE;
@@ -444,14 +444,15 @@ public class OffenceUtil {
         }
     }
 
-    public static boolean hasAppealResultOrGrantedOrReopened(List<CourtApplications> courtApplications) {
-        return hasAppealResult(courtApplications) ||  hasResultType(courtApplications, G) || hasResultType(courtApplications, ROPENED);
+    public static boolean hasAppealResultOrGranted(List<CourtApplications> courtApplications) {
+        return hasAppealResult(courtApplications) ||  hasResultType(courtApplications, G) ;
     }
 
-    public static boolean isApplicationReopenedAndInterimResult(final List<CourtApplications> courtApplications) {
-        return isReopenedApplication(courtApplications) &&
+    public static boolean isApplicationReopenedAndResultIsReopenedOrInterim(final List<CourtApplications> courtApplications) {
+        return isReopenedApplication(courtApplications) && (
+                hasResultType(courtApplications, ROPENED) ||
                 courtApplications.stream().allMatch(courtApplication -> courtApplication.getResults().stream()
-                        .allMatch(result -> INTERMEDIARY.equals(result.getJudicialResultCategory()) || ANCILLARY.equals(result.getJudicialResultCategory())));
+                        .allMatch(result -> INTERMEDIARY.equals(result.getJudicialResultCategory()) || ANCILLARY.equals(result.getJudicialResultCategory()))));
     }
 
     public static boolean hasAppealRefusedResult(List<CourtApplications> courtApplications) {

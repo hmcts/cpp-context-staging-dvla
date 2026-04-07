@@ -45,7 +45,7 @@ public class MergeUtil {
 
     public static DefendantCaseOffences mergeOffence(final DefendantCaseOffences offence,
                                                      final DefendantCaseOffences previousOffence,
-                                                     final String orderDate, final String orderingCourtCode, final boolean hasAppealResultOrGranted) {
+                                                     final String orderDate, final String orderingCourtCode, final boolean hasAppealResultOrGranted, final boolean isReopenedAppReopenedOrInterimResult) {
         final DefendantCaseOffences mergedOffence = DefendantCaseOffences.defendantCaseOffences()
                 .withValuesFrom(offence)
                 .withTitle((String) mergeValue(offence.getTitle(), previousOffence.getTitle()))
@@ -65,7 +65,7 @@ public class MergeUtil {
                 .withAlcoholReadingMethodCode((String) mergeValue(offence.getAlcoholReadingMethodCode(), previousOffence.getAlcoholReadingMethodCode()))
                 .withAlcoholReadingMethodDescription((String) mergeValue(offence.getAlcoholReadingMethodDescription(), previousOffence.getAlcoholReadingMethodDescription()))
                 .withEndorsableFlag((Boolean) mergeValue(offence.getEndorsableFlag(), previousOffence.getEndorsableFlag()))
-                .withResults(hasAppealResultOrGranted
+                .withResults(hasAppealResultOrGranted || isReopenedAppReopenedOrInterimResult
                         ? ((hasNoResult(offence) || hasAnyResultType(offence.getResults(), asList(OATS.id, ADJ.id)))
                         ? previousOffence.getResults() : mergeResultsV2(offence.getResults(), previousOffence.getResults()))
                         : mergeResultsV1(offence.getResults(), previousOffence.getResults()))

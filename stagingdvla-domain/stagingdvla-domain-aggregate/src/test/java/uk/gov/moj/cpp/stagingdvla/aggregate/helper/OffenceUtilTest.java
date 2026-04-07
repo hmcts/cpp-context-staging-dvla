@@ -42,12 +42,12 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAnyResu
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAnyResultType;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAppealRefusedResult;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAppealResult;
-import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAppealResultOrGrantedOrReopened;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAppealResultOrGranted;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasD20Endorsement;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasPointsDisqualificationCode;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasResultCategoryOnly;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasResultType;
-import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.isApplicationReopenedAndInterimResult;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.isApplicationReopenedAndResultIsReopenedOrInterim;
 
 import uk.gov.justice.core.courts.JudicialResultCategory;
 import uk.gov.justice.cpp.stagingdvla.event.Cases;
@@ -596,13 +596,13 @@ class OffenceUtilTest {
     }
 
     @Test
-    void shouldReturnTrueForHasAppealResultOrGrantedWithAppealOrReopenResult() {
+    void shouldReturnTrueForHasAppealResultOrGrantedWithAppealResult() {
         final List<Results> results = singletonList(results().withResultIdentifier(AACA.id).build());
         final List<CourtApplications> courtApplications = singletonList(
                 CourtApplications.courtApplications().withResults(results).build()
         );
 
-        boolean hasAppealResultOrGranted = hasAppealResultOrGrantedOrReopened(courtApplications);
+        boolean hasAppealResultOrGranted = hasAppealResultOrGranted(courtApplications);
 
         assertThat(hasAppealResultOrGranted, is(true));
     }
@@ -614,30 +614,47 @@ class OffenceUtilTest {
                 CourtApplications.courtApplications().withResults(results).build()
         );
 
-        boolean hasAppealResultOrGranted = hasAppealResultOrGrantedOrReopened(courtApplications);
+        boolean hasAppealResultOrGranted = hasAppealResultOrGranted(courtApplications);
 
         assertThat(hasAppealResultOrGranted, is(true));
     }
     @Test
-    void shouldReturnTrueForHasAppealResultOrGrantedWithReopenResult() {
+    void shouldReturnTrueForApplicationReopenedAndResultIsReopenedOrInterimWithReopenResult() {
         final List<Results> results = singletonList(results().withResultIdentifier(ROPENED.id).build());
         final List<CourtApplications> courtApplications = singletonList(
-                CourtApplications.courtApplications().withResults(results).build()
+                CourtApplications.courtApplications()
+                        .withApplicationTypeId(REOPENED_APPLICATION_TYPE)
+                        .withResults(results).build()
         );
 
-        boolean hasAppealResultOrGranted = hasAppealResultOrGrantedOrReopened(courtApplications);
+        boolean applicationReopenedAndResultIsReopenedOrInterim = isApplicationReopenedAndResultIsReopenedOrInterim(courtApplications);
 
-        assertThat(hasAppealResultOrGranted, is(true));
+        assertThat(applicationReopenedAndResultIsReopenedOrInterim, is(true));
     }
 
     @Test
-    void shouldReturnFalseForHasAppealResultOrGrantedWithOtherOrReopenResult() {
+    void shouldReturnTrueForApplicationReopenedAndResultIsReopenedOrInterimWithInterimResult() {
+        final List<Results> results = List.of(results().withJudicialResultCategory(JudicialResultCategory.INTERMEDIARY).build(),
+                results().withJudicialResultCategory(JudicialResultCategory.ANCILLARY).build());
+        final List<CourtApplications> courtApplications = singletonList(
+                CourtApplications.courtApplications()
+                        .withApplicationTypeId(REOPENED_APPLICATION_TYPE)
+                        .withResults(results).build()
+        );
+
+        boolean applicationReopenedAndResultIsReopenedOrInterim = isApplicationReopenedAndResultIsReopenedOrInterim(courtApplications);
+
+        assertThat(applicationReopenedAndResultIsReopenedOrInterim, is(true));
+    }
+
+    @Test
+    void shouldReturnFalseForHasAppealResultOrGrantedWithOtherResult() {
         final List<Results> results = singletonList(results().withResultIdentifier(OATS.id).build());
         final List<CourtApplications> courtApplications = singletonList(
                 CourtApplications.courtApplications().withResults(results).build()
         );
 
-        boolean hasAppealResultOrGranted = hasAppealResultOrGrantedOrReopened(courtApplications);
+        boolean hasAppealResultOrGranted = hasAppealResultOrGranted(courtApplications);
 
         assertThat(hasAppealResultOrGranted, is(false));
     }
@@ -865,7 +882,7 @@ class OffenceUtilTest {
                 .withResults(List.of(results().withJudicialResultCategory(JudicialResultCategory.INTERMEDIARY).build(),
                         results().withJudicialResultCategory(JudicialResultCategory.ANCILLARY).build()))
                 .build());
-        assertThat(isApplicationReopenedAndInterimResult(courtApplications), is(true));
+        assertThat(isApplicationReopenedAndResultIsReopenedOrInterim(courtApplications), is(true));
     }
 
     @Test
@@ -876,7 +893,7 @@ class OffenceUtilTest {
                         results().withJudicialResultCategory(JudicialResultCategory.ANCILLARY).build(),
                         results().withJudicialResultCategory(JudicialResultCategory.FINAL).build()))
                 .build());
-        assertThat(isApplicationReopenedAndInterimResult(courtApplications), is(false));
+        assertThat(isApplicationReopenedAndResultIsReopenedOrInterim(courtApplications), is(false));
     }
 
     @Test
@@ -886,6 +903,6 @@ class OffenceUtilTest {
                 .withResults(List.of(results().withJudicialResultCategory(JudicialResultCategory.INTERMEDIARY).build(),
                         results().withJudicialResultCategory(JudicialResultCategory.ANCILLARY).build()))
                 .build());
-        assertThat(isApplicationReopenedAndInterimResult(courtApplications), is(false));
+        assertThat(isApplicationReopenedAndResultIsReopenedOrInterim(courtApplications), is(false));
     }
 }
