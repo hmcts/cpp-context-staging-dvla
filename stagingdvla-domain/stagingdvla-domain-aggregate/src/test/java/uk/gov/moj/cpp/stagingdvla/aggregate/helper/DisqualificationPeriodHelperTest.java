@@ -29,7 +29,7 @@ public class DisqualificationPeriodHelperTest {
     public void shouldTransformDisqualificationPeriodGivenMonthsAndDays() {
         DefendantCaseOffences defendantCaseOffences = getDefendantCaseOffences("100 Months 2 days");
 
-        final String disqualificationPeriod = getDisqualificationPeriod(defendantCaseOffences,hearingDate);
+        final String disqualificationPeriod = getDisqualificationPeriod(defendantCaseOffences.getResults(),hearingDate);
 
         assertThat(disqualificationPeriod, is(equalTo("080402")));
     }
@@ -38,7 +38,7 @@ public class DisqualificationPeriodHelperTest {
     public void shouldTransformDisqualificationPeriodGivenMaxDays() {
         DefendantCaseOffences defendantCaseOffences = getDefendantCaseOffences("365 days");
 
-        final String disqualificationPeriod = getDisqualificationPeriod(defendantCaseOffences,hearingDate);
+        final String disqualificationPeriod = getDisqualificationPeriod(defendantCaseOffences.getResults(),hearingDate);
 
         assertThat(disqualificationPeriod, is(equalTo("010000")));
     }
@@ -47,7 +47,7 @@ public class DisqualificationPeriodHelperTest {
     public void shouldTransformDisqualificationPeriodGivenDays() {
         DefendantCaseOffences defendantCaseOffences = getDefendantCaseOffences("2 days");
 
-        final String disqualificationPeriod = getDisqualificationPeriod(defendantCaseOffences,hearingDate);
+        final String disqualificationPeriod = getDisqualificationPeriod(defendantCaseOffences.getResults(),hearingDate);
 
         assertThat(disqualificationPeriod, is(equalTo("000002")));
     }
@@ -56,7 +56,7 @@ public class DisqualificationPeriodHelperTest {
     public void shouldTransformDisqualificationPeriodGivenMaxWeeks() {
         DefendantCaseOffences defendantCaseOffences = getDefendantCaseOffences("99 weeks");
 
-        final String disqualificationPeriod = getDisqualificationPeriod(defendantCaseOffences,hearingDate);
+        final String disqualificationPeriod = getDisqualificationPeriod(defendantCaseOffences.getResults(),hearingDate);
 
         assertThat(disqualificationPeriod, is(equalTo("011024")));
     }
@@ -67,7 +67,7 @@ public class DisqualificationPeriodHelperTest {
         //given
         DefendantCaseOffences defendantCaseOffences = getDefendantCaseOffences("5 years 120 Months 4 weeks 20 days");
         //when
-        final String disqualificationPeriod = getDisqualificationPeriod(defendantCaseOffences,hearingDate);
+        final String disqualificationPeriod = getDisqualificationPeriod(defendantCaseOffences.getResults(),hearingDate);
         //then
         assertThat(disqualificationPeriod, is(equalTo("150117")));
     }
@@ -76,7 +76,7 @@ public class DisqualificationPeriodHelperTest {
     public void shouldTransformDisqualificationPeriodGivenExceedingMaxYears() {
         DefendantCaseOffences defendantCaseOffences = getDefendantCaseOffences("100 years 2 days");
 
-        final String disqualificationPeriod = getDisqualificationPeriod(defendantCaseOffences,hearingDate);
+        final String disqualificationPeriod = getDisqualificationPeriod(defendantCaseOffences.getResults(),hearingDate);
 
         assertThat(disqualificationPeriod, is(equalTo("1000002")));
     }
@@ -85,7 +85,7 @@ public class DisqualificationPeriodHelperTest {
     public void shouldTransformDisqualificationPeriodGivenWeeks() {
         DefendantCaseOffences defendantCaseOffences = getDefendantCaseOffences("15 Weeks");
 
-        final String disqualificationPeriod = getDisqualificationPeriod(defendantCaseOffences,hearingDate);
+        final String disqualificationPeriod = getDisqualificationPeriod(defendantCaseOffences.getResults(),hearingDate);
 
         assertThat(disqualificationPeriod, is(equalTo("000315")));
     }

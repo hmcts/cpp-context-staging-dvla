@@ -1,17 +1,20 @@
 package uk.gov.moj.stagingdvla.it;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.anyOf;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
 
 import uk.gov.justice.cpp.stagingdvla.event.DefendantCaseOffences;
 import uk.gov.justice.cpp.stagingdvla.event.DriverNotified;
+import uk.gov.justice.cpp.stagingdvla.event.NotificationType;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -36,11 +39,6 @@ public class DriverNotifiedEventAssertion {
         return new DriverNotifiedEventAssertion(notifiedEvent);
     }
 
-    public DriverNotifiedEventAssertion hasOneCase() {
-        assertThat(notifiedEvent.getCases(), hasSize(1));
-        return this;
-    }
-
     public DriverNotifiedEventAssertion hasCaseReference(String reference) {
         assertThat(notifiedEvent.getCases().get(0).getReference(), equalTo(reference));
         return this;
@@ -51,22 +49,14 @@ public class DriverNotifiedEventAssertion {
         return this;
     }
 
+    public DriverNotifiedEventAssertion hasNotificationType(NotificationType notificationType) {
+        assertThat(notifiedEvent.getNotificationType(), is(equalTo(notificationType)));
+        return this;
+    }
+
     public DriverNotifiedEventAssertion hasUpdatedEndorsements() {
         assertThat(notifiedEvent.getUpdatedEndorsements(), not(empty()));
         return this;
-    }
-
-    public DriverNotifiedEventAssertion hasEmptyUpdatedEndorsements() {
-        return isEmpty(notifiedEvent::getUpdatedEndorsements);
-    }
-
-    public DriverNotifiedEventAssertion hasRemovedEndorsements() {
-        assertThat(notifiedEvent.getRemovedEndorsements(), not(empty()));
-        return this;
-    }
-
-    public DriverNotifiedEventAssertion hasEmptyRemovedEndorsements() {
-        return isEmpty(notifiedEvent::getRemovedEndorsements);
     }
 
     public DriverNotifiedEventAssertion hasNoRemovedEndorsements() {
@@ -79,12 +69,21 @@ public class DriverNotifiedEventAssertion {
 
     public DriverNotifiedEventAssertion hasUpdatedEndorsementContains(String...updatedEndorsements) {
         Objects.requireNonNull(updatedEndorsements);
-        assertThat(notifiedEvent.getUpdatedEndorsements(), hasItems(updatedEndorsements));
+        assertThat(notifiedEvent.getUpdatedEndorsements().stream().sorted().toArray(),
+                is(equalTo(Arrays.stream(updatedEndorsements).sorted().toArray())));
+        return this;
+    }
+
+    public DriverNotifiedEventAssertion hasOatsEndorsementContains(String...oatsEndorsements) {
+        Objects.requireNonNull(oatsEndorsements);
+        assertThat(notifiedEvent.getOatsEndorsements().stream().sorted().toArray(),
+                is(equalTo(Arrays.stream(oatsEndorsements).sorted().toArray())));
         return this;
     }
 
     public DriverNotifiedEventAssertion hasRemovedEndorsementContains(String...removedEndorsements) {
-        assertThat(notifiedEvent.getRemovedEndorsements(), hasItems(removedEndorsements));
+        assertThat(notifiedEvent.getRemovedEndorsements().stream().sorted().toArray(),
+                is(equalTo(Arrays.stream(removedEndorsements).sorted().toArray())));
         return this;
     }
     public DriverNotifiedEventAssertion hasResults(int size) {
@@ -129,16 +128,30 @@ public class DriverNotifiedEventAssertion {
     public DriverNotifiedEventAssertion hasOffenceCode(String offenceCode) {
         return validate(getOffence(1), DefendantCaseOffences::getCode, offenceCode);
     }
-    public DriverNotifiedEventAssertion hasResults(int offenceNumber,int size) {
-        assertThat(getOffence(offenceNumber).getResults(), hasSize(size));
+
+    public DriverNotifiedEventAssertion hasResults(int offenceNumber, int size) {
+        if (size == 0) {
+            assertThat(getOffence(offenceNumber).getResults(), anyOf(nullValue(), empty()));
+        } else {
+            assertThat(getOffence(offenceNumber).getResults(), hasSize(size));
+        }
         return this;
     }
+
     public DriverNotifiedEventAssertion hasAmountOfFine(int offenceNumber, String fineAmount) {
         return validate(getOffence(offenceNumber), DefendantCaseOffences::getFine, fineAmount);
     }
 
     public DriverNotifiedEventAssertion hasPenaltyPoints(int offenceNumber, String penaltyPoints) {
         return validate(getOffence(offenceNumber), DefendantCaseOffences::getPenaltyPoints, penaltyPoints);
+    }
+
+    public DriverNotifiedEventAssertion hasSentenceDate(int offenceNumber, String sentenceDate) {
+        return validate(getOffence(offenceNumber), DefendantCaseOffences::getSentenceDate, sentenceDate);
+    }
+
+    public DriverNotifiedEventAssertion hasSentencingCourtCode(int offenceNumber, String sentencingCourtCode) {
+        return validate(getOffence(offenceNumber), DefendantCaseOffences::getSentencingCourtCode, sentencingCourtCode);
     }
 
     public DriverNotifiedEventAssertion hasDVLACode(int offenceNumber, String dvlaCode) {
@@ -151,6 +164,10 @@ public class DriverNotifiedEventAssertion {
 
     public DriverNotifiedEventAssertion hasDisqualificationPeriod(int offenceNumber, String disQualificationPeriod) {
         return validate(getOffence(offenceNumber), DefendantCaseOffences::getDisqualificationPeriod, disQualificationPeriod);
+    }
+
+    public DriverNotifiedEventAssertion hasDateDisqReimposedFollowingAppeal(int offenceNumber, String dateDisqReimposedFollowingAppeal) {
+        return validate(getOffence(offenceNumber), DefendantCaseOffences::getDateDisqReimposedFollowingAppeal, dateDisqReimposedFollowingAppeal);
     }
 
     public DriverNotifiedEventAssertion hasConvictionDate(int offenceNumber, String convictionDate) {
@@ -191,11 +208,6 @@ public class DriverNotifiedEventAssertion {
 
     private <T, R> DriverNotifiedEventAssertion validate(T input, Function<T, R> getFunction, R expectedValue) {
         assertThat(getFunction.apply(input), equalTo(expectedValue));
-        return this;
-    }
-
-    private DriverNotifiedEventAssertion isEmpty(Supplier<Collection<?>> getValues) {
-        assertThat(getValues.get(), empty());
         return this;
     }
 

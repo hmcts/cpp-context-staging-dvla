@@ -57,24 +57,10 @@
         "applicationStatus": "UN_ALLOCATED",
         "results": [
           {
-            "resultIdentifier": "48b8ff83-2d5d-4891-bab1-b0f5edcd3822",
+            "resultIdentifier": "2b3f7c20-8fc1-4fad-9076-df196c24b27e",
             "publishedForNows": false,
-            "prompts": [
-              {
-                "promptIdentifier": "318c9eb2-cf3c-4592-a353-1b2166c15f81",
-                "promptReference": "reasons",
-                "label": "Reasons",
-                "value": "appeal"
-              },
-              {
-                "promptIdentifier": "4ad82d44-41cc-4e47-a2f5-e0dd147320ee",
-                "promptReference": "0024a6cf-14a0-4b7d-8199-1b675e3653bd",
-                "label": "Driving disqualification stands",
-                "value": ""
-              }
-            ],
             "d20": false,
-            "label": "Appeal abandoned"
+            "label": "Granted"
           },
           {
             "resultIdentifier": "4ad82d44-41cc-4e47-a2f5-e0dd147320ee",

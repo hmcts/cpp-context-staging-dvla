@@ -87,12 +87,6 @@
             ],
             "d20": true,
             "label": "Driving disqualification suspended pending appeal in a later session"
-          },
-          {
-            "resultIdentifier": "2b3f7c20-8fc1-4fad-9076-df196c24b27e",
-            "publishedForNows": false,
-            "d20": false,
-            "label": "Granted"
           }
         ]
       }

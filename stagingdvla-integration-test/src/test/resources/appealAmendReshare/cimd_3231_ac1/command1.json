@@ -1,0 +1,108 @@
+{
+  "masterDefendantId": "%DEFENDANT_ID%",
+  "orderingCourt": {
+    "address": {
+      "address1": "176A Lavender Hill",
+      "address2": "London",
+      "postcode": "SW11 1JU"
+    },
+    "code": "B01LY00",
+    "courtHearingLocation": "B01LY01",
+    "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+    "lja": {
+      "ljaCode": "2577",
+      "ljaName": "South West London Magistrates' Court"
+    },
+    "name": "Lavender Hill Magistrates' Court",
+    "roomId": "9e4932f7-97b2-3010-b942-ddd2624e4dd8",
+    "roomName": "Courtroom 01"
+  },
+  "nowContent": {
+    "orderDate": "2025-05-16",
+    "defendant": {
+      "dateOfBirth": "2000-09-09",
+      "gender": "MALE",
+      "driverNumber": "ABCDE00010BCFAA",
+      "title": "MR",
+      "firstName": "Liana",
+      "middleName": "Jasmine Jasmine",
+      "lastName": "Powlowski",
+      "name": "Liana Jasmine Jasmine Powlowski",
+      "address": {
+        "line1": "56saon",
+        "line2": "56Police House",
+        "line3": "StreetDescription1",
+        "line4": "Locality1",
+        "line5": "Fayborough",
+        "postCode": "TW14 9XJ"
+      }
+    },
+    "caseApplicationReferences": [
+      "JW29150867"
+    ],
+    "cases": [
+      {
+        "reference": "JW29150867",
+        "initiationCode": "C",
+        "caseId": "a0738dff-4498-4b4b-95e3-189b1b7e91a2",
+        "defendantCaseOffences": [
+          {
+            "allocationDecision": "Summary-only offence",
+            "civilOffence": false,
+            "code": "RA88001",
+            "convictingCourtCode": "2577",
+            "convictionDate": "2025-05-16",
+            "convictionStatus": "Convicted",
+            "dvlaCode": "IN10",
+            "endorsableFlag": true,
+            "modeOfTrial": "Summary",
+            "plea": "GUILTY",
+            "results": [
+              {
+                "d20": false,
+                "dvlaCode": "E",
+                "label": "Conditional discharge",
+                "prompts": [
+                  {
+                    "durationSequence": 1,
+                    "label": "Period of conditional discharge",
+                    "promptIdentifier": "d3205319-84cf-4c5b-9d7a-7e4bb1865054",
+                    "promptReference": "periodofConditionalDischarge",
+                    "value": "12 Months"
+                  }
+                ],
+                "publishedForNows": false,
+                "resultIdentifier": "554c2622-c1cc-459e-a98d-b7f317ab065c"
+              },
+              {
+                "d20": true,
+                "label": "Driving record endorsed with penalty points",
+                "prompts": [
+                  {
+                    "label": "Penalty points for this offence",
+                    "promptIdentifier": "a8719de4-7783-448a-b792-e3f94e670ad0",
+                    "promptReference": "PENPT",
+                    "value": "6"
+                  },
+                  {
+                    "label": "Defendant driving licence number",
+                    "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+                    "promptReference": "defendantDrivingLicenceNumber",
+                    "value": "ABCDE00010BCFAA"
+                  }
+                ],
+                "publishedForNows": false,
+                "resultIdentifier": "cee54856-4450-4f28-a8a9-72b688726201"
+              }
+            ],
+            "startDate": "2025-10-26",
+            "title": "Use a motor vehicle on a road / public place without third party insurance",
+            "wording": "Use a motor vehicle on a road / public place without third party insurance"
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": true,
+  "orderingHearingId": "4282cfaf-ce25-4054-9e0e-830a9365a7d9"
+}

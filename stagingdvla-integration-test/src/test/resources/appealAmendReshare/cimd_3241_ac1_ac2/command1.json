@@ -1,0 +1,323 @@
+{
+  "masterDefendantId": "%DEFENDANT_ID%",
+  "orderingCourt": {
+    "address": {
+      "address1": "176A Lavender Hill",
+      "address2": "London",
+      "postcode": "SW11 1JU"
+    },
+    "code": "B01LY00",
+    "courtHearingLocation": "B01LY01",
+    "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+    "lja": {
+      "ljaCode": "1577",
+      "ljaName": "South West London Magistrates' Court"
+    },
+    "name": "Lavender Hill Magistrates' Court",
+    "roomId": "9e4932f7-97b2-3010-b942-ddd2624e4dd8",
+    "roomName": "Courtroom 01"
+  },
+  "nowContent": {
+    "orderDate": "2026-05-16",
+    "defendant": {
+      "dateOfBirth": "2000-09-09",
+      "gender": "MALE",
+      "driverNumber": "ABCDE00010BCFAA",
+      "title": "MR",
+      "firstName": "Liana",
+      "middleName": "Jasmine Jasmine",
+      "lastName": "Powlowski",
+      "name": "Liana Jasmine Jasmine Powlowski",
+      "address": {
+        "line1": "56saon",
+        "line2": "56Police House",
+        "line3": "StreetDescription1",
+        "line4": "Locality1",
+        "line5": "Fayborough",
+        "postCode": "TW14 9XJ"
+      }
+    },
+    "caseApplicationReferences": [
+      "JW29150867"
+    ],
+    "cases": [
+      {
+        "reference": "JW29150867",
+        "initiationCode": "C",
+        "caseId": "a0738dff-4498-4b4b-95e3-189b1b7e91a2",
+        "defendantCaseOffences": [
+          {
+            "allocationDecision": "Summary-only offence",
+            "civilOffence": false,
+            "code": "RA88001",
+            "convictingCourtCode": "2577",
+            "convictionDate": "2026-06-06",
+            "convictionStatus": "Convicted",
+            "dvlaCode": "IN10",
+            "endorsableFlag": true,
+            "modeOfTrial": "Summary",
+            "plea": "GUILTY",
+            "results": [
+              {
+                "d20": false,
+                "label": "Fine",
+                "prompts": [
+                  {
+                    "label": "Amount of fine",
+                    "promptIdentifier": "7cd1472f-2379-4f5b-9e67-98a43d86e122",
+                    "promptReference": "AOF",
+                    "value": "£100.00"
+                  }
+                ],
+                "publishedForNows": false,
+                "resultDefinitionGroup": "Imposition",
+                "resultIdentifier": "969f150c-cd05-46b0-9dd9-30891efcc766"
+              },
+              {
+                "d20": true,
+                "label": "Driving record endorsed (no points)",
+                "prompts": [],
+                "publishedForNows": false,
+                "resultIdentifier": "b0aeb4fc-df63-4e2f-af88-97e3f23e847f"
+              }
+            ],
+            "startDate": "2025-12-08",
+            "title": "Use a motor vehicle on a road / public place without third party insurance - IN10",
+            "wording": "Use a motor vehicle on a road / public place without third party insurance - IN10"
+          },
+          {
+            "allocationDecision": "Summary-only offence",
+            "civilOffence": false,
+            "code": "RA88002",
+            "convictingCourtCode": "2577",
+            "convictionDate": "2026-06-06",
+            "convictionStatus": "Convicted",
+            "dvlaCode": "IN20",
+            "endorsableFlag": true,
+            "modeOfTrial": "Summary",
+            "plea": "GUILTY",
+            "results": [
+              {
+                "d20": false,
+                "dvlaCode": "E",
+                "label": "Conditional discharge",
+                "prompts": [
+                  {
+                    "durationSequence": 1,
+                    "label": "Period of conditional discharge",
+                    "promptIdentifier": "d3205319-84cf-4c5b-9d7a-7e4bb1865054",
+                    "promptReference": "periodofConditionalDischarge",
+                    "value": "12 Months"
+                  }
+                ],
+                "publishedForNows": false,
+                "resultIdentifier": "554c2622-c1cc-459e-a98d-b7f317ab065c"
+              },
+              {
+                "d20": true,
+                "label": "Driving record endorsed (no points)",
+                "prompts": [],
+                "publishedForNows": false,
+                "resultIdentifier": "b0aeb4fc-df63-4e2f-af88-97e3f23e847f"
+              }
+            ],
+            "startDate": "2025-12-08",
+            "title": "Use a motor vehicle on a road / public place without third party insurance - IN20",
+            "wording": "Use a motor vehicle on a road / public place without third party insurance - IN20"
+          },
+          {
+            "allocationDecision": "Summary-only offence",
+            "civilOffence": false,
+            "code": "RA88003",
+            "convictingCourtCode": "2577",
+            "convictionDate": "2026-06-06",
+            "convictionStatus": "Convicted",
+            "dvlaCode": "IN30",
+            "endorsableFlag": true,
+            "modeOfTrial": "Summary",
+            "plea": "GUILTY",
+            "results": [
+              {
+                "d20": false,
+                "label": "Fine",
+                "prompts": [
+                  {
+                    "label": "Amount of fine",
+                    "promptIdentifier": "7cd1472f-2379-4f5b-9e67-98a43d86e122",
+                    "promptReference": "AOF",
+                    "value": "£300.00"
+                  }
+                ],
+                "publishedForNows": false,
+                "resultDefinitionGroup": "Imposition",
+                "resultIdentifier": "969f150c-cd05-46b0-9dd9-30891efcc766"
+              },
+              {
+                "d20": true,
+                "label": "Driving record endorsed (no points)",
+                "prompts": [],
+                "publishedForNows": false,
+                "resultIdentifier": "b0aeb4fc-df63-4e2f-af88-97e3f23e847f"
+              }
+            ],
+            "startDate": "2025-12-08",
+            "title": "Use a motor vehicle on a road / public place without third party insurance - IN30",
+            "wording": "Use a motor vehicle on a road / public place without third party insurance - IN30"
+          },
+          {
+            "allocationDecision": "Summary-only offence",
+            "civilOffence": false,
+            "code": "RA88004",
+            "convictingCourtCode": "2577",
+            "convictionDate": "2026-06-06",
+            "convictionStatus": "Convicted",
+            "dvlaCode": "IN10",
+            "endorsableFlag": true,
+            "modeOfTrial": "Summary",
+            "plea": "GUILTY",
+            "results": [
+              {
+                "resultIdentifier": "b9c6047b-fb84-4b12-97a1-2175e4b8bbac",
+                "publishedForNows": false,
+                "resultWording": "",
+                "d20": false,
+                "dvlaCode": "J",
+                "label": "Absolute discharge"
+              }
+            ],
+            "startDate": "2025-12-08",
+            "title": "Use a motor vehicle on a road / public place without third party insurance - IN40",
+            "wording": "Use a motor vehicle on a road / public place without third party insurance - IN40"
+          },
+          {
+            "allocationDecision": "Summary-only offence",
+            "civilOffence": false,
+            "code": "RA88005",
+            "convictingCourtCode": "2577",
+            "convictionDate": "2026-06-06",
+            "convictionStatus": "Convicted",
+            "dvlaCode": "IN50",
+            "endorsableFlag": true,
+            "modeOfTrial": "Summary",
+            "plea": "GUILTY",
+            "results": [
+              {
+                "d20": false,
+                "label": "Fine",
+                "prompts": [
+                  {
+                    "label": "Amount of fine",
+                    "promptIdentifier": "7cd1472f-2379-4f5b-9e67-98a43d86e122",
+                    "promptReference": "AOF",
+                    "value": "£500.00"
+                  }
+                ],
+                "publishedForNows": false,
+                "resultDefinitionGroup": "Imposition",
+                "resultIdentifier": "969f150c-cd05-46b0-9dd9-30891efcc766"
+              }
+            ],
+            "startDate": "2025-12-08",
+            "title": "Use a motor vehicle on a road / public place without third party insurance - IN50",
+            "wording": "Use a motor vehicle on a road / public place without third party insurance - IN50"
+          },
+          {
+            "allocationDecision": "Summary-only offence",
+            "civilOffence": false,
+            "code": "RA88006",
+            "convictingCourtCode": "2577",
+            "convictionDate": "2026-06-06",
+            "convictionStatus": "Convicted",
+            "dvlaCode": "IN60",
+            "endorsableFlag": true,
+            "modeOfTrial": "Summary",
+            "plea": "GUILTY",
+            "results": [
+              {
+                "d20": false,
+                "label": "Fine",
+                "prompts": [
+                  {
+                    "label": "Amount of fine",
+                    "promptIdentifier": "7cd1472f-2379-4f5b-9e67-98a43d86e122",
+                    "promptReference": "AOF",
+                    "value": "£600.00"
+                  }
+                ],
+                "publishedForNows": false,
+                "resultDefinitionGroup": "Imposition",
+                "resultIdentifier": "969f150c-cd05-46b0-9dd9-30891efcc766"
+              },
+              {
+                "d20": true,
+                "label": "Discretionary with ordinary disqualification",
+                "prompts": [
+                  {
+                    "durationSequence": 1,
+                    "label": "Disqualification period",
+                    "promptIdentifier": "2bf54447-328c-4c1b-a123-341adbd52172",
+                    "promptReference": "disqualificationPeriod",
+                    "value": "12 Months"
+                  },
+                  {
+                    "label": "Defendant driving licence number",
+                    "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+                    "promptReference": "defendantDrivingLicenceNumber",
+                    "value": "ABCDE00010BCFAA"
+                  }
+                ],
+                "publishedForNows": false,
+                "resultIdentifier": "ccfc452e-ebe4-4cd7-b8a0-4f90768447b4",
+                "resultWording": "Disqualified for holding or obtaining a driving licence. Discretionary disqualification. Driving record endorsed. Section 34(2) Road Traffic Offenders Act 1988"
+              }
+            ],
+            "startDate": "2025-12-08",
+            "title": "Use a motor vehicle on a road / public place without third party insurance - IN60",
+            "wording": "Use a motor vehicle on a road / public place without third party insurance - IN60"
+          },
+          {
+            "allocationDecision": "Summary-only offence",
+            "civilOffence": false,
+            "code": "RA88007",
+            "convictingCourtCode": "2577",
+            "convictionDate": "2026-06-06",
+            "convictionStatus": "Convicted",
+            "dvlaCode": "IN70",
+            "endorsableFlag": true,
+            "modeOfTrial": "Summary",
+            "plea": "GUILTY",
+            "results": [
+              {
+                "d20": false,
+                "label": "Fine",
+                "prompts": [
+                  {
+                    "label": "Amount of fine",
+                    "promptIdentifier": "7cd1472f-2379-4f5b-9e67-98a43d86e122",
+                    "promptReference": "AOF",
+                    "value": "£700.00"
+                  }
+                ],
+                "publishedForNows": false,
+                "resultDefinitionGroup": "Imposition",
+                "resultIdentifier": "969f150c-cd05-46b0-9dd9-30891efcc766"
+              },
+              {
+                "d20": true,
+                "label": "Driving record endorsed (no points)",
+                "prompts": [],
+                "publishedForNows": false,
+                "resultIdentifier": "b0aeb4fc-df63-4e2f-af88-97e3f23e847f"
+              }
+            ],
+            "startDate": "2025-12-08",
+            "title": "Use a motor vehicle on a road / public place without third party insurance - IN70",
+            "wording": "Use a motor vehicle on a road / public place without third party insurance - IN70"
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": true,
+  "orderingHearingId": "4282cfaf-ce25-4054-9e0e-830a9365a7d9"
+}

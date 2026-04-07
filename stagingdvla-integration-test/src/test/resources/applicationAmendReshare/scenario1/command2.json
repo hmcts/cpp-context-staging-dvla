@@ -25,7 +25,7 @@
     "defendant": {
       "dateOfBirth": "2010-09-09",
       "gender": "MALE",
-      "driverNumber": "ABCDE0,0010BCFAA",
+      "driverNumber": "ABCDE00010BCFAA",
       "title": "MR",
       "firstName": "Kody",
       "middleName": "Jasmine Jasmine",
@@ -68,6 +68,26 @@
             "wording": "Has a violent past and fear that he will commit further offences and interfere with witnesse",
             "startDate": "2020-09-18",
             "results": [
+              {
+                "d20": true,
+                "label": "Driving record endorsed with penalty points",
+                "prompts": [
+                  {
+                    "label": "Penalty points for this offence",
+                    "promptIdentifier": "a8719de4-7783-448a-b792-e3f94e670ad0",
+                    "promptReference": "PENPT",
+                    "value": "6"
+                  },
+                  {
+                    "label": "Defendant driving licence number",
+                    "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+                    "promptReference": "defendantDrivingLicenceNumber",
+                    "value": "ABCDE00010BCFAA"
+                  }
+                ],
+                "publishedForNows": false,
+                "resultIdentifier": "cee54856-4450-4f28-a8a9-72b688726201"
+              },
               {
                 "resultIdentifier": "4a026ff3-e1aa-407e-aafa-015723c1dbd0",
                 "publishedForNows": false,

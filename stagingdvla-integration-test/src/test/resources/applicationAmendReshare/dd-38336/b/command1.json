@@ -1,5 +1,5 @@
 {
-  "masterDefendantId": "58d79c70-a1ab-4ef1-bbc3-3697dc8a54ab",
+  "masterDefendantId": "%DEFENDANT_ID%",
   "orderingCourt": {
     "address": {
       "address1": "1 Queen Victoria Street",

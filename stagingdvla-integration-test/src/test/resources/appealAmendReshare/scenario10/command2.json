@@ -76,6 +76,21 @@
                 ],
                 "d20": false,
                 "label": "Sentence varied"
+              },
+              {
+                "d20": false,
+                "label": "Withdrawn",
+                "prompts": [
+                  {
+                    "label": "Details",
+                    "promptIdentifier": "6f305506-9919-4e7b-bd57-c4c352ec3e3e",
+                    "promptReference": "details",
+                    "value": "Complaint withdrawn"
+                  }
+                ],
+                "publishedForNows": false,
+                "resultDefinitionGroup": "WOAEXTEND",
+                "resultIdentifier": "eb2e4c4f-b738-4a4d-9cce-0572cecb7cb8"
               }
             ]
           }

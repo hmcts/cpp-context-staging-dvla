@@ -75,6 +75,14 @@
     "notificationWasPreviouslySent": {
       "type": "boolean"
     },
+    "notificationType": {
+      "type": "string",
+      "enum": [
+        "New",
+        "Update",
+        "Remove"
+      ]
+    },
     "removedEndorsements": {
       "type": "array",
       "items": {
@@ -82,6 +90,12 @@
       }
     },
     "updatedEndorsements": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "oatsEndorsements": {
       "type": "array",
       "items": {
         "type": "string"
@@ -424,6 +438,9 @@
         },
         "dvlaCode": {
           "type": "string"
+        },
+        "judicialResultCategory": {
+          "$ref": "http://justice.gov.uk/core/courts/courtsDefinitions.json#/definitions/judicialResultCategory"
         }
       },
       "required": [
