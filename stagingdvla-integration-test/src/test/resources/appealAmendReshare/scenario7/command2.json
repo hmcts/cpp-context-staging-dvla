@@ -65,6 +65,26 @@
             "startDate": "2020-09-18",
             "results": [
               {
+                "resultIdentifier": "cee54856-4450-4f28-a8a9-72b688726201",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "a8719de4-7783-448a-b792-e3f94e670ad0",
+                    "promptReference": "PENPT",
+                    "label": "Penalty points for this offence",
+                    "value": "6"
+                  },
+                  {
+                    "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+                    "promptReference": "defendantDrivingLicenceNumber",
+                    "label": "Defendant driving licence number",
+                    "value": "ABCDE0,0010BCFAA"
+                  }
+                ],
+                "d20": true,
+                "label": "Driving record endorsed with penalty points"
+              },
+              {
                 "resultIdentifier": "b9c6047b-fb84-4b12-97a1-2175e4b8bbac",
                 "publishedForNows": false,
                 "resultWording": "",

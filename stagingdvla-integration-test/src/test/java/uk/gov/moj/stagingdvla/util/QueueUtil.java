@@ -11,6 +11,7 @@ import java.util.Optional;
 
 import javax.jms.Connection;
 import javax.jms.JMSException;
+import javax.jms.Message;
 import javax.jms.MessageConsumer;
 import javax.jms.MessageProducer;
 import javax.jms.Session;
@@ -37,10 +38,11 @@ public class QueueUtil {
 
     private static final String QUEUE_URI = System.getProperty("queueUri", "tcp://" + HOST + ":61616");
 
-    private static final long RETRIEVE_TIMEOUT = 10000;
-    private static final long MESSAGE_RETRIEVE_TRIAL_TIMEOUT = 10000;
+    private static final long RETRIEVE_TIMEOUT = 1000;
+    private static final long CLEAR_TIMEOUT = 100;
+    private static final long MESSAGE_RETRIEVE_TRIAL_TIMEOUT = 1000;
     private static final int RETRY_TIMEOUT_IN_MILLIS = 5000;
-    private static final int DEFAULT_POLL_TIMEOUT_IN_MILLIS = 30000;
+    private static final int DEFAULT_POLL_TIMEOUT_IN_MILLIS = 3000;
 
     private Session session;
 
@@ -160,6 +162,20 @@ public class QueueUtil {
             return Optional.of(message.getText());
         } catch (final JMSException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public static void clearMessages(final MessageConsumer consumer) {
+        try {
+            Message message;
+            final long shortTimeout = CLEAR_TIMEOUT;
+
+            // Keep receiving messages with a short timeout until no more messages are available
+            while ((message = consumer.receive(shortTimeout)) != null) {
+                LOGGER.debug("Cleared message from queue");
+            }
+        } catch (final JMSException e) {
+            throw new RuntimeException("Failed to clear messages from consumer", e);
         }
     }
 

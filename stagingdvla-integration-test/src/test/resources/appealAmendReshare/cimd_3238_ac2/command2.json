@@ -1,0 +1,164 @@
+{
+  "masterDefendantId": "%DEFENDANT_ID%",
+  "orderingCourt": {
+    "address": {
+      "address1": "176A Lavender Hill",
+      "address2": "London",
+      "postcode": "SW11 1JU"
+    },
+    "code": "B01LY00",
+    "courtHearingLocation": "B01LY02",
+    "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+    "lja": {
+      "ljaCode": "2577",
+      "ljaName": "South West London Magistrates' Court"
+    },
+    "name": "Lavender Hill Magistrates' Court",
+    "roomId": "b4562684-9209-3ec4-a544-7f80dabd94d8",
+    "roomName": "Courtroom 02"
+  },
+  "nowContent": {
+    "orderDate": "2023-05-16",
+    "defendant": {
+      "dateOfBirth": "2000-09-09",
+      "gender": "MALE",
+      "driverNumber": "ABCDE00010BCFAA",
+      "title": "MR",
+      "firstName": "Liana",
+      "middleName": "Jasmine Jasmine",
+      "lastName": "Powlowski",
+      "name": "Liana Jasmine Jasmine Powlowski",
+      "address": {
+        "line1": "56saon",
+        "line2": "56Police House",
+        "line3": "StreetDescription1",
+        "line4": "Locality1",
+        "line5": "Fayborough",
+        "postCode": "TW14 9XJ"
+      }
+    },
+    "caseApplicationReferences": [
+      "JW29150867"
+    ],
+    "cases": [
+      {
+        "reference": "JW29150867",
+        "caseId": "a0738dff-4498-4b4b-95e3-189b1b7e91a2",
+        "defendantCaseOffences": [
+          {
+            "allocationDecision": "Summary-only offence",
+            "civilOffence": false,
+            "code": "RA88001",
+            "convictingCourtCode": "2577",
+            "convictionDate": "2026-02-05",
+            "convictionStatus": "Convicted",
+            "dvlaCode": "IN10",
+            "endorsableFlag": true,
+            "modeOfTrial": "Summary",
+            "plea": "GUILTY",
+            "results": [],
+            "startDate": "2025-12-07",
+            "title": "Use a motor vehicle on a road / public place without third party insurance",
+            "wording": "Use a motor vehicle on a road / public place without third party insurance"
+          },
+          {
+            "allocationDecision": "Summary-only offence",
+            "civilOffence": false,
+            "code": "RA88002",
+            "convictingCourtCode": "2577",
+            "convictionDate": "2026-02-05",
+            "convictionStatus": "Convicted",
+            "dvlaCode": "IN20",
+            "endorsableFlag": true,
+            "modeOfTrial": "Summary",
+            "plea": "GUILTY",
+            "results": [
+              {
+                "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956",
+                "publishedForNows": true,
+                "d20": false,
+                "label": "0: None or unknown"
+              }
+            ],
+            "startDate": "2025-12-07",
+            "title": "Drive a motor vehicle otherwise than in accordance with a licence - endorsable offence",
+            "wording": "Drive a motor vehicle otherwise than in accordance with a licence - endorsable offence"
+          }
+        ]
+      }
+    ],
+    "courtApplications": [
+      {
+        "applicationReceivedDate": "2026-02-05",
+        "applicationReference": "SG821225728",
+        "applicationStatus": "FINALISED",
+        "applicationType": "Appeal against conviction and sentence by a Magistrates' Court to the Crown Court",
+        "applicationTypeId": "abc05494-05d7-4289-b4bc-a92726257a4b",
+        "id": "922eb0f2-4b94-448b-8c0c-9deb06b82484",
+        "results": [
+          {
+            "d20": false,
+            "label": "Appeal against sentence allowed",
+            "prompts": [
+              {
+                "label": "Date sentence was imposed",
+                "promptIdentifier": "c946a5df-5849-4cca-b425-ecbd6bd704dc",
+                "promptReference": "dateSentenceWasImposed",
+                "value": "05/02/2026"
+              },
+              {
+                "label": "Reasons",
+                "promptIdentifier": "c10b4c83-1856-4ca9-9592-d8b8183a0324",
+                "promptReference": "reasons",
+                "value": "sentence was imposed"
+              },
+              {
+                "label": "Driving endorsement to be removed",
+                "promptIdentifier": "f42fa098-0f7b-4269-ac4f-b10c9b6832d7",
+                "promptReference": "3e60f58e-44c4-4ac9-9f8b-6b2d112af604",
+                "value": "Original court code:1013\nOriginal conviction date:15/02/2026\nDVLA endorsement code:IN10\nOriginal offence date:05/02/2026"
+              }
+            ],
+            "publishedForNows": false,
+            "resultIdentifier": "d861586a-df88-440d-98d4-63cc2a680ae1",
+            "resultWording": ""
+          },
+          {
+            "d20": false,
+            "label": "Driving endorsement to be removed",
+            "prompts": [
+              {
+                "label": "Original court code",
+                "promptIdentifier": "b49bf4fa-0b1e-4079-b85a-c0113a46b91b",
+                "promptReference": "originalCourtCode",
+                "value": "1013"
+              },
+              {
+                "label": "Original conviction date",
+                "promptIdentifier": "0cd86af5-10d8-4fd1-a78a-8a0e80179034",
+                "promptReference": "originalConvictionDate",
+                "value": "15/02/2026"
+              },
+              {
+                "label": "DVLA endorsement code",
+                "promptIdentifier": "1a2a23ea-c70d-4a5c-afa7-09dc514f84cc",
+                "promptReference": "dVLAEndorsementCode",
+                "value": "IN10"
+              },
+              {
+                "label": "Original offence date",
+                "promptIdentifier": "37ee2b08-1950-4b04-bea5-f6f66b768bb0",
+                "promptReference": "originalOffenceDate",
+                "value": "05/02/2026"
+              }
+            ],
+            "publishedForNows": true,
+            "resultIdentifier": "f42fa098-0f7b-4269-ac4f-b10c9b6832d7"
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": true,
+  "orderingHearingId": "93bc6155-952f-4909-a36a-b9f277da3b85"
+}

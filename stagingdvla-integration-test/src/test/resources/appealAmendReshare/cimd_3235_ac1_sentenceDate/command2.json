@@ -1,0 +1,221 @@
+{
+  "masterDefendantId": "%DEFENDANT_ID%",
+  "orderingCourt": {
+    "address": {
+      "address1": "176A Lavender Hill",
+      "address2": "London",
+      "postcode": "SW11 1JU"
+    },
+    "code": "B01LY00",
+    "courtHearingLocation": "B01LY02",
+    "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+    "lja": {
+      "ljaCode": "2589",
+      "ljaName": "South West London Magistrates' Court"
+    },
+    "name": "Lavender Hill Magistrates' Court",
+    "roomId": "b4562684-9209-3ec4-a544-7f80dabd94d8",
+    "roomName": "Courtroom 02"
+  },
+  "nowContent": {
+    "orderDate": "2026-10-17",
+    "defendant": {
+      "dateOfBirth": "2000-09-09",
+      "gender": "MALE",
+      "driverNumber": "ABCDE00010BCFAA",
+      "title": "MR",
+      "firstName": "Liana",
+      "middleName": "Jasmine Jasmine",
+      "lastName": "Powlowski",
+      "name": "Liana Jasmine Jasmine Powlowski",
+      "address": {
+        "line1": "56saon",
+        "line2": "56Police House",
+        "line3": "StreetDescription1",
+        "line4": "Locality1",
+        "line5": "Fayborough",
+        "postCode": "TW14 9XJ"
+      }
+    },
+    "caseApplicationReferences": [
+      "JW29150867"
+    ],
+    "cases": [
+      {
+        "reference": "JW29150867",
+        "caseId": "a0738dff-4498-4b4b-95e3-189b1b7e91a2",
+        "defendantCaseOffences": [
+          {
+            "allocationDecision": "Summary-only offence",
+            "civilOffence": false,
+            "code": "RA88001",
+            "convictingCourtCode": "2577",
+            "convictionDate": "2026-06-06",
+            "convictionStatus": "Convicted",
+            "dvlaCode": "IN10",
+            "endorsableFlag": true,
+            "modeOfTrial": "Summary",
+            "plea": "GUILTY",
+            "results": [
+              {
+                "resultIdentifier": "418b3aa7-65ab-4a4a-bab9-2f96b698118c",
+                "publishedForNows": false,
+                "d20": false,
+                "judicialResultCategory": "FINAL",
+                "dvlaCode": "M",
+                "label": "Community order England / Wales",
+                "prompts": [
+                  {
+                    "promptIdentifier": "d6caa3c4-ec9d-41ec-8f86-2c617ef0d5d9",
+                    "promptReference": "endDate",
+                    "label": "End Date",
+                    "value": "01/08/2023"
+                  },
+                  {
+                    "promptIdentifier": "29f5b3c7-8d15-4606-9dcf-23f32a21b5ef",
+                    "promptReference": "responsibleOfficer",
+                    "label": "Responsible officer",
+                    "value": "a member of the youth offending team"
+                  },
+                  {
+                    "promptIdentifier": "f4a4f159-779e-4f35-822a-b559a2415ecb",
+                    "promptReference": "supervisingCourt",
+                    "label": "Supervising Court",
+                    "value": "Lavender Hill Magistrates' Court"
+                  },
+                  {
+                    "promptIdentifier": "68c92035-27fd-4ee6-b03c-fe18ea6dbcb0",
+                    "promptReference": "probationteamtobenotifiedOrganisationName",
+                    "label": "Probation team to be notified organisation name",
+                    "value": "South West and Central Division NPS"
+                  },
+                  {
+                    "promptIdentifier": "68c92035-27fd-4ee6-b03c-fe18ea6dbcb0",
+                    "promptReference": "probationteamtobenotifiedEmailAddress1",
+                    "label": "Probation team to be notified email address 1",
+                    "value": "SWSCNPS.Court@justice.gov.uk"
+                  },
+                  {
+                    "promptIdentifier": "dada120c-160a-49a9-b040-e8b6b7128d67",
+                    "promptReference": "03107a26-cb0c-4646-a1a3-4a755e675800",
+                    "label": "Notification of electronic monitoring order (requirement)",
+                    "value": "Electronic monitoring contractor organisation name:G4S Scotland Monitoring Technologies & Services\nElectronic monitoring contractor email address 1:EM.Scotland.Notifications@uk.g4s.com.cjsm.net\nFirst notification of electronic monitoring:Yes\nAre there any additional requirements as well?:No\nDefendant's mobile number:0917894278022\nWas an interpreter used?:No\nLanguage:English\nDoes the offender have any special needs?:No\nSpecial needs:Test1"
+                  }
+                ]
+              },
+              {
+                "resultDefinitionGroup": "Community Requirement",
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "Unpaid work. Requirement to be completed within 12 months.",
+                "resultIdentifier": "9bec5977-1796-4645-9b9e-687d4f23d37d",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "72413aef-ecb9-4e9b-a143-31d1e9c11584",
+                    "promptReference": "numberOfHours",
+                    "label": "Number of hours",
+                    "value": "100 Hours"
+                  }
+                ]
+              }
+            ],
+            "startDate": "2025-12-08",
+            "title": "Use a motor vehicle on a road / public place without third party insurance",
+            "wording": "Use a motor vehicle on a road / public place without third party insurance"
+          },
+          {
+            "allocationDecision": "Summary-only offence",
+            "civilOffence": false,
+            "code": "RA88002",
+            "convictingCourtCode": "2577",
+            "convictionDate": "2026-06-06",
+            "convictionStatus": "Convicted",
+            "dvlaCode": "IN20",
+            "endorsableFlag": true,
+            "modeOfTrial": "Summary",
+            "plea": "GUILTY",
+            "results": [
+              {
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "dvlaCode": "E",
+                "label": "Conditional discharge",
+                "prompts": [
+                  {
+                    "durationSequence": 1,
+                    "label": "Period of conditional discharge",
+                    "promptIdentifier": "d3205319-84cf-4c5b-9d7a-7e4bb1865054",
+                    "promptReference": "periodofConditionalDischarge",
+                    "value": "12 Months"
+                  }
+                ],
+                "publishedForNows": false,
+                "resultIdentifier": "554c2622-c1cc-459e-a98d-b7f317ab065c"
+              }
+            ],
+            "startDate": "2025-12-08",
+            "title": "Drive a motor vehicle otherwise than in accordance with a licence - endorsable offence",
+            "wording": "Drive a motor vehicle otherwise than in accordance with a licence - endorsable offence"
+          },
+          {
+            "allocationDecision": "Summary-only offence",
+            "civilOffence": false,
+            "code": "RA88003",
+            "convictingCourtCode": "2577",
+            "convictionDate": "2026-06-06",
+            "convictionStatus": "Convicted",
+            "dvlaCode": "IN30",
+            "endorsableFlag": true,
+            "modeOfTrial": "Summary",
+            "plea": "GUILTY",
+            "results": [
+              {
+                "d20": false,
+                "dvlaCode": "E",
+                "judicialResultCategory": "ANCILLARY",
+                "label": "Conditional discharge",
+                "prompts": [
+                  {
+                    "durationSequence": 1,
+                    "label": "Period of conditional discharge",
+                    "promptIdentifier": "d3205319-84cf-4c5b-9d7a-7e4bb1865054",
+                    "promptReference": "periodofConditionalDischarge",
+                    "value": "12 Months"
+                  }
+                ],
+                "publishedForNows": false,
+                "resultIdentifier": "554c2622-c1cc-459e-a98d-b7f317ab065c"
+              }
+            ],
+            "startDate": "2025-12-08",
+            "title": "Drive motor vehicle with a proportion of a specified controlled drug above the specified limit",
+            "wording": "Drive motor vehicle with a proportion of a specified controlled drug above the specified limit"
+          }
+        ]
+      }
+    ],
+    "courtApplications": [
+      {
+        "applicationReceivedDate": "2026-02-05",
+        "applicationReference": "SG821225728",
+        "applicationStatus": "FINALISED",
+        "applicationType": "Appeal against conviction and sentence by a Magistrates' Court to the Crown Court",
+        "applicationTypeId": "abc05494-05d7-4289-b4bc-a92726257a4b",
+        "id": "922eb0f2-4b94-448b-8c0c-9deb06b82484",
+        "results": [
+          {
+            "d20": false,
+            "label": "Appeal against sentence allowed",
+            "prompts": [],
+            "publishedForNows": false,
+            "resultIdentifier": "d861586a-df88-440d-98d4-63cc2a680ae1",
+            "resultWording": ""
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": true,
+  "orderingHearingId": "93bc6155-952f-4909-a36a-b9f277da3b85"
+}
