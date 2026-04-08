@@ -29,7 +29,6 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.Res
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.G;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.OATS;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.RFSD;
-import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.ROPENED;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.SV;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.TEXT;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.WDRN;
@@ -57,8 +56,6 @@ import uk.gov.justice.cpp.stagingdvla.event.Prompts;
 import uk.gov.justice.cpp.stagingdvla.event.Results;
 
 import java.util.List;
-import java.util.UUID;
-
 import org.junit.jupiter.api.Test;
 
 class OffenceUtilTest {

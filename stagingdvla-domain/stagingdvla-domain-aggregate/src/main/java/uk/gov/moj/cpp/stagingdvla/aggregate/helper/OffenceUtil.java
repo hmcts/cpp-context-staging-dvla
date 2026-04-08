@@ -104,13 +104,13 @@ public class OffenceUtil {
     private static final String INACTIVE = "INACTIVE";
     private static final String ST_DEC = "STATUTORY DECLARATION";
     private static final String NEXT_HEARING_GROUP = "NEXT HEARING";
-    public static final List<String> APPEAL_RESULTS = asList(
+    protected static final List<String> APPEAL_RESULTS = asList(
             AACA.id, AACD.id, AASA.id, AASD.id, ACSD.id, APA.id, ASV.id, AW.id, DDRE.id
     );
-    public static final List<String> APPEAL_REFUSED_RESULTS = asList(
+    protected static final List<String> APPEAL_REFUSED_RESULTS = asList(
             AACD.id, AASD.id, ACSD.id, APA.id, AW.id
     );
-    public static final List<String> LICENCE_PRODUCED_IN_COURT_RESULTS = asList(
+    protected static final List<String> LICENCE_PRODUCED_IN_COURT_RESULTS = asList(
             LPIC1.id, LPIC2.id, LPIC3.id, LPIC4.id, LPIC5.id
     );
 

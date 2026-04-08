@@ -148,7 +148,7 @@ public class QueueUtil {
 
     public static Optional<JsonObject> retrieveMessageAsJsonObject(final MessageConsumer consumer) {
         return ifPresent(retrieveMessageAsString(consumer, RETRIEVE_TIMEOUT),
-                (x) -> Optional.of(Json.createReader(new StringReader(x)).readObject())
+                x -> Optional.of(Json.createReader(new StringReader(x)).readObject())
         ).orElse(Optional::empty);
     }
 
