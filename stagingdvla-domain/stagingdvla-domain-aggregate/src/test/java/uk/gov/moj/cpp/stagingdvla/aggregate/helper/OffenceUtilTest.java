@@ -47,7 +47,7 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasD20Endo
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasPointsDisqualificationCode;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasResultCategoryOnly;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasResultType;
-import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.isApplicationReopenedAndResultIsReopenedOrInterim;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.isReopenedApplication;
 
 import uk.gov.justice.core.courts.JudicialResultCategory;
 import uk.gov.justice.cpp.stagingdvla.event.Cases;
@@ -619,30 +619,13 @@ class OffenceUtilTest {
         assertThat(hasAppealResultOrGranted, is(true));
     }
     @Test
-    void shouldReturnTrueForApplicationReopenedAndResultIsReopenedOrInterimWithReopenResult() {
-        final List<Results> results = singletonList(results().withResultIdentifier(ROPENED.id).build());
+    void shouldReturnTrueForApplicationReopened() {
         final List<CourtApplications> courtApplications = singletonList(
                 CourtApplications.courtApplications()
-                        .withApplicationTypeId(REOPENED_APPLICATION_TYPE)
-                        .withResults(results).build()
+                        .withApplicationTypeId(REOPENED_APPLICATION_TYPE).build()
         );
 
-        boolean applicationReopenedAndResultIsReopenedOrInterim = isApplicationReopenedAndResultIsReopenedOrInterim(courtApplications);
-
-        assertThat(applicationReopenedAndResultIsReopenedOrInterim, is(true));
-    }
-
-    @Test
-    void shouldReturnTrueForApplicationReopenedAndResultIsReopenedOrInterimWithInterimResult() {
-        final List<Results> results = List.of(results().withJudicialResultCategory(JudicialResultCategory.INTERMEDIARY).build(),
-                results().withJudicialResultCategory(JudicialResultCategory.ANCILLARY).build());
-        final List<CourtApplications> courtApplications = singletonList(
-                CourtApplications.courtApplications()
-                        .withApplicationTypeId(REOPENED_APPLICATION_TYPE)
-                        .withResults(results).build()
-        );
-
-        boolean applicationReopenedAndResultIsReopenedOrInterim = isApplicationReopenedAndResultIsReopenedOrInterim(courtApplications);
+        boolean applicationReopenedAndResultIsReopenedOrInterim = isReopenedApplication(courtApplications);
 
         assertThat(applicationReopenedAndResultIsReopenedOrInterim, is(true));
     }
@@ -875,34 +858,4 @@ class OffenceUtilTest {
         assertThat(hasResultCategoryOnly(offence, JudicialResultCategory.ANCILLARY, JudicialResultCategory.INTERMEDIARY), is(false));
     }
 
-    @Test
-    void shouldApplicationReopenedAndInterimResultReturnTrue() {
-        final List<CourtApplications> courtApplications = singletonList(CourtApplications.courtApplications()
-                .withApplicationTypeId(REOPENED_APPLICATION_TYPE)
-                .withResults(List.of(results().withJudicialResultCategory(JudicialResultCategory.INTERMEDIARY).build(),
-                        results().withJudicialResultCategory(JudicialResultCategory.ANCILLARY).build()))
-                .build());
-        assertThat(isApplicationReopenedAndResultIsReopenedOrInterim(courtApplications), is(true));
-    }
-
-    @Test
-    void shouldApplicationReopenedAndInterimResultReturnFalseWhenHasFinalResult() {
-        final List<CourtApplications> courtApplications = singletonList(CourtApplications.courtApplications()
-                .withApplicationTypeId(REOPENED_APPLICATION_TYPE)
-                .withResults(List.of(results().withJudicialResultCategory(JudicialResultCategory.INTERMEDIARY).build(),
-                        results().withJudicialResultCategory(JudicialResultCategory.ANCILLARY).build(),
-                        results().withJudicialResultCategory(JudicialResultCategory.FINAL).build()))
-                .build());
-        assertThat(isApplicationReopenedAndResultIsReopenedOrInterim(courtApplications), is(false));
-    }
-
-    @Test
-    void shouldApplicationReopenedAndInterimResultReturnFalseWhenApplicationIsNotReopen() {
-        final List<CourtApplications> courtApplications = singletonList(CourtApplications.courtApplications()
-                .withApplicationTypeId(UUID.randomUUID().toString())
-                .withResults(List.of(results().withJudicialResultCategory(JudicialResultCategory.INTERMEDIARY).build(),
-                        results().withJudicialResultCategory(JudicialResultCategory.ANCILLARY).build()))
-                .build());
-        assertThat(isApplicationReopenedAndResultIsReopenedOrInterim(courtApplications), is(false));
-    }
 }

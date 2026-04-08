@@ -68,7 +68,6 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.Res
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.NESR;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.OATS;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.RFSD;
-import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.ROPENED;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.SUMRCC;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.TEXT;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.WDRN;
@@ -137,7 +136,7 @@ public class OffenceUtil {
 
         if (hasAppealResultOrGranted(courtApplications)) {
             return getEndorsementStatusForAppealOrReopened(currentOffence, previousOffence, courtApplications);
-        } else if(isApplicationReopenedAndResultIsReopenedOrInterim(courtApplications)) {
+        } else if(isReopenedApplication(courtApplications)) {
             return getEndorsementStatusForAppealOrReopened(currentOffence, previousOffence, courtApplications);
         } else if (!nonEndorsable && isAmendment) {
             return isNull(currentOffence) ? REMOVE : UPDATE_NOMERGE;
@@ -448,13 +447,6 @@ public class OffenceUtil {
         return hasAppealResult(courtApplications) ||  hasResultType(courtApplications, G) ;
     }
 
-    public static boolean isApplicationReopenedAndResultIsReopenedOrInterim(final List<CourtApplications> courtApplications) {
-        return isReopenedApplication(courtApplications) && (
-                hasResultType(courtApplications, ROPENED) ||
-                courtApplications.stream().allMatch(courtApplication -> courtApplication.getResults().stream()
-                        .allMatch(result -> INTERMEDIARY.equals(result.getJudicialResultCategory()) || ANCILLARY.equals(result.getJudicialResultCategory()))));
-    }
-
     public static boolean hasAppealRefusedResult(List<CourtApplications> courtApplications) {
         return isNotEmpty(courtApplications)
                 && courtApplications.stream()
@@ -469,10 +461,9 @@ public class OffenceUtil {
                         .anyMatch(result -> APPEAL_RESULTS.stream().anyMatch(result.getResultIdentifier()::equalsIgnoreCase)));
     }
 
-    private static boolean isReopenedApplication(final List<CourtApplications> courtApplications) {
+    public static boolean isReopenedApplication(final List<CourtApplications> courtApplications) {
         return isNotEmpty(courtApplications) &&
                 courtApplications.stream().allMatch(courtApplication -> REOPENED_APPLICATION_TYPE.equals(courtApplication.getApplicationTypeId()));
-
     }
 
     public static boolean hasAnyResult(final DefendantCaseOffences offence, final List<ResultType> resultTypes) {
