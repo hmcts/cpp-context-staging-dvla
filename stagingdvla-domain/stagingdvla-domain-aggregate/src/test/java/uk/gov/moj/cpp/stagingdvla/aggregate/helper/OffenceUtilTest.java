@@ -29,11 +29,11 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.Res
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.G;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.OATS;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.RFSD;
-import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.ROPENED;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.SV;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.TEXT;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.WDRN;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.WDRNOFF;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.REOPENED_APPLICATION_TYPE;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.getEndorsementStatus;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAnyD20Removed;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAnyResult;
@@ -41,11 +41,14 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAnyResu
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAnyResultType;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAppealRefusedResult;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAppealResult;
-import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAppealResultOrGrantedOrReopened;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAppealResultOrGranted;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasD20Endorsement;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasPointsDisqualificationCode;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasResultCategoryOnly;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasResultType;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.isReopenedApplication;
 
+import uk.gov.justice.core.courts.JudicialResultCategory;
 import uk.gov.justice.cpp.stagingdvla.event.Cases;
 import uk.gov.justice.cpp.stagingdvla.event.CourtApplications;
 import uk.gov.justice.cpp.stagingdvla.event.DefendantCaseOffences;
@@ -53,7 +56,6 @@ import uk.gov.justice.cpp.stagingdvla.event.Prompts;
 import uk.gov.justice.cpp.stagingdvla.event.Results;
 
 import java.util.List;
-
 import org.junit.jupiter.api.Test;
 
 class OffenceUtilTest {
@@ -591,13 +593,13 @@ class OffenceUtilTest {
     }
 
     @Test
-    void shouldReturnTrueForHasAppealResultOrGrantedWithAppealOrReopenResult() {
+    void shouldReturnTrueForHasAppealResultOrGrantedWithAppealResult() {
         final List<Results> results = singletonList(results().withResultIdentifier(AACA.id).build());
         final List<CourtApplications> courtApplications = singletonList(
                 CourtApplications.courtApplications().withResults(results).build()
         );
 
-        boolean hasAppealResultOrGranted = hasAppealResultOrGrantedOrReopened(courtApplications);
+        boolean hasAppealResultOrGranted = hasAppealResultOrGranted(courtApplications);
 
         assertThat(hasAppealResultOrGranted, is(true));
     }
@@ -609,30 +611,30 @@ class OffenceUtilTest {
                 CourtApplications.courtApplications().withResults(results).build()
         );
 
-        boolean hasAppealResultOrGranted = hasAppealResultOrGrantedOrReopened(courtApplications);
+        boolean hasAppealResultOrGranted = hasAppealResultOrGranted(courtApplications);
 
         assertThat(hasAppealResultOrGranted, is(true));
     }
     @Test
-    void shouldReturnTrueForHasAppealResultOrGrantedWithReopenResult() {
-        final List<Results> results = singletonList(results().withResultIdentifier(ROPENED.id).build());
+    void shouldReturnTrueForApplicationReopened() {
         final List<CourtApplications> courtApplications = singletonList(
-                CourtApplications.courtApplications().withResults(results).build()
+                CourtApplications.courtApplications()
+                        .withApplicationTypeId(REOPENED_APPLICATION_TYPE).build()
         );
 
-        boolean hasAppealResultOrGranted = hasAppealResultOrGrantedOrReopened(courtApplications);
+        boolean applicationReopenedAndResultIsReopenedOrInterim = isReopenedApplication(courtApplications);
 
-        assertThat(hasAppealResultOrGranted, is(true));
+        assertThat(applicationReopenedAndResultIsReopenedOrInterim, is(true));
     }
 
     @Test
-    void shouldReturnFalseForHasAppealResultOrGrantedWithOtherOrReopenResult() {
+    void shouldReturnFalseForHasAppealResultOrGrantedWithOtherResult() {
         final List<Results> results = singletonList(results().withResultIdentifier(OATS.id).build());
         final List<CourtApplications> courtApplications = singletonList(
                 CourtApplications.courtApplications().withResults(results).build()
         );
 
-        boolean hasAppealResultOrGranted = hasAppealResultOrGrantedOrReopened(courtApplications);
+        boolean hasAppealResultOrGranted = hasAppealResultOrGranted(courtApplications);
 
         assertThat(hasAppealResultOrGranted, is(false));
     }
@@ -836,4 +838,21 @@ class OffenceUtilTest {
 
         assertThat(hasResult, is(false));
     }
+
+    @Test
+    void shouldHasResultCategoryOnlyReturnTrueWhenAtLeastOneMatches() {
+        final DefendantCaseOffences offence = DefendantCaseOffences.defendantCaseOffences()
+                .withResults(singletonList(results().withJudicialResultCategory(JudicialResultCategory.ANCILLARY).build()))
+                .build();
+        assertThat(hasResultCategoryOnly(offence, JudicialResultCategory.ANCILLARY, JudicialResultCategory.INTERMEDIARY), is(true));
+    }
+
+    @Test
+    void shouldHasResultCategoryOnlyReturnFalseWhenNoMatches() {
+        final DefendantCaseOffences offence = DefendantCaseOffences.defendantCaseOffences()
+                .withResults(singletonList(results().withJudicialResultCategory(JudicialResultCategory.FINAL).build()))
+                .build();
+        assertThat(hasResultCategoryOnly(offence, JudicialResultCategory.ANCILLARY, JudicialResultCategory.INTERMEDIARY), is(false));
+    }
+
 }

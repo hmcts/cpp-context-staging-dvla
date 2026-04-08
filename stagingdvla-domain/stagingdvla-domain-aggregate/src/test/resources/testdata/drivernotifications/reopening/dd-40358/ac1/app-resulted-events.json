@@ -1,0 +1,316 @@
+{
+  "caseApplicationReferences": [
+    "28DI3871009"
+  ],
+  "cases": [
+    {
+      "caseId": "40dd59b4-4f02-48f5-b0fa-90eb6c56a00e",
+      "caseStatus": "INACTIVE",
+      "defendantCaseOffences": [],
+      "hasSV": false,
+      "initiationCode": "C",
+      "reference": "28DI3871009"
+    }
+  ],
+  "courtApplications": [
+    {
+      "applicationReceivedDate": "2026-04-01",
+      "applicationReference": "28DI3871009",
+      "applicationStatus": "FINALISED",
+      "applicationType": "Application to reopen case",
+      "applicationTypeId": "9d2ae0fe-d4d0-43ca-ab7a-7a2556cafe5e",
+      "id": "37907da8-0836-4a66-9f7b-fc840798674e",
+      "results": [
+        {
+          "d20": false,
+          "judicialResultCategory": "FINAL",
+          "label": "Granted",
+          "publishedForNows": false,
+          "resultIdentifier": "2b3f7c20-8fc1-4fad-9076-df196c24b27e"
+        },
+        {
+          "d20": false,
+          "judicialResultCategory": "FINAL",
+          "label": "Case reopened",
+          "prompts": [
+            {
+              "label": "Re-opened under",
+              "promptIdentifier": "3872ea68-92d9-469f-9929-c676745982ef",
+              "promptReference": "reopenedUnder",
+              "value": "Section 155 Powers of Criminal Courts (Sentencing) Act 2000"
+            },
+            {
+              "label": "Conviction and sentence imposed on specified date are set aside",
+              "promptIdentifier": "5797feb0-7678-4193-ad16-944365e9a68a",
+              "promptReference": "convictionAndSentenceImposedOnSpecifiedDateAreSetAside",
+              "value": "03/03/2027"
+            },
+            {
+              "label": "Prosecutor to be notified organisation name",
+              "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+              "promptReference": "prosecutortobenotifiedOrganisationName",
+              "value": "test"
+            },
+            {
+              "label": "Prosecutor to be notified address line 1",
+              "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+              "promptReference": "prosecutortobenotifiedAddress1",
+              "value": "test"
+            },
+            {
+              "label": "Prosecutor to be notified post code",
+              "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+              "promptReference": "prosecutortobenotifiedPostCode",
+              "value": "MK6 7AS"
+            }
+          ],
+          "publishedForNows": false,
+          "resultIdentifier": "e3fb46ee-e406-4f73-9bf1-71d513da8cc7"
+        }
+      ]
+    }
+  ],
+  "defendant": {
+    "address": {
+      "line1": "9999A9999AAAA",
+      "line2": "Woodlane",
+      "line3": "addressline 3",
+      "line4": "Bristol",
+      "line5": "Avon",
+      "postCode": "SW11 3TQ"
+    },
+    "dateOfBirth": "2005-11-11",
+    "driverNumber": "VANFL002222OW9PH",
+    "firstName": "Lavinia",
+    "gender": "MALE",
+    "lastName": "Marvin",
+    "name": "Lavinia Marvin",
+    "title": "Mr"
+  },
+  "distinctPrompts": [
+    {
+      "label": "Defendant driving licence number",
+      "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+      "promptReference": "defendantDrivingLicenceNumber",
+      "value": "VANFL002222OW9PH"
+    }
+  ],
+  "identifier": "52f48d48-e1a8-4273-bc54-ad34b5e263f1",
+  "licenceProducedInCourt": "0: None or unknown",
+  "masterDefendantId": "1da3dc44-6e4d-43a7-bfba-745e27da2d7c",
+  "materialId": "00c805fd-63ee-4870-ab4d-9d5cb6226b06",
+  "notificationType": "Remove",
+  "notificationWasPreviouslySent": true,
+  "orderDate": "2026-04-02",
+  "orderingCourt": {
+    "address": {
+      "address1": "Norwich Place",
+      "address2": "Bexleyheath",
+      "address3": "Kent",
+      "address4": "",
+      "address5": "",
+      "postcode": "DA6 7ND"
+    },
+    "code": "B01BH00",
+    "courtHearingLocation": "B01BH01",
+    "id": "7e967376-eacf-4fca-9b30-21b0c5aad427",
+    "lja": {
+      "ljaCode": "2575",
+      "ljaName": "South East London Magistrates' Court"
+    },
+    "name": "Bexley Magistrates' Court",
+    "roomId": "8e912353-3b5d-36c3-953e-ad3b94b19de3",
+    "roomName": "Courtroom 01"
+  },
+  "orderingCourtCode": "2575",
+  "orderingHearingId": "791384d8-b6fb-4d01-a735-23826b08463e",
+  "previous": {
+    "caseApplicationReferences": [
+      "28DI3871009"
+    ],
+    "cases": [
+      {
+        "caseId": "40dd59b4-4f02-48f5-b0fa-90eb6c56a00e",
+        "caseStatus": "ACTIVE",
+        "defendantCaseOffences": [
+          {
+            "civilOffence": false,
+            "code": "OF61102C",
+            "convictionStatus": "Not Convicted",
+            "dateFromWhichDisqRemoved": "",
+            "disqualificationPeriod": "",
+            "dttpDtetp": "",
+            "dvlaCode": "NE98",
+            "endorsableFlag": false,
+            "fine": "",
+            "interimImposedFinalSentence": "",
+            "modeOfTrial": "Indictable",
+            "otherSentence": "E12M",
+            "penaltyPoints": "",
+            "results": [
+              {
+                "d20": false,
+                "dvlaCode": "E",
+                "judicialResultCategory": "FINAL",
+                "label": "Conditional discharge",
+                "prompts": [
+                  {
+                    "durationSequence": 1,
+                    "label": "Period of conditional discharge",
+                    "promptIdentifier": "d3205319-84cf-4c5b-9d7a-7e4bb1865054",
+                    "promptReference": "periodofConditionalDischarge",
+                    "value": "12 Months"
+                  }
+                ],
+                "publishedForNows": false,
+                "resultIdentifier": "554c2622-c1cc-459e-a98d-b7f317ab065c"
+              },
+              {
+                "d20": true,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "Driving record endorsed (no points)",
+                "publishedForNows": false,
+                "resultIdentifier": "b0aeb4fc-df63-4e2f-af88-97e3f23e847f"
+              },
+              {
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "0: None or unknown",
+                "publishedForNows": true,
+                "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956"
+              }
+            ],
+            "startDate": "2022-12-12",
+            "title": "Conspire to assault a person thereby occasioning them actual bodily harm",
+            "wording": "Lavinia Marvin at Howell Port, conspired together with Earnest Renner to assault Mack Hahn, thereby occasioning actual bodily harm."
+          },
+          {
+            "civilOffence": false,
+            "code": "PS90015",
+            "convictionStatus": "Not Convicted",
+            "dateFromWhichDisqRemoved": "",
+            "disqualificationPeriod": "001200",
+            "dttpDtetp": "",
+            "dvlaCode": "NE98",
+            "endorsableFlag": false,
+            "fine": "£100.00",
+            "interimImposedFinalSentence": "",
+            "modeOfTrial": "Summary",
+            "penaltyPoints": "",
+            "results": [
+              {
+                "d20": true,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "Discretionary with ordinary disqualification",
+                "prompts": [
+                  {
+                    "durationSequence": 1,
+                    "label": "Disqualification period",
+                    "promptIdentifier": "2bf54447-328c-4c1b-a123-341adbd52172",
+                    "promptReference": "disqualificationPeriod",
+                    "value": "12 Months"
+                  },
+                  {
+                    "label": "Defendant driving licence number",
+                    "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+                    "promptReference": "defendantDrivingLicenceNumber",
+                    "value": "VANFL002222OW9PH"
+                  }
+                ],
+                "publishedForNows": false,
+                "resultIdentifier": "ccfc452e-ebe4-4cd7-b8a0-4f90768447b4",
+                "resultWording": "Disqualified for holding or obtaining a driving licence. Discretionary disqualification. Driving record endorsed. Section 34(2) Road Traffic Offenders Act 1988"
+              },
+              {
+                "d20": false,
+                "judicialResultCategory": "FINAL",
+                "label": "Fine",
+                "prompts": [
+                  {
+                    "label": "Amount of fine",
+                    "promptIdentifier": "7cd1472f-2379-4f5b-9e67-98a43d86e122",
+                    "promptReference": "AOF",
+                    "value": "£100.00"
+                  }
+                ],
+                "publishedForNows": false,
+                "resultDefinitionGroup": "Imposition",
+                "resultIdentifier": "969f150c-cd05-46b0-9dd9-30891efcc766"
+              },
+              {
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "0: None or unknown",
+                "publishedForNows": true,
+                "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956"
+              }
+            ],
+            "startDate": "2022-11-28",
+            "title": "Public service vehicles - passenger failing to pay fare",
+            "wording": "Public service vehicles - passenger failing to pay fare"
+          }
+        ],
+        "hasSV": false,
+        "initiationCode": "C",
+        "reference": "28DI3871009"
+      }
+    ],
+    "defendant": {
+      "address": {
+        "line1": "9999A9999AAAA",
+        "line2": "Woodlane",
+        "line3": "addressline 3",
+        "line4": "Bristol",
+        "line5": "Avon",
+        "postCode": "SW11 3TQ"
+      },
+      "dateOfBirth": "2005-11-11",
+      "driverNumber": "VANFL002222OW9PH",
+      "firstName": "Lavinia",
+      "gender": "MALE",
+      "lastName": "Marvin",
+      "name": "Lavinia Marvin",
+      "title": "Mr"
+    },
+    "distinctPrompts": [
+      {
+        "label": "Defendant driving licence number",
+        "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+        "promptReference": "defendantDrivingLicenceNumber",
+        "value": "VANFL002222OW9PH"
+      }
+    ],
+    "identifier": "77cba4a0-b5fe-45a3-9db9-488a5836278b",
+    "licenceProducedInCourt": "0: None or unknown",
+    "masterDefendantId": "1da3dc44-6e4d-43a7-bfba-745e27da2d7c",
+    "materialId": "f7790471-acdb-4c69-afd4-1e21bb37fef4",
+    "orderDate": "2026-04-01",
+    "orderingCourt": {
+      "address": {
+        "address1": "176A Lavender Hill",
+        "address2": "London",
+        "address3": "",
+        "address4": "",
+        "address5": "",
+        "postcode": "SW11 1JU"
+      },
+      "code": "B01LY00",
+      "courtHearingLocation": "B01LY01",
+      "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+      "lja": {
+        "ljaCode": "2577",
+        "ljaName": "South West London Magistrates' Court"
+      },
+      "name": "Lavender Hill Magistrates' Court",
+      "roomId": "9e4932f7-97b2-3010-b942-ddd2624e4dd8",
+      "roomName": "Courtroom 01"
+    },
+    "orderingHearingId": "0a575691-1e94-45ee-9acc-d65b3ac652ce",
+    "retrySequence": 0
+  },
+  "removedEndorsements": [
+    "NE98",
+    "NE98"
+  ],
+  "retrySequence": 0
+}

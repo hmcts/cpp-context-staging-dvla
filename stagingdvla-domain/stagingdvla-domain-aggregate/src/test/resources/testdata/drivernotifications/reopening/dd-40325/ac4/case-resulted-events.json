@@ -1,0 +1,226 @@
+{
+  "caseApplicationReferences": [
+    "SJ142251679"
+  ],
+  "cases": [
+    {
+      "caseId": "e0c2baa0-874e-4a5c-b7ca-f9735057d564",
+      "defendantCaseOffences": [
+        {
+          "civilOffence": false,
+          "code": "RA88002",
+          "convictingCourtCode": "1894",
+          "convictionDate": "2026-03-31",
+          "convictionStatus": "Convicted",
+          "dateFromWhichDisqRemoved": "",
+          "disqualificationPeriod": "001200",
+          "dttpDtetp": "",
+          "dvlaCode": "IN14",
+          "endorsableFlag": true,
+          "fine": "£200.00",
+          "interimImposedFinalSentence": "",
+          "modeOfTrial": "1",
+          "penaltyPoints": "",
+          "results": [
+            {
+              "d20": false,
+              "judicialResultCategory": "FINAL",
+              "label": "Fine",
+              "prompts": [
+                {
+                  "durationSequence": 0,
+                  "label": "Amount of fine",
+                  "promptIdentifier": "7cd1472f-2379-4f5b-9e67-98a43d86e122",
+                  "promptReference": "AOF",
+                  "value": "£200.00"
+                }
+              ],
+              "publishedForNows": false,
+              "resultDefinitionGroup": "Imposition",
+              "resultIdentifier": "969f150c-cd05-46b0-9dd9-30891efcc766"
+            },
+            {
+              "d20": false,
+              "judicialResultCategory": "FINAL",
+              "label": "Compensation",
+              "prompts": [
+                {
+                  "durationSequence": 0,
+                  "label": "Amount of compensation",
+                  "promptIdentifier": "26985e5b-fe1f-4d7d-a21a-57207c5966e7",
+                  "promptReference": "AOCOM",
+                  "value": "£8.91"
+                },
+                {
+                  "durationSequence": 0,
+                  "label": "Major creditor organisation name",
+                  "promptIdentifier": "af921cf4-06e7-4f6b-a4ea-dcb58aab0dbe",
+                  "promptReference": "cREDNAMEOrganisationName",
+                  "value": "West Mercia Police"
+                }
+              ],
+              "publishedForNows": false,
+              "resultDefinitionGroup": "Imposition",
+              "resultIdentifier": "ae89b99c-e0e3-47b5-b218-24d4fca3ca53"
+            },
+            {
+              "d20": true,
+              "judicialResultCategory": "ANCILLARY",
+              "label": "Discretionary with ordinary disqualification",
+              "prompts": [
+                {
+                  "durationSequence": 1,
+                  "label": "Disqualification period",
+                  "promptIdentifier": "2bf54447-328c-4c1b-a123-341adbd52172",
+                  "promptReference": "disqualificationPeriod",
+                  "value": "12 Months"
+                }
+              ],
+              "publishedForNows": false,
+              "resultIdentifier": "ccfc452e-ebe4-4cd7-b8a0-4f90768447b4",
+              "resultWording": "Disqualified for holding or obtaining a driving licence. Discretionary disqualification. Driving record endorsed. Section 34(2) Road Traffic Offenders Act 1988"
+            },
+            {
+              "d20": false,
+              "judicialResultCategory": "ANCILLARY",
+              "label": "Licence produced in court",
+              "publishedForNows": false,
+              "resultIdentifier": "ea1ee5a4-be13-48dc-8411-78f22e01c236"
+            },
+            {
+              "d20": false,
+              "judicialResultCategory": "ANCILLARY",
+              "label": "0: None or unknown",
+              "publishedForNows": true,
+              "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956"
+            }
+          ],
+          "startDate": "2026-03-16",
+          "title": "Cause use of motor vehicle with no insurance",
+          "wording": "Cause use of motor vehicle with no insurance"
+        },
+        {
+          "civilOffence": false,
+          "code": "RC86851",
+          "convictingCourtCode": "1894",
+          "convictionDate": "2026-03-31",
+          "convictionStatus": "Convicted",
+          "dateFromWhichDisqRemoved": "",
+          "disqualificationPeriod": "",
+          "dttpDtetp": "",
+          "dvlaCode": "CU10",
+          "endorsableFlag": true,
+          "fine": "",
+          "interimImposedFinalSentence": "",
+          "modeOfTrial": "1",
+          "otherSentence": "E12M",
+          "penaltyPoints": "6",
+          "results": [
+            {
+              "d20": false,
+              "dvlaCode": "E",
+              "judicialResultCategory": "FINAL",
+              "label": "Conditional discharge",
+              "prompts": [
+                {
+                  "durationSequence": 1,
+                  "label": "Period of conditional discharge",
+                  "promptIdentifier": "d3205319-84cf-4c5b-9d7a-7e4bb1865054",
+                  "promptReference": "periodofConditionalDischarge",
+                  "value": "12 Months"
+                }
+              ],
+              "publishedForNows": false,
+              "resultIdentifier": "554c2622-c1cc-459e-a98d-b7f317ab065c"
+            },
+            {
+              "d20": true,
+              "judicialResultCategory": "ANCILLARY",
+              "label": "Driving record endorsed with penalty points",
+              "prompts": [
+                {
+                  "durationSequence": 0,
+                  "label": "Penalty points for this offence",
+                  "promptIdentifier": "a8719de4-7783-448a-b792-e3f94e670ad0",
+                  "promptReference": "PENPT",
+                  "value": "6"
+                },
+                {
+                  "durationSequence": 0,
+                  "label": "Defendant driving licence number",
+                  "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+                  "promptReference": "defendantDrivingLicenceNumber"
+                }
+              ],
+              "publishedForNows": false,
+              "resultIdentifier": "cee54856-4450-4f28-a8a9-72b688726201"
+            },
+            {
+              "d20": false,
+              "judicialResultCategory": "ANCILLARY",
+              "label": "Licence produced in court",
+              "publishedForNows": false,
+              "resultIdentifier": "ea1ee5a4-be13-48dc-8411-78f22e01c236"
+            },
+            {
+              "d20": false,
+              "judicialResultCategory": "ANCILLARY",
+              "label": "0: None or unknown",
+              "publishedForNows": true,
+              "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956"
+            }
+          ],
+          "startDate": "2026-02-19",
+          "title": "Vehicle defect - permit use of a motor vehicle / trailer with defective brakes",
+          "wording": "Vehicle defect - permit use of a motor vehicle / trailer with defective brakes"
+        }
+      ],
+      "hasSV": false,
+      "initiationCode": "J",
+      "reference": "SJ142251679"
+    }
+  ],
+  "courtApplications": [],
+  "defendant": {
+    "address": {
+      "line1": "FLAT - 25A",
+      "line2": "Constable Street",
+      "line3": "Bristol",
+      "line4": "England",
+      "line5": "UK",
+      "postCode": "IG1 1YY"
+    },
+    "dateOfBirth": "1957-03-31",
+    "firstName": "FlmIRaSo",
+    "gender": "MALE",
+    "lastName": "Smithn5ZU2",
+    "name": "FlmIRaSo Smithn5ZU2",
+    "title": "Mr"
+  },
+  "distinctPrompts": [],
+  "identifier": "23f9058b-e056-4d7f-9c8f-4a8f3139120d",
+  "licenceProducedInCourt": "0: None or unknown",
+  "masterDefendantId": "8f883820-9fd1-4725-88bd-91fd40313214",
+  "materialId": "b76ffe13-1552-4a17-84cb-9488833da87a",
+  "notificationType": "New",
+  "orderDate": "2026-03-31",
+  "orderingCourt": {
+    "address": {
+      "address1": "Grove Street",
+      "address2": "Redditch",
+      "address3": "Worcestershire",
+      "postcode": "B98 8DB"
+    },
+    "code": "B22KS00",
+    "id": "39fe3360-b3b5-3285-a3df-a75feb4e463c",
+    "lja": {
+      "ljaCode": "1894",
+      "ljaName": "Redditch Magistrates' Court",
+      "welshLjaName": "Llys Ynadon Redditch"
+    },
+    "name": "Redditch Magistrates' Court"
+  },
+  "orderingCourtCode": "1894",
+  "orderingHearingId": "0fef3e9e-b036-433e-8e13-b377a65e3ea8",
+  "retrySequence": 0
+}
