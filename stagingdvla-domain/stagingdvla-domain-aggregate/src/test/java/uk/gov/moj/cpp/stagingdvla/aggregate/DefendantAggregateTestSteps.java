@@ -26,11 +26,12 @@ import java.util.stream.Stream;
 
 import javax.json.Json;
 import javax.json.JsonArray;
-import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import javax.json.JsonReader;
+import javax.json.JsonValue;
 
 import org.apache.commons.io.IOUtils;
+import org.checkerframework.checker.nullness.qual.NonNull;
 import org.hamcrest.core.IsNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,14 +64,17 @@ class DefendantAggregateTestSteps {
                         step.input.masterDefendantId()
                 );
                 if (isNull(step.expectedEventsJsonFile)) {
-                    assertThat(name + " - No events were produced", eventStream, IsNull.nullValue());
+                    assertThat(name + " - Events were produced", eventStream, IsNull.nullValue());
                 } else {
                     assertThat(name + " - No events were produced", eventStream, IsNull.notNullValue());
                     final List<String> actualEvents = eventStream
                             .map(objectToJsonObjectConverter::convert)
                             .map(Object::toString)
+                            .peek(event -> LOGGER.info("Produced event: {}", event))
                             .toList();
-                    final String expectedEventsJson = payloadAsString(step.expectedEventsJsonFile(), Map.of());
+                    final String jsonFilePath = step.expectedEventsJsonFile();
+                    String expectedEventsJson = payloadAsString(jsonFilePath, Map.of());
+                    expectedEventsJson = applySrcDirective(expectedEventsJson, jsonFilePath);
                     final JsonArray expectedEventsArray = jsonStringToArray(expectedEventsJson);
                     assertThat(actualEvents.size() + " events were produced, expected " + expectedEventsArray.size() + "\nactualEvents:\n" + String.join("\n", actualEvents), actualEvents.size() == expectedEventsArray.size());
                     for (int i = 0; i < expectedEventsArray.size(); i++) {
@@ -114,6 +118,47 @@ class DefendantAggregateTestSteps {
                     ), expectedEventsJsonFile));
             return this;
         }
+    }
+
+    /**
+     * Replaces all instances of the `{{src:...}}` directive in the given JSON string with the content
+     * of the referenced JSON file, processing any specified fields to be ignored.
+     * <p>
+     * The `{{src:...}}` directive indicates a reference to another JSON file. This method extracts
+     * the referenced file, reads its content, and replaces the directive in the original JSON string
+     * with the parsed content. If a directive includes `ignoreFields`, those fields in the referenced
+     * JSON will be nullified before substitution.
+     *
+     * @param expectedEventsJson the original JSON string containing `{{src:...}}` directives
+     * @param jsonFilePath       the file path of the JSON file containing the directives
+     * @return the modified JSON string with all `{{src:...}}` directives replaced with the respective
+     * referenced content
+     */
+    static @NonNull String applySrcDirective(String expectedEventsJson, final String jsonFilePath) {
+        while (expectedEventsJson.contains("{{src:")) {
+            int startIndex = expectedEventsJson.indexOf("{{src:");
+            int endIndex = expectedEventsJson.indexOf("}}", startIndex);
+            String srcDirective = expectedEventsJson.substring(startIndex, endIndex + 2);
+            String[] parts = srcDirective.substring(6, srcDirective.length() - 2).split(",ignoredFields:");
+            String referencedFile = parts[0].trim();
+            List<String> ignoreFields = Arrays.asList("courtApplications", "notificationType", "orderingCourtCode");
+            if (parts.length > 1 && !parts[1].trim().isEmpty()) {
+                ignoreFields = Arrays.asList(parts[1].trim().replace("[", "").replace("]", "").replace("\\\"", "").split(","));
+            }
+            String referenceFilePath = jsonFilePath.substring(0, jsonFilePath.lastIndexOf("/") + 1) + referencedFile;
+            String fileContent = payloadAsString(referenceFilePath, Map.of());
+            JsonObject jsonObject = stringToJsonConverter.convert(fileContent);
+            JsonObject jsonObjectWithIgnoredFieldsNullified = Json.createObjectBuilder(jsonObject).build();
+            for (String field : ignoreFields) {
+                if (jsonObject.containsKey(field)) {
+                    jsonObjectWithIgnoredFieldsNullified = Json.createObjectBuilder(jsonObjectWithIgnoredFieldsNullified)
+                            .add(field, JsonValue.NULL)
+                            .build();
+                }
+            }
+            expectedEventsJson = expectedEventsJson.replace("\"" + srcDirective + "\"", jsonObjectWithIgnoredFieldsNullified.toString());
+        }
+        return expectedEventsJson;
     }
 
     static String payloadAsString(final String path, final Map<String, String> parameters) {
