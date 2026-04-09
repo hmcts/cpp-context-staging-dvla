@@ -115,7 +115,9 @@ public class OffenceUtil {
             LPIC1.id, LPIC2.id, LPIC3.id, LPIC4.id, LPIC5.id
     );
 
-    protected static final List<String> COV_G_RESULTS = asList(COV.id, G.id);
+    public static final String REOPENED_APPLICATION_TYPE = "9d2ae0fe-d4d0-43ca-ab7a-7a2556cafe5e";
+
+    public static final List<String> COV_G_RESULTS = asList(COV.id, G.id);
 
     public static String getConvictingCourtCode(final DefendantCaseOffences currentOffence,
                                                 final DefendantCaseOffences previousOffence) {
@@ -133,7 +135,7 @@ public class OffenceUtil {
                                                          final List<String> nonEndorsableOffenceCodes) {
         boolean nonEndorsable = nonEndorsableOffenceCodes.contains(getDvlaCode(previousOffence));
 
-        if (hasAppealResultOrGranted(courtApplications)) {
+        if (hasAppealResultOrGranted(courtApplications) || isCaseReopen(courtApplications)) {
             return getEndorsementStatusForAppeal(currentOffence, previousOffence, courtApplications);
         } else if (!nonEndorsable && isAmendment) {
             return isNull(currentOffence) ? REMOVE : UPDATE_NOMERGE;
@@ -147,8 +149,8 @@ public class OffenceUtil {
     }
 
     private static EndorsementStatus getEndorsementStatusForAppeal(final DefendantCaseOffences currentOffence,
-                                                                   final DefendantCaseOffences previousOffence,
-                                                                   final List<CourtApplications> courtApplications) {
+                                                                             final DefendantCaseOffences previousOffence,
+                                                                             final List<CourtApplications> courtApplications) {
         if (nonNull(currentOffence)) {
             if (hasRemoveResultType(currentOffence)) {
                 return REMOVE;
@@ -192,7 +194,7 @@ public class OffenceUtil {
             } else {
                 return NO_UPDATE_PREV_NOT_ENDORSED;
             }
-        } else if (hasAppealResult(courtApplications)) {
+        } else if (hasAppealResult(courtApplications) || isCaseReopen(courtApplications)) {
             if (hasD20Endorsement(previousOffence)) {
                 if (hasResultType(courtApplications, DDRE)) {
                     return UPDATE_MERGE;
@@ -618,7 +620,7 @@ public class OffenceUtil {
         return false;
     }
 
-    private static boolean isCaseReopen(final List<CourtApplications> courtApplications) {
+    public static boolean isCaseReopen(final List<CourtApplications> courtApplications) {
         if (isNotEmpty(courtApplications))
             return courtApplications.stream()
                     .anyMatch(ca -> APPRO.appType.equalsIgnoreCase(ca.getApplicationType()) || APPRO.id.equals(ca.getApplicationTypeId()));
