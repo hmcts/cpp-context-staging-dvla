@@ -1,7 +1,9 @@
 package uk.gov.moj.cpp.stagingdvla.aggregate;
 
 
+import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.DefendantAggregateTestSteps.JsonPathAssertions.jsonPathAssertions;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.DefendantAggregateTestSteps.defendantAggregateScenario;
 
 import uk.gov.moj.cpp.stagingdvla.aggregate.DefendantAggregateTestSteps.Scenario;
@@ -21,13 +23,15 @@ class DefendantAggregateReopenedAppScenariosTest {
                                 .withNotifyDriverStep(
                                         "case hearing resulted",
                                         "/testdata/drivernotifications/reopening/dd-39832/ac1/case-resulted.json",
-                                        "/testdata/drivernotifications/reopening/dd-39832/ac1/case-resulted-events.json"
-                                )
+                                        "/testdata/drivernotifications/reopening/dd-39832/ac1/case-resulted-events.json",
+                                        jsonPathAssertions().add("notificationType", "New"))
                                 .withNotifyDriverStep(
                                         "application hearing resulted",
                                         "/testdata/drivernotifications/reopening/dd-39832/ac1/app-resulted.json",
-                                        "/testdata/drivernotifications/reopening/dd-39832/ac1/app-resulted-events.json"
-                                )
+                                        "/testdata/drivernotifications/reopening/dd-39832/ac1/app-resulted-events.json",
+                                        jsonPathAssertions()
+                                                .add("notificationType", "Update")
+                                                .add("previous", notNullValue()))
 
                 ),
                 Arguments.of("DD-39832-ac2",

@@ -3,6 +3,7 @@ package uk.gov.moj.cpp.stagingdvla.aggregate;
 import static java.nio.charset.Charset.defaultCharset;
 import static java.util.Objects.isNull;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 import uk.gov.justice.core.courts.CourtCentre;
 import uk.gov.justice.core.courts.nowdocument.Nowdefendant;
@@ -19,6 +20,8 @@ import java.io.InputStream;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -30,6 +33,7 @@ import javax.json.JsonObject;
 import javax.json.JsonReader;
 import javax.json.JsonValue;
 
+import com.jayway.jsonpath.JsonPath;
 import org.apache.commons.io.IOUtils;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.hamcrest.core.IsNull;
@@ -81,6 +85,7 @@ class DefendantAggregateTestSteps {
                         final String expectedEventPayload = objectToJsonObjectConverter.convert(expectedEventsArray.getJsonObject(i)).toString();
                         final String actualEventPayload = actualEvents.get(i);
                         assertThat(actualEventPayload, JsonMatcher.matchesJson(expectedEventPayload, FIELDS_TO_CHECK_PRESENCE_ONLY));
+                        assertJsonPaths(actualEventPayload, step.jsonpathAssertions);
                     }
                 }
 
@@ -88,6 +93,10 @@ class DefendantAggregateTestSteps {
         }
 
         public Scenario withNotifyDriverStep(final String stepName, final String notificationJsonFile, final String expectedEventsJsonFile) {
+            return withNotifyDriverStep(stepName, notificationJsonFile, expectedEventsJsonFile, new JsonPathAssertions());
+        }
+
+        public Scenario withNotifyDriverStep(final String stepName, final String notificationJsonFile, final String expectedEventsJsonFile, final JsonPathAssertions jsonpathAssertions) {
             final JsonObject notification = stringToJsonConverter.convert(payloadAsString(notificationJsonFile, Map.of()));
             final Boolean isReshare = notification.getBoolean("isReshare");
             final JsonObject nowContent = notification.getJsonObject("nowContent");
@@ -115,9 +124,24 @@ class DefendantAggregateTestSteps {
                             courtApplications,
                             UUID.fromString(notification.getString("masterDefendantId")),
                             isReshare
-                    ), expectedEventsJsonFile));
+                    ), expectedEventsJsonFile, jsonpathAssertions));
             return this;
         }
+    }
+
+    static void assertJsonPaths(String jsonResponse, JsonPathAssertions jsonPathAssertions) {
+        jsonPathAssertions.toMap().forEach((path, expectedValue) -> {
+            Object actualValue;
+            try {
+                actualValue = JsonPath.read(jsonResponse, path);
+            } catch (com.jayway.jsonpath.PathNotFoundException e) {
+                actualValue = null;
+            }
+
+            assertThat("Check failed for path: " + path,
+                    actualValue,
+                    expectedValue instanceof org.hamcrest.Matcher ? (org.hamcrest.Matcher<? super Object>) expectedValue : equalTo(expectedValue));
+        });
     }
 
     /**
@@ -174,7 +198,27 @@ class DefendantAggregateTestSteps {
         }
     }
 
-    record StepData(String stepName, NotificationData input, String expectedEventsJsonFile) {
+    record StepData(String stepName, NotificationData input, String expectedEventsJsonFile, JsonPathAssertions jsonpathAssertions) {
+    }
+
+    static final class JsonPathAssertions {
+        private final Map<String, Object> assertions = new LinkedHashMap<>();
+
+        private JsonPathAssertions() {}
+
+        public static JsonPathAssertions jsonPathAssertions() {
+            final JsonPathAssertions builder = new JsonPathAssertions();
+            return builder;
+        }
+
+        public JsonPathAssertions add(final String jsonPath, final Object expectedValue) {
+            assertions.put(jsonPath, expectedValue);
+            return this;
+        }
+
+        public Map<String, Object> toMap() {
+            return Collections.unmodifiableMap(assertions);
+        }
     }
 
     record NotificationData(String orderDate,
