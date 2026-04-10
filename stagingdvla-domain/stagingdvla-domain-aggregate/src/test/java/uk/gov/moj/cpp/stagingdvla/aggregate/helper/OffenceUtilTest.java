@@ -30,6 +30,7 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.Res
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.G;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.OATS;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.RFSD;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.SUMRCC;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.SV;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.TEXT;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.WDRN;
@@ -492,6 +493,22 @@ class OffenceUtilTest {
         boolean hasAnyD20Removed = hasAnyD20Removed(previousCases, currentCases, courtApplications);
 
         assertThat(hasAnyD20Removed, is(true));
+    }
+
+    @Test
+    void shouldHasAnyD20RemovedReturnFalseWhenSjpCaseReferToCC() {
+        final Cases previousCases = buildCases(RESULT_IDENTIFIER, Boolean.TRUE);
+        final Cases currentCases = Cases.cases().withReference(caseReference)
+                .withDefendantCaseOffences(singletonList(DefendantCaseOffences.defendantCaseOffences()
+                        .withResults(singletonList(results()
+                                .withResultIdentifier(SUMRCC.id)
+                                .build()))
+                        .build()))
+                .build();
+
+        boolean hasAnyD20Removed = hasAnyD20Removed(previousCases, currentCases, emptyList());
+
+        assertThat(hasAnyD20Removed, is(false));
     }
 
     @Test
