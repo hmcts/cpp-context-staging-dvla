@@ -46,6 +46,7 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.Res
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.AASD;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.ACSD;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.ADJ;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.ADJOURNSJP;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.APA;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.ASV;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.AW;
@@ -70,6 +71,7 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.Res
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.NESR;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.OATS;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.RFSD;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.SUMRCC;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.TEXT;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.WDRN;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.WDRNOFF;
@@ -173,7 +175,7 @@ public class OffenceUtil {
                 } else {
                     return OATS_PREV_NOT_ENDORSED;
                 }
-            } else if (hasResultType(currentOffence, ADJ)) {
+            } else if (hasResultType(currentOffence, ADJ) || hasResultType(currentOffence, ADJOURNSJP) || hasResultType(currentOffence, SUMRCC)) {
                 if (hasD20Endorsement(previousOffence)) {
                     return NO_UPDATE_PREV_ENDORSED;
                 } else {
@@ -593,7 +595,11 @@ public class OffenceUtil {
                 return prevCase.getDefendantCaseOffences().
                         stream().
                         anyMatch(prevOffence -> hasD20Endorsement(prevOffence));
-            } else {
+            } else if(isSjpCaseReferToCC(currCase)) {
+                LOGGER.info("[Case Id:{}], this result has 'Refer for a full court hearing' result", currCase.getCaseId());
+                return false;
+            }
+            else {
                 LOGGER.info("[Case Id:{}], searching for D20 removals", currCase.getCaseId());
 
                 return prevCase.getDefendantCaseOffences().
@@ -750,6 +756,13 @@ public class OffenceUtil {
                     .anyMatch(ca -> isGranted(ca.getResults()));
 
         return false;
+    }
+
+    private static boolean isSjpCaseReferToCC(final Cases currCase) {
+        return nonNull(currCase) &&
+                isNotEmpty(currCase.getDefendantCaseOffences()) &&
+                currCase.getDefendantCaseOffences().stream().allMatch(defendantCaseOffences ->
+                        defendantCaseOffences.getResults().stream().anyMatch(results -> SUMRCC.id.equals(results.getResultIdentifier())));
     }
 
     private static boolean isGranted(final List<Results> results) {

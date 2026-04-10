@@ -109,118 +109,117 @@ class DefendantAggregateReopenedAppScenariosTest {
                                         "/testdata/drivernotifications/reopening/dd-39832/ac6/app-amended-resulted-events.json"
                                 )
 
+                ),
+                Arguments.of("DD-39832-ac7",
+                        defendantAggregateScenario()
+                                .withNotifyDriverStep(
+                                        "case hearing resulted",
+                                        "/testdata/drivernotifications/reopening/dd-39832/ac7/case-resulted.json",
+                                        "/testdata/drivernotifications/reopening/dd-39832/ac7/case-resulted-events.json"
+                                )
+                                .withNotifyDriverStep(
+                                        "application hearing resulted",
+                                        "/testdata/drivernotifications/reopening/dd-39832/ac7/app-resulted.json",
+                                        "/testdata/drivernotifications/reopening/dd-39832/ac7/app-resulted-events.json"
+                                )
+                ),
+                Arguments.of("DD-40326-ac1",
+                        defendantAggregateScenario()
+                                .withNotifyDriverStep(
+                                        "case hearing resulted",
+                                        "/testdata/drivernotifications/reopening/dd-40326/ac1/case-resulted.json",
+                                        "/testdata/drivernotifications/reopening/dd-40326/ac1/case-resulted-events.json"
+                                )
+                                .withNotifyDriverStep(
+                                        "application hearing resulted",
+                                        "/testdata/drivernotifications/reopening/dd-40326/ac1/app-resulted.json",
+                                        "/testdata/drivernotifications/reopening/dd-40326/ac1/app-resulted-events.json"
+                                )
+                ),
+                Arguments.of("DD-40326-ac2",
+                        defendantAggregateScenario()
+                                .withNotifyDriverStep(
+                                        "case hearing resulted",
+                                        "/testdata/drivernotifications/reopening/dd-40326/ac2/case-resulted.json",
+                                        "/testdata/drivernotifications/reopening/dd-40326/ac2/case-resulted-events.json"
+                                )
+                                .withNotifyDriverStep(
+                                        "application hearing resulted",
+                                        "/testdata/drivernotifications/reopening/dd-40326/ac2/app-resulted.json",
+                                        null
+                                )
+                ),
+                Arguments.of("DD-40325-ac1",
+                        defendantAggregateScenario()
+                                .withNotifyDriverStep(
+                                        "case hearing resulted",
+                                        "/testdata/drivernotifications/reopening/dd-40325/ac1/case-resulted.json",
+                                        "/testdata/drivernotifications/reopening/dd-40325/ac1/case-resulted-events.json"
+                                )
+                                .withNotifyDriverStep(
+                                        "application hearing resulted",
+                                        "/testdata/drivernotifications/reopening/dd-40325/ac1/app-resulted.json",
+                                        null
+                                )
+                ),
+                        Arguments.of("DD-40325-ac2",
+                                defendantAggregateScenario()
+                                        .withNotifyDriverStep(
+                                                "case hearing resulted",
+                                                "/testdata/drivernotifications/reopening/dd-40325/ac2/case-resulted.json",
+                                                "/testdata/drivernotifications/reopening/dd-40325/ac2/case-resulted-events.json"
+                                        )
+                                        .withNotifyDriverStep(
+                                                "application hearing resulted",
+                                                "/testdata/drivernotifications/reopening/dd-40325/ac2/app-resulted.json",
+                                                null
+                                        )
+                ),
+                Arguments.of("DD-40325-ac3",
+                        defendantAggregateScenario()
+                                .withNotifyDriverStep(
+                                        "case hearing resulted",
+                                        "/testdata/drivernotifications/reopening/dd-40325/ac3/case-resulted.json",
+                                        "/testdata/drivernotifications/reopening/dd-40325/ac3/case-resulted-events.json"
+                                )
+                                .withNotifyDriverStep(
+                                        "application hearing resulted",
+                                        "/testdata/drivernotifications/reopening/dd-40325/ac3/app-resulted.json",
+                                        null
+                                )
+                ),
+                Arguments.of("DD-40325-ac4",
+                        defendantAggregateScenario()
+                                .withNotifyDriverStep(
+                                        "sjp case hearing resulted",
+                                        "/testdata/drivernotifications/reopening/dd-40325/ac4/case-resulted.json",
+                                        "/testdata/drivernotifications/reopening/dd-40325/ac4/case-resulted-events.json"
+                                )
+                                .withNotifyDriverStep(
+                                        "application hearing resulted",
+                                        "/testdata/drivernotifications/reopening/dd-40325/ac4/app-resulted.json",
+                                        null
+                                )
+                ),
+                Arguments.of("DD-40325-ac5",
+                        defendantAggregateScenario()
+                                .withNotifyDriverStep(
+                                        "sjp case hearing resulted",
+                                        "/testdata/drivernotifications/reopening/dd-40325/ac5/case-resulted.json",
+                                        "/testdata/drivernotifications/reopening/dd-40325/ac5/case-resulted-events.json"
+                                )
+                                .withNotifyDriverStep(
+                                        "application hearing resulted",
+                                        "/testdata/drivernotifications/reopening/dd-40325/ac5/referred-to-cc-resulted.json",
+                                        null
+                                )
+                                .withNotifyDriverStep(
+                                        "cc case hearing resulted",
+                                        "/testdata/drivernotifications/reopening/dd-40325/ac5/reopen-created-resulted.json",
+                                        null
+                                )
+
                 )
-//                Arguments.of("DD-39832-ac7",
-//                        defendantAggregateScenario()
-//                                .withNotifyDriverStep(
-//                                        "case hearing resulted",
-//                                        "/testdata/drivernotifications/reopening/dd-39832/ac7/case-resulted.json",
-//                                        "/testdata/drivernotifications/reopening/dd-39832/ac7/case-resulted-events.json"
-//                                )
-//                                .withNotifyDriverStep(
-//                                        "application hearing resulted",
-//                                        "/testdata/drivernotifications/reopening/dd-39832/ac7/app-resulted.json",
-//                                        "/testdata/drivernotifications/reopening/dd-39832/ac7/app-resulted-events.json"
-//                                )
-//                )
-//                Arguments.of("DD-40326-ac1",
-//                        defendantAggregateScenario()
-//                                .withNotifyDriverStep(
-//                                        "case hearing resulted",
-//                                        "/testdata/drivernotifications/reopening/dd-40326/ac1/case-resulted.json",
-//                                        "/testdata/drivernotifications/reopening/dd-40326/ac1/case-resulted-events.json"
-//                                )
-//                                .withNotifyDriverStep(
-//                                        "application hearing resulted",
-//                                        "/testdata/drivernotifications/reopening/dd-40326/ac1/app-resulted.json",
-//                                        "/testdata/drivernotifications/reopening/dd-40326/ac1/app-resulted-events.json"
-//                                )
-//                ),
-//                Arguments.of("DD-40326-ac2",
-//                        defendantAggregateScenario()
-//                                .withNotifyDriverStep(
-//                                        "case hearing resulted",
-//                                        "/testdata/drivernotifications/reopening/dd-40326/ac2/case-resulted.json",
-//                                        "/testdata/drivernotifications/reopening/dd-40326/ac2/case-resulted-events.json"
-//                                )
-//                                .withNotifyDriverStep(
-//                                        "application hearing resulted",
-//                                        "/testdata/drivernotifications/reopening/dd-40326/ac2/app-resulted.json",
-//                                        null
-//                                )
-//                ),
-////                Arguments.of("DD-40326-ac3", will be added later
-//                Arguments.of("DD-40325-ac1",
-//                        defendantAggregateScenario()
-//                                .withNotifyDriverStep(
-//                                        "case hearing resulted",
-//                                        "/testdata/drivernotifications/reopening/dd-40325/ac1/case-resulted.json",
-//                                        "/testdata/drivernotifications/reopening/dd-40325/ac1/case-resulted-events.json"
-//                                )
-//                                .withNotifyDriverStep(
-//                                        "application hearing resulted",
-//                                        "/testdata/drivernotifications/reopening/dd-40325/ac1/app-resulted.json",
-//                                        null
-//                                )
-//                ),
-//                        Arguments.of("DD-40325-ac2",
-//                                defendantAggregateScenario()
-//                                        .withNotifyDriverStep(
-//                                                "case hearing resulted",
-//                                                "/testdata/drivernotifications/reopening/dd-40325/ac2/case-resulted.json",
-//                                                "/testdata/drivernotifications/reopening/dd-40325/ac2/case-resulted-events.json"
-//                                        )
-//                                        .withNotifyDriverStep(
-//                                                "application hearing resulted",
-//                                                "/testdata/drivernotifications/reopening/dd-40325/ac2/app-resulted.json",
-//                                                null
-//                                        )
-//                ),
-//                Arguments.of("DD-40325-ac3",
-//                        defendantAggregateScenario()
-//                                .withNotifyDriverStep(
-//                                        "case hearing resulted",
-//                                        "/testdata/drivernotifications/reopening/dd-40325/ac3/case-resulted.json",
-//                                        "/testdata/drivernotifications/reopening/dd-40325/ac3/case-resulted-events.json"
-//                                )
-//                                .withNotifyDriverStep(
-//                                        "application hearing resulted",
-//                                        "/testdata/drivernotifications/reopening/dd-40325/ac3/app-resulted.json",
-//                                        null
-//                                )
-//                ),
-//                Arguments.of("DD-40325-ac4",
-//                        defendantAggregateScenario()
-//                                .withNotifyDriverStep(
-//                                        "sjp case hearing resulted",
-//                                        "/testdata/drivernotifications/reopening/dd-40325/ac4/case-resulted.json",
-//                                        "/testdata/drivernotifications/reopening/dd-40325/ac4/case-resulted-events.json"
-//                                )
-//                                .withNotifyDriverStep(
-//                                        "application hearing resulted",
-//                                        "/testdata/drivernotifications/reopening/dd-40325/ac4/app-resulted.json",
-//                                        null
-//                                )
-//                ),
-//                Arguments.of("DD-40325-ac5",
-//                        defendantAggregateScenario()
-//                                .withNotifyDriverStep(
-//                                        "sjp case hearing resulted",
-//                                        "/testdata/drivernotifications/reopening/dd-40325/ac5/case-resulted.json",
-//                                        "/testdata/drivernotifications/reopening/dd-40325/ac5/case-resulted-events.json"
-//                                )
-//                                .withNotifyDriverStep(
-//                                        "application hearing resulted",
-//                                        "/testdata/drivernotifications/reopening/dd-40325/ac5/referred-to-cc-resulted.json",
-//                                        null
-//                                )
-//                                .withNotifyDriverStep(
-//                                        "cc case hearing resulted",
-//                                        "/testdata/drivernotifications/reopening/dd-40325/ac5/reopen-created-resulted.json",
-//                                        null
-//                                )
-//
-//                ),
 //                Arguments.of("DD-40358-ac1",
 //                        defendantAggregateScenario()
 //                                .withNotifyDriverStep(

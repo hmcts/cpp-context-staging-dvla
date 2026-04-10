@@ -74,6 +74,7 @@ public class AggregateConstants {
         G("2b3f7c20-8fc1-4fad-9076-df196c24b27e"),
         TEXT("98138ec8-5dd3-11e8-9c2d-fa7ae01bbebc"),
         ADJ("d278650c-e429-11e8-9f32-f2801f1b9fd1"),
+        ADJOURNSJP("f7784e82-20b5-4d2c-b174-6fd57ebf8d7c"),
         ERR("c36fed37-b635-4303-b514-2273e9e2594d"),
         OATS("3e859586-bc86-407d-bd8e-c9a01d40d147"),
         DISM("14d66587-8fbe-424f-a369-b1144f1684e3"),
@@ -85,7 +86,8 @@ public class AggregateConstants {
         WDRNOFF("e0ae61f5-bbfa-4562-bc6d-ac59a484a06b"),
         DER("f42fa098-0f7b-4269-ac4f-b10c9b6832d7"),
         NESR("f121db73-57fb-4f74-9ab1-0843aabe4605"),
-        NDSR("808313d1-f450-4410-b2f1-97409d7b4074");
+        NDSR("808313d1-f450-4410-b2f1-97409d7b4074"),
+        SUMRCC("600edfc3-a584-4f9f-a52e-5bb8a99646c1");
 
         public final String id;
 
