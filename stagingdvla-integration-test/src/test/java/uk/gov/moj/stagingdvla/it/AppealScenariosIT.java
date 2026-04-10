@@ -1273,5 +1273,12 @@ public class AppealScenariosIT extends AbstractIntegrationTest {
         verifyDVLANotificationCommandInvoked(driverNotifiedList);
         verifyGenerateDocumentStubCommandInvoked(driverNotifiedList);
     }
+
+    @Test
+    void dd_42243() throws IOException {
+        sendAndVerifyEvent("appealAmendReshare/dd_42243/command1.json", 0);
+
+        sendAndVerifyEvent("appealAmendReshare/dd_42243/command2.json", 0);
+    }
 }
 
