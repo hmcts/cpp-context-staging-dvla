@@ -1274,6 +1274,7 @@ public class AppealScenariosIT extends AbstractIntegrationTest {
         verifyGenerateDocumentStubCommandInvoked(driverNotifiedList);
     }
 
+    @SuppressWarnings({"java:S2699"})
     @Test
     void dd_42243() throws IOException {
         sendAndVerifyEvent("appealAmendReshare/dd_42243/command1.json", 0);
