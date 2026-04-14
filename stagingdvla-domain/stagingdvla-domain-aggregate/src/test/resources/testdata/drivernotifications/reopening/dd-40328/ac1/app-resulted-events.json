@@ -1,0 +1,182 @@
+{
+  "caseApplicationReferences": [
+    "28DI1264371"
+  ],
+  "cases": [
+    {
+      "caseId": "d3666123-3499-4345-be7f-5c931ce3bf97",
+      "caseStatus": "INACTIVE",
+      "defendantCaseOffences": [
+        {
+          "civilOffence": false,
+          "code": "CA03012",
+          "convictionStatus": "Not Convicted",
+          "dateFromWhichDisqRemoved": "",
+          "disqualificationPeriod": "",
+          "dttpDtetp": "",
+          "dvlaCode": "NE98",
+          "endorsableFlag": false,
+          "fine": "",
+          "interimImposedFinalSentence": "",
+          "modeOfTrial": "Summary",
+          "otherSentence": "E12M",
+          "penaltyPoints": "12",
+          "results": [
+            {
+              "d20": true,
+              "judicialResultCategory": "ANCILLARY",
+              "label": "Driving record endorsed with penalty points",
+              "prompts": [
+                {
+                  "label": "Penalty points for this offence",
+                  "promptIdentifier": "a8719de4-7783-448a-b792-e3f94e670ad0",
+                  "promptReference": "PENPT",
+                  "value": "12"
+                }
+              ],
+              "publishedForNows": false,
+              "resultIdentifier": "cee54856-4450-4f28-a8a9-72b688726201"
+            },
+            {
+              "d20": false,
+              "judicialResultCategory": "ANCILLARY",
+              "label": "0: None or unknown",
+              "publishedForNows": true,
+              "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956"
+            },
+            {
+              "d20": false,
+              "dvlaCode": "E",
+              "judicialResultCategory": "FINAL",
+              "label": "Conditional discharge",
+              "prompts": [
+                {
+                  "durationSequence": 1,
+                  "label": "Period of conditional discharge",
+                  "promptIdentifier": "d3205319-84cf-4c5b-9d7a-7e4bb1865054",
+                  "promptReference": "periodofConditionalDischarge",
+                  "value": "12 Months"
+                }
+              ],
+              "publishedForNows": false,
+              "resultIdentifier": "554c2622-c1cc-459e-a98d-b7f317ab065c"
+            }
+          ],
+          "startDate": "2022-12-12",
+          "title": "Possess / control TV set with intent another use install without a licence",
+          "wording": "Arlie Heidenreich have set up a TV cable without a valid license."
+        }
+      ],
+      "hasSV": false,
+      "initiationCode": "C",
+      "reference": "28DI1264371"
+    }
+  ],
+  "courtApplications": [
+    {
+      "applicationReceivedDate": "2026-04-13",
+      "applicationReference": "28DI1264371",
+      "applicationStatus": "FINALISED",
+      "applicationType": "Application to reopen case",
+      "applicationTypeId": "9d2ae0fe-d4d0-43ca-ab7a-7a2556cafe5e",
+      "id": "1928a5d2-8bcb-455d-acad-9e7cf4868927",
+      "results": [
+        {
+          "d20": false,
+          "judicialResultCategory": "FINAL",
+          "label": "Granted",
+          "publishedForNows": false,
+          "resultIdentifier": "2b3f7c20-8fc1-4fad-9076-df196c24b27e"
+        },
+        {
+          "d20": false,
+          "judicialResultCategory": "FINAL",
+          "label": "Case reopened",
+          "prompts": [
+            {
+              "label": "Re-opened under",
+              "promptIdentifier": "3872ea68-92d9-469f-9929-c676745982ef",
+              "promptReference": "reopenedUnder",
+              "value": "Section 155 Powers of Criminal Courts (Sentencing) Act 2000"
+            },
+            {
+              "label": "Conviction and sentence imposed on specified date are set aside",
+              "promptIdentifier": "5797feb0-7678-4193-ad16-944365e9a68a",
+              "promptReference": "convictionAndSentenceImposedOnSpecifiedDateAreSetAside",
+              "value": "03/03/2027"
+            },
+            {
+              "label": "Prosecutor to be notified organisation name",
+              "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+              "promptReference": "prosecutortobenotifiedOrganisationName",
+              "value": "test"
+            },
+            {
+              "label": "Prosecutor to be notified address line 1",
+              "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+              "promptReference": "prosecutortobenotifiedAddress1",
+              "value": "test"
+            },
+            {
+              "label": "Prosecutor to be notified post code",
+              "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+              "promptReference": "prosecutortobenotifiedPostCode",
+              "value": "MK4 8AH"
+            }
+          ],
+          "publishedForNows": false,
+          "resultIdentifier": "e3fb46ee-e406-4f73-9bf1-71d513da8cc7"
+        }
+      ]
+    }
+  ],
+  "defendant": {
+    "address": {
+      "line1": "21",
+      "line2": "Furnburry Park Road",
+      "line3": "London",
+      "postCode": "SW11 3TQ"
+    },
+    "dateOfBirth": "2001-02-18",
+    "firstName": "Arlie",
+    "gender": "MALE",
+    "lastName": "Heidenreich",
+    "name": "Arlie Heidenreich",
+    "title": "MR"
+  },
+  "distinctPrompts": [],
+  "identifier": "903c14d7-04dd-4cfe-a48a-adca5b9ce5bd",
+  "licenceProducedInCourt": "0: None or unknown",
+  "masterDefendantId": "dcb2e9c6-593d-4833-9bd6-4ec62a87642b",
+  "materialId": "7254e588-e67b-4c8c-aa25-109f8d13cccc",
+  "notificationType": "Update",
+  "notificationWasPreviouslySent": true,
+  "orderDate": "2026-04-14",
+  "orderingCourt": {
+    "address": {
+      "address1": "The Magistrates' Court",
+      "address2": "Barclay Road",
+      "address3": "Croydon",
+      "address4": "",
+      "address5": "",
+      "postcode": "CR9 3NG"
+    },
+    "code": "B01EF00",
+    "courtHearingLocation": "B01EF01",
+    "id": "31b3d313-7a7c-4598-bb4b-c1bff9b00e26",
+    "lja": {
+      "ljaCode": "2576",
+      "ljaName": "South London Magistrates' Court"
+    },
+    "name": "Croydon Magistrates' Court",
+    "roomId": "bfb67c13-789c-373b-b442-52b82faf863e",
+    "roomName": "Courtroom 01"
+  },
+  "orderingCourtCode": "2576",
+  "orderingHearingId": "849383ec-28ca-4ce2-9b55-5506f299070b",
+  "previous": "{{src:case-resulted-events.json}}",
+  "retrySequence": 0,
+  "updatedEndorsements": [
+    "NE98"
+  ]
+}
