@@ -1,0 +1,272 @@
+{
+  "caseApplicationReferences": [
+    "28DI2405244"
+  ],
+  "cases": [
+    {
+      "caseId": "527e94a8-88d6-430b-9e7c-bead1a6d7c2b",
+      "caseStatus": "INACTIVE",
+      "defendantCaseOffences": [
+        {
+          "code": "OF61102CTT99",
+          "disqualificationPeriod": "002000",
+          "dttpDtetp": "",
+          "dvlaCode": "TT99",
+          "mainOffenceCode": "OF61102C",
+          "wording": "Aiyana Daniel at Schneider Circle, conspired together with Ms. Mitchell Kihn to assault Mr. Kristina Waters, thereby occasioning actual bodily harm."
+        },
+        {
+          "civilOffence": false,
+          "code": "OF61102C",
+          "convictionStatus": "Not Convicted",
+          "dateFromWhichDisqRemoved": "",
+          "disqualificationPeriod": "",
+          "dttpDtetp": "",
+          "dvlaCode": "NE98",
+          "endorsableFlag": false,
+          "fine": "",
+          "interimImposedFinalSentence": "",
+          "modeOfTrial": "Indictable",
+          "otherSentence": "I000",
+          "penaltyPoints": "9",
+          "results": [
+            {
+              "d20": true,
+              "judicialResultCategory": "ANCILLARY",
+              "label": "Points disqualification",
+              "pointsDisqualificationCode": "TT99",
+              "prompts": [
+                {
+                  "durationSequence": 1,
+                  "label": "Disqualification period",
+                  "promptIdentifier": "2bf54447-328c-4c1b-a123-341adbd52172",
+                  "promptReference": "disqualificationPeriod",
+                  "value": "20 Months"
+                },
+                {
+                  "label": "Notional penalty points",
+                  "promptIdentifier": "462d5ba8-7a1c-44a0-a732-6c75601bd6af",
+                  "promptReference": "notionalPenaltyPoints",
+                  "value": "9"
+                },
+                {
+                  "label": "Defendant driving licence number",
+                  "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+                  "promptReference": "defendantDrivingLicenceNumber",
+                  "value": "VANFL002222OW9PH"
+                }
+              ],
+              "publishedForNows": false,
+              "resultIdentifier": "73fe22ca-76bd-4aba-bdea-6dfef8ee03a2",
+              "resultWording": "Disqualified for holding or obtaining a driving licence. Disqualification obligatory due to repeat offending. Driving record endorsed. Section 35(1) Road Traffic Offenders Act 1988"
+            },
+            {
+              "d20": false,
+              "dvlaCode": "I",
+              "judicialResultCategory": "FINAL",
+              "label": "No separate penalty",
+              "publishedForNows": false,
+              "resultIdentifier": "49939c7c-750f-403e-9ce1-f82e3e568065"
+            },
+            {
+              "d20": false,
+              "judicialResultCategory": "ANCILLARY",
+              "label": "0: None or unknown",
+              "publishedForNows": true,
+              "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956"
+            }
+          ],
+          "startDate": "2022-12-12",
+          "title": "Conspire to assault a person thereby occasioning them actual bodily harm",
+          "wording": "Aiyana Daniel at Schneider Circle, conspired together with Ms. Mitchell Kihn to assault Mr. Kristina Waters, thereby occasioning actual bodily harm."
+        },
+        {
+          "civilOffence": false,
+          "code": "PS90015",
+          "convictionStatus": "Not Convicted",
+          "dateFromWhichDisqRemoved": "",
+          "disqualificationPeriod": "002000",
+          "dttpDtetp": "",
+          "dvlaCode": "NE98",
+          "endorsableFlag": false,
+          "fine": "£600.00",
+          "interimImposedFinalSentence": "",
+          "modeOfTrial": "Summary",
+          "penaltyPoints": "",
+          "results": [
+            {
+              "d20": false,
+              "judicialResultCategory": "FINAL",
+              "label": "Fine",
+              "prompts": [
+                {
+                  "label": "Amount of fine",
+                  "promptIdentifier": "7cd1472f-2379-4f5b-9e67-98a43d86e122",
+                  "promptReference": "AOF",
+                  "value": "£600.00"
+                }
+              ],
+              "publishedForNows": false,
+              "resultDefinitionGroup": "Imposition",
+              "resultIdentifier": "969f150c-cd05-46b0-9dd9-30891efcc766"
+            },
+            {
+              "d20": true,
+              "judicialResultCategory": "ANCILLARY",
+              "label": "Driving record endorsed (no points)",
+              "publishedForNows": false,
+              "resultIdentifier": "b0aeb4fc-df63-4e2f-af88-97e3f23e847f"
+            },
+            {
+              "d20": false,
+              "judicialResultCategory": "FINAL",
+              "label": "Pay by date",
+              "prompts": [
+                {
+                  "label": "Date to pay in full by",
+                  "promptIdentifier": "ee7d253a-c629-11e8-a355-529269fb1459",
+                  "promptReference": "PBD",
+                  "value": "03/05/2027"
+                }
+              ],
+              "publishedForNows": false,
+              "resultDefinitionGroup": "Payment terms",
+              "resultIdentifier": "bcb5a496-f7cf-11e8-8eb2-f2801f1b9fd1"
+            },
+            {
+              "d20": false,
+              "judicialResultCategory": "ANCILLARY",
+              "label": "0: None or unknown",
+              "publishedForNows": true,
+              "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956"
+            }
+          ],
+          "startDate": "2022-11-28",
+          "title": "Public service vehicles - passenger failing to pay fare",
+          "wording": "Public service vehicles - passenger failing to pay fare"
+        }
+      ],
+      "hasSV": false,
+      "initiationCode": "C",
+      "reference": "28DI2405244"
+    }
+  ],
+  "courtApplications": [
+    {
+      "applicationReceivedDate": "2026-04-13",
+      "applicationReference": "28DI2405244",
+      "applicationStatus": "FINALISED",
+      "applicationType": "Application to reopen case",
+      "applicationTypeId": "9d2ae0fe-d4d0-43ca-ab7a-7a2556cafe5e",
+      "id": "95ff7e8d-0176-4dc1-8caf-4f83b4532987",
+      "results": [
+        {
+          "d20": false,
+          "judicialResultCategory": "FINAL",
+          "label": "Granted",
+          "publishedForNows": false,
+          "resultIdentifier": "2b3f7c20-8fc1-4fad-9076-df196c24b27e"
+        },
+        {
+          "d20": false,
+          "judicialResultCategory": "FINAL",
+          "label": "Case reopened",
+          "prompts": [
+            {
+              "label": "Re-opened under",
+              "promptIdentifier": "3872ea68-92d9-469f-9929-c676745982ef",
+              "promptReference": "reopenedUnder",
+              "value": "Section 155 Powers of Criminal Courts (Sentencing) Act 2000"
+            },
+            {
+              "label": "Conviction and sentence imposed on specified date are set aside",
+              "promptIdentifier": "5797feb0-7678-4193-ad16-944365e9a68a",
+              "promptReference": "convictionAndSentenceImposedOnSpecifiedDateAreSetAside",
+              "value": "03/04/2027"
+            },
+            {
+              "label": "Prosecutor to be notified organisation name",
+              "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+              "promptReference": "prosecutortobenotifiedOrganisationName",
+              "value": "test"
+            },
+            {
+              "label": "Prosecutor to be notified address line 1",
+              "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+              "promptReference": "prosecutortobenotifiedAddress1",
+              "value": "test"
+            },
+            {
+              "label": "Prosecutor to be notified post code",
+              "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+              "promptReference": "prosecutortobenotifiedPostCode",
+              "value": "MK7 6AS"
+            }
+          ],
+          "publishedForNows": false,
+          "resultIdentifier": "e3fb46ee-e406-4f73-9bf1-71d513da8cc7"
+        }
+      ]
+    }
+  ],
+  "defendant": {
+    "address": {
+      "line1": "9999A9999AAAA",
+      "line2": "Woodlane",
+      "line3": "addressline 3",
+      "line4": "Bristol",
+      "line5": "Avon",
+      "postCode": "SW11 3TQ"
+    },
+    "dateOfBirth": "2005-11-11",
+    "driverNumber": "VANFL002222OW9PH",
+    "firstName": "Aiyana",
+    "gender": "MALE",
+    "lastName": "Daniel",
+    "name": "Aiyana Daniel",
+    "title": "Mr"
+  },
+  "distinctPrompts": [
+    {
+      "label": "Defendant driving licence number",
+      "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+      "promptReference": "defendantDrivingLicenceNumber",
+      "value": "VANFL002222OW9PH"
+    }
+  ],
+  "identifier": "bb20405a-9290-4012-a821-1587dc7391cf",
+  "licenceProducedInCourt": "0: None or unknown",
+  "masterDefendantId": "066278d6-6023-4eb2-954e-b7ada5a44083",
+  "materialId": "e74d910d-620c-4b2b-aa54-eb6f6ba2abe7",
+  "notificationType": "Update",
+  "notificationWasPreviouslySent": true,
+  "orderDate": "2026-04-14",
+  "orderingCourt": {
+    "address": {
+      "address1": "The Magistrates' Court",
+      "address2": "Barclay Road",
+      "address3": "Croydon",
+      "address4": "",
+      "address5": "",
+      "postcode": "CR9 3NG"
+    },
+    "code": "B01EF00",
+    "courtHearingLocation": "B01EF01",
+    "id": "31b3d313-7a7c-4598-bb4b-c1bff9b00e26",
+    "lja": {
+      "ljaCode": "2576",
+      "ljaName": "South London Magistrates' Court"
+    },
+    "name": "Croydon Magistrates' Court",
+    "roomId": "bfb67c13-789c-373b-b442-52b82faf863e",
+    "roomName": "Courtroom 01"
+  },
+  "orderingCourtCode": "2576",
+  "orderingHearingId": "6f34c4ad-7f8b-48b9-bb5f-444c4cf7f220",
+  "previous": "{{src:case-resulted-events.json}}",
+  "retrySequence": 0,
+  "updatedEndorsements": [
+    "NE98",
+    "NE98"
+  ]
+}

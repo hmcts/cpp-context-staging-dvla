@@ -1,0 +1,234 @@
+{
+  "caseApplicationReferences": [
+    "28DI8124060"
+  ],
+  "cases": [
+    {
+      "caseId": "5f28b782-57a4-4168-bf18-a84c842973dc",
+      "caseStatus": "INACTIVE",
+      "defendantCaseOffences": [
+        {
+          "civilOffence": false,
+          "code": "PS90015",
+          "convictionStatus": "Not Convicted",
+          "dateFromWhichDisqRemoved": "",
+          "disqualificationPeriod": "",
+          "dttpDtetp": "",
+          "dvlaCode": "NE98",
+          "endorsableFlag": false,
+          "fine": "",
+          "interimImposedFinalSentence": "",
+          "modeOfTrial": "Summary",
+          "penaltyPoints": "",
+          "results": [
+            {
+              "d20": true,
+              "judicialResultCategory": "ANCILLARY",
+              "label": "Driving record endorsed (no points)",
+              "publishedForNows": false,
+              "resultIdentifier": "b0aeb4fc-df63-4e2f-af88-97e3f23e847f"
+            },
+            {
+              "d20": false,
+              "judicialResultCategory": "ANCILLARY",
+              "label": "0: None or unknown",
+              "publishedForNows": true,
+              "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956"
+            }
+          ],
+          "startDate": "2022-11-28",
+          "title": "Public service vehicles - passenger failing to pay fare",
+          "wording": "Public service vehicles - passenger failing to pay fare"
+        },
+        {
+          "civilOffence": false,
+          "code": "OF61102C",
+          "convictionStatus": "Not Convicted",
+          "dateFromWhichDisqRemoved": "",
+          "disqualificationPeriod": "",
+          "dttpDtetp": "",
+          "dvlaCode": "NE98",
+          "endorsableFlag": false,
+          "fine": "",
+          "interimImposedFinalSentence": "",
+          "modeOfTrial": "Indictable",
+          "otherSentence": "E12M",
+          "penaltyPoints": "6",
+          "results": [
+            {
+              "d20": false,
+              "dvlaCode": "E",
+              "judicialResultCategory": "FINAL",
+              "label": "Conditional discharge",
+              "prompts": [
+                {
+                  "durationSequence": 1,
+                  "label": "Period of conditional discharge",
+                  "promptIdentifier": "d3205319-84cf-4c5b-9d7a-7e4bb1865054",
+                  "promptReference": "periodofConditionalDischarge",
+                  "value": "12 Months"
+                }
+              ],
+              "publishedForNows": false,
+              "resultIdentifier": "554c2622-c1cc-459e-a98d-b7f317ab065c"
+            },
+            {
+              "d20": true,
+              "judicialResultCategory": "ANCILLARY",
+              "label": "Driving record endorsed with penalty points",
+              "prompts": [
+                {
+                  "label": "Penalty points for this offence",
+                  "promptIdentifier": "a8719de4-7783-448a-b792-e3f94e670ad0",
+                  "promptReference": "PENPT",
+                  "value": "6"
+                },
+                {
+                  "label": "Defendant driving licence number",
+                  "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+                  "promptReference": "defendantDrivingLicenceNumber",
+                  "value": "VANFL002222OW9PH"
+                }
+              ],
+              "publishedForNows": false,
+              "resultIdentifier": "cee54856-4450-4f28-a8a9-72b688726201"
+            },
+            {
+              "d20": false,
+              "judicialResultCategory": "ANCILLARY",
+              "label": "0: None or unknown",
+              "publishedForNows": true,
+              "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956"
+            }
+          ],
+          "startDate": "2022-12-12",
+          "title": "Conspire to assault a person thereby occasioning them actual bodily harm",
+          "wording": "Raleigh Ryan at Francisca Court, conspired together with Hugo Hermiston to assault Carmen Runte, thereby occasioning actual bodily harm."
+        }
+      ],
+      "hasSV": false,
+      "initiationCode": "C",
+      "reference": "28DI8124060"
+    }
+  ],
+  "courtApplications": [
+    {
+      "applicationReceivedDate": "2026-04-13",
+      "applicationReference": "28DI8124060",
+      "applicationStatus": "FINALISED",
+      "applicationType": "Application to reopen case",
+      "applicationTypeId": "9d2ae0fe-d4d0-43ca-ab7a-7a2556cafe5e",
+      "id": "4b27dd30-35c5-4c2d-b5de-2ab927a17783",
+      "results": [
+        {
+          "d20": false,
+          "judicialResultCategory": "FINAL",
+          "label": "Granted",
+          "publishedForNows": false,
+          "resultIdentifier": "2b3f7c20-8fc1-4fad-9076-df196c24b27e"
+        },
+        {
+          "d20": false,
+          "judicialResultCategory": "FINAL",
+          "label": "Case reopened",
+          "prompts": [
+            {
+              "label": "Re-opened under",
+              "promptIdentifier": "3872ea68-92d9-469f-9929-c676745982ef",
+              "promptReference": "reopenedUnder",
+              "value": "Section 155 Powers of Criminal Courts (Sentencing) Act 2000"
+            },
+            {
+              "label": "Conviction and sentence imposed on specified date are set aside",
+              "promptIdentifier": "5797feb0-7678-4193-ad16-944365e9a68a",
+              "promptReference": "convictionAndSentenceImposedOnSpecifiedDateAreSetAside",
+              "value": "03/03/2027"
+            },
+            {
+              "label": "Prosecutor to be notified organisation name",
+              "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+              "promptReference": "prosecutortobenotifiedOrganisationName",
+              "value": "test"
+            },
+            {
+              "label": "Prosecutor to be notified address line 1",
+              "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+              "promptReference": "prosecutortobenotifiedAddress1",
+              "value": "test"
+            },
+            {
+              "label": "Prosecutor to be notified post code",
+              "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+              "promptReference": "prosecutortobenotifiedPostCode",
+              "value": "MK8 7FG"
+            }
+          ],
+          "publishedForNows": false,
+          "resultIdentifier": "e3fb46ee-e406-4f73-9bf1-71d513da8cc7"
+        }
+      ]
+    }
+  ],
+  "defendant": {
+    "address": {
+      "line1": "9999A9999AAAA",
+      "line2": "Woodlane",
+      "line3": "addressline 3",
+      "line4": "Bristol",
+      "line5": "Avon",
+      "postCode": "SW11 3TQ"
+    },
+    "dateOfBirth": "2005-11-11",
+    "driverNumber": "VANFL002222OW9PH",
+    "firstName": "Raleigh",
+    "gender": "MALE",
+    "lastName": "Ryan",
+    "name": "Raleigh Ryan",
+    "title": "Mr"
+  },
+  "distinctPrompts": [
+    {
+      "label": "Defendant driving licence number",
+      "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+      "promptReference": "defendantDrivingLicenceNumber",
+      "value": "VANFL002222OW9PH"
+    }
+  ],
+  "identifier": "6586da2e-6003-417b-9f62-20107d6b8f88",
+  "licenceProducedInCourt": "0: None or unknown",
+  "masterDefendantId": "066feee7-a17d-4ed7-a720-bf6adfbe548d",
+  "materialId": "05cea582-10d5-4d34-8d28-b4c9cf44dda1",
+  "notificationType": "Update",
+  "notificationWasPreviouslySent": true,
+  "oatsEndorsements": [
+    "NE98"
+  ],
+  "orderDate": "2026-04-14",
+  "orderingCourt": {
+    "address": {
+      "address1": "The Magistrates' Court",
+      "address2": "Barclay Road",
+      "address3": "Croydon",
+      "address4": "",
+      "address5": "",
+      "postcode": "CR9 3NG"
+    },
+    "code": "B01EF00",
+    "courtHearingLocation": "B01EF01",
+    "id": "31b3d313-7a7c-4598-bb4b-c1bff9b00e26",
+    "lja": {
+      "ljaCode": "2576",
+      "ljaName": "South London Magistrates' Court"
+    },
+    "name": "Croydon Magistrates' Court",
+    "roomId": "bfb67c13-789c-373b-b442-52b82faf863e",
+    "roomName": "Courtroom 01"
+  },
+  "orderingCourtCode": "2576",
+  "orderingHearingId": "c2cd5d0f-7d4e-4aea-a60e-038db54c437f",
+  "previous": "{{src:case-resulted-events.json}}",
+  "retrySequence": 0,
+  "updatedEndorsements": [
+    "NE98"
+  ]
+}
