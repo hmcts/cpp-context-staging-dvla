@@ -192,6 +192,19 @@ class DefendantAggregateReopenedAppScenariosTest {
                                         null
                                 )
                 ),
+                Arguments.of("DD-40325-ac2b",
+                        defendantAggregateScenario()
+                                .withNotifyDriverStep(
+                                        "case hearing resulted",
+                                        "/testdata/drivernotifications/reopening/dd-40325/ac2b/case-resulted.json",
+                                        "/testdata/drivernotifications/reopening/dd-40325/ac2b/case-resulted-events.json",
+                                        jsonPathAssertions().add("notificationType", "New"))
+                                .withNotifyDriverStep(
+                                        "application hearing resulted",
+                                        "/testdata/drivernotifications/reopening/dd-40325/ac2b/app-resulted.json",
+                                        null
+                                )
+                ),
                 Arguments.of("DD-40325-ac3",
                         defendantAggregateScenario()
                                 .withNotifyDriverStep(
