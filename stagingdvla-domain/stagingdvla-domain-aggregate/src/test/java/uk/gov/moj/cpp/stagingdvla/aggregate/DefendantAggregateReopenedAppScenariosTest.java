@@ -359,11 +359,62 @@ class DefendantAggregateReopenedAppScenariosTest {
                                         jsonPathAssertions()
                                                 .add("notificationType", "Update")
                                                 .add("cases[0].defendantCaseOffences.size()", 2)
-                                                .add("previous", notNullValue()))
+                                                .add("previous", notNullValue()))),
+                        Arguments.of("DD-41665-ac1",
+                                defendantAggregateScenario()
+                                        .withNotifyDriverStep(
+                                                "case hearing resulted",
+                                                "/testdata/drivernotifications/reopening/dd-41665/ac1/case-resulted.json",
+                                                "/testdata/drivernotifications/reopening/dd-41665/ac1/case-resulted-events.json",
+                                                jsonPathAssertions()
+                                                        .add("notificationType", "New")
+                                                        .add("cases[0].defendantCaseOffences.size()", 2))
+                                        .withNotifyDriverStep(
+                                                "application hearing resulted",
+                                                "/testdata/drivernotifications/reopening/dd-41665/ac1/app-resulted.json",
+                                                "/testdata/drivernotifications/reopening/dd-41665/ac1/app-resulted-events.json",
+                                                jsonPathAssertions()
+                                                        .add("notificationType", "Update")
+                                                        .add("cases[0].defendantCaseOffences.size()", 2)
+                                                        .add("previous", notNullValue()))),
+                Arguments.of("DD-40359-ac1",
+                        defendantAggregateScenario()
+                                .withNotifyDriverStep(
+                                        "case hearing resulted",
+                                        "/testdata/drivernotifications/reopening/dd-40359/ac1/case-resulted.json",
+                                        "/testdata/drivernotifications/reopening/dd-40359/ac1/case-resulted-events.json",
+                                        jsonPathAssertions()
+                                                .add("notificationType", "New")
+                                                .add("cases[0].defendantCaseOffences.size()", 2))
+                                .withNotifyDriverStep(
+                                        "application hearing resulted",
+                                        "/testdata/drivernotifications/reopening/dd-40359/ac1/app-resulted.json",
+                                        "/testdata/drivernotifications/reopening/dd-40359/ac1/app-resulted-events.json",
+                                        jsonPathAssertions()
+                                                .add("notificationType", "Remove")
+                                                .add("cases[0].defendantCaseOffences.size()", 2)
+                                                .add("previous", notNullValue()))),
+                Arguments.of("DD-40359-ac2",
+                        defendantAggregateScenario()
+                                .withNotifyDriverStep(
+                                        "case hearing resulted",
+                                        "/testdata/drivernotifications/reopening/dd-40359/ac2/case-resulted.json",
+                                        "/testdata/drivernotifications/reopening/dd-40359/ac2/case-resulted-events.json",
+                                        jsonPathAssertions()
+                                                .add("notificationType", "New")
+                                                .add("cases[0].defendantCaseOffences.size()", 2))
+                                .withNotifyDriverStep(
+                                        "application hearing resulted",
+                                        "/testdata/drivernotifications/reopening/dd-40359/ac2/app-resulted.json",
+                                        "/testdata/drivernotifications/reopening/dd-40359/ac2/app-resulted-events.json",
+                                        jsonPathAssertions()
+                                                .add("notificationType", "Update")
+                                                .add("cases[0].defendantCaseOffences.size()", 2)
+                                                .add("previous", notNullValue())))
 
 
                 // Additional scenarios can be added here
-        ));
+        );
     }
 
     @ParameterizedTest(name = "{index} => {0}")
