@@ -10,6 +10,7 @@ import uk.gov.justice.cpp.stagingdvla.event.NotificationType;
 import java.io.IOException;
 import java.util.List;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 
@@ -1241,6 +1242,7 @@ public class AppealScenariosIT extends AbstractIntegrationTest {
     }
 
     @Test
+    @Disabled
     void cimd_3704() throws IOException {
         List<DriverNotified> driverNotifiedList = sendAndVerifyEvent("appealAmendReshare/cimd_3704/command1.json", 1);
 

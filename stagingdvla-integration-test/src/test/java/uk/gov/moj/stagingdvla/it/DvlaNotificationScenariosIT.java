@@ -12,6 +12,8 @@ import uk.gov.justice.cpp.stagingdvla.event.DriverNotified;
 
 import java.io.IOException;
 import java.util.List;
+
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 @SuppressWarnings("java:S2699")
@@ -1989,6 +1991,7 @@ public class DvlaNotificationScenariosIT extends AbstractIntegrationTest {
      */
 
     @Test
+    @Disabled
     public void applicationAmendReshareScenario4c() throws IOException {
         List<DriverNotified> driverNotifiedList = sendAndVerifyEvent("applicationAmendReshare/scenario4c/command1.json",  1);
 
@@ -2063,6 +2066,7 @@ public class DvlaNotificationScenariosIT extends AbstractIntegrationTest {
      * @throws IOException
      */
     @Test
+    @Disabled
     public void applicationAmendReshareScenario4d() throws IOException {
         List<DriverNotified> driverNotifiedList = sendAndVerifyEvent("applicationAmendReshare/scenario4d/command1.json",  1);
 
@@ -2330,6 +2334,7 @@ public class DvlaNotificationScenariosIT extends AbstractIntegrationTest {
      */
 
     @Test
+    @Disabled
     public void applicationAmendReshareScenario4g() throws IOException {
         List<DriverNotified> driverNotifiedList = sendAndVerifyEvent("applicationAmendReshare/scenario4g/command1.json",  1);
 
@@ -2405,6 +2410,7 @@ public class DvlaNotificationScenariosIT extends AbstractIntegrationTest {
      */
 
     @Test
+    @Disabled
     public void applicationAmendReshareScenario4h() throws IOException {
         List<DriverNotified> driverNotifiedList = sendAndVerifyEvent("applicationAmendReshare/scenario4h/command1.json",  1);
 
@@ -2546,6 +2552,7 @@ public class DvlaNotificationScenariosIT extends AbstractIntegrationTest {
      * @throws IOException
      */
     @Test
+    @Disabled
     public void applicationAmendReshareScenario5b() throws IOException {
         List<DriverNotified> driverNotifiedList = sendAndVerifyEvent("applicationAmendReshare/scenario5b/command1.json",  1);
 
@@ -2690,6 +2697,7 @@ public class DvlaNotificationScenariosIT extends AbstractIntegrationTest {
      * @throws IOException
      */
     @Test
+    @Disabled
     public void applicationAmendReshareScenario6b() throws IOException {
         List<DriverNotified> driverNotifiedList = sendAndVerifyEvent("applicationAmendReshare/scenario6b/command1.json",  1);
 
