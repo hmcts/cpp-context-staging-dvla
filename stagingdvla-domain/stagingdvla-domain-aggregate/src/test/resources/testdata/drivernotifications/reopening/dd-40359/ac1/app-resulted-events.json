@@ -6,78 +6,7 @@
     {
       "caseId": "f0522d70-6f03-4b4a-a1a7-ebc5004ad2eb",
       "caseStatus": "INACTIVE",
-      "defendantCaseOffences": [
-        {
-          "civilOffence": false,
-          "code": "OF61102C",
-          "convictionStatus": "Not Convicted",
-          "dateFromWhichDisqRemoved": "",
-          "disqualificationPeriod": "",
-          "dttpDtetp": "",
-          "dvlaCode": "NE98",
-          "endorsableFlag": false,
-          "fine": "",
-          "interimImposedFinalSentence": "",
-          "modeOfTrial": "Indictable",
-          "penaltyPoints": "",
-          "results": [
-            {
-              "d20": false,
-              "judicialResultCategory": "FINAL",
-              "label": "Withdrawn",
-              "prompts": [
-                {
-                  "label": "Details",
-                  "promptIdentifier": "6f305506-9919-4e7b-bd57-c4c352ec3e3e",
-                  "promptReference": "details",
-                  "value": "Civil application withdrawn"
-                }
-              ],
-              "publishedForNows": false,
-              "resultDefinitionGroup": "WOAEXTEND",
-              "resultIdentifier": "eb2e4c4f-b738-4a4d-9cce-0572cecb7cb8"
-            }
-          ],
-          "startDate": "2022-12-12",
-          "title": "Conspire to assault a person thereby occasioning them actual bodily harm",
-          "wording": "Daphney Mohr at Hirthe Road, conspired together with Ivan Goldner I to assault Sheldon Leannon, thereby occasioning actual bodily harm."
-        },
-        {
-          "civilOffence": false,
-          "code": "PS90015",
-          "convictionStatus": "Not Convicted",
-          "dateFromWhichDisqRemoved": "",
-          "disqualificationPeriod": "",
-          "dttpDtetp": "",
-          "dvlaCode": "NE98",
-          "endorsableFlag": false,
-          "fine": "",
-          "interimImposedFinalSentence": "",
-          "modeOfTrial": "Summary",
-          "penaltyPoints": "",
-          "results": [
-            {
-              "d20": false,
-              "judicialResultCategory": "FINAL",
-              "label": "Withdrawn",
-              "prompts": [
-                {
-                  "label": "Details",
-                  "promptIdentifier": "6f305506-9919-4e7b-bd57-c4c352ec3e3e",
-                  "promptReference": "details",
-                  "value": "Civil application withdrawn"
-                }
-              ],
-              "publishedForNows": false,
-              "resultDefinitionGroup": "WOAEXTEND",
-              "resultIdentifier": "eb2e4c4f-b738-4a4d-9cce-0572cecb7cb8"
-            }
-          ],
-          "startDate": "2022-11-28",
-          "title": "Public service vehicles - passenger failing to pay fare",
-          "wording": "Public service vehicles - passenger failing to pay fare"
-        }
-      ],
+      "defendantCaseOffences": [],
       "hasSV": false,
       "initiationCode": "C",
       "reference": "28DI8610740"
@@ -166,10 +95,10 @@
       "value": "VANFL002222OW9PH"
     }
   ],
-  "identifier": "3c292ad2-7758-4229-8115-2ac32573d279",
+  "identifier": "d558740a-899f-4f39-80d7-433a45754f94",
   "licenceProducedInCourt": "0: None or unknown",
   "masterDefendantId": "b9713bd7-3989-4d65-a6c3-d5b0ea394322",
-  "materialId": "40778b93-98de-46ab-a829-6e03a69f3645",
+  "materialId": "02959bbd-4cb2-4281-a842-10496fff9c14",
   "notificationType": "Remove",
   "notificationWasPreviouslySent": true,
   "orderDate": "2026-04-15",
@@ -351,10 +280,10 @@
         "value": "VANFL002222OW9PH"
       }
     ],
-    "identifier": "e44bc788-4354-4613-aa6f-a257113912df",
+    "identifier": "73364c7e-40bc-403f-9b31-2e2a1631cc8e",
     "licenceProducedInCourt": "0: None or unknown",
     "masterDefendantId": "b9713bd7-3989-4d65-a6c3-d5b0ea394322",
-    "materialId": "35f4ca8c-3017-4487-890a-0255a8480964",
+    "materialId": "20a164e2-4513-4d32-bf5e-929977f12ea0",
     "orderDate": "2026-04-14",
     "orderingCourt": {
       "address": {

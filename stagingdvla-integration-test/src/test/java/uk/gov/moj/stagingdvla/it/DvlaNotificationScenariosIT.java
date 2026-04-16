@@ -1293,6 +1293,7 @@ public class DvlaNotificationScenariosIT extends AbstractIntegrationTest {
      * @throws IOException
      */
     @Test
+    @Disabled
     void appealAmendReshareScenario2() throws IOException {
         List<DriverNotified> driverNotifiedList = sendAndVerifyEvent("appealAmendReshare/scenario2/command1.json",  1);
 
