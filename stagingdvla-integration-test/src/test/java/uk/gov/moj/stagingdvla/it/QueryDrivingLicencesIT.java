@@ -2,6 +2,7 @@ package uk.gov.moj.stagingdvla.it;
 
 import static java.lang.String.format;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.nullValue;
 import static org.skyscreamer.jsonassert.JSONAssert.assertEquals;
 import static org.skyscreamer.jsonassert.JSONCompareMode.STRICT;
 import static uk.gov.moj.stagingdvla.stubs.ApimStub.verifyQueryDrivingLicencesWithDefendantInformation;
@@ -77,19 +78,20 @@ public class QueryDrivingLicencesIT extends AbstractIntegrationTest {
     @Test
     void shouldReceiveBadRequestForInvalidDOB() {
         final String result = pollForResponseWithBadRequest("/drivers?lastName=Harrison&firstNames=Walter&dateOfBirth=81-07-31&exactFirstNamesMatch=true&reasonType=CE&reference=CASEURN", "application/vnd.stagingdvla.query.driverdetails+json", USER_ID);
-        assertThat(result, CoreMatchers.is(""));
+        assertThat(result, nullValue());
     }
 
     @Test
     void shouldReceiveBadRequestForInvalidPostCode() {
         final String result = pollForResponseWithBadRequest("/drivers?lastName=Harrison&firstNames=Walter&dateOfBirth=1971-06-22&exactFirstNamesMatch=true&reasonType=CE&reference=CASEURN&postcode=\"AB24 3QB,\"", "application/vnd.stagingdvla.query.driverdetails+json", USER_ID);
-        assertThat(result, CoreMatchers.is(""));
+        assertThat(result, nullValue());
     }
 
     @Test
     void shouldReceiveBadRequestForInvalidDriverNumber() {
         final String result = pollForResponseWithBadRequest("/driver/AUPSU711267IE9ZKK?reasonType=CE&reference=CASEURN", "application/vnd.stagingdvla.query.drivernumber+json", USER_ID);
-        assertThat(result, CoreMatchers.is(""));
+        assertThat(result, nullValue());
+
     }
 
     @Test

@@ -3,7 +3,7 @@ package uk.gov.moj.cpp.stagingdvla.processor;
 import static java.util.Objects.nonNull;
 import static java.util.UUID.fromString;
 import static java.util.UUID.randomUUID;
-import static javax.json.Json.createObjectBuilder;
+import static uk.gov.justice.services.messaging.JsonObjects.createObjectBuilder;
 import static uk.gov.justice.services.core.annotation.Component.EVENT_PROCESSOR;
 import static uk.gov.justice.services.messaging.Envelope.metadataFrom;
 import static uk.gov.moj.cpp.stagingdvla.helper.DriverSearchAuditHelper.FILE_NAME;
@@ -50,7 +50,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
-import javax.json.Json;
+import uk.gov.justice.services.messaging.JsonObjects;
 import javax.json.JsonReader;
 
 import org.slf4j.Logger;
@@ -149,7 +149,7 @@ public class SystemDocGeneratorEventProcessor {
 
             LOGGER.info("Retrieved file reference '{}' successfully", payloadFileReference);
 
-            try (final JsonReader reader = Json.createReader(payloadFileReference.getContentStream())) {
+            try (final JsonReader reader = JsonObjects.createReader(payloadFileReference.getContentStream())) {
 
                 final JsonObject rawPayload = reader.readObject();
 
