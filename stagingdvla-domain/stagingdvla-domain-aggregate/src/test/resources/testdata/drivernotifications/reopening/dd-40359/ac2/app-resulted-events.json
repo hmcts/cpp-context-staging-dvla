@@ -9,41 +9,6 @@
       "defendantCaseOffences": [
         {
           "civilOffence": false,
-          "code": "OF61102C",
-          "convictionStatus": "Not Convicted",
-          "dateFromWhichDisqRemoved": "",
-          "disqualificationPeriod": "",
-          "dttpDtetp": "",
-          "dvlaCode": "NE98",
-          "endorsableFlag": false,
-          "fine": "",
-          "interimImposedFinalSentence": "",
-          "modeOfTrial": "Indictable",
-          "penaltyPoints": "",
-          "results": [
-            {
-              "d20": false,
-              "judicialResultCategory": "FINAL",
-              "label": "Withdrawn",
-              "prompts": [
-                {
-                  "label": "Details",
-                  "promptIdentifier": "6f305506-9919-4e7b-bd57-c4c352ec3e3e",
-                  "promptReference": "details",
-                  "value": "Civil application withdrawn"
-                }
-              ],
-              "publishedForNows": false,
-              "resultDefinitionGroup": "WOAEXTEND",
-              "resultIdentifier": "eb2e4c4f-b738-4a4d-9cce-0572cecb7cb8"
-            }
-          ],
-          "startDate": "2022-12-12",
-          "title": "Conspire to assault a person thereby occasioning them actual bodily harm",
-          "wording": "Angelina Bechtelar at Chauncey Rapids, conspired together with Eva Gibson to assault Traci Bashirian I, thereby occasioning actual bodily harm."
-        },
-        {
-          "civilOffence": false,
           "code": "PS90015",
           "convictionStatus": "Not Convicted",
           "dateFromWhichDisqRemoved": "",
@@ -196,10 +161,10 @@
       "value": "VANFL002222OW9PH"
     }
   ],
-  "identifier": "d2ae411b-fbc2-41dc-957a-4b564ed506e6",
+  "identifier": "f6906863-e162-44a8-aa93-0d73b493c9b1",
   "licenceProducedInCourt": "0: None or unknown",
   "masterDefendantId": "0650eea8-fa2a-44b3-a30b-848f42b16e70",
-  "materialId": "7b7f1d65-9b43-4b4c-8774-cc70ad7d95af",
+  "materialId": "5153908e-1fca-4b3a-81cd-4831f8e582db",
   "notificationType": "Update",
   "notificationWasPreviouslySent": true,
   "oatsEndorsements": [
@@ -384,10 +349,10 @@
         "value": "VANFL002222OW9PH"
       }
     ],
-    "identifier": "631160cc-6a1f-4eea-ba9c-88a103e6485d",
+    "identifier": "67def36b-db68-46cf-ae52-692592ddaa0e",
     "licenceProducedInCourt": "0: None or unknown",
     "masterDefendantId": "0650eea8-fa2a-44b3-a30b-848f42b16e70",
-    "materialId": "8f21e022-6f2a-4b4d-ba63-457b90358d8b",
+    "materialId": "27e96b7a-6728-4160-98a8-a07b2d6461e0",
     "orderDate": "2026-04-14",
     "orderingCourt": {
       "address": {
