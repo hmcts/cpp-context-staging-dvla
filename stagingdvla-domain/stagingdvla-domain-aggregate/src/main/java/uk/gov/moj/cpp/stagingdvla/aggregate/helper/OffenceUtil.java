@@ -78,7 +78,6 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.Res
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.STARTING_FROM_DATE_DATE_OF_INTERIM_DISQUALIFICATION;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.TT99;
 
-import uk.gov.justice.core.courts.JudicialResultCategory;
 import uk.gov.justice.cpp.stagingdvla.event.Cases;
 import uk.gov.justice.cpp.stagingdvla.event.CourtApplications;
 import uk.gov.justice.cpp.stagingdvla.event.DefendantCaseOffences;
@@ -116,8 +115,6 @@ public class OffenceUtil {
     protected static final List<String> LICENCE_PRODUCED_IN_COURT_RESULTS = asList(
             LPIC1.id, LPIC2.id, LPIC3.id, LPIC4.id, LPIC5.id
     );
-
-    public static final String REOPENED_APPLICATION_TYPE = "9d2ae0fe-d4d0-43ca-ab7a-7a2556cafe5e";
 
     public static final List<String> COV_G_RESULTS = asList(COV.id, G.id);
 

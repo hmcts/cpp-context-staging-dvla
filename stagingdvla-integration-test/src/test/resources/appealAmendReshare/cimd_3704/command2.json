@@ -59,6 +59,7 @@
             "results": [
               {
                 "d20": false,
+                "judicialResultCategory": "FINAL",
                 "dvlaCode": "E",
                 "label": "Conditional discharge",
                 "prompts": [

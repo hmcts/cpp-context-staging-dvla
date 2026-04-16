@@ -85,7 +85,7 @@ public class MergeUtil {
                 .withDateDisqReimposedFollowingAppeal((String) mergeValue(offence.getDateDisqReimposedFollowingAppeal(), previousOffence.getDateDisqReimposedFollowingAppeal()))
                 .build();
 
-        if (hasAppealResultOrGranted) {
+        if (hasAppealResultOrGranted || isCaseReopened) {
             final DefendantCaseOffences.Builder mergedOffenceWithAttributes = DefendantCaseOffences.defendantCaseOffences()
                     .withValuesFrom(mergedOffence)
                     .withFine(getFine(mergedOffence.getResults()))
