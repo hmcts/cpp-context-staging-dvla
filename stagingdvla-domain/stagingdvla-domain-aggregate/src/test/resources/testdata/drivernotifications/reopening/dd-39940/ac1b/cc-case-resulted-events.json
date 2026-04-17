@@ -1,0 +1,449 @@
+{
+  "caseApplicationReferences": [
+    "SJ915441493"
+  ],
+  "cases": [
+    {
+      "caseId": "de6fb7cd-476e-4bf5-b42c-786065b763b5",
+      "caseStatus": "SJP_REFERRAL",
+      "defendantCaseOffences": [
+        {
+          "allocationDecision": "Summary-only offence",
+          "civilOffence": false,
+          "code": "RR84130",
+          "convictingCourtCode": "2577",
+          "convictionDate": "2026-04-16",
+          "convictionStatus": "Convicted",
+          "dateFromWhichDisqRemoved": "",
+          "disqualificationPeriod": "",
+          "dttpDtetp": "",
+          "dvlaCode": "SP40",
+          "endorsableFlag": true,
+          "fine": "£200.00",
+          "interimImposedFinalSentence": "",
+          "modeOfTrial": "Summary",
+          "penaltyPoints": "3",
+          "plea": "GUILTY",
+          "results": [
+            {
+              "d20": false,
+              "judicialResultCategory": "FINAL",
+              "label": "Fine",
+              "prompts": [
+                {
+                  "durationSequence": 0,
+                  "label": "Amount of fine",
+                  "promptIdentifier": "7cd1472f-2379-4f5b-9e67-98a43d86e122",
+                  "promptReference": "AOF",
+                  "value": "£200.00"
+                }
+              ],
+              "publishedForNows": false,
+              "resultDefinitionGroup": "Imposition",
+              "resultIdentifier": "969f150c-cd05-46b0-9dd9-30891efcc766"
+            },
+            {
+              "d20": true,
+              "judicialResultCategory": "ANCILLARY",
+              "label": "Driving record endorsed with penalty points",
+              "prompts": [
+                {
+                  "durationSequence": 0,
+                  "label": "Penalty points for this offence",
+                  "promptIdentifier": "a8719de4-7783-448a-b792-e3f94e670ad0",
+                  "promptReference": "PENPT",
+                  "value": "3"
+                }
+              ],
+              "publishedForNows": false,
+              "resultIdentifier": "cee54856-4450-4f28-a8a9-72b688726201"
+            },
+            {
+              "d20": false,
+              "judicialResultCategory": "ANCILLARY",
+              "label": "0: None or unknown",
+              "publishedForNows": true,
+              "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956"
+            }
+          ],
+          "startDate": "2026-04-01",
+          "title": "Speeding - passenger motor vehicle and trailer exceeding 50 mph - single carriageway - manned equipment",
+          "wording": "Speeding - passenger motor vehicle and trailer exceeding 50 mph - single carriageway - manned equipment"
+        },
+        {
+          "allocationDecision": "Summary-only offence",
+          "civilOffence": false,
+          "code": "RC86851",
+          "convictingCourtCode": "2577",
+          "convictionDate": "2026-04-16",
+          "convictionStatus": "Convicted",
+          "dateFromWhichDisqRemoved": "",
+          "disqualificationPeriod": "",
+          "dttpDtetp": "",
+          "dvlaCode": "CU10",
+          "endorsableFlag": true,
+          "fine": "£220.00",
+          "interimImposedFinalSentence": "",
+          "modeOfTrial": "Summary",
+          "penaltyPoints": "6",
+          "plea": "GUILTY",
+          "results": [
+            {
+              "d20": false,
+              "judicialResultCategory": "FINAL",
+              "label": "Fine",
+              "prompts": [
+                {
+                  "durationSequence": 0,
+                  "label": "Amount of fine",
+                  "promptIdentifier": "7cd1472f-2379-4f5b-9e67-98a43d86e122",
+                  "promptReference": "AOF",
+                  "value": "£220.00"
+                }
+              ],
+              "publishedForNows": false,
+              "resultDefinitionGroup": "Imposition",
+              "resultIdentifier": "969f150c-cd05-46b0-9dd9-30891efcc766"
+            },
+            {
+              "d20": true,
+              "judicialResultCategory": "ANCILLARY",
+              "label": "Driving record endorsed with additional points (points on more than one offence)",
+              "prompts": [
+                {
+                  "durationSequence": 0,
+                  "label": "Penalty points for this offence",
+                  "promptIdentifier": "a8719de4-7783-448a-b792-e3f94e670ad0",
+                  "promptReference": "PENPT",
+                  "value": "6"
+                },
+                {
+                  "durationSequence": 0,
+                  "label": "Reasons for imposing penalty points on more than one offence",
+                  "promptIdentifier": "bbbb47bb-3418-463c-bfc3-43c6f72bb7c9",
+                  "promptReference": "reasonsForImposingPenaltyPointsOnMoreThanOneOffence",
+                  "value": "DIFFERENT_OCCASIONS"
+                },
+                {
+                  "durationSequence": 0,
+                  "label": "Defendant driving licence number",
+                  "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+                  "promptReference": "defendantDrivingLicenceNumber"
+                }
+              ],
+              "publishedForNows": false,
+              "resultIdentifier": "3fa139cc-efe0-422b-93d6-190a5be50953"
+            },
+            {
+              "d20": false,
+              "judicialResultCategory": "ANCILLARY",
+              "label": "Licence produced in court",
+              "publishedForNows": false,
+              "resultIdentifier": "ea1ee5a4-be13-48dc-8411-78f22e01c236"
+            },
+            {
+              "d20": false,
+              "judicialResultCategory": "ANCILLARY",
+              "label": "0: None or unknown",
+              "publishedForNows": true,
+              "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956"
+            }
+          ],
+          "startDate": "2026-03-07",
+          "title": "Vehicle defect - permit use of a motor vehicle / trailer with defective brakes",
+          "wording": "Vehicle defect - permit use of a motor vehicle / trailer with defective brakes"
+        }
+      ],
+      "hasSV": false,
+      "initiationCode": "C",
+      "reference": "SJ915441493"
+    }
+  ],
+  "courtApplications": [],
+  "defendant": {
+    "address": {
+      "line1": "FLAT - 25A",
+      "line2": "Constable Street",
+      "line3": "Bristol",
+      "line4": "England",
+      "line5": "UK",
+      "postCode": "IG1 1YY"
+    },
+    "dateOfBirth": "1981-04-16",
+    "firstName": "FlmRaIEJ",
+    "gender": "MALE",
+    "lastName": "SmithyeAW3",
+    "name": "FlmRaIEJ SmithyeAW3",
+    "title": "MR"
+  },
+  "distinctPrompts": [],
+  "identifier": "ab8a25fe-0cca-4c2a-90af-507f94d5c10e",
+  "licenceProducedInCourt": "0: None or unknown",
+  "masterDefendantId": "91c14631-7d40-4a3b-beee-3d91bedf154d",
+  "materialId": "cdebf941-521a-46fa-bfee-f908a2ae2df2",
+  "notificationType": "Update",
+  "notificationWasPreviouslySent": true,
+  "oatsEndorsements": [
+    "CU10"
+  ],
+  "orderDate": "2026-04-16",
+  "orderingCourt": {
+    "address": {
+      "address1": "176A Lavender Hill",
+      "address2": "London",
+      "address3": "",
+      "address4": "",
+      "address5": "",
+      "postcode": "SW11 1JU"
+    },
+    "code": "B01LY00",
+    "courtHearingLocation": "B01LY01",
+    "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+    "lja": {
+      "ljaCode": "2577",
+      "ljaName": "South West London Magistrates' Court"
+    },
+    "name": "Lavender Hill Magistrates' Court",
+    "roomId": "9e4932f7-97b2-3010-b942-ddd2624e4dd8",
+    "roomName": "Courtroom 01"
+  },
+  "orderingCourtCode": "2577",
+  "orderingHearingId": "9fa396c6-49b7-4e60-8ba6-06aa88911025",
+  "previous": {
+    "caseApplicationReferences": [
+      "SJ915441493"
+    ],
+    "cases": [
+      {
+        "caseId": "de6fb7cd-476e-4bf5-b42c-786065b763b5",
+        "defendantCaseOffences": [
+          {
+            "civilOffence": false,
+            "code": "RR84130",
+            "convictingCourtCode": "2577",
+            "convictionDate": "2026-04-16",
+            "convictionStatus": "Convicted",
+            "dateFromWhichDisqRemoved": "",
+            "disqualificationPeriod": "",
+            "dttpDtetp": "",
+            "dvlaCode": "SP40",
+            "endorsableFlag": true,
+            "fine": "£300.00",
+            "interimImposedFinalSentence": "",
+            "modeOfTrial": "1",
+            "penaltyPoints": "12",
+            "results": [
+              {
+                "d20": false,
+                "judicialResultCategory": "FINAL",
+                "label": "Fine",
+                "prompts": [
+                  {
+                    "durationSequence": 0,
+                    "label": "Amount of fine",
+                    "promptIdentifier": "7cd1472f-2379-4f5b-9e67-98a43d86e122",
+                    "promptReference": "AOF",
+                    "value": "£300.00"
+                  }
+                ],
+                "publishedForNows": false,
+                "resultDefinitionGroup": "Imposition",
+                "resultIdentifier": "969f150c-cd05-46b0-9dd9-30891efcc766"
+              },
+              {
+                "d20": false,
+                "judicialResultCategory": "FINAL",
+                "label": "Compensation",
+                "prompts": [
+                  {
+                    "durationSequence": 0,
+                    "label": "Amount of compensation",
+                    "promptIdentifier": "26985e5b-fe1f-4d7d-a21a-57207c5966e7",
+                    "promptReference": "AOCOM",
+                    "value": "£8.91"
+                  },
+                  {
+                    "durationSequence": 0,
+                    "label": "Major creditor organisation name",
+                    "promptIdentifier": "af921cf4-06e7-4f6b-a4ea-dcb58aab0dbe",
+                    "promptReference": "cREDNAMEOrganisationName",
+                    "value": "British Transport Police"
+                  }
+                ],
+                "publishedForNows": false,
+                "resultDefinitionGroup": "Imposition",
+                "resultIdentifier": "ae89b99c-e0e3-47b5-b218-24d4fca3ca53"
+              },
+              {
+                "d20": true,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "Driving record endorsed with penalty points",
+                "prompts": [
+                  {
+                    "durationSequence": 0,
+                    "label": "Penalty points for this offence",
+                    "promptIdentifier": "a8719de4-7783-448a-b792-e3f94e670ad0",
+                    "promptReference": "PENPT",
+                    "value": "12"
+                  },
+                  {
+                    "durationSequence": 0,
+                    "label": "Defendant driving licence number",
+                    "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+                    "promptReference": "defendantDrivingLicenceNumber"
+                  }
+                ],
+                "publishedForNows": false,
+                "resultIdentifier": "cee54856-4450-4f28-a8a9-72b688726201"
+              },
+              {
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "Licence produced in court",
+                "publishedForNows": false,
+                "resultIdentifier": "ea1ee5a4-be13-48dc-8411-78f22e01c236"
+              },
+              {
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "0: None or unknown",
+                "publishedForNows": true,
+                "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956"
+              }
+            ],
+            "startDate": "2026-04-01",
+            "title": "Speeding - passenger motor vehicle and trailer exceeding 50 mph - single carriageway - manned equipment",
+            "wording": "Speeding - passenger motor vehicle and trailer exceeding 50 mph - single carriageway - manned equipment"
+          },
+          {
+            "civilOffence": false,
+            "code": "RC86851",
+            "convictingCourtCode": "2577",
+            "convictionDate": "2026-04-16",
+            "convictionStatus": "Convicted",
+            "dateFromWhichDisqRemoved": "",
+            "disqualificationPeriod": "",
+            "dttpDtetp": "",
+            "dvlaCode": "CU10",
+            "endorsableFlag": true,
+            "fine": "£220.00",
+            "interimImposedFinalSentence": "",
+            "modeOfTrial": "1",
+            "penaltyPoints": "6",
+            "results": [
+              {
+                "d20": false,
+                "judicialResultCategory": "FINAL",
+                "label": "Fine",
+                "prompts": [
+                  {
+                    "durationSequence": 0,
+                    "label": "Amount of fine",
+                    "promptIdentifier": "7cd1472f-2379-4f5b-9e67-98a43d86e122",
+                    "promptReference": "AOF",
+                    "value": "£220.00"
+                  }
+                ],
+                "publishedForNows": false,
+                "resultDefinitionGroup": "Imposition",
+                "resultIdentifier": "969f150c-cd05-46b0-9dd9-30891efcc766"
+              },
+              {
+                "d20": true,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "Driving record endorsed with additional points (points on more than one offence)",
+                "prompts": [
+                  {
+                    "durationSequence": 0,
+                    "label": "Penalty points for this offence",
+                    "promptIdentifier": "a8719de4-7783-448a-b792-e3f94e670ad0",
+                    "promptReference": "PENPT",
+                    "value": "6"
+                  },
+                  {
+                    "durationSequence": 0,
+                    "label": "Reasons for imposing penalty points on more than one offence",
+                    "promptIdentifier": "bbbb47bb-3418-463c-bfc3-43c6f72bb7c9",
+                    "promptReference": "reasonsForImposingPenaltyPointsOnMoreThanOneOffence",
+                    "value": "DIFFERENT_OCCASIONS"
+                  },
+                  {
+                    "durationSequence": 0,
+                    "label": "Defendant driving licence number",
+                    "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+                    "promptReference": "defendantDrivingLicenceNumber"
+                  }
+                ],
+                "publishedForNows": false,
+                "resultIdentifier": "3fa139cc-efe0-422b-93d6-190a5be50953"
+              },
+              {
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "Licence produced in court",
+                "publishedForNows": false,
+                "resultIdentifier": "ea1ee5a4-be13-48dc-8411-78f22e01c236"
+              },
+              {
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "0: None or unknown",
+                "publishedForNows": true,
+                "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956"
+              }
+            ],
+            "startDate": "2026-03-07",
+            "title": "Vehicle defect - permit use of a motor vehicle / trailer with defective brakes",
+            "wording": "Vehicle defect - permit use of a motor vehicle / trailer with defective brakes"
+          }
+        ],
+        "hasSV": false,
+        "initiationCode": "J",
+        "reference": "SJ915441493"
+      }
+    ],
+    "defendant": {
+      "address": {
+        "line1": "FLAT - 25A",
+        "line2": "Constable Street",
+        "line3": "Bristol",
+        "line4": "England",
+        "line5": "UK",
+        "postCode": "IG1 1YY"
+      },
+      "dateOfBirth": "1981-04-16",
+      "firstName": "FlmRaIEJ",
+      "gender": "MALE",
+      "lastName": "SmithyeAW3",
+      "name": "FlmRaIEJ SmithyeAW3",
+      "title": "Mr"
+    },
+    "distinctPrompts": [],
+    "identifier": "da29d70d-1f13-4c82-9a69-26fa8be143f7",
+    "licenceProducedInCourt": "0: None or unknown",
+    "masterDefendantId": "91c14631-7d40-4a3b-beee-3d91bedf154d",
+    "materialId": "a457275a-eed5-4124-a516-5dd4bdd40914",
+    "orderDate": "2026-04-16",
+    "orderingCourt": {
+      "address": {
+        "address1": "176A Lavender Hill",
+        "address2": "London",
+        "postcode": "SW11 1JU"
+      },
+      "code": "B01LY00",
+      "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+      "lja": {
+        "ljaCode": "2577",
+        "ljaName": "Lavender Hill Magistrates' Court",
+        "welshLjaName": "Llys Ynadon Lavender Hill"
+      },
+      "name": "Lavender Hill Magistrates' Court"
+    },
+    "orderingHearingId": "c1a20979-4b5b-4f0f-8acf-eced81028fc1",
+    "retrySequence": 0
+  },
+  "retrySequence": 0,
+  "updatedEndorsements": [
+    "SP40"
+  ]
+}
