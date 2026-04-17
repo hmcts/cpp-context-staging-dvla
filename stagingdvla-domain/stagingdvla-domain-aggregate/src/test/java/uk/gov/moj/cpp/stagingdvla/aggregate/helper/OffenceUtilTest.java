@@ -69,7 +69,7 @@ class OffenceUtilTest {
         Cases previousCases = buildCases(RESULT_IDENTIFIER, Boolean.TRUE);
         Cases currentCases = buildCases(RESULT_IDENTIFIER, Boolean.FALSE);
 
-        boolean d20Removed = hasAnyD20Removed(previousCases, currentCases, null);
+        boolean d20Removed = hasAnyD20Removed(previousCases, currentCases, null, null);
 
         assertThat(d20Removed, is(false));
     }
@@ -82,7 +82,7 @@ class OffenceUtilTest {
         final List<Results> results = singletonList(results().withResultIdentifier(RFSD.id).build());
         final List<CourtApplications> courtApplications = singletonList(CourtApplications.courtApplications().withResults(results).build());
 
-        boolean isApplicationRefused = hasAnyD20Removed(previousCases, currentCases, courtApplications);
+        boolean isApplicationRefused = hasAnyD20Removed(previousCases, currentCases, courtApplications, null);
 
         assertThat(isApplicationRefused, is(false));
     }
@@ -95,7 +95,7 @@ class OffenceUtilTest {
         final List<Results> results = singletonList(results().withResultIdentifier(ERR.id).build());
         final List<CourtApplications> courtApplications = singletonList(CourtApplications.courtApplications().withResults(results).build());
 
-        boolean isApplicationRefused = hasAnyD20Removed(previousCases, currentCases, courtApplications);
+        boolean isApplicationRefused = hasAnyD20Removed(previousCases, currentCases, courtApplications, null);
 
         assertThat(isApplicationRefused, is(false));
     }
@@ -116,7 +116,7 @@ class OffenceUtilTest {
         final List<Results> results = singletonList(results().withResultIdentifier(AACA.id).build());
         final List<CourtApplications> courtApplications = singletonList(CourtApplications.courtApplications().withResults(results).build());
 
-        boolean isApplicationRefused = hasAnyD20Removed(previousCases, currentCases, courtApplications);
+        boolean isApplicationRefused = hasAnyD20Removed(previousCases, currentCases, courtApplications, null);
 
         assertThat(isApplicationRefused, is(true));
     }
@@ -129,7 +129,7 @@ class OffenceUtilTest {
         final List<Results> results = asList(results().withResultIdentifier(G.id).build(), results().withResultIdentifier(COV.id).build());
         final List<CourtApplications> courtApplications = singletonList(CourtApplications.courtApplications().withResults(results).build());
 
-        boolean hasAnyD20Removed = hasAnyD20Removed(previousCases, currentCases, courtApplications);
+        boolean hasAnyD20Removed = hasAnyD20Removed(previousCases, currentCases, courtApplications, null);
 
         assertThat(hasAnyD20Removed, is(false));
     }
@@ -150,7 +150,7 @@ class OffenceUtilTest {
         final List<Results> results = singletonList(results().withResultIdentifier(G.id).build());
         final List<CourtApplications> courtApplications = singletonList(CourtApplications.courtApplications().withResults(results).build());
 
-        boolean hasAnyD20Removed = hasAnyD20Removed(previousCases, currentCases, courtApplications);
+        boolean hasAnyD20Removed = hasAnyD20Removed(previousCases, currentCases, courtApplications, null);
 
         assertThat(hasAnyD20Removed, is(true));
     }
@@ -160,7 +160,7 @@ class OffenceUtilTest {
         final Cases currentCases = Cases.cases().withReference(caseReference).withCaseStatus("INACTIVE").build();
         final List<CourtApplications> courtApplications = singletonList(CourtApplications.courtApplications().withApplicationTypeId(ACP.id).build());
 
-        boolean hasAnyD20Removed = hasAnyD20Removed(null, currentCases, courtApplications);
+        boolean hasAnyD20Removed = hasAnyD20Removed(null, currentCases, courtApplications, null);
 
         assertThat(hasAnyD20Removed, is(false));
     }
@@ -172,7 +172,7 @@ class OffenceUtilTest {
         final Cases currentCases = Cases.cases().withReference(caseReference).withCaseStatus("ACTIVE").build();
         final List<CourtApplications> courtApplications = singletonList(CourtApplications.courtApplications().withResults(results).withApplicationType("Appearance to make statutory declaration (other than SJP)").build());
 
-        boolean hasAnyD20Removed = hasAnyD20Removed(previousCases, currentCases, courtApplications);
+        boolean hasAnyD20Removed = hasAnyD20Removed(previousCases, currentCases, courtApplications, null);
 
         assertThat(hasAnyD20Removed, is(true));
     }
@@ -254,7 +254,7 @@ class OffenceUtilTest {
 
         Cases currentCases = buildCases("RI02", Boolean.FALSE);
 
-        boolean d20Removed = hasAnyD20Removed(previousCases, currentCases, null);
+        boolean d20Removed = hasAnyD20Removed(previousCases, currentCases, null, null);
 
         assertThat(d20Removed, is(true));
     }
@@ -263,7 +263,7 @@ class OffenceUtilTest {
     void shouldGetEndorsementStatusDSPAS() {
         final List<CourtApplications> courtApplications = getCourtApplications(DSPAS);
 
-        final AggregateConstants.EndorsementStatus endorsementStatus = getEndorsementStatus(false, null, null, courtApplications, emptyList());
+        final AggregateConstants.EndorsementStatus endorsementStatus = getEndorsementStatus(false, null, null, courtApplications, emptyList(), null);
 
         assertThat(endorsementStatus, is(UPDATE_MERGE));
     }
@@ -272,7 +272,7 @@ class OffenceUtilTest {
     void shouldGetEndorsementStatusDISM() {
         final List<CourtApplications> courtApplications = getCourtApplications(DISM);
 
-        final AggregateConstants.EndorsementStatus endorsementStatus = getEndorsementStatus(false, null, null, courtApplications, emptyList());
+        final AggregateConstants.EndorsementStatus endorsementStatus = getEndorsementStatus(false, null, null, courtApplications, emptyList(), null);
 
         assertThat(endorsementStatus, is(REMOVE));
     }
@@ -281,7 +281,7 @@ class OffenceUtilTest {
     void shouldGetEndorsementStatusDINE() {
         final List<CourtApplications> courtApplications = getCourtApplications(DINE);
 
-        final AggregateConstants.EndorsementStatus endorsementStatus = getEndorsementStatus(false, null, null, courtApplications, emptyList());
+        final AggregateConstants.EndorsementStatus endorsementStatus = getEndorsementStatus(false, null, null, courtApplications, emptyList(), null);
 
         assertThat(endorsementStatus, is(REMOVE));
     }
@@ -290,7 +290,7 @@ class OffenceUtilTest {
     void shouldGetEndorsementStatusDINI() {
         final List<CourtApplications> courtApplications = getCourtApplications(DINI);
 
-        final AggregateConstants.EndorsementStatus endorsementStatus = getEndorsementStatus(false, null, null, courtApplications, emptyList());
+        final AggregateConstants.EndorsementStatus endorsementStatus = getEndorsementStatus(false, null, null, courtApplications, emptyList(), null);
 
         assertThat(endorsementStatus, is(REMOVE));
     }
@@ -299,7 +299,7 @@ class OffenceUtilTest {
     void shouldGetEndorsementStatusDISC() {
         final List<CourtApplications> courtApplications = getCourtApplications(DISC);
 
-        final AggregateConstants.EndorsementStatus endorsementStatus = getEndorsementStatus(false, null, null, courtApplications, emptyList());
+        final AggregateConstants.EndorsementStatus endorsementStatus = getEndorsementStatus(false, null, null, courtApplications, emptyList(), null);
 
         assertThat(endorsementStatus, is(REMOVE));
     }
@@ -308,7 +308,7 @@ class OffenceUtilTest {
     void shouldGetEndorsementStatusDISCH() {
         final List<CourtApplications> courtApplications = getCourtApplications(DISCH);
 
-        final AggregateConstants.EndorsementStatus endorsementStatus = getEndorsementStatus(false, null, null, courtApplications, emptyList());
+        final AggregateConstants.EndorsementStatus endorsementStatus = getEndorsementStatus(false, null, null, courtApplications, emptyList(), null);
 
         assertThat(endorsementStatus, is(REMOVE));
     }
@@ -317,7 +317,7 @@ class OffenceUtilTest {
     void shouldGetEndorsementStatusWDRN() {
         final List<CourtApplications> courtApplications = getCourtApplications(WDRN);
 
-        final AggregateConstants.EndorsementStatus endorsementStatus = getEndorsementStatus(false, null, null, courtApplications, emptyList());
+        final AggregateConstants.EndorsementStatus endorsementStatus = getEndorsementStatus(false, null, null, courtApplications, emptyList(), null);
 
         assertThat(endorsementStatus, is(REMOVE));
     }
@@ -326,7 +326,7 @@ class OffenceUtilTest {
     void shouldGetEndorsementStatusWDRNOFF() {
         final List<CourtApplications> courtApplications = getCourtApplications(WDRNOFF);
 
-        final AggregateConstants.EndorsementStatus endorsementStatus = getEndorsementStatus(false, null, null, courtApplications, emptyList());
+        final AggregateConstants.EndorsementStatus endorsementStatus = getEndorsementStatus(false, null, null, courtApplications, emptyList(), null);
 
         assertThat(endorsementStatus, is(REMOVE));
     }
@@ -426,7 +426,7 @@ class OffenceUtilTest {
                         .build()
         );
 
-        boolean hasAnyD20Removed = hasAnyD20Removed(previousCases, currentCases, courtApplications);
+        boolean hasAnyD20Removed = hasAnyD20Removed(previousCases, currentCases, courtApplications, null);
 
         assertThat(hasAnyD20Removed, is(true));
     }
@@ -443,7 +443,7 @@ class OffenceUtilTest {
                         .build()
         );
 
-        boolean hasAnyD20Removed = hasAnyD20Removed(null, currentCases, courtApplications);
+        boolean hasAnyD20Removed = hasAnyD20Removed(null, currentCases, courtApplications, null);
 
         assertThat(hasAnyD20Removed, is(false));
     }
@@ -460,7 +460,7 @@ class OffenceUtilTest {
                         .build()
         );
 
-        boolean hasAnyD20Removed = hasAnyD20Removed(null, currentCases, courtApplications);
+        boolean hasAnyD20Removed = hasAnyD20Removed(null, currentCases, courtApplications, null);
 
         assertThat(hasAnyD20Removed, is(false));
     }
@@ -490,7 +490,7 @@ class OffenceUtilTest {
                         .build()
         );
 
-        boolean hasAnyD20Removed = hasAnyD20Removed(previousCases, currentCases, courtApplications);
+        boolean hasAnyD20Removed = hasAnyD20Removed(previousCases, currentCases, courtApplications, null);
 
         assertThat(hasAnyD20Removed, is(true));
     }
@@ -506,7 +506,7 @@ class OffenceUtilTest {
                         .build()))
                 .build();
 
-        boolean hasAnyD20Removed = hasAnyD20Removed(previousCases, currentCases, emptyList());
+        boolean hasAnyD20Removed = hasAnyD20Removed(previousCases, currentCases, emptyList(), null);
 
         assertThat(hasAnyD20Removed, is(false));
     }

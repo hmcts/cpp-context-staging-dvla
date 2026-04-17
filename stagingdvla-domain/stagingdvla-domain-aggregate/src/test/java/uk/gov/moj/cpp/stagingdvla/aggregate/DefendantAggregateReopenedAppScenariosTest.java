@@ -1,7 +1,7 @@
 package uk.gov.moj.cpp.stagingdvla.aggregate;
 
 
-import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.DefendantAggregateTestSteps.JsonPathAssertions.jsonPathAssertions;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.DefendantAggregateTestSteps.defendantAggregateScenario;
@@ -241,12 +241,12 @@ class DefendantAggregateReopenedAppScenariosTest {
                                 .withNotifyDriverStep(
                                         "application hearing resulted",
                                         "/testdata/drivernotifications/reopening/dd-40325/ac5/referred-to-cc-resulted.json",
-                                        null
+                                        "/testdata/drivernotifications/reopening/dd-40325/ac5/referred-to-cc-resulted-events.json"
                                 )
                                 .withNotifyDriverStep(
                                         "cc case hearing resulted",
                                         "/testdata/drivernotifications/reopening/dd-40325/ac5/reopen-created-resulted.json",
-                                        null
+                                        "/testdata/drivernotifications/reopening/dd-40325/ac5/reopen-created-resulted-events.json"
                                 )
 
                 ),
@@ -448,7 +448,62 @@ class DefendantAggregateReopenedAppScenariosTest {
                                         jsonPathAssertions()
                                                 .add("notificationType", "Update")
                                                 .add("cases[0].defendantCaseOffences.size()", 4)
-                                                .add("previous", notNullValue()))))
+                                                .add("previous", notNullValue())))),
+                Arguments.of("DD-39940-ac1",
+                        defendantAggregateScenario()
+                                .withNotifyDriverStep(
+                                        "case hearing resulted",
+                                        "/testdata/drivernotifications/reopening/dd-39940/ac1/case-resulted.json",
+                                        "/testdata/drivernotifications/reopening/dd-39940/ac1/case-resulted-events.json",
+                                        jsonPathAssertions()
+                                                .add("notificationType", "New")
+                                                .add("cases[0].defendantCaseOffences.size()", 1))
+                                .withNotifyDriverStep(
+                                        "application hearing resulted",
+                                        "/testdata/drivernotifications/reopening/dd-39940/ac1/app-resulted.json",
+                                        null)),
+                Arguments.of("DD-39940-ac1a",
+                        defendantAggregateScenario()
+                                .withNotifyDriverStep(
+                                        "case hearing resulted",
+                                        "/testdata/drivernotifications/reopening/dd-39940/ac1a/case-resulted.json",
+                                        "/testdata/drivernotifications/reopening/dd-39940/ac1a/case-resulted-events.json",
+                                        jsonPathAssertions()
+                                                .add("notificationType", "New")
+                                                .add("cases[0].defendantCaseOffences.size()", 2))
+                                .withNotifyDriverStep(
+                                        "application hearing resulted",
+                                        "/testdata/drivernotifications/reopening/dd-39940/ac1a/app-resulted.json",
+                                     "/testdata/drivernotifications/reopening/dd-39940/ac1a/app-resulted-events.json",
+                                        jsonPathAssertions()
+                                                .add("notificationType", "Update")
+                                                .add("cases[0].defendantCaseOffences.size()", 2)
+                                                .add("previous", notNullValue()))),
+                Arguments.of("DD-39940-ac1b",
+                        defendantAggregateScenario()
+                                .withNotifyDriverStep(
+                                        "sjp case hearing resulted",
+                                        "/testdata/drivernotifications/reopening/dd-39940/ac1b/sjp-case-resulted.json",
+                                        "/testdata/drivernotifications/reopening/dd-39940/ac1b/sjp-case-resulted-events.json",
+                                        jsonPathAssertions()
+                                                .add("notificationType", "New")
+                                                .add("cases[0].defendantCaseOffences.size()", 2))
+                                .withNotifyDriverStep(
+                                        "sjp  case ref to cc",
+                                        "/testdata/drivernotifications/reopening/dd-39940/ac1b/sjp-case-ref-to-cc-resulted.json",
+                                        "/testdata/drivernotifications/reopening/dd-39940/ac1b/sjp-case-ref-to-cc-resulted-events.json")
+                                .withNotifyDriverStep(
+                                        "sjp  case ref to cc and application created",
+                                        "/testdata/drivernotifications/reopening/dd-39940/ac1b/sjp-case-ref-to-cc-app-resulted.json",
+                                        "/testdata/drivernotifications/reopening/dd-39940/ac1b/sjp-case-ref-to-cc-app-resulted-events.json")
+                                .withNotifyDriverStep(
+                                        "cc case resulted",
+                                        "/testdata/drivernotifications/reopening/dd-39940/ac1b/cc-case-resulted.json",
+                                        "/testdata/drivernotifications/reopening/dd-39940/ac1b/cc-case-resulted-events.json",
+                                        jsonPathAssertions()
+                                                .add("notificationType", "Update")
+                                                .add("cases[0].defendantCaseOffences.size()", 2))
+                                                )
 
 
 

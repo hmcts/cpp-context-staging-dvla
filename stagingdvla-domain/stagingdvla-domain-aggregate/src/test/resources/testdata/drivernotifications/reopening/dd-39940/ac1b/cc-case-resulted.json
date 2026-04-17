@@ -1,0 +1,161 @@
+{
+  "masterDefendantId": "91c14631-7d40-4a3b-beee-3d91bedf154d",
+  "orderingCourt": {
+    "address": {
+      "address1": "176A Lavender Hill",
+      "address2": "London",
+      "address3": "",
+      "address4": "",
+      "address5": "",
+      "postcode": "SW11 1JU"
+    },
+    "code": "B01LY00",
+    "courtHearingLocation": "B01LY01",
+    "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+    "lja": {
+      "ljaCode": "2577",
+      "ljaName": "South West London Magistrates' Court"
+    },
+    "name": "Lavender Hill Magistrates' Court",
+    "roomId": "9e4932f7-97b2-3010-b942-ddd2624e4dd8",
+    "roomName": "Courtroom 01"
+  },
+  "nowContent": {
+    "orderDate": "2026-04-16",
+    "defendant": {
+      "dateOfBirth": "1981-04-16",
+      "gender": "MALE",
+      "title": "MR",
+      "firstName": "FlmRaIEJ",
+      "lastName": "SmithyeAW3",
+      "name": "FlmRaIEJ SmithyeAW3",
+      "address": {
+        "line1": "FLAT - 25A",
+        "line2": "Constable Street",
+        "line3": "Bristol",
+        "line4": "England",
+        "line5": "UK",
+        "postCode": "IG1 1YY"
+      }
+    },
+    "caseApplicationReferences": [
+      "SJ915441493"
+    ],
+    "cases": [
+      {
+        "caseStatus": "SJP_REFERRAL",
+        "initiationCode": "C",
+        "reference": "SJ915441493",
+        "caseId": "de6fb7cd-476e-4bf5-b42c-786065b763b5",
+        "defendantCaseOffences": [
+          {
+            "title": "Keep a vehicle without a valid vehicle licence",
+            "civilOffence": false,
+            "convictionDate": "2026-04-16",
+            "convictionStatus": "Convicted",
+            "plea": "GUILTY",
+            "code": "VE94015",
+            "modeOfTrial": "Summary",
+            "allocationDecision": "Summary-only offence",
+            "endorsableFlag": false,
+            "convictingCourtCode": "2577",
+            "wording": "Wording: Keep a vehicle without a valid vehicle licence",
+            "startDate": "2026-04-01",
+            "results": [
+              {
+                "resultIdentifier": "b9c6047b-fb84-4b12-97a1-2175e4b8bbac",
+                "publishedForNows": false,
+                "resultWording": "",
+                "d20": false,
+                "dvlaCode": "J",
+                "judicialResultCategory": "FINAL",
+                "label": "Absolute discharge"
+              }
+            ]
+          },
+          {
+            "title": "Speeding - passenger motor vehicle and trailer exceeding 50 mph - single carriageway - manned equipment",
+            "civilOffence": false,
+            "dvlaCode": "SP40",
+            "convictionDate": "2026-04-16",
+            "convictionStatus": "Convicted",
+            "plea": "GUILTY",
+            "code": "RR84130",
+            "modeOfTrial": "Summary",
+            "allocationDecision": "Summary-only offence",
+            "endorsableFlag": true,
+            "convictingCourtCode": "2577",
+            "wording": "Speeding - passenger motor vehicle and trailer exceeding 50 mph - single carriageway - manned equipment",
+            "startDate": "2026-04-01",
+            "results": [
+              {
+                "resultIdentifier": "969f150c-cd05-46b0-9dd9-30891efcc766",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "7cd1472f-2379-4f5b-9e67-98a43d86e122",
+                    "promptReference": "AOF",
+                    "label": "Amount of fine",
+                    "value": "£200.00"
+                  }
+                ],
+                "resultDefinitionGroup": "Imposition",
+                "d20": false,
+                "judicialResultCategory": "FINAL",
+                "label": "Fine"
+              },
+              {
+                "resultIdentifier": "cee54856-4450-4f28-a8a9-72b688726201",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "a8719de4-7783-448a-b792-e3f94e670ad0",
+                    "promptReference": "PENPT",
+                    "label": "Penalty points for this offence",
+                    "value": "3"
+                  }
+                ],
+                "d20": true,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "Driving record endorsed with penalty points"
+              },
+              {
+                "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956",
+                "publishedForNows": true,
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "0: None or unknown"
+              }
+            ]
+          },
+          {
+            "title": "Vehicle defect - permit use of a motor vehicle / trailer with defective brakes",
+            "civilOffence": false,
+            "dvlaCode": "CU10",
+            "convictionDate": "2026-04-16",
+            "convictionStatus": "Convicted",
+            "plea": "GUILTY",
+            "code": "RC86851",
+            "modeOfTrial": "Summary",
+            "allocationDecision": "Summary-only offence",
+            "endorsableFlag": true,
+            "convictingCourtCode": "2577",
+            "wording": "Vehicle defect - permit use of a motor vehicle / trailer with defective brakes",
+            "startDate": "2026-03-07",
+            "results": [
+              {
+                "resultIdentifier": "3e859586-bc86-407d-bd8e-c9a01d40d147",
+                "publishedForNows": false,
+                "d20": false,
+                "judicialResultCategory": "FINAL",
+                "label": "Offence not dealt with as part of application - original adjudication to stand"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": false,
+  "orderingHearingId": "9fa396c6-49b7-4e60-8ba6-06aa88911025"
+}
