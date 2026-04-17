@@ -95,6 +95,18 @@
           }
         ]
       }
+    ],
+    "courtApplications": [
+      {
+        "applicationType": "Application to reopen case",
+        "applicationReceivedDate": "2023-05-16",
+        "id": "270c5f38-5083-48c6-9409-65a295dd4c02",
+        "applicationReference": "JW127755221",
+        "applicationStatus": "UN_ALLOCATED",
+        "results": [
+
+        ]
+      }
     ]
   },
   "isReshare": true,

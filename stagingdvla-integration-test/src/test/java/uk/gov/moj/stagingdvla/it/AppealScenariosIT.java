@@ -10,7 +10,6 @@ import uk.gov.justice.cpp.stagingdvla.event.NotificationType;
 import java.io.IOException;
 import java.util.List;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 
@@ -1242,7 +1241,6 @@ public class AppealScenariosIT extends AbstractIntegrationTest {
     }
 
     @Test
-    @Disabled
     void cimd_3704() throws IOException {
         List<DriverNotified> driverNotifiedList = sendAndVerifyEvent("appealAmendReshare/cimd_3704/command1.json", 1);
 
@@ -1266,11 +1264,11 @@ public class AppealScenariosIT extends AbstractIntegrationTest {
 
         DriverNotifiedEventAssertion.with(driverNotifiedList.get(0))
                 .hasCaseReference("JW29150867")
-                .hasNotificationType(NotificationType.REMOVE)
-                .hasRemovedEndorsementContains("IN10")
-                .hasNoUpdatedEndorsements()
+                .hasNotificationType(NotificationType.UPDATE)
+                .hasUpdatedEndorsementContains("IN10")
+                .hasNoRemovedEndorsements()
                 .hasCourtApplications(1)
-                .hasOffences(0);
+                .hasOffences(1);
 
         verifyDVLANotificationCommandInvoked(driverNotifiedList);
         verifyGenerateDocumentStubCommandInvoked(driverNotifiedList);
