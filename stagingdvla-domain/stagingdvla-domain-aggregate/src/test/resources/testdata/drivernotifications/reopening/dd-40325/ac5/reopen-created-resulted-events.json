@@ -1,1 +1,9 @@
-{"applicationTypeIds":["9d2ae0fe-d4d0-43ca-ab7a-7a2556cafe5e"],"caseId":"f70773c6-e955-4d25-97a6-f41cadb21f6e"}
+{
+  "applicationTypes": [
+    {
+      "id": "9d2ae0fe-d4d0-43ca-ab7a-7a2556cafe5e",
+      "name": "Application to reopen case"
+    }
+  ],
+  "caseReference": "SJ142255147"
+}

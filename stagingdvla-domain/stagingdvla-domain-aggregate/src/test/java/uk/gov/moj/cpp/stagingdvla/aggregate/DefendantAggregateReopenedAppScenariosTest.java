@@ -241,15 +241,12 @@ class DefendantAggregateReopenedAppScenariosTest {
                                 .withNotifyDriverStep(
                                         "application hearing resulted",
                                         "/testdata/drivernotifications/reopening/dd-40325/ac5/referred-to-cc-resulted.json",
-                                        "/testdata/drivernotifications/reopening/dd-40325/ac5/referred-to-cc-resulted-events.json"
+                                        null
                                 )
                                 .withNotifyDriverStep(
                                         "cc case hearing resulted",
                                         "/testdata/drivernotifications/reopening/dd-40325/ac5/reopen-created-resulted.json",
-                                        "/testdata/drivernotifications/reopening/dd-40325/ac5/reopen-created-resulted-events.json"
-                                )
-
-                ),
+                                        "/testdata/drivernotifications/reopening/dd-40325/ac5/reopen-created-resulted-events.json")),
                 Arguments.of("DD-40358-ac1",
                         defendantAggregateScenario()
                                 .withNotifyDriverStep(
@@ -491,7 +488,7 @@ class DefendantAggregateReopenedAppScenariosTest {
                                 .withNotifyDriverStep(
                                         "sjp  case ref to cc",
                                         "/testdata/drivernotifications/reopening/dd-39940/ac1b/sjp-case-ref-to-cc-resulted.json",
-                                        "/testdata/drivernotifications/reopening/dd-39940/ac1b/sjp-case-ref-to-cc-resulted-events.json")
+                                        null)
                                 .withNotifyDriverStep(
                                         "sjp  case ref to cc and application created",
                                         "/testdata/drivernotifications/reopening/dd-39940/ac1b/sjp-case-ref-to-cc-app-resulted.json",
