@@ -5,13 +5,13 @@ import static javax.ws.rs.core.Response.Status.OK;
 import static javax.ws.rs.core.Response.Status.fromStatusCode;
 import static javax.ws.rs.core.Response.status;
 import static org.slf4j.LoggerFactory.getLogger;
+import static uk.gov.justice.services.messaging.JsonObjects.createObjectBuilder;
 
 import uk.gov.justice.services.core.annotation.Adapter;
 import uk.gov.moj.cpp.stagingdvla.query.view.StagingdvlaQueryView;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.json.Json;
 import javax.json.JsonObject;
 import javax.ws.rs.core.Response;
 
@@ -40,7 +40,7 @@ public class DefaultQueryApiDriverAuditReportReportIdMaterialMaterialIdResource 
 
     private Response processedMaterialResponse(final Response materialResponse) {
         final String url = materialResponse.readEntity(String.class);
-        final JsonObject jsonObject = Json.createObjectBuilder()
+        final JsonObject jsonObject = createObjectBuilder()
                 .add("url", url)
                 .build();
 
