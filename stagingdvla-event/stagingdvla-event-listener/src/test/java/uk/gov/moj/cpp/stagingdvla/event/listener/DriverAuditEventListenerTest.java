@@ -8,6 +8,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 import static uk.gov.justice.services.messaging.JsonEnvelope.envelopeFrom;
+import static uk.gov.justice.services.messaging.JsonObjects.createObjectBuilder;
 import static uk.gov.justice.services.test.utils.core.messaging.MetadataBuilderFactory.metadataWithRandomUUID;
 import static uk.gov.justice.services.test.utils.core.reflection.ReflectionUtil.setField;
 
@@ -25,7 +26,6 @@ import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.UUID;
 
-import javax.json.Json;
 import javax.json.JsonObject;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -87,13 +87,13 @@ public class DriverAuditEventListenerTest {
                 .withPostcode("ER1 05UA")
                 .build();
 
-        final JsonObject payload = Json.createObjectBuilder()
+        final JsonObject payload = createObjectBuilder()
                 .add("id", ID.toString())
                 .add("userId", USER_ID.toString())
                 .add("userEmail", "peter@gmail.com")
                 .add("dateTime", DATE_TIME.toString())
-                .add("driverSearchReason",driverSearchReason.toString())
-                .add("driverSearchCriteria",driverSearchCriteria.toString())
+                .add("driverSearchReason", driverSearchReason.toString())
+                .add("driverSearchCriteria", driverSearchCriteria.toString())
                 .build();
 
 
@@ -153,13 +153,13 @@ public class DriverAuditEventListenerTest {
                 .withPostcode("ER1 05UA")
                 .build();
 
-        final JsonObject payload = Json.createObjectBuilder()
+        final JsonObject payload = createObjectBuilder()
                 .add("id", ID.toString())
                 .add("userId", USER_ID.toString())
                 .add("userEmail", "peter@gmail.com")
                 .add("dateTime", "")
-                .add("driverSearchReason",driverSearchReason.toString())
-                .add("driverSearchCriteria",driverSearchCriteria.toString())
+                .add("driverSearchReason", driverSearchReason.toString())
+                .add("driverSearchCriteria", driverSearchCriteria.toString())
                 .build();
 
 
