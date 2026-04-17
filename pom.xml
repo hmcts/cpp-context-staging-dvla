@@ -6,12 +6,12 @@
     <parent>
         <groupId>uk.gov.moj.cpp.common</groupId>
         <artifactId>service-parent-pom</artifactId>
-        <version>17.103.9-M1</version>
+        <version>17.103.9</version>
     </parent>
 
     <groupId>uk.gov.moj.cpp.staging.dvla</groupId>
     <artifactId>stagingdvla-parent</artifactId>
-    <version>17.103.90-PEG-2848-SNAPSHOT</version>
+    <version>17.103.90-RBSD-2609-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>stagingdvla Context - Parent Module</name>

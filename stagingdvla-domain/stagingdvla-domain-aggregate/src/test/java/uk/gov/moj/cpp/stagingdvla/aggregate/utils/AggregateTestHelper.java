@@ -7,9 +7,11 @@ import static org.apache.commons.collections.CollectionUtils.isNotEmpty;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.CONVICTED;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.ADJ;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.DDDL;
 
 import uk.gov.justice.core.courts.Address;
 import uk.gov.justice.core.courts.CourtCentre;
+import uk.gov.justice.core.courts.JudicialResultCategory;
 import uk.gov.justice.core.courts.LjaDetails;
 import uk.gov.justice.core.courts.nowdocument.NowText;
 import uk.gov.justice.core.courts.nowdocument.Nowaddress;
@@ -278,6 +280,7 @@ public class AggregateTestHelper {
                 .withPointsDisqualificationCode(pointsDisqualificationCode)
                 .withDrivingTestStipulation(option == ONE ? 1 : null)
                 .withDvlaCode(option == ONE ? prefix.concat(dvlaCode) : EMPTY)
+                .withJudicialResultCategory(DDDL.id.equals(resultIdentifier) ? JudicialResultCategory.ANCILLARY :JudicialResultCategory.FINAL)
                 .build();
     }
 

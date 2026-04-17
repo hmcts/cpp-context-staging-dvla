@@ -18,7 +18,7 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.Res
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.DDRNL;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.DDRVL;
 
-import uk.gov.justice.cpp.stagingdvla.event.DefendantCaseOffences;
+import uk.gov.justice.cpp.stagingdvla.event.Results;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -40,12 +40,12 @@ public class DisqualificationPeriodHelper {
     private DisqualificationPeriodHelper() {
     }
 
-    public static String getDisqualificationPeriod(DefendantCaseOffences offence, final String orderDate) {
+    public static String getDisqualificationPeriod(final List<Results> results, final String orderDate) {
         final AtomicReference<String> disqualificationPeriod = new AtomicReference<>(EMPTY);
         final AtomicBoolean hasLifetimeDisqualification = new AtomicBoolean(FALSE);
 
-        if (isNotEmpty(offence.getResults())) {
-            offence.getResults().stream().forEach(result -> {
+        if (isNotEmpty(results)) {
+            results.stream().forEach(result -> {
                 if (isNotEmpty(result.getPrompts())) {
                     result.getPrompts().stream().forEach(prompt -> {
                         if (DISQUALIFICATION_PERIOD.equalsIgnoreCase(prompt.getPromptReference())) {

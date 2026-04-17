@@ -3,7 +3,7 @@
     <parent>
         <artifactId>stagingdvla-command</artifactId>
         <groupId>uk.gov.moj.cpp.staging.dvla</groupId>
-        <version>17.103.90-PEG-2848-SNAPSHOT</version>
+        <version>17.103.90-RBSD-2609-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 

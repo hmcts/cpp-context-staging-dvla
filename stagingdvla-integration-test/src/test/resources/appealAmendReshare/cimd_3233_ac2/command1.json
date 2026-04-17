@@ -1,0 +1,214 @@
+{
+  "masterDefendantId": "%DEFENDANT_ID%",
+  "orderingCourt": {
+    "address": {
+      "address1": "176A Lavender Hill",
+      "address2": "London",
+      "postcode": "SW11 1JU"
+    },
+    "code": "B01LY00",
+    "courtHearingLocation": "B01LY01",
+    "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+    "lja": {
+      "ljaCode": "2577",
+      "ljaName": "South West London Magistrates' Court"
+    },
+    "name": "Lavender Hill Magistrates' Court",
+    "roomId": "9e4932f7-97b2-3010-b942-ddd2624e4dd8",
+    "roomName": "Courtroom 01"
+  },
+  "nowContent": {
+    "orderDate": "2026-09-09",
+    "defendant": {
+      "dateOfBirth": "2000-09-09",
+      "gender": "MALE",
+      "driverNumber": "ABCDE00010BCFAA",
+      "title": "MR",
+      "firstName": "Liana",
+      "middleName": "Jasmine Jasmine",
+      "lastName": "Powlowski",
+      "name": "Liana Jasmine Jasmine Powlowski",
+      "address": {
+        "line1": "56saon",
+        "line2": "56Police House",
+        "line3": "StreetDescription1",
+        "line4": "Locality1",
+        "line5": "Fayborough",
+        "postCode": "TW14 9XJ"
+      }
+    },
+    "caseApplicationReferences": [
+      "JW29150867"
+    ],
+    "cases": [
+      {
+        "reference": "JW29150867",
+        "initiationCode": "C",
+        "caseId": "a0738dff-4498-4b4b-95e3-189b1b7e91a2",
+        "defendantCaseOffences": [
+          {
+            "allocationDecision": "Summary-only offence",
+            "civilOffence": false,
+            "code": "RA88001",
+            "convictingCourtCode": "2577",
+            "convictionDate": "2026-02-05",
+            "convictionStatus": "Convicted",
+            "dvlaCode": "IN10",
+            "endorsableFlag": true,
+            "modeOfTrial": "Summary",
+            "plea": "GUILTY",
+            "results": [
+              {
+                "d20": false,
+                "dvlaCode": "C",
+                "label": "Suspended sentence order - imprisonment",
+                "prompts": [
+                  {
+                    "durationSequence": 1,
+                    "label": "Imprisonment Period",
+                    "promptIdentifier": "76f15753-1706-42fb-b922-0d56d01e5706",
+                    "promptReference": "imprisonmentPeriod",
+                    "value": "6 Months"
+                  },
+                  {
+                    "durationSequence": 2,
+                    "label": "Suspended period",
+                    "promptIdentifier": "95618691-0742-417e-82b9-c4d4bff94585",
+                    "promptReference": "suspendedPeriod",
+                    "value": "12 Months"
+                  },
+                  {
+                    "label": "Imprisonment reasons",
+                    "promptIdentifier": "ea957761-0813-4a92-9e7c-b536654325f0",
+                    "promptReference": "imprisonmentReasons",
+                    "value": "failure to comply with a pre-sentence drug testing order"
+                  },
+                  {
+                    "label": "Supervising Court",
+                    "promptIdentifier": "f4a4f159-779e-4f35-822a-b559a2415ecb",
+                    "promptReference": "supervisingCourt",
+                    "value": "Aberdeen JP Court"
+                  },
+                  {
+                    "label": "Bail remand days to count (tagged days)",
+                    "promptIdentifier": "4d10cd4b-fb39-40dd-88e1-2397832bc914",
+                    "promptReference": "bailRemandDaysToCountTaggedDays",
+                    "value": "10"
+                  },
+                  {
+                    "label": "Total custodial period",
+                    "promptIdentifier": "b2cf5a1e-8539-45a1-a287-4be5094a0e73",
+                    "promptReference": "totalCustodialPeriod",
+                    "value": "6 Months"
+                  },
+                  {
+                    "label": "Supervision period",
+                    "promptIdentifier": "fcff158b-aa4b-4111-afd8-6d536895fc20",
+                    "promptReference": "supervisionPeriod",
+                    "value": "12 Months"
+                  },
+                  {
+                    "label": "Probation team to be notified organisation name",
+                    "promptIdentifier": "68c92035-27fd-4ee6-b03c-fe18ea6dbcb0",
+                    "promptReference": "probationteamtobenotifiedOrganisationName",
+                    "value": "London Division NPS"
+                  },
+                  {
+                    "label": "Probation team to be notified email address 1",
+                    "promptIdentifier": "68c92035-27fd-4ee6-b03c-fe18ea6dbcb0",
+                    "promptReference": "probationteamtobenotifiedEmailAddress1",
+                    "value": "londonnps.court@justice.gov.uk"
+                  }
+                ],
+                "publishedForNows": false,
+                "resultIdentifier": "8b1cff00-a456-40da-9ce4-f11c20959084"
+              },
+              {
+                "d20": false,
+                "label": "Unpaid work. Requirement to be completed within 12 months.",
+                "prompts": [
+                  {
+                    "label": "Number of hours",
+                    "promptIdentifier": "72413aef-ecb9-4e9b-a143-31d1e9c11584",
+                    "promptReference": "numberOfHours",
+                    "value": "100 Hours"
+                  }
+                ],
+                "publishedForNows": false,
+                "resultDefinitionGroup": "Community Requirement",
+                "resultIdentifier": "9bec5977-1796-4645-9b9e-687d4f23d37d"
+              },
+              {
+                "d20": true,
+                "label": "Discretionary with ordinary disqualification",
+                "prompts": [
+                  {
+                    "durationSequence": 1,
+                    "label": "Disqualification period",
+                    "promptIdentifier": "2bf54447-328c-4c1b-a123-341adbd52172",
+                    "promptReference": "disqualificationPeriod",
+                    "value": "12 Months"
+                  },
+                  {
+                    "label": "Extension period section 35A (immediate custodial sentence)",
+                    "promptIdentifier": "81638260-3cd1-41e7-9725-c8e91e23bda1",
+                    "promptReference": "extensionPeriodSection35AImmediateCustodialSentence",
+                    "value": "test"
+                  },
+                  {
+                    "label": "Extension period section 35B (effect of custodial sentence noted)",
+                    "promptIdentifier": "0143f821-7cab-4e53-a00b-2fd1c3dc8204",
+                    "promptReference": "extensionPeriodSection35BEffectOfCustodialSentenceNoted",
+                    "value": "test"
+                  },
+                  {
+                    "label": "Defendant driving licence number",
+                    "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+                    "promptReference": "defendantDrivingLicenceNumber",
+                    "value": "VANFL002222OW9PH"
+                  }
+                ],
+                "publishedForNows": false,
+                "resultIdentifier": "ccfc452e-ebe4-4cd7-b8a0-4f90768447b4",
+                "resultWording": "Disqualified for holding or obtaining a driving licence. Discretionary disqualification. Driving record endorsed. Section 34(2) Road Traffic Offenders Act 1988"
+              },
+              {
+                "d20": false,
+                "label": "Driving disqualification suspended pending appeal",
+                "prompts": [
+                  {
+                    "label": "Defendant driving licence number",
+                    "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+                    "promptReference": "defendantDrivingLicenceNumber",
+                    "value": "VANFL002222OW9PH"
+                  }
+                ],
+                "publishedForNows": false,
+                "resultIdentifier": "238fc228-f948-430e-b0a1-7c9bdcafac46"
+              },
+              {
+                "d20": false,
+                "label": "Granted",
+                "prompts": [],
+                "publishedForNows": false,
+                "resultIdentifier": "2b3f7c20-8fc1-4fad-9076-df196c24b27e"
+              },
+              {
+                "d20": false,
+                "label": "0: None or unknown",
+                "prompts": [],
+                "publishedForNows": true,
+                "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956"
+              }
+            ],
+            "startDate": "2025-12-07",
+            "title": "Use a motor vehicle on a road / public place without third party insurance",
+            "wording": "Use a motor vehicle on a road / public place without third party insurance"
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": true,
+  "orderingHearingId": "4282cfaf-ce25-4054-9e0e-830a9365a7d9"
+}
