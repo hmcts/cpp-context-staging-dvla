@@ -280,7 +280,7 @@ public class AggregateTestHelper {
                 .withPointsDisqualificationCode(pointsDisqualificationCode)
                 .withDrivingTestStipulation(option == ONE ? 1 : null)
                 .withDvlaCode(option == ONE ? prefix.concat(dvlaCode) : EMPTY)
-                .withJudicialResultCategory(DDDL.id.equals(resultIdentifier) ? JudicialResultCategory.ANCILLARY :JudicialResultCategory.FINAL)
+                .withJudicialResultCategory(DDDL.id.equals(resultIdentifier) ? JudicialResultCategory.ANCILLARY : NHCC.equals(resultIdentifier) ? JudicialResultCategory.INTERMEDIARY : JudicialResultCategory.FINAL)
                 .build();
     }
 
