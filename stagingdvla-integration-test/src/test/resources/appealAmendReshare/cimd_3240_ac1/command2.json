@@ -1,0 +1,226 @@
+{
+  "masterDefendantId": "%DEFENDANT_ID%",
+  "orderingCourt": {
+    "address": {
+      "address1": "176A Lavender Hill",
+      "address2": "London",
+      "postcode": "SW11 1JU"
+    },
+    "code": "B01LY00",
+    "courtHearingLocation": "B01LY02",
+    "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+    "lja": {
+      "ljaCode": "2577",
+      "ljaName": "South West London Magistrates' Court"
+    },
+    "name": "Lavender Hill Magistrates' Court",
+    "roomId": "b4562684-9209-3ec4-a544-7f80dabd94d8",
+    "roomName": "Courtroom 02"
+  },
+  "nowContent": {
+    "orderDate": "2023-05-16",
+    "defendant": {
+      "dateOfBirth": "2000-09-09",
+      "gender": "MALE",
+      "driverNumber": "ABCDE00010BCFAA",
+      "title": "MR",
+      "firstName": "Liana",
+      "middleName": "Jasmine Jasmine",
+      "lastName": "Powlowski",
+      "name": "Liana Jasmine Jasmine Powlowski",
+      "address": {
+        "line1": "56saon",
+        "line2": "56Police House",
+        "line3": "StreetDescription1",
+        "line4": "Locality1",
+        "line5": "Fayborough",
+        "postCode": "TW14 9XJ"
+      }
+    },
+    "caseApplicationReferences": [
+      "JW29150867"
+    ],
+    "cases": [
+      {
+        "reference": "JW29150867",
+        "caseId": "a0738dff-4498-4b4b-95e3-189b1b7e91a2",
+        "defendantCaseOffences": [
+          {
+            "allocationDecision": "Summary-only offence",
+            "civilOffence": false,
+            "code": "RA88001",
+            "convictingCourtCode": "2577",
+            "convictionDate": "2026-02-06",
+            "convictionStatus": "Convicted",
+            "dvlaCode": "IN10",
+            "endorsableFlag": true,
+            "modeOfTrial": "Summary",
+            "plea": "GUILTY",
+            "results": [
+              {
+                "resultIdentifier": "d278650c-e429-11e8-9f32-f2801f1b9fd1",
+                "judicialResultCategory": "Intermediary",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "70c98fa6-804d-11e8-adc0-fa7ae01bbebc",
+                    "promptReference": "dd8e337f-b530-42fa-a147-245ee05926bb",
+                    "label": "Next hearing in magistrates' court",
+                    "value": "Date of hearing:08/05/2023\nTime of hearing:10:00\nCourthouse organisation name:Lavender Hill Magistrates' Court\nCourthouse address line 1:176A Lavender Hill\nCourthouse address line 2:London\nCourthouse post code:SW11 1JU\nCourtroom:Courtroom 01\nHearing type:Sentence\nEstimated duration:30 MINUTES\nBooking reference:69f053a9-2d1e-4706-9012-7d79e279b5f2"
+                  },
+                  {
+                    "promptIdentifier": "61f951c3-f18d-4a44-ae4a-0cad4efb4133",
+                    "promptReference": "defendantToAttendTheNextHearing",
+                    "label": "Defendant to attend the next hearing",
+                    "value": "Yes"
+                  },
+                  {
+                    "promptIdentifier": "1d55fdeb-7dbc-46ec-b3ff-7b15fe08a476",
+                    "promptReference": "3ef9cf8f-2b6f-4ff9-9b23-6692064179d4",
+                    "label": "At request of the prosecution",
+                    "value": "Reason:Test"
+                  },
+                  {
+                    "promptIdentifier": "7fc17a01-2f5a-4433-aae9-28e0c959f73b",
+                    "promptReference": "d04ca326-8d15-4d5e-91a4-b700aebbb965",
+                    "label": "Adjournment reasons",
+                    "value": ""
+                  }
+                ],
+                "resultWording": "",
+                "d20": false,
+                "label": "Adjournment"
+              }
+            ],
+            "startDate": "2025-12-08",
+            "title": "Use a motor vehicle on a road / public place without third party insurance",
+            "wording": "Use a motor vehicle on a road / public place without third party insurance"
+          },
+          {
+            "allocationDecision": "Summary-only offence",
+            "civilOffence": false,
+            "code": "RA88002",
+            "convictingCourtCode": "2577",
+            "convictionDate": "2026-02-06",
+            "convictionStatus": "Convicted",
+            "dvlaCode": "IN20",
+            "endorsableFlag": true,
+            "modeOfTrial": "Summary",
+            "plea": "GUILTY",
+            "results": [
+              {
+                "resultIdentifier": "d278650c-e429-11e8-9f32-f2801f1b9fd1",
+                "judicialResultCategory": "Intermediary",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "70c98fa6-804d-11e8-adc0-fa7ae01bbebc",
+                    "promptReference": "dd8e337f-b530-42fa-a147-245ee05926bb",
+                    "label": "Next hearing in magistrates' court",
+                    "value": "Date of hearing:08/05/2023\nTime of hearing:10:00\nCourthouse organisation name:Lavender Hill Magistrates' Court\nCourthouse address line 1:176A Lavender Hill\nCourthouse address line 2:London\nCourthouse post code:SW11 1JU\nCourtroom:Courtroom 01\nHearing type:Sentence\nEstimated duration:30 MINUTES\nBooking reference:69f053a9-2d1e-4706-9012-7d79e279b5f2"
+                  },
+                  {
+                    "promptIdentifier": "61f951c3-f18d-4a44-ae4a-0cad4efb4133",
+                    "promptReference": "defendantToAttendTheNextHearing",
+                    "label": "Defendant to attend the next hearing",
+                    "value": "Yes"
+                  },
+                  {
+                    "promptIdentifier": "1d55fdeb-7dbc-46ec-b3ff-7b15fe08a476",
+                    "promptReference": "3ef9cf8f-2b6f-4ff9-9b23-6692064179d4",
+                    "label": "At request of the prosecution",
+                    "value": "Reason:Test"
+                  },
+                  {
+                    "promptIdentifier": "7fc17a01-2f5a-4433-aae9-28e0c959f73b",
+                    "promptReference": "d04ca326-8d15-4d5e-91a4-b700aebbb965",
+                    "label": "Adjournment reasons",
+                    "value": ""
+                  }
+                ],
+                "resultWording": "",
+                "d20": false,
+                "label": "Adjournment"
+              }
+            ],
+            "startDate": "2025-12-08",
+            "title": "Drive a motor vehicle otherwise than in accordance with a licence - endorsable offence",
+            "wording": "Drive a motor vehicle otherwise than in accordance with a licence - endorsable offence"
+          },
+          {
+            "allocationDecision": "Summary-only offence",
+            "civilOffence": false,
+            "code": "RA88003",
+            "convictingCourtCode": "2577",
+            "convictionDate": "2026-02-06",
+            "convictionStatus": "Convicted",
+            "dvlaCode": "IN30",
+            "endorsableFlag": true,
+            "modeOfTrial": "Summary",
+            "plea": "GUILTY",
+            "results": [
+              {
+                "resultIdentifier": "d076bd4a-17d5-4720-899a-1c6f96e3b35f",
+                "judicialResultCategory": "Intermediary",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "fbed768b-ee95-4434-87c8-e81cbc8d24c8",
+                    "promptReference": "9032329d-0d4e-4681-a277-de2aaf8799a9",
+                    "label": "Next hearing in Crown Court",
+                    "value": "Fixed Date:30/06/2025\nTime of hearing:10:30\nCourthouse organisation name:Reading Crown Court\nCourthouse address line 1:Old Shire Hall\nCourthouse address line 2:The Forbury\nCourthouse address line 3:Reading\nCourthouse address line 4:Berks.\nCourthouse post code:RG1 3EH\nCourtroom:Courtroom 01\nHearing type:Plea and Trial Preparation\nEstimated duration:1 HOURS"
+                  },
+                  {
+                    "promptIdentifier": "61f951c3-f18d-4a44-ae4a-0cad4efb4133",
+                    "promptReference": "defendantToAttendTheNextHearing",
+                    "label": "Defendant to attend the next hearing",
+                    "value": "Yes"
+                  },
+                  {
+                    "promptIdentifier": "69ff04d5-84e8-4a61-8478-82c2999c1969",
+                    "promptReference": "e0c1735c-65d6-4bb3-9dfc-b25092e872f9",
+                    "label": "To attend or a warrant to issue",
+                    "value": ""
+                  },
+                  {
+                    "promptIdentifier": "7fc17a01-2f5a-4433-aae9-28e0c959f73b",
+                    "promptReference": "76fc334a-f524-4df0-a992-c195089f9938",
+                    "label": "Adjournment reasons",
+                    "value": ""
+                  }
+                ],
+                "d20": false,
+                "label": "Remand unconditional bail"
+              }
+            ],
+            "startDate": "2025-12-08",
+            "title": "Drive motor vehicle with a proportion of a specified controlled drug above the specified limit",
+            "wording": "Drive motor vehicle with a proportion of a specified controlled drug above the specified limit"
+          }
+        ]
+      }
+    ],
+    "courtApplications": [
+      {
+        "applicationReceivedDate": "2026-02-05",
+        "applicationReference": "SG821225728",
+        "applicationStatus": "FINALISED",
+        "applicationType": "Appeal against conviction and sentence by a Magistrates' Court to the Crown Court",
+        "applicationTypeId": "abc05494-05d7-4289-b4bc-a92726257a4b",
+        "id": "922eb0f2-4b94-448b-8c0c-9deb06b82484",
+        "results": [
+          {
+            "d20": false,
+            "label": "Appeal against sentence allowed",
+            "prompts": [],
+            "publishedForNows": false,
+            "resultIdentifier": "d861586a-df88-440d-98d4-63cc2a680ae1",
+            "resultWording": ""
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": true,
+  "orderingHearingId": "93bc6155-952f-4909-a36a-b9f277da3b85"
+}
