@@ -3,25 +3,25 @@ package uk.gov.moj.cpp.stagingdvla.processor;
 import static java.util.Objects.nonNull;
 import static java.util.UUID.fromString;
 import static java.util.UUID.randomUUID;
-import static javax.json.Json.createObjectBuilder;
+import static org.apache.commons.collections.CollectionUtils.isNotEmpty;
 import static uk.gov.justice.services.core.annotation.Component.EVENT_PROCESSOR;
 import static uk.gov.justice.services.messaging.Envelope.metadataFrom;
+import static uk.gov.justice.services.messaging.JsonObjects.createObjectBuilder;
+import static uk.gov.justice.services.messaging.JsonObjects.createReader;
 import static uk.gov.moj.cpp.stagingdvla.helper.DriverSearchAuditHelper.FILE_NAME;
 import static uk.gov.moj.cpp.stagingdvla.helper.DriverSearchAuditHelper.isForDriverAuditReportDocument;
-
-import uk.gov.justice.core.courts.CourtDocument;
-import uk.gov.justice.core.courts.Material;
-import uk.gov.justice.cpp.stagingdvla.CaseDocument;
-import uk.gov.justice.cpp.stagingdvla.DocumentCategory;
-import uk.gov.justice.cpp.stagingdvla.command.handler.DriverRecordSearchAuditReportCreated;
-import static org.apache.commons.collections.CollectionUtils.isNotEmpty;
 import static uk.gov.moj.cpp.stagingdvla.notify.util.DrivingConvictionTransformUtil.EndorsementType.NEW;
 import static uk.gov.moj.cpp.stagingdvla.notify.util.DrivingConvictionTransformUtil.getEndorsementType;
 import static uk.gov.moj.cpp.stagingdvla.notify.util.DrivingConvictionTransformUtil.hasMultipleConvictingCourts;
 import static uk.gov.moj.cpp.stagingdvla.notify.util.DrivingConvictionTransformUtil.hasMultipleConvictionDates;
 
+import uk.gov.justice.core.courts.CourtDocument;
+import uk.gov.justice.core.courts.Material;
 import uk.gov.justice.core.courts.Personalisation;
 import uk.gov.justice.core.courts.notification.EmailChannel;
+import uk.gov.justice.cpp.stagingdvla.CaseDocument;
+import uk.gov.justice.cpp.stagingdvla.DocumentCategory;
+import uk.gov.justice.cpp.stagingdvla.command.handler.DriverRecordSearchAuditReportCreated;
 import uk.gov.justice.cpp.stagingdvla.event.Cases;
 import uk.gov.justice.cpp.stagingdvla.event.DriverNotified;
 import uk.gov.justice.services.adapter.rest.exception.BadRequestException;
@@ -30,14 +30,11 @@ import uk.gov.justice.services.common.converter.ObjectToJsonObjectConverter;
 import uk.gov.justice.services.core.annotation.Handles;
 import uk.gov.justice.services.core.annotation.ServiceComponent;
 import uk.gov.justice.services.core.sender.Sender;
+import uk.gov.justice.services.fileservice.api.FileServiceException;
 import uk.gov.justice.services.fileservice.client.FileService;
+import uk.gov.justice.services.fileservice.domain.FileReference;
 import uk.gov.justice.services.messaging.Envelope;
 import uk.gov.justice.services.messaging.JsonEnvelope;
-
-import javax.inject.Inject;
-import javax.json.JsonObject;
-import uk.gov.justice.services.fileservice.api.FileServiceException;
-import uk.gov.justice.services.fileservice.domain.FileReference;
 import uk.gov.justice.services.messaging.Metadata;
 import uk.gov.moj.cpp.material.url.MaterialUrlGenerator;
 import uk.gov.moj.cpp.stagingdvla.SjpDocumentTypes;
@@ -50,7 +47,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
-import javax.json.Json;
+
+import javax.inject.Inject;
+import javax.json.JsonObject;
 import javax.json.JsonReader;
 
 import org.slf4j.Logger;
@@ -149,7 +148,7 @@ public class SystemDocGeneratorEventProcessor {
 
             LOGGER.info("Retrieved file reference '{}' successfully", payloadFileReference);
 
-            try (final JsonReader reader = Json.createReader(payloadFileReference.getContentStream())) {
+            try (final JsonReader reader = createReader(payloadFileReference.getContentStream())) {
 
                 final JsonObject rawPayload = reader.readObject();
 

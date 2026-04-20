@@ -13,6 +13,7 @@ import uk.gov.justice.services.messaging.Metadata;
 import uk.gov.justice.services.messaging.spi.DefaultEnvelope;
 import uk.gov.justice.services.messaging.spi.DefaultJsonEnvelopeProvider;
 
+import javax.json.Json;
 import javax.json.JsonObject;
 
 import org.junit.jupiter.api.Test;
@@ -60,7 +61,7 @@ public class DriverSearchAuditApiTest {
 
     @Test
     public void shouldHandleDeleteDriverSearchAuditReportCommand() {
-        final JsonObject payload = createObjectBuilder()
+        final JsonObject payload = Json.createObjectBuilder()
                 .add("reportFileId", "1002101212121")
                 .build();
         final Metadata metadata = Envelope.metadataBuilder()

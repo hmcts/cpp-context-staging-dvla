@@ -9,12 +9,12 @@ import static java.util.Objects.nonNull;
 import static org.apache.commons.collections.CollectionUtils.isEmpty;
 import static org.apache.commons.collections.CollectionUtils.isNotEmpty;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
-import static org.apache.commons.lang3.StringUtils.equalsIgnoreCase;
 import static org.apache.commons.lang3.StringUtils.isEmpty;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 import static org.apache.commons.lang3.StringUtils.isNumeric;
 import static org.slf4j.LoggerFactory.getLogger;
 import static uk.gov.justice.core.courts.JudicialResultCategory.FINAL;
+import static uk.gov.justice.core.courts.JudicialResultCategory.INTERMEDIARY;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ALCOHOL_DRUG_MAX_LEVEL;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.AOF;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ApplicationType.AACMC;
@@ -45,8 +45,6 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.Res
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.AASA;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.AASD;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.ACSD;
-import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.ADJ;
-import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.ADJOURNSJP;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.APA;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.ASV;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.AW;
@@ -78,6 +76,7 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.Res
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.STARTING_FROM_DATE_DATE_OF_INTERIM_DISQUALIFICATION;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.TT99;
 
+import uk.gov.justice.core.courts.JudicialResultCategory;
 import uk.gov.justice.cpp.stagingdvla.event.ApplicationTypes;
 import uk.gov.justice.cpp.stagingdvla.event.Cases;
 import uk.gov.justice.cpp.stagingdvla.event.CourtApplications;
@@ -175,7 +174,7 @@ public class OffenceUtil {
                 } else {
                     return OATS_PREV_NOT_ENDORSED;
                 }
-            } else if (hasResultType(currentOffence, ADJ) || hasResultType(currentOffence, ADJOURNSJP) || hasResultType(currentOffence, SUMRCC)) {
+            } else if (hasResultCategory(currentOffence, INTERMEDIARY)) {
                 if (hasD20Endorsement(previousOffence)) {
                     return NO_UPDATE_PREV_ENDORSED;
                 } else {
@@ -487,6 +486,11 @@ public class OffenceUtil {
                 offence.getResults().stream().noneMatch(result -> FINAL.equals(result.getJudicialResultCategory()));
     }
 
+    public static boolean hasResultCategory(final DefendantCaseOffences offence, final JudicialResultCategory judicialResultCategory) {
+        return nonNull(offence) && isNotEmpty(offence.getResults()) &&
+                offence.getResults().stream().anyMatch(result -> judicialResultCategory.equals(result.getJudicialResultCategory()));
+    }
+
     public static boolean hasResultType(final DefendantCaseOffences offence, final ResultType resultType) {
         return nonNull(offence) && isNotEmpty(offence.getResults()) &&
                 offence.getResults().stream().anyMatch(result -> resultType.id.equalsIgnoreCase(result.getResultIdentifier()));
@@ -610,7 +614,7 @@ public class OffenceUtil {
                                     currCase.getDefendantCaseOffences().
                                             stream().
                                             filter(offence ->
-                                                    equalsIgnoreCase(prevOffence.getMainOffenceCode(),
+                                                    nonNull(prevOffence.getMainOffenceCode()) && prevOffence.getMainOffenceCode().equalsIgnoreCase(
                                                             offence.getMainOffenceCode())).
                                             findFirst().
                                             orElse(null);
@@ -833,7 +837,7 @@ public class OffenceUtil {
                                 currCase.getDefendantCaseOffences().
                                         stream().
                                         filter(offence ->
-                                                equalsIgnoreCase(prevOffence.getMainOffenceCode(),
+                                                isNotEmpty(prevOffence.getMainOffenceCode()) && prevOffence.getMainOffenceCode().equalsIgnoreCase(
                                                         offence.getMainOffenceCode())).
                                         findFirst().
                                         orElse(null);
@@ -865,7 +869,7 @@ public class OffenceUtil {
                                         getResults().
                                         stream().
                                         noneMatch(currResult ->
-                                                equalsIgnoreCase(currResult.getResultIdentifier(),
+                                                isNotEmpty(currResult.getResultIdentifier()) && currResult.getResultIdentifier().equalsIgnoreCase(
                                                         prevResult.getResultIdentifier())));
                 d20Removed = removedResults.anyMatch(
                         removedResult -> nonNull(removedResult.getD20()) &&
@@ -887,7 +891,7 @@ public class OffenceUtil {
                             getResults().
                             stream().
                             noneMatch(currResult ->
-                                    equalsIgnoreCase(currResult.getResultIdentifier(),
+                                    isNotEmpty(currResult.getResultIdentifier()) && currResult.getResultIdentifier().equalsIgnoreCase(
                                             prevResult.getResultIdentifier()))).collect(Collectors.toList());
         }
         return emptyList();

@@ -3,6 +3,7 @@ package uk.gov.moj.stagingdvla.util;
 import static java.lang.String.format;
 import static java.util.Optional.ofNullable;
 import static org.junit.Assert.fail;
+import static uk.gov.justice.services.messaging.JsonObjects.createReader;
 import static uk.gov.moj.stagingdvla.util.OptionalPresent.ifPresent;
 
 import java.io.StringReader;
@@ -16,7 +17,6 @@ import javax.jms.MessageProducer;
 import javax.jms.Session;
 import javax.jms.TextMessage;
 import javax.jms.Topic;
-import javax.json.Json;
 import javax.json.JsonObject;
 
 import io.restassured.path.json.JsonPath;
@@ -148,7 +148,7 @@ public class QueueUtil {
 
     public static Optional<JsonObject> retrieveMessageAsJsonObject(final MessageConsumer consumer) {
         return ifPresent(retrieveMessageAsString(consumer, RETRIEVE_TIMEOUT),
-                (x) -> Optional.of(Json.createReader(new StringReader(x)).readObject())
+                (x) -> Optional.of(createReader(new StringReader(x)).readObject())
         ).orElse(Optional::empty);
     }
 
