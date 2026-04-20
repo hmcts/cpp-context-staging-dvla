@@ -9,7 +9,6 @@ import static java.util.Objects.nonNull;
 import static org.apache.commons.collections.CollectionUtils.isEmpty;
 import static org.apache.commons.collections.CollectionUtils.isNotEmpty;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
-import static org.apache.commons.lang3.StringUtils.equalsIgnoreCase;
 import static org.apache.commons.lang3.StringUtils.isEmpty;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 import static org.apache.commons.lang3.StringUtils.isNumeric;
@@ -46,8 +45,6 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.Res
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.AASA;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.AASD;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.ACSD;
-import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.ADJ;
-import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.ADJOURNSJP;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.APA;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.ASV;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.AW;
@@ -617,7 +614,7 @@ public class OffenceUtil {
                                     currCase.getDefendantCaseOffences().
                                             stream().
                                             filter(offence ->
-                                                    equalsIgnoreCase(prevOffence.getMainOffenceCode(),
+                                                    nonNull(prevOffence.getMainOffenceCode()) && prevOffence.getMainOffenceCode().equalsIgnoreCase(
                                                             offence.getMainOffenceCode())).
                                             findFirst().
                                             orElse(null);
@@ -840,7 +837,7 @@ public class OffenceUtil {
                                 currCase.getDefendantCaseOffences().
                                         stream().
                                         filter(offence ->
-                                                equalsIgnoreCase(prevOffence.getMainOffenceCode(),
+                                                isNotEmpty(prevOffence.getMainOffenceCode()) && prevOffence.getMainOffenceCode().equalsIgnoreCase(
                                                         offence.getMainOffenceCode())).
                                         findFirst().
                                         orElse(null);
@@ -872,7 +869,7 @@ public class OffenceUtil {
                                         getResults().
                                         stream().
                                         noneMatch(currResult ->
-                                                equalsIgnoreCase(currResult.getResultIdentifier(),
+                                                isNotEmpty(currResult.getResultIdentifier()) && currResult.getResultIdentifier().equalsIgnoreCase(
                                                         prevResult.getResultIdentifier())));
                 d20Removed = removedResults.anyMatch(
                         removedResult -> nonNull(removedResult.getD20()) &&
@@ -894,7 +891,7 @@ public class OffenceUtil {
                             getResults().
                             stream().
                             noneMatch(currResult ->
-                                    equalsIgnoreCase(currResult.getResultIdentifier(),
+                                    isNotEmpty(currResult.getResultIdentifier()) && currResult.getResultIdentifier().equalsIgnoreCase(
                                             prevResult.getResultIdentifier()))).collect(Collectors.toList());
         }
         return emptyList();

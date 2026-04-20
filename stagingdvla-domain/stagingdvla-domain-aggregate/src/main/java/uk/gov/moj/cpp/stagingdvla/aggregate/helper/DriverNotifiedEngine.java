@@ -141,7 +141,7 @@ public class DriverNotifiedEngine {
         // Get previous case using reference number
         final Cases previousCase = nonNull(previousDriverNotified) ? previousDriverNotified.getCases()
                 .stream()
-                .filter((aCase -> equalsIgnoreCase(currentCase.getReference(), aCase.getReference())))
+                .filter((aCase -> isNotEmpty(currentCase.getReference()) && currentCase.getReference().equalsIgnoreCase(aCase.getReference())))
                 .findFirst()
                 .orElse(null) : null;
 
