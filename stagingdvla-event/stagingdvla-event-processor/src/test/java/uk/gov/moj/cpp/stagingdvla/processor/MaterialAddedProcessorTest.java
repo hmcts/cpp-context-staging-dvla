@@ -1,6 +1,5 @@
 package uk.gov.moj.cpp.stagingdvla.processor;
 
-import static javax.json.Json.createObjectBuilder;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.verify;
@@ -9,6 +8,7 @@ import static uk.gov.justice.services.messaging.JsonEnvelope.metadataFrom;
 import static uk.gov.justice.services.messaging.JsonMetadata.ID;
 import static uk.gov.justice.services.messaging.JsonMetadata.NAME;
 import static uk.gov.justice.services.messaging.JsonMetadata.USER_ID;
+import static uk.gov.justice.services.messaging.JsonObjects.createObjectBuilder;
 import static uk.gov.justice.services.test.utils.core.reflection.ReflectionUtil.setField;
 import static uk.gov.moj.cpp.stagingdvla.processor.helper.EnvelopeHelper.verifySendAtIndex;
 import static uk.gov.moj.cpp.stagingdvla.service.MaterialService.AUDIT_REPORT_ORIGINATOR_VALUE;
@@ -27,11 +27,11 @@ import uk.gov.justice.services.messaging.MetadataBuilder;
 import java.util.List;
 import java.util.UUID;
 
-import javax.json.Json;
 import javax.json.JsonObject;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
@@ -39,7 +39,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.junit.jupiter.api.Test;
 
 @Disabled
 @ExtendWith(MockitoExtension.class)
@@ -68,12 +67,12 @@ public class MaterialAddedProcessorTest {
 
     @Test
     public void shouldProcessMaterialAddedEvent() {
-        final JsonObject metaDataJson = Json.createObjectBuilder()
+        final JsonObject metaDataJson = createObjectBuilder()
                 .add(ID, UUID.randomUUID().toString())
                 .add(NAME, "material.material-added")
                 .add(SOURCE, AUDIT_REPORT_ORIGINATOR_VALUE)
                 .add(PROCESS_ID, UUID.randomUUID().toString())
-                .add(CONTEXT, Json.createObjectBuilder()
+                .add(CONTEXT, createObjectBuilder()
                         .add(USER_ID, UUID.randomUUID().toString()))
                 .build();
 

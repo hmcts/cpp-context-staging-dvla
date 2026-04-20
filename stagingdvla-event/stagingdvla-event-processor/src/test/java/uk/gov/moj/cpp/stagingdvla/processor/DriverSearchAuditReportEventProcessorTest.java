@@ -11,6 +11,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.quality.Strictness.LENIENT;
 import static uk.gov.justice.services.messaging.JsonEnvelope.envelopeFrom;
+import static uk.gov.justice.services.messaging.JsonObjects.createObjectBuilder;
 import static uk.gov.justice.services.test.utils.core.messaging.MetadataBuilderFactory.metadataWithRandomUUID;
 
 import uk.gov.justice.cpp.stagingdvla.DriverAuditReportSearchCriteria;
@@ -38,17 +39,16 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import javax.json.Json;
 import javax.json.JsonObject;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.junit.jupiter.api.Test;
 import org.mockito.junit.jupiter.MockitoSettings;
 
 @MockitoSettings(strictness = LENIENT)
@@ -208,7 +208,7 @@ public class DriverSearchAuditReportEventProcessorTest {
         final UUID id = randomUUID();
 
 
-        final JsonObject searchAuditReportDeletionFailed = Json.createObjectBuilder()
+        final JsonObject searchAuditReportDeletionFailed = createObjectBuilder()
                 .add("id", id.toString())
                 .build();
         final JsonEnvelope requestMessage = envelopeFrom(
