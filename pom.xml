@@ -26,11 +26,11 @@
         <jackson-data-format.version>2.8.8</jackson-data-format.version>
         <systemdocgenerator.version>17.0.57</systemdocgenerator.version>
         <material.version>17.0.57</material.version>
-        <coredomain.version>17.103.10</coredomain.version>
-        <usersgroups.version>17.104.47</usersgroups.version>
+        <coredomain.version>17.103.12</coredomain.version>
+        <usersgroups.version>17.104.46</usersgroups.version>
         <commons-text.version>1.10.0</commons-text.version>
-        <progression.version>17.0.248</progression.version>
-        <sjp.version>17.103.167</sjp.version>
+        <progression.version>17.0.246</progression.version>
+        <sjp.version>17.103.166</sjp.version>
         <jgitflow.maven.developBranchName>main</jgitflow.maven.developBranchName>
         <h2.version>1.4.196</h2.version>
     </properties>
