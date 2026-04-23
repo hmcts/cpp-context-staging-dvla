@@ -196,10 +196,10 @@ public class DefendantAggregate implements Aggregate {
                     if (nonNull(e.getCases())) {
                         e.getCases().forEach(c -> {
                             previousDriverNotifiedByCase.put(c.getReference(), e);
-                            if(isNull(e.getCourtApplications()) || e.getCourtApplications().stream()
-                                    .noneMatch(courtApplication->courtApplication.getApplicationReference().equals(c.getReference()))){
+                            if (isNull(e.getCourtApplications()) || e.getCourtApplications().stream()
+                                    .noneMatch(courtApplication -> isNotEmpty(courtApplication.getApplicationReference()) && courtApplication.getApplicationReference().equals(c.getReference()))) {
                                 latestDriverNotifiedByOriginalCaseResult.put(c.getReference(), e);
-                        }
+                            }
                         });
                     }
 
