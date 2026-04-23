@@ -1,5 +1,6 @@
 package uk.gov.moj.cpp.stagingdvla.aggregate;
 
+import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 import static org.apache.commons.lang3.ObjectUtils.isNotEmpty;
 import static org.slf4j.LoggerFactory.getLogger;
@@ -39,6 +40,7 @@ public class DefendantAggregate implements Aggregate {
     private boolean isWaitingRetryTrigger = false;
     private int retrySequence = 0;
     private final Map<String, DriverNotified> previousDriverNotifiedByCase = new HashMap<>();
+    private final Map<String, DriverNotified> latestDriverNotifiedByOriginalCaseResult = new HashMap<>();
     private final Map<String, List<ApplicationTypes>> sjpCaseToCcReferredApplications = new HashMap<>();
     private static final String CODE_FOR_SJP_CASE = "J";
 
@@ -49,7 +51,8 @@ public class DefendantAggregate implements Aggregate {
                                        final List<Cases> currentCases,
                                        final UUID hearingId,
                                        final List<CourtApplications> courtApplications,
-                                       final UUID masterDefendantId) {
+                                       final UUID masterDefendantId,
+                                       final Boolean isReshare) {
 
         final List<SjpCaseToCcReferred> sjpCaseReferredEvents = getSjpCaseReferredEvents(currentCases, courtApplications);
         // Create a new event for each incoming cases
@@ -62,7 +65,9 @@ public class DefendantAggregate implements Aggregate {
                 currentCases,
                 hearingId,
                 courtApplications,
-                sjpCaseToCcReferredApplications);
+                latestDriverNotifiedByOriginalCaseResult,
+                sjpCaseToCcReferredApplications,
+                isReshare);
 
         if (driverNotifiedEvents.isEmpty()) {
             if (LOGGER.isInfoEnabled()) {
@@ -189,7 +194,13 @@ public class DefendantAggregate implements Aggregate {
                     // For each case, get the latest DriverNotifiedEvent. This is required for comparing if
                     // results has been updated
                     if (nonNull(e.getCases())) {
-                        e.getCases().forEach(c -> previousDriverNotifiedByCase.put(c.getReference(), e));
+                        e.getCases().forEach(c -> {
+                            previousDriverNotifiedByCase.put(c.getReference(), e);
+                            if(isNull(e.getCourtApplications()) || e.getCourtApplications().stream()
+                                    .noneMatch(courtApplication->courtApplication.getApplicationReference().equals(c.getReference()))){
+                                latestDriverNotifiedByOriginalCaseResult.put(c.getReference(), e);
+                        }
+                        });
                     }
 
                     isWaitingRetryTrigger = false;

@@ -54,6 +54,8 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasD20Endo
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasPointsDisqualificationCode;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasResultType;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.isCaseReopen;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.isStdecGranted;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.isStdecNotGranted;
 
 import uk.gov.justice.core.courts.CourtCentre;
 import uk.gov.justice.core.courts.nowdocument.Nowdefendant;
@@ -104,7 +106,9 @@ public class DriverNotifiedEngine {
             final List<Cases> currentCases,
             final UUID hearingId,
             final List<CourtApplications> courtApplications,
-            final Map<String, List<ApplicationTypes>> sjpCaseToCcReferredApplications) {
+            final Map<String, DriverNotified> latestDriverNotifiedByOriginalCaseResult,
+            final Map<String, List<ApplicationTypes>> sjpCaseToCcReferredApplications,
+            final Boolean isReshare) {
 
         final List<DriverNotified> driverNotifiedList = currentCases
                 .stream()
@@ -116,7 +120,9 @@ public class DriverNotifiedEngine {
                         currentCase,
                         hearingId,
                         courtApplications,
-                        sjpCaseToCcReferredApplications.get(currentCase.getReference())
+                        latestDriverNotifiedByOriginalCaseResult.get(currentCase.getReference()),
+                        sjpCaseToCcReferredApplications.get(currentCase.getReference()),
+                        isReshare
                 ))
                 .filter(Objects::nonNull)
                 .collect(toList());
@@ -134,9 +140,22 @@ public class DriverNotifiedEngine {
                                               final Cases currentCase,
                                               final UUID hearingId,
                                               final List<CourtApplications> courtApplications,
-                                              final List<ApplicationTypes> sjpCaseToCcReferredApplications) {
+                                              final DriverNotified latestDriverNotifiedByCaseResult,
+                                              final List<ApplicationTypes> sjpCaseToCcReferredApplications,
+                                              final Boolean isReshare) {
 
         LOGGER.info("Processing case: {}", currentCase.getReference());
+
+        if(isStdecNotGranted(courtApplications) && Boolean.TRUE.equals(isReshare) && nonNull(latestDriverNotifiedByCaseResult)) {
+            return DriverNotified.driverNotified()
+                    .withValuesFrom(latestDriverNotifiedByCaseResult)
+                    .withNotificationType(NotificationType.UPDATE)
+                    .withNotificationWasPreviouslySent(true)
+                    .withCaseApplicationReferences(singletonList(currentCase.getReference()))
+                    .withCourtApplications(courtApplications)
+                    .withPrevious(getPrevious(previousDriverNotified))
+                    .build();
+        }
 
         // Get previous case using reference number
         final Cases previousCase = nonNull(previousDriverNotified) ? previousDriverNotified.getCases()
@@ -301,8 +320,8 @@ public class DriverNotifiedEngine {
                 .withSuspendedSentence(getSuspendedSentence(currentOffence.getResults()))
                 .withDttpDtetp(getDttpDtetp(currentOffence.getResults()))
                 .withInterimImposedFinalSentence(getInterimImposedFinalSentence(currentOffence.getResults()))
-                .withSentencingCourtCode(getSentencingCourtCode(currentOffence, previousOffence, amendmentDate, orderDate, orderingCourtCode))
-                .withSentenceDate(getSentenceDate(currentOffence, previousOffence, amendmentDate, orderDate))
+                .withSentencingCourtCode(getSentencingCourtCode(currentOffence, previousOffence, amendmentDate, orderDate, orderingCourtCode, courtApplications))
+                .withSentenceDate(getSentenceDate(currentOffence, previousOffence, amendmentDate, orderDate,courtApplications))
                 .withDateFromWhichDisqRemoved(getDateFromWhichDisqRemoved(currentOffence.getResults()))
                 .withDateDisqSuspendedPendingAppeal(getDateDisqSuspendedPendingAppeal(currentOffence, courtApplications, previousOffence, amendmentDate, orderDate))
                 .withDateDisqReimposedFollowingAppeal(getDateDisqReimposedFollowingAppeal(courtApplications, orderDate))
@@ -438,7 +457,7 @@ public class DriverNotifiedEngine {
                 } else {
                     if (UPDATE_MERGE.equals(endorsementStatus) || OATS_PREV_ENDORSED.equals(endorsementStatus)
                             || NO_UPDATE_PREV_ENDORSED.equals(endorsementStatus) || NO_RESULT_PREV_ENDORSED.equals(endorsementStatus)) {
-                        mergeOffences(currentCase, currentOffence, previousOffence, courtApplications, orderDate, orderingCourtCode, hasAppealResultOrGranted(courtApplications), isCaseHasReopenedApplication);
+                        mergeOffences(currentCase, currentOffence, previousOffence, courtApplications, orderDate, orderingCourtCode, hasAppealResultOrGranted(courtApplications), isCaseHasReopenedApplication, isStdecGranted(courtApplications));
                     } else if (SPECIAL_REASON.equals(endorsementStatus) || NO_UPDATE_PREV_NOT_ENDORSED.equals(endorsementStatus)) {
                         removeOffence(currentOffence, currentCase);
                     }
@@ -521,7 +540,7 @@ public class DriverNotifiedEngine {
             builder.withOatsEndorsements(oatsOffences);
         }
 
-        if (hasAppealResultOrGranted(courtApplications) || isCaseReopen(courtApplications, sjpCaseToCcReferredApplications)) {
+        if (hasAppealResultOrGranted(courtApplications) || isCaseReopen(courtApplications, sjpCaseToCcReferredApplications) || isStdecGranted(courtApplications)) {
             builder.withNotificationType(isNotEmpty(updatedEndorsements) || isNotEmpty(oatsOffences)
                     ? NotificationType.UPDATE : NotificationType.REMOVE);
 
@@ -534,14 +553,14 @@ public class DriverNotifiedEngine {
     private static void mergeOffences(final Cases currentCase, final DefendantCaseOffences currentOffence,
                                       final DefendantCaseOffences previousOffence, final List<CourtApplications> courtApplications,
                                       final String orderDate, final String orderingCourtCode, final boolean hasAppealResultOrGranted,
-                                      final boolean isCaseReopened) {
+                                      final boolean isCaseReopened, final boolean isStatDec) {
         if (isNull(currentOffence)) {
             currentCase.getDefendantCaseOffences().add(DefendantCaseOffences.defendantCaseOffences()
                     .withValuesFrom(previousOffence)
                     .withDateDisqReimposedFollowingAppeal(getDateDisqReimposedFollowingAppeal(courtApplications, orderDate))
                     .build());
         } else if (nonNull(previousOffence)) {
-            final DefendantCaseOffences mergedOffence = mergeOffence(currentOffence, previousOffence, orderDate, orderingCourtCode, hasAppealResultOrGranted, isCaseReopened);
+            final DefendantCaseOffences mergedOffence = mergeOffence(currentOffence, previousOffence, orderDate, orderingCourtCode, hasAppealResultOrGranted, isCaseReopened, isStatDec);
             currentCase.getDefendantCaseOffences().remove(currentOffence);
             currentCase.getDefendantCaseOffences().add(mergedOffence);
         }

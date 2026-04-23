@@ -65,7 +65,8 @@ class DefendantAggregateTestSteps {
                         step.input.currentCases(),
                         step.input.hearingId(),
                         step.input.courtApplications(),
-                        step.input.masterDefendantId()
+                        step.input.masterDefendantId(),
+                        step.input.isReshare
                 );
                 if (isNull(step.expectedEventsJsonFile)) {
                     assertThat(name + " - Events were produced", eventStream, IsNull.nullValue());

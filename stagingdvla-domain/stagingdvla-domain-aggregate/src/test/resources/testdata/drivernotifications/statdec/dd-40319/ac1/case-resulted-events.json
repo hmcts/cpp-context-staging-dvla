@@ -1,0 +1,102 @@
+{
+  "caseApplicationReferences": [
+    "28DI2829010"
+  ],
+  "cases": [
+    {
+      "caseId": "880ac79a-017d-466c-b9d7-834ec7373082",
+      "caseStatus": "ACTIVE",
+      "defendantCaseOffences": [
+        {
+          "civilOffence": false,
+          "code": "RR84141",
+          "convictionStatus": "Not Convicted",
+          "dateFromWhichDisqRemoved": "",
+          "disqualificationPeriod": "",
+          "dttpDtetp": "",
+          "dvlaCode": "NE98",
+          "endorsableFlag": false,
+          "fine": "",
+          "interimImposedFinalSentence": "",
+          "modeOfTrial": "Summary",
+          "penaltyPoints": "6",
+          "results": [
+            {
+              "d20": true,
+              "judicialResultCategory": "ANCILLARY",
+              "label": "Driving record endorsed with penalty points",
+              "prompts": [
+                {
+                  "label": "Penalty points for this offence",
+                  "promptIdentifier": "a8719de4-7783-448a-b792-e3f94e670ad0",
+                  "promptReference": "PENPT",
+                  "value": "6"
+                }
+              ],
+              "publishedForNows": false,
+              "resultIdentifier": "cee54856-4450-4f28-a8a9-72b688726201"
+            },
+            {
+              "d20": false,
+              "judicialResultCategory": "ANCILLARY",
+              "label": "0: None or unknown",
+              "publishedForNows": true,
+              "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956"
+            }
+          ],
+          "startDate": "2024-07-12",
+          "title": "Drive vehicle with axle weight exceeding maximum permitted - local traffic order within Greater London",
+          "wording": "Before 08 Aug 2024 at Croydon drove a motor vehicle, namely VH89712 Tesla Model X, on a road, namely Aby Road, subject of a local traffic order, namely Transport for London , when the weight conveyed to the road surface by one of its axles exceeded the maximum permitted axle weight of 11500 kg."
+        }
+      ],
+      "hasSV": false,
+      "initiationCode": "C",
+      "reference": "28DI2829010"
+    }
+  ],
+  "courtApplications": [],
+  "defendant": {
+    "address": {
+      "line1": "21",
+      "line2": "Furnburry Park Road",
+      "line3": "London",
+      "postCode": "SW11 3TQ"
+    },
+    "dateOfBirth": "2001-02-18",
+    "firstName": "Everett",
+    "gender": "MALE",
+    "lastName": "Rolfson",
+    "name": "Everett Rolfson",
+    "title": "MR"
+  },
+  "distinctPrompts": [],
+  "identifier": "dded72c8-28c8-47b5-8150-fb31c8f2d6e0",
+  "licenceProducedInCourt": "0: None or unknown",
+  "masterDefendantId": "727e9428-fa9d-4ac2-abdf-ca4100f31693",
+  "materialId": "0e68eaa9-302b-47bb-8e95-4e3279db1362",
+  "notificationType": "New",
+  "orderDate": "2026-04-20",
+  "orderingCourt": {
+    "address": {
+      "address1": "The Magistrates' Court",
+      "address2": "Barclay Road",
+      "address3": "Croydon",
+      "address4": "",
+      "address5": "",
+      "postcode": "CR9 3NG"
+    },
+    "code": "B01EF00",
+    "courtHearingLocation": "B01EF01",
+    "id": "31b3d313-7a7c-4598-bb4b-c1bff9b00e26",
+    "lja": {
+      "ljaCode": "2576",
+      "ljaName": "South London Magistrates' Court"
+    },
+    "name": "Croydon Magistrates' Court",
+    "roomId": "bfb67c13-789c-373b-b442-52b82faf863e",
+    "roomName": "Courtroom 01"
+  },
+  "orderingCourtCode": "2576",
+  "orderingHearingId": "cfcfb58c-c0e2-4aef-aef3-d45508f1a17e",
+  "retrySequence": 0
+}

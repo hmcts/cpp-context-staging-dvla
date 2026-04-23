@@ -1,0 +1,196 @@
+{
+  "caseApplicationReferences": [
+    "28DI7983968"
+  ],
+  "cases": [
+    {
+      "caseId": "0cc6a0a0-a68d-4c2e-9f4c-8eb257e6fb8b",
+      "caseStatus": "ACTIVE",
+      "defendantCaseOffences": [],
+      "hasSV": false,
+      "initiationCode": "C",
+      "reference": "28DI7983968"
+    }
+  ],
+  "courtApplications": [
+    {
+      "applicationReceivedDate": "2026-04-20",
+      "applicationReference": "28DI7983968",
+      "applicationStatus": "LISTED",
+      "applicationType": "Appearance to make statutory declaration (other than SJP)",
+      "applicationTypeId": "a6663f2a-c900-4bb4-a7d7-4be34cb2f1f7",
+      "id": "11dd50cb-80cb-4956-aaa2-cec3659aaceb",
+      "results": [
+        {
+          "d20": false,
+          "judicialResultCategory": "INTERMEDIARY",
+          "label": "Adjournment",
+          "prompts": [
+            {
+              "label": "Next hearing in magistrates' court",
+              "promptIdentifier": "70c98fa6-804d-11e8-adc0-fa7ae01bbebc",
+              "promptReference": "48fbb56c-4652-4f36-b6a5-973e91ff5971",
+              "value": "Date of hearing:22/04/2026\nTime of hearing:10:00\nCourthouse organisation name:Croydon Magistrates' Court\nCourthouse address line 1:The Magistrates' Court\nCourthouse address line 2:Barclay Road\nCourthouse address line 3:Croydon\nCourthouse post code:CR9 3NG\nCourtroom:Courtroom 01\nHearing type:Application\nEstimated duration:20 MINUTES\nBooking reference:3bfb334e-010d-4d5f-bc96-292171127b43"
+            },
+            {
+              "label": "Defendant to attend the next hearing",
+              "promptIdentifier": "61f951c3-f18d-4a44-ae4a-0cad4efb4133",
+              "promptReference": "defendantToAttendTheNextHearing",
+              "value": "Yes"
+            },
+            {
+              "label": "To attend or a warrant to issue",
+              "promptIdentifier": "69ff04d5-84e8-4a61-8478-82c2999c1969",
+              "promptReference": "aefac6f4-592e-42b7-a2c3-cda583fd0a0c",
+              "value": ""
+            },
+            {
+              "label": "Adjournment reasons",
+              "promptIdentifier": "7fc17a01-2f5a-4433-aae9-28e0c959f73b",
+              "promptReference": "30a26df2-ca0c-483b-aadc-ea1bfce42aa8",
+              "value": ""
+            }
+          ],
+          "publishedForNows": false,
+          "resultIdentifier": "d278650c-e429-11e8-9f32-f2801f1b9fd1",
+          "resultWording": ""
+        },
+        {
+          "d20": false,
+          "judicialResultCategory": "ANCILLARY",
+          "label": "To attend or a warrant to issue",
+          "publishedForNows": true,
+          "resultDefinitionGroup": "Adjournment reasons",
+          "resultIdentifier": "69ff04d5-84e8-4a61-8478-82c2999c1969",
+          "resultWording": ""
+        },
+        {
+          "d20": false,
+          "judicialResultCategory": "ANCILLARY",
+          "label": "Next hearing in magistrates' court",
+          "prompts": [
+            {
+              "label": "Date of hearing",
+              "promptIdentifier": "d27a5d86-d51f-4c6e-914b-cb4b0abc4283",
+              "promptReference": "HDATE",
+              "value": "22/04/2026"
+            },
+            {
+              "label": "Time of hearing",
+              "promptIdentifier": "4d125a5a-acbc-461d-a657-ba5643af85a6",
+              "promptReference": "timeOfHearing",
+              "value": "10:00"
+            },
+            {
+              "label": "Courthouse organisation name",
+              "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+              "promptReference": "hCHOUSEOrganisationName",
+              "value": "Croydon Magistrates' Court"
+            },
+            {
+              "label": "Courthouse address line 1",
+              "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+              "promptReference": "hCHOUSEAddress1",
+              "value": "The Magistrates' Court"
+            },
+            {
+              "label": "Courthouse address line 2",
+              "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+              "promptReference": "hCHOUSEAddress2",
+              "value": "Barclay Road"
+            },
+            {
+              "label": "Courthouse address line 3",
+              "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+              "promptReference": "hCHOUSEAddress3",
+              "value": "Croydon"
+            },
+            {
+              "label": "Courthouse post code",
+              "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+              "promptReference": "hCHOUSEPostCode",
+              "value": "CR9 3NG"
+            },
+            {
+              "label": "Courtroom",
+              "promptIdentifier": "49ec9b26-dd63-4637-b2e9-55ba9948a90f",
+              "promptReference": "HCROOM",
+              "value": "Courtroom 01"
+            },
+            {
+              "label": "Hearing type",
+              "promptIdentifier": "c1116d12-dd35-4171-807a-2cb845357d22",
+              "promptReference": "HTYPE",
+              "value": "Application"
+            },
+            {
+              "label": "Estimated duration",
+              "promptIdentifier": "d85cc2d7-66c8-471e-b6ff-c1bc60c6cdac",
+              "promptReference": "HEST",
+              "value": "20 MINUTES"
+            },
+            {
+              "label": "Booking reference",
+              "promptIdentifier": "e73e6ab8-9bfe-4135-9fe6-f526544584d6",
+              "promptReference": "bookingReference",
+              "value": "3bfb334e-010d-4d5f-bc96-292171127b43"
+            }
+          ],
+          "publishedForNows": true,
+          "resultDefinitionGroup": "Next hearing",
+          "resultIdentifier": "70c98fa6-804d-11e8-adc0-fa7ae01bbebc",
+          "resultWording": ""
+        }
+      ]
+    }
+  ],
+  "defendant": {
+    "address": {
+      "line1": "21",
+      "line2": "Furnburry Park Road",
+      "line3": "London",
+      "postCode": "SW11 3TQ"
+    },
+    "dateOfBirth": "2001-02-18",
+    "firstName": "Gino",
+    "gender": "MALE",
+    "lastName": "Pacocha",
+    "name": "Gino Pacocha",
+    "title": "MR"
+  },
+  "distinctPrompts": [],
+  "identifier": "fdd5def6-97cc-49df-bef1-c2d710c68fa9",
+  "licenceProducedInCourt": "0: None or unknown",
+  "masterDefendantId": "a96aa878-b618-40a3-9c86-0e522701731e",
+  "materialId": "14992068-bed6-4dca-996a-5726f8b3f72f",
+  "notificationType": "Remove",
+  "notificationWasPreviouslySent": true,
+  "orderDate": "2026-04-21",
+  "orderingCourt": {
+    "address": {
+      "address1": "The Magistrates' Court",
+      "address2": "Barclay Road",
+      "address3": "Croydon",
+      "address4": "",
+      "address5": "",
+      "postcode": "CR9 3NG"
+    },
+    "code": "B01EF00",
+    "courtHearingLocation": "B01EF01",
+    "id": "31b3d313-7a7c-4598-bb4b-c1bff9b00e26",
+    "lja": {
+      "ljaCode": "2576",
+      "ljaName": "South London Magistrates' Court"
+    },
+    "name": "Croydon Magistrates' Court",
+    "roomId": "bfb67c13-789c-373b-b442-52b82faf863e",
+    "roomName": "Courtroom 01"
+  },
+  "orderingCourtCode": "2576",
+  "orderingHearingId": "f3be25b4-741a-4e19-a4a9-965b32b16992",
+  "previous": "{{src:case-resulted-events.json}}",
+  "removedEndorsements": [
+    "NE98"
+  ],
+  "retrySequence": 0
+}
