@@ -777,7 +777,7 @@ public class OffenceUtil {
     }
 
     public static boolean isStdecNotGranted(final List<CourtApplications> courtApplications) {
-        if (isNotEmpty(courtApplications))
+        if (isNotEmpty(courtApplications) && courtApplications.stream().anyMatch(OffenceUtil::isStDec))
             return courtApplications.stream()
                     .filter(ca -> isNotEmpty(ca.getResults()))
                     .filter(OffenceUtil::isStDec)
