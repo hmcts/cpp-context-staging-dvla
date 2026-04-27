@@ -20,7 +20,6 @@ public class AggregateConstants {
 
     public static final String CONVICTED = "Convicted";
     public static final String DEFAULT_DVLA_CODE = "NE98";
-    public static final String CROWN_COURT_CODE_PREFIX = "0";
     public static final String C_FOR_CROWN = "C";
 
     public static final String TT99 = "TT99";
