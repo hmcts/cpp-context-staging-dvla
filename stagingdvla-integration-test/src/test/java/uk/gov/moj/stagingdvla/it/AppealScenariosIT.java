@@ -494,7 +494,7 @@ public class AppealScenariosIT extends AbstractIntegrationTest {
         DriverNotifiedEventAssertion.with(driverNotifiedList.get(0))
                 .hasCaseReference("JW29150867")
                 .hasNotificationType(NotificationType.UPDATE)
-                .hasUpdatedEndorsementContains( "IN20")
+                .hasUpdatedEndorsementContains("IN20")
                 .hasOatsEndorsementContains("IN10")
                 .hasNoRemovedEndorsements()
                 .hasCourtApplications(1)
@@ -1329,6 +1329,52 @@ public class AppealScenariosIT extends AbstractIntegrationTest {
                 .hasNoUpdatedEndorsements()
                 .hasCourtApplications(1)
                 .hasOffences(0);
+
+        verifyDVLANotificationCommandInvoked(driverNotifiedList);
+        verifyGenerateDocumentStubCommandInvoked(driverNotifiedList);
+    }
+
+    @Test
+    public void cimd_3810() throws IOException {
+        List<DriverNotified> driverNotifiedList = sendAndVerifyEvent("appealAmendReshare/cimd_3810/command1.json", 1);
+
+        DriverNotifiedEventAssertion.with(driverNotifiedList.get(0))
+                .hasCaseReference("JW29150867")
+                .hasNotificationType(NotificationType.NEW)
+                .hasNoUpdatedEndorsements()
+                .hasNoRemovedEndorsements()
+                .hasCourtApplications(0)
+                .hasOffences(2)
+                .hasResults(1, 2)
+                .hasResults(2, 2);
+
+        verifyDVLANotificationCommandInvoked(driverNotifiedList);
+        verifyGenerateDocumentStubCommandInvoked(driverNotifiedList);
+
+        driverNotifiedList = sendAndVerifyEvent("appealAmendReshare/cimd_3810/command2.json", 1);
+
+        DriverNotifiedEventAssertion.with(driverNotifiedList.get(0))
+                .hasCaseReference("JW29150867")
+                .hasNotificationType(NotificationType.UPDATE)
+                .hasUpdatedEndorsementContains("IN10")
+                .hasOatsEndorsementContains("IN20")
+                .hasNoRemovedEndorsements()
+                .hasCourtApplications(1)
+                .hasOffences(2)
+                .hasDVLACode(1, "IN10")
+                .hasDVLACode(2, "IN20")
+                .hasOffenceCode(1, "RA88001")
+                .hasOffenceCode(2, "RA88002")
+                .hasPenaltyPoints(1, "6")
+                .hasPenaltyPoints(2, "3")
+                .hasAmountOfFine(1, "£100.00")
+                .hasAmountOfFine(2, "£200.00")
+                .hasDisqualificationPeriod(1, EMPTY_STRING)
+                .hasDisqualificationPeriod(2, EMPTY_STRING)
+                .hasResults(1, 2)
+                .hasResults(2, 2)
+                .hasWording(1, "Use a motor vehicle on a road / public place without third party insurance")
+                .hasWording(2, "Drive a motor vehicle otherwise than in accordance with a licence - endorsable offence");
 
         verifyDVLANotificationCommandInvoked(driverNotifiedList);
         verifyGenerateDocumentStubCommandInvoked(driverNotifiedList);

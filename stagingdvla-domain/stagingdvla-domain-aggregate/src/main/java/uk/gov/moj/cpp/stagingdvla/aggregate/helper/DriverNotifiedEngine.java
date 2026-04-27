@@ -389,7 +389,7 @@ public class DriverNotifiedEngine {
                                                               final List<Cases> cases, final List<CourtApplications> courtApplications,
                                                               final List<String> nonEndorsableOffenceCodes) {
         if (hasAppealRefusedResult(courtApplications)
-                && !(hasResultType(courtApplications, DDRE) || hasSV(cases))) {
+                && !(hasResultType(courtApplications, DDRE) || hasSV(cases) || hasResultType(courtApplications, SV))) {
             return false;
         }
 
