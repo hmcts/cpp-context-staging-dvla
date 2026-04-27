@@ -1,10 +1,10 @@
 {
   "caseApplicationReferences": [
-    "28DI7946250"
+    "28DI2035955"
   ],
   "cases": [
     {
-      "caseId": "8fb230cb-be9f-429c-9d46-8dd3e0eb9f85",
+      "caseId": "5dc459f6-f434-4711-b5f1-3a632ce1aeb2",
       "caseStatus": "ACTIVE",
       "defendantCaseOffences": [
         {
@@ -51,7 +51,7 @@
       ],
       "hasSV": false,
       "initiationCode": "C",
-      "reference": "28DI7946250"
+      "reference": "28DI2035955"
     }
   ],
   "courtApplications": [],
@@ -63,40 +63,40 @@
       "postCode": "SW11 3TQ"
     },
     "dateOfBirth": "2001-02-18",
-    "firstName": "Heather",
+    "firstName": "Leonardo",
     "gender": "MALE",
-    "lastName": "Kiehn",
-    "name": "Heather Kiehn",
+    "lastName": "Hettinger",
+    "name": "Leonardo Hettinger",
     "title": "MR"
   },
   "distinctPrompts": [],
-  "identifier": "af4ca04f-0b9f-4775-a657-fb37a0aa1fdc",
+  "identifier": "7594e3f4-40c5-4126-a23f-c0d54f14db3e",
   "licenceProducedInCourt": "0: None or unknown",
-  "masterDefendantId": "1535b4b9-8d00-4a84-92ae-d401a5d64598",
-  "materialId": "5a5c0604-9c49-4118-8466-2450527de792",
+  "masterDefendantId": "1670b495-dfb3-4d62-aa01-f40b6077cb4b",
+  "materialId": "074765a3-f288-40ab-bb90-4af25b59310b",
   "notificationType": "New",
   "orderDate": "2026-04-27",
   "orderingCourt": {
     "address": {
-      "address1": "The Magistrates' Court",
-      "address2": "Barclay Road",
-      "address3": "Croydon",
+      "address1": "176A Lavender Hill",
+      "address2": "London",
+      "address3": "",
       "address4": "",
       "address5": "",
-      "postcode": "CR9 3NG"
+      "postcode": "SW11 1JU"
     },
-    "code": "B01EF00",
-    "courtHearingLocation": "B01EF01",
-    "id": "31b3d313-7a7c-4598-bb4b-c1bff9b00e26",
+    "code": "B01LY00",
+    "courtHearingLocation": "B01LY01",
+    "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
     "lja": {
-      "ljaCode": "2576",
-      "ljaName": "South London Magistrates' Court"
+      "ljaCode": "2577",
+      "ljaName": "South West London Magistrates' Court"
     },
-    "name": "Croydon Magistrates' Court",
-    "roomId": "bfb67c13-789c-373b-b442-52b82faf863e",
+    "name": "Lavender Hill Magistrates' Court",
+    "roomId": "9e4932f7-97b2-3010-b942-ddd2624e4dd8",
     "roomName": "Courtroom 01"
   },
-  "orderingCourtCode": "2576",
-  "orderingHearingId": "354879c1-fdf1-49a2-8af6-8988ac371dad",
+  "orderingCourtCode": "2577",
+  "orderingHearingId": "329702b5-743a-4e46-af38-c550dbfac6d2",
   "retrySequence": 0
 }

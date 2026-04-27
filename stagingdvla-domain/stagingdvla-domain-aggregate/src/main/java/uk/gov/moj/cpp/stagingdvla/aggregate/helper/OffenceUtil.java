@@ -776,11 +776,10 @@ public class OffenceUtil {
         return false;
     }
 
-    public static boolean isStdecNotGranted(final List<CourtApplications> courtApplications) {
-        if (isNotEmpty(courtApplications) && courtApplications.stream().anyMatch(OffenceUtil::isStDec))
+    public static boolean isApplicationNotGranted(final List<CourtApplications> courtApplications) {
+        if (isNotEmpty(courtApplications) )
             return courtApplications.stream()
                     .filter(ca -> isNotEmpty(ca.getResults()))
-                    .filter(OffenceUtil::isStDec)
                     .noneMatch(ca -> isGranted(ca.getResults()));
 
         return false;
@@ -797,7 +796,7 @@ public class OffenceUtil {
         return results.stream().map(Results::getResultIdentifier).anyMatch(G.id::equals);
     }
 
-    private static boolean isStDec(CourtApplications courtApplications) {
+    public static boolean isStDec(CourtApplications courtApplications) {
         return Objects.nonNull(courtApplications.getApplicationType()) &&
                 courtApplications.getApplicationType().toUpperCase().contains(ST_DEC);
     }

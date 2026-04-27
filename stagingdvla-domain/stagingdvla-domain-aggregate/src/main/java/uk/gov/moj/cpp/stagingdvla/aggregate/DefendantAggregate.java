@@ -1,6 +1,5 @@
 package uk.gov.moj.cpp.stagingdvla.aggregate;
 
-import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
 import static org.apache.commons.lang3.ObjectUtils.isNotEmpty;
 import static org.slf4j.LoggerFactory.getLogger;
@@ -40,7 +39,7 @@ public class DefendantAggregate implements Aggregate {
     private boolean isWaitingRetryTrigger = false;
     private int retrySequence = 0;
     private final Map<String, DriverNotified> previousDriverNotifiedByCase = new HashMap<>();
-    private final Map<String, DriverNotified> latestDriverNotifiedByOriginalCaseResult = new HashMap<>();
+    private final Map<String, Map<UUID,DriverNotified>> driverNotifiedByCaseAndHearing = new HashMap<>();
     private final Map<String, List<ApplicationTypes>> sjpCaseToCcReferredApplications = new HashMap<>();
     private static final String CODE_FOR_SJP_CASE = "J";
 
@@ -65,7 +64,7 @@ public class DefendantAggregate implements Aggregate {
                 currentCases,
                 hearingId,
                 courtApplications,
-                latestDriverNotifiedByOriginalCaseResult,
+                driverNotifiedByCaseAndHearing,
                 sjpCaseToCcReferredApplications,
                 isReshare);
 
@@ -196,9 +195,13 @@ public class DefendantAggregate implements Aggregate {
                     if (nonNull(e.getCases())) {
                         e.getCases().forEach(c -> {
                             previousDriverNotifiedByCase.put(c.getReference(), e);
-                            if (isNull(e.getCourtApplications()) || e.getCourtApplications().stream()
-                                    .noneMatch(courtApplication -> isNotEmpty(courtApplication.getApplicationReference()) && courtApplication.getApplicationReference().equals(c.getReference()))) {
-                                latestDriverNotifiedByOriginalCaseResult.put(c.getReference(), e);
+                            if (Boolean.TRUE.equals(e.getIsUsedPreviousEvent())) {
+                                driverNotifiedByCaseAndHearing.get(c.getReference()).remove(e.getOrderingHearingId());
+                            } else {
+                                if (!driverNotifiedByCaseAndHearing.containsKey(c.getReference())) {
+                                    driverNotifiedByCaseAndHearing.put(c.getReference(), new HashMap<>());
+                                }
+                                driverNotifiedByCaseAndHearing.get(c.getReference()).put(e.getOrderingHearingId(), e);
                             }
                         });
                     }

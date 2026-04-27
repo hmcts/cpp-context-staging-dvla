@@ -23,7 +23,9 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.End
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.SPECIAL_REASON;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.UPDATE_MERGE;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.POINTS_DISQUALIFICATION_CODE;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.ADJ;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.DDRE;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.RFSD;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.SV;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.DisqualificationPeriodHelper.getDisqualificationPeriod;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.MergeUtil.getDistinctPrompts;
@@ -53,9 +55,9 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAppealR
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasD20Endorsement;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasPointsDisqualificationCode;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasResultType;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.isApplicationNotGranted;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.isCaseReopen;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.isStdecGranted;
-import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.isStdecNotGranted;
 
 import uk.gov.justice.core.courts.CourtCentre;
 import uk.gov.justice.core.courts.nowdocument.Nowdefendant;
@@ -68,7 +70,9 @@ import uk.gov.justice.cpp.stagingdvla.event.DriverNotified;
 import uk.gov.justice.cpp.stagingdvla.event.NotificationType;
 import uk.gov.justice.cpp.stagingdvla.event.Previous;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -106,7 +110,7 @@ public class DriverNotifiedEngine {
             final List<Cases> currentCases,
             final UUID hearingId,
             final List<CourtApplications> courtApplications,
-            final Map<String, DriverNotified> latestDriverNotifiedByOriginalCaseResult,
+            final Map<String, Map<UUID,DriverNotified>> driverNotifiedByCaseAndHearing,
             final Map<String, List<ApplicationTypes>> sjpCaseToCcReferredApplications,
             final Boolean isReshare) {
 
@@ -120,7 +124,7 @@ public class DriverNotifiedEngine {
                         currentCase,
                         hearingId,
                         courtApplications,
-                        latestDriverNotifiedByOriginalCaseResult.get(currentCase.getReference()),
+                        driverNotifiedByCaseAndHearing.get(currentCase.getReference()),
                         sjpCaseToCcReferredApplications.get(currentCase.getReference()),
                         isReshare
                 ))
@@ -140,19 +144,24 @@ public class DriverNotifiedEngine {
                                               final Cases currentCase,
                                               final UUID hearingId,
                                               final List<CourtApplications> courtApplications,
-                                              final DriverNotified latestDriverNotifiedByCaseResult,
+                                              final Map<UUID,DriverNotified> driverNotifiedByHearing,
                                               final List<ApplicationTypes> sjpCaseToCcReferredApplications,
                                               final Boolean isReshare) {
 
         LOGGER.info("Processing case: {}", currentCase.getReference());
 
-        if(isStdecNotGranted(courtApplications) && Boolean.TRUE.equals(isReshare) && nonNull(latestDriverNotifiedByCaseResult)) {
+        if(isApplicationResharedAndNotGrantedResult(courtApplications, isReshare)) {
             return DriverNotified.driverNotified()
-                    .withValuesFrom(latestDriverNotifiedByCaseResult)
+                    .withValuesFrom(
+                            Objects.requireNonNull(driverNotifiedByHearing.values().stream()
+                                    .filter(event -> LocalDate.parse(event.getOrderDate()).isBefore(LocalDate.parse(orderDate)))
+                                    .max(Comparator.comparing(DriverNotified::getOrderDate))
+                                    .orElse(null)))
                     .withNotificationType(NotificationType.UPDATE)
                     .withNotificationWasPreviouslySent(true)
                     .withCaseApplicationReferences(singletonList(currentCase.getReference()))
                     .withCourtApplications(courtApplications)
+                    .withOrderDate(orderDate)
                     .withPrevious(getPrevious(previousDriverNotified))
                     .build();
         }
@@ -226,6 +235,12 @@ public class DriverNotifiedEngine {
             return builder.build();
         }
         return null;
+    }
+
+    private static boolean isApplicationResharedAndNotGrantedResult(final List<CourtApplications> courtApplications, final Boolean isReshare) {
+        return isApplicationNotGranted(courtApplications) && courtApplications.stream().anyMatch(OffenceUtil::isStDec) &&
+                (hasResultType(courtApplications, ADJ) || hasResultType(courtApplications, RFSD) || courtApplications.stream().allMatch(c->isEmpty(c.getResults())))
+                && Boolean.TRUE.equals(isReshare) ;
     }
 
     private static List<Cases> getUpdatedCases(final Cases cases) {

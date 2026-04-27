@@ -46,7 +46,6 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAppealR
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasD20Endorsement;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasPointsDisqualificationCode;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasResultType;
-import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.isStdecNotGranted;
 
 import uk.gov.justice.cpp.stagingdvla.event.Cases;
 import uk.gov.justice.cpp.stagingdvla.event.CourtApplications;
@@ -842,47 +841,5 @@ class OffenceUtilTest {
         boolean hasResult = hasResultType(offence, SV);
 
         assertThat(hasResult, is(false));
-    }
-
-    @Test
-    void shouldIsStdecNotGrantedReturnFalseWhenCourtApplicationsIsEmpty() {
-        assertThat(isStdecNotGranted(emptyList()), is(false));
-    }
-
-    @Test
-    void shouldIsStdecNotGrantedReturnFalseWhenCourtApplicationsIsNull() {
-        assertThat(isStdecNotGranted(null), is(false));
-    }
-
-    @Test
-    void shouldIsStdecNotGrantedReturnFalseWhenCourtApplicationsIsNotStatDec() {
-        assertThat(isStdecNotGranted(singletonList(CourtApplications.courtApplications().withApplicationType("reopen").build())), is(false));
-    }
-
-    @Test
-    void shouldIsStdecNotGrantedReturnFalseWhenCourtApplicationsIsStatDecAndGrantedResult() {
-        final List<CourtApplications> courtApplications = singletonList(CourtApplications.courtApplications()
-                .withApplicationType("STATUTORY DECLARATION")
-                .withResults(singletonList(results().withResultIdentifier(G.id).build()))
-                .build());
-        assertThat(isStdecNotGranted(courtApplications), is(false));
-    }
-
-    @Test
-    void shouldIsStdecNotGrantedReturnTrueWhenCourtApplicationsIsStatDecAndNotGrantedResult() {
-        final List<CourtApplications> courtApplications = singletonList(CourtApplications.courtApplications()
-                .withApplicationType("STATUTORY DECLARATION")
-                .withResults(singletonList(results().withResultIdentifier(RFSD.id).build()))
-                .build());
-        assertThat(isStdecNotGranted(courtApplications), is(true));
-    }
-
-    @Test
-    void shouldIsStdecNotGrantedReturnTrueWhenCourtApplicationsIsStatDecAndNotEmptyResult() {
-        final List<CourtApplications> courtApplications = singletonList(CourtApplications.courtApplications()
-                .withApplicationType("STATUTORY DECLARATION")
-                .withResults(null)
-                .build());
-        assertThat(isStdecNotGranted(courtApplications), is(true));
     }
 }
