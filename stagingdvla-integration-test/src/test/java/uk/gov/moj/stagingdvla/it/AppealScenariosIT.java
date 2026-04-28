@@ -1335,7 +1335,7 @@ public class AppealScenariosIT extends AbstractIntegrationTest {
     }
 
     @Test
-    public void cimd_3810() throws IOException {
+    void cimd_3810() throws IOException {
         List<DriverNotified> driverNotifiedList = sendAndVerifyEvent("appealAmendReshare/cimd_3810/command1.json", 1);
 
         DriverNotifiedEventAssertion.with(driverNotifiedList.get(0))
