@@ -150,7 +150,7 @@ public class DriverNotifiedEngine {
 
         LOGGER.info("Processing case: {}", currentCase.getReference());
 
-        if (isApplicationResharedAndNotGrantedResult(courtApplications, isReshare)) {
+        if (isStDecApplicationResharedAndNotGrantedResult(courtApplications, isReshare)) {
             return getLatestDriverNotifiedFromPreviousHearing(previousDriverNotified,orderDate,currentCase,courtApplications,previousDriverNotifiedByHearing);
         }
 
@@ -251,7 +251,7 @@ public class DriverNotifiedEngine {
                 .build();
     }
 
-    private static boolean isApplicationResharedAndNotGrantedResult(final List<CourtApplications> courtApplications, final Boolean isReshare) {
+    private static boolean isStDecApplicationResharedAndNotGrantedResult(final List<CourtApplications> courtApplications, final Boolean isReshare) {
         return isApplicationNotGranted(courtApplications) && courtApplications.stream().anyMatch(OffenceUtil::isStDec) &&
                 (hasResultType(courtApplications, ADJ) || hasResultType(courtApplications, RFSD) || courtApplications.stream().allMatch(c->isEmpty(c.getResults())))
                 && Boolean.TRUE.equals(isReshare) ;
