@@ -2135,6 +2135,26 @@ public class DriverNotifiedEngineTest {
     }
 
     @Test
+    public void shouldSendNotificationWhenAASDAndSV() {
+        DriverNotified previous = getPreviousDriverNotified(1, EMPTY, singletonList(Boolean.TRUE),
+                singletonList(SS30), singletonList(OFF1), singletonList(OFF1), true, previousConvictionDate, true, null, 1, false, singletonList(DSPAS.id), previousOrderDate, null);
+        previousByCase.put(previous.getCases().get(0).getReference(), previous);
+
+        List<DefendantCaseOffences> offences = new ArrayList<>();
+        offences.add(getOffences(EMPTY, true, SS30, OFF1, OFF1, true, convictionDate, emptyList(), null, 1, false, emptyList(), null));
+        List<Cases> cases = asList(Cases.cases().withDefendantCaseOffences(offences).withCaseId(CASE_ID).withReference("CaseReference").build());
+
+        List<CourtApplications> courtApplications = getCourtApplications(singletonList(APP1), prefix, false, null, null, SS30, 1, asList(AASD.id, SV.id));
+
+        DriverNotified transformed = transformDriverNotified(previousByCase, orderDate,
+                crownCourt, null, defendant, cases, hearingId, courtApplications).get(0);
+
+        assertThat(transformed.getUpdatedEndorsements().size(), is(equalTo(1)));
+        assertThat(transformed.getRemovedEndorsements(), is(nullValue()));
+        assertThat(transformed.getUpdatedEndorsements().stream().sorted().toArray(), is(equalTo(Stream.of(SS30).toArray())));
+    }
+
+    @Test
     public void shouldNotSendNotificationWhenACSD() {
         DriverNotified previous = getPreviousDriverNotified(1, EMPTY, singletonList(Boolean.TRUE),
                 singletonList(SS30), singletonList(OFF1), singletonList(OFF1), true, previousConvictionDate, true, null, 1, false, singletonList(DSPAS.id), previousOrderDate, null);
