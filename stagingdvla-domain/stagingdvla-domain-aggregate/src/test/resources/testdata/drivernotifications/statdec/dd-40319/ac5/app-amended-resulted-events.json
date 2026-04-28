@@ -202,6 +202,7 @@
   },
   "distinctPrompts": [],
   "identifier": "1fdaccda-34fa-49a7-bf7e-accd839698dc",
+  "isResetToPreviousEvent": true,
   "licenceProducedInCourt": "0: None or unknown",
   "masterDefendantId": "1670b495-dfb3-4d62-aa01-f40b6077cb4b",
   "materialId": "ddf19084-f2a1-40eb-96ae-f0231d05bcb9",

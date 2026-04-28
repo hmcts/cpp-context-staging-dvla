@@ -110,7 +110,7 @@ public class DriverNotifiedEngine {
             final List<Cases> currentCases,
             final UUID hearingId,
             final List<CourtApplications> courtApplications,
-            final Map<String, Map<UUID,DriverNotified>> driverNotifiedByCaseAndHearing,
+            final Map<String, Map<UUID,DriverNotified>> previousDriverNotifiedByCaseAndHearing,
             final Map<String, List<ApplicationTypes>> sjpCaseToCcReferredApplications,
             final Boolean isReshare) {
 
@@ -124,7 +124,7 @@ public class DriverNotifiedEngine {
                         currentCase,
                         hearingId,
                         courtApplications,
-                        driverNotifiedByCaseAndHearing.get(currentCase.getReference()),
+                        previousDriverNotifiedByCaseAndHearing.get(currentCase.getReference()),
                         sjpCaseToCcReferredApplications.get(currentCase.getReference()),
                         isReshare
                 ))
@@ -144,26 +144,14 @@ public class DriverNotifiedEngine {
                                               final Cases currentCase,
                                               final UUID hearingId,
                                               final List<CourtApplications> courtApplications,
-                                              final Map<UUID,DriverNotified> driverNotifiedByHearing,
+                                              final Map<UUID,DriverNotified> previousDriverNotifiedByHearing,
                                               final List<ApplicationTypes> sjpCaseToCcReferredApplications,
                                               final Boolean isReshare) {
 
         LOGGER.info("Processing case: {}", currentCase.getReference());
 
-        if(isApplicationResharedAndNotGrantedResult(courtApplications, isReshare)) {
-            return DriverNotified.driverNotified()
-                    .withValuesFrom(
-                            Objects.requireNonNull(driverNotifiedByHearing.values().stream()
-                                    .filter(event -> LocalDate.parse(event.getOrderDate()).isBefore(LocalDate.parse(orderDate)))
-                                    .max(Comparator.comparing(DriverNotified::getOrderDate))
-                                    .orElse(null)))
-                    .withNotificationType(NotificationType.UPDATE)
-                    .withNotificationWasPreviouslySent(true)
-                    .withCaseApplicationReferences(singletonList(currentCase.getReference()))
-                    .withCourtApplications(courtApplications)
-                    .withOrderDate(orderDate)
-                    .withPrevious(getPrevious(previousDriverNotified))
-                    .build();
+        if (isApplicationResharedAndNotGrantedResult(courtApplications, isReshare)) {
+            return getLatestDriverNotifiedFromPreviousHearing(previousDriverNotified,orderDate,currentCase,courtApplications,previousDriverNotifiedByHearing);
         }
 
         // Get previous case using reference number
@@ -235,6 +223,32 @@ public class DriverNotifiedEngine {
             return builder.build();
         }
         return null;
+    }
+
+    private static DriverNotified getLatestDriverNotifiedFromPreviousHearing(final DriverNotified previousDriverNotified,
+                                                                      final String orderDate,
+                                                                      final Cases currentCase,
+                                                                      final List<CourtApplications> courtApplications,
+                                                                      final Map<UUID, DriverNotified> previousDriverNotifiedByHearing) {
+        final DriverNotified latestDriverNotified = previousDriverNotifiedByHearing.values().stream()
+                .filter(event -> LocalDate.parse(event.getOrderDate()).isBefore(LocalDate.parse(orderDate)))
+                .max(Comparator.comparing(DriverNotified::getOrderDate))
+                .orElse(null);
+        if (isNull(latestDriverNotified)) {
+            return null;
+        } else if (NotificationType.REMOVE.equals(latestDriverNotified.getNotificationType()) && NotificationType.REMOVE.equals(previousDriverNotified.getNotificationType())) {
+            return null;
+        }
+        return DriverNotified.driverNotified()
+                .withValuesFrom(latestDriverNotified)
+                .withNotificationType(latestDriverNotified.getNotificationType().equals(NotificationType.NEW) ? NotificationType.UPDATE : latestDriverNotified.getNotificationType())
+                .withNotificationWasPreviouslySent(true)
+                .withCaseApplicationReferences(singletonList(currentCase.getReference()))
+                .withCourtApplications(courtApplications)
+                .withOrderDate(orderDate)
+                .withIsResetToPreviousEvent(true)
+                .withPrevious(getPrevious(previousDriverNotified))
+                .build();
     }
 
     private static boolean isApplicationResharedAndNotGrantedResult(final List<CourtApplications> courtApplications, final Boolean isReshare) {

@@ -39,7 +39,8 @@ public class DefendantAggregate implements Aggregate {
     private boolean isWaitingRetryTrigger = false;
     private int retrySequence = 0;
     private final Map<String, DriverNotified> previousDriverNotifiedByCase = new HashMap<>();
-    private final Map<String, Map<UUID,DriverNotified>> driverNotifiedByCaseAndHearing = new HashMap<>();
+    /** Keep track of previous latest events per hearing for reset(i.e. when application is refused, DD-40319) */
+    private final Map<String, Map<UUID,DriverNotified>> previousDriverNotifiedByCaseAndHearing = new HashMap<>();
     private final Map<String, List<ApplicationTypes>> sjpCaseToCcReferredApplications = new HashMap<>();
     private static final String CODE_FOR_SJP_CASE = "J";
 
@@ -64,7 +65,7 @@ public class DefendantAggregate implements Aggregate {
                 currentCases,
                 hearingId,
                 courtApplications,
-                driverNotifiedByCaseAndHearing,
+                previousDriverNotifiedByCaseAndHearing,
                 sjpCaseToCcReferredApplications,
                 isReshare);
 
@@ -195,13 +196,13 @@ public class DefendantAggregate implements Aggregate {
                     if (nonNull(e.getCases())) {
                         e.getCases().forEach(c -> {
                             previousDriverNotifiedByCase.put(c.getReference(), e);
-                            if (Boolean.TRUE.equals(e.getIsUsedPreviousEvent())) {
-                                driverNotifiedByCaseAndHearing.get(c.getReference()).remove(e.getOrderingHearingId());
+                            if (Boolean.TRUE.equals(e.getIsResetToPreviousEvent())) {
+                                previousDriverNotifiedByCaseAndHearing.get(c.getReference()).remove(e.getOrderingHearingId());
                             } else {
-                                if (!driverNotifiedByCaseAndHearing.containsKey(c.getReference())) {
-                                    driverNotifiedByCaseAndHearing.put(c.getReference(), new HashMap<>());
+                                if (!previousDriverNotifiedByCaseAndHearing.containsKey(c.getReference())) {
+                                    previousDriverNotifiedByCaseAndHearing.put(c.getReference(), new HashMap<>());
                                 }
-                                driverNotifiedByCaseAndHearing.get(c.getReference()).put(e.getOrderingHearingId(), e);
+                                previousDriverNotifiedByCaseAndHearing.get(c.getReference()).put(e.getOrderingHearingId(), e);
                             }
                         });
                     }
