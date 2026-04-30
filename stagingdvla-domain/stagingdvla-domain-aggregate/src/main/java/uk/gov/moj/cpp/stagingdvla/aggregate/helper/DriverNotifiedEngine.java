@@ -253,8 +253,8 @@ public class DriverNotifiedEngine {
 
     private static boolean isStDecApplicationResharedAndNotGrantedResult(final List<CourtApplications> courtApplications, final Boolean isReshare) {
         return isApplicationNotGranted(courtApplications) && courtApplications.stream().anyMatch(OffenceUtil::isStDec) &&
-                (hasResultType(courtApplications, ADJ) || hasResultType(courtApplications, RFSD) || courtApplications.stream().allMatch(c->isEmpty(c.getResults())))
-                && Boolean.TRUE.equals(isReshare) ;
+                (hasResultType(courtApplications, ADJ) || hasResultType(courtApplications, RFSD))
+                && Boolean.TRUE.equals(isReshare);
     }
 
     private static List<Cases> getUpdatedCases(final Cases cases) {
