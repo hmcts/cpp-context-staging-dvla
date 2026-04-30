@@ -22,6 +22,7 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.App
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ApplicationType.AASMC;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ApplicationType.ACP;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ApplicationType.APPRO;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ApplicationType.AWCP;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.DATE_DISQUALIFICATION_ENDS;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.DEFAULT_DVLA_CODE;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.DVLACODE_FOR_OFFENCE;
@@ -68,6 +69,7 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.Res
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.NDSR;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.NESR;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.OATS;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.RDD;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.RFSD;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.SUMRCC;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.TEXT;
@@ -138,6 +140,8 @@ public class OffenceUtil {
 
         if (hasAppealResultOrGranted(courtApplications) || isCaseReopen(courtApplications, sjpCaseToCcReferredApplications)) {
             return getEndorsementStatusForAppealAndReopen(currentOffence, previousOffence, courtApplications, sjpCaseToCcReferredApplications);
+        } else if(isCriminalProceedingAppGranted(courtApplications)){
+            return getEndorsementStatusForCriminalProceeding(currentOffence, previousOffence, courtApplications);
         } else if (!nonEndorsable && isAmendment) {
             return isNull(currentOffence) ? REMOVE : UPDATE_NOMERGE;
         } else if (!nonEndorsable && hasResultType(courtApplications, DSPAS)) {
@@ -209,6 +213,19 @@ public class OffenceUtil {
         } else {
             return REMOVE;
         }
+    }
+
+    public static EndorsementStatus getEndorsementStatusForCriminalProceeding(final DefendantCaseOffences currentOffence, final DefendantCaseOffences previousOffence, final List<CourtApplications> courtApplications) {
+        if (hasRemovalOfDisqualificationsResult(courtApplications) || hasResultType(currentOffence, RDD)) {
+            return UPDATE_MERGE;
+        } else {
+            if (hasD20Endorsement(previousOffence)) {
+                return NO_UPDATE_PREV_ENDORSED;
+            } else {
+                return NO_UPDATE_PREV_NOT_ENDORSED;
+            }
+        }
+
     }
 
     public static String getDvlaCode(DefendantCaseOffences offence) {
@@ -476,6 +493,13 @@ public class OffenceUtil {
                         .anyMatch(result -> APPEAL_RESULTS.stream().anyMatch(result.getResultIdentifier()::equalsIgnoreCase)));
     }
 
+    public static boolean hasRemovalOfDisqualificationsResult(final List<CourtApplications> courtApplications) {
+        return isNotEmpty(courtApplications)
+                && courtApplications.stream()
+                .anyMatch(courtApplication -> courtApplication.getResults().stream()
+                        .anyMatch(result -> RDD.id.equals(result.getResultIdentifier())));
+    }
+
     public static boolean hasAnyResult(final DefendantCaseOffences offence, final List<ResultType> resultTypes) {
         for (final ResultType resultType : resultTypes) {
             if (hasResultType(offence, resultType)) {
@@ -651,6 +675,12 @@ public class OffenceUtil {
 
     public static boolean isCaseReopen(final List<CourtApplications> courtApplications, final List<ApplicationTypes> sjpCaseToCcReferredApplications) {
         return isCaseReopen(courtApplications) || isSjpCaseReferredReopen(sjpCaseToCcReferredApplications);
+    }
+
+    public static boolean isCriminalProceedingAppGranted(final List<CourtApplications> courtApplications) {
+        return isNotEmpty(courtApplications) &&
+                courtApplications.stream().anyMatch(courtApplication -> AWCP.id.equals(courtApplication.getApplicationTypeId()) &&
+                        courtApplication.getResults().stream().anyMatch(result -> G.id.equals(result.getResultIdentifier())));
     }
 
     private static boolean isAdjournmentOrError(final Cases currCase,

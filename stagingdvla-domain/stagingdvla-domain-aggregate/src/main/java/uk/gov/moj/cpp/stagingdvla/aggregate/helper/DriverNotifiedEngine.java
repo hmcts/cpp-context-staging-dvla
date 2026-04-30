@@ -25,6 +25,7 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.End
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.POINTS_DISQUALIFICATION_CODE;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.ADJ;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.DDRE;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.RDD;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.RFSD;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.SV;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.DisqualificationPeriodHelper.getDisqualificationPeriod;
@@ -54,9 +55,11 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAppealR
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAppealResultOrGranted;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasD20Endorsement;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasPointsDisqualificationCode;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasRemovalOfDisqualificationsResult;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasResultType;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.isApplicationNotGranted;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.isCaseReopen;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.isCriminalProceedingAppGranted;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.isStdecGranted;
 
 import uk.gov.justice.core.courts.CourtCentre;
@@ -69,9 +72,11 @@ import uk.gov.justice.cpp.stagingdvla.event.DistinctPrompts;
 import uk.gov.justice.cpp.stagingdvla.event.DriverNotified;
 import uk.gov.justice.cpp.stagingdvla.event.NotificationType;
 import uk.gov.justice.cpp.stagingdvla.event.Previous;
+import uk.gov.justice.cpp.stagingdvla.event.Prompts;
+import uk.gov.justice.cpp.stagingdvla.event.Results;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
@@ -488,7 +493,7 @@ public class DriverNotifiedEngine {
                 } else {
                     if (UPDATE_MERGE.equals(endorsementStatus) || OATS_PREV_ENDORSED.equals(endorsementStatus)
                             || NO_UPDATE_PREV_ENDORSED.equals(endorsementStatus) || NO_RESULT_PREV_ENDORSED.equals(endorsementStatus)) {
-                        mergeOffences(currentCase, currentOffence, previousOffence, courtApplications, orderDate, orderingCourtCode, hasAppealResultOrGranted(courtApplications), isCaseHasReopenedApplication, isStdecGranted(courtApplications));
+                        mergeOffences(currentCase, currentOffence, previousOffence, courtApplications, orderDate, orderingCourtCode, hasAppealResultOrGranted(courtApplications), isCaseHasReopenedApplication, isStdecGranted(courtApplications), isCriminalProceedingAppGranted(courtApplications) );
                     } else if (SPECIAL_REASON.equals(endorsementStatus) || NO_UPDATE_PREV_NOT_ENDORSED.equals(endorsementStatus)) {
                         removeOffence(currentOffence, currentCase);
                     }
@@ -584,14 +589,17 @@ public class DriverNotifiedEngine {
     private static void mergeOffences(final Cases currentCase, final DefendantCaseOffences currentOffence,
                                       final DefendantCaseOffences previousOffence, final List<CourtApplications> courtApplications,
                                       final String orderDate, final String orderingCourtCode, final boolean hasAppealResultOrGranted,
-                                      final boolean isCaseReopened, final boolean isStatDec) {
+                                      final boolean isCaseReopened, final boolean isStatDec, final boolean isCriminalProceedingGranted) {
         if (isNull(currentOffence)) {
-            currentCase.getDefendantCaseOffences().add(DefendantCaseOffences.defendantCaseOffences()
+            final DefendantCaseOffences.Builder updatedPreviousOffence = DefendantCaseOffences.defendantCaseOffences()
                     .withValuesFrom(previousOffence)
-                    .withDateDisqReimposedFollowingAppeal(getDateDisqReimposedFollowingAppeal(courtApplications, orderDate))
-                    .build());
+                    .withDateDisqReimposedFollowingAppeal(getDateDisqReimposedFollowingAppeal(courtApplications, orderDate));
+            if(isCriminalProceedingGranted && hasRemovalOfDisqualificationsResult(courtApplications)){
+                updatedPreviousOffence.withDateFromWhichDisqRemoved(getDateFromWhichDisqRemoved(courtApplications.stream().map(CourtApplications::getResults).flatMap(Collection::stream).toList()));
+            }
+            currentCase.getDefendantCaseOffences().add(updatedPreviousOffence.build());
         } else if (nonNull(previousOffence)) {
-            final DefendantCaseOffences mergedOffence = mergeOffence(currentOffence, previousOffence, orderDate, orderingCourtCode, hasAppealResultOrGranted, isCaseReopened, isStatDec);
+            final DefendantCaseOffences mergedOffence = mergeOffence(currentOffence, previousOffence, orderDate, orderingCourtCode, hasAppealResultOrGranted, isCaseReopened, isStatDec, isCriminalProceedingGranted);
             currentCase.getDefendantCaseOffences().remove(currentOffence);
             currentCase.getDefendantCaseOffences().add(mergedOffence);
         }

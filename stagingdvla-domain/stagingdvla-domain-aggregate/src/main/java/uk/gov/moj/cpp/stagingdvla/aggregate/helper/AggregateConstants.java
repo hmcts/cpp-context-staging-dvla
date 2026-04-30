@@ -88,7 +88,8 @@ public class AggregateConstants {
         DER("f42fa098-0f7b-4269-ac4f-b10c9b6832d7"),
         NESR("f121db73-57fb-4f74-9ab1-0843aabe4605"),
         NDSR("808313d1-f450-4410-b2f1-97409d7b4074"),
-        SUMRCC("600edfc3-a584-4f9f-a52e-5bb8a99646c1");
+        SUMRCC("600edfc3-a584-4f9f-a52e-5bb8a99646c1"),
+        RDD("b5ee3936-2cd5-47f4-9192-3737c7093a7f");
 
         public final String id;
 
@@ -102,7 +103,8 @@ public class AggregateConstants {
         AACMC("57810183-a5c2-3195-8748-c6b97eda1ebd", "MC80802", "Appeal against conviction by a Magistrates' Court to the Crown Court"),
         AACSMC("36f3b0c3-9f75-31aa-a226-cfee69216160", "MC80801", "Appeal against conviction and sentence by a Magistrates' Court to the Crown Court"),
         ACP("4e281610-96aa-3711-aecf-59df86b6c6bb", "AP00501", "Application within criminal proceedings"),
-        APPRO("44c238d9-3bc2-3cf3-a2eb-a7d1437b8383", "MC80524", "Application to reopen case");
+        APPRO("44c238d9-3bc2-3cf3-a2eb-a7d1437b8383", "MC80524", "Application to reopen case"),
+        AWCP("fde5dd50-fb49-4100-8c46-4c10096fb136","AP00501","Application within criminal proceedings");
 
         public final String id;
         public final String code;
