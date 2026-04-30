@@ -1,0 +1,74 @@
+{
+  "masterDefendantId": "241b9bf2-8cd3-4929-aca6-b5bf20537332",
+  "orderingCourt": {
+    "address": {
+      "address1": "The Magistrates' Court",
+      "address2": "Barclay Road",
+      "address3": "Croydon",
+      "address4": "",
+      "address5": "",
+      "postcode": "CR9 3NG"
+    },
+    "code": "B01EF00",
+    "courtHearingLocation": "B01EF01",
+    "id": "31b3d313-7a7c-4598-bb4b-c1bff9b00e26",
+    "lja": {
+      "ljaCode": "2576",
+      "ljaName": "South London Magistrates' Court"
+    },
+    "name": "Croydon Magistrates' Court",
+    "roomId": "bfb67c13-789c-373b-b442-52b82faf863e",
+    "roomName": "Courtroom 01"
+  },
+  "nowContent": {
+    "orderDate": "2026-04-27",
+    "defendant": {
+      "dateOfBirth": "2001-02-18",
+      "gender": "MALE",
+      "title": "MR",
+      "firstName": "Abdiel",
+      "lastName": "DuBuque",
+      "name": "Abdiel DuBuque",
+      "address": {
+        "line1": "21",
+        "line2": "Furnburry Park Road",
+        "line3": "London",
+        "postCode": "SW11 3TQ"
+      }
+    },
+    "caseApplicationReferences": [
+      "28DI8572292"
+    ],
+    "cases": [
+      {
+        "caseStatus": "ACTIVE",
+        "initiationCode": "C",
+        "reference": "28DI8572292",
+        "caseId": "183f4d48-f544-41e5-9cb8-0f00ca8e96d0",
+        "defendantCaseOffences": []
+      }
+    ],
+    "courtApplications": [
+      {
+        "applicationType": "Appearance to make statutory declaration (other than SJP)",
+        "applicationTypeId": "a6663f2a-c900-4bb4-a7d7-4be34cb2f1f7",
+        "applicationReceivedDate": "2026-04-22",
+        "id": "420bf1c4-a400-46cf-af62-2df87761415b",
+        "applicationReference": "28DI8572292",
+        "applicationStatus": "FINALISED",
+        "results": [
+          {
+            "resultIdentifier": "d3902789-4cc8-4753-a15f-7e26dd39f6ae",
+            "publishedForNows": false,
+            "resultWording": "",
+            "d20": false,
+            "judicialResultCategory": "FINAL",
+            "label": "Application refused"
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": true,
+  "orderingHearingId": "a830948d-2ad9-4172-9d26-000cfbe0535e"
+}

@@ -376,34 +376,37 @@ public class OffenceUtil {
         return EMPTY;
     }
 
-    public static String getSentencingCourtCode(final DefendantCaseOffences offence, final DefendantCaseOffences previousOffence, final String amendmentDate, final String orderDate, final String orderingCourtCode) {
+    public static String getSentencingCourtCode(final DefendantCaseOffences offence, final DefendantCaseOffences previousOffence, final String amendmentDate, final String orderDate, final String orderingCourtCode,  final List<CourtApplications> courtApplications) {
         if (isNotEmpty(amendmentDate) && hasResultType(offence, DDRI)) {
             return null;
         } else if (nonNull(previousOffence) && isNotEmpty(previousOffence.getSentencingCourtCode())) {
             return previousOffence.getSentencingCourtCode();
-        } else if (nonNull(offence) && isSentenced(offence, orderDate)) {
+        } else if (nonNull(offence) && isSentenced(offence, orderDate, courtApplications)) {
             return orderingCourtCode;
         } else {
             return null;
         }
     }
 
-    public static String getSentenceDate(final DefendantCaseOffences offence, final DefendantCaseOffences previousOffence, final String amendmentDate, final String orderDate) {
+    public static String getSentenceDate(final DefendantCaseOffences offence, final DefendantCaseOffences previousOffence, final String amendmentDate, final String orderDate, final List<CourtApplications> courtApplications) {
         if (isNotEmpty(amendmentDate) && hasResultType(offence, DDRI)) {
             return null;
         } else if (nonNull(previousOffence) && isNotEmpty(previousOffence.getSentenceDate())) {
             return previousOffence.getSentenceDate();
-        } else if (isSentenced(offence, orderDate)) {
+        } else if (isSentenced(offence, orderDate, courtApplications)) {
             return orderDate;
         } else {
             return null;
         }
     }
 
-    private static boolean isSentenced(final DefendantCaseOffences offence, final String orderDate) {
+    private static boolean isSentenced(final DefendantCaseOffences offence, final String orderDate, final List<CourtApplications> courtApplications) {
         if (hasResultType(offence, DDRI)) {
             return false;
         } else if (nonNull(offence) && isNotEmpty(orderDate) && isNotEmpty(offence.getConvictionDate())) {
+            if(isStdecGranted(courtApplications)){
+                return true;
+            }
             return !orderDate.equalsIgnoreCase(offence.getConvictionDate());
         } else {
             return false;
@@ -763,12 +766,21 @@ public class OffenceUtil {
         return Collections.emptyList();
     }
 
-    private static boolean isStdecGranted(final List<CourtApplications> courtApplications) {
+    public static boolean isStdecGranted(final List<CourtApplications> courtApplications) {
         if (isNotEmpty(courtApplications))
             return courtApplications.stream()
                     .filter(ca -> isNotEmpty(ca.getResults()))
                     .filter(OffenceUtil::isStDec)
                     .anyMatch(ca -> isGranted(ca.getResults()));
+
+        return false;
+    }
+
+    public static boolean isApplicationNotGranted(final List<CourtApplications> courtApplications) {
+        if (isNotEmpty(courtApplications) )
+            return courtApplications.stream()
+                    .filter(ca -> isNotEmpty(ca.getResults()))
+                    .noneMatch(ca -> isGranted(ca.getResults()));
 
         return false;
     }
@@ -784,7 +796,7 @@ public class OffenceUtil {
         return results.stream().map(Results::getResultIdentifier).anyMatch(G.id::equals);
     }
 
-    private static boolean isStDec(CourtApplications courtApplications) {
+    public static boolean isStDec(CourtApplications courtApplications) {
         return Objects.nonNull(courtApplications.getApplicationType()) &&
                 courtApplications.getApplicationType().toUpperCase().contains(ST_DEC);
     }

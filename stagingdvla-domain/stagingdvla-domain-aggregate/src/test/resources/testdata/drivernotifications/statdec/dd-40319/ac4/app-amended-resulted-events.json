@@ -1,0 +1,185 @@
+{
+  "caseApplicationReferences": [
+    "28DI8572292"
+  ],
+  "cases": [
+    {
+      "caseId": "183f4d48-f544-41e5-9cb8-0f00ca8e96d0",
+      "caseStatus": "ACTIVE",
+      "defendantCaseOffences": [
+        {
+          "allocationDecision": "Summary-only offence",
+          "civilOffence": false,
+          "code": "RR84141",
+          "convictingCourtCode": "2576",
+          "convictionDate": "2026-04-22",
+          "convictionStatus": "Convicted",
+          "dateFromWhichDisqRemoved": "",
+          "disqualificationPeriod": "",
+          "dttpDtetp": "",
+          "dvlaCode": "NE98",
+          "endorsableFlag": false,
+          "fine": "",
+          "interimImposedFinalSentence": "",
+          "modeOfTrial": "Summary",
+          "penaltyPoints": "6",
+          "plea": "GUILTY",
+          "results": [
+            {
+              "d20": true,
+              "judicialResultCategory": "ANCILLARY",
+              "label": "Driving record endorsed with penalty points",
+              "prompts": [
+                {
+                  "label": "Penalty points for this offence",
+                  "promptIdentifier": "a8719de4-7783-448a-b792-e3f94e670ad0",
+                  "promptReference": "PENPT",
+                  "value": "6"
+                }
+              ],
+              "publishedForNows": false,
+              "resultIdentifier": "cee54856-4450-4f28-a8a9-72b688726201"
+            },
+            {
+              "d20": false,
+              "judicialResultCategory": "ANCILLARY",
+              "label": "0: None or unknown",
+              "publishedForNows": true,
+              "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956"
+            }
+          ],
+          "startDate": "2024-07-12",
+          "title": "Drive vehicle with axle weight exceeding maximum permitted - local traffic order within Greater London",
+          "wording": "Before 08 Aug 2024 at Croydon drove a motor vehicle, namely VH89712 Tesla Model X, on a road, namely Aby Road, subject of a local traffic order, namely Transport for London , when the weight conveyed to the road surface by one of its axles exceeded the maximum permitted axle weight of 11500 kg."
+        }
+      ],
+      "hasSV": false,
+      "initiationCode": "C",
+      "reference": "28DI8572292"
+    }
+  ],
+  "courtApplications": [
+    {
+      "applicationReceivedDate": "2026-04-22",
+      "applicationReference": "28DI8572292",
+      "applicationStatus": "FINALISED",
+      "applicationType": "Appearance to make statutory declaration (other than SJP)",
+      "applicationTypeId": "a6663f2a-c900-4bb4-a7d7-4be34cb2f1f7",
+      "id": "420bf1c4-a400-46cf-af62-2df87761415b",
+      "results": [
+        {
+          "d20": false,
+          "judicialResultCategory": "FINAL",
+          "label": "Application refused",
+          "publishedForNows": false,
+          "resultIdentifier": "d3902789-4cc8-4753-a15f-7e26dd39f6ae",
+          "resultWording": ""
+        }
+      ]
+    }
+  ],
+  "defendant": {
+    "address": {
+      "line1": "21",
+      "line2": "Furnburry Park Road",
+      "line3": "London",
+      "postCode": "SW11 3TQ"
+    },
+    "dateOfBirth": "2001-02-18",
+    "firstName": "Abdiel",
+    "gender": "MALE",
+    "lastName": "DuBuque",
+    "name": "Abdiel DuBuque",
+    "title": "MR"
+  },
+  "distinctPrompts": [],
+  "identifier": "81a25ba2-0866-4fbb-94b9-ae4ee0454ec5",
+  "isResetToPreviousEvent": true,
+  "licenceProducedInCourt": "0: None or unknown",
+  "masterDefendantId": "241b9bf2-8cd3-4929-aca6-b5bf20537332",
+  "materialId": "37afc59a-8098-44d5-bee4-8ad681397e89",
+  "notificationType": "Update",
+  "notificationWasPreviouslySent": true,
+  "orderDate": "2026-04-27",
+  "orderingCourt": {
+    "address": {
+      "address1": "The Magistrates' Court",
+      "address2": "Barclay Road",
+      "address3": "Croydon",
+      "address4": "",
+      "address5": "",
+      "postcode": "CR9 3NG"
+    },
+    "code": "B01EF00",
+    "courtHearingLocation": "B01EF01",
+    "id": "31b3d313-7a7c-4598-bb4b-c1bff9b00e26",
+    "lja": {
+      "ljaCode": "2576",
+      "ljaName": "South London Magistrates' Court"
+    },
+    "name": "Croydon Magistrates' Court",
+    "roomId": "bfb67c13-789c-373b-b442-52b82faf863e",
+    "roomName": "Courtroom 01"
+  },
+  "orderingCourtCode": "2576",
+  "orderingHearingId": "a830948d-2ad9-4172-9d26-000cfbe0535e",
+  "previous": {
+    "caseApplicationReferences": [
+      "28DI8572292"
+    ],
+    "cases": [
+      {
+        "caseId": "183f4d48-f544-41e5-9cb8-0f00ca8e96d0",
+        "caseStatus": "ACTIVE",
+        "defendantCaseOffences": [],
+        "hasSV": false,
+        "initiationCode": "C",
+        "reference": "28DI8572292"
+      }
+    ],
+    "defendant": {
+      "address": {
+        "line1": "21",
+        "line2": "Furnburry Park Road",
+        "line3": "London",
+        "postCode": "SW11 3TQ"
+      },
+      "dateOfBirth": "2001-02-18",
+      "firstName": "Abdiel",
+      "gender": "MALE",
+      "lastName": "DuBuque",
+      "name": "Abdiel DuBuque",
+      "title": "MR"
+    },
+    "distinctPrompts": [],
+    "identifier": "b8c6fc94-779f-4523-84bc-d0f3aef9bdb4",
+    "licenceProducedInCourt": "0: None or unknown",
+    "masterDefendantId": "241b9bf2-8cd3-4929-aca6-b5bf20537332",
+    "materialId": "4e654836-8934-4748-ad7f-1520b479398d",
+    "notificationWasPreviouslySent": true,
+    "orderDate": "2026-04-27",
+    "orderingCourt": {
+      "address": {
+        "address1": "The Magistrates' Court",
+        "address2": "Barclay Road",
+        "address3": "Croydon",
+        "address4": "",
+        "address5": "",
+        "postcode": "CR9 3NG"
+      },
+      "code": "B01EF00",
+      "courtHearingLocation": "B01EF01",
+      "id": "31b3d313-7a7c-4598-bb4b-c1bff9b00e26",
+      "lja": {
+        "ljaCode": "2576",
+        "ljaName": "South London Magistrates' Court"
+      },
+      "name": "Croydon Magistrates' Court",
+      "roomId": "bfb67c13-789c-373b-b442-52b82faf863e",
+      "roomName": "Courtroom 01"
+    },
+    "orderingHearingId": "a830948d-2ad9-4172-9d26-000cfbe0535e",
+    "retrySequence": 0
+  },
+  "retrySequence": 0
+}

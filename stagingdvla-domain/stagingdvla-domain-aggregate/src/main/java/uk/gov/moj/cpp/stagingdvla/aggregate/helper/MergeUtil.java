@@ -22,7 +22,6 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAnyResu
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasD20Endorsement;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasNoResult;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasNonD20Endorsement;
-import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.isCaseReopen;
 
 import uk.gov.justice.core.courts.JudicialResultCategory;
 import uk.gov.justice.core.courts.nowdocument.NowText;
@@ -47,7 +46,7 @@ public class MergeUtil {
     public static DefendantCaseOffences mergeOffence(final DefendantCaseOffences offence,
                                                      final DefendantCaseOffences previousOffence,
                                                      final String orderDate, final String orderingCourtCode,
-                                                     final boolean hasAppealResultOrGranted, final boolean isCaseReopened) {
+                                                     final boolean hasAppealResultOrGranted, final boolean isCaseReopened, final boolean isStatDec) {
         final DefendantCaseOffences mergedOffence = DefendantCaseOffences.defendantCaseOffences()
                 .withValuesFrom(offence)
                 .withTitle((String) mergeValue(offence.getTitle(), previousOffence.getTitle()))
@@ -107,9 +106,28 @@ public class MergeUtil {
             }
 
             return mergedOffenceWithAttributes.build();
+        } else if (isStatDec) {
+            return updateMergedOffenceForStatDec(offence, previousOffence, orderDate, orderingCourtCode, mergedOffence);
         } else {
             return mergedOffence;
         }
+    }
+
+    private static DefendantCaseOffences updateMergedOffenceForStatDec(final DefendantCaseOffences offence, final DefendantCaseOffences previousOffence, final String orderDate, final String orderingCourtCode, final DefendantCaseOffences mergedOffence) {
+        final DefendantCaseOffences.Builder mergedOffenceWithAttributes = DefendantCaseOffences.defendantCaseOffences().withValuesFrom(mergedOffence)
+                .withFine(offence.getFine())
+                .withPenaltyPoints(offence.getPenaltyPoints())
+                .withDisqualificationPeriod(offence.getDisqualificationPeriod())
+                .withOtherSentence(offence.getOtherSentence())
+                .withSuspendedSentence(offence.getSuspendedSentence())
+                .withDttpDtetp(offence.getDttpDtetp())
+                .withInterimImposedFinalSentence(offence.getInterimImposedFinalSentence())
+                .withDateFromWhichDisqRemoved(offence.getDateFromWhichDisqRemoved());
+        if (isNotEmpty(mergedOffence.getConvictionDate())) {
+             mergedOffenceWithAttributes.withSentenceDate(nonNull(previousOffence) && isNotEmpty(previousOffence.getSentenceDate()) ? previousOffence.getSentenceDate() : orderDate);
+             mergedOffenceWithAttributes.withSentencingCourtCode(nonNull(previousOffence) && isNotEmpty(previousOffence.getSentencingCourtCode()) ? previousOffence.getSentencingCourtCode() : orderingCourtCode);
+         }
+        return mergedOffenceWithAttributes.build();
     }
 
     private static List<Results> mergeResultsV1(final List<Results> results, final List<Results> previousResults) {

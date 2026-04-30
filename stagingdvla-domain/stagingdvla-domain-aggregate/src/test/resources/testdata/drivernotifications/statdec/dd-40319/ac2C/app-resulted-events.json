@@ -1,0 +1,303 @@
+{
+  "caseApplicationReferences": [
+    "28DI3186874"
+  ],
+  "cases": [
+    {
+      "caseId": "1199e4c3-f53c-4907-b311-78fda56749d8",
+      "caseStatus": "INACTIVE",
+      "defendantCaseOffences": [
+        {
+          "allocationDecision": "Summary-only offence",
+          "civilOffence": false,
+          "code": "PS90015",
+          "convictingCourtCode": "2577",
+          "convictionDate": "2026-04-21",
+          "convictionStatus": "Convicted",
+          "dateFromWhichDisqRemoved": "",
+          "disqualificationPeriod": "",
+          "dttpDtetp": "",
+          "dvlaCode": "NE98",
+          "endorsableFlag": false,
+          "fine": "",
+          "interimImposedFinalSentence": "",
+          "modeOfTrial": "Summary",
+          "otherSentence": "E12M",
+          "penaltyPoints": "3",
+          "plea": "GUILTY",
+          "results": [
+            {
+              "d20": false,
+              "dvlaCode": "E",
+              "judicialResultCategory": "FINAL",
+              "label": "Conditional discharge",
+              "prompts": [
+                {
+                  "durationSequence": 1,
+                  "label": "Period of conditional discharge",
+                  "promptIdentifier": "d3205319-84cf-4c5b-9d7a-7e4bb1865054",
+                  "promptReference": "periodofConditionalDischarge",
+                  "value": "12 Months"
+                }
+              ],
+              "publishedForNows": false,
+              "resultIdentifier": "554c2622-c1cc-459e-a98d-b7f317ab065c"
+            },
+            {
+              "d20": true,
+              "judicialResultCategory": "ANCILLARY",
+              "label": "Driving record endorsed with penalty points",
+              "prompts": [
+                {
+                  "label": "Penalty points for this offence",
+                  "promptIdentifier": "a8719de4-7783-448a-b792-e3f94e670ad0",
+                  "promptReference": "PENPT",
+                  "value": "3"
+                },
+                {
+                  "label": "Defendant driving licence number",
+                  "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+                  "promptReference": "defendantDrivingLicenceNumber",
+                  "value": "VANFL002222OW9PH"
+                }
+              ],
+              "publishedForNows": false,
+              "resultIdentifier": "cee54856-4450-4f28-a8a9-72b688726201"
+            },
+            {
+              "d20": false,
+              "judicialResultCategory": "ANCILLARY",
+              "label": "0: None or unknown",
+              "publishedForNows": true,
+              "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956"
+            }
+          ],
+          "sentenceDate": "2026-04-23",
+          "sentencingCourtCode": "2576",
+          "startDate": "2022-11-28",
+          "title": "Public service vehicles - passenger failing to pay fare",
+          "wording": "Public service vehicles - passenger failing to pay fare"
+        }
+      ],
+      "hasSV": false,
+      "initiationCode": "C",
+      "reference": "28DI3186874"
+    }
+  ],
+  "courtApplications": [
+    {
+      "applicationReceivedDate": "2026-04-21",
+      "applicationReference": "28DI3186874",
+      "applicationStatus": "FINALISED",
+      "applicationType": "Appearance to make statutory declaration (other than SJP)",
+      "applicationTypeId": "a6663f2a-c900-4bb4-a7d7-4be34cb2f1f7",
+      "id": "1c96e64a-7d7c-433e-8c75-497b2a3703d4",
+      "results": [
+        {
+          "d20": false,
+          "judicialResultCategory": "FINAL",
+          "label": "Granted",
+          "publishedForNows": false,
+          "resultIdentifier": "2b3f7c20-8fc1-4fad-9076-df196c24b27e"
+        },
+        {
+          "d20": false,
+          "judicialResultCategory": "FINAL",
+          "label": "Statutory Declaration",
+          "prompts": [
+            {
+              "label": "Referred to convicting court",
+              "promptIdentifier": "e138b873-4363-4d4d-84a5-62b6c9bb975a",
+              "promptReference": "referredToConvictingCourt",
+              "value": "tst"
+            },
+            {
+              "label": "Purpose of the next hearing",
+              "promptIdentifier": "de9e3c7c-a598-4a00-b3e9-71d2130627d2",
+              "promptReference": "purposeOfTheNextHearing",
+              "value": "This is for a case management hearing. You must attend this hearing"
+            },
+            {
+              "label": "Next hearing in magistrates' court",
+              "promptIdentifier": "70c98fa6-804d-11e8-adc0-fa7ae01bbebc",
+              "promptReference": "d6d3ebac-7ee7-4902-8a51-ec9cf750e7a8",
+              "value": "Date of hearing:27/04/2026\nTime of hearing:10:00\nCourthouse organisation name:Croydon Magistrates' Court\nCourthouse address line 1:The Magistrates' Court\nCourthouse address line 2:Barclay Road\nCourthouse address line 3:Croydon\nCourthouse post code:CR9 3NG\nCourtroom:Courtroom 01\nHearing type:Application\nEstimated duration:20 MINUTES\nBooking reference:50173852-45ae-456f-a81e-b2e4efd863b0"
+            },
+            {
+              "label": "Statutory declaration made under",
+              "promptIdentifier": "7b6ef0ac-2d0b-44e5-a68e-4720b96cc679",
+              "promptReference": "statutoryDeclarationMadeUnder",
+              "value": "Section 14 of the Magistrates' Courts Act 1980"
+            },
+            {
+              "label": "Financial penalties to be written off",
+              "promptIdentifier": "36e32c50-dbec-41c4-904b-25eb20c9c54a",
+              "promptReference": "financialPenaltiesToBeWrittenOff",
+              "value": "No"
+            },
+            {
+              "label": "Prosecutor to be notified organisation name",
+              "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+              "promptReference": "prosecutortobenotifiedOrganisationName",
+              "value": "MKs WAR"
+            },
+            {
+              "label": "Prosecutor to be notified address line 1",
+              "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+              "promptReference": "prosecutortobenotifiedAddress1",
+              "value": "test"
+            },
+            {
+              "label": "Prosecutor to be notified post code",
+              "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+              "promptReference": "prosecutortobenotifiedPostCode",
+              "value": "MK3 4AF"
+            }
+          ],
+          "publishedForNows": false,
+          "resultDefinitionGroup": "Enforcement",
+          "resultIdentifier": "e2f6e11b-c3a2-4e76-8d29-fbede4174988"
+        },
+        {
+          "d20": false,
+          "judicialResultCategory": "ANCILLARY",
+          "label": "Next hearing in magistrates' court",
+          "prompts": [
+            {
+              "label": "Date of hearing",
+              "promptIdentifier": "d27a5d86-d51f-4c6e-914b-cb4b0abc4283",
+              "promptReference": "HDATE",
+              "value": "27/04/2026"
+            },
+            {
+              "label": "Time of hearing",
+              "promptIdentifier": "4d125a5a-acbc-461d-a657-ba5643af85a6",
+              "promptReference": "timeOfHearing",
+              "value": "10:00"
+            },
+            {
+              "label": "Courthouse organisation name",
+              "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+              "promptReference": "hCHOUSEOrganisationName",
+              "value": "Croydon Magistrates' Court"
+            },
+            {
+              "label": "Courthouse address line 1",
+              "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+              "promptReference": "hCHOUSEAddress1",
+              "value": "The Magistrates' Court"
+            },
+            {
+              "label": "Courthouse address line 2",
+              "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+              "promptReference": "hCHOUSEAddress2",
+              "value": "Barclay Road"
+            },
+            {
+              "label": "Courthouse address line 3",
+              "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+              "promptReference": "hCHOUSEAddress3",
+              "value": "Croydon"
+            },
+            {
+              "label": "Courthouse post code",
+              "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+              "promptReference": "hCHOUSEPostCode",
+              "value": "CR9 3NG"
+            },
+            {
+              "label": "Courtroom",
+              "promptIdentifier": "49ec9b26-dd63-4637-b2e9-55ba9948a90f",
+              "promptReference": "HCROOM",
+              "value": "Courtroom 01"
+            },
+            {
+              "label": "Hearing type",
+              "promptIdentifier": "c1116d12-dd35-4171-807a-2cb845357d22",
+              "promptReference": "HTYPE",
+              "value": "Application"
+            },
+            {
+              "label": "Estimated duration",
+              "promptIdentifier": "d85cc2d7-66c8-471e-b6ff-c1bc60c6cdac",
+              "promptReference": "HEST",
+              "value": "20 MINUTES"
+            },
+            {
+              "label": "Booking reference",
+              "promptIdentifier": "e73e6ab8-9bfe-4135-9fe6-f526544584d6",
+              "promptReference": "bookingReference",
+              "value": "50173852-45ae-456f-a81e-b2e4efd863b0"
+            }
+          ],
+          "publishedForNows": true,
+          "resultDefinitionGroup": "Next hearing",
+          "resultIdentifier": "70c98fa6-804d-11e8-adc0-fa7ae01bbebc",
+          "resultWording": ""
+        }
+      ]
+    }
+  ],
+  "defendant": {
+    "address": {
+      "line1": "9999A9999AAAA",
+      "line2": "Woodlane",
+      "line3": "addressline 3",
+      "line4": "Bristol",
+      "line5": "Avon",
+      "postCode": "SW11 3TQ"
+    },
+    "dateOfBirth": "2005-11-11",
+    "driverNumber": "VANFL002222OW9PH",
+    "firstName": "Rahsaan",
+    "gender": "MALE",
+    "lastName": "Williamson",
+    "name": "Rahsaan Williamson",
+    "title": "Mr"
+  },
+  "distinctPrompts": [
+    {
+      "label": "Defendant driving licence number",
+      "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+      "promptReference": "defendantDrivingLicenceNumber",
+      "value": "VANFL002222OW9PH"
+    }
+  ],
+  "identifier": "6b8cf045-1d29-4b80-9953-595cef47df80",
+  "licenceProducedInCourt": "0: None or unknown",
+  "masterDefendantId": "ad4f4e89-7d74-407a-9e2a-fefc75415363",
+  "materialId": "2acedf77-77ab-402b-8afc-5ce7faec42ae",
+  "notificationType": "Update",
+  "notificationWasPreviouslySent": true,
+  "orderDate": "2026-04-23",
+  "orderingCourt": {
+    "address": {
+      "address1": "The Magistrates' Court",
+      "address2": "Barclay Road",
+      "address3": "Croydon",
+      "address4": "",
+      "address5": "",
+      "postcode": "CR9 3NG"
+    },
+    "code": "B01EF00",
+    "courtHearingLocation": "B01EF01",
+    "id": "31b3d313-7a7c-4598-bb4b-c1bff9b00e26",
+    "lja": {
+      "ljaCode": "2576",
+      "ljaName": "South London Magistrates' Court"
+    },
+    "name": "Croydon Magistrates' Court",
+    "roomId": "bfb67c13-789c-373b-b442-52b82faf863e",
+    "roomName": "Courtroom 01"
+  },
+  "orderingCourtCode": "2576",
+  "orderingHearingId": "9e9332d4-2653-4546-8ad7-1b8ba02a0fe0",
+  "previous": "{{src:case-resulted-events.json}}",
+  "removedEndorsements": [
+    "NE98"
+  ],
+  "retrySequence": 0,
+  "updatedEndorsements": [
+    "NE98"
+  ]
+}
