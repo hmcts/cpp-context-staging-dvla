@@ -22,7 +22,6 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.App
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ApplicationType.AASMC;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ApplicationType.ACP;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ApplicationType.APPRO;
-import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ApplicationType.AWCP;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.DATE_DISQUALIFICATION_ENDS;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.DEFAULT_DVLA_CODE;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.DVLACODE_FOR_OFFENCE;
@@ -679,7 +678,7 @@ public class OffenceUtil {
 
     public static boolean isCriminalProceedingAppGranted(final List<CourtApplications> courtApplications) {
         return isNotEmpty(courtApplications) &&
-                courtApplications.stream().anyMatch(courtApplication -> AWCP.id.equals(courtApplication.getApplicationTypeId()) &&
+                courtApplications.stream().anyMatch(courtApplication -> isCriminalProceedingApp(courtApplication) &&
                         courtApplication.getResults().stream().anyMatch(result -> G.id.equals(result.getResultIdentifier())));
     }
 
@@ -850,8 +849,12 @@ public class OffenceUtil {
     }
 
     private static boolean isFinalisedCase(final Cases currCase, final CourtApplications courtApplication) {
-        return (ACP.id.equals(courtApplication.getApplicationTypeId()) || ACP.appType.equalsIgnoreCase(courtApplication.getApplicationType())) &&
+        return isCriminalProceedingApp(courtApplication) &&
                 INACTIVE.equals(currCase.getCaseStatus());
+    }
+
+    private static boolean isCriminalProceedingApp(final CourtApplications courtApplication) {
+        return ACP.id.equals(courtApplication.getApplicationTypeId()) || ACP.appType.equalsIgnoreCase(courtApplication.getApplicationType());
     }
 
     private static boolean isRefused(final CourtApplications courtApplication) {
