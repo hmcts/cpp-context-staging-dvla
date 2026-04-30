@@ -34,6 +34,7 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.Res
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.SV;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.TEXT;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.WDRN;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.WDRNNOT;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.WDRNOFF;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.getEndorsementStatus;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAnyD20Removed;
@@ -316,6 +317,15 @@ class OffenceUtilTest {
     @Test
     void shouldGetEndorsementStatusWDRN() {
         final List<CourtApplications> courtApplications = getCourtApplications(WDRN);
+
+        final AggregateConstants.EndorsementStatus endorsementStatus = getEndorsementStatus(false, null, null, courtApplications, emptyList(), null);
+
+        assertThat(endorsementStatus, is(REMOVE));
+    }
+
+    @Test
+    void shouldGetEndorsementStatusWDRNOT() {
+        final List<CourtApplications> courtApplications = getCourtApplications(WDRNNOT);
 
         final AggregateConstants.EndorsementStatus endorsementStatus = getEndorsementStatus(false, null, null, courtApplications, emptyList(), null);
 

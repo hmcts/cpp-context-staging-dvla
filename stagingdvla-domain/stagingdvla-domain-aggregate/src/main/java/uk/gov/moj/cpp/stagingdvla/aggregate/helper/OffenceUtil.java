@@ -72,6 +72,7 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.Res
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.SUMRCC;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.TEXT;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.WDRN;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.WDRNNOT;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.WDRNOFF;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.STARTING_FROM_DATE_DATE_OF_INTERIM_DISQUALIFICATION;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.TT99;
@@ -530,7 +531,7 @@ public class OffenceUtil {
     }
 
     public static boolean hasRemoveResultType(final DefendantCaseOffences offence) {
-        return hasAnyResult(offence, asList(DISM, DINE, DINI, DISC, DISCH, WDRN, WDRNOFF));
+        return hasAnyResult(offence, asList(DISM, DINE, DINI, DISC, DISCH, WDRN, WDRNOFF, WDRNNOT));
     }
 
     public static boolean hasSpecialReason(final DefendantCaseOffences offence) {
