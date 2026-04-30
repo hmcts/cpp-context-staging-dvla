@@ -84,6 +84,7 @@ public class AggregateConstants {
         DISCH("d3139b79-696b-4cb7-a39d-7f06fcc24f4a"),
         WDRN("eb2e4c4f-b738-4a4d-9cce-0572cecb7cb8"),
         WDRNOFF("e0ae61f5-bbfa-4562-bc6d-ac59a484a06b"),
+        WDRNNOT("6feb0f2e-8d1e-40c7-af2c-05b28c69e5fc"),
         DER("f42fa098-0f7b-4269-ac4f-b10c9b6832d7"),
         NESR("f121db73-57fb-4f74-9ab1-0843aabe4605"),
         NDSR("808313d1-f450-4410-b2f1-97409d7b4074"),
