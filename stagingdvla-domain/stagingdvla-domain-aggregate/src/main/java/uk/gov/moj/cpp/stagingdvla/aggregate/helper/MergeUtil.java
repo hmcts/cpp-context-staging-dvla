@@ -9,6 +9,7 @@ import static org.apache.commons.collections.CollectionUtils.isNotEmpty;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.ADJ;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.OATS;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.RDD;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.getDistinctPromptReferences;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.DisqualificationPeriodHelper.getDisqualificationPeriod;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.getDateFromWhichDisqRemoved;
@@ -22,6 +23,7 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAnyResu
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasD20Endorsement;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasNoResult;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasNonD20Endorsement;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasResultType;
 
 import uk.gov.justice.core.courts.JudicialResultCategory;
 import uk.gov.justice.core.courts.nowdocument.NowText;
@@ -46,7 +48,8 @@ public class MergeUtil {
     public static DefendantCaseOffences mergeOffence(final DefendantCaseOffences offence,
                                                      final DefendantCaseOffences previousOffence,
                                                      final String orderDate, final String orderingCourtCode,
-                                                     final boolean hasAppealResultOrGranted, final boolean isCaseReopened, final boolean isStatDec) {
+                                                     final boolean hasAppealResultOrGranted, final boolean isCaseReopened,
+                                                     final boolean isStatDec, final boolean isCriminalProceedingGranted) {
         final DefendantCaseOffences mergedOffence = DefendantCaseOffences.defendantCaseOffences()
                 .withValuesFrom(offence)
                 .withTitle((String) mergeValue(offence.getTitle(), previousOffence.getTitle()))
@@ -108,6 +111,15 @@ public class MergeUtil {
             return mergedOffenceWithAttributes.build();
         } else if (isStatDec) {
             return updateMergedOffenceForStatDec(offence, previousOffence, orderDate, orderingCourtCode, mergedOffence);
+        } else if (isCriminalProceedingGranted) {
+            if (hasResultType(offence, RDD)) {
+                return DefendantCaseOffences.defendantCaseOffences()
+                        .withValuesFrom(mergedOffence)
+                        .withDateFromWhichDisqRemoved(getDateFromWhichDisqRemoved(offence.getResults()))
+                        .build();
+            }
+            return mergedOffence;
+
         } else {
             return mergedOffence;
         }

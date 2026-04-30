@@ -1,0 +1,104 @@
+{
+  "caseApplicationReferences": [
+    "28DI1060874"
+  ],
+  "cases": [
+    {
+      "caseId": "241a6afa-6ce9-4d02-8791-5a8bf8e239f8",
+      "caseStatus": "ACTIVE",
+      "defendantCaseOffences": [
+        {
+          "civilOffence": false,
+          "code": "RR84141",
+          "convictionStatus": "Not Convicted",
+          "dateFromWhichDisqRemoved": "",
+          "disqualificationPeriod": "000600",
+          "dttpDtetp": "",
+          "dvlaCode": "NE98",
+          "endorsableFlag": false,
+          "fine": "",
+          "interimImposedFinalSentence": "",
+          "modeOfTrial": "Summary",
+          "penaltyPoints": "",
+          "results": [
+            {
+              "d20": true,
+              "judicialResultCategory": "ANCILLARY",
+              "label": "Discretionary with ordinary disqualification",
+              "prompts": [
+                {
+                  "durationSequence": 1,
+                  "label": "Disqualification period",
+                  "promptIdentifier": "2bf54447-328c-4c1b-a123-341adbd52172",
+                  "promptReference": "disqualificationPeriod",
+                  "value": "6 Months"
+                }
+              ],
+              "publishedForNows": false,
+              "resultIdentifier": "ccfc452e-ebe4-4cd7-b8a0-4f90768447b4",
+              "resultWording": "Disqualified for holding or obtaining a driving licence. Discretionary disqualification. Driving record endorsed. Section 34(2) Road Traffic Offenders Act 1988"
+            },
+            {
+              "d20": false,
+              "judicialResultCategory": "ANCILLARY",
+              "label": "0: None or unknown",
+              "publishedForNows": true,
+              "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956"
+            }
+          ],
+          "startDate": "2024-07-12",
+          "title": "Drive vehicle with axle weight exceeding maximum permitted - local traffic order within Greater London",
+          "wording": "Before 08 Aug 2024 at Croydon drove a motor vehicle, namely VH89712 Tesla Model X, on a road, namely Aby Road, subject of a local traffic order, namely Transport for London , when the weight conveyed to the road surface by one of its axles exceeded the maximum permitted axle weight of 11500 kg."
+        }
+      ],
+      "hasSV": false,
+      "initiationCode": "C",
+      "reference": "28DI1060874"
+    }
+  ],
+  "courtApplications": [],
+  "defendant": {
+    "address": {
+      "line1": "21",
+      "line2": "Furnburry Park Road",
+      "line3": "London",
+      "postCode": "SW11 3TQ"
+    },
+    "dateOfBirth": "2001-02-18",
+    "firstName": "Madyson",
+    "gender": "MALE",
+    "lastName": "Schmeler",
+    "name": "Madyson Schmeler",
+    "title": "MR"
+  },
+  "distinctPrompts": [],
+  "identifier": "1769b7d9-4974-4954-9cc4-8937b6e92697",
+  "licenceProducedInCourt": "0: None or unknown",
+  "masterDefendantId": "b6cd8151-6a63-4078-9327-e464d78473d9",
+  "materialId": "e4a8151c-8df4-4a68-b3af-854e61af3868",
+  "notificationType": "New",
+  "orderDate": "2026-04-29",
+  "orderingCourt": {
+    "address": {
+      "address1": "176A Lavender Hill",
+      "address2": "London",
+      "address3": "",
+      "address4": "",
+      "address5": "",
+      "postcode": "SW11 1JU"
+    },
+    "code": "B01LY00",
+    "courtHearingLocation": "B01LY01",
+    "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+    "lja": {
+      "ljaCode": "2577",
+      "ljaName": "South West London Magistrates' Court"
+    },
+    "name": "Lavender Hill Magistrates' Court",
+    "roomId": "9e4932f7-97b2-3010-b942-ddd2624e4dd8",
+    "roomName": "Courtroom 01"
+  },
+  "orderingCourtCode": "2577",
+  "orderingHearingId": "0bbd668d-0530-43de-be1d-3f83b8066c3e",
+  "retrySequence": 0
+}

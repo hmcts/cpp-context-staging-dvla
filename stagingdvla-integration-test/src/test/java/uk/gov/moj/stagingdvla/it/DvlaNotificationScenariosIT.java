@@ -2217,8 +2217,8 @@ public class DvlaNotificationScenariosIT extends AbstractIntegrationTest {
      * AND in a subsequent hearing, the Application is resulted with an ERR
      * WHEN the result is shared
      * THEN no remove endorsement generated
-     * WHEN same resulted ammended and shared with G and withdrawal
-     * THEN it should generate update D20
+     * WHEN same resulted ammended and shared with G
+     * THEN it should generate no update D20
      * @throws IOException
      */
     @Test
@@ -2240,14 +2240,7 @@ public class DvlaNotificationScenariosIT extends AbstractIntegrationTest {
 
         sendAndVerifyEvent("applicationAmendReshare/dd-38336/b/command2.json",  0);
         sendAndVerifyEvent("applicationAmendReshare/dd-38336/b/command3.json",  0);
-        driverNotifiedList = sendAndVerifyEvent("applicationAmendReshare/dd-38336/b/command4.json",  1);
-
-        DriverNotifiedEventAssertion.with(driverNotifiedList.get(0))
-                .hasCaseReference("DVLA02022454")
-                .hasUpdatedEndorsementContains("SP50")
-                .hasNoRemovedEndorsements()
-                .hasCourtApplications(1)
-                .hasOffences(1);
+        sendAndVerifyEvent("applicationAmendReshare/dd-38336/b/command4.json",  0);
     }
 
     /**
@@ -2258,8 +2251,8 @@ public class DvlaNotificationScenariosIT extends AbstractIntegrationTest {
      * AND the Application has been referred to box work
      * AND the application offences have been adjourned to another day
      * AND the result has been shared
-     * AND in a subsequent hearing, the Application is resulted with G and withdrawal
-     * THEN it should generate update D20
+     * AND in a subsequent hearing, the Application is resulted with G
+     * THEN it should generate no update D20
      * @throws IOException
      */
     @Test
@@ -2280,14 +2273,8 @@ public class DvlaNotificationScenariosIT extends AbstractIntegrationTest {
                 .hasWording("A fine not exceeding level five on the standard scale.Time limit for prosecutions:6 monthsOn the 12th March 2015 the limit on fines imposed by a Magistrates? court was removed ? as such, the potential fine on summary conviction in relation to an offence committed after this date is unlimited.");
 
         sendAndVerifyEvent("applicationAmendReshare/dd-38336/c/command2.json",  0);
-        driverNotifiedList = sendAndVerifyEvent("applicationAmendReshare/dd-38336/c/command3.json",  1);
+        sendAndVerifyEvent("applicationAmendReshare/dd-38336/c/command3.json",  0);
 
-        DriverNotifiedEventAssertion.with(driverNotifiedList.get(0))
-                .hasCaseReference("DVLA02022455")
-                .hasUpdatedEndorsementContains("SP50")
-                .hasNoRemovedEndorsements()
-                .hasCourtApplications(1)
-                .hasOffences(1);
     }
 
     /**

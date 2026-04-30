@@ -1,0 +1,118 @@
+{
+  "masterDefendantId": "10736b9c-4986-4f02-abe0-5cf7d546c4f0",
+  "orderingCourt": {
+    "address": {
+      "address1": "The Magistrates' Court",
+      "address2": "Barclay Road",
+      "address3": "Croydon",
+      "address4": "",
+      "address5": "",
+      "postcode": "CR9 3NG"
+    },
+    "code": "B01EF00",
+    "courtHearingLocation": "B01EF01",
+    "id": "31b3d313-7a7c-4598-bb4b-c1bff9b00e26",
+    "lja": {
+      "ljaCode": "2576",
+      "ljaName": "South London Magistrates' Court"
+    },
+    "name": "Croydon Magistrates' Court",
+    "roomId": "bfb67c13-789c-373b-b442-52b82faf863e",
+    "roomName": "Courtroom 01"
+  },
+  "nowContent": {
+    "orderDate": "2026-04-30",
+    "defendant": {
+      "dateOfBirth": "2001-02-18",
+      "gender": "MALE",
+      "title": "MR",
+      "firstName": "Cloyd",
+      "lastName": "Langworth",
+      "name": "Cloyd Langworth",
+      "address": {
+        "line1": "21",
+        "line2": "Furnburry Park Road",
+        "line3": "London",
+        "postCode": "SW11 3TQ"
+      }
+    },
+    "caseApplicationReferences": [
+      "28DI1965421"
+    ],
+    "cases": [
+      {
+        "caseStatus": "ACTIVE",
+        "initiationCode": "C",
+        "reference": "28DI1965421",
+        "caseId": "2e832196-eab9-4b48-9ffd-59c3af3b7690",
+        "defendantCaseOffences": []
+      }
+    ],
+    "courtApplications": [
+      {
+        "applicationType": "Application within criminal proceedings",
+        "applicationTypeId": "fde5dd50-fb49-4100-8c46-4c10096fb136",
+        "applicationReceivedDate": "2026-04-29",
+        "id": "1531c835-a2be-4159-9e34-69b8a96a4159",
+        "applicationReference": "28DI1965421",
+        "applicationStatus": "FINALISED",
+        "results": [
+          {
+            "resultIdentifier": "2b3f7c20-8fc1-4fad-9076-df196c24b27e",
+            "publishedForNows": false,
+            "d20": false,
+            "judicialResultCategory": "FINAL",
+            "label": "Granted"
+          },
+          {
+            "resultIdentifier": "b5ee3936-2cd5-47f4-9192-3737c7093a7f",
+            "publishedForNows": false,
+            "prompts": [
+              {
+                "promptIdentifier": "fb28be9c-0f74-4c02-a70e-0fffa9b0614b",
+                "promptReference": "dateDisqualificationImposed",
+                "label": "Date disqualification imposed",
+                "value": "01/05/2026"
+              },
+              {
+                "promptIdentifier": "7a6d9bb9-a042-4234-8b92-d871437fd15a",
+                "promptReference": "dateDisqualificationEnds",
+                "label": "Date disqualification ends",
+                "value": "01/12/2026"
+              },
+              {
+                "promptIdentifier": "73f005c6-11e7-4d45-a378-85ea5919e553",
+                "promptReference": "originalDateOfConviction",
+                "label": "Original date of conviction",
+                "value": "28/04/2026"
+              },
+              {
+                "promptIdentifier": "37ee2b08-1950-4b04-bea5-f6f66b768bb0",
+                "promptReference": "originalOffenceDate",
+                "label": "Original offence date",
+                "value": "24/04/2026"
+              },
+              {
+                "promptIdentifier": "5813ddb2-e987-44fd-bdcf-4148e6fb9cda",
+                "promptReference": "dVLAOffenceCode",
+                "label": "DVLA offence code",
+                "value": "1234"
+              },
+              {
+                "promptIdentifier": "c70597c0-a333-4828-959f-e6c8174a311c",
+                "promptReference": "originalConvictingCourt",
+                "label": "Original convicting court",
+                "value": "test"
+              }
+            ],
+            "d20": true,
+            "judicialResultCategory": "FINAL",
+            "label": "Removal of Driving Disqualification"
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": false,
+  "orderingHearingId": "2d0fbede-eac0-4f1e-8a28-4743db46a41c"
+}
