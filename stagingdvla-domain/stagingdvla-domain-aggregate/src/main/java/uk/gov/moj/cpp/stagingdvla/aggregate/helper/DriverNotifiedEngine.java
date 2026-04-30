@@ -151,7 +151,7 @@ public class DriverNotifiedEngine {
         LOGGER.info("Processing case: {}", currentCase.getReference());
 
         if (isStDecApplicationResharedAndNotGrantedResult(courtApplications, isReshare)) {
-            return getLatestDriverNotifiedFromPreviousHearing(previousDriverNotified,orderDate,currentCase,courtApplications,previousDriverNotifiedByHearing);
+            return getLatestDriverNotifiedFromPreviousHearing(previousDriverNotified,orderDate,hearingId, currentCase,courtApplications,previousDriverNotifiedByHearing);
         }
 
         // Get previous case using reference number
@@ -227,11 +227,12 @@ public class DriverNotifiedEngine {
 
     private static DriverNotified getLatestDriverNotifiedFromPreviousHearing(final DriverNotified previousDriverNotified,
                                                                       final String orderDate,
+                                                                      final UUID hearingId,
                                                                       final Cases currentCase,
                                                                       final List<CourtApplications> courtApplications,
                                                                       final Map<UUID, DriverNotified> previousDriverNotifiedByHearing) {
         final DriverNotified latestDriverNotified = previousDriverNotifiedByHearing.values().stream()
-                .filter(event -> LocalDate.parse(event.getOrderDate()).isBefore(LocalDate.parse(orderDate)))
+                .filter(event -> !event.getOrderingHearingId().equals(hearingId))
                 .max(Comparator.comparing(DriverNotified::getOrderDate))
                 .orElse(null);
         if (isNull(latestDriverNotified)) {
@@ -241,6 +242,7 @@ public class DriverNotifiedEngine {
         }
         return DriverNotified.driverNotified()
                 .withValuesFrom(latestDriverNotified)
+                .withOrderingHearingId(hearingId)
                 .withNotificationType(latestDriverNotified.getNotificationType().equals(NotificationType.NEW) ? NotificationType.UPDATE : latestDriverNotified.getNotificationType())
                 .withNotificationWasPreviouslySent(true)
                 .withCaseApplicationReferences(singletonList(currentCase.getReference()))
