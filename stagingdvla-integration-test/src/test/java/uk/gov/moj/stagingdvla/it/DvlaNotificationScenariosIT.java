@@ -2208,6 +2208,8 @@ public class DvlaNotificationScenariosIT extends AbstractIntegrationTest {
     }
     /**
      * Scenario DD-38336: Application resulted in ERR - No D20 remove
+     * Test is updated for DD-40345 as Granted application result with RDD
+     * result should  send D20 and update Date disqualification ends
      *
      * GIVEN that an CC case has been resulted with an endorsement
      * AND subsequently a Application has been created for the case
@@ -2240,11 +2242,22 @@ public class DvlaNotificationScenariosIT extends AbstractIntegrationTest {
 
         sendAndVerifyEvent("applicationAmendReshare/dd-38336/b/command2.json",  0);
         sendAndVerifyEvent("applicationAmendReshare/dd-38336/b/command3.json",  0);
-        sendAndVerifyEvent("applicationAmendReshare/dd-38336/b/command4.json",  0);
+        driverNotifiedList = sendAndVerifyEvent("applicationAmendReshare/dd-38336/b/command4.json",  1);
+
+        DriverNotifiedEventAssertion.with(driverNotifiedList.get(0))
+                .hasCaseReference("DVLA02022454")
+                .hasUpdatedEndorsementContains("SP50")
+                .hasNoRemovedEndorsements()
+                .hasCourtApplications(1)
+                .hasOffences(1)
+                .hasDateFromWhichDisqRemoved("03/04/2026");
+
     }
 
     /**
      * Scenario DD-38336: Application resulted in ERR - No D20 remove
+     * Test is updated for DD-40345 as Granted application result without RDD
+     * result should not send D20
      *
      * GIVEN that an CC case has been resulted with an endorsement
      * AND subsequently a Application has been created for the case

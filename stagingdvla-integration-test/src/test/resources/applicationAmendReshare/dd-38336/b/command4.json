@@ -63,68 +63,49 @@
             "startDate": "2020-07-02",
             "results": [
               {
-                "d20": true,
-                "label": "Driving record endorsed with penalty points",
+                "resultIdentifier": "b5ee3936-2cd5-47f4-9192-3737c7093a7f",
+                "publishedForNows": false,
                 "prompts": [
                   {
-                    "label": "Penalty points for this offence",
-                    "promptIdentifier": "a8719de4-7783-448a-b792-e3f94e670ad0",
-                    "promptReference": "PENPT",
-                    "value": "6"
+                    "promptIdentifier": "fb28be9c-0f74-4c02-a70e-0fffa9b0614b",
+                    "promptReference": "dateDisqualificationImposed",
+                    "label": "Date disqualification imposed",
+                    "value": "03/03/2026"
                   },
                   {
-                    "label": "Defendant driving licence number",
-                    "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
-                    "promptReference": "defendantDrivingLicenceNumber",
-                    "value": "ULLRI611187XH9ZM"
-                  }
-                ],
-                "publishedForNows": false,
-                "resultIdentifier": "cee54856-4450-4f28-a8a9-72b688726201"
-              },
-              {
-                "resultIdentifier": "969f150c-cd05-46b0-9dd9-30891efcc766",
-                "publishedForNows": false,
-                "prompts": [
+                    "promptIdentifier": "7a6d9bb9-a042-4234-8b92-d871437fd15a",
+                    "promptReference": "dateDisqualificationEnds",
+                    "label": "Date disqualification ends",
+                    "value": "03/04/2026"
+                  },
                   {
-                    "promptIdentifier": "7cd1472f-2379-4f5b-9e67-98a43d86e122",
-                    "promptReference": "AOF",
-                    "label": "Amount of fine",
-                    "value": "£555.00"
-                  }
-                ],
-                "resultDefinitionGroup": "Imposition",
-                "d20": false,
-                "label": "Fine"
-              },
-              {
-                "resultIdentifier": "9ea0d845-5096-44f6-9ce0-8ae801141eac",
-                "publishedForNows": false,
-                "prompts": [
+                    "promptIdentifier": "73f005c6-11e7-4d45-a378-85ea5919e553",
+                    "promptReference": "originalDateOfConviction",
+                    "label": "Original date of conviction",
+                    "value": "03/03/2026"
+                  },
                   {
-                    "promptIdentifier": "6b36e5ff-e116-4dc3-b438-8c02d493959e",
-                    "promptReference": "collectionOrderType",
-                    "label": "Collection order type",
-                    "value": "Deductions from benefit"
-                  }
-                ],
-                "d20": false,
-                "label": "Collection order"
-              },
-              {
-                "resultIdentifier": "bcb5a496-f7cf-11e8-8eb2-f2801f1b9fd1",
-                "publishedForNows": false,
-                "prompts": [
+                    "promptIdentifier": "37ee2b08-1950-4b04-bea5-f6f66b768bb0",
+                    "promptReference": "originalOffenceDate",
+                    "label": "Original offence date",
+                    "value": "03/03/2026"
+                  },
                   {
-                    "promptIdentifier": "ee7d253a-c629-11e8-a355-529269fb1459",
-                    "promptReference": "PBD",
-                    "label": "Date to pay in full by",
-                    "value": "31/12/2025"
+                    "promptIdentifier": "5813ddb2-e987-44fd-bdcf-4148e6fb9cda",
+                    "promptReference": "dVLAOffenceCode",
+                    "label": "DVLA offence code",
+                    "value": "1234"
+                  },
+                  {
+                    "promptIdentifier": "c70597c0-a333-4828-959f-e6c8174a311c",
+                    "promptReference": "originalConvictingCourt",
+                    "label": "Original convicting court",
+                    "value": "tets"
                   }
                 ],
-                "resultDefinitionGroup": "Payment terms",
-                "d20": false,
-                "label": "Pay by date"
+                "d20": true,
+                "judicialResultCategory": "FINAL",
+                "label": "Removal of Driving Disqualification"
               }
             ]
           }
