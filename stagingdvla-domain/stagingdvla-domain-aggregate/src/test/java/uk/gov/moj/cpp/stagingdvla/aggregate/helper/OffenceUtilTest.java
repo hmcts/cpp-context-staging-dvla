@@ -396,7 +396,10 @@ class OffenceUtilTest {
                 .withD20(Boolean.TRUE)
                 .withResultIdentifier(resultType.id)
                 .withPrompts(singletonList(prompts().withPromptReference(PROMPT_REFERENCE).withValue("2").build()))
-                .build())).build();
+                .build()))
+                .withApplicationType(AggregateConstants.ApplicationType.STDEC.appType)
+                .withApplicationTypeId(AggregateConstants.ApplicationType.STDEC.id)
+                .build();
 
         return singletonList(applications);
     }
