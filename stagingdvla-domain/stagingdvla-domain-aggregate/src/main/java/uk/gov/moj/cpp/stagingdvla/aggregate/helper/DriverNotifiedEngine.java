@@ -234,7 +234,9 @@ public class DriverNotifiedEngine {
                 .filter(event -> !event.getOrderingHearingId().equals(hearingId))
                 .max(Comparator.comparing(DriverNotified::getOrderDate))
                 .orElse(null);
-        if (isNull(latestDriverNotified) || (NotificationType.REMOVE.equals(latestDriverNotified.getNotificationType()) && NotificationType.REMOVE.equals(previousDriverNotified.getNotificationType()))) {
+        if (isNull(latestDriverNotified)) {
+            return null;
+        } else if (NotificationType.REMOVE.equals(latestDriverNotified.getNotificationType()) && NotificationType.REMOVE.equals(previousDriverNotified.getNotificationType())) {
             return null;
         }
         return DriverNotified.driverNotified()
