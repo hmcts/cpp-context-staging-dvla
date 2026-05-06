@@ -145,8 +145,8 @@ public class OffenceUtil {
             return getEndorsementStatusForCriminalProceeding(currentOffence, previousOffence, courtApplications);
         } else if (isSuspendDisqualificationPendingAppealAppGranted(courtApplications)) {
             return getEndorsementStatusForSuspendDisqualificationPendingAppeal(previousOffence, courtApplications);
-        } else if(isApplicationContainsOtherTypes(courtApplications) && isNull(currentOffence) && courtApplications.stream().map(CourtApplications::getResults).anyMatch(Objects::nonNull)) {
-            return getEndorsementStatusForOtherApplication(previousOffence);
+        } else if(isApplicationContainsOtherTypes(courtApplications) && courtApplications.stream().map(CourtApplications::getResults).anyMatch(Objects::nonNull)) {
+            return getEndorsementStatusForOtherApplication(currentOffence, previousOffence);
         }else if (!nonEndorsable && isAmendment) {
             return isNull(currentOffence) ? REMOVE : UPDATE_NOMERGE;
         } else if (!nonEndorsable && hasResultType(courtApplications, DSPAS)) {
@@ -244,11 +244,15 @@ public class OffenceUtil {
         }
     }
 
-    public static EndorsementStatus getEndorsementStatusForOtherApplication(final DefendantCaseOffences previousOffence) {
-        if (hasD20Endorsement(previousOffence)) {
-            return NO_UPDATE_PREV_ENDORSED;
+    public static EndorsementStatus getEndorsementStatusForOtherApplication(final DefendantCaseOffences currentOffence, final DefendantCaseOffences previousOffence) {
+        if (nonNull(currentOffence)) {
+            return UPDATE_MERGE;
         } else {
-            return NO_UPDATE_PREV_NOT_ENDORSED;
+            if (hasD20Endorsement(previousOffence)) {
+                return NO_UPDATE_PREV_ENDORSED;
+            } else {
+                return NO_UPDATE_PREV_NOT_ENDORSED;
+            }
         }
     }
 
