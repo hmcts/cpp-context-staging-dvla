@@ -234,9 +234,7 @@ public class DriverNotifiedEngine {
                 .filter(event -> !event.getOrderingHearingId().equals(hearingId))
                 .max(Comparator.comparing(DriverNotified::getOrderDate))
                 .orElse(null);
-        if (isNull(latestDriverNotified)) {
-            return null;
-        } else if (NotificationType.REMOVE.equals(latestDriverNotified.getNotificationType()) && NotificationType.REMOVE.equals(previousDriverNotified.getNotificationType())) {
+        if (isNull(latestDriverNotified) || (NotificationType.REMOVE.equals(latestDriverNotified.getNotificationType()) && NotificationType.REMOVE.equals(previousDriverNotified.getNotificationType()))) {
             return null;
         }
         return DriverNotified.driverNotified()
@@ -580,6 +578,7 @@ public class DriverNotifiedEngine {
         }
     }
 
+    @SuppressWarnings("squid:S00107")
     private static void mergeOffences(final Cases currentCase, final DefendantCaseOffences currentOffence,
                                       final DefendantCaseOffences previousOffence, final List<CourtApplications> courtApplications,
                                       final String orderDate, final String orderingCourtCode, final boolean hasAppealResultOrGranted,

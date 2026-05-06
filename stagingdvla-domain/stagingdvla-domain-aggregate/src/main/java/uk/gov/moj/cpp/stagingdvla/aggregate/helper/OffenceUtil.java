@@ -117,7 +117,7 @@ public class OffenceUtil {
             LPIC1.id, LPIC2.id, LPIC3.id, LPIC4.id, LPIC5.id
     );
 
-    public static final List<String> COV_G_RESULTS = asList(COV.id, G.id);
+    protected static final List<String> COV_G_RESULTS = asList(COV.id, G.id);
 
     public static String getConvictingCourtCode(final DefendantCaseOffences currentOffence,
                                                 final DefendantCaseOffences previousOffence) {
