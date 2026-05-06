@@ -104,9 +104,9 @@ public class AggregateConstants {
         AACSMC("36f3b0c3-9f75-31aa-a226-cfee69216160", "MC80801", "Appeal against conviction and sentence by a Magistrates' Court to the Crown Court"),
         ACP("4e281610-96aa-3711-aecf-59df86b6c6bb", "AP00501", "Application within criminal proceedings"),
         APPRO("44c238d9-3bc2-3cf3-a2eb-a7d1437b8383", "MC80524", "Application to reopen case"),
-        ASDPA("32dad4d4-cd29-31ca-aeea-c7d8bc956cc6", "RO88504", "Application to suspend disqualification pending appeal"),
-        STDEC("a6663f2a-c900-4bb4-a7d7-4be34cb2f1f7","MC80527","Appearance to make statutory declaration (other than SJP)"),
-        STDECSJP("f3a6e917-7cc8-3c66-83dd-d958abd6a6e4","MC80528","Appearance to make statutory declaration (SJP case)");
+        ASDPA("c3bee4e7-c45d-4d6a-8647-4dc7c089b1e6", "RO88504", "Application to suspend disqualification pending appeal"),
+        STDEC("e842d688-2c7a-4f61-ba73-0a477db06721","MC80527","Appearance to make statutory declaration (other than SJP)"),
+        STDECSJP("c715f9a1-c79f-4912-8454-c196748272bf","MC80528","Appearance to make statutory declaration (SJP case)");
 
         public final String id;
         public final String code;
