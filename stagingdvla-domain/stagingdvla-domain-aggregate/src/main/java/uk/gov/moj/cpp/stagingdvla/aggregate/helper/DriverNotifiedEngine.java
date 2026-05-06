@@ -70,7 +70,6 @@ import uk.gov.justice.cpp.stagingdvla.event.DriverNotified;
 import uk.gov.justice.cpp.stagingdvla.event.NotificationType;
 import uk.gov.justice.cpp.stagingdvla.event.Previous;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -496,7 +495,7 @@ public class DriverNotifiedEngine {
             });
         });
 
-        if (hasAppealResultOrGranted(courtApplications) || isCaseHasReopenedApplication) {
+        if (hasAppealResultOrGranted(courtApplications) || isCaseHasReopenedApplication || isStdecGranted(courtApplications)) {
             updatedEndorsements.addAll(checkOffencesThatDoesNotExistInPrevious(cases, previousDriverNotified));
         }
 
