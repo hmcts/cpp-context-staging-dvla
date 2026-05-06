@@ -495,7 +495,7 @@ public class DriverNotifiedEngine {
             });
         });
 
-        if (hasAppealResultOrGranted(courtApplications) || isCaseHasReopenedApplication || isStdecGranted(courtApplications)) {
+        if (isNotEmpty(courtApplications) || isCaseHasReopenedApplication) {
             updatedEndorsements.addAll(checkOffencesThatDoesNotExistInPrevious(cases, previousDriverNotified));
         }
 
