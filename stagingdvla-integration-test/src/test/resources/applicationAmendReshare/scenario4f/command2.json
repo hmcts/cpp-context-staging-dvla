@@ -188,7 +188,7 @@
     ],
     "courtApplications": [
       {
-        "applicationType": "Appearance to make statutory declaration",
+        "applicationType": "Appearance to make statutory declaration (other than SJP)",
         "applicationTypeId" : "f3a6e917-7cc8-3c66-83dd-d958abd6a6e4",
         "applicationCode": "MC80527",
         "applicationReceivedDate": "2023-05-04",

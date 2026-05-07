@@ -1712,6 +1712,7 @@ public class DvlaNotificationScenariosIT extends AbstractIntegrationTest {
     // D20 Scenarios for application(stat dec) amend and reshare - Start
 
     /**
+     * Updated with DD-40345
      * Given that a case is created in CC with 1 defendant
      * And has an endorsable offence
      * And is listed for hearing
@@ -1721,9 +1722,9 @@ public class DvlaNotificationScenariosIT extends AbstractIntegrationTest {
      * And a D20 API notification is generated for the case
      * When the HMTC user creates an application e.g. “Application within criminal proceedings" linked to the case
      * And list for a court hearing
-     * And a Application is resulted with Granted and COV (community order varied)
+     * And a Application is resulted with Granted
      * And shares the result
-     * Then generate update notification
+     * Then generate no notification
      *
      * @throws IOException
      */
@@ -1751,7 +1752,51 @@ public class DvlaNotificationScenariosIT extends AbstractIntegrationTest {
         verifyDVLANotificationCommandInvoked(driverNotifiedList);
         verifyGenerateDocumentStubCommandInvoked(driverNotifiedList);
 
-        driverNotifiedList = sendAndVerifyEvent("applicationAmendReshare/scenario1/command2.json",  1);
+        sendAndVerifyEvent("applicationAmendReshare/scenario1/command2.json",  0);
+    }
+
+    /**
+     * Updated with DD-40345
+     * Given that a case is created in CC with 1 defendant
+     * And has an endorsable offence
+     * And is listed for hearing
+     * And an endorsement result is entered against offences on the case
+     * And a Community order is entered against the offence
+     * And shared
+     * And a D20 API notification is generated for the case
+     * When the HMTC user creates an application e.g. “Application within criminal proceedings" linked to the case
+     * And list for a court hearing
+     * And a Application is resulted with Granted and RDD
+     * And shares the result
+     * Then generate no notification
+     *
+     * @throws IOException
+     */
+    @Test
+    public void applicationAmendReshareScenario1a() throws IOException {
+        List<DriverNotified> driverNotifiedList = sendAndVerifyEvent("applicationAmendReshare/scenario1a/command1.json",  1);
+
+        DriverNotifiedEventAssertion.with(driverNotifiedList.get(0))
+                .hasCaseReference("JW74896350")
+                .hasNoUpdatedEndorsements()
+                .hasNoRemovedEndorsements()
+                .hasCourtApplications(0)
+                .hasOffences(1)
+                .hasOffenceCode("RT88319")
+                .hasDVLACode("IN14")
+                .hasDisqualificationPeriod(EMPTY_STRING)
+                .hasDrugLevel("500")
+                .hasPenaltyPoints("3")
+                .hasConvictingCourt("2577")
+                .hasConvictionDate("2023-04-23")
+                .hasAmountOfFine(EMPTY_STRING)
+                .hasResults(5)
+                .hasWording("Has a violent past and fear that he will commit further offences and interfere with witnesse");
+
+        verifyDVLANotificationCommandInvoked(driverNotifiedList);
+        verifyGenerateDocumentStubCommandInvoked(driverNotifiedList);
+
+        driverNotifiedList = sendAndVerifyEvent("applicationAmendReshare/scenario1a/command2.json",  1);
 
         DriverNotifiedEventAssertion.with(driverNotifiedList.get(0))
                 .hasCaseReference("JW74896350")

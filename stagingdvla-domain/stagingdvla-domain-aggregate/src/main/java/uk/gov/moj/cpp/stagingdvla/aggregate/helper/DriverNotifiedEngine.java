@@ -54,13 +54,16 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAppealR
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAppealResult;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAppealResultOrGranted;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasD20Endorsement;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasDrivingDisqualificationSuspendedPendingAppeal;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasPointsDisqualificationCode;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasRemovalOfDisqualificationsResult;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasResultType;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.isApplicationNotGranted;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.isCaseReopen;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.isCriminalProceedingAppGranted;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.isSjpCaseReferred;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.isStdecGranted;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.isSuspendDisqualificationPendingAppealAppGranted;
 
 import uk.gov.justice.core.courts.CourtCentre;
 import uk.gov.justice.core.courts.nowdocument.Nowdefendant;
@@ -460,7 +463,7 @@ public class DriverNotifiedEngine {
         final List<String> noUpdateOffences = new ArrayList<>();
         final List<String> emptyResultOffences = new ArrayList<>();
         final List<String> specialReasonOffences = new ArrayList<>();
-        final boolean isCaseHasReopenedApplication = isCaseReopen(courtApplications, sjpCaseToCcReferredApplications);
+
 
         previousDriverNotified.getCases().forEach(previousCase -> {
             final Cases currentCase = cases.stream()
@@ -485,7 +488,7 @@ public class DriverNotifiedEngine {
 
 
                 if (REMOVE.equals(endorsementStatus)) {
-                    if (hasAppealResultOrGranted(courtApplications) || isCaseHasReopenedApplication) {
+                    if (isNotEmpty(courtApplications) || isSjpCaseReferred(sjpCaseToCcReferredApplications)) {
                         removeOffence(currentOffence, currentCase);
                     } else {
                         removeConvictionDataFromOffence(currentOffence, currentCase);
@@ -493,7 +496,8 @@ public class DriverNotifiedEngine {
                 } else {
                     if (UPDATE_MERGE.equals(endorsementStatus) || OATS_PREV_ENDORSED.equals(endorsementStatus)
                             || NO_UPDATE_PREV_ENDORSED.equals(endorsementStatus) || NO_RESULT_PREV_ENDORSED.equals(endorsementStatus)) {
-                        mergeOffences(currentCase, currentOffence, previousOffence, courtApplications, orderDate, orderingCourtCode, hasAppealResultOrGranted(courtApplications), isCaseHasReopenedApplication, isStdecGranted(courtApplications), isCriminalProceedingAppGranted(courtApplications) );
+                        final boolean isCaseHasReopenedApplication = isCaseReopen(courtApplications, sjpCaseToCcReferredApplications);
+                        mergeOffences(currentCase, currentOffence, previousOffence, courtApplications, orderDate, orderingCourtCode, hasAppealResultOrGranted(courtApplications), isCaseHasReopenedApplication, isStdecGranted(courtApplications), isCriminalProceedingAppGranted(courtApplications), isSuspendDisqualificationPendingAppealAppGranted(courtApplications) );
                     } else if (SPECIAL_REASON.equals(endorsementStatus) || NO_UPDATE_PREV_NOT_ENDORSED.equals(endorsementStatus)) {
                         removeOffence(currentOffence, currentCase);
                     }
@@ -501,7 +505,7 @@ public class DriverNotifiedEngine {
             });
         });
 
-        if (hasAppealResultOrGranted(courtApplications) || isCaseHasReopenedApplication) {
+        if (isNotEmpty(courtApplications) || isSjpCaseReferred(sjpCaseToCcReferredApplications)) {
             updatedEndorsements.addAll(checkOffencesThatDoesNotExistInPrevious(cases, previousDriverNotified));
         }
 
@@ -576,7 +580,7 @@ public class DriverNotifiedEngine {
             builder.withOatsEndorsements(oatsOffences);
         }
 
-        if (hasAppealResultOrGranted(courtApplications) || isCaseReopen(courtApplications, sjpCaseToCcReferredApplications) || isStdecGranted(courtApplications)) {
+        if (isNotEmpty(courtApplications) || isSjpCaseReferred(sjpCaseToCcReferredApplications)) {
             builder.withNotificationType(isNotEmpty(updatedEndorsements) || isNotEmpty(oatsOffences)
                     ? NotificationType.UPDATE : NotificationType.REMOVE);
 
@@ -589,13 +593,16 @@ public class DriverNotifiedEngine {
     private static void mergeOffences(final Cases currentCase, final DefendantCaseOffences currentOffence,
                                       final DefendantCaseOffences previousOffence, final List<CourtApplications> courtApplications,
                                       final String orderDate, final String orderingCourtCode, final boolean hasAppealResultOrGranted,
-                                      final boolean isCaseReopened, final boolean isStatDec, final boolean isCriminalProceedingGranted) {
+                                      final boolean isCaseReopened, final boolean isStatDec, final boolean isCriminalProceedingGranted,
+                                      final boolean isSuspendDisqualificationPendingAppealAppG) {
         if (isNull(currentOffence)) {
             final DefendantCaseOffences.Builder updatedPreviousOffence = DefendantCaseOffences.defendantCaseOffences()
                     .withValuesFrom(previousOffence)
                     .withDateDisqReimposedFollowingAppeal(getDateDisqReimposedFollowingAppeal(courtApplications, orderDate));
-            if (isCriminalProceedingGranted && hasRemovalOfDisqualificationsResult(courtApplications)) {
+            if (isCriminalProceedingGranted && hasRemovalOfDisqualificationsResult(currentOffence, courtApplications)) {
                 updatedPreviousOffence.withDateFromWhichDisqRemoved(getDateFromWhichDisqRemoved(courtApplications.stream().map(CourtApplications::getResults).flatMap(Collection::stream).toList()));
+            } else if(isSuspendDisqualificationPendingAppealAppG && hasDrivingDisqualificationSuspendedPendingAppeal(currentOffence, courtApplications)){
+                updatedPreviousOffence.withDateDisqSuspendedPendingAppeal(orderDate);
             }
             currentCase.getDefendantCaseOffences().add(updatedPreviousOffence.build());
         } else if (nonNull(previousOffence)) {
