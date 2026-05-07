@@ -144,7 +144,7 @@ public class OffenceUtil {
         } else if (isCriminalProceedingAppGranted(courtApplications)) {
             return getEndorsementStatusForCriminalProceeding(currentOffence, previousOffence, courtApplications);
         } else if (isSuspendDisqualificationPendingAppealAppGranted(courtApplications)) {
-            return getEndorsementStatusForSuspendDisqualificationPendingAppeal(previousOffence, courtApplications);
+            return getEndorsementStatusForSuspendDisqualificationPendingAppeal(currentOffence, previousOffence, courtApplications);
         } else if (isApplicationContainsOtherTypes(courtApplications)) {
             return getEndorsementStatusForOtherApplication(previousOffence);
         } else if (!nonEndorsable && isAmendment) {
@@ -232,8 +232,8 @@ public class OffenceUtil {
         }
     }
 
-    public static EndorsementStatus getEndorsementStatusForSuspendDisqualificationPendingAppeal(final DefendantCaseOffences previousOffence, final List<CourtApplications> courtApplications ){
-        if(hasDrivingDisqualificationSuspendedPendingAppeal(courtApplications)){
+    public static EndorsementStatus getEndorsementStatusForSuspendDisqualificationPendingAppeal(final DefendantCaseOffences currentOffence,final DefendantCaseOffences previousOffence, final List<CourtApplications> courtApplications ){
+        if(hasDrivingDisqualificationSuspendedPendingAppeal(currentOffence, courtApplications)){
             return UPDATE_MERGE;
         } else {
             if (hasD20Endorsement(previousOffence)) {
@@ -532,11 +532,16 @@ public class OffenceUtil {
     }
 
 
-    public static boolean hasDrivingDisqualificationSuspendedPendingAppeal(final List<CourtApplications> courtApplications) {
-        return isNotEmpty(courtApplications)
+    public static boolean hasDrivingDisqualificationSuspendedPendingAppeal(final DefendantCaseOffences currentOffence, final List<CourtApplications> courtApplications) {
+        return (isNotEmpty(courtApplications)
                 && courtApplications.stream()
-                .anyMatch(courtApplication -> courtApplication.getResults().stream()
-                        .anyMatch(result -> DSPA.id.equals(result.getResultIdentifier())));
+                .anyMatch(courtApplication -> hasDSPA(courtApplication.getResults())) ||
+                (nonNull(currentOffence) && hasDSPA(currentOffence.getResults())));
+    }
+
+    private static boolean hasDSPA(final List<Results> results) {
+        return results != null && results.stream()
+                .anyMatch(r -> DSPA.id.equals(r.getResultIdentifier()));
     }
 
     public static boolean hasAnyResult(final DefendantCaseOffences offence, final List<ResultType> resultTypes) {
