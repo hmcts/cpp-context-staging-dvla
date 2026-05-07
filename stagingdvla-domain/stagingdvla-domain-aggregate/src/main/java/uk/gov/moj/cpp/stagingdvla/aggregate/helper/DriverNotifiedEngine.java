@@ -61,7 +61,7 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasResultT
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.isApplicationNotGranted;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.isCaseReopen;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.isCriminalProceedingAppGranted;
-import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.isSjpCaseReferredReopen;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.isSjpCaseReferred;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.isStdecGranted;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.isSuspendDisqualificationPendingAppealAppGranted;
 
@@ -488,7 +488,7 @@ public class DriverNotifiedEngine {
 
 
                 if (REMOVE.equals(endorsementStatus)) {
-                    if (isNotEmpty(courtApplications) || isSjpCaseReferredReopen(sjpCaseToCcReferredApplications)) {
+                    if (isNotEmpty(courtApplications) || isSjpCaseReferred(sjpCaseToCcReferredApplications)) {
                         removeOffence(currentOffence, currentCase);
                     } else {
                         removeConvictionDataFromOffence(currentOffence, currentCase);
@@ -505,7 +505,7 @@ public class DriverNotifiedEngine {
             });
         });
 
-        if (isNotEmpty(courtApplications) || isSjpCaseReferredReopen(sjpCaseToCcReferredApplications)) {
+        if (isNotEmpty(courtApplications) || isSjpCaseReferred(sjpCaseToCcReferredApplications)) {
             updatedEndorsements.addAll(checkOffencesThatDoesNotExistInPrevious(cases, previousDriverNotified));
         }
 
@@ -580,7 +580,7 @@ public class DriverNotifiedEngine {
             builder.withOatsEndorsements(oatsOffences);
         }
 
-        if (isNotEmpty(courtApplications) || isSjpCaseReferredReopen(sjpCaseToCcReferredApplications)) {
+        if (isNotEmpty(courtApplications) || isSjpCaseReferred(sjpCaseToCcReferredApplications)) {
             builder.withNotificationType(isNotEmpty(updatedEndorsements) || isNotEmpty(oatsOffences)
                     ? NotificationType.UPDATE : NotificationType.REMOVE);
 

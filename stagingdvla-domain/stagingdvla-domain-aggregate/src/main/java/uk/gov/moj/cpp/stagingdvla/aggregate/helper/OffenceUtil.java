@@ -141,13 +141,13 @@ public class OffenceUtil {
 
         if (hasAppealResultOrGranted(courtApplications) || isCaseReopen(courtApplications, sjpCaseToCcReferredApplications)) {
             return getEndorsementStatusForAppealAndReopen(currentOffence, previousOffence, courtApplications, sjpCaseToCcReferredApplications);
-        } else if(isCriminalProceedingAppGranted(courtApplications)){
+        } else if (isCriminalProceedingAppGranted(courtApplications)) {
             return getEndorsementStatusForCriminalProceeding(currentOffence, previousOffence, courtApplications);
         } else if (isSuspendDisqualificationPendingAppealAppGranted(courtApplications)) {
             return getEndorsementStatusForSuspendDisqualificationPendingAppeal(previousOffence, courtApplications);
-        } else if(isApplicationContainsOtherTypes(courtApplications) && courtApplications.stream().map(CourtApplications::getResults).anyMatch(Objects::nonNull)) {
-            return getEndorsementStatusForOtherApplication(currentOffence, previousOffence);
-        }else if (!nonEndorsable && isAmendment) {
+        } else if (isApplicationContainsOtherTypes(courtApplications)) {
+            return getEndorsementStatusForOtherApplication(previousOffence);
+        } else if (!nonEndorsable && isAmendment) {
             return isNull(currentOffence) ? REMOVE : UPDATE_NOMERGE;
         } else if (!nonEndorsable && hasResultType(courtApplications, DSPAS)) {
             return UPDATE_MERGE;
@@ -244,16 +244,13 @@ public class OffenceUtil {
         }
     }
 
-    public static EndorsementStatus getEndorsementStatusForOtherApplication(final DefendantCaseOffences currentOffence, final DefendantCaseOffences previousOffence) {
-        if (nonNull(currentOffence) && !hasD20Endorsement(currentOffence)) {
-            return UPDATE_MERGE;
+    public static EndorsementStatus getEndorsementStatusForOtherApplication(final DefendantCaseOffences previousOffence) {
+        if (hasD20Endorsement(previousOffence)) {
+            return NO_UPDATE_PREV_ENDORSED;
         } else {
-            if (hasD20Endorsement(previousOffence)) {
-                return NO_UPDATE_PREV_ENDORSED;
-            } else {
-                return NO_UPDATE_PREV_NOT_ENDORSED;
-            }
+            return NO_UPDATE_PREV_NOT_ENDORSED;
         }
+
     }
 
     public static String getDvlaCode(DefendantCaseOffences offence) {
@@ -713,6 +710,15 @@ public class OffenceUtil {
         return isNotEmpty( sjpCaseToCcReferredApplications) &&
                 sjpCaseToCcReferredApplications.stream()
                         .anyMatch(applicationType-> APPRO.id.equals(applicationType.getId()) || APPRO.appType.equalsIgnoreCase(applicationType.getName()));
+    }
+
+
+    public static boolean isSjpCaseReferred(final List<ApplicationTypes> sjpCaseToCcReferredApplications) {
+        return isNotEmpty( sjpCaseToCcReferredApplications) &&
+                sjpCaseToCcReferredApplications.stream()
+                        .anyMatch(applicationTypes-> Arrays.stream(AggregateConstants.ApplicationType.values())
+                                .anyMatch(applicationType -> applicationType.id.equals(applicationTypes.getId()) ||
+                                        applicationType.appType.equalsIgnoreCase(applicationTypes.getName())));
     }
 
     public static boolean isCaseReopen(final List<CourtApplications> courtApplications, final List<ApplicationTypes> sjpCaseToCcReferredApplications) {
