@@ -221,7 +221,7 @@ public class OffenceUtil {
     }
 
     public static EndorsementStatus getEndorsementStatusForCriminalProceeding(final DefendantCaseOffences currentOffence, final DefendantCaseOffences previousOffence, final List<CourtApplications> courtApplications) {
-        if (hasRemovalOfDisqualificationsResult(courtApplications) || hasResultType(currentOffence, RDD)) {
+        if (hasRemovalOfDisqualificationsResult(currentOffence, courtApplications) || hasResultType(currentOffence, RDD)) {
             return UPDATE_MERGE;
         } else {
             if (hasD20Endorsement(previousOffence)) {
@@ -245,7 +245,7 @@ public class OffenceUtil {
     }
 
     public static EndorsementStatus getEndorsementStatusForOtherApplication(final DefendantCaseOffences currentOffence, final DefendantCaseOffences previousOffence) {
-        if (nonNull(currentOffence)) {
+        if (nonNull(currentOffence) && !hasD20Endorsement(currentOffence)) {
             return UPDATE_MERGE;
         } else {
             if (hasD20Endorsement(previousOffence)) {
@@ -521,12 +521,19 @@ public class OffenceUtil {
                         .anyMatch(result -> APPEAL_RESULTS.stream().anyMatch(result.getResultIdentifier()::equalsIgnoreCase)));
     }
 
-    public static boolean hasRemovalOfDisqualificationsResult(final List<CourtApplications> courtApplications) {
-        return isNotEmpty(courtApplications)
+    public static boolean hasRemovalOfDisqualificationsResult(final DefendantCaseOffences currentOffence, final List<CourtApplications> courtApplications) {
+        return (isNotEmpty(courtApplications)
                 && courtApplications.stream()
-                .anyMatch(courtApplication -> courtApplication.getResults().stream()
-                        .anyMatch(result -> RDD.id.equals(result.getResultIdentifier())));
+                .anyMatch(courtApplication -> hasRDD(courtApplication.getResults())) ||
+                (nonNull(currentOffence) && hasRDD(currentOffence.getResults())));
     }
+
+
+    private static boolean hasRDD(final List<Results> results) {
+        return results != null && results.stream()
+                .anyMatch(r -> RDD.id.equals(r.getResultIdentifier()));
+    }
+
 
     public static boolean hasDrivingDisqualificationSuspendedPendingAppeal(final List<CourtApplications> courtApplications) {
         return isNotEmpty(courtApplications)

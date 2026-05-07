@@ -597,7 +597,7 @@ public class DriverNotifiedEngine {
             final DefendantCaseOffences.Builder updatedPreviousOffence = DefendantCaseOffences.defendantCaseOffences()
                     .withValuesFrom(previousOffence)
                     .withDateDisqReimposedFollowingAppeal(getDateDisqReimposedFollowingAppeal(courtApplications, orderDate));
-            if (isCriminalProceedingGranted && hasRemovalOfDisqualificationsResult(courtApplications)) {
+            if (isCriminalProceedingGranted && hasRemovalOfDisqualificationsResult(currentOffence, courtApplications)) {
                 updatedPreviousOffence.withDateFromWhichDisqRemoved(getDateFromWhichDisqRemoved(courtApplications.stream().map(CourtApplications::getResults).flatMap(Collection::stream).toList()));
             } else if(isSuspendDisqualificationPendingAppealAppG && hasDrivingDisqualificationSuspendedPendingAppeal(courtApplications)){
                 updatedPreviousOffence.withDateDisqSuspendedPendingAppeal(orderDate);
