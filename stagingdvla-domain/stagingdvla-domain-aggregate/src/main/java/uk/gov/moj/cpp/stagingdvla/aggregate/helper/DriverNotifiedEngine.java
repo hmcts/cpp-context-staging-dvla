@@ -61,6 +61,7 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasResultT
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.isApplicationNotGranted;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.isCaseReopen;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.isCriminalProceedingAppGranted;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.isSjpCaseReferredReopen;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.isStdecGranted;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.isSuspendDisqualificationPendingAppealAppGranted;
 
@@ -462,7 +463,7 @@ public class DriverNotifiedEngine {
         final List<String> noUpdateOffences = new ArrayList<>();
         final List<String> emptyResultOffences = new ArrayList<>();
         final List<String> specialReasonOffences = new ArrayList<>();
-        final boolean isCaseHasReopenedApplication = isCaseReopen(courtApplications, sjpCaseToCcReferredApplications);
+
 
         previousDriverNotified.getCases().forEach(previousCase -> {
             final Cases currentCase = cases.stream()
@@ -487,7 +488,7 @@ public class DriverNotifiedEngine {
 
 
                 if (REMOVE.equals(endorsementStatus)) {
-                    if (hasAppealResultOrGranted(courtApplications) || isCaseHasReopenedApplication) {
+                    if (isNotEmpty(courtApplications) || isSjpCaseReferredReopen(sjpCaseToCcReferredApplications)) {
                         removeOffence(currentOffence, currentCase);
                     } else {
                         removeConvictionDataFromOffence(currentOffence, currentCase);
@@ -495,6 +496,7 @@ public class DriverNotifiedEngine {
                 } else {
                     if (UPDATE_MERGE.equals(endorsementStatus) || OATS_PREV_ENDORSED.equals(endorsementStatus)
                             || NO_UPDATE_PREV_ENDORSED.equals(endorsementStatus) || NO_RESULT_PREV_ENDORSED.equals(endorsementStatus)) {
+                        final boolean isCaseHasReopenedApplication = isCaseReopen(courtApplications, sjpCaseToCcReferredApplications);
                         mergeOffences(currentCase, currentOffence, previousOffence, courtApplications, orderDate, orderingCourtCode, hasAppealResultOrGranted(courtApplications), isCaseHasReopenedApplication, isStdecGranted(courtApplications), isCriminalProceedingAppGranted(courtApplications), isSuspendDisqualificationPendingAppealAppGranted(courtApplications) );
                     } else if (SPECIAL_REASON.equals(endorsementStatus) || NO_UPDATE_PREV_NOT_ENDORSED.equals(endorsementStatus)) {
                         removeOffence(currentOffence, currentCase);
@@ -503,7 +505,7 @@ public class DriverNotifiedEngine {
             });
         });
 
-        if (hasAppealResultOrGranted(courtApplications) || isCaseHasReopenedApplication) {
+        if (isNotEmpty(courtApplications) || isSjpCaseReferredReopen(sjpCaseToCcReferredApplications)) {
             updatedEndorsements.addAll(checkOffencesThatDoesNotExistInPrevious(cases, previousDriverNotified));
         }
 
