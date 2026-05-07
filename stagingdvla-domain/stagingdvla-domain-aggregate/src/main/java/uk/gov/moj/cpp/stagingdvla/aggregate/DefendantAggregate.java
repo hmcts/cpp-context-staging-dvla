@@ -32,7 +32,7 @@ import org.slf4j.Logger;
 
 @SuppressWarnings("squid:S1602")
 public class DefendantAggregate implements Aggregate {
-    private static final long serialVersionUID = 4L;
+    private static final long serialVersionUID = 5L;
     private static final Logger LOGGER = getLogger(DefendantAggregate.class);
 
     private DriverNotified previousDriverNotified;
