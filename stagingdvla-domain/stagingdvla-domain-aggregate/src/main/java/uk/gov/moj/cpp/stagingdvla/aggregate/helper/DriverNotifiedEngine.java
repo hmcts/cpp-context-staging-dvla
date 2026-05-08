@@ -258,6 +258,7 @@ public class DriverNotifiedEngine {
                 .withOrderDate(orderDate)
                 .withIsResetToPreviousEvent(true)
                 .withMaterialId(UUID.randomUUID())
+                .withIdentifier(randomUUID())
                 .withPrevious(getPrevious(previousDriverNotified))
                 .build();
     }
