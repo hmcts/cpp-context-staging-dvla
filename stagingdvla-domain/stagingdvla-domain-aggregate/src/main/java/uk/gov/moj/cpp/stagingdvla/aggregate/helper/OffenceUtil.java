@@ -23,6 +23,7 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.App
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ApplicationType.ACP;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ApplicationType.APPRO;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ApplicationType.ASDPA;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ApplicationType.STDECSJP;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.DATE_DISQUALIFICATION_ENDS;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.DEFAULT_DVLA_CODE;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.DVLACODE_FOR_OFFENCE;
@@ -658,7 +659,7 @@ public class OffenceUtil {
                                            final List<ApplicationTypes> sjpCaseToCcReferredApplications) {
 
         if (check20Removal(prevCase, currCase, courtApplications)) {
-            if (isStdecGranted(courtApplications) || isCaseReopen(courtApplications, sjpCaseToCcReferredApplications)) {
+            if (isStdecGranted(courtApplications) || isSjpCaseReferredStDec(sjpCaseToCcReferredApplications) || isCaseReopen(courtApplications, sjpCaseToCcReferredApplications)) {
                 LOGGER.info("[Case Id:{}], this result is an STDEC Granted or case reopen", currCase.getCaseId());
 
                 return true;
@@ -715,6 +716,12 @@ public class OffenceUtil {
         return isNotEmpty( sjpCaseToCcReferredApplications) &&
                 sjpCaseToCcReferredApplications.stream()
                         .anyMatch(applicationType-> APPRO.id.equals(applicationType.getId()) || APPRO.appType.equalsIgnoreCase(applicationType.getName()));
+    }
+
+    public static boolean isSjpCaseReferredStDec(final List<ApplicationTypes> sjpCaseToCcReferredApplications) {
+        return isNotEmpty( sjpCaseToCcReferredApplications) &&
+                sjpCaseToCcReferredApplications.stream()
+                        .anyMatch(applicationType-> STDECSJP.id.equals(applicationType.getId()) || STDECSJP.appType.equalsIgnoreCase(applicationType.getName()));
     }
 
 

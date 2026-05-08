@@ -55,6 +55,7 @@ public class DefendantAggregate implements Aggregate {
                                        final Boolean isReshare) {
 
         final List<SjpCaseToCcReferred> sjpCaseReferredEvents = getSjpCaseReferredEvents(currentCases, courtApplications);
+        addNewSjpCaseReferredEventsToMap(sjpCaseReferredEvents);
         // Create a new event for each incoming cases
         final List<DriverNotified> driverNotifiedEvents = transformDriverNotified(
                 this.previousDriverNotifiedByCase,
@@ -90,10 +91,22 @@ public class DefendantAggregate implements Aggregate {
         final Stream.Builder<Object> streamBuilder =
                 streamingEvents(transformedDriverNotifiedEvents, masterDefendantId);
 
-
-
+        if (!sjpCaseReferredEvents.isEmpty()) {
+            sjpCaseReferredEvents.forEach(streamBuilder::add);
+        }
 
         return apply(streamBuilder.build());
+    }
+
+    private void addNewSjpCaseReferredEventsToMap(final List<SjpCaseToCcReferred> sjpCaseReferredEvents) {
+        sjpCaseReferredEvents.forEach(sjpCaseReferredEvent ->{
+            if(!sjpCaseToCcReferredApplications.containsKey( sjpCaseReferredEvent.getCaseReference())){
+                sjpCaseToCcReferredApplications.put(sjpCaseReferredEvent.getCaseReference(), sjpCaseReferredEvent.getApplicationTypes());
+            }
+            else {
+                sjpCaseToCcReferredApplications.get(sjpCaseReferredEvent.getCaseReference()).addAll(sjpCaseReferredEvent.getApplicationTypes());
+            }
+        });
     }
 
 
