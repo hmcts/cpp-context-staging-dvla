@@ -76,8 +76,7 @@ import uk.gov.justice.cpp.stagingdvla.event.DistinctPrompts;
 import uk.gov.justice.cpp.stagingdvla.event.DriverNotified;
 import uk.gov.justice.cpp.stagingdvla.event.NotificationType;
 import uk.gov.justice.cpp.stagingdvla.event.Previous;
-import uk.gov.justice.cpp.stagingdvla.event.Prompts;
-import uk.gov.justice.cpp.stagingdvla.event.Results;
+import uk.gov.justice.cpp.stagingdvla.event.SjpCaseToCcReferred;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -120,7 +119,7 @@ public class DriverNotifiedEngine {
             final UUID hearingId,
             final List<CourtApplications> courtApplications,
             final Map<String, Map<UUID,DriverNotified>> previousDriverNotifiedByCaseAndHearing,
-            final Map<String, List<ApplicationTypes>> sjpCaseToCcReferredApplications,
+            final List<SjpCaseToCcReferred> sjpCaseToCcReferredApplications,
             final Boolean isReshare) {
 
         final List<DriverNotified> driverNotifiedList = currentCases
@@ -134,7 +133,11 @@ public class DriverNotifiedEngine {
                         hearingId,
                         courtApplications,
                         previousDriverNotifiedByCaseAndHearing.get(currentCase.getReference()),
-                        sjpCaseToCcReferredApplications.get(currentCase.getReference()),
+                        sjpCaseToCcReferredApplications.stream()
+                                .filter(sjpCaseToCcReferred -> sjpCaseToCcReferred.getCaseReference().equalsIgnoreCase(currentCase.getReference()))
+                                .map(SjpCaseToCcReferred::getApplicationTypes)
+                                .flatMap(Collection::stream)
+                                .toList(),
                         isReshare
                 ))
                 .filter(Objects::nonNull)
