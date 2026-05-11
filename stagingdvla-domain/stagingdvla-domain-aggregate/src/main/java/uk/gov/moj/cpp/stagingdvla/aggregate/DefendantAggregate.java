@@ -41,7 +41,6 @@ public class DefendantAggregate implements Aggregate {
     private final Map<String, DriverNotified> previousDriverNotifiedByCase = new HashMap<>();
     /** Keep track of previous latest events per hearing for reset(i.e. when application is refused, DD-40319) */
     private final Map<String, Map<UUID,DriverNotified>> previousDriverNotifiedByCaseAndHearing = new HashMap<>();
-//    private final Map<String, List<ApplicationTypes>> sjpCaseToCcReferredApplications = new HashMap<>();
     private final List<SjpCaseToCcReferred> previousSjpCaseToCcReferred = new ArrayList<>();
     private static final String CODE_FOR_SJP_CASE = "J";
 
@@ -90,19 +89,6 @@ public class DefendantAggregate implements Aggregate {
 
         return apply(streamBuilder.build());
     }
-
-//    private void addNewSjpCaseReferredEventsToMap(final List<SjpCaseToCcReferred> sjpCaseReferredEvents) {
-//        previousSjpCaseToCcReferred.addAll(sjpCaseReferredEvents);
-//        sjpCaseReferredEvents.forEach(sjpCaseReferredEvent ->{
-//            if(!sjpCaseToCcReferredApplications.containsKey( sjpCaseReferredEvent.getCaseReference())){
-//                sjpCaseToCcReferredApplications.put(sjpCaseReferredEvent.getCaseReference(), sjpCaseReferredEvent.getApplicationTypes());
-//            }
-//            else {
-//                sjpCaseToCcReferredApplications.get(sjpCaseReferredEvent.getCaseReference()).addAll(sjpCaseReferredEvent.getApplicationTypes());
-//            }
-//        });
-//    }
-
 
     private List<SjpCaseToCcReferred> getSjpCaseReferredEvents(final List<Cases> currentCases, final List<CourtApplications> courtApplications) {
 
