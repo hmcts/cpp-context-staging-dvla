@@ -62,6 +62,7 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.isApplicat
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.isCaseReopen;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.isCriminalProceedingAppGranted;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.isSjpCaseReferred;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.isSjpCaseReferredStDec;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.isStdecGranted;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.isSuspendDisqualificationPendingAppealAppGranted;
 
@@ -258,6 +259,7 @@ public class DriverNotifiedEngine {
                 .withOrderDate(orderDate)
                 .withIsResetToPreviousEvent(true)
                 .withMaterialId(UUID.randomUUID())
+                .withIdentifier(randomUUID())
                 .withPrevious(getPrevious(previousDriverNotified))
                 .build();
     }
@@ -498,7 +500,8 @@ public class DriverNotifiedEngine {
                     if (UPDATE_MERGE.equals(endorsementStatus) || OATS_PREV_ENDORSED.equals(endorsementStatus)
                             || NO_UPDATE_PREV_ENDORSED.equals(endorsementStatus) || NO_RESULT_PREV_ENDORSED.equals(endorsementStatus)) {
                         final boolean isCaseHasReopenedApplication = isCaseReopen(courtApplications, sjpCaseToCcReferredApplications);
-                        mergeOffences(currentCase, currentOffence, previousOffence, courtApplications, orderDate, orderingCourtCode, hasAppealResultOrGranted(courtApplications), isCaseHasReopenedApplication, isStdecGranted(courtApplications), isCriminalProceedingAppGranted(courtApplications), isSuspendDisqualificationPendingAppealAppGranted(courtApplications) );
+                        final boolean isStDecApplication = isStdecGranted(courtApplications) || isSjpCaseReferredStDec(sjpCaseToCcReferredApplications);
+                        mergeOffences(currentCase, currentOffence, previousOffence, courtApplications, orderDate, orderingCourtCode, hasAppealResultOrGranted(courtApplications), isCaseHasReopenedApplication, isStDecApplication, isCriminalProceedingAppGranted(courtApplications), isSuspendDisqualificationPendingAppealAppGranted(courtApplications) );
                     } else if (SPECIAL_REASON.equals(endorsementStatus) || NO_UPDATE_PREV_NOT_ENDORSED.equals(endorsementStatus)) {
                         removeOffence(currentOffence, currentCase);
                     }
