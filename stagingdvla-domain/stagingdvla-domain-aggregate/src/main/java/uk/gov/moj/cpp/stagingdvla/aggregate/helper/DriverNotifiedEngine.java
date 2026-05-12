@@ -1,6 +1,7 @@
 package uk.gov.moj.cpp.stagingdvla.aggregate.helper;
 
 import static java.util.Arrays.asList;
+import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
@@ -25,9 +26,12 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.End
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.POINTS_DISQUALIFICATION_CODE;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.ADJ;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.DDRE;
-import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.RDD;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.DINE;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.RFSD;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.SV;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.WDRN;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.WDRNNOT;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.WDRNOFF;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.DisqualificationPeriodHelper.getDisqualificationPeriod;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.MergeUtil.getDistinctPrompts;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.MergeUtil.mergeOffence;
@@ -55,6 +59,7 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAppealR
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAppealResultOrGranted;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasD20Endorsement;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasDrivingDisqualificationSuspendedPendingAppeal;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasOneOfResultType;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasPointsDisqualificationCode;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasRemovalOfDisqualificationsResult;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasResultType;
@@ -88,6 +93,7 @@ import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 
@@ -162,7 +168,7 @@ public class DriverNotifiedEngine {
 
         LOGGER.info("Processing case: {}", currentCase.getReference());
 
-        if (isStDecApplicationResharedAndNotGrantedResult(courtApplications, isReshare)) {
+        if (isStatDecApplicationAmendedToReject(courtApplications, isReshare, hearingId, previousDriverNotifiedByHearing)) {
             return getLatestDriverNotifiedFromPreviousHearing(previousDriverNotified,orderDate,hearingId, currentCase,courtApplications,previousDriverNotifiedByHearing);
         }
 
@@ -238,24 +244,40 @@ public class DriverNotifiedEngine {
     }
 
     private static DriverNotified getLatestDriverNotifiedFromPreviousHearing(final DriverNotified previousDriverNotified,
-                                                                      final String orderDate,
-                                                                      final UUID hearingId,
-                                                                      final Cases currentCase,
-                                                                      final List<CourtApplications> courtApplications,
-                                                                      final Map<UUID, DriverNotified> previousDriverNotifiedByHearing) {
+                                                                             final String orderDate,
+                                                                             final UUID hearingId,
+                                                                             final Cases currentCase,
+                                                                             final List<CourtApplications> courtApplications,
+                                                                             final Map<UUID, DriverNotified> previousDriverNotifiedByHearing) {
         final DriverNotified latestDriverNotified = previousDriverNotifiedByHearing.values().stream()
                 .filter(event -> !event.getOrderingHearingId().equals(hearingId))
                 .max(Comparator.comparing(DriverNotified::getOrderDate))
                 .orElse(null);
         if (isNull(latestDriverNotified)) {
-            return null;
+            if (nonNull(previousDriverNotified)) {
+                return DriverNotified.driverNotified()
+                        .withValuesFrom(previousDriverNotified)
+                        .withNotificationType(NotificationType.REMOVE)
+                        .withNotificationWasPreviouslySent(true)
+                        .withMaterialId(UUID.randomUUID())
+                        .withIdentifier(randomUUID())
+                        .withPrevious(getPrevious(previousDriverNotified))
+                        .withCases(previousDriverNotified.getCases().stream()
+                                .map(c -> Cases.cases().withValuesFrom(c).withDefendantCaseOffences(emptyList()).build())
+                                .toList())
+                        .withIsResetToPreviousEvent(true)
+                        .withRemovedEndorsements(previousDriverNotified.getCases().stream().map(Cases::getDefendantCaseOffences).flatMap(Collection::stream).map(DefendantCaseOffences::getDvlaCode).collect(Collectors.toList()))
+                        .build();
+            } else {
+                return null;
+            }
         } else if (NotificationType.REMOVE.equals(latestDriverNotified.getNotificationType()) && NotificationType.REMOVE.equals(previousDriverNotified.getNotificationType())) {
             return null;
         }
         return DriverNotified.driverNotified()
                 .withValuesFrom(latestDriverNotified)
                 .withOrderingHearingId(hearingId)
-                .withNotificationType(latestDriverNotified.getNotificationType().equals(NotificationType.NEW) ? NotificationType.UPDATE : latestDriverNotified.getNotificationType())
+                .withNotificationType((NotificationType.NEW.equals(latestDriverNotified.getNotificationType())) ? NotificationType.UPDATE : latestDriverNotified.getNotificationType())
                 .withNotificationWasPreviouslySent(true)
                 .withCaseApplicationReferences(singletonList(currentCase.getReference()))
                 .withCourtApplications(courtApplications)
@@ -267,10 +289,11 @@ public class DriverNotifiedEngine {
                 .build();
     }
 
-    private static boolean isStDecApplicationResharedAndNotGrantedResult(final List<CourtApplications> courtApplications, final Boolean isReshare) {
+    private static boolean isStatDecApplicationAmendedToReject(final List<CourtApplications> courtApplications, final Boolean isReshare, final UUID hearingId,  final Map<UUID, DriverNotified> previousDriverNotifiedByHearing) {
         return isApplicationNotGranted(courtApplications) && courtApplications.stream().anyMatch(OffenceUtil::isStDec) &&
-                (hasResultType(courtApplications, ADJ) || hasResultType(courtApplications, RFSD))
-                && Boolean.TRUE.equals(isReshare);
+                nonNull(previousDriverNotifiedByHearing) && previousDriverNotifiedByHearing.containsKey(hearingId) &&
+                hasOneOfResultType(courtApplications, List.of(ADJ,RFSD,WDRN,WDRNOFF,WDRNNOT,DINE)) &&
+                Boolean.TRUE.equals(isReshare);
     }
 
     private static List<Cases> getUpdatedCases(final Cases cases) {

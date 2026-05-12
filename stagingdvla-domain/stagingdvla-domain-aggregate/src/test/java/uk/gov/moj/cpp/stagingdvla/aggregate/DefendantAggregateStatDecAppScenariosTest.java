@@ -301,6 +301,27 @@ class DefendantAggregateStatDecAppScenariosTest {
                                                 .add("notificationType", "Update")
                                                 .add("previous", notNullValue()))
 
+                ),
+                Arguments.of("DD-40319-ac6",
+                        defendantAggregateScenario()
+                                .withNotifyDriverStep(
+                                        "case hearing resulted",
+                                        "/testdata/drivernotifications/statdec/dd-40319/ac6/case-resulted.json",
+                                        null)
+                                .withNotifyDriverStep(
+                                        "application hearing resulted",
+                                        "/testdata/drivernotifications/statdec/dd-40319/ac6/app-resulted.json",
+                                        "/testdata/drivernotifications/statdec/dd-40319/ac6/app-resulted-events.json",
+                                        jsonPathAssertions()
+                                                .add("notificationType", "New"))
+                                .withNotifyDriverStep(
+                                        "application hearing resulted",
+                                        "/testdata/drivernotifications/statdec/dd-40319/ac6/app-amended-resulted.json",
+                                        "/testdata/drivernotifications/statdec/dd-40319/ac6/app-amended-resulted-events.json",
+                                        jsonPathAssertions()
+                                                .add("notificationType", "Remove")
+                                                .add("previous", notNullValue()))
+
                 )
 
 
