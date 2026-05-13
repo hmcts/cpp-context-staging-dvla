@@ -1,0 +1,650 @@
+{
+  "courtApplications": [
+    {
+      "applicant": {
+        "id": "d8aa5624-3bd4-4f27-87d3-c0237891903a",
+        "masterDefendant": {
+          "defendantCase": [
+            {
+              "caseId": "5be3bc1f-1fa6-41ca-8019-02238ccbad5e",
+              "caseReference": "TQ148073342",
+              "defendantId": "13362cb0-cead-4822-9270-e0c43f682895"
+            }
+          ],
+          "masterDefendantId": "13362cb0-cead-4822-9270-e0c43f682895",
+          "personDefendant": {
+            "arrestSummonsNumber": "2391NX0000498443354D",
+            "bailStatus": {
+              "code": "A",
+              "description": "Not applicable",
+              "id": "86009c70-759d-3308-8de4-194886ff9a77"
+            },
+            "driverNumber": "VANFL002222OW9PH",
+            "personDetails": {
+              "address": {
+                "address1": "15 Station Road",
+                "address2": "Station Road",
+                "address3": "Manchester",
+                "address4": "Greater Manchester",
+                "postcode": "M1 3FH"
+              },
+              "contact": {
+                "home": "0744892735",
+                "mobile": "04517951119",
+                "primaryEmail": "quyen.parker@example.com"
+              },
+              "dateOfBirth": "1967-04-27",
+              "documentationLanguageNeeds": "ENGLISH",
+              "ethnicity": {
+                "observedEthnicityCode": "1",
+                "observedEthnicityDescription": "White",
+                "observedEthnicityId": "c4ca4238-a0b9-3382-8dcc-509a6f75849b",
+                "selfDefinedEthnicityCode": "W1",
+                "selfDefinedEthnicityDescription": "British",
+                "selfDefinedEthnicityId": "c4ca4238-a0b9-3382-8dcc-509a6f75849b"
+              },
+              "firstName": "Quyen",
+              "gender": "MALE",
+              "hearingLanguageNeeds": "ENGLISH",
+              "lastName": "Parker",
+              "title": "Mr"
+            },
+            "policeBailStatus": {
+              "code": "C",
+              "description": "Custody",
+              "id": "12e69486-4d01-3403-a50a-7419ca040635"
+            }
+          }
+        },
+        "notificationRequired": true,
+        "summonsRequired": false
+      },
+      "applicationReceivedDate": "2026-04-27",
+      "applicationReference": "TQ148073342",
+      "applicationResultCodeForLaa": "AASA",
+      "applicationStatus": "FINALISED",
+      "commissionerOfOath": false,
+      "courtApplicationCases": [
+        {
+          "caseStatus": "INACTIVE",
+          "isSJP": false,
+          "offences": [
+            {
+              "allocationDecision": {
+                "allocationDecisionDate": "2026-04-27",
+                "motReasonCode": "01",
+                "motReasonDescription": "Summary-only offence",
+                "motReasonId": "b8c37e33-defd-351c-b91e-1e03e51657da",
+                "offenceId": "c1fb05ed-8e6f-4fc2-8415-cc648e2d5944",
+                "originatingHearingId": "7b2c615b-9ef6-4a7a-b550-94ad80005d99",
+                "sequenceNumber": 90
+              },
+              "arrestDate": "2026-04-12",
+              "chargeDate": "2026-04-17",
+              "convictingCourt": {
+                "code": "B01LY00",
+                "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+                "lja": {
+                  "ljaCode": "2577",
+                  "ljaName": "South West London Magistrates' Court"
+                },
+                "name": "Lavender Hill Magistrates' Court",
+                "roomId": "9e4932f7-97b2-3010-b942-ddd2624e4dd8"
+              },
+              "convictionDate": "2026-04-27",
+              "count": 0,
+              "dvlaOffenceCode": "IN10",
+              "endorsableFlag": true,
+              "id": "c1fb05ed-8e6f-4fc2-8415-cc648e2d5944",
+              "isDisposed": false,
+              "listingNumber": 1,
+              "maxPenalty": "S:Ultd Fine LE 6-8pp",
+              "modeOfTrial": "Summary",
+              "offenceCode": "RA88001",
+              "offenceDateCode": 1,
+              "offenceDefinitionId": "d78f6d87-b9e3-33a9-b483-84c370f66a04",
+              "offenceLegislation": "Contrary to section 143 of, the Road Traffic Act 1988 and Schedule 2 to, the Road Traffic Offenders Act 1988.",
+              "offenceLegislationWelsh": "Yn groes i adran 143 Deddf Traffig Ffyrdd 1988 ac Atodlen 2 i Ddeddf Troseddwyr Traffig Ffyrdd 1988.",
+              "offenceTitle": "Use a motor vehicle on a road / public place without third party insurance",
+              "offenceTitleWelsh": "Defnyddio cerbyd modur ar ffordd / mewn man cyhoeddus heb yswiriant trydydd parti",
+              "orderIndex": 1,
+              "plea": {
+                "offenceId": "c1fb05ed-8e6f-4fc2-8415-cc648e2d5944",
+                "originatingHearingId": "7b2c615b-9ef6-4a7a-b550-94ad80005d99",
+                "pleaDate": "2026-04-27",
+                "pleaValue": "GUILTY"
+              },
+              "proceedingsConcluded": true,
+              "startDate": "2026-02-26",
+              "wording": "Use a motor vehicle on a road / public place without third party insurance"
+            },
+            {
+              "allocationDecision": {
+                "allocationDecisionDate": "2026-04-27",
+                "motReasonCode": "01",
+                "motReasonDescription": "Summary-only offence",
+                "motReasonId": "b8c37e33-defd-351c-b91e-1e03e51657da",
+                "offenceId": "018fa46b-2fa1-4ce4-96e7-7f5108fcad3b",
+                "originatingHearingId": "7b2c615b-9ef6-4a7a-b550-94ad80005d99",
+                "sequenceNumber": 90
+              },
+              "arrestDate": "2026-04-12",
+              "chargeDate": "2026-04-17",
+              "convictingCourt": {
+                "code": "B01LY00",
+                "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+                "lja": {
+                  "ljaCode": "2577",
+                  "ljaName": "South West London Magistrates' Court"
+                },
+                "name": "Lavender Hill Magistrates' Court",
+                "roomId": "9e4932f7-97b2-3010-b942-ddd2624e4dd8"
+              },
+              "convictionDate": "2026-04-27",
+              "count": 0,
+              "dvlaOffenceCode": "LC20",
+              "endorsableFlag": true,
+              "id": "018fa46b-2fa1-4ce4-96e7-7f5108fcad3b",
+              "isDisposed": false,
+              "listingNumber": 1,
+              "maxPenalty": "S:L3 LE 3-6pp",
+              "modeOfTrial": "Summary",
+              "offenceCode": "RT88334",
+              "offenceDateCode": 1,
+              "offenceDefinitionId": "8cd35b0f-f102-35ab-8add-620848f3ffa2",
+              "offenceLegislation": "Contrary to section 87(1) of the Road Traffic Act 1988 and Schedule 2 to the Road Traffic Offenders Act 1988.",
+              "offenceLegislationWelsh": "Yn groes i adran 87(1) Deddf Traffig Ffyrdd 1988 ac Atodlen 2 Deddf Troseddwyr Traffig Ffyrdd 1988.",
+              "offenceTitle": "Drive a motor vehicle otherwise than in accordance with a licence - endorsable offence",
+              "offenceTitleWelsh": "Gyrru cerbyd modur mewn ffordd nad yw'n unol â thrwydded - trosedd ardystiadwy",
+              "orderIndex": 2,
+              "plea": {
+                "offenceId": "018fa46b-2fa1-4ce4-96e7-7f5108fcad3b",
+                "originatingHearingId": "7b2c615b-9ef6-4a7a-b550-94ad80005d99",
+                "pleaDate": "2026-04-27",
+                "pleaValue": "GUILTY"
+              },
+              "proceedingsConcluded": true,
+              "startDate": "2026-02-26",
+              "wording": "Drive a motor vehicle otherwise than in accordance with a licence - endorsable offence"
+            },
+            {
+              "allocationDecision": {
+                "allocationDecisionDate": "2026-04-27",
+                "motReasonCode": "01",
+                "motReasonDescription": "Summary-only offence",
+                "motReasonId": "b8c37e33-defd-351c-b91e-1e03e51657da",
+                "offenceId": "be754344-86ea-4835-8079-efe5c0f16b58",
+                "originatingHearingId": "7b2c615b-9ef6-4a7a-b550-94ad80005d99",
+                "sequenceNumber": 90
+              },
+              "arrestDate": "2026-04-12",
+              "chargeDate": "2026-04-17",
+              "convictingCourt": {
+                "code": "B01LY00",
+                "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+                "lja": {
+                  "ljaCode": "2577",
+                  "ljaName": "South West London Magistrates' Court"
+                },
+                "name": "Lavender Hill Magistrates' Court",
+                "roomId": "9e4932f7-97b2-3010-b942-ddd2624e4dd8"
+              },
+              "convictionDate": "2026-04-27",
+              "count": 0,
+              "dvlaOffenceCode": "IN14",
+              "endorsableFlag": true,
+              "id": "be754344-86ea-4835-8079-efe5c0f16b58",
+              "isDisposed": false,
+              "judicialResults": [
+                {
+                  "alwaysPublished": false,
+                  "canBeSubjectOfBreach": false,
+                  "canBeSubjectOfVariation": true,
+                  "canExtendActiveOrder": false,
+                  "category": "ANCILLARY",
+                  "cjsCode": "3071",
+                  "committedToCC": false,
+                  "courtClerk": {
+                    "firstName": "Erica",
+                    "lastName": "Wilson",
+                    "userId": "a085e359-6069-4694-8820-7810e7dfe762"
+                  },
+                  "d20": true,
+                  "durationElement": {
+                    "primaryDurationUnit": "M",
+                    "primaryDurationValue": 12
+                  },
+                  "excludedFromResults": false,
+                  "isAdjournmentResult": false,
+                  "isAvailableForCourtExtract": true,
+                  "isConvictedResult": true,
+                  "isDeleted": false,
+                  "isFinancialResult": false,
+                  "isNewAmendment": true,
+                  "isUnscheduled": false,
+                  "judicialResultId": "39d876e6-8ec7-4296-81de-ea5b37148996",
+                  "judicialResultPrompts": [
+                    {
+                      "courtExtract": "Y",
+                      "durationSequence": 1,
+                      "isFinancialImposition": false,
+                      "judicialResultPromptTypeId": "2bf54447-328c-4c1b-a123-341adbd52172",
+                      "label": "Disqualification period",
+                      "promptReference": "disqualificationPeriod",
+                      "promptSequence": 100,
+                      "type": "INTM",
+                      "usergroups": [],
+                      "value": "12 Months",
+                      "welshLabel": "Cyfnod gwahardd",
+                      "welshValue": "12 Months"
+                    },
+                    {
+                      "courtExtract": "N",
+                      "isFinancialImposition": false,
+                      "judicialResultPromptTypeId": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+                      "label": "Defendant driving licence number",
+                      "promptReference": "defendantDrivingLicenceNumber",
+                      "promptSequence": 500,
+                      "type": "TXT",
+                      "usergroups": [
+                        "CPS",
+                        "Defence",
+                        "Judiciary",
+                        "NCES",
+                        "Probation",
+                        "Prosecuting Authorities",
+                        "YOTs"
+                      ],
+                      "value": "VANFL002222OW9PH",
+                      "welshLabel": "Rhif trwydded yrru'r Diffynnydd",
+                      "welshValue": "VANFL002222OW9PH"
+                    }
+                  ],
+                  "judicialResultTypeId": "ccfc452e-ebe4-4cd7-b8a0-4f90768447b4",
+                  "label": "Discretionary with ordinary disqualification",
+                  "lastSharedDateTime": "2026-04-27",
+                  "level": "O",
+                  "lifeDuration": false,
+                  "orderedDate": "2026-04-29",
+                  "orderedHearingId": "b8989903-48f1-469a-bba2-fe2eeb504c8f",
+                  "postHearingCustodyStatus": "A",
+                  "preserveActiveOrder": false,
+                  "publishedAsAPrompt": false,
+                  "publishedForNows": false,
+                  "rank": 101700,
+                  "resultText": "DDD - Discretionary with ordinary disqualification\nDisqualified for holding or obtaining a driving licence for 12 Months.  Discretionary disqualification. Driving record endorsed. Section 34(2) Road Traffic Offenders Act 1988.",
+                  "resultWording": "Disqualified for holding or obtaining a driving licence. Discretionary disqualification. Driving record endorsed. Section 34(2) Road Traffic Offenders Act 1988",
+                  "rollUpPrompts": true,
+                  "rootJudicialResultId": "39d876e6-8ec7-4296-81de-ea5b37148996",
+                  "rootJudicialResultTypeId": "ccfc452e-ebe4-4cd7-b8a0-4f90768447b4",
+                  "sentToCC": false,
+                  "terminatesOffenceProceedings": false,
+                  "urgent": true,
+                  "usergroups": [],
+                  "welshResultWording": "Gwahardd rhag dal neu gael trwydded yrru. Gwahardd yn ôl disgresiwn. Cofnod gyrru wedi’i ardystio. Adran 34(2) Deddf Troseddwyr Traffig Ffyrdd 1988"
+                },
+                {
+                  "alwaysPublished": false,
+                  "canBeSubjectOfBreach": false,
+                  "canBeSubjectOfVariation": false,
+                  "canExtendActiveOrder": false,
+                  "category": "ANCILLARY",
+                  "committedToCC": false,
+                  "courtClerk": {
+                    "firstName": "Erica",
+                    "lastName": "Wilson",
+                    "userId": "a085e359-6069-4694-8820-7810e7dfe762"
+                  },
+                  "d20": false,
+                  "excludedFromResults": false,
+                  "isAdjournmentResult": false,
+                  "isAvailableForCourtExtract": false,
+                  "isConvictedResult": false,
+                  "isDeleted": false,
+                  "isFinancialResult": false,
+                  "isNewAmendment": true,
+                  "isUnscheduled": false,
+                  "judicialResultId": "b892418e-1b4d-4ab0-9e71-3f6760574e54",
+                  "judicialResultTypeId": "c3a39c2f-b056-442f-8dfc-604b5434f956",
+                  "label": "0: None or unknown",
+                  "lastSharedDateTime": "2026-04-27",
+                  "level": "O",
+                  "lifeDuration": false,
+                  "orderedDate": "2026-04-29",
+                  "orderedHearingId": "b8989903-48f1-469a-bba2-fe2eeb504c8f",
+                  "parentJudicialResultId": "5c942495-0e46-4464-9a24-d97dcd98621d",
+                  "parentJudicialResultTypeId": "ea1ee5a4-be13-48dc-8411-78f22e01c236",
+                  "postHearingCustodyStatus": "A",
+                  "preserveActiveOrder": false,
+                  "publishedAsAPrompt": false,
+                  "publishedForNows": true,
+                  "rank": 33900,
+                  "resultText": "NONE - 0: None or unknown",
+                  "rollUpPrompts": false,
+                  "rootJudicialResultId": "39d876e6-8ec7-4296-81de-ea5b37148996",
+                  "rootJudicialResultTypeId": "ccfc452e-ebe4-4cd7-b8a0-4f90768447b4",
+                  "sentToCC": false,
+                  "terminatesOffenceProceedings": false,
+                  "urgent": false,
+                  "usergroups": [
+                    "CPS",
+                    "Defence",
+                    "Judiciary",
+                    "NCES",
+                    "Probation",
+                    "Prosecuting Authorities",
+                    "YOTs"
+                  ],
+                  "welshLabel": "0: Dim neu’n anhysbys"
+                }
+              ],
+              "lastAdjournDate": "2026-04-28",
+              "lastAdjournedHearingType": "To attend or a warrant to issue",
+              "listingNumber": 1,
+              "maxPenalty": "S:Ultd Fine LE 6-8pp",
+              "modeOfTrial": "Summary",
+              "offenceCode": "RA88002",
+              "offenceDateCode": 1,
+              "offenceDefinitionId": "e63c2b35-4936-3750-89d4-87f943bbc43e",
+              "offenceLegislation": "Contrary to section143(2) of, the Road Traffic Act 1988 and Schedule 2 to, the Road TrafficOffenders Act 1988.",
+              "offenceLegislationWelsh": "Yn groes i adran 143(2) Deddf Traffig Ffyrdd 1988 ac Atodlen 2 i Ddeddf Troseddwyr Traffig Ffyrdd 1988.",
+              "offenceTitle": "Cause use of motor vehicle with no insurance",
+              "offenceTitleWelsh": "Achosi defnyddio cerbyd modur heb yswiriant",
+              "orderIndex": 3,
+              "plea": {
+                "offenceId": "be754344-86ea-4835-8079-efe5c0f16b58",
+                "originatingHearingId": "7b2c615b-9ef6-4a7a-b550-94ad80005d99",
+                "pleaDate": "2026-04-27",
+                "pleaValue": "GUILTY"
+              },
+              "proceedingsConcluded": true,
+              "startDate": "2026-02-26",
+              "wording": "Cause use of motor vehicle with no insurance"
+            }
+          ],
+          "prosecutionCaseId": "5be3bc1f-1fa6-41ca-8019-02238ccbad5e",
+          "prosecutionCaseIdentifier": {
+            "address": {
+              "address1": "Finance Operations",
+              "address2": "C3 East",
+              "address3": "DVLA",
+              "address4": "Longview Road",
+              "address5": "Swansea",
+              "postcode": "SA6 7JL"
+            },
+            "contact": {
+              "primaryEmail": "sjp@dvla.gov.uk"
+            },
+            "majorCreditorCode": "DVL2",
+            "prosecutionAuthorityCode": "DVLA",
+            "prosecutionAuthorityId": "6ae4b163-658b-3ae2-a66d-43401cac2f96",
+            "prosecutionAuthorityName": "Driver and Vehicle Licensing Agency",
+            "prosecutionAuthorityOUCode": "G94DV00",
+            "caseURN": "TQ148073342"
+          }
+        }
+      ],
+      "courtApplicationPayment": {
+        "feeStatus": "NOT_APPLICABLE"
+      },
+      "courtCivilApplication": {
+        "isCivil": false
+      },
+      "id": "ecf1dd56-3966-4011-8234-df820dc2b1e3",
+      "judicialResults": [
+        {
+          "alwaysPublished": false,
+          "canBeSubjectOfBreach": false,
+          "canBeSubjectOfVariation": false,
+          "canExtendActiveOrder": false,
+          "category": "FINAL",
+          "committedToCC": false,
+          "courtClerk": {
+            "firstName": "Erica",
+            "lastName": "Wilson",
+            "userId": "a085e359-6069-4694-8820-7810e7dfe762"
+          },
+          "d20": false,
+          "excludedFromResults": false,
+          "isAdjournmentResult": false,
+          "isAvailableForCourtExtract": true,
+          "isConvictedResult": false,
+          "isDeemedServed": false,
+          "isDeleted": false,
+          "isFinancialResult": false,
+          "isNewAmendment": true,
+          "isUnscheduled": false,
+          "judicialResultId": "00d122b1-b77a-474b-be95-f557b9affab5",
+          "judicialResultPrompts": [
+            {
+              "courtExtract": "Y",
+              "isFinancialImposition": false,
+              "judicialResultPromptTypeId": "c946a5df-5849-4cca-b425-ecbd6bd704dc",
+              "label": "Date sentence was imposed",
+              "promptReference": "dateSentenceWasImposed",
+              "promptSequence": 100,
+              "type": "DATE",
+              "usergroups": [],
+              "value": "27/04/2026",
+              "welshValue": "27/04/2026"
+            },
+            {
+              "courtExtract": "N",
+              "isFinancialImposition": false,
+              "judicialResultPromptTypeId": "c10b4c83-1856-4ca9-9592-d8b8183a0324",
+              "label": "Reasons",
+              "promptReference": "reasons",
+              "promptSequence": 200,
+              "type": "TXT",
+              "usergroups": [
+                "CPS",
+                "Defence",
+                "Judiciary",
+                "NCES",
+                "Probation",
+                "Prosecuting Authorities",
+                "YOTs"
+              ],
+              "value": "sentence was imposed",
+              "welshValue": "sentence was imposed"
+            }
+          ],
+          "judicialResultTypeId": "d861586a-df88-440d-98d4-63cc2a680ae1",
+          "label": "Appeal against sentence allowed",
+          "lastSharedDateTime": "2026-04-27",
+          "level": "O",
+          "lifeDuration": false,
+          "orderedDate": "2026-04-28",
+          "orderedHearingId": "999f8cd0-fae9-41ba-89a6-476ae89d90e3",
+          "postHearingCustodyStatus": "A",
+          "preserveActiveOrder": false,
+          "publishedAsAPrompt": false,
+          "publishedForNows": false,
+          "rank": 61900,
+          "resultText": "AASA - Appeal against sentence allowed\nDate sentence was imposed . ",
+          "resultWording": "",
+          "rollUpPrompts": true,
+          "rootJudicialResultId": "00d122b1-b77a-474b-be95-f557b9affab5",
+          "rootJudicialResultTypeId": "d861586a-df88-440d-98d4-63cc2a680ae1",
+          "sentToCC": false,
+          "terminatesOffenceProceedings": false,
+          "urgent": false,
+          "usergroups": []
+        }
+      ],
+      "proceedingsConcluded": false,
+      "respondents": [
+        {
+          "id": "c284b26a-4868-46b7-8922-3def29a5b52c",
+          "notificationRequired": true,
+          "prosecutingAuthority": {
+            "address": {
+              "address1": "Finance Operations",
+              "address2": "C3 East",
+              "address3": "DVLA",
+              "address4": "Longview Road",
+              "address5": "Swansea",
+              "postcode": "SA6 7JL"
+            },
+            "contact": {
+              "primaryEmail": "sjp@dvla.gov.uk"
+            },
+            "majorCreditorCode": "DVL2",
+            "name": "Driver and Vehicle Licensing Agency",
+            "prosecutionAuthorityCode": "DVLA",
+            "prosecutionAuthorityId": "6ae4b163-658b-3ae2-a66d-43401cac2f96",
+            "prosecutionAuthorityOUCode": "G94DV00",
+            "welshName": "Asiantaeth Trwyddedu Gyrwyr a Cherbydau"
+          },
+          "summonsRequired": false
+        }
+      ],
+      "subject": {
+        "id": "d8aa5624-3bd4-4f27-87d3-c0237891903a",
+        "masterDefendant": {
+          "defendantCase": [
+            {
+              "caseId": "5be3bc1f-1fa6-41ca-8019-02238ccbad5e",
+              "caseReference": "TQ148073342",
+              "defendantId": "13362cb0-cead-4822-9270-e0c43f682895"
+            }
+          ],
+          "masterDefendantId": "13362cb0-cead-4822-9270-e0c43f682895",
+          "personDefendant": {
+            "arrestSummonsNumber": "2391NX0000498443354D",
+            "bailConditions": "",
+            "bailStatus": {
+              "code": "A",
+              "description": "Not applicable",
+              "id": "86009c70-759d-3308-8de4-194886ff9a77"
+            },
+            "driverNumber": "VANFL002222OW9PH",
+            "personDetails": {
+              "address": {
+                "address1": "15 Station Road",
+                "address2": "Station Road",
+                "address3": "Manchester",
+                "address4": "Greater Manchester",
+                "postcode": "M1 3FH"
+              },
+              "contact": {
+                "home": "0744892735",
+                "mobile": "04517951119",
+                "primaryEmail": "quyen.parker@example.com"
+              },
+              "dateOfBirth": "1967-04-27",
+              "documentationLanguageNeeds": "ENGLISH",
+              "ethnicity": {
+                "observedEthnicityCode": "1",
+                "observedEthnicityDescription": "White",
+                "observedEthnicityId": "c4ca4238-a0b9-3382-8dcc-509a6f75849b",
+                "selfDefinedEthnicityCode": "W1",
+                "selfDefinedEthnicityDescription": "British",
+                "selfDefinedEthnicityId": "c4ca4238-a0b9-3382-8dcc-509a6f75849b"
+              },
+              "firstName": "Quyen",
+              "gender": "MALE",
+              "hearingLanguageNeeds": "ENGLISH",
+              "lastName": "Parker",
+              "title": "Mr"
+            },
+            "policeBailStatus": {
+              "code": "C",
+              "description": "Custody",
+              "id": "12e69486-4d01-3403-a50a-7419ca040635"
+            }
+          }
+        },
+        "notificationRequired": true,
+        "summonsRequired": false
+      },
+      "type": {
+        "appealFlag": true,
+        "applicantAppellantFlag": true,
+        "applicationWording": "Appeal against sentence by a Magistrates' Court imposed on {1} at {2} to the Crown Court",
+        "boxworkNotifTemplate": "NOT_APPLICABLE",
+        "breachType": "NOT_APPLICABLE",
+        "categoryCode": "CR",
+        "changeDate": "2022-10-09T14:12:09",
+        "code": "MC80803",
+        "commrOfOathFlag": false,
+        "contestedFeeApplicable": false,
+        "courtExtractAvlFlag": true,
+        "courtOfAppealFlag": false,
+        "exParte": false,
+        "hearingCode": "ASE",
+        "id": "ef71f385-88f5-4e53-8b9f-d568af9ea90c",
+        "initialFeeApplicable": false,
+        "jurisdiction": "CROWN",
+        "lastModified": "2025-02-24T18:19:04.973Z",
+        "legislation": "In accordance with section 108 of the Magistrates' Courts Act 1980.",
+        "legislationWelsh": "adran 108 Deddf Llysoedd Ynadon 1980",
+        "linkType": "SJP",
+        "listingNotifTemplate": "POSTAL_NOTIFICATION",
+        "offenceActiveOrder": "OFFENCE",
+        "pleaApplicableFlag": false,
+        "prosecutorThirdPartyFlag": false,
+        "pssId": 587541,
+        "sowRef": "APPS",
+        "spiOutApplicableFlag": true,
+        "summonsTemplateType": "NOT_APPLICABLE",
+        "type": "Appeal against sentence by a Magistrates' Court to the Crown Court",
+        "typeWelsh": "Apelio i Lys y Goron yn erbyn dedfryd gan Lys Ynadon",
+        "validFrom": "1980-01-01"
+      }
+    }
+  ],
+  "courtCentre": {
+    "address": {
+      "address1": "1-15 Pocock Street",
+      "address2": "London",
+      "address3": "",
+      "address4": "",
+      "address5": "",
+      "postcode": "SE1 0BJ"
+    },
+    "code": "C01BL00",
+    "courtHearingLocation": "C01BL00",
+    "courtLocationCode": "0428",
+    "id": "89592405-c29b-3706-b1d3-b1dd3a08b227",
+    "lja": {
+      "ljaCode": "2570",
+      "ljaName": "Central London Magistrates' Court"
+    },
+    "name": "Blackfriars Crown Court",
+    "roomId": "d0624ee3-9198-3c8b-94d6-42fb197ebe5e",
+    "roomName": "Courtroom 01"
+  },
+  "defendantAttendance": [
+    {
+      "attendanceDays": [
+        {
+          "attendanceType": "IN_PERSON",
+          "day": "2026-04-29"
+        }
+      ],
+      "defendantId": "13362cb0-cead-4822-9270-e0c43f682895"
+    }
+  ],
+  "estimatedDuration": "1 HOURS",
+  "hasSharedResults": true,
+  "hearingDays": [
+    {
+      "courtCentreId": "89592405-c29b-3706-b1d3-b1dd3a08b227",
+      "courtRoomId": "d0624ee3-9198-3c8b-94d6-42fb197ebe5e",
+      "hasSharedResults": true,
+      "isCancelled": false,
+      "listedDurationMinutes": 60,
+      "listingSequence": 0,
+      "sittingDay": "2026-04-29T09:00:00.000Z"
+    }
+  ],
+  "hearingLanguage": "ENGLISH",
+  "id": "b8989903-48f1-469a-bba2-fe2eeb504c8f",
+  "jurisdictionType": "CROWN",
+  "shadowListedOffences": [],
+  "type": {
+    "description": "Plea and Trial Preparation",
+    "id": "06b0c2bf-3f98-46ed-ab7e-56efaf9ecced"
+  }
+}

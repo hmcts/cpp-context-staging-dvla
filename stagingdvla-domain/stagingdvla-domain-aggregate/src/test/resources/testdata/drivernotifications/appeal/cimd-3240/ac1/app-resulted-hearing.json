@@ -1,0 +1,1499 @@
+{
+  "courtApplications": [
+    {
+      "applicant": {
+        "id": "ec3d4bc1-2653-4e65-a1d5-34bbb612240a",
+        "masterDefendant": {
+          "defendantCase": [
+            {
+              "caseId": "2278fb90-96ad-4825-8461-2bce80e6dd3b",
+              "caseReference": "SL148167743",
+              "defendantId": "585e43f2-c3be-4cc0-bac4-2f54b3649b3e"
+            }
+          ],
+          "masterDefendantId": "585e43f2-c3be-4cc0-bac4-2f54b3649b3e",
+          "personDefendant": {
+            "arrestSummonsNumber": "2391NX0000646412567D",
+            "bailStatus": {
+              "code": "A",
+              "description": "Not applicable",
+              "id": "86009c70-759d-3308-8de4-194886ff9a77"
+            },
+            "driverNumber": "VANFL002222OW9PH",
+            "personDetails": {
+              "address": {
+                "address1": "40 Market Place",
+                "address2": "Market Place",
+                "address3": "Bristol",
+                "postcode": "BS1 1AA"
+              },
+              "contact": {
+                "home": "0467625963",
+                "mobile": "07954229449",
+                "primaryEmail": "elayne.leannon@example.com"
+              },
+              "dateOfBirth": "1954-04-24",
+              "documentationLanguageNeeds": "ENGLISH",
+              "ethnicity": {
+                "observedEthnicityCode": "1",
+                "observedEthnicityDescription": "White",
+                "observedEthnicityId": "c4ca4238-a0b9-3382-8dcc-509a6f75849b",
+                "selfDefinedEthnicityCode": "W1",
+                "selfDefinedEthnicityDescription": "British",
+                "selfDefinedEthnicityId": "c4ca4238-a0b9-3382-8dcc-509a6f75849b"
+              },
+              "firstName": "Elayne",
+              "gender": "MALE",
+              "hearingLanguageNeeds": "ENGLISH",
+              "lastName": "Leannon",
+              "title": "Mr"
+            },
+            "policeBailStatus": {
+              "code": "C",
+              "description": "Custody",
+              "id": "12e69486-4d01-3403-a50a-7419ca040635"
+            }
+          }
+        },
+        "notificationRequired": true,
+        "summonsRequired": false
+      },
+      "applicationReceivedDate": "2026-04-24",
+      "applicationReference": "SL148167743",
+      "applicationStatus": "FINALISED",
+      "commissionerOfOath": false,
+      "courtApplicationCases": [
+        {
+          "caseStatus": "INACTIVE",
+          "isSJP": false,
+          "offences": [
+            {
+              "allocationDecision": {
+                "allocationDecisionDate": "2026-04-24",
+                "motReasonCode": "01",
+                "motReasonDescription": "Summary-only offence",
+                "motReasonId": "b8c37e33-defd-351c-b91e-1e03e51657da",
+                "offenceId": "be33a899-6bbe-4781-bfee-ddd6af0360c5",
+                "originatingHearingId": "d4edb910-7e5c-43ec-a981-60ea42213461",
+                "sequenceNumber": 90
+              },
+              "arrestDate": "2026-04-09",
+              "chargeDate": "2026-04-14",
+              "convictingCourt": {
+                "code": "B01LY00",
+                "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+                "lja": {
+                  "ljaCode": "2577",
+                  "ljaName": "South West London Magistrates' Court"
+                },
+                "name": "Lavender Hill Magistrates' Court",
+                "roomId": "9e4932f7-97b2-3010-b942-ddd2624e4dd8"
+              },
+              "convictionDate": "2026-04-24",
+              "count": 0,
+              "dvlaOffenceCode": "IN10",
+              "endorsableFlag": true,
+              "id": "be33a899-6bbe-4781-bfee-ddd6af0360c5",
+              "isDisposed": false,
+              "judicialResults": [
+                {
+                  "alwaysPublished": false,
+                  "canBeSubjectOfBreach": false,
+                  "canBeSubjectOfVariation": false,
+                  "canExtendActiveOrder": false,
+                  "category": "INTERMEDIARY",
+                  "cjsCode": "4506",
+                  "committedToCC": false,
+                  "courtClerk": {
+                    "firstName": "Erica",
+                    "lastName": "Wilson",
+                    "userId": "a085e359-6069-4694-8820-7810e7dfe762"
+                  },
+                  "d20": false,
+                  "excludedFromResults": false,
+                  "isAdjournmentResult": false,
+                  "isAvailableForCourtExtract": true,
+                  "isConvictedResult": false,
+                  "isDeleted": false,
+                  "isFinancialResult": false,
+                  "isNewAmendment": true,
+                  "isUnscheduled": false,
+                  "judicialResultId": "8d1659ac-640c-4c63-92e8-5e0b4e63fa50",
+                  "judicialResultPrompts": [
+                    {
+                      "courtExtract": "Y",
+                      "judicialResultPromptTypeId": "fbed768b-ee95-4434-87c8-e81cbc8d24c8",
+                      "label": "Next hearing in Crown Court",
+                      "promptReference": "0e045a1a-b92e-4ef7-a069-2d607db63522",
+                      "promptSequence": 0,
+                      "usergroups": [],
+                      "value": "Fixed Date:25/04/2026\nTime of hearing:10:00\nCourthouse organisation name:Blackfriars Crown Court\nCourthouse address line 1:1-15 Pocock Street\nCourthouse address line 2:London\nCourthouse post code:SE1 0BJ\nCourtroom:Courtroom 01\nHearing type:Plea and Trial Preparation\nEstimated duration:1 HOURS",
+                      "welshLabel": "Bydd y gwrandawiad nesaf yn Llys y Goron"
+                    },
+                    {
+                      "courtExtract": "Y",
+                      "isFinancialImposition": false,
+                      "judicialResultPromptTypeId": "61f951c3-f18d-4a44-ae4a-0cad4efb4133",
+                      "label": "Defendant to attend the next hearing",
+                      "promptReference": "defendantToAttendTheNextHearing",
+                      "promptSequence": 100,
+                      "type": "BOOLEAN",
+                      "usergroups": [],
+                      "value": "true",
+                      "welshLabel": "Diffynnydd i fynychu’r gwrandawiad nesaf",
+                      "welshValue": "true"
+                    },
+                    {
+                      "courtExtract": "Y",
+                      "judicialResultPromptTypeId": "69ff04d5-84e8-4a61-8478-82c2999c1969",
+                      "label": "To attend or a warrant to issue",
+                      "promptReference": "e6857bb3-1bc1-4ed0-8d07-c650825ef3c5",
+                      "promptSequence": 200,
+                      "qualifier": "GE",
+                      "usergroups": [],
+                      "value": "",
+                      "welshLabel": "Codi neu gyhoeddi gwarant"
+                    },
+                    {
+                      "courtExtract": "Y",
+                      "judicialResultPromptTypeId": "7fc17a01-2f5a-4433-aae9-28e0c959f73b",
+                      "label": "Adjournment reasons",
+                      "promptReference": "5a3f487d-d2bc-4547-a412-c3ee2b0c7b10",
+                      "promptSequence": 300,
+                      "usergroups": [],
+                      "value": "",
+                      "welshLabel": "Rheswm dros ohirio:"
+                    }
+                  ],
+                  "judicialResultTypeId": "d278650c-e429-11e8-9f32-f2801f1b9fd1",
+                  "label": "Adjournment",
+                  "lastSharedDateTime": "2026-04-24",
+                  "level": "O",
+                  "lifeDuration": false,
+                  "nextHearing": {
+                    "adjournmentReason": "To attend or a warrant to issue",
+                    "courtCentre": {
+                      "address": {
+                        "address1": "1-15 Pocock Street",
+                        "address2": "London",
+                        "postcode": "SE1 0BJ"
+                      },
+                      "code": "C01BL00",
+                      "courtHearingLocation": "C01BL00",
+                      "id": "89592405-c29b-3706-b1d3-b1dd3a08b227",
+                      "name": "Blackfriars Crown Court",
+                      "psaCode": 2570,
+                      "roomId": "d0624ee3-9198-3c8b-94d6-42fb197ebe5e",
+                      "roomName": "Courtroom 01",
+                      "welshName": "Llys Y Goron Blackfriars"
+                    },
+                    "estimatedDuration": "1 HOURS",
+                    "estimatedMinutes": 60,
+                    "jurisdictionType": "CROWN",
+                    "listedStartDateTime": "2026-04-25T09:00:00.000Z",
+                    "type": {
+                      "description": "Plea and Trial Preparation",
+                      "id": "06b0c2bf-3f98-46ed-ab7e-56efaf9ecced"
+                    }
+                  },
+                  "orderedDate": "2026-04-25",
+                  "orderedHearingId": "a1036389-b2eb-4706-9588-639ee6293586",
+                  "policeSubjectLineTitle": "Adjourned",
+                  "postHearingCustodyStatus": "A",
+                  "preserveActiveOrder": false,
+                  "publishedAsAPrompt": false,
+                  "publishedForNows": false,
+                  "qualifier": "GE",
+                  "rank": 194200,
+                  "resultText": "A - Adjournment\nAdjourned for hearing on 25/04/2026 at 10:00 in Courtroom 01, Blackfriars Crown Court. Reason: To attend or a warrant to issue. Defendant to attend the next hearing.",
+                  "resultWording": "",
+                  "rollUpPrompts": true,
+                  "rootJudicialResultId": "8d1659ac-640c-4c63-92e8-5e0b4e63fa50",
+                  "rootJudicialResultTypeId": "d278650c-e429-11e8-9f32-f2801f1b9fd1",
+                  "sentToCC": false,
+                  "terminatesOffenceProceedings": false,
+                  "urgent": false,
+                  "usergroups": [],
+                  "welshLabel": "Gohiriad"
+                },
+                {
+                  "alwaysPublished": false,
+                  "canBeSubjectOfBreach": false,
+                  "canBeSubjectOfVariation": false,
+                  "canExtendActiveOrder": false,
+                  "category": "ANCILLARY",
+                  "committedToCC": false,
+                  "courtClerk": {
+                    "firstName": "Erica",
+                    "lastName": "Wilson",
+                    "userId": "a085e359-6069-4694-8820-7810e7dfe762"
+                  },
+                  "d20": false,
+                  "excludedFromResults": false,
+                  "isAdjournmentResult": false,
+                  "isAvailableForCourtExtract": true,
+                  "isConvictedResult": false,
+                  "isDeleted": false,
+                  "isFinancialResult": false,
+                  "isNewAmendment": true,
+                  "isUnscheduled": false,
+                  "judicialResultId": "e6857bb3-1bc1-4ed0-8d07-c650825ef3c5",
+                  "judicialResultTypeId": "69ff04d5-84e8-4a61-8478-82c2999c1969",
+                  "label": "To attend or a warrant to issue",
+                  "lastSharedDateTime": "2026-04-24",
+                  "level": "O",
+                  "lifeDuration": false,
+                  "orderedDate": "2026-04-25",
+                  "orderedHearingId": "a1036389-b2eb-4706-9588-639ee6293586",
+                  "parentJudicialResultId": "5a3f487d-d2bc-4547-a412-c3ee2b0c7b10",
+                  "parentJudicialResultTypeId": "7fc17a01-2f5a-4433-aae9-28e0c959f73b",
+                  "postHearingCustodyStatus": "A",
+                  "preserveActiveOrder": false,
+                  "publishedAsAPrompt": true,
+                  "publishedForNows": true,
+                  "rank": 22600,
+                  "resultDefinitionGroup": "Adjournment reasons",
+                  "resultText": "To attend or a warrant to issue",
+                  "resultWording": "",
+                  "rollUpPrompts": false,
+                  "rootJudicialResultId": "8d1659ac-640c-4c63-92e8-5e0b4e63fa50",
+                  "rootJudicialResultTypeId": "d278650c-e429-11e8-9f32-f2801f1b9fd1",
+                  "sentToCC": false,
+                  "terminatesOffenceProceedings": false,
+                  "urgent": false,
+                  "usergroups": [],
+                  "welshLabel": "Codi neu gyhoeddi gwarant"
+                },
+                {
+                  "alwaysPublished": false,
+                  "canBeSubjectOfBreach": false,
+                  "canBeSubjectOfVariation": false,
+                  "canExtendActiveOrder": false,
+                  "category": "ANCILLARY",
+                  "committedToCC": false,
+                  "courtClerk": {
+                    "firstName": "Erica",
+                    "lastName": "Wilson",
+                    "userId": "a085e359-6069-4694-8820-7810e7dfe762"
+                  },
+                  "d20": false,
+                  "excludedFromResults": false,
+                  "isAdjournmentResult": false,
+                  "isAvailableForCourtExtract": true,
+                  "isConvictedResult": false,
+                  "isDeleted": false,
+                  "isFinancialResult": false,
+                  "isNewAmendment": true,
+                  "isUnscheduled": false,
+                  "judicialResultId": "0e045a1a-b92e-4ef7-a069-2d607db63522",
+                  "judicialResultPrompts": [
+                    {
+                      "courtExtract": "Y",
+                      "isFinancialImposition": false,
+                      "judicialResultPromptTypeId": "aea2ee79-47b4-4023-9a95-1b327e6e03d5",
+                      "label": "Fixed Date",
+                      "promptReference": "fixedDate",
+                      "promptSequence": 200,
+                      "type": "DATE",
+                      "usergroups": [],
+                      "value": "25/04/2026",
+                      "welshLabel": "Dyddiad Penodol",
+                      "welshValue": "25/04/2026"
+                    },
+                    {
+                      "courtExtract": "Y",
+                      "isFinancialImposition": false,
+                      "judicialResultPromptTypeId": "4d125a5a-acbc-461d-a657-ba5643af85a6",
+                      "label": "Time of hearing",
+                      "promptReference": "timeOfHearing",
+                      "promptSequence": 400,
+                      "type": "TIME",
+                      "usergroups": [],
+                      "value": "10:00",
+                      "welshLabel": "Amser y gwrandawiad",
+                      "welshValue": "10:00"
+                    },
+                    {
+                      "courtExtract": "Y",
+                      "isFinancialImposition": false,
+                      "judicialResultPromptTypeId": "66868c04-72c4-46d9-a4fc-860a82107475",
+                      "label": "Courthouse organisation name",
+                      "promptReference": "hCHOUSEOrganisationName",
+                      "promptSequence": 500,
+                      "type": "NAMEADDRESS",
+                      "usergroups": [],
+                      "value": "Blackfriars Crown Court",
+                      "welshValue": "Blackfriars Crown Court"
+                    },
+                    {
+                      "courtExtract": "Y",
+                      "isFinancialImposition": false,
+                      "judicialResultPromptTypeId": "66868c04-72c4-46d9-a4fc-860a82107475",
+                      "label": "Courthouse address line 1",
+                      "promptReference": "hCHOUSEAddress1",
+                      "promptSequence": 500,
+                      "type": "NAMEADDRESS",
+                      "usergroups": [],
+                      "value": "1-15 Pocock Street",
+                      "welshValue": "1-15 Pocock Street"
+                    },
+                    {
+                      "courtExtract": "Y",
+                      "isFinancialImposition": false,
+                      "judicialResultPromptTypeId": "66868c04-72c4-46d9-a4fc-860a82107475",
+                      "label": "Courthouse address line 2",
+                      "promptReference": "hCHOUSEAddress2",
+                      "promptSequence": 500,
+                      "type": "NAMEADDRESS",
+                      "usergroups": [],
+                      "value": "London",
+                      "welshValue": "London"
+                    },
+                    {
+                      "courtExtract": "Y",
+                      "isFinancialImposition": false,
+                      "judicialResultPromptTypeId": "66868c04-72c4-46d9-a4fc-860a82107475",
+                      "label": "Courthouse post code",
+                      "promptReference": "hCHOUSEPostCode",
+                      "promptSequence": 500,
+                      "type": "NAMEADDRESS",
+                      "usergroups": [],
+                      "value": "SE1 0BJ",
+                      "welshValue": "SE1 0BJ"
+                    },
+                    {
+                      "courtExtract": "Y",
+                      "isFinancialImposition": false,
+                      "judicialResultPromptTypeId": "49ec9b26-dd63-4637-b2e9-55ba9948a90f",
+                      "label": "Courtroom",
+                      "promptReference": "HCROOM",
+                      "promptSequence": 600,
+                      "type": "INT",
+                      "usergroups": [],
+                      "value": "Courtroom 01",
+                      "welshLabel": "Ystafell Llys",
+                      "welshValue": "Courtroom 01"
+                    },
+                    {
+                      "courtExtract": "Y",
+                      "isFinancialImposition": false,
+                      "judicialResultPromptTypeId": "c1116d12-dd35-4171-807a-2cb845357d22",
+                      "label": "Hearing type",
+                      "promptReference": "HTYPE",
+                      "promptSequence": 700,
+                      "type": "TXT",
+                      "usergroups": [],
+                      "value": "Plea and Trial Preparation",
+                      "welshLabel": "Math o wrandawiad",
+                      "welshValue": "Plea and Trial Preparation"
+                    },
+                    {
+                      "courtExtract": "Y",
+                      "isFinancialImposition": false,
+                      "judicialResultPromptTypeId": "d85cc2d7-66c8-471e-b6ff-c1bc60c6cdac",
+                      "label": "Estimated duration",
+                      "promptReference": "HEST",
+                      "promptSequence": 800,
+                      "type": "INT",
+                      "usergroups": [],
+                      "value": "1 HOURS",
+                      "welshLabel": "Amcangyfrif amser",
+                      "welshValue": "1 HOURS"
+                    }
+                  ],
+                  "judicialResultTypeId": "fbed768b-ee95-4434-87c8-e81cbc8d24c8",
+                  "label": "Next hearing in Crown Court",
+                  "lastSharedDateTime": "2026-04-24",
+                  "level": "O",
+                  "lifeDuration": false,
+                  "orderedDate": "2026-04-25",
+                  "orderedHearingId": "a1036389-b2eb-4706-9588-639ee6293586",
+                  "parentJudicialResultId": "827334f5-26eb-437a-8693-0c05afc87844",
+                  "parentJudicialResultTypeId": "f00359b5-7303-403b-b59e-0b1a1daa89bc",
+                  "postHearingCustodyStatus": "A",
+                  "preserveActiveOrder": true,
+                  "publishedAsAPrompt": true,
+                  "publishedForNows": true,
+                  "rank": 29600,
+                  "resultDefinitionGroup": "Next hearing",
+                  "resultText": "hearing on 25/04/2026 at 10:00 in Courtroom 01, Blackfriars Crown Court",
+                  "resultWording": "",
+                  "rollUpPrompts": false,
+                  "rootJudicialResultId": "8d1659ac-640c-4c63-92e8-5e0b4e63fa50",
+                  "rootJudicialResultTypeId": "d278650c-e429-11e8-9f32-f2801f1b9fd1",
+                  "sentToCC": false,
+                  "terminatesOffenceProceedings": false,
+                  "urgent": false,
+                  "usergroups": [],
+                  "welshLabel": "Bydd y gwrandawiad nesaf yn Llys y Goron"
+                }
+              ],
+              "listingNumber": 1,
+              "maxPenalty": "S:Ultd Fine LE 6-8pp",
+              "modeOfTrial": "Summary",
+              "offenceCode": "RA88001",
+              "offenceDateCode": 1,
+              "offenceDefinitionId": "d78f6d87-b9e3-33a9-b483-84c370f66a04",
+              "offenceLegislation": "Contrary to section 143 of, the Road Traffic Act 1988 and Schedule 2 to, the Road Traffic Offenders Act 1988.",
+              "offenceLegislationWelsh": "Yn groes i adran 143 Deddf Traffig Ffyrdd 1988 ac Atodlen 2 i Ddeddf Troseddwyr Traffig Ffyrdd 1988.",
+              "offenceTitle": "Use a motor vehicle on a road / public place without third party insurance",
+              "offenceTitleWelsh": "Defnyddio cerbyd modur ar ffordd / mewn man cyhoeddus heb yswiriant trydydd parti",
+              "orderIndex": 1,
+              "plea": {
+                "offenceId": "be33a899-6bbe-4781-bfee-ddd6af0360c5",
+                "originatingHearingId": "d4edb910-7e5c-43ec-a981-60ea42213461",
+                "pleaDate": "2026-04-24",
+                "pleaValue": "GUILTY"
+              },
+              "proceedingsConcluded": true,
+              "startDate": "2026-02-23",
+              "wording": "Use a motor vehicle on a road / public place without third party insurance"
+            },
+            {
+              "allocationDecision": {
+                "allocationDecisionDate": "2026-04-24",
+                "motReasonCode": "01",
+                "motReasonDescription": "Summary-only offence",
+                "motReasonId": "b8c37e33-defd-351c-b91e-1e03e51657da",
+                "offenceId": "7812f39e-9022-47f5-b5f2-7bb03af746d4",
+                "originatingHearingId": "d4edb910-7e5c-43ec-a981-60ea42213461",
+                "sequenceNumber": 90
+              },
+              "arrestDate": "2026-04-09",
+              "chargeDate": "2026-04-14",
+              "convictingCourt": {
+                "code": "B01LY00",
+                "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+                "lja": {
+                  "ljaCode": "2577",
+                  "ljaName": "South West London Magistrates' Court"
+                },
+                "name": "Lavender Hill Magistrates' Court",
+                "roomId": "9e4932f7-97b2-3010-b942-ddd2624e4dd8"
+              },
+              "convictionDate": "2026-04-24",
+              "count": 0,
+              "dvlaOffenceCode": "LC20",
+              "endorsableFlag": true,
+              "id": "7812f39e-9022-47f5-b5f2-7bb03af746d4",
+              "isDisposed": false,
+              "judicialResults": [
+                {
+                  "alwaysPublished": false,
+                  "canBeSubjectOfBreach": false,
+                  "canBeSubjectOfVariation": false,
+                  "canExtendActiveOrder": false,
+                  "category": "INTERMEDIARY",
+                  "cjsCode": "4506",
+                  "committedToCC": false,
+                  "courtClerk": {
+                    "firstName": "Erica",
+                    "lastName": "Wilson",
+                    "userId": "a085e359-6069-4694-8820-7810e7dfe762"
+                  },
+                  "d20": false,
+                  "excludedFromResults": false,
+                  "isAdjournmentResult": false,
+                  "isAvailableForCourtExtract": true,
+                  "isConvictedResult": false,
+                  "isDeleted": false,
+                  "isFinancialResult": false,
+                  "isNewAmendment": true,
+                  "isUnscheduled": false,
+                  "judicialResultId": "0f452569-12e3-4a4c-98bc-e15f2dc431b5",
+                  "judicialResultPrompts": [
+                    {
+                      "courtExtract": "Y",
+                      "judicialResultPromptTypeId": "fbed768b-ee95-4434-87c8-e81cbc8d24c8",
+                      "label": "Next hearing in Crown Court",
+                      "promptReference": "1fd21027-00ed-4d40-89e6-047cf1d3a4ed",
+                      "promptSequence": 0,
+                      "usergroups": [],
+                      "value": "Fixed Date:25/04/2026\nTime of hearing:10:00\nCourthouse organisation name:Blackfriars Crown Court\nCourthouse address line 1:1-15 Pocock Street\nCourthouse address line 2:London\nCourthouse post code:SE1 0BJ\nCourtroom:Courtroom 01\nHearing type:Plea and Trial Preparation\nEstimated duration:1 HOURS",
+                      "welshLabel": "Bydd y gwrandawiad nesaf yn Llys y Goron"
+                    },
+                    {
+                      "courtExtract": "Y",
+                      "isFinancialImposition": false,
+                      "judicialResultPromptTypeId": "61f951c3-f18d-4a44-ae4a-0cad4efb4133",
+                      "label": "Defendant to attend the next hearing",
+                      "promptReference": "defendantToAttendTheNextHearing",
+                      "promptSequence": 100,
+                      "type": "BOOLEAN",
+                      "usergroups": [],
+                      "value": "true",
+                      "welshLabel": "Diffynnydd i fynychu’r gwrandawiad nesaf",
+                      "welshValue": "true"
+                    },
+                    {
+                      "courtExtract": "Y",
+                      "judicialResultPromptTypeId": "69ff04d5-84e8-4a61-8478-82c2999c1969",
+                      "label": "To attend or a warrant to issue",
+                      "promptReference": "b7713b1a-5424-4151-b120-d6540bf2d4ea",
+                      "promptSequence": 200,
+                      "qualifier": "GE",
+                      "usergroups": [],
+                      "value": "",
+                      "welshLabel": "Codi neu gyhoeddi gwarant"
+                    },
+                    {
+                      "courtExtract": "Y",
+                      "judicialResultPromptTypeId": "7fc17a01-2f5a-4433-aae9-28e0c959f73b",
+                      "label": "Adjournment reasons",
+                      "promptReference": "5cba7ae8-4c79-4ea9-9c0a-1ab9e72e5e0d",
+                      "promptSequence": 300,
+                      "usergroups": [],
+                      "value": "",
+                      "welshLabel": "Rheswm dros ohirio:"
+                    }
+                  ],
+                  "judicialResultTypeId": "d278650c-e429-11e8-9f32-f2801f1b9fd1",
+                  "label": "Adjournment",
+                  "lastSharedDateTime": "2026-04-24",
+                  "level": "O",
+                  "lifeDuration": false,
+                  "nextHearing": {
+                    "adjournmentReason": "To attend or a warrant to issue",
+                    "courtCentre": {
+                      "address": {
+                        "address1": "1-15 Pocock Street",
+                        "address2": "London",
+                        "postcode": "SE1 0BJ"
+                      },
+                      "code": "C01BL00",
+                      "courtHearingLocation": "C01BL00",
+                      "id": "89592405-c29b-3706-b1d3-b1dd3a08b227",
+                      "name": "Blackfriars Crown Court",
+                      "psaCode": 2570,
+                      "roomId": "d0624ee3-9198-3c8b-94d6-42fb197ebe5e",
+                      "roomName": "Courtroom 01",
+                      "welshName": "Llys Y Goron Blackfriars"
+                    },
+                    "estimatedDuration": "1 HOURS",
+                    "estimatedMinutes": 60,
+                    "jurisdictionType": "CROWN",
+                    "listedStartDateTime": "2026-04-25T09:00:00.000Z",
+                    "type": {
+                      "description": "Plea and Trial Preparation",
+                      "id": "06b0c2bf-3f98-46ed-ab7e-56efaf9ecced"
+                    }
+                  },
+                  "orderedDate": "2026-04-25",
+                  "orderedHearingId": "a1036389-b2eb-4706-9588-639ee6293586",
+                  "policeSubjectLineTitle": "Adjourned",
+                  "postHearingCustodyStatus": "A",
+                  "preserveActiveOrder": false,
+                  "publishedAsAPrompt": false,
+                  "publishedForNows": false,
+                  "qualifier": "GE",
+                  "rank": 194200,
+                  "resultText": "A - Adjournment\nAdjourned for hearing on 25/04/2026 at 10:00 in Courtroom 01, Blackfriars Crown Court. Reason: To attend or a warrant to issue. Defendant to attend the next hearing.",
+                  "resultWording": "",
+                  "rollUpPrompts": true,
+                  "rootJudicialResultId": "0f452569-12e3-4a4c-98bc-e15f2dc431b5",
+                  "rootJudicialResultTypeId": "d278650c-e429-11e8-9f32-f2801f1b9fd1",
+                  "sentToCC": false,
+                  "terminatesOffenceProceedings": false,
+                  "urgent": false,
+                  "usergroups": [],
+                  "welshLabel": "Gohiriad"
+                },
+                {
+                  "alwaysPublished": false,
+                  "canBeSubjectOfBreach": false,
+                  "canBeSubjectOfVariation": false,
+                  "canExtendActiveOrder": false,
+                  "category": "ANCILLARY",
+                  "committedToCC": false,
+                  "courtClerk": {
+                    "firstName": "Erica",
+                    "lastName": "Wilson",
+                    "userId": "a085e359-6069-4694-8820-7810e7dfe762"
+                  },
+                  "d20": false,
+                  "excludedFromResults": false,
+                  "isAdjournmentResult": false,
+                  "isAvailableForCourtExtract": true,
+                  "isConvictedResult": false,
+                  "isDeleted": false,
+                  "isFinancialResult": false,
+                  "isNewAmendment": true,
+                  "isUnscheduled": false,
+                  "judicialResultId": "b7713b1a-5424-4151-b120-d6540bf2d4ea",
+                  "judicialResultTypeId": "69ff04d5-84e8-4a61-8478-82c2999c1969",
+                  "label": "To attend or a warrant to issue",
+                  "lastSharedDateTime": "2026-04-24",
+                  "level": "O",
+                  "lifeDuration": false,
+                  "orderedDate": "2026-04-25",
+                  "orderedHearingId": "a1036389-b2eb-4706-9588-639ee6293586",
+                  "parentJudicialResultId": "5cba7ae8-4c79-4ea9-9c0a-1ab9e72e5e0d",
+                  "parentJudicialResultTypeId": "7fc17a01-2f5a-4433-aae9-28e0c959f73b",
+                  "postHearingCustodyStatus": "A",
+                  "preserveActiveOrder": false,
+                  "publishedAsAPrompt": true,
+                  "publishedForNows": true,
+                  "rank": 22600,
+                  "resultDefinitionGroup": "Adjournment reasons",
+                  "resultText": "To attend or a warrant to issue",
+                  "resultWording": "",
+                  "rollUpPrompts": false,
+                  "rootJudicialResultId": "0f452569-12e3-4a4c-98bc-e15f2dc431b5",
+                  "rootJudicialResultTypeId": "d278650c-e429-11e8-9f32-f2801f1b9fd1",
+                  "sentToCC": false,
+                  "terminatesOffenceProceedings": false,
+                  "urgent": false,
+                  "usergroups": [],
+                  "welshLabel": "Codi neu gyhoeddi gwarant"
+                },
+                {
+                  "alwaysPublished": false,
+                  "canBeSubjectOfBreach": false,
+                  "canBeSubjectOfVariation": false,
+                  "canExtendActiveOrder": false,
+                  "category": "ANCILLARY",
+                  "committedToCC": false,
+                  "courtClerk": {
+                    "firstName": "Erica",
+                    "lastName": "Wilson",
+                    "userId": "a085e359-6069-4694-8820-7810e7dfe762"
+                  },
+                  "d20": false,
+                  "excludedFromResults": false,
+                  "isAdjournmentResult": false,
+                  "isAvailableForCourtExtract": true,
+                  "isConvictedResult": false,
+                  "isDeleted": false,
+                  "isFinancialResult": false,
+                  "isNewAmendment": true,
+                  "isUnscheduled": false,
+                  "judicialResultId": "1fd21027-00ed-4d40-89e6-047cf1d3a4ed",
+                  "judicialResultPrompts": [
+                    {
+                      "courtExtract": "Y",
+                      "isFinancialImposition": false,
+                      "judicialResultPromptTypeId": "aea2ee79-47b4-4023-9a95-1b327e6e03d5",
+                      "label": "Fixed Date",
+                      "promptReference": "fixedDate",
+                      "promptSequence": 200,
+                      "type": "DATE",
+                      "usergroups": [],
+                      "value": "25/04/2026",
+                      "welshLabel": "Dyddiad Penodol",
+                      "welshValue": "25/04/2026"
+                    },
+                    {
+                      "courtExtract": "Y",
+                      "isFinancialImposition": false,
+                      "judicialResultPromptTypeId": "4d125a5a-acbc-461d-a657-ba5643af85a6",
+                      "label": "Time of hearing",
+                      "promptReference": "timeOfHearing",
+                      "promptSequence": 400,
+                      "type": "TIME",
+                      "usergroups": [],
+                      "value": "10:00",
+                      "welshLabel": "Amser y gwrandawiad",
+                      "welshValue": "10:00"
+                    },
+                    {
+                      "courtExtract": "Y",
+                      "isFinancialImposition": false,
+                      "judicialResultPromptTypeId": "66868c04-72c4-46d9-a4fc-860a82107475",
+                      "label": "Courthouse organisation name",
+                      "promptReference": "hCHOUSEOrganisationName",
+                      "promptSequence": 500,
+                      "type": "NAMEADDRESS",
+                      "usergroups": [],
+                      "value": "Blackfriars Crown Court",
+                      "welshValue": "Blackfriars Crown Court"
+                    },
+                    {
+                      "courtExtract": "Y",
+                      "isFinancialImposition": false,
+                      "judicialResultPromptTypeId": "66868c04-72c4-46d9-a4fc-860a82107475",
+                      "label": "Courthouse address line 1",
+                      "promptReference": "hCHOUSEAddress1",
+                      "promptSequence": 500,
+                      "type": "NAMEADDRESS",
+                      "usergroups": [],
+                      "value": "1-15 Pocock Street",
+                      "welshValue": "1-15 Pocock Street"
+                    },
+                    {
+                      "courtExtract": "Y",
+                      "isFinancialImposition": false,
+                      "judicialResultPromptTypeId": "66868c04-72c4-46d9-a4fc-860a82107475",
+                      "label": "Courthouse address line 2",
+                      "promptReference": "hCHOUSEAddress2",
+                      "promptSequence": 500,
+                      "type": "NAMEADDRESS",
+                      "usergroups": [],
+                      "value": "London",
+                      "welshValue": "London"
+                    },
+                    {
+                      "courtExtract": "Y",
+                      "isFinancialImposition": false,
+                      "judicialResultPromptTypeId": "66868c04-72c4-46d9-a4fc-860a82107475",
+                      "label": "Courthouse post code",
+                      "promptReference": "hCHOUSEPostCode",
+                      "promptSequence": 500,
+                      "type": "NAMEADDRESS",
+                      "usergroups": [],
+                      "value": "SE1 0BJ",
+                      "welshValue": "SE1 0BJ"
+                    },
+                    {
+                      "courtExtract": "Y",
+                      "isFinancialImposition": false,
+                      "judicialResultPromptTypeId": "49ec9b26-dd63-4637-b2e9-55ba9948a90f",
+                      "label": "Courtroom",
+                      "promptReference": "HCROOM",
+                      "promptSequence": 600,
+                      "type": "INT",
+                      "usergroups": [],
+                      "value": "Courtroom 01",
+                      "welshLabel": "Ystafell Llys",
+                      "welshValue": "Courtroom 01"
+                    },
+                    {
+                      "courtExtract": "Y",
+                      "isFinancialImposition": false,
+                      "judicialResultPromptTypeId": "c1116d12-dd35-4171-807a-2cb845357d22",
+                      "label": "Hearing type",
+                      "promptReference": "HTYPE",
+                      "promptSequence": 700,
+                      "type": "TXT",
+                      "usergroups": [],
+                      "value": "Plea and Trial Preparation",
+                      "welshLabel": "Math o wrandawiad",
+                      "welshValue": "Plea and Trial Preparation"
+                    },
+                    {
+                      "courtExtract": "Y",
+                      "isFinancialImposition": false,
+                      "judicialResultPromptTypeId": "d85cc2d7-66c8-471e-b6ff-c1bc60c6cdac",
+                      "label": "Estimated duration",
+                      "promptReference": "HEST",
+                      "promptSequence": 800,
+                      "type": "INT",
+                      "usergroups": [],
+                      "value": "1 HOURS",
+                      "welshLabel": "Amcangyfrif amser",
+                      "welshValue": "1 HOURS"
+                    }
+                  ],
+                  "judicialResultTypeId": "fbed768b-ee95-4434-87c8-e81cbc8d24c8",
+                  "label": "Next hearing in Crown Court",
+                  "lastSharedDateTime": "2026-04-24",
+                  "level": "O",
+                  "lifeDuration": false,
+                  "orderedDate": "2026-04-25",
+                  "orderedHearingId": "a1036389-b2eb-4706-9588-639ee6293586",
+                  "parentJudicialResultId": "8dbfeb74-9baa-4878-bfc7-29ea36dddafe",
+                  "parentJudicialResultTypeId": "f00359b5-7303-403b-b59e-0b1a1daa89bc",
+                  "postHearingCustodyStatus": "A",
+                  "preserveActiveOrder": true,
+                  "publishedAsAPrompt": true,
+                  "publishedForNows": true,
+                  "rank": 29600,
+                  "resultDefinitionGroup": "Next hearing",
+                  "resultText": "hearing on 25/04/2026 at 10:00 in Courtroom 01, Blackfriars Crown Court",
+                  "resultWording": "",
+                  "rollUpPrompts": false,
+                  "rootJudicialResultId": "0f452569-12e3-4a4c-98bc-e15f2dc431b5",
+                  "rootJudicialResultTypeId": "d278650c-e429-11e8-9f32-f2801f1b9fd1",
+                  "sentToCC": false,
+                  "terminatesOffenceProceedings": false,
+                  "urgent": false,
+                  "usergroups": [],
+                  "welshLabel": "Bydd y gwrandawiad nesaf yn Llys y Goron"
+                }
+              ],
+              "listingNumber": 1,
+              "maxPenalty": "S:L3 LE 3-6pp",
+              "modeOfTrial": "Summary",
+              "offenceCode": "RT88334",
+              "offenceDateCode": 1,
+              "offenceDefinitionId": "8cd35b0f-f102-35ab-8add-620848f3ffa2",
+              "offenceLegislation": "Contrary to section 87(1) of the Road Traffic Act 1988 and Schedule 2 to the Road Traffic Offenders Act 1988.",
+              "offenceLegislationWelsh": "Yn groes i adran 87(1) Deddf Traffig Ffyrdd 1988 ac Atodlen 2 Deddf Troseddwyr Traffig Ffyrdd 1988.",
+              "offenceTitle": "Drive a motor vehicle otherwise than in accordance with a licence - endorsable offence",
+              "offenceTitleWelsh": "Gyrru cerbyd modur mewn ffordd nad yw'n unol â thrwydded - trosedd ardystiadwy",
+              "orderIndex": 2,
+              "plea": {
+                "offenceId": "7812f39e-9022-47f5-b5f2-7bb03af746d4",
+                "originatingHearingId": "d4edb910-7e5c-43ec-a981-60ea42213461",
+                "pleaDate": "2026-04-24",
+                "pleaValue": "GUILTY"
+              },
+              "proceedingsConcluded": true,
+              "startDate": "2026-02-23",
+              "wording": "Drive a motor vehicle otherwise than in accordance with a licence - endorsable offence"
+            },
+            {
+              "allocationDecision": {
+                "allocationDecisionDate": "2026-04-24",
+                "motReasonCode": "01",
+                "motReasonDescription": "Summary-only offence",
+                "motReasonId": "b8c37e33-defd-351c-b91e-1e03e51657da",
+                "offenceId": "00978648-a3e8-4e3b-8c13-58510a4e12a2",
+                "originatingHearingId": "d4edb910-7e5c-43ec-a981-60ea42213461",
+                "sequenceNumber": 90
+              },
+              "arrestDate": "2026-04-09",
+              "chargeDate": "2026-04-14",
+              "convictingCourt": {
+                "code": "B01LY00",
+                "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+                "lja": {
+                  "ljaCode": "2577",
+                  "ljaName": "South West London Magistrates' Court"
+                },
+                "name": "Lavender Hill Magistrates' Court",
+                "roomId": "9e4932f7-97b2-3010-b942-ddd2624e4dd8"
+              },
+              "convictionDate": "2026-04-24",
+              "count": 0,
+              "dvlaOffenceCode": "IN14",
+              "endorsableFlag": true,
+              "id": "00978648-a3e8-4e3b-8c13-58510a4e12a2",
+              "isDisposed": false,
+              "judicialResults": [
+                {
+                  "alwaysPublished": false,
+                  "canBeSubjectOfBreach": false,
+                  "canBeSubjectOfVariation": false,
+                  "canExtendActiveOrder": false,
+                  "category": "INTERMEDIARY",
+                  "cjsCode": "4506",
+                  "committedToCC": false,
+                  "courtClerk": {
+                    "firstName": "Erica",
+                    "lastName": "Wilson",
+                    "userId": "a085e359-6069-4694-8820-7810e7dfe762"
+                  },
+                  "d20": false,
+                  "excludedFromResults": false,
+                  "isAdjournmentResult": false,
+                  "isAvailableForCourtExtract": true,
+                  "isConvictedResult": false,
+                  "isDeleted": false,
+                  "isFinancialResult": false,
+                  "isNewAmendment": true,
+                  "isUnscheduled": false,
+                  "judicialResultId": "9514e95c-41c4-4efd-8a8e-607f6447624d",
+                  "judicialResultPrompts": [
+                    {
+                      "courtExtract": "Y",
+                      "judicialResultPromptTypeId": "fbed768b-ee95-4434-87c8-e81cbc8d24c8",
+                      "label": "Next hearing in Crown Court",
+                      "promptReference": "6db00f6a-d693-49c6-a07d-8c256232c251",
+                      "promptSequence": 0,
+                      "usergroups": [],
+                      "value": "Fixed Date:25/04/2026\nTime of hearing:10:00\nCourthouse organisation name:Blackfriars Crown Court\nCourthouse address line 1:1-15 Pocock Street\nCourthouse address line 2:London\nCourthouse post code:SE1 0BJ\nCourtroom:Courtroom 01\nHearing type:Plea and Trial Preparation\nEstimated duration:1 HOURS",
+                      "welshLabel": "Bydd y gwrandawiad nesaf yn Llys y Goron"
+                    },
+                    {
+                      "courtExtract": "Y",
+                      "isFinancialImposition": false,
+                      "judicialResultPromptTypeId": "61f951c3-f18d-4a44-ae4a-0cad4efb4133",
+                      "label": "Defendant to attend the next hearing",
+                      "promptReference": "defendantToAttendTheNextHearing",
+                      "promptSequence": 100,
+                      "type": "BOOLEAN",
+                      "usergroups": [],
+                      "value": "true",
+                      "welshLabel": "Diffynnydd i fynychu’r gwrandawiad nesaf",
+                      "welshValue": "true"
+                    },
+                    {
+                      "courtExtract": "Y",
+                      "judicialResultPromptTypeId": "69ff04d5-84e8-4a61-8478-82c2999c1969",
+                      "label": "To attend or a warrant to issue",
+                      "promptReference": "4524510f-17a6-40c4-a62a-a2456bbb8673",
+                      "promptSequence": 200,
+                      "qualifier": "GE",
+                      "usergroups": [],
+                      "value": "",
+                      "welshLabel": "Codi neu gyhoeddi gwarant"
+                    },
+                    {
+                      "courtExtract": "Y",
+                      "judicialResultPromptTypeId": "7fc17a01-2f5a-4433-aae9-28e0c959f73b",
+                      "label": "Adjournment reasons",
+                      "promptReference": "6bcced0b-9d21-45bf-b303-ce10190b2b19",
+                      "promptSequence": 300,
+                      "usergroups": [],
+                      "value": "",
+                      "welshLabel": "Rheswm dros ohirio:"
+                    }
+                  ],
+                  "judicialResultTypeId": "d278650c-e429-11e8-9f32-f2801f1b9fd1",
+                  "label": "Adjournment",
+                  "lastSharedDateTime": "2026-04-24",
+                  "level": "O",
+                  "lifeDuration": false,
+                  "nextHearing": {
+                    "adjournmentReason": "To attend or a warrant to issue",
+                    "courtCentre": {
+                      "address": {
+                        "address1": "1-15 Pocock Street",
+                        "address2": "London",
+                        "postcode": "SE1 0BJ"
+                      },
+                      "code": "C01BL00",
+                      "courtHearingLocation": "C01BL00",
+                      "id": "89592405-c29b-3706-b1d3-b1dd3a08b227",
+                      "name": "Blackfriars Crown Court",
+                      "psaCode": 2570,
+                      "roomId": "d0624ee3-9198-3c8b-94d6-42fb197ebe5e",
+                      "roomName": "Courtroom 01",
+                      "welshName": "Llys Y Goron Blackfriars"
+                    },
+                    "estimatedDuration": "1 HOURS",
+                    "estimatedMinutes": 60,
+                    "jurisdictionType": "CROWN",
+                    "listedStartDateTime": "2026-04-25T09:00:00.000Z",
+                    "type": {
+                      "description": "Plea and Trial Preparation",
+                      "id": "06b0c2bf-3f98-46ed-ab7e-56efaf9ecced"
+                    }
+                  },
+                  "orderedDate": "2026-04-25",
+                  "orderedHearingId": "a1036389-b2eb-4706-9588-639ee6293586",
+                  "policeSubjectLineTitle": "Adjourned",
+                  "postHearingCustodyStatus": "A",
+                  "preserveActiveOrder": false,
+                  "publishedAsAPrompt": false,
+                  "publishedForNows": false,
+                  "qualifier": "GE",
+                  "rank": 194200,
+                  "resultText": "A - Adjournment\nAdjourned for hearing on 25/04/2026 at 10:00 in Courtroom 01, Blackfriars Crown Court. Reason: To attend or a warrant to issue. Defendant to attend the next hearing.",
+                  "resultWording": "",
+                  "rollUpPrompts": true,
+                  "rootJudicialResultId": "9514e95c-41c4-4efd-8a8e-607f6447624d",
+                  "rootJudicialResultTypeId": "d278650c-e429-11e8-9f32-f2801f1b9fd1",
+                  "sentToCC": false,
+                  "terminatesOffenceProceedings": false,
+                  "urgent": false,
+                  "usergroups": [],
+                  "welshLabel": "Gohiriad"
+                },
+                {
+                  "alwaysPublished": false,
+                  "canBeSubjectOfBreach": false,
+                  "canBeSubjectOfVariation": false,
+                  "canExtendActiveOrder": false,
+                  "category": "ANCILLARY",
+                  "committedToCC": false,
+                  "courtClerk": {
+                    "firstName": "Erica",
+                    "lastName": "Wilson",
+                    "userId": "a085e359-6069-4694-8820-7810e7dfe762"
+                  },
+                  "d20": false,
+                  "excludedFromResults": false,
+                  "isAdjournmentResult": false,
+                  "isAvailableForCourtExtract": true,
+                  "isConvictedResult": false,
+                  "isDeleted": false,
+                  "isFinancialResult": false,
+                  "isNewAmendment": true,
+                  "isUnscheduled": false,
+                  "judicialResultId": "4524510f-17a6-40c4-a62a-a2456bbb8673",
+                  "judicialResultTypeId": "69ff04d5-84e8-4a61-8478-82c2999c1969",
+                  "label": "To attend or a warrant to issue",
+                  "lastSharedDateTime": "2026-04-24",
+                  "level": "O",
+                  "lifeDuration": false,
+                  "orderedDate": "2026-04-25",
+                  "orderedHearingId": "a1036389-b2eb-4706-9588-639ee6293586",
+                  "parentJudicialResultId": "6bcced0b-9d21-45bf-b303-ce10190b2b19",
+                  "parentJudicialResultTypeId": "7fc17a01-2f5a-4433-aae9-28e0c959f73b",
+                  "postHearingCustodyStatus": "A",
+                  "preserveActiveOrder": false,
+                  "publishedAsAPrompt": true,
+                  "publishedForNows": true,
+                  "rank": 22600,
+                  "resultDefinitionGroup": "Adjournment reasons",
+                  "resultText": "To attend or a warrant to issue",
+                  "resultWording": "",
+                  "rollUpPrompts": false,
+                  "rootJudicialResultId": "9514e95c-41c4-4efd-8a8e-607f6447624d",
+                  "rootJudicialResultTypeId": "d278650c-e429-11e8-9f32-f2801f1b9fd1",
+                  "sentToCC": false,
+                  "terminatesOffenceProceedings": false,
+                  "urgent": false,
+                  "usergroups": [],
+                  "welshLabel": "Codi neu gyhoeddi gwarant"
+                },
+                {
+                  "alwaysPublished": false,
+                  "canBeSubjectOfBreach": false,
+                  "canBeSubjectOfVariation": false,
+                  "canExtendActiveOrder": false,
+                  "category": "ANCILLARY",
+                  "committedToCC": false,
+                  "courtClerk": {
+                    "firstName": "Erica",
+                    "lastName": "Wilson",
+                    "userId": "a085e359-6069-4694-8820-7810e7dfe762"
+                  },
+                  "d20": false,
+                  "excludedFromResults": false,
+                  "isAdjournmentResult": false,
+                  "isAvailableForCourtExtract": true,
+                  "isConvictedResult": false,
+                  "isDeleted": false,
+                  "isFinancialResult": false,
+                  "isNewAmendment": true,
+                  "isUnscheduled": false,
+                  "judicialResultId": "6db00f6a-d693-49c6-a07d-8c256232c251",
+                  "judicialResultPrompts": [
+                    {
+                      "courtExtract": "Y",
+                      "isFinancialImposition": false,
+                      "judicialResultPromptTypeId": "aea2ee79-47b4-4023-9a95-1b327e6e03d5",
+                      "label": "Fixed Date",
+                      "promptReference": "fixedDate",
+                      "promptSequence": 200,
+                      "type": "DATE",
+                      "usergroups": [],
+                      "value": "25/04/2026",
+                      "welshLabel": "Dyddiad Penodol",
+                      "welshValue": "25/04/2026"
+                    },
+                    {
+                      "courtExtract": "Y",
+                      "isFinancialImposition": false,
+                      "judicialResultPromptTypeId": "4d125a5a-acbc-461d-a657-ba5643af85a6",
+                      "label": "Time of hearing",
+                      "promptReference": "timeOfHearing",
+                      "promptSequence": 400,
+                      "type": "TIME",
+                      "usergroups": [],
+                      "value": "10:00",
+                      "welshLabel": "Amser y gwrandawiad",
+                      "welshValue": "10:00"
+                    },
+                    {
+                      "courtExtract": "Y",
+                      "isFinancialImposition": false,
+                      "judicialResultPromptTypeId": "66868c04-72c4-46d9-a4fc-860a82107475",
+                      "label": "Courthouse organisation name",
+                      "promptReference": "hCHOUSEOrganisationName",
+                      "promptSequence": 500,
+                      "type": "NAMEADDRESS",
+                      "usergroups": [],
+                      "value": "Blackfriars Crown Court",
+                      "welshValue": "Blackfriars Crown Court"
+                    },
+                    {
+                      "courtExtract": "Y",
+                      "isFinancialImposition": false,
+                      "judicialResultPromptTypeId": "66868c04-72c4-46d9-a4fc-860a82107475",
+                      "label": "Courthouse address line 1",
+                      "promptReference": "hCHOUSEAddress1",
+                      "promptSequence": 500,
+                      "type": "NAMEADDRESS",
+                      "usergroups": [],
+                      "value": "1-15 Pocock Street",
+                      "welshValue": "1-15 Pocock Street"
+                    },
+                    {
+                      "courtExtract": "Y",
+                      "isFinancialImposition": false,
+                      "judicialResultPromptTypeId": "66868c04-72c4-46d9-a4fc-860a82107475",
+                      "label": "Courthouse address line 2",
+                      "promptReference": "hCHOUSEAddress2",
+                      "promptSequence": 500,
+                      "type": "NAMEADDRESS",
+                      "usergroups": [],
+                      "value": "London",
+                      "welshValue": "London"
+                    },
+                    {
+                      "courtExtract": "Y",
+                      "isFinancialImposition": false,
+                      "judicialResultPromptTypeId": "66868c04-72c4-46d9-a4fc-860a82107475",
+                      "label": "Courthouse post code",
+                      "promptReference": "hCHOUSEPostCode",
+                      "promptSequence": 500,
+                      "type": "NAMEADDRESS",
+                      "usergroups": [],
+                      "value": "SE1 0BJ",
+                      "welshValue": "SE1 0BJ"
+                    },
+                    {
+                      "courtExtract": "Y",
+                      "isFinancialImposition": false,
+                      "judicialResultPromptTypeId": "49ec9b26-dd63-4637-b2e9-55ba9948a90f",
+                      "label": "Courtroom",
+                      "promptReference": "HCROOM",
+                      "promptSequence": 600,
+                      "type": "INT",
+                      "usergroups": [],
+                      "value": "Courtroom 01",
+                      "welshLabel": "Ystafell Llys",
+                      "welshValue": "Courtroom 01"
+                    },
+                    {
+                      "courtExtract": "Y",
+                      "isFinancialImposition": false,
+                      "judicialResultPromptTypeId": "c1116d12-dd35-4171-807a-2cb845357d22",
+                      "label": "Hearing type",
+                      "promptReference": "HTYPE",
+                      "promptSequence": 700,
+                      "type": "TXT",
+                      "usergroups": [],
+                      "value": "Plea and Trial Preparation",
+                      "welshLabel": "Math o wrandawiad",
+                      "welshValue": "Plea and Trial Preparation"
+                    },
+                    {
+                      "courtExtract": "Y",
+                      "isFinancialImposition": false,
+                      "judicialResultPromptTypeId": "d85cc2d7-66c8-471e-b6ff-c1bc60c6cdac",
+                      "label": "Estimated duration",
+                      "promptReference": "HEST",
+                      "promptSequence": 800,
+                      "type": "INT",
+                      "usergroups": [],
+                      "value": "1 HOURS",
+                      "welshLabel": "Amcangyfrif amser",
+                      "welshValue": "1 HOURS"
+                    }
+                  ],
+                  "judicialResultTypeId": "fbed768b-ee95-4434-87c8-e81cbc8d24c8",
+                  "label": "Next hearing in Crown Court",
+                  "lastSharedDateTime": "2026-04-24",
+                  "level": "O",
+                  "lifeDuration": false,
+                  "orderedDate": "2026-04-25",
+                  "orderedHearingId": "a1036389-b2eb-4706-9588-639ee6293586",
+                  "parentJudicialResultId": "22c75020-c0f2-4c77-af3e-6563db1faa04",
+                  "parentJudicialResultTypeId": "f00359b5-7303-403b-b59e-0b1a1daa89bc",
+                  "postHearingCustodyStatus": "A",
+                  "preserveActiveOrder": true,
+                  "publishedAsAPrompt": true,
+                  "publishedForNows": true,
+                  "rank": 29600,
+                  "resultDefinitionGroup": "Next hearing",
+                  "resultText": "hearing on 25/04/2026 at 10:00 in Courtroom 01, Blackfriars Crown Court",
+                  "resultWording": "",
+                  "rollUpPrompts": false,
+                  "rootJudicialResultId": "9514e95c-41c4-4efd-8a8e-607f6447624d",
+                  "rootJudicialResultTypeId": "d278650c-e429-11e8-9f32-f2801f1b9fd1",
+                  "sentToCC": false,
+                  "terminatesOffenceProceedings": false,
+                  "urgent": false,
+                  "usergroups": [],
+                  "welshLabel": "Bydd y gwrandawiad nesaf yn Llys y Goron"
+                }
+              ],
+              "listingNumber": 1,
+              "maxPenalty": "S:Ultd Fine LE 6-8pp",
+              "modeOfTrial": "Summary",
+              "offenceCode": "RA88002",
+              "offenceDateCode": 1,
+              "offenceDefinitionId": "e63c2b35-4936-3750-89d4-87f943bbc43e",
+              "offenceLegislation": "Contrary to section143(2) of, the Road Traffic Act 1988 and Schedule 2 to, the Road TrafficOffenders Act 1988.",
+              "offenceLegislationWelsh": "Yn groes i adran 143(2) Deddf Traffig Ffyrdd 1988 ac Atodlen 2 i Ddeddf Troseddwyr Traffig Ffyrdd 1988.",
+              "offenceTitle": "Cause use of motor vehicle with no insurance",
+              "offenceTitleWelsh": "Achosi defnyddio cerbyd modur heb yswiriant",
+              "orderIndex": 3,
+              "plea": {
+                "offenceId": "00978648-a3e8-4e3b-8c13-58510a4e12a2",
+                "originatingHearingId": "d4edb910-7e5c-43ec-a981-60ea42213461",
+                "pleaDate": "2026-04-24",
+                "pleaValue": "GUILTY"
+              },
+              "proceedingsConcluded": true,
+              "startDate": "2026-02-23",
+              "wording": "Cause use of motor vehicle with no insurance"
+            }
+          ],
+          "prosecutionCaseId": "2278fb90-96ad-4825-8461-2bce80e6dd3b",
+          "prosecutionCaseIdentifier": {
+            "address": {
+              "address1": "Finance Operations",
+              "address2": "C3 East",
+              "address3": "DVLA",
+              "address4": "Longview Road",
+              "address5": "Swansea",
+              "postcode": "SA6 7JL"
+            },
+            "contact": {
+              "primaryEmail": "sjp@dvla.gov.uk"
+            },
+            "majorCreditorCode": "DVL2",
+            "prosecutionAuthorityCode": "DVLA",
+            "prosecutionAuthorityId": "6ae4b163-658b-3ae2-a66d-43401cac2f96",
+            "prosecutionAuthorityName": "Driver and Vehicle Licensing Agency",
+            "prosecutionAuthorityOUCode": "G94DV00",
+            "caseURN": "SL148167743"
+          }
+        }
+      ],
+      "courtApplicationPayment": {
+        "feeStatus": "NOT_APPLICABLE"
+      },
+      "courtCivilApplication": {
+        "isCivil": false
+      },
+      "id": "ce9690dd-4dde-4741-82d5-cbe3983ae0a2",
+      "judicialResults": [
+        {
+          "alwaysPublished": false,
+          "canBeSubjectOfBreach": false,
+          "canBeSubjectOfVariation": false,
+          "canExtendActiveOrder": false,
+          "category": "FINAL",
+          "committedToCC": false,
+          "courtClerk": {
+            "firstName": "Erica",
+            "lastName": "Wilson",
+            "userId": "a085e359-6069-4694-8820-7810e7dfe762"
+          },
+          "d20": false,
+          "excludedFromResults": false,
+          "isAdjournmentResult": false,
+          "isAvailableForCourtExtract": true,
+          "isConvictedResult": false,
+          "isDeemedServed": false,
+          "isDeleted": false,
+          "isFinancialResult": false,
+          "isNewAmendment": true,
+          "isUnscheduled": false,
+          "judicialResultId": "2f0f59fd-a676-49b7-a6fd-f6e19b89b7a9",
+          "judicialResultPrompts": [
+            {
+              "courtExtract": "Y",
+              "isFinancialImposition": false,
+              "judicialResultPromptTypeId": "c946a5df-5849-4cca-b425-ecbd6bd704dc",
+              "label": "Date sentence was imposed",
+              "promptReference": "dateSentenceWasImposed",
+              "promptSequence": 100,
+              "type": "DATE",
+              "usergroups": [],
+              "value": "24/04/2026",
+              "welshValue": "24/04/2026"
+            },
+            {
+              "courtExtract": "N",
+              "isFinancialImposition": false,
+              "judicialResultPromptTypeId": "c10b4c83-1856-4ca9-9592-d8b8183a0324",
+              "label": "Reasons",
+              "promptReference": "reasons",
+              "promptSequence": 200,
+              "type": "TXT",
+              "usergroups": [
+                "CPS",
+                "Defence",
+                "Judiciary",
+                "NCES",
+                "Probation",
+                "Prosecuting Authorities",
+                "YOTs"
+              ],
+              "value": "sentence was imposed",
+              "welshValue": "sentence was imposed"
+            }
+          ],
+          "judicialResultTypeId": "d861586a-df88-440d-98d4-63cc2a680ae1",
+          "label": "Appeal against sentence allowed",
+          "lastSharedDateTime": "2026-04-24",
+          "level": "O",
+          "lifeDuration": false,
+          "orderedDate": "2026-04-25",
+          "orderedHearingId": "a1036389-b2eb-4706-9588-639ee6293586",
+          "postHearingCustodyStatus": "A",
+          "preserveActiveOrder": false,
+          "publishedAsAPrompt": false,
+          "publishedForNows": false,
+          "rank": 61900,
+          "resultText": "AASA - Appeal against sentence allowed\nDate sentence was imposed . ",
+          "resultWording": "",
+          "rollUpPrompts": true,
+          "rootJudicialResultId": "2f0f59fd-a676-49b7-a6fd-f6e19b89b7a9",
+          "rootJudicialResultTypeId": "d861586a-df88-440d-98d4-63cc2a680ae1",
+          "sentToCC": false,
+          "terminatesOffenceProceedings": false,
+          "urgent": false,
+          "usergroups": []
+        }
+      ],
+      "respondents": [
+        {
+          "id": "824db3e2-0c54-4986-883d-dc1375883e53",
+          "notificationRequired": true,
+          "prosecutingAuthority": {
+            "address": {
+              "address1": "Finance Operations",
+              "address2": "C3 East",
+              "address3": "DVLA",
+              "address4": "Longview Road",
+              "address5": "Swansea",
+              "postcode": "SA6 7JL"
+            },
+            "contact": {
+              "primaryEmail": "sjp@dvla.gov.uk"
+            },
+            "majorCreditorCode": "DVL2",
+            "name": "Driver and Vehicle Licensing Agency",
+            "prosecutionAuthorityCode": "DVLA",
+            "prosecutionAuthorityId": "6ae4b163-658b-3ae2-a66d-43401cac2f96",
+            "prosecutionAuthorityOUCode": "G94DV00",
+            "welshName": "Asiantaeth Trwyddedu Gyrwyr a Cherbydau"
+          },
+          "summonsRequired": false
+        }
+      ],
+      "subject": {
+        "id": "ec3d4bc1-2653-4e65-a1d5-34bbb612240a",
+        "masterDefendant": {
+          "defendantCase": [
+            {
+              "caseId": "2278fb90-96ad-4825-8461-2bce80e6dd3b",
+              "caseReference": "SL148167743",
+              "defendantId": "585e43f2-c3be-4cc0-bac4-2f54b3649b3e"
+            }
+          ],
+          "masterDefendantId": "585e43f2-c3be-4cc0-bac4-2f54b3649b3e",
+          "personDefendant": {
+            "arrestSummonsNumber": "2391NX0000646412567D",
+            "bailConditions": "",
+            "bailStatus": {
+              "code": "A",
+              "description": "Not applicable",
+              "id": "86009c70-759d-3308-8de4-194886ff9a77"
+            },
+            "driverNumber": "VANFL002222OW9PH",
+            "personDetails": {
+              "address": {
+                "address1": "40 Market Place",
+                "address2": "Market Place",
+                "address3": "Bristol",
+                "postcode": "BS1 1AA"
+              },
+              "contact": {
+                "home": "0467625963",
+                "mobile": "07954229449",
+                "primaryEmail": "elayne.leannon@example.com"
+              },
+              "dateOfBirth": "1954-04-24",
+              "documentationLanguageNeeds": "ENGLISH",
+              "ethnicity": {
+                "observedEthnicityCode": "1",
+                "observedEthnicityDescription": "White",
+                "observedEthnicityId": "c4ca4238-a0b9-3382-8dcc-509a6f75849b",
+                "selfDefinedEthnicityCode": "W1",
+                "selfDefinedEthnicityDescription": "British",
+                "selfDefinedEthnicityId": "c4ca4238-a0b9-3382-8dcc-509a6f75849b"
+              },
+              "firstName": "Elayne",
+              "gender": "MALE",
+              "hearingLanguageNeeds": "ENGLISH",
+              "lastName": "Leannon",
+              "title": "Mr"
+            },
+            "policeBailStatus": {
+              "code": "C",
+              "description": "Custody",
+              "id": "12e69486-4d01-3403-a50a-7419ca040635"
+            }
+          }
+        },
+        "notificationRequired": true,
+        "summonsRequired": false
+      },
+      "type": {
+        "appealFlag": true,
+        "applicantAppellantFlag": true,
+        "applicationWording": "Appeal against conviction and sentence by a Magistrates' Court on {1} at {2} to the Crown Court",
+        "boxworkNotifTemplate": "NOT_APPLICABLE",
+        "breachType": "NOT_APPLICABLE",
+        "categoryCode": "CR",
+        "changeDate": "2022-10-09T14:12:09",
+        "code": "MC80801",
+        "commrOfOathFlag": false,
+        "contestedFeeApplicable": false,
+        "courtExtractAvlFlag": true,
+        "courtOfAppealFlag": false,
+        "exParte": false,
+        "hearingCode": "APL",
+        "id": "abc05494-05d7-4289-b4bc-a92726257a4b",
+        "initialFeeApplicable": false,
+        "jurisdiction": "CROWN",
+        "lastModified": "2025-02-24T18:19:04.969Z",
+        "legislation": "In accordance with section 108 of the Magistrates' Courts Act 1980.",
+        "legislationWelsh": "adran 108 Deddf Llysoedd Ynadon 1980",
+        "linkType": "SJP",
+        "listingNotifTemplate": "POSTAL_NOTIFICATION",
+        "offenceActiveOrder": "OFFENCE",
+        "pleaApplicableFlag": false,
+        "prosecutorThirdPartyFlag": false,
+        "pssId": 587539,
+        "sowRef": "APPS",
+        "spiOutApplicableFlag": true,
+        "summonsTemplateType": "NOT_APPLICABLE",
+        "type": "Appeal against conviction and sentence by a Magistrates' Court to the Crown Court",
+        "typeWelsh": "Apelio i Lys y Goron yn erbyn euogfarn a dedfryd gan Lys Ynadon",
+        "validFrom": "1980-01-01"
+      }
+    }
+  ],
+  "courtCentre": {
+    "address": {
+      "address1": "1-15 Pocock Street",
+      "address2": "London",
+      "address3": "",
+      "address4": "",
+      "address5": "",
+      "postcode": "SE1 0BJ"
+    },
+    "code": "C01BL00",
+    "courtHearingLocation": "C01BL00",
+    "courtLocationCode": "0428",
+    "id": "89592405-c29b-3706-b1d3-b1dd3a08b227",
+    "lja": {
+      "ljaCode": "2570",
+      "ljaName": "Central London Magistrates' Court"
+    },
+    "name": "Blackfriars Crown Court",
+    "roomId": "d0624ee3-9198-3c8b-94d6-42fb197ebe5e",
+    "roomName": "Courtroom 01"
+  },
+  "defendantAttendance": [
+    {
+      "attendanceDays": [
+        {
+          "attendanceType": "IN_PERSON",
+          "day": "2026-04-25"
+        }
+      ],
+      "defendantId": "585e43f2-c3be-4cc0-bac4-2f54b3649b3e"
+    }
+  ],
+  "hasSharedResults": true,
+  "hearingDays": [
+    {
+      "courtCentreId": "89592405-c29b-3706-b1d3-b1dd3a08b227",
+      "courtRoomId": "d0624ee3-9198-3c8b-94d6-42fb197ebe5e",
+      "hasSharedResults": true,
+      "isCancelled": false,
+      "listedDurationMinutes": 30,
+      "listingSequence": 0,
+      "sittingDay": "2026-04-25T10:00:00.000Z"
+    }
+  ],
+  "hearingLanguage": "ENGLISH",
+  "id": "a1036389-b2eb-4706-9588-639ee6293586",
+  "jurisdictionType": "CROWN",
+  "shadowListedOffences": [],
+  "type": {
+    "description": "Appeal",
+    "id": "bd30a723-a375-3ae9-9332-871724cd8edd"
+  }
+}
