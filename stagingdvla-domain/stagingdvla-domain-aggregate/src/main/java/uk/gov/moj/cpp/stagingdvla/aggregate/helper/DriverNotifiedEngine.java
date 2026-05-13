@@ -259,7 +259,7 @@ public class DriverNotifiedEngine {
                         .withValuesFrom(previousDriverNotified)
                         .withNotificationType(NotificationType.REMOVE)
                         .withNotificationWasPreviouslySent(true)
-                        .withMaterialId(UUID.randomUUID())
+                        .withMaterialId(randomUUID())
                         .withIdentifier(randomUUID())
                         .withPrevious(getPrevious(previousDriverNotified))
                         .withCases(previousDriverNotified.getCases().stream()
