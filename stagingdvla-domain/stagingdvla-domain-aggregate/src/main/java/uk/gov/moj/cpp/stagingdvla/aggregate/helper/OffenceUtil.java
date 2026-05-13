@@ -575,6 +575,13 @@ public class OffenceUtil {
                         courtApplication.getResults().stream().anyMatch(result -> resultType.id.equalsIgnoreCase(result.getResultIdentifier())));
     }
 
+    public static boolean hasOneOfResultType(final List<CourtApplications> courtApplications, final List<ResultType> resultTypes) {
+        return isNotEmpty(courtApplications) &&
+                courtApplications.stream().anyMatch(courtApplication -> isNotEmpty(courtApplication.getResults()) &&
+                        courtApplication.getResults().stream().anyMatch(result -> resultTypes.stream()
+                                .anyMatch(resultType -> resultType.id.equals(result.getResultIdentifier()))));
+    }
+
     public static boolean hasResultType(final CourtApplications courtApplication, final ResultType resultType) {
         return nonNull(courtApplication)
                 && isNotEmpty(courtApplication.getResults())

@@ -72,6 +72,9 @@ public class DefendantAggregate implements Aggregate {
                 sjpCaseReferredEvents,
                 isReshare);
         if (driverNotifiedEvents.isEmpty() && currentSjpCaseReferredEvents.isEmpty()) {
+            if (LOGGER.isInfoEnabled()) {
+                LOGGER.info("D20 not generated since there are no appeal/endorsable offences/change from previous offences for hearingId {}", hearingId);
+            }
             return null;
         }
         final Stream.Builder<Object> streamBuilder = Stream.builder();
@@ -185,14 +188,7 @@ public class DefendantAggregate implements Aggregate {
                     if (nonNull(e.getCases())) {
                         e.getCases().forEach(c -> {
                             previousDriverNotifiedByCase.put(c.getReference(), e);
-                            if (Boolean.TRUE.equals(e.getIsResetToPreviousEvent())) {
-                                previousDriverNotifiedByCaseAndHearing.get(c.getReference()).remove(e.getOrderingHearingId());
-                            } else {
-                                if (!previousDriverNotifiedByCaseAndHearing.containsKey(c.getReference())) {
-                                    previousDriverNotifiedByCaseAndHearing.put(c.getReference(), new HashMap<>());
-                                }
-                                previousDriverNotifiedByCaseAndHearing.get(c.getReference()).put(e.getOrderingHearingId(), e);
-                            }
+                            setPreviousDriverNotifiedByCaseHearing(e, c);
                         });
                     }
 
@@ -213,5 +209,18 @@ public class DefendantAggregate implements Aggregate {
                 when(SjpCaseToCcReferred.class).apply(previousSjpCaseToCcReferred::add
                 ),
                 otherwiseDoNothing());
+    }
+
+    private void setPreviousDriverNotifiedByCaseHearing(final DriverNotified e, final Cases c) {
+        if (Boolean.TRUE.equals(e.getIsResetToPreviousEvent())) {
+            if (previousDriverNotifiedByCaseAndHearing.containsKey(c.getReference())) {
+                previousDriverNotifiedByCaseAndHearing.get(c.getReference()).remove(e.getOrderingHearingId());
+            }
+        } else {
+            if (!previousDriverNotifiedByCaseAndHearing.containsKey(c.getReference())) {
+                previousDriverNotifiedByCaseAndHearing.put(c.getReference(), new HashMap<>());
+            }
+            previousDriverNotifiedByCaseAndHearing.get(c.getReference()).put(e.getOrderingHearingId(), e);
+        }
     }
 }
