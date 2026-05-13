@@ -1,0 +1,227 @@
+{
+  "caseApplicationReferences": [
+    "28DI1866702"
+  ],
+  "cases": [
+    {
+      "caseId": "986a3c5d-01a2-4e12-8263-d9d5177787b1",
+      "caseStatus": "INACTIVE",
+      "defendantCaseOffences": [
+        {
+          "civilOffence": false,
+          "code": "TH68013",
+          "convictionStatus": "Not Convicted",
+          "dateDisqSuspendedPendingAppeal": "2026-05-13",
+          "dateFromWhichDisqRemoved": "",
+          "disqualificationPeriod": "000200",
+          "dttpDtetp": "",
+          "dvlaCode": "NE98",
+          "endorsableFlag": false,
+          "fine": "£200.00",
+          "interimImposedFinalSentence": "",
+          "modeOfTrial": "Either Way",
+          "penaltyPoints": "",
+          "results": [
+            {
+              "d20": false,
+              "judicialResultCategory": "ANCILLARY",
+              "label": "Driving disqualification suspended pending appeal",
+              "publishedForNows": false,
+              "resultIdentifier": "238fc228-f948-430e-b0a1-7c9bdcafac46"
+            }
+          ],
+          "startDate": "2025-08-13",
+          "title": "Theft of motor vehicle",
+          "wording": "Theft of motor vehicle"
+        }
+      ],
+      "hasSV": false,
+      "initiationCode": "C",
+      "reference": "28DI1866702"
+    }
+  ],
+  "courtApplications": [
+    {
+      "applicationReceivedDate": "2026-05-13",
+      "applicationReference": "28DI1866702",
+      "applicationStatus": "FINALISED",
+      "applicationType": "Application to suspend disqualification pending appeal",
+      "applicationTypeId": "effc82d1-a5e9-43f0-b248-de3b11dcf7bb",
+      "id": "07a0f5a0-f177-4ec8-8ecd-32baf1cdb8cf",
+      "results": [
+        {
+          "d20": false,
+          "judicialResultCategory": "FINAL",
+          "label": "Granted",
+          "publishedForNows": false,
+          "resultIdentifier": "2b3f7c20-8fc1-4fad-9076-df196c24b27e"
+        }
+      ]
+    }
+  ],
+  "defendant": {
+    "address": {
+      "line1": "21",
+      "line2": "Furnburry Park Road",
+      "line3": "London",
+      "postCode": "SW11 3TQ"
+    },
+    "dateOfBirth": "1991-02-18",
+    "firstName": "Cathrine",
+    "gender": "MALE",
+    "lastName": "Rice",
+    "name": "Cathrine Rice",
+    "title": "MR"
+  },
+  "distinctPrompts": [],
+  "identifier": "19281bde-e0e4-4e2d-ba83-dfa1a7a0df0f",
+  "licenceProducedInCourt": "0: None or unknown",
+  "masterDefendantId": "44bb404e-1261-4c22-a0ac-dfbe2c355cc7",
+  "materialId": "d17e02da-619d-4229-a78a-d049433f46e5",
+  "notificationType": "Update",
+  "notificationWasPreviouslySent": true,
+  "orderDate": "2026-05-13",
+  "orderingCourt": {
+    "address": {
+      "address1": "176A Lavender Hill",
+      "address2": "London",
+      "address3": "",
+      "address4": "",
+      "address5": "",
+      "postcode": "SW11 1JU"
+    },
+    "code": "B01LY00",
+    "courtHearingLocation": "B01LY01",
+    "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+    "lja": {
+      "ljaCode": "2577",
+      "ljaName": "South West London Magistrates' Court"
+    },
+    "name": "Lavender Hill Magistrates' Court",
+    "roomId": "9e4932f7-97b2-3010-b942-ddd2624e4dd8",
+    "roomName": "Courtroom 01"
+  },
+  "orderingCourtCode": "2577",
+  "orderingHearingId": "340b723a-bd2b-4a8a-9711-5c1bab7664dd",
+  "previous": {
+    "caseApplicationReferences": [
+      "28DI1866702"
+    ],
+    "cases": [
+      {
+        "caseId": "986a3c5d-01a2-4e12-8263-d9d5177787b1",
+        "caseStatus": "ACTIVE",
+        "defendantCaseOffences": [
+          {
+            "civilOffence": false,
+            "code": "TH68013",
+            "convictionStatus": "Not Convicted",
+            "dateFromWhichDisqRemoved": "",
+            "disqualificationPeriod": "000200",
+            "dttpDtetp": "",
+            "dvlaCode": "NE98",
+            "endorsableFlag": false,
+            "fine": "£200.00",
+            "interimImposedFinalSentence": "",
+            "modeOfTrial": "Either Way",
+            "penaltyPoints": "",
+            "results": [
+              {
+                "d20": true,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "Discretionary with ordinary disqualification",
+                "prompts": [
+                  {
+                    "durationSequence": 1,
+                    "label": "Disqualification period",
+                    "promptIdentifier": "2bf54447-328c-4c1b-a123-341adbd52172",
+                    "promptReference": "disqualificationPeriod",
+                    "value": "2 Months"
+                  }
+                ],
+                "publishedForNows": false,
+                "resultIdentifier": "ccfc452e-ebe4-4cd7-b8a0-4f90768447b4",
+                "resultWording": "Disqualified for holding or obtaining a driving licence. Discretionary disqualification. Driving record endorsed. Section 34(2) Road Traffic Offenders Act 1988"
+              },
+              {
+                "d20": false,
+                "judicialResultCategory": "FINAL",
+                "label": "Fine",
+                "prompts": [
+                  {
+                    "label": "Amount of fine",
+                    "promptIdentifier": "7cd1472f-2379-4f5b-9e67-98a43d86e122",
+                    "promptReference": "AOF",
+                    "value": "£200.00"
+                  }
+                ],
+                "publishedForNows": false,
+                "resultDefinitionGroup": "Imposition",
+                "resultIdentifier": "969f150c-cd05-46b0-9dd9-30891efcc766"
+              },
+              {
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "0: None or unknown",
+                "publishedForNows": true,
+                "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956"
+              }
+            ],
+            "startDate": "2025-08-13",
+            "title": "Theft of motor vehicle",
+            "wording": "Theft of motor vehicle"
+          }
+        ],
+        "hasSV": false,
+        "initiationCode": "C",
+        "reference": "28DI1866702"
+      }
+    ],
+    "defendant": {
+      "address": {
+        "line1": "21",
+        "line2": "Furnburry Park Road",
+        "line3": "London",
+        "postCode": "SW11 3TQ"
+      },
+      "dateOfBirth": "1991-02-18",
+      "firstName": "Cathrine",
+      "gender": "MALE",
+      "lastName": "Rice",
+      "name": "Cathrine Rice",
+      "title": "MR"
+    },
+    "distinctPrompts": [],
+    "identifier": "e380fe1e-cc43-4c82-b7b4-1763cc71dbbf",
+    "licenceProducedInCourt": "0: None or unknown",
+    "masterDefendantId": "44bb404e-1261-4c22-a0ac-dfbe2c355cc7",
+    "materialId": "d8c9afa8-b200-4868-b917-027e737f586f",
+    "orderDate": "2026-05-13",
+    "orderingCourt": {
+      "address": {
+        "address1": "176A Lavender Hill",
+        "address2": "London",
+        "address3": "",
+        "address4": "",
+        "address5": "",
+        "postcode": "SW11 1JU"
+      },
+      "code": "B01LY00",
+      "courtHearingLocation": "B01LY01",
+      "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+      "lja": {
+        "ljaCode": "2577",
+        "ljaName": "South West London Magistrates' Court"
+      },
+      "name": "Lavender Hill Magistrates' Court",
+      "roomId": "9e4932f7-97b2-3010-b942-ddd2624e4dd8",
+      "roomName": "Courtroom 01"
+    },
+    "orderingHearingId": "49572d93-089e-4de4-9407-dd2bfda6b0d5",
+    "retrySequence": 0
+  },
+  "retrySequence": 0,
+  "updatedEndorsements": [
+    "NE98"
+  ]
+}
