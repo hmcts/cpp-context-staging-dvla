@@ -249,11 +249,11 @@ public class DriverNotifiedEngine {
                                                                              final Cases currentCase,
                                                                              final List<CourtApplications> courtApplications,
                                                                              final Map<UUID, DriverNotified> previousDriverNotifiedByHearing) {
-        final DriverNotified latestDriverNotified = previousDriverNotifiedByHearing.values().stream()
+        final DriverNotified latestDriverNotifiedPriorToCurrentHearing = previousDriverNotifiedByHearing.values().stream()
                 .filter(event -> !event.getOrderingHearingId().equals(hearingId))
                 .max(Comparator.comparing(DriverNotified::getOrderDate))
                 .orElse(null);
-        if (isNull(latestDriverNotified)) {
+        if (isNull(latestDriverNotifiedPriorToCurrentHearing)) {
             if (nonNull(previousDriverNotified)) {
                 return DriverNotified.driverNotified()
                         .withValuesFrom(previousDriverNotified)
@@ -271,13 +271,13 @@ public class DriverNotifiedEngine {
             } else {
                 return null;
             }
-        } else if (NotificationType.REMOVE.equals(latestDriverNotified.getNotificationType()) && NotificationType.REMOVE.equals(previousDriverNotified.getNotificationType())) {
+        } else if (NotificationType.REMOVE.equals(latestDriverNotifiedPriorToCurrentHearing.getNotificationType()) && NotificationType.REMOVE.equals(previousDriverNotified.getNotificationType())) {
             return null;
         }
         return DriverNotified.driverNotified()
-                .withValuesFrom(latestDriverNotified)
+                .withValuesFrom(latestDriverNotifiedPriorToCurrentHearing)
                 .withOrderingHearingId(hearingId)
-                .withNotificationType((NotificationType.NEW.equals(latestDriverNotified.getNotificationType())) ? NotificationType.UPDATE : latestDriverNotified.getNotificationType())
+                .withNotificationType((NotificationType.NEW.equals(latestDriverNotifiedPriorToCurrentHearing.getNotificationType())) ? NotificationType.UPDATE : latestDriverNotifiedPriorToCurrentHearing.getNotificationType())
                 .withNotificationWasPreviouslySent(true)
                 .withCaseApplicationReferences(singletonList(currentCase.getReference()))
                 .withCourtApplications(courtApplications)
