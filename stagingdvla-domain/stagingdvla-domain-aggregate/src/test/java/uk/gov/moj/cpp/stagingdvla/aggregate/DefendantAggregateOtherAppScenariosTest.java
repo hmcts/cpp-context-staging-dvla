@@ -102,6 +102,22 @@ class DefendantAggregateOtherAppScenariosTest {
                                                 .add("cases[0].defendantCaseOffences.size()", 1))
 
                 ),
+                Arguments.of("DD-40346-ac2A",
+                        defendantAggregateScenario()
+                                .withNotifyDriverStep(
+                                        "case hearing resulted",
+                                        "/testdata/drivernotifications/other/dd-40346/ac2A/case-resulted.json",
+                                        "/testdata/drivernotifications/other/dd-40346/ac2A/case-resulted-events.json",
+                                        jsonPathAssertions().add("notificationType", "New"))
+                                .withNotifyDriverStep(
+                                        "application hearing resulted",
+                                        "/testdata/drivernotifications/other/dd-40346/ac2A/app-resulted.json",
+                                        "/testdata/drivernotifications/other/dd-40346/ac2A/app-resulted-events.json",
+                                        jsonPathAssertions()
+                                                .add("notificationType", "Update")
+                                                .add("cases[0].defendantCaseOffences.size()", 1))
+
+                ),
                 Arguments.of("DD-40349-ac1",
                         defendantAggregateScenario()
                                 .withNotifyDriverStep(

@@ -536,13 +536,8 @@ public class OffenceUtil {
     public static boolean hasDrivingDisqualificationSuspendedPendingAppeal(final DefendantCaseOffences currentOffence, final List<CourtApplications> courtApplications) {
         return (isNotEmpty(courtApplications)
                 && courtApplications.stream()
-                .anyMatch(courtApplication -> hasDSPA(courtApplication.getResults())) ||
-                (nonNull(currentOffence) && hasDSPA(currentOffence.getResults())));
-    }
-
-    private static boolean hasDSPA(final List<Results> results) {
-        return results != null && results.stream()
-                .anyMatch(r -> DSPA.id.equals(r.getResultIdentifier()));
+                .anyMatch(courtApplication -> hasAnyResultType(courtApplication.getResults(), List.of(DSPA.id, DSPAS.id))) ||
+                (nonNull(currentOffence) && hasAnyResultType(currentOffence.getResults() ,List.of(DSPA.id, DSPAS.id))));
     }
 
     public static boolean hasAnyResult(final DefendantCaseOffences offence, final List<ResultType> resultTypes) {
