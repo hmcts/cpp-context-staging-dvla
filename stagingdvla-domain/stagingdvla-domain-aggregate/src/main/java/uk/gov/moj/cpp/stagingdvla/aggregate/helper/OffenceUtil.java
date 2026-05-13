@@ -522,16 +522,9 @@ public class OffenceUtil {
     public static boolean hasRemovalOfDisqualificationsResult(final DefendantCaseOffences currentOffence, final List<CourtApplications> courtApplications) {
         return (isNotEmpty(courtApplications)
                 && courtApplications.stream()
-                .anyMatch(courtApplication -> hasRDD(courtApplication.getResults())) ||
-                (nonNull(currentOffence) && hasRDD(currentOffence.getResults())));
+                .anyMatch(courtApplication -> hasResultType(courtApplication, RDD)) ||
+                (nonNull(currentOffence) && hasResultType(currentOffence, RDD)));
     }
-
-
-    private static boolean hasRDD(final List<Results> results) {
-        return results != null && results.stream()
-                .anyMatch(r -> RDD.id.equals(r.getResultIdentifier()));
-    }
-
 
     public static boolean hasDrivingDisqualificationSuspendedPendingAppeal(final DefendantCaseOffences currentOffence, final List<CourtApplications> courtApplications) {
         return (isNotEmpty(courtApplications)
@@ -926,7 +919,7 @@ public class OffenceUtil {
     }
 
     private static boolean isFinalisedCase(final Cases currCase, final CourtApplications courtApplication) {
-        return isCriminalProceedingApp(courtApplication) &&
+        return isCriminalProceedingApp(courtApplication) && !hasResultType(courtApplication, RDD) &&
                 INACTIVE.equals(currCase.getCaseStatus());
     }
 

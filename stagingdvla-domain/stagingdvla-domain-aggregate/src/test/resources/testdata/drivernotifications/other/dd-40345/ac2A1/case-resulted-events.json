@@ -1,0 +1,163 @@
+{
+  "caseApplicationReferences": [
+    "QL408573247"
+  ],
+  "cases": [
+    {
+      "caseId": "5ec90ae4-ca1f-47bd-9754-5d4aa98cd75c",
+      "caseStatus": "ACTIVE",
+      "defendantCaseOffences": [
+        {
+          "alcoholReadingAmount": "500",
+          "alcoholReadingMethodCode": "A",
+          "alcoholReadingMethodDescription": "Blood",
+          "civilOffence": false,
+          "code": "TH68013A",
+          "convictingCourtCode": "2570",
+          "convictionDate": "2026-05-12",
+          "convictionStatus": "Convicted",
+          "dateFromWhichDisqRemoved": "",
+          "disqualificationPeriod": "000600",
+          "dttpDtetp": "",
+          "dvlaCode": "NE99",
+          "endorsableFlag": false,
+          "fine": "",
+          "interimImposedFinalSentence": "",
+          "modeOfTrial": "Either Way",
+          "otherSentence": "E46W",
+          "penaltyPoints": "",
+          "plea": "GUILTY",
+          "results": [
+            {
+              "d20": false,
+              "dvlaCode": "E",
+              "judicialResultCategory": "FINAL",
+              "label": "Conditional discharge",
+              "prompts": [
+                {
+                  "durationSequence": 1,
+                  "label": "Period of conditional discharge",
+                  "promptIdentifier": "d3205319-84cf-4c5b-9d7a-7e4bb1865054",
+                  "promptReference": "periodofConditionalDischarge",
+                  "value": "46 Weeks"
+                }
+              ],
+              "publishedForNows": false,
+              "resultIdentifier": "554c2622-c1cc-459e-a98d-b7f317ab065c"
+            },
+            {
+              "d20": true,
+              "judicialResultCategory": "ANCILLARY",
+              "label": "Discretionary with ordinary disqualification",
+              "prompts": [
+                {
+                  "label": "Licence issue number",
+                  "promptIdentifier": "11a939b1-71e6-4065-8c29-007e4b52da7a",
+                  "promptReference": "licenceIssueNumber",
+                  "value": "23"
+                },
+                {
+                  "durationSequence": 1,
+                  "label": "Disqualification period",
+                  "promptIdentifier": "2bf54447-328c-4c1b-a123-341adbd52172",
+                  "promptReference": "disqualificationPeriod",
+                  "value": "6 Months"
+                },
+                {
+                  "label": "Defendant driving licence number",
+                  "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+                  "promptReference": "defendantDrivingLicenceNumber",
+                  "value": "VANFL002222OW9PH"
+                }
+              ],
+              "publishedForNows": false,
+              "resultIdentifier": "ccfc452e-ebe4-4cd7-b8a0-4f90768447b4",
+              "resultWording": "Disqualified for holding or obtaining a driving licence. Discretionary disqualification. Driving record endorsed. Section 34(2) Road Traffic Offenders Act 1988"
+            },
+            {
+              "d20": false,
+              "judicialResultCategory": "ANCILLARY",
+              "label": "1: Prov DVLA produced",
+              "prompts": [
+                {
+                  "label": "Licence issue number",
+                  "promptIdentifier": "11a939b1-71e6-4065-8c29-007e4b52da7a",
+                  "promptReference": "licenceIssueNumber",
+                  "value": "23"
+                }
+              ],
+              "publishedForNows": true,
+              "resultIdentifier": "4b850aa9-984c-4a15-a1ae-b2f861cfcbe8"
+            }
+          ],
+          "startDate": "2026-03-13",
+          "title": "Attempt theft of motor vehicle",
+          "wording": "Attempt theft to vehicle"
+        }
+      ],
+      "hasSV": false,
+      "initiationCode": "C",
+      "reference": "QL408573247"
+    }
+  ],
+  "courtApplications": [],
+  "defendant": {
+    "address": {
+      "line1": "33 Bridge Street",
+      "line2": "Bridge Street",
+      "line3": "Stratford-upon-Avon",
+      "line4": "Warwickshire",
+      "postCode": "NW1 5BR"
+    },
+    "dateOfBirth": "1999-05-12",
+    "driverNumber": "VANFL002222OW9PH",
+    "firstName": "Rosamond",
+    "gender": "MALE",
+    "lastName": "Schulist",
+    "name": "Rosamond Schulist",
+    "title": "Mr"
+  },
+  "distinctPrompts": [
+    {
+      "label": "Defendant driving licence number",
+      "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+      "promptReference": "defendantDrivingLicenceNumber",
+      "value": "VANFL002222OW9PH"
+    },
+    {
+      "label": "Licence issue number",
+      "promptIdentifier": "11a939b1-71e6-4065-8c29-007e4b52da7a",
+      "promptReference": "licenceIssueNumber",
+      "value": "23"
+    }
+  ],
+  "identifier": "992610e4-11ca-4b8d-bc78-e6ce1cf122ae",
+  "licenceProducedInCourt": "1: Prov DVLA produced",
+  "masterDefendantId": "ee9a5141-e50e-45ba-a30f-340ad3c0d43f",
+  "materialId": "222aa4c0-723a-4751-a523-32dd6a292bf8",
+  "notificationType": "New",
+  "orderDate": "2026-05-12",
+  "orderingCourt": {
+    "address": {
+      "address1": "1 Queen Victoria Street",
+      "address2": "London",
+      "address3": "",
+      "address4": "",
+      "address5": "",
+      "postcode": "EC4N 4XY"
+    },
+    "code": "B01DU00",
+    "courtHearingLocation": "B01DU02",
+    "id": "c133d0de-c989-48b9-bd20-0431943e347e",
+    "lja": {
+      "ljaCode": "2570",
+      "ljaName": "Central London Magistrates' Court"
+    },
+    "name": "City of London Magistrates' Court",
+    "roomId": "6d335b1f-769f-3120-bcda-c5d7c0725d3a",
+    "roomName": "Courtroom 02"
+  },
+  "orderingCourtCode": "2570",
+  "orderingHearingId": "eb45f516-8138-4654-8c85-81ca5d0f4fdb",
+  "retrySequence": 0
+}
