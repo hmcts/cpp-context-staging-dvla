@@ -1,7 +1,7 @@
 package uk.gov.moj.cpp.stagingdvla.handler.command.api;
 
 import static java.util.UUID.randomUUID;
-import static javax.json.Json.createObjectBuilder;
+import static uk.gov.justice.services.messaging.JsonObjects.createObjectBuilder;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.verify;
@@ -13,7 +13,6 @@ import uk.gov.justice.services.messaging.Metadata;
 import uk.gov.justice.services.messaging.spi.DefaultEnvelope;
 import uk.gov.justice.services.messaging.spi.DefaultJsonEnvelopeProvider;
 
-import javax.json.Json;
 import javax.json.JsonObject;
 
 import org.junit.jupiter.api.Test;
@@ -61,7 +60,7 @@ public class DriverSearchAuditApiTest {
 
     @Test
     public void shouldHandleDeleteDriverSearchAuditReportCommand() {
-        final JsonObject payload = Json.createObjectBuilder()
+        final JsonObject payload = createObjectBuilder()
                 .add("reportFileId", "1002101212121")
                 .build();
         final Metadata metadata = Envelope.metadataBuilder()
