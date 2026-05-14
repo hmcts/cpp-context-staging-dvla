@@ -520,10 +520,16 @@ public class OffenceUtil {
     }
 
     public static boolean hasRemovalOfDisqualificationsResult(final DefendantCaseOffences currentOffence, final List<CourtApplications> courtApplications) {
-        return (isNotEmpty(courtApplications)
+        return isNotEmpty(courtApplications)
                 && courtApplications.stream()
                 .anyMatch(courtApplication -> hasResultType(courtApplication, RDD)) ||
-                (nonNull(currentOffence) && hasResultType(currentOffence, RDD)));
+                (nonNull(currentOffence) && hasResultType(currentOffence, RDD));
+    }
+
+    public static boolean hasRemovalOfDisqualificationsResult(final List<DefendantCaseOffences> currentOffences, final CourtApplications courtApplication) {
+        return nonNull(courtApplication)
+                && hasResultType(courtApplication, RDD) ||
+                (isNotEmpty(currentOffences) && currentOffences.stream().anyMatch( offences-> hasResultType(offences, RDD)));
     }
 
     public static boolean hasDrivingDisqualificationSuspendedPendingAppeal(final DefendantCaseOffences currentOffence, final List<CourtApplications> courtApplications) {
@@ -919,8 +925,9 @@ public class OffenceUtil {
     }
 
     private static boolean isFinalisedCase(final Cases currCase, final CourtApplications courtApplication) {
-        return isCriminalProceedingApp(courtApplication) && !hasResultType(courtApplication, RDD) &&
-                INACTIVE.equals(currCase.getCaseStatus());
+        return isCriminalProceedingApp(courtApplication)
+                && !hasRemovalOfDisqualificationsResult(currCase.getDefendantCaseOffences(), courtApplication)
+                && INACTIVE.equals(currCase.getCaseStatus());
     }
 
     private static boolean isCriminalProceedingApp(final CourtApplications courtApplication) {
