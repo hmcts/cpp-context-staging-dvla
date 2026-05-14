@@ -23,60 +23,68 @@ class DefendantAggregateAppealsAppScenariosTest {
                         defendantAggregateScenario()
                                 .withNotifyDriverStep(
                                         "case hearing resulted",
-                                        "/testdata/drivernotifications/reopening/dd-39832/ac1/case-resulted.json",
-                                        "/testdata/drivernotifications/reopening/dd-39832/ac1/case-resulted-events.json",
+                                        "/testdata/drivernotifications/appeal/cimd-3237/ac1/case-resulted.json",
+                                        "/testdata/drivernotifications/appeal/cimd-3237/ac1/case-resulted-events.json",
                                         jsonPathAssertions().add("notificationType", "New"))
                                 .withNotifyDriverStep(
                                         "application hearing resulted",
-                                        "/testdata/drivernotifications/reopening/dd-39832/ac1/app-resulted.json",
-                                        "/testdata/drivernotifications/reopening/dd-39832/ac1/app-resulted-events.json",
+                                        "/testdata/drivernotifications/appeal/cimd-3237/ac1/app-resulted.json",
+                                        "/testdata/drivernotifications/appeal/cimd-3237/ac1/app-resulted-events.json",
                                         jsonPathAssertions()
                                                 .add("notificationType", "Update")
-                                                .add("oatsEndorsements", List.of("NE98" ))
-                                                .add("previous", notNullValue()))
+                                                .add("oatsEndorsements", List.of("IN10" ))
+                                                .add("previous", notNullValue())
+                                                )
 
                 ),
                 Arguments.of("CIMD-3237-ac2",
                         defendantAggregateScenario()
                                 .withNotifyDriverStep(
                                         "case hearing resulted",
-                                        "/testdata/drivernotifications/reopening/dd-39832/ac1/case-resulted.json",
-                                        "/testdata/drivernotifications/reopening/dd-39832/ac1/case-resulted-events.json",
-                                        jsonPathAssertions().add("notificationType", "New"))
-
-                ),
-                //Case urn is not matching with the AC, need to confirm the case
-                Arguments.of("CIMD-3237-ac3",
-                        defendantAggregateScenario()
-                                .withNotifyDriverStep(
-                                        "case hearing resulted",
-                                        "/testdata/drivernotifications/reopening/dd-39832/ac1/case-resulted.json",
-                                        "/testdata/drivernotifications/reopening/dd-39832/ac1/case-resulted-events.json",
+                                        "/testdata/drivernotifications/appeal/cimd-3237/ac2/case-resulted.json",
+                                        "/testdata/drivernotifications/appeal/cimd-3237/ac2/case-resulted-events.json",
                                         jsonPathAssertions().add("notificationType", "New"))
                                 .withNotifyDriverStep(
                                         "application hearing resulted",
-                                        "/testdata/drivernotifications/reopening/dd-39832/ac1/app-resulted.json",
-                                        "/testdata/drivernotifications/reopening/dd-39832/ac1/app-resulted-events.json",
-                                        jsonPathAssertions()
-                                                .add("notificationType", "Update")
-                                                .add("oatsEndorsements", List.of("NE98" ))
-                                                .add("previous", notNullValue()))
+                                        "/testdata/drivernotifications/appeal/cimd-3237/ac2/app-resulted.json",
+                                        null
+                                )
 
                 ),
                 Arguments.of("CIMD-3237-ac4",
                         defendantAggregateScenario()
                                 .withNotifyDriverStep(
                                         "case hearing resulted",
-                                        "/testdata/drivernotifications/reopening/dd-39832/ac1/case-resulted.json",
-                                        "/testdata/drivernotifications/reopening/dd-39832/ac1/case-resulted-events.json",
+                                        "/testdata/drivernotifications/appeal/cimd-3237/ac4/case-resulted.json",
+                                        "/testdata/drivernotifications/appeal/cimd-3237/ac4/case-resulted-events.json",
                                         jsonPathAssertions().add("notificationType", "New"))
                                 .withNotifyDriverStep(
                                         "application hearing resulted",
-                                        "/testdata/drivernotifications/reopening/dd-39832/ac1/app-resulted.json",
-                                        "/testdata/drivernotifications/reopening/dd-39832/ac1/app-resulted-events.json",
+                                        "/testdata/drivernotifications/appeal/cimd-3237/ac4/app-resulted.json",
+                                        "/testdata/drivernotifications/appeal/cimd-3237/ac4/app-resulted-events.json",
                                         jsonPathAssertions()
                                                 .add("notificationType", "Update")
-                                                .add("oatsEndorsements", List.of("NE98" ))
+                                                .add("oatsEndorsements", List.of("IN10","LC20" ))
+                                                .add("previous", notNullValue()))
+
+                ),
+                Arguments.of("DD-39832-ac5",
+                        defendantAggregateScenario()
+                                .withNotifyDriverStep(
+                                        "case hearing resulted",
+                                        "/testdata/drivernotifications/appeal/cimd-3237/ac5/case-resulted.json",
+                                        "/testdata/drivernotifications/appeal/cimd-3237/ac5/case-resulted-events.json",
+                                        jsonPathAssertions().add("notificationType", "New"))
+                                .withNotifyDriverStep(
+                                        "application hearing resulted with adj",
+                                        "/testdata/drivernotifications/appeal/cimd-3237/ac5/app-resulted-adj.json",
+                                        null)
+                                .withNotifyDriverStep(
+                                        "application hearing resulted",
+                                        "/testdata/drivernotifications/appeal/cimd-3237/ac5/app-resulted.json",
+                                        "/testdata/drivernotifications/appeal/cimd-3237/ac5/app-resulted-events.json",
+                                        jsonPathAssertions()
+                                                .add("notificationType", "Update")
                                                 .add("previous", notNullValue()))
 
                 ),
@@ -84,17 +92,13 @@ class DefendantAggregateAppealsAppScenariosTest {
                         defendantAggregateScenario()
                                 .withNotifyDriverStep(
                                         "case hearing resulted",
-                                        "/testdata/drivernotifications/reopening/dd-39832/ac1/case-resulted.json",
-                                        "/testdata/drivernotifications/reopening/dd-39832/ac1/case-resulted-events.json",
+                                        "/testdata/drivernotifications/appeal/cimd-3240/ac1/case-resulted.json",
+                                        "/testdata/drivernotifications/appeal/cimd-3240/ac1/case-resulted-events.json",
                                         jsonPathAssertions().add("notificationType", "New"))
                                 .withNotifyDriverStep(
                                         "application hearing resulted",
-                                        "/testdata/drivernotifications/reopening/dd-39832/ac1/app-resulted.json",
-                                        "/testdata/drivernotifications/reopening/dd-39832/ac1/app-resulted-events.json",
-                                        jsonPathAssertions()
-                                                .add("notificationType", "Update")
-                                                .add("oatsEndorsements", List.of("NE98" ))
-                                                .add("previous", notNullValue()))
+                                        "/testdata/drivernotifications/appeal/cimd-3240/ac1/app-resulted.json",
+                                        null)
 
                 )
                 // Additional scenarios can be added here
