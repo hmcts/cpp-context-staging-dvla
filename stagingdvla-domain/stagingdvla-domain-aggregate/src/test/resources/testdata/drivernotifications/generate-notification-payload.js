@@ -20,7 +20,7 @@ if (!fs.existsSync(absInput)) {
     process.exit(1);
 }
 
-// const hearingJson = JSON.parse(fs.readFileSync(absInput, 'utf8')).hearing;
+//const hearingJson = JSON.parse(fs.readFileSync(absInput, 'utf8')).hearing;
 const hearingJson = JSON.parse(fs.readFileSync(absInput, 'utf8'));
 
 const context = {
@@ -34,7 +34,7 @@ const context = {
 const input = { hearingJson, isReshare: false };
 
 OutboundDvlaNotification(input, context).then(result => {
-    fs.writeFileSync(outputPath, JSON.stringify(result, null, 2));
+    fs.writeFileSync(outputPath, JSON.stringify(Array.isArray(result) ? result[0] : result, null, 2));
     console.log(`Output written to: ${outputPath}`);
 }).catch(err => {
     console.error('Failed:', err);
