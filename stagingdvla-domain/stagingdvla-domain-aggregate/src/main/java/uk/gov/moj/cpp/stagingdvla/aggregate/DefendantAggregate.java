@@ -98,7 +98,7 @@ public class DefendantAggregate implements Aggregate {
         final List<SjpCaseToCcReferred> sjpCaseReferredEvents = new ArrayList<>();
         currentCases.forEach(currentCase -> {
             if (CODE_FOR_SJP_CASE.equalsIgnoreCase(currentCase.getInitiationCode()) && isNotEmpty(courtApplications) &&
-                    isSjpCaseReferredToCC(currentCase)) {
+                    isSjpCaseReferredToCC(currentCase, courtApplications)) {
                 sjpCaseReferredEvents.add(SjpCaseToCcReferred.sjpCaseToCcReferred()
                         .withCaseReference(currentCase.getReference())
                         .withApplicationTypes(courtApplications.stream()
@@ -114,8 +114,8 @@ public class DefendantAggregate implements Aggregate {
         return sjpCaseReferredEvents;
     }
 
-    private static boolean isSjpCaseReferredToCC(final Cases currentCase) {
-        return isNotEmpty(currentCase.getDefendantCaseOffences()) && currentCase.getDefendantCaseOffences().stream()
+    private static boolean isSjpCaseReferredToCC(final Cases currentCase, final List<CourtApplications> courtApplications) {
+        return isNotEmpty(courtApplications) && isNotEmpty(currentCase.getDefendantCaseOffences()) && currentCase.getDefendantCaseOffences().stream()
                 .anyMatch(defendantCaseOffences -> isNotEmpty(defendantCaseOffences.getResults()) &&
                         defendantCaseOffences.getResults().stream()
                                 .anyMatch(result -> SUMRCC.id.equals(result.getResultIdentifier())));
