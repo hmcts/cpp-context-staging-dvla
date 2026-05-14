@@ -1,0 +1,264 @@
+{
+  "caseApplicationReferences": [
+    "28DI3493422"
+  ],
+  "cases": [
+    {
+      "caseId": "af628fa5-32b8-4705-ab4a-298627cf1bf5",
+      "caseStatus": "INACTIVE",
+      "defendantCaseOffences": [
+        {
+          "civilOffence": false,
+          "code": "RR84141",
+          "convictionStatus": "Not Convicted",
+          "dateFromWhichDisqRemoved": "03/08/2026",
+          "disqualificationPeriod": "000600",
+          "dttpDtetp": "",
+          "dvlaCode": "NE98",
+          "endorsableFlag": false,
+          "fine": "£300.00",
+          "interimImposedFinalSentence": "",
+          "modeOfTrial": "Summary",
+          "penaltyPoints": "",
+          "results": [
+            {
+              "d20": true,
+              "judicialResultCategory": "FINAL",
+              "label": "Removal of Driving Disqualification",
+              "prompts": [
+                {
+                  "label": "Date disqualification imposed",
+                  "promptIdentifier": "fb28be9c-0f74-4c02-a70e-0fffa9b0614b",
+                  "promptReference": "dateDisqualificationImposed",
+                  "value": "03/03/2026"
+                },
+                {
+                  "label": "Date disqualification ends",
+                  "promptIdentifier": "7a6d9bb9-a042-4234-8b92-d871437fd15a",
+                  "promptReference": "dateDisqualificationEnds",
+                  "value": "03/08/2026"
+                },
+                {
+                  "label": "Original date of conviction",
+                  "promptIdentifier": "73f005c6-11e7-4d45-a378-85ea5919e553",
+                  "promptReference": "originalDateOfConviction",
+                  "value": "03/03/2026"
+                },
+                {
+                  "label": "Original offence date",
+                  "promptIdentifier": "37ee2b08-1950-4b04-bea5-f6f66b768bb0",
+                  "promptReference": "originalOffenceDate",
+                  "value": "02/03/2024"
+                },
+                {
+                  "label": "DVLA offence code",
+                  "promptIdentifier": "5813ddb2-e987-44fd-bdcf-4148e6fb9cda",
+                  "promptReference": "dVLAOffenceCode",
+                  "value": "1234"
+                },
+                {
+                  "label": "Original convicting court",
+                  "promptIdentifier": "c70597c0-a333-4828-959f-e6c8174a311c",
+                  "promptReference": "originalConvictingCourt",
+                  "value": "test"
+                }
+              ],
+              "publishedForNows": false,
+              "resultIdentifier": "b5ee3936-2cd5-47f4-9192-3737c7093a7f"
+            }
+          ],
+          "startDate": "2024-07-12",
+          "title": "Drive vehicle with axle weight exceeding maximum permitted - local traffic order within Greater London",
+          "wording": "Before 08 Aug 2024 at Croydon drove a motor vehicle, namely VH89712 Tesla Model X, on a road, namely Aby Road, subject of a local traffic order, namely Transport for London , when the weight conveyed to the road surface by one of its axles exceeded the maximum permitted axle weight of 11500 kg."
+        }
+      ],
+      "hasSV": false,
+      "initiationCode": "C",
+      "reference": "28DI3493422"
+    }
+  ],
+  "courtApplications": [
+    {
+      "applicationReceivedDate": "2026-05-14",
+      "applicationReference": "28DI3493422",
+      "applicationStatus": "FINALISED",
+      "applicationType": "Application within criminal proceedings",
+      "applicationTypeId": "fde5dd50-fb49-4100-8c46-4c10096fb136",
+      "id": "e9daec6a-3d0b-40d5-8aa1-8f18620ab430",
+      "results": [
+        {
+          "d20": false,
+          "judicialResultCategory": "FINAL",
+          "label": "Granted",
+          "publishedForNows": false,
+          "resultIdentifier": "2b3f7c20-8fc1-4fad-9076-df196c24b27e"
+        }
+      ]
+    }
+  ],
+  "defendant": {
+    "address": {
+      "line1": "21",
+      "line2": "Furnburry Park Road",
+      "line3": "London",
+      "postCode": "SW11 3TQ"
+    },
+    "dateOfBirth": "2001-02-18",
+    "firstName": "Virginia",
+    "gender": "MALE",
+    "lastName": "Monahan",
+    "name": "Virginia Monahan",
+    "title": "MR"
+  },
+  "distinctPrompts": [],
+  "identifier": "54155cf8-67cd-4e2f-a752-f308aeeb8c90",
+  "licenceProducedInCourt": "0: None or unknown",
+  "masterDefendantId": "e6757929-9fbc-4d00-8999-ffb8174a6fa5",
+  "materialId": "93394192-f9a8-4867-acb2-2351d7f977fc",
+  "notificationType": "Update",
+  "notificationWasPreviouslySent": true,
+  "orderDate": "2026-05-18",
+  "orderingCourt": {
+    "address": {
+      "address1": "The Magistrates' Court",
+      "address2": "Barclay Road",
+      "address3": "Croydon",
+      "address4": "",
+      "address5": "",
+      "postcode": "CR9 3NG"
+    },
+    "code": "B01EF00",
+    "courtHearingLocation": "B01EF01",
+    "id": "31b3d313-7a7c-4598-bb4b-c1bff9b00e26",
+    "lja": {
+      "ljaCode": "2576",
+      "ljaName": "South London Magistrates' Court"
+    },
+    "name": "Croydon Magistrates' Court",
+    "roomId": "bfb67c13-789c-373b-b442-52b82faf863e",
+    "roomName": "Courtroom 01"
+  },
+  "orderingCourtCode": "2576",
+  "orderingHearingId": "5016da2b-7aba-4f62-ae5d-1f2e836108ef",
+  "previous": {
+    "caseApplicationReferences": [
+      "28DI3493422"
+    ],
+    "cases": [
+      {
+        "caseId": "af628fa5-32b8-4705-ab4a-298627cf1bf5",
+        "caseStatus": "ACTIVE",
+        "defendantCaseOffences": [
+          {
+            "civilOffence": false,
+            "code": "RR84141",
+            "convictionStatus": "Not Convicted",
+            "dateFromWhichDisqRemoved": "",
+            "disqualificationPeriod": "000600",
+            "dttpDtetp": "",
+            "dvlaCode": "NE98",
+            "endorsableFlag": false,
+            "fine": "£300.00",
+            "interimImposedFinalSentence": "",
+            "modeOfTrial": "Summary",
+            "penaltyPoints": "",
+            "results": [
+              {
+                "d20": true,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "Discretionary with ordinary disqualification",
+                "prompts": [
+                  {
+                    "durationSequence": 1,
+                    "label": "Disqualification period",
+                    "promptIdentifier": "2bf54447-328c-4c1b-a123-341adbd52172",
+                    "promptReference": "disqualificationPeriod",
+                    "value": "6 Months"
+                  }
+                ],
+                "publishedForNows": false,
+                "resultIdentifier": "ccfc452e-ebe4-4cd7-b8a0-4f90768447b4",
+                "resultWording": "Disqualified for holding or obtaining a driving licence. Discretionary disqualification. Driving record endorsed. Section 34(2) Road Traffic Offenders Act 1988"
+              },
+              {
+                "d20": false,
+                "judicialResultCategory": "FINAL",
+                "label": "Fine",
+                "prompts": [
+                  {
+                    "label": "Amount of fine",
+                    "promptIdentifier": "7cd1472f-2379-4f5b-9e67-98a43d86e122",
+                    "promptReference": "AOF",
+                    "value": "£300.00"
+                  }
+                ],
+                "publishedForNows": false,
+                "resultDefinitionGroup": "Imposition",
+                "resultIdentifier": "969f150c-cd05-46b0-9dd9-30891efcc766"
+              },
+              {
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "0: None or unknown",
+                "publishedForNows": true,
+                "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956"
+              }
+            ],
+            "startDate": "2024-07-12",
+            "title": "Drive vehicle with axle weight exceeding maximum permitted - local traffic order within Greater London",
+            "wording": "Before 08 Aug 2024 at Croydon drove a motor vehicle, namely VH89712 Tesla Model X, on a road, namely Aby Road, subject of a local traffic order, namely Transport for London , when the weight conveyed to the road surface by one of its axles exceeded the maximum permitted axle weight of 11500 kg."
+          }
+        ],
+        "hasSV": false,
+        "initiationCode": "C",
+        "reference": "28DI3493422"
+      }
+    ],
+    "defendant": {
+      "address": {
+        "line1": "21",
+        "line2": "Furnburry Park Road",
+        "line3": "London",
+        "postCode": "SW11 3TQ"
+      },
+      "dateOfBirth": "2001-02-18",
+      "firstName": "Virginia",
+      "gender": "MALE",
+      "lastName": "Monahan",
+      "name": "Virginia Monahan",
+      "title": "MR"
+    },
+    "distinctPrompts": [],
+    "identifier": "652cda32-0165-491f-a493-8d8879d1410e",
+    "licenceProducedInCourt": "0: None or unknown",
+    "masterDefendantId": "e6757929-9fbc-4d00-8999-ffb8174a6fa5",
+    "materialId": "326a155d-ca54-4033-b2a8-bfbff29298aa",
+    "orderDate": "2026-05-14",
+    "orderingCourt": {
+      "address": {
+        "address1": "The Magistrates' Court",
+        "address2": "Barclay Road",
+        "address3": "Croydon",
+        "address4": "",
+        "address5": "",
+        "postcode": "CR9 3NG"
+      },
+      "code": "B01EF00",
+      "courtHearingLocation": "B01EF01",
+      "id": "31b3d313-7a7c-4598-bb4b-c1bff9b00e26",
+      "lja": {
+        "ljaCode": "2576",
+        "ljaName": "South London Magistrates' Court"
+      },
+      "name": "Croydon Magistrates' Court",
+      "roomId": "bfb67c13-789c-373b-b442-52b82faf863e",
+      "roomName": "Courtroom 01"
+    },
+    "orderingHearingId": "03c80c83-4ad6-439d-a987-2854fb8e7027",
+    "retrySequence": 0
+  },
+  "retrySequence": 0,
+  "updatedEndorsements": [
+    "NE98"
+  ]
+}

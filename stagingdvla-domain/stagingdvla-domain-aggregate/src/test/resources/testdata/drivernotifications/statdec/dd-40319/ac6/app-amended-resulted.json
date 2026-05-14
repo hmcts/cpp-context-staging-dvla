@@ -1,0 +1,74 @@
+{
+  "masterDefendantId": "b76a24d4-e71d-432c-867c-a8478e20c88d",
+  "orderingCourt": {
+    "address": {
+      "address1": "176A Lavender Hill",
+      "address2": "London",
+      "address3": "",
+      "address4": "",
+      "address5": "",
+      "postcode": "SW11 1JU"
+    },
+    "code": "B01LY00",
+    "courtHearingLocation": "B01LY01",
+    "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+    "lja": {
+      "ljaCode": "2577",
+      "ljaName": "South West London Magistrates' Court"
+    },
+    "name": "Lavender Hill Magistrates' Court",
+    "roomId": "9e4932f7-97b2-3010-b942-ddd2624e4dd8",
+    "roomName": "Courtroom 01"
+  },
+  "nowContent": {
+    "orderDate": "2026-05-12",
+    "defendant": {
+      "gender": "MALE",
+      "driverNumber": "AFESL811111B99TX",
+      "title": "MR",
+      "firstName": "Gussie",
+      "lastName": "DARE",
+      "name": "Gussie DARE",
+      "address": {
+        "line1": "21",
+        "line2": "Furnburry Park Road",
+        "line3": "London"
+      }
+    },
+    "caseApplicationReferences": [
+      "28DI1105479"
+    ],
+    "cases": [
+      {
+        "caseStatus": "INACTIVE",
+        "initiationCode": "C",
+        "reference": "28DI1105479",
+        "caseId": "d2f2fa7e-2bc6-445c-9985-3ba26eb2a71d",
+        "defendantCaseOffences": []
+      }
+    ],
+    "courtApplications": [
+      {
+        "applicationType": "Appearance to make statutory declaration (other than SJP)",
+        "applicationTypeId": "a6663f2a-c900-4bb4-a7d7-4be34cb2f1f7",
+        "applicationReceivedDate": "2026-05-12",
+        "id": "37bb1cbd-1bfb-45bd-a8c1-2ae98ca7809b",
+        "applicationReference": "28DI1105479",
+        "applicationStatus": "FINALISED",
+        "results": [
+          {
+            "resultIdentifier": "d3902789-4cc8-4753-a15f-7e26dd39f6ae",
+            "publishedForNows": false,
+            "resultWording": "",
+            "d20": false,
+            "judicialResultCategory": "FINAL",
+            "label": "Application refused"
+          }
+        ]
+      }
+    ],
+    "amendmentDate": "2026-05-12"
+  },
+  "isReshare": true,
+  "orderingHearingId": "ab3c9d2e-6b34-4800-824a-f117daca916d"
+}

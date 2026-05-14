@@ -69,6 +69,41 @@ class DefendantAggregateStatDecAppScenariosTest {
                                                 .add("previous", notNullValue()))
 
                 ),
+                Arguments.of("DD-40382-ac3A",
+                        defendantAggregateScenario()
+                                .withNotifyDriverStep(
+                                        "case hearing resulted",
+                                        "/testdata/drivernotifications/statdec/dd-40382/ac3A/case-resulted.json",
+                                        "/testdata/drivernotifications/statdec/dd-40382/ac3A/case-resulted-events.json",
+                                        jsonPathAssertions().add("notificationType", "New"))
+                                .withNotifyDriverStep(
+                                        "sjp refer to cc resulted",
+                                        "/testdata/drivernotifications/statdec/dd-40382/ac3A/refer-to-cc-resulted.json",
+                                        null)
+                                .withNotifyDriverStep(
+                                        "application hearing resulted",
+                                        "/testdata/drivernotifications/statdec/dd-40382/ac3A/app-resulted.json",
+                                        "/testdata/drivernotifications/statdec/dd-40382/ac3A/app-resulted-events.json")
+
+                ),
+                Arguments.of("DD-40382-ac3A1",
+                        defendantAggregateScenario()
+                                .withNotifyDriverStep(
+                                        "case hearing resulted",
+                                        "/testdata/drivernotifications/statdec/dd-40382/ac3A1/case-resulted.json",
+                                        "/testdata/drivernotifications/statdec/dd-40382/ac3A1/case-resulted-events.json",
+                                        jsonPathAssertions().add("notificationType", "New"))
+
+                                .withNotifyDriverStep(
+                                        "application hearing resulted",
+                                        "/testdata/drivernotifications/statdec/dd-40382/ac3A1/app-resulted.json",
+                                        "/testdata/drivernotifications/statdec/dd-40382/ac3A1/app-resulted-events.json")
+                                .withNotifyDriverStep(
+                                        "sjp refer to cc hearing resulted",
+                                        "/testdata/drivernotifications/statdec/dd-40382/ac3A1/refer-to-cc-resulted.json",
+                                        null)
+
+                ),
                 Arguments.of("DD-40382-ac4",
                         defendantAggregateScenario()
                                 .withNotifyDriverStep(
@@ -282,6 +317,27 @@ class DefendantAggregateStatDecAppScenariosTest {
                                         "/testdata/drivernotifications/statdec/dd-40319/ac5/app-amended-resulted-events.json",
                                         jsonPathAssertions()
                                                 .add("notificationType", "Update")
+                                                .add("previous", notNullValue()))
+
+                ),
+                Arguments.of("DD-40319-ac6",
+                        defendantAggregateScenario()
+                                .withNotifyDriverStep(
+                                        "case hearing resulted",
+                                        "/testdata/drivernotifications/statdec/dd-40319/ac6/case-resulted.json",
+                                        null)
+                                .withNotifyDriverStep(
+                                        "application hearing resulted",
+                                        "/testdata/drivernotifications/statdec/dd-40319/ac6/app-resulted.json",
+                                        "/testdata/drivernotifications/statdec/dd-40319/ac6/app-resulted-events.json",
+                                        jsonPathAssertions()
+                                                .add("notificationType", "New"))
+                                .withNotifyDriverStep(
+                                        "application hearing resulted",
+                                        "/testdata/drivernotifications/statdec/dd-40319/ac6/app-amended-resulted.json",
+                                        "/testdata/drivernotifications/statdec/dd-40319/ac6/app-amended-resulted-events.json",
+                                        jsonPathAssertions()
+                                                .add("notificationType", "Remove")
                                                 .add("previous", notNullValue()))
 
                 )

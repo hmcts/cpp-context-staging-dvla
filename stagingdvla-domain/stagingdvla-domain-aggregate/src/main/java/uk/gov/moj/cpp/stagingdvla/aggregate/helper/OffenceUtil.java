@@ -23,6 +23,7 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.App
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ApplicationType.ACP;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ApplicationType.APPRO;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ApplicationType.ASDPA;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ApplicationType.STDECSJP;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.DATE_DISQUALIFICATION_ENDS;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.DEFAULT_DVLA_CODE;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.DVLACODE_FOR_OFFENCE;
@@ -519,29 +520,23 @@ public class OffenceUtil {
     }
 
     public static boolean hasRemovalOfDisqualificationsResult(final DefendantCaseOffences currentOffence, final List<CourtApplications> courtApplications) {
-        return (isNotEmpty(courtApplications)
+        return isNotEmpty(courtApplications)
                 && courtApplications.stream()
-                .anyMatch(courtApplication -> hasRDD(courtApplication.getResults())) ||
-                (nonNull(currentOffence) && hasRDD(currentOffence.getResults())));
+                .anyMatch(courtApplication -> hasResultType(courtApplication, RDD)) ||
+                (nonNull(currentOffence) && hasResultType(currentOffence, RDD));
     }
 
-
-    private static boolean hasRDD(final List<Results> results) {
-        return results != null && results.stream()
-                .anyMatch(r -> RDD.id.equals(r.getResultIdentifier()));
+    public static boolean hasRemovalOfDisqualificationsResult(final List<DefendantCaseOffences> currentOffences, final CourtApplications courtApplication) {
+        return nonNull(courtApplication)
+                && hasResultType(courtApplication, RDD) ||
+                (isNotEmpty(currentOffences) && currentOffences.stream().anyMatch( offences-> hasResultType(offences, RDD)));
     }
-
 
     public static boolean hasDrivingDisqualificationSuspendedPendingAppeal(final DefendantCaseOffences currentOffence, final List<CourtApplications> courtApplications) {
         return (isNotEmpty(courtApplications)
                 && courtApplications.stream()
-                .anyMatch(courtApplication -> hasDSPA(courtApplication.getResults())) ||
-                (nonNull(currentOffence) && hasDSPA(currentOffence.getResults())));
-    }
-
-    private static boolean hasDSPA(final List<Results> results) {
-        return results != null && results.stream()
-                .anyMatch(r -> DSPA.id.equals(r.getResultIdentifier()));
+                .anyMatch(courtApplication -> hasAnyResultType(courtApplication.getResults(), List.of(DSPA.id, DSPAS.id))) ||
+                (nonNull(currentOffence) && hasAnyResultType(currentOffence.getResults() ,List.of(DSPA.id, DSPAS.id))));
     }
 
     public static boolean hasAnyResult(final DefendantCaseOffences offence, final List<ResultType> resultTypes) {
@@ -572,6 +567,13 @@ public class OffenceUtil {
         return isNotEmpty(courtApplications) &&
                 courtApplications.stream().anyMatch(courtApplication -> isNotEmpty(courtApplication.getResults()) &&
                         courtApplication.getResults().stream().anyMatch(result -> resultType.id.equalsIgnoreCase(result.getResultIdentifier())));
+    }
+
+    public static boolean hasOneOfResultType(final List<CourtApplications> courtApplications, final List<ResultType> resultTypes) {
+        return isNotEmpty(courtApplications) &&
+                courtApplications.stream().anyMatch(courtApplication -> isNotEmpty(courtApplication.getResults()) &&
+                        courtApplication.getResults().stream().anyMatch(result -> resultTypes.stream()
+                                .anyMatch(resultType -> resultType.id.equals(result.getResultIdentifier()))));
     }
 
     public static boolean hasResultType(final CourtApplications courtApplication, final ResultType resultType) {
@@ -658,7 +660,11 @@ public class OffenceUtil {
                                            final List<ApplicationTypes> sjpCaseToCcReferredApplications) {
 
         if (check20Removal(prevCase, currCase, courtApplications)) {
-            if (isStdecGranted(courtApplications) || isCaseReopen(courtApplications, sjpCaseToCcReferredApplications)) {
+            if (isSjpCaseReferToCC(currCase, courtApplications)) {
+                LOGGER.info("[Case Id:{}], this result has 'Refer for a full court hearing' result", currCase.getCaseId());
+                return false;
+            }
+            else if (isStdecGranted(courtApplications) || isSjpCaseReferredStDec(sjpCaseToCcReferredApplications) || isCaseReopen(courtApplications, sjpCaseToCcReferredApplications)) {
                 LOGGER.info("[Case Id:{}], this result is an STDEC Granted or case reopen", currCase.getCaseId());
 
                 return true;
@@ -672,9 +678,6 @@ public class OffenceUtil {
                 return prevCase.getDefendantCaseOffences().
                         stream().
                         anyMatch(prevOffence -> hasD20Endorsement(prevOffence));
-            } else if(isSjpCaseReferToCC(currCase)) {
-                LOGGER.info("[Case Id:{}], this result has 'Refer for a full court hearing' result", currCase.getCaseId());
-                return false;
             }
             else {
                 LOGGER.info("[Case Id:{}], searching for D20 removals", currCase.getCaseId());
@@ -715,6 +718,12 @@ public class OffenceUtil {
         return isNotEmpty( sjpCaseToCcReferredApplications) &&
                 sjpCaseToCcReferredApplications.stream()
                         .anyMatch(applicationType-> APPRO.id.equals(applicationType.getId()) || APPRO.appType.equalsIgnoreCase(applicationType.getName()));
+    }
+
+    public static boolean isSjpCaseReferredStDec(final List<ApplicationTypes> sjpCaseToCcReferredApplications) {
+        return isNotEmpty( sjpCaseToCcReferredApplications) &&
+                sjpCaseToCcReferredApplications.stream()
+                        .anyMatch(applicationType-> STDECSJP.id.equals(applicationType.getId()) || STDECSJP.appType.equalsIgnoreCase(applicationType.getName()));
     }
 
 
@@ -883,8 +892,8 @@ public class OffenceUtil {
         return false;
     }
 
-    private static boolean isSjpCaseReferToCC(final Cases currCase) {
-        return nonNull(currCase) &&
+    private static boolean isSjpCaseReferToCC(final Cases currCase, final List<CourtApplications> courtApplications) {
+        return nonNull(currCase) && isEmpty(courtApplications) &&
                 isNotEmpty(currCase.getDefendantCaseOffences()) &&
                 currCase.getDefendantCaseOffences().stream().allMatch(defendantCaseOffences ->
                         defendantCaseOffences.getResults().stream().anyMatch(results -> SUMRCC.id.equals(results.getResultIdentifier())));
@@ -917,8 +926,9 @@ public class OffenceUtil {
     }
 
     private static boolean isFinalisedCase(final Cases currCase, final CourtApplications courtApplication) {
-        return isCriminalProceedingApp(courtApplication) &&
-                INACTIVE.equals(currCase.getCaseStatus());
+        return isCriminalProceedingApp(courtApplication)
+                && !hasRemovalOfDisqualificationsResult(currCase.getDefendantCaseOffences(), courtApplication)
+                && INACTIVE.equals(currCase.getCaseStatus());
     }
 
     private static boolean isCriminalProceedingApp(final CourtApplications courtApplication) {

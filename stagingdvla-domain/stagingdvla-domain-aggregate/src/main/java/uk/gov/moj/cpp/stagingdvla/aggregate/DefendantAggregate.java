@@ -41,7 +41,7 @@ public class DefendantAggregate implements Aggregate {
     private final Map<String, DriverNotified> previousDriverNotifiedByCase = new HashMap<>();
     /** Keep track of previous latest events per hearing for reset(i.e. when application is refused, DD-40319) */
     private final Map<String, Map<UUID,DriverNotified>> previousDriverNotifiedByCaseAndHearing = new HashMap<>();
-    private final Map<String, List<ApplicationTypes>> sjpCaseToCcReferredApplications = new HashMap<>();
+    private final List<SjpCaseToCcReferred> previousSjpCaseToCcReferred = new ArrayList<>();
     private static final String CODE_FOR_SJP_CASE = "J";
 
     public Stream<Object> notifyDriver(final String orderDate,
@@ -54,7 +54,10 @@ public class DefendantAggregate implements Aggregate {
                                        final UUID masterDefendantId,
                                        final Boolean isReshare) {
 
-        final List<SjpCaseToCcReferred> sjpCaseReferredEvents = getSjpCaseReferredEvents(currentCases, courtApplications);
+        final List<SjpCaseToCcReferred> sjpCaseReferredEvents = new ArrayList<>();
+        final List<SjpCaseToCcReferred> currentSjpCaseReferredEvents = getSjpCaseReferredEvents(currentCases, courtApplications);
+        sjpCaseReferredEvents.addAll(currentSjpCaseReferredEvents);
+        sjpCaseReferredEvents.addAll(previousSjpCaseToCcReferred);
         // Create a new event for each incoming cases
         final List<DriverNotified> driverNotifiedEvents = transformDriverNotified(
                 this.previousDriverNotifiedByCase,
@@ -66,43 +69,36 @@ public class DefendantAggregate implements Aggregate {
                 hearingId,
                 courtApplications,
                 previousDriverNotifiedByCaseAndHearing,
-                sjpCaseToCcReferredApplications,
+                sjpCaseReferredEvents,
                 isReshare);
-
-        if (driverNotifiedEvents.isEmpty()) {
+        if (driverNotifiedEvents.isEmpty() && currentSjpCaseReferredEvents.isEmpty()) {
             if (LOGGER.isInfoEnabled()) {
                 LOGGER.info("D20 not generated since there are no appeal/endorsable offences/change from previous offences for hearingId {}", hearingId);
             }
-            if (sjpCaseReferredEvents.isEmpty()) {
-                return null;
-            } else {
-                final Stream.Builder<Object> streamBuilder = Stream.builder();
-                sjpCaseReferredEvents.forEach(streamBuilder::add);
-                return apply(streamBuilder.build());
-            }
+            return null;
+        }
+        final Stream.Builder<Object> streamBuilder = Stream.builder();
+        if (!driverNotifiedEvents.isEmpty()) {
+            final List<DriverNotified> transformedDriverNotifiedEvents = driverNotifiedEvents.stream()
+                    .map(e -> getDriverNotifiedEvent(e, masterDefendantId, 0))
+                    .collect(Collectors.toList());
 
+            streamingEvents(streamBuilder, transformedDriverNotifiedEvents, masterDefendantId);
         }
 
-        final List<DriverNotified> transformedDriverNotifiedEvents = driverNotifiedEvents.stream()
-                .map(e -> getDriverNotifiedEvent(e, masterDefendantId, 0))
-                .collect(Collectors.toList());
-
-        final Stream.Builder<Object> streamBuilder =
-                streamingEvents(transformedDriverNotifiedEvents, masterDefendantId);
-
-
-
+        if (!currentSjpCaseReferredEvents.isEmpty()) {
+            currentSjpCaseReferredEvents.forEach(streamBuilder::add);
+        }
 
         return apply(streamBuilder.build());
     }
-
 
     private List<SjpCaseToCcReferred> getSjpCaseReferredEvents(final List<Cases> currentCases, final List<CourtApplications> courtApplications) {
 
         final List<SjpCaseToCcReferred> sjpCaseReferredEvents = new ArrayList<>();
         currentCases.forEach(currentCase -> {
             if (CODE_FOR_SJP_CASE.equalsIgnoreCase(currentCase.getInitiationCode()) && isNotEmpty(courtApplications) &&
-                    isSjpCaseReferredToCC(currentCase)) {
+                    isSjpCaseReferredToCC(currentCase, courtApplications)) {
                 sjpCaseReferredEvents.add(SjpCaseToCcReferred.sjpCaseToCcReferred()
                         .withCaseReference(currentCase.getReference())
                         .withApplicationTypes(courtApplications.stream()
@@ -118,16 +114,14 @@ public class DefendantAggregate implements Aggregate {
         return sjpCaseReferredEvents;
     }
 
-    private static boolean isSjpCaseReferredToCC(final Cases currentCase) {
-        return isNotEmpty(currentCase.getDefendantCaseOffences()) && currentCase.getDefendantCaseOffences().stream()
+    private static boolean isSjpCaseReferredToCC(final Cases currentCase, final List<CourtApplications> courtApplications) {
+        return isNotEmpty(courtApplications) && isNotEmpty(currentCase.getDefendantCaseOffences()) && currentCase.getDefendantCaseOffences().stream()
                 .anyMatch(defendantCaseOffences -> isNotEmpty(defendantCaseOffences.getResults()) &&
                         defendantCaseOffences.getResults().stream()
                                 .anyMatch(result -> SUMRCC.id.equals(result.getResultIdentifier())));
     }
 
-    private Stream.Builder<Object> streamingEvents(final List<DriverNotified> driverNotifiedEvents, final UUID masterDefendantId) {
-        final Stream.Builder<Object> streamBuilder = Stream.builder();
-
+    private void streamingEvents(final Stream.Builder<Object> streamBuilder, final List<DriverNotified> driverNotifiedEvents, final UUID masterDefendantId) {
         driverNotifiedEvents.stream().forEach(
                 e -> {
                     if (this.isWaitingRetryTrigger) {
@@ -136,8 +130,6 @@ public class DefendantAggregate implements Aggregate {
                     streamBuilder.add(e);
                 }
         );
-
-        return streamBuilder;
     }
 
     public Stream<Object> scheduleNextRetryForDriverNotified(final UUID convictionId, final UUID masterDefendantId) {
@@ -196,14 +188,7 @@ public class DefendantAggregate implements Aggregate {
                     if (nonNull(e.getCases())) {
                         e.getCases().forEach(c -> {
                             previousDriverNotifiedByCase.put(c.getReference(), e);
-                            if (Boolean.TRUE.equals(e.getIsResetToPreviousEvent())) {
-                                previousDriverNotifiedByCaseAndHearing.get(c.getReference()).remove(e.getOrderingHearingId());
-                            } else {
-                                if (!previousDriverNotifiedByCaseAndHearing.containsKey(c.getReference())) {
-                                    previousDriverNotifiedByCaseAndHearing.put(c.getReference(), new HashMap<>());
-                                }
-                                previousDriverNotifiedByCaseAndHearing.get(c.getReference()).put(e.getOrderingHearingId(), e);
-                            }
+                            setPreviousDriverNotifiedByCaseHearing(e, c);
                         });
                     }
 
@@ -221,9 +206,21 @@ public class DefendantAggregate implements Aggregate {
                     isWaitingRetryTrigger = false;
                     retrySequence = 0;
                 }),
-                when(SjpCaseToCcReferred.class).apply(e ->
-                    sjpCaseToCcReferredApplications.put(e.getCaseReference(), e.getApplicationTypes())
+                when(SjpCaseToCcReferred.class).apply(previousSjpCaseToCcReferred::add
                 ),
                 otherwiseDoNothing());
+    }
+
+    private void setPreviousDriverNotifiedByCaseHearing(final DriverNotified e, final Cases c) {
+        if (Boolean.TRUE.equals(e.getIsResetToPreviousEvent())) {
+            if (previousDriverNotifiedByCaseAndHearing.containsKey(c.getReference())) {
+                previousDriverNotifiedByCaseAndHearing.get(c.getReference()).remove(e.getOrderingHearingId());
+            }
+        } else {
+            if (!previousDriverNotifiedByCaseAndHearing.containsKey(c.getReference())) {
+                previousDriverNotifiedByCaseAndHearing.put(c.getReference(), new HashMap<>());
+            }
+            previousDriverNotifiedByCaseAndHearing.get(c.getReference()).put(e.getOrderingHearingId(), e);
+        }
     }
 }
