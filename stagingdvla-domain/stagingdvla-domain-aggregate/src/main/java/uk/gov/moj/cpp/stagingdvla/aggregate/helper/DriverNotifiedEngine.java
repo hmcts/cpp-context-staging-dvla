@@ -495,7 +495,6 @@ public class DriverNotifiedEngine {
         final List<String> emptyResultOffences = new ArrayList<>();
         final List<String> specialReasonOffences = new ArrayList<>();
 
-
         previousDriverNotified.getCases().forEach(previousCase -> {
             final Cases currentCase = cases.stream()
                     .filter(aCase -> previousCase.getCaseId().equals(aCase.getCaseId())).findFirst().orElse(null);
