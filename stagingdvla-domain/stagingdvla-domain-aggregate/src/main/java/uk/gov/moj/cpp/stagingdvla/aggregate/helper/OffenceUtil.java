@@ -660,7 +660,11 @@ public class OffenceUtil {
                                            final List<ApplicationTypes> sjpCaseToCcReferredApplications) {
 
         if (check20Removal(prevCase, currCase, courtApplications)) {
-            if (isStdecGranted(courtApplications) || isSjpCaseReferredStDec(sjpCaseToCcReferredApplications) || isCaseReopen(courtApplications, sjpCaseToCcReferredApplications)) {
+            if (isSjpCaseReferToCC(currCase, courtApplications)) {
+                LOGGER.info("[Case Id:{}], this result has 'Refer for a full court hearing' result", currCase.getCaseId());
+                return false;
+            }
+            else if (isStdecGranted(courtApplications) || isSjpCaseReferredStDec(sjpCaseToCcReferredApplications) || isCaseReopen(courtApplications, sjpCaseToCcReferredApplications)) {
                 LOGGER.info("[Case Id:{}], this result is an STDEC Granted or case reopen", currCase.getCaseId());
 
                 return true;
@@ -674,9 +678,6 @@ public class OffenceUtil {
                 return prevCase.getDefendantCaseOffences().
                         stream().
                         anyMatch(prevOffence -> hasD20Endorsement(prevOffence));
-            } else if(isSjpCaseReferToCC(currCase)) {
-                LOGGER.info("[Case Id:{}], this result has 'Refer for a full court hearing' result", currCase.getCaseId());
-                return false;
             }
             else {
                 LOGGER.info("[Case Id:{}], searching for D20 removals", currCase.getCaseId());
@@ -891,8 +892,8 @@ public class OffenceUtil {
         return false;
     }
 
-    private static boolean isSjpCaseReferToCC(final Cases currCase) {
-        return nonNull(currCase) &&
+    private static boolean isSjpCaseReferToCC(final Cases currCase, final List<CourtApplications> courtApplications) {
+        return nonNull(currCase) && isEmpty(courtApplications) &&
                 isNotEmpty(currCase.getDefendantCaseOffences()) &&
                 currCase.getDefendantCaseOffences().stream().allMatch(defendantCaseOffences ->
                         defendantCaseOffences.getResults().stream().anyMatch(results -> SUMRCC.id.equals(results.getResultIdentifier())));

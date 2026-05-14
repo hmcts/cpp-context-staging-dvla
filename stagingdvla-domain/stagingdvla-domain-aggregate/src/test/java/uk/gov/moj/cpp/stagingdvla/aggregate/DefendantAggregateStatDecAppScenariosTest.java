@@ -77,13 +77,31 @@ class DefendantAggregateStatDecAppScenariosTest {
                                         "/testdata/drivernotifications/statdec/dd-40382/ac3A/case-resulted-events.json",
                                         jsonPathAssertions().add("notificationType", "New"))
                                 .withNotifyDriverStep(
-                                        "application hearing resulted",
+                                        "sjp refer to cc resulted",
                                         "/testdata/drivernotifications/statdec/dd-40382/ac3A/refer-to-cc-resulted.json",
                                         null)
                                 .withNotifyDriverStep(
                                         "application hearing resulted",
                                         "/testdata/drivernotifications/statdec/dd-40382/ac3A/app-resulted.json",
                                         "/testdata/drivernotifications/statdec/dd-40382/ac3A/app-resulted-events.json")
+
+                ),
+                Arguments.of("DD-40382-ac3A1",
+                        defendantAggregateScenario()
+                                .withNotifyDriverStep(
+                                        "case hearing resulted",
+                                        "/testdata/drivernotifications/statdec/dd-40382/ac3A1/case-resulted.json",
+                                        "/testdata/drivernotifications/statdec/dd-40382/ac3A1/case-resulted-events.json",
+                                        jsonPathAssertions().add("notificationType", "New"))
+
+                                .withNotifyDriverStep(
+                                        "application hearing resulted",
+                                        "/testdata/drivernotifications/statdec/dd-40382/ac3A1/app-resulted.json",
+                                        "/testdata/drivernotifications/statdec/dd-40382/ac3A1/app-resulted-events.json")
+                                .withNotifyDriverStep(
+                                        "sjp refer to cc hearing resulted",
+                                        "/testdata/drivernotifications/statdec/dd-40382/ac3A1/refer-to-cc-resulted.json",
+                                        null)
 
                 ),
                 Arguments.of("DD-40382-ac4",

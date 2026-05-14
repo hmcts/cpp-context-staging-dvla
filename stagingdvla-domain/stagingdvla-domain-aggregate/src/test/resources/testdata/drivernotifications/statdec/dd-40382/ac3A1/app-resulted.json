@@ -1,0 +1,258 @@
+{
+  "masterDefendantId": "7ed61466-f09a-48bd-8280-97f00f80c1bd",
+  "orderingCourt": {
+    "address": {
+      "address1": "176A Lavender Hill",
+      "address2": "London",
+      "postcode": "SW11 1JU"
+    },
+    "code": "B01LY00",
+    "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+    "lja": {
+      "ljaCode": "2577",
+      "ljaName": "Lavender Hill Magistrates' Court",
+      "welshLjaName": "Llys Ynadon Lavender Hill"
+    },
+    "name": "Lavender Hill Magistrates' Court"
+  },
+  "nowContent": {
+    "orderDate": "2026-05-13",
+    "defendant": {
+      "dateOfBirth": "1981-11-11",
+      "gender": "MALE",
+      "driverNumber": "VANFL002222OW9PH",
+      "title": "MR",
+      "firstName": "nathan",
+      "lastName": "mikeson",
+      "name": "nathan mikeson",
+      "address": {
+        "line1": "9999A9999AAAA",
+        "line2": "Woodlane",
+        "line3": "addressline 3",
+        "line4": "Bristol",
+        "line5": "Avon"
+      }
+    },
+    "caseApplicationReferences": [
+      "28DI8133977"
+    ],
+    "cases": [
+      {
+        "caseStatus": "INACTIVE",
+        "initiationCode": "J",
+        "reference": "28DI8133977",
+        "caseId": "a97ae049-ee8d-414a-8d11-ea985aa912cc",
+        "defendantCaseOffences": [
+          {
+            "title": "Permit use of motor vehicle - driver not having proper control - endorsable offence",
+            "civilOffence": false,
+            "dvlaCode": "CU84",
+            "convictionDate": "2026-05-13",
+            "convictionStatus": "Convicted",
+            "code": "RC86818",
+            "wording": "Permit use of motor vehicle - driver not having proper control - endorsable offence.",
+            "startDate": "2025-11-28",
+            "results": [
+              {
+                "resultIdentifier": "600edfc3-a584-4f9f-a52e-5bb8a99646c1",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "bca4e07c-17e0-48f1-84f4-7b6ff8bab5e2",
+                    "promptReference": "reasonsForReferringToCourt",
+                    "durationSequence": 0,
+                    "label": "Reasons for referring to court",
+                    "value": "For trial"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEOrganisationName",
+                    "durationSequence": 0,
+                    "label": "Courthouse organisation name",
+                    "value": "Lavender Hill Magistrates' Court"
+                  },
+                  {
+                    "promptIdentifier": "49ec9b26-dd63-4637-b2e9-55ba9948a90f",
+                    "promptReference": "HCROOM",
+                    "durationSequence": 0,
+                    "label": "Courtroom",
+                    "value": "Courtroom 01"
+                  },
+                  {
+                    "promptIdentifier": "d85cc2d7-66c8-471e-b6ff-c1bc60c6cdac",
+                    "promptReference": "HEST",
+                    "durationSequence": 0,
+                    "label": "Estimated duration",
+                    "value": "30"
+                  },
+                  {
+                    "promptIdentifier": "4d125a5a-acbc-461d-a657-ba5643af85a6",
+                    "promptReference": "timeOfHearing",
+                    "durationSequence": 0,
+                    "label": "Time of hearing",
+                    "value": "09:00"
+                  },
+                  {
+                    "promptIdentifier": "d27a5d86-d51f-4c6e-914b-cb4b0abc4283",
+                    "promptReference": "HDATE",
+                    "durationSequence": 0,
+                    "label": "Date of hearing",
+                    "value": "2026-05-20"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEAddress1",
+                    "durationSequence": 0,
+                    "label": "Courthouse address line 1",
+                    "value": "176A Lavender Hill"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEAddress2",
+                    "durationSequence": 0,
+                    "label": "Courthouse address line 2",
+                    "value": "London"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEPostCode",
+                    "durationSequence": 0,
+                    "label": "Courthouse post code",
+                    "value": "SW11 1JU"
+                  }
+                ],
+                "d20": false,
+                "judicialResultCategory": "INTERMEDIARY",
+                "label": "Refer for a full court hearing"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "courtApplications": [
+      {
+        "applicationType": "Appearance to make statutory declaration (SJP case)",
+        "applicationTypeId": "99f6114d-a92b-4c89-986a-ac3ef1294130",
+        "applicationReceivedDate": "2026-05-13",
+        "id": "8ca0cdf6-2a2b-4ee1-afdc-4410d08456ab",
+        "applicationReference": "KYYAATIZXI",
+        "applicationStatus": "FINALISED",
+        "results": [
+          {
+            "resultIdentifier": "e2f6e11b-c3a2-4e76-8d29-fbede4174988",
+            "publishedForNows": false,
+            "prompts": [
+              {
+                "promptIdentifier": "7b6ef0ac-2d0b-44e5-a68e-4720b96cc679",
+                "promptReference": "statutoryDeclarationMadeUnder",
+                "durationSequence": 0,
+                "label": "Statutory declaration made under",
+                "value": "Section 14 of the Magistrates' Courts Act 1980"
+              },
+              {
+                "promptIdentifier": "36e32c50-dbec-41c4-904b-25eb20c9c54a",
+                "promptReference": "financialPenaltiesToBeWrittenOff",
+                "durationSequence": 0,
+                "label": "Financial penalties to be written off",
+                "value": "Yes"
+              },
+              {
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedOrganisationName",
+                "durationSequence": 0,
+                "label": "Prosecutor to be notified organisation name",
+                "value": "Driver and Vehicle Licensing Agency"
+              },
+              {
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedOrganisationName",
+                "durationSequence": 0,
+                "label": "Prosecutor to be notified organisation name",
+                "value": "Finance Operations"
+              },
+              {
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedOrganisationName",
+                "durationSequence": 0,
+                "label": "Prosecutor to be notified organisation name",
+                "value": "C3 East"
+              },
+              {
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedOrganisationName",
+                "durationSequence": 0,
+                "label": "Prosecutor to be notified organisation name",
+                "value": "DVLA"
+              },
+              {
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedOrganisationName",
+                "durationSequence": 0,
+                "label": "Prosecutor to be notified organisation name",
+                "value": "Longview Road"
+              },
+              {
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedOrganisationName",
+                "durationSequence": 0,
+                "label": "Prosecutor to be notified organisation name",
+                "value": "Swansea"
+              },
+              {
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedOrganisationName",
+                "durationSequence": 0,
+                "label": "Prosecutor to be notified organisation name",
+                "value": "SA6 7JL"
+              }
+            ],
+            "resultDefinitionGroup": "Enforcement",
+            "d20": false,
+            "judicialResultCategory": "FINAL",
+            "label": "Statutory Declaration"
+          },
+          {
+            "resultIdentifier": "f42fa098-0f7b-4269-ac4f-b10c9b6832d7",
+            "publishedForNows": true,
+            "prompts": [
+              {
+                "promptIdentifier": "b49bf4fa-0b1e-4079-b85a-c0113a46b91b",
+                "promptReference": "originalCourtCode",
+                "durationSequence": 0,
+                "label": "Original court code",
+                "value": "2577"
+              },
+              {
+                "promptIdentifier": "0cd86af5-10d8-4fd1-a78a-8a0e80179034",
+                "promptReference": "originalConvictionDate",
+                "durationSequence": 0,
+                "label": "Original conviction date",
+                "value": "2026-05-13"
+              },
+              {
+                "promptIdentifier": "37ee2b08-1950-4b04-bea5-f6f66b768bb0",
+                "promptReference": "originalOffenceDate",
+                "durationSequence": 0,
+                "label": "Original offence date",
+                "value": "2025-11-28"
+              },
+              {
+                "promptIdentifier": "1a2a23ea-c70d-4a5c-afa7-09dc514f84cc",
+                "promptReference": "dVLAEndorsementCode",
+                "durationSequence": 0,
+                "label": "DVLA endorsement code",
+                "value": "CU84"
+              }
+            ],
+            "d20": false,
+            "judicialResultCategory": "ANCILLARY",
+            "label": "Driving endorsement to be removed"
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": false,
+  "orderingHearingId": "6496eace-402a-479f-a3d0-2b1253ff716f"
+}
