@@ -22,6 +22,7 @@ import uk.gov.justice.domain.aggregate.Aggregate;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -56,8 +57,14 @@ public class DefendantAggregate implements Aggregate {
 
         final List<SjpCaseToCcReferred> sjpCaseReferredEvents = new ArrayList<>();
         final List<SjpCaseToCcReferred> currentSjpCaseReferredEvents = getSjpCaseReferredEvents(currentCases, courtApplications);
+        if(isNotEmpty(previousSjpCaseToCcReferred) && isNotEmpty(currentSjpCaseReferredEvents) &&
+                isCurrentSjpReferredEventAlreadyPresentInPrevious(currentSjpCaseReferredEvents)) {
+            LOGGER.info("Sjp refer to CC is already present for hearingId {}", hearingId);
+            return null;
+        }
         sjpCaseReferredEvents.addAll(currentSjpCaseReferredEvents);
         sjpCaseReferredEvents.addAll(previousSjpCaseToCcReferred);
+
         // Create a new event for each incoming cases
         final List<DriverNotified> driverNotifiedEvents = transformDriverNotified(
                 this.previousDriverNotifiedByCase,
@@ -91,6 +98,23 @@ public class DefendantAggregate implements Aggregate {
         }
 
         return apply(streamBuilder.build());
+    }
+
+    /**
+     * When SJP refers a case to CC while accepting an application,
+     * DVLA contexts receive the same payload again from PASS.
+     * This method prevents processing of such duplicate events.
+     *
+     * @param currentSjpCaseReferredEvents
+     * @return
+     */
+    private boolean isCurrentSjpReferredEventAlreadyPresentInPrevious(final List<SjpCaseToCcReferred> currentSjpCaseReferredEvents) {
+        return currentSjpCaseReferredEvents.stream().anyMatch(currentReferredEvent ->
+                previousSjpCaseToCcReferred.stream().anyMatch(previousReferredEvent ->
+                        previousReferredEvent.getCaseReference().equals(currentReferredEvent.getCaseReference())
+                                && previousReferredEvent.getApplicationTypes().stream().map(ApplicationTypes::getId).anyMatch(
+                                previousApplicationTypeId -> currentReferredEvent.getApplicationTypes().stream().map(ApplicationTypes::getId)
+                                        .anyMatch(previousApplicationTypeId::equals))));
     }
 
     private List<SjpCaseToCcReferred> getSjpCaseReferredEvents(final List<Cases> currentCases, final List<CourtApplications> courtApplications) {
