@@ -57,7 +57,7 @@ public class DefendantAggregate implements Aggregate {
 
         final List<SjpCaseToCcReferred> sjpCaseReferredEvents = new ArrayList<>();
         final List<SjpCaseToCcReferred> currentSjpCaseReferredEvents = getSjpCaseReferredEvents(currentCases, courtApplications);
-        if(isNotEmpty(previousSjpCaseToCcReferred) && isNotEmpty(currentSjpCaseReferredEvents) &&
+        if (isNotEmpty(previousSjpCaseToCcReferred) && isNotEmpty(currentSjpCaseReferredEvents) &&
                 isCurrentSjpReferredEventAlreadyPresentInPrevious(currentSjpCaseReferredEvents)) {
             LOGGER.info("Sjp refer to CC is already present for hearingId {}", hearingId);
             return null;
@@ -105,8 +105,6 @@ public class DefendantAggregate implements Aggregate {
      * DVLA contexts receive the same payload again from PASS.
      * This method prevents processing of such duplicate events.
      *
-     * @param currentSjpCaseReferredEvents
-     * @return
      */
     private boolean isCurrentSjpReferredEventAlreadyPresentInPrevious(final List<SjpCaseToCcReferred> currentSjpCaseReferredEvents) {
         return currentSjpCaseReferredEvents.stream().anyMatch(currentReferredEvent ->
