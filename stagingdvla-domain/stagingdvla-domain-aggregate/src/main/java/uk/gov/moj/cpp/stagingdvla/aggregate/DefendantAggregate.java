@@ -109,10 +109,7 @@ public class DefendantAggregate implements Aggregate {
     private boolean isCurrentSjpReferredEventAlreadyPresentInPrevious(final List<SjpCaseToCcReferred> currentSjpCaseReferredEvents) {
         return currentSjpCaseReferredEvents.stream().anyMatch(currentReferredEvent ->
                 previousSjpCaseToCcReferred.stream().anyMatch(previousReferredEvent ->
-                        previousReferredEvent.getCaseReference().equals(currentReferredEvent.getCaseReference())
-                                && previousReferredEvent.getApplicationTypes().stream().map(ApplicationTypes::getId).anyMatch(
-                                previousApplicationTypeId -> currentReferredEvent.getApplicationTypes().stream().map(ApplicationTypes::getId)
-                                        .anyMatch(previousApplicationTypeId::equals))));
+                        previousReferredEvent.getCaseReference().equals(currentReferredEvent.getCaseReference())));
     }
 
     private List<SjpCaseToCcReferred> getSjpCaseReferredEvents(final List<Cases> currentCases, final List<CourtApplications> courtApplications) {
