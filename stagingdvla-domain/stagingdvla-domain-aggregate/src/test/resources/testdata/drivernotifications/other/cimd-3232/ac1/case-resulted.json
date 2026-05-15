@@ -1,0 +1,202 @@
+{
+  "masterDefendantId": "e2b79a12-075a-41d3-80d8-f9ce262b8d23",
+  "orderingCourt": {
+    "address": {
+      "address1": "1 Queen Victoria Street",
+      "address2": "London",
+      "address3": "",
+      "address4": "",
+      "address5": "",
+      "postcode": "EC4N 4XY"
+    },
+    "code": "B01DU00",
+    "courtHearingLocation": "B01DU01",
+    "id": "c133d0de-c989-48b9-bd20-0431943e347e",
+    "lja": {
+      "ljaCode": "2570",
+      "ljaName": "Central London Magistrates' Court"
+    },
+    "name": "City of London Magistrates' Court",
+    "roomId": "4294a92c-8827-3296-be53-c74b7e9e31d8",
+    "roomName": "Courtroom 01"
+  },
+  "nowContent": {
+    "orderDate": "2026-04-24",
+    "defendant": {
+      "dateOfBirth": "2001-04-24",
+      "gender": "MALE",
+      "driverNumber": "VANFL002222OW9PH",
+      "title": "Mr",
+      "firstName": "Amiee",
+      "lastName": "McCullough",
+      "name": "Amiee McCullough",
+      "address": {
+        "line1": "12 King Street",
+        "line2": "King Street",
+        "line3": "Covent Garden",
+        "line4": "Greater London",
+        "line5": "London",
+        "postCode": "WC2E 8JD"
+      }
+    },
+    "caseApplicationReferences": [
+      "VK142082823"
+    ],
+    "cases": [
+      {
+        "caseStatus": "ACTIVE",
+        "initiationCode": "C",
+        "reference": "VK142082823",
+        "caseId": "19614bec-cc3e-4b08-a4fe-468a3e5c759a",
+        "defendantCaseOffences": [
+          {
+            "title": "Drive a motor vehicle otherwise than in accordance with a licence - endorsable offence",
+            "civilOffence": false,
+            "dvlaCode": "LC20",
+            "convictionDate": "2026-04-24",
+            "convictionStatus": "Convicted",
+            "plea": "GUILTY",
+            "code": "RT88334",
+            "modeOfTrial": "Summary",
+            "allocationDecision": "Summary-only offence",
+            "endorsableFlag": true,
+            "convictingCourtCode": "2570",
+            "wording": "Drive a motor vehicle otherwise than in accordance with a licence - endorsable offence",
+            "startDate": "2026-02-23",
+            "results": [
+              {
+                "resultIdentifier": "554c2622-c1cc-459e-a98d-b7f317ab065c",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "d3205319-84cf-4c5b-9d7a-7e4bb1865054",
+                    "promptReference": "periodofConditionalDischarge",
+                    "durationSequence": 1,
+                    "label": "Period of conditional discharge",
+                    "value": "12 Months"
+                  }
+                ],
+                "d20": false,
+                "dvlaCode": "E",
+                "judicialResultCategory": "FINAL",
+                "label": "Conditional discharge"
+              },
+              {
+                "resultIdentifier": "b0aeb4fc-df63-4e2f-af88-97e3f23e847f",
+                "publishedForNows": false,
+                "d20": true,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "Driving record endorsed (no points)"
+              },
+              {
+                "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956",
+                "publishedForNows": true,
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "0: None or unknown"
+              }
+            ]
+          },
+          {
+            "title": "Use a motor vehicle on a road / public place without third party insurance",
+            "civilOffence": false,
+            "dvlaCode": "IN10",
+            "convictionDate": "2026-04-24",
+            "convictionStatus": "Convicted",
+            "plea": "GUILTY",
+            "code": "RA88001",
+            "modeOfTrial": "Summary",
+            "allocationDecision": "Summary-only offence",
+            "endorsableFlag": true,
+            "convictingCourtCode": "2570",
+            "wording": "Use a motor vehicle on a road / public place without third party insurance",
+            "startDate": "2026-02-23",
+            "results": [
+              {
+                "resultIdentifier": "ccfc452e-ebe4-4cd7-b8a0-4f90768447b4",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "2bf54447-328c-4c1b-a123-341adbd52172",
+                    "promptReference": "disqualificationPeriod",
+                    "durationSequence": 1,
+                    "label": "Disqualification period",
+                    "value": "12 Months"
+                  },
+                  {
+                    "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+                    "promptReference": "defendantDrivingLicenceNumber",
+                    "label": "Defendant driving licence number",
+                    "value": "VANFL002222OW9PH"
+                  }
+                ],
+                "resultWording": "Disqualified for holding or obtaining a driving licence. Discretionary disqualification. Driving record endorsed. Section 34(2) Road Traffic Offenders Act 1988",
+                "d20": true,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "Discretionary with ordinary disqualification"
+              },
+              {
+                "resultIdentifier": "969f150c-cd05-46b0-9dd9-30891efcc766",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "7cd1472f-2379-4f5b-9e67-98a43d86e122",
+                    "promptReference": "AOF",
+                    "label": "Amount of fine",
+                    "value": "£200.00"
+                  }
+                ],
+                "resultDefinitionGroup": "Imposition",
+                "d20": false,
+                "judicialResultCategory": "FINAL",
+                "label": "Fine"
+              },
+              {
+                "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956",
+                "publishedForNows": true,
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "0: None or unknown"
+              }
+            ]
+          },
+          {
+            "title": "Cause use of motor vehicle with no insurance",
+            "civilOffence": false,
+            "dvlaCode": "IN14",
+            "convictionDate": "2026-04-24",
+            "convictionStatus": "Convicted",
+            "plea": "GUILTY",
+            "code": "RA88002",
+            "modeOfTrial": "Summary",
+            "allocationDecision": "Summary-only offence",
+            "endorsableFlag": true,
+            "convictingCourtCode": "2570",
+            "wording": "Cause use of motor vehicle with no insurance",
+            "startDate": "2026-02-23",
+            "results": [
+              {
+                "resultIdentifier": "969f150c-cd05-46b0-9dd9-30891efcc766",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "7cd1472f-2379-4f5b-9e67-98a43d86e122",
+                    "promptReference": "AOF",
+                    "label": "Amount of fine",
+                    "value": "£100.00"
+                  }
+                ],
+                "resultDefinitionGroup": "Imposition",
+                "d20": false,
+                "judicialResultCategory": "FINAL",
+                "label": "Fine"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": false,
+  "orderingHearingId": "ac3a1620-4817-4a1e-a71c-63f98d282f97"
+}

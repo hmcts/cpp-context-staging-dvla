@@ -100,6 +100,79 @@ class DefendantAggregateAppealsAppScenariosTest {
                                         "/testdata/drivernotifications/appeal/cimd-3240/ac1/app-resulted.json",
                                         null)
 
+                ),
+                Arguments.of("cimd-3241-ac1",
+                        defendantAggregateScenario()
+                                .withNotifyDriverStep(
+                                        "case hearing resulted",
+                                        "/testdata/drivernotifications/other/cimd-3241/case-resulted.json",
+                                        "/testdata/drivernotifications/other/cimd-3241/case-resulted-events.json",
+                                        jsonPathAssertions().add("notificationType", "New"))
+                                .withNotifyDriverStep(
+                                        "application hearing resulted",
+                                        "/testdata/drivernotifications/other/cimd-3241/app-resulted.json",
+                                        "/testdata/drivernotifications/other/cimd-3241/app-resulted-events.json",
+                                        jsonPathAssertions()
+                                                .add("notificationType", "Update")
+                                                .add("oatsEndorsements", List.of("IN14"))
+                                                .add("previous", notNullValue()))
+                ),Arguments.of("cimd-3241-ac2",
+                        defendantAggregateScenario()
+                                .withNotifyDriverStep(
+                                        "case hearing resulted",
+                                        "/testdata/drivernotifications/other/cimd-3241/case-resulted.json",
+                                        "/testdata/drivernotifications/other/cimd-3241/case-resulted-events.json",
+                                        jsonPathAssertions().add("notificationType", "New"))
+                                .withNotifyDriverStep(
+                                        "application hearing resulted",
+                                        "/testdata/drivernotifications/other/cimd-3241/app-resulted.json",
+                                        "/testdata/drivernotifications/other/cimd-3241/app-resulted-events.json",
+                                        jsonPathAssertions()
+                                                .add("notificationType", "Update")
+                                                .add("oatsEndorsements", List.of("IN14"))
+                                                .add("previous", notNullValue()))
+                                .withNotifyDriverStep(
+                                        "application hearing resulted",
+                                        "/testdata/drivernotifications/other/cimd-3241/app-resulted-2.json",
+                                        "/testdata/drivernotifications/other/cimd-3241/app-resulted-events-2.json",
+                                        jsonPathAssertions()
+                                                .add("notificationType", "Update"))
+                ),Arguments.of("cimd-3232-ac1",
+                        defendantAggregateScenario()
+                                .withNotifyDriverStep(
+                                        "case hearing resulted",
+                                        "/testdata/drivernotifications/other/cimd-3232/ac1/case-resulted.json",
+                                        "/testdata/drivernotifications/other/cimd-3232/ac1/case-resulted-events.json",
+                                        jsonPathAssertions().add("notificationType", "New"))
+                                .withNotifyDriverStep(
+                                        "application hearing resulted",
+                                        "/testdata/drivernotifications/other/cimd-3232/ac1/application-resulted.json",
+                                        "/testdata/drivernotifications/other/cimd-3232/ac1/application-resulted-events.json",
+                                        jsonPathAssertions().add("notificationType", "Remove"))
+                ),Arguments.of("cimd-3242-ac1",
+                        defendantAggregateScenario()
+                                .withNotifyDriverStep(
+                                        "case hearing resulted",
+                                        "/testdata/drivernotifications/other/cimd-3242/ac1/case-resulted.json",
+                                        "/testdata/drivernotifications/other/cimd-3242/ac1/case-resulted-events.json",
+                                        jsonPathAssertions().add("notificationType", "New"))
+                                .withNotifyDriverStep(
+                                        "application hearing resulted",
+                                        "/testdata/drivernotifications/other/cimd-3242/ac1/application-resulted.json",
+                                        "/testdata/drivernotifications/other/cimd-3242/ac1/application-resulted-events.json",
+                                        jsonPathAssertions().add("notificationType", "Remove"))
+                ),Arguments.of("cimd-3242-ac2",
+                        defendantAggregateScenario()
+                                .withNotifyDriverStep(
+                                        "case hearing resulted",
+                                        "/testdata/drivernotifications/other/cimd-3242/ac2/case-resulted.json",
+                                        "/testdata/drivernotifications/other/cimd-3242/ac2/case-resulted-events.json",
+                                        jsonPathAssertions().add("notificationType", "New"))
+                                .withNotifyDriverStep(
+                                        "application hearing resulted",
+                                        "/testdata/drivernotifications/other/cimd-3242/ac2/application-resulted.json",
+                                        "/testdata/drivernotifications/other/cimd-3242/ac2/application-resulted-events.json",
+                                        jsonPathAssertions().add("notificationType", "Remove"))
                 )
                 // Additional scenarios can be added here
         );
