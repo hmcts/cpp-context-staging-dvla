@@ -1,0 +1,452 @@
+{
+  "masterDefendantId": "586a5599-763e-463b-aa8c-9d50406bfbda",
+  "orderingCourt": {
+    "address": {
+      "address1": "The Law Courts",
+      "address2": "Altyre Road",
+      "address3": "Croydon",
+      "address4": "",
+      "address5": "",
+      "postcode": "CR9 5AB"
+    },
+    "code": "C01CY00",
+    "courtHearingLocation": "C01CY00",
+    "courtLocationCode": "0418",
+    "id": "07e45c88-9e5d-3e44-b664-d5345bb13be2",
+    "lja": {
+      "ljaCode": "2576",
+      "ljaName": "South London Magistrates' Court"
+    },
+    "name": "Croydon Crown Court",
+    "roomId": "731816c1-5ee4-373a-9bda-840e13a5bcb0",
+    "roomName": "Courtroom 01"
+  },
+  "nowContent": {
+    "orderDate": "2026-04-26",
+    "defendant": {
+      "dateOfBirth": "1966-04-24",
+      "gender": "MALE",
+      "driverNumber": "VANFL002222OW9PH",
+      "title": "Mr",
+      "firstName": "Antionette",
+      "lastName": "Hills",
+      "name": "Antionette Hills",
+      "address": {
+        "line1": "14 The Crescent",
+        "line2": "The Crescent",
+        "line3": "Salford Quays",
+        "line4": "Greater Manchester",
+        "line5": "Salford",
+        "postCode": "M5 4PE"
+      }
+    },
+    "caseApplicationReferences": [
+      "AJ143182547"
+    ],
+    "cases": [
+      {
+        "caseStatus": "INACTIVE",
+        "initiationCode": "C",
+        "reference": "AJ143182547",
+        "caseId": "ef913120-3584-41c4-b4c3-68223e5bc78e",
+        "defendantCaseOffences": [
+          {
+            "title": "Permit use of motor vehicle with no insurance",
+            "civilOffence": false,
+            "dvlaCode": "IN14",
+            "convictionDate": "2026-04-24",
+            "convictionStatus": "Convicted",
+            "plea": "GUILTY",
+            "code": "RA88003",
+            "modeOfTrial": "Summary",
+            "allocationDecision": "Summary-only offence",
+            "endorsableFlag": true,
+            "convictingCourtCode": "2570",
+            "wording": "Permit use of motor vehicle with no insurance",
+            "startDate": "2026-02-23",
+            "results": [
+              {
+                "resultIdentifier": "3e859586-bc86-407d-bd8e-c9a01d40d147",
+                "publishedForNows": false,
+                "d20": false,
+                "judicialResultCategory": "FINAL",
+                "label": "Offence not dealt with as part of application - original adjudication to stand"
+              }
+            ]
+          },
+          {
+            "title": "Drive a motor vehicle otherwise than in accordance with a licence - endorsable offence",
+            "civilOffence": false,
+            "dvlaCode": "LC20",
+            "convictionDate": "2026-04-24",
+            "convictionStatus": "Convicted",
+            "plea": "GUILTY",
+            "code": "RT88334",
+            "modeOfTrial": "Summary",
+            "allocationDecision": "Summary-only offence",
+            "endorsableFlag": true,
+            "convictingCourtCode": "2570",
+            "wording": "Drive a motor vehicle otherwise than in accordance with a licence - endorsable offence",
+            "startDate": "2026-02-23",
+            "results": [
+              {
+                "resultIdentifier": "d278650c-e429-11e8-9f32-f2801f1b9fd1",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "70c98fa6-804d-11e8-adc0-fa7ae01bbebc",
+                    "promptReference": "27052d9c-b9cf-440c-9dfb-55a9eca86688",
+                    "label": "Next hearing in magistrates' court",
+                    "value": "Date of hearing:28/04/2026\nTime of hearing:09:00\nCourthouse organisation name:Wimbledon Magistrates' Court\nCourthouse address line 1:The Law Courts\nCourthouse address line 2:Alexandra Road\nCourthouse address line 3:Wimbledon\nCourthouse post code:SW19 7JP\nCourtroom:Courtroom 05\nHearing type:Plea and Trial Preparation\nEstimated duration:20 MINUTES\nBooking reference:f00aec7b-7753-4357-978b-87e25263bfd7"
+                  },
+                  {
+                    "promptIdentifier": "61f951c3-f18d-4a44-ae4a-0cad4efb4133",
+                    "promptReference": "defendantToAttendTheNextHearing",
+                    "label": "Defendant to attend the next hearing",
+                    "value": "Yes"
+                  },
+                  {
+                    "promptIdentifier": "9c1dcdfa-ec44-4167-bbd4-d29c3a63a7fc",
+                    "promptReference": "2efaf426-6a21-4fcc-a465-7ba4e8415508",
+                    "label": "Unexpected circumstances meant that the case could not be heard",
+                    "value": ""
+                  },
+                  {
+                    "promptIdentifier": "7fc17a01-2f5a-4433-aae9-28e0c959f73b",
+                    "promptReference": "125f6a39-db43-48e3-b106-7996820a5c58",
+                    "label": "Adjournment reasons",
+                    "value": ""
+                  }
+                ],
+                "resultWording": "",
+                "d20": false,
+                "judicialResultCategory": "INTERMEDIARY",
+                "label": "Adjournment"
+              },
+              {
+                "resultIdentifier": "70c98fa6-804d-11e8-adc0-fa7ae01bbebc",
+                "publishedForNows": true,
+                "prompts": [
+                  {
+                    "promptIdentifier": "d27a5d86-d51f-4c6e-914b-cb4b0abc4283",
+                    "promptReference": "HDATE",
+                    "label": "Date of hearing",
+                    "value": "28/04/2026"
+                  },
+                  {
+                    "promptIdentifier": "4d125a5a-acbc-461d-a657-ba5643af85a6",
+                    "promptReference": "timeOfHearing",
+                    "label": "Time of hearing",
+                    "value": "09:00"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEOrganisationName",
+                    "label": "Courthouse organisation name",
+                    "value": "Wimbledon Magistrates' Court"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEAddress1",
+                    "label": "Courthouse address line 1",
+                    "value": "The Law Courts"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEAddress2",
+                    "label": "Courthouse address line 2",
+                    "value": "Alexandra Road"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEAddress3",
+                    "label": "Courthouse address line 3",
+                    "value": "Wimbledon"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEPostCode",
+                    "label": "Courthouse post code",
+                    "value": "SW19 7JP"
+                  },
+                  {
+                    "promptIdentifier": "49ec9b26-dd63-4637-b2e9-55ba9948a90f",
+                    "promptReference": "HCROOM",
+                    "label": "Courtroom",
+                    "value": "Courtroom 05"
+                  },
+                  {
+                    "promptIdentifier": "c1116d12-dd35-4171-807a-2cb845357d22",
+                    "promptReference": "HTYPE",
+                    "label": "Hearing type",
+                    "value": "Plea and Trial Preparation"
+                  },
+                  {
+                    "promptIdentifier": "d85cc2d7-66c8-471e-b6ff-c1bc60c6cdac",
+                    "promptReference": "HEST",
+                    "label": "Estimated duration",
+                    "value": "20 MINUTES"
+                  },
+                  {
+                    "promptIdentifier": "e73e6ab8-9bfe-4135-9fe6-f526544584d6",
+                    "promptReference": "bookingReference",
+                    "label": "Booking reference",
+                    "value": "f00aec7b-7753-4357-978b-87e25263bfd7"
+                  }
+                ],
+                "resultWording": "",
+                "resultDefinitionGroup": "Next hearing",
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "Next hearing in magistrates' court"
+              },
+              {
+                "resultIdentifier": "9c1dcdfa-ec44-4167-bbd4-d29c3a63a7fc",
+                "publishedForNows": true,
+                "resultWording": "",
+                "resultDefinitionGroup": "Adjournment reasons",
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "Unexpected circumstances meant that the case could not be heard"
+              }
+            ]
+          },
+          {
+            "title": "Use a motor vehicle on a road / public place without third party insurance",
+            "civilOffence": false,
+            "dvlaCode": "IN10",
+            "convictionDate": "2026-04-24",
+            "convictionStatus": "Convicted",
+            "plea": "GUILTY",
+            "code": "RA88001",
+            "modeOfTrial": "Summary",
+            "allocationDecision": "Summary-only offence",
+            "endorsableFlag": true,
+            "convictingCourtCode": "2570",
+            "wording": "Use a motor vehicle on a road / public place without third party insurance",
+            "startDate": "2026-02-23",
+            "results": [
+              {
+                "resultIdentifier": "f121db73-57fb-4f74-9ab1-0843aabe4605",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "dcaf502b-44d2-4be0-acfc-2f7d29142da6",
+                    "promptReference": "specialReasons",
+                    "label": "Special reasons",
+                    "value": "Test"
+                  }
+                ],
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "No endorsement - Special Reasons"
+              }
+            ]
+          },
+          {
+            "title": "Cause use of motor vehicle with no insurance",
+            "civilOffence": false,
+            "dvlaCode": "IN14",
+            "convictionDate": "2026-04-24",
+            "convictionStatus": "Convicted",
+            "plea": "GUILTY",
+            "code": "RA88002",
+            "modeOfTrial": "Summary",
+            "allocationDecision": "Summary-only offence",
+            "endorsableFlag": true,
+            "convictingCourtCode": "2570",
+            "wording": "Cause use of motor vehicle with no insurance",
+            "startDate": "2026-02-23",
+            "results": [
+              {
+                "resultIdentifier": "cee54856-4450-4f28-a8a9-72b688726201",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "a8719de4-7783-448a-b792-e3f94e670ad0",
+                    "promptReference": "PENPT",
+                    "label": "Penalty points for this offence",
+                    "value": "6"
+                  },
+                  {
+                    "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+                    "promptReference": "defendantDrivingLicenceNumber",
+                    "label": "Defendant driving licence number",
+                    "value": "VANFL002222OW9PH"
+                  }
+                ],
+                "d20": true,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "Driving record endorsed with penalty points"
+              },
+              {
+                "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956",
+                "publishedForNows": true,
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "0: None or unknown"
+              }
+            ]
+          },
+          {
+            "title": "Attempt theft of motor vehicle",
+            "civilOffence": false,
+            "dvlaCode": "NE99",
+            "convictionDate": "2026-04-24",
+            "convictionStatus": "Convicted",
+            "plea": "GUILTY",
+            "code": "TH68013A",
+            "modeOfTrial": "Either Way",
+            "endorsableFlag": false,
+            "convictingCourtCode": "2570",
+            "wording": "Attempt theft of motor vehicle",
+            "startDate": "2026-02-23",
+            "results": [
+              {
+                "resultIdentifier": "e866cd11-6073-4fdf-a229-51c9d694e1d0",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "629a971e-9d7a-4526-838d-0a4cb922b5cb",
+                    "promptReference": "AOS",
+                    "label": "Amount of surcharge",
+                    "value": "£130.00"
+                  }
+                ],
+                "resultDefinitionGroup": "Imposition",
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "Surcharge"
+              },
+              {
+                "resultIdentifier": "bcb5a496-f7cf-11e8-8eb2-f2801f1b9fd1",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "ee7d253a-c629-11e8-a355-529269fb1459",
+                    "promptReference": "PBD",
+                    "label": "Date to pay in full by",
+                    "value": "05/05/2026"
+                  }
+                ],
+                "resultDefinitionGroup": "Payment terms",
+                "d20": false,
+                "judicialResultCategory": "FINAL",
+                "label": "Pay by date"
+              }
+            ]
+          },
+          {
+            "title": "Drive whilst disqualified",
+            "civilOffence": false,
+            "dvlaCode": "BA10",
+            "convictionDate": "2026-04-24",
+            "convictionStatus": "Convicted",
+            "plea": "GUILTY",
+            "code": "RT88333",
+            "modeOfTrial": "Summary",
+            "allocationDecision": "Summary-only offence",
+            "endorsableFlag": true,
+            "convictingCourtCode": "2570",
+            "wording": "Drive whilst disqualified",
+            "startDate": "2026-02-23",
+            "results": [
+              {
+                "resultIdentifier": "554c2622-c1cc-459e-a98d-b7f317ab065c",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "d3205319-84cf-4c5b-9d7a-7e4bb1865054",
+                    "promptReference": "periodofConditionalDischarge",
+                    "durationSequence": 1,
+                    "label": "Period of conditional discharge",
+                    "value": "12 Months"
+                  }
+                ],
+                "d20": false,
+                "dvlaCode": "E",
+                "judicialResultCategory": "FINAL",
+                "label": "Conditional discharge"
+              }
+            ]
+          },
+          {
+            "title": "Danger of injury due to vehicle condition",
+            "civilOffence": false,
+            "dvlaCode": "CU24",
+            "convictionDate": "2026-04-24",
+            "convictionStatus": "Convicted",
+            "plea": "GUILTY",
+            "code": "RT88634",
+            "allocationDecision": "Summary-only offence",
+            "endorsableFlag": true,
+            "convictingCourtCode": "2570",
+            "wording": "Danger of injury due to vehicle condition",
+            "startDate": "2026-02-23",
+            "results": [
+              {
+                "resultIdentifier": "eb2e4c4f-b738-4a4d-9cce-0572cecb7cb8",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "6f305506-9919-4e7b-bd57-c4c352ec3e3e",
+                    "promptReference": "details",
+                    "label": "Details",
+                    "value": "Complaint withdrawn"
+                  }
+                ],
+                "resultDefinitionGroup": "WOAEXTEND",
+                "d20": false,
+                "judicialResultCategory": "FINAL",
+                "label": "Withdrawn"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "courtApplications": [
+      {
+        "applicationType": "Appeal against sentence by a Magistrates' Court to the Crown Court",
+        "applicationTypeId": "ef71f385-88f5-4e53-8b9f-d568af9ea90c",
+        "applicationReceivedDate": "2026-04-24",
+        "id": "76384d25-fb8c-4c90-844e-58c8a27e590c",
+        "applicationReference": "AJ143182547",
+        "applicationStatus": "FINALISED",
+        "results": [
+          {
+            "resultIdentifier": "d861586a-df88-440d-98d4-63cc2a680ae1",
+            "publishedForNows": false,
+            "prompts": [
+              {
+                "promptIdentifier": "c946a5df-5849-4cca-b425-ecbd6bd704dc",
+                "promptReference": "dateSentenceWasImposed",
+                "label": "Date sentence was imposed",
+                "value": "24/04/2026"
+              },
+              {
+                "promptIdentifier": "c10b4c83-1856-4ca9-9592-d8b8183a0324",
+                "promptReference": "reasons",
+                "label": "Reasons",
+                "value": "sentence was imposed"
+              }
+            ],
+            "resultWording": "",
+            "d20": false,
+            "judicialResultCategory": "FINAL",
+            "label": "Appeal against sentence allowed"
+          },
+          {
+            "resultIdentifier": "2b3f7c20-8fc1-4fad-9076-df196c24b27e",
+            "publishedForNows": false,
+            "d20": false,
+            "judicialResultCategory": "FINAL",
+            "label": "Granted"
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": false,
+  "orderingHearingId": "88c99aa4-b041-4450-9532-0b331217f259"
+}
