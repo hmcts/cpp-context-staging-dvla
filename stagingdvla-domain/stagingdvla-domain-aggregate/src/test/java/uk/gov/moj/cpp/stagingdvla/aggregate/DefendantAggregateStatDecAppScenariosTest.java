@@ -253,6 +253,29 @@ class DefendantAggregateStatDecAppScenariosTest {
                                                 .add("previous", notNullValue()))
 
                 ),
+                Arguments.of("DD-40319-ac2C1",
+                        defendantAggregateScenario()
+                                .withNotifyDriverStep(
+                                        "case hearing resulted",
+                                        "/testdata/drivernotifications/statdec/dd-40319/ac2C1/case-resulted.json",
+                                        "/testdata/drivernotifications/statdec/dd-40319/ac2C1/case-resulted-events.json",
+                                        jsonPathAssertions().add("notificationType", "New"))
+                                .withNotifyDriverStep(
+                                        "application hearing resulted",
+                                        "/testdata/drivernotifications/statdec/dd-40319/ac2C1/app-resulted.json",
+                                        "/testdata/drivernotifications/statdec/dd-40319/ac2C1/app-resulted-events.json",
+                                        jsonPathAssertions()
+                                                .add("notificationType", "Update")
+                                                .add("previous", notNullValue()))
+                                .withNotifyDriverStep(
+                                        "application hearing resulted",
+                                        "/testdata/drivernotifications/statdec/dd-40319/ac2C1/app-second-resulted.json",
+                                        "/testdata/drivernotifications/statdec/dd-40319/ac2C1/app-second-resulted-events.json",
+                                        jsonPathAssertions()
+                                                .add("notificationType", "Update")
+                                                .add("previous", notNullValue()))
+
+                ),
                 Arguments.of("DD-40319-ac3",
                         defendantAggregateScenario()
                                 .withNotifyDriverStep(

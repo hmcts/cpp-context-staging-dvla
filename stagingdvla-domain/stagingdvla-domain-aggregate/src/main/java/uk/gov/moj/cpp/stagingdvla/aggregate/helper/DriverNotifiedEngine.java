@@ -92,6 +92,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
@@ -498,10 +499,13 @@ public class DriverNotifiedEngine {
         previousDriverNotified.getCases().forEach(previousCase -> {
             final Cases currentCase = cases.stream()
                     .filter(aCase -> previousCase.getCaseId().equals(aCase.getCaseId())).findFirst().orElse(null);
+            final List<CourtApplications> previousCourtApplications = Optional.ofNullable(previousDriverNotified.getCourtApplications()).orElse(emptyList()).stream()
+                    .filter(application -> application.getApplicationReference().equals(currentCase.getReference()))
+                    .toList();
             previousCase.getDefendantCaseOffences().forEach(previousOffence -> {
                 final DefendantCaseOffences currentOffence = getMatchingOffence(currentCase, previousOffence);
                 final EndorsementStatus endorsementStatus = getEndorsementStatus(isNotEmpty(amendmentDate),
-                        currentOffence, previousOffence, courtApplications, nonEndorsableOffenceCodes, sjpCaseToCcReferredApplications);
+                        currentOffence, previousOffence, courtApplications, nonEndorsableOffenceCodes, sjpCaseToCcReferredApplications, previousCourtApplications);
                 final String dvlaCode = getDvlaCode(previousOffence);
 
                 switch (endorsementStatus) {
