@@ -1,25 +1,29 @@
 {
   "caseApplicationReferences": [
-    "28DI5545805"
+    "28DI6433012"
   ],
   "cases": [
     {
-      "caseId": "9c024dd1-c722-4473-934d-437dab1b84c3",
+      "caseId": "278513c9-ab07-41b1-b978-2c1c080197e6",
       "caseStatus": "INACTIVE",
       "defendantCaseOffences": [
         {
+          "allocationDecision": "Summary-only offence",
           "civilOffence": false,
           "code": "RC86823",
-          "convictionStatus": "Not Convicted",
+          "convictingCourtCode": "2577",
+          "convictionDate": "2026-05-13",
+          "convictionStatus": "Convicted",
           "dateFromWhichDisqRemoved": "",
           "disqualificationPeriod": "",
           "dttpDtetp": "",
           "dvlaCode": "CU80",
           "endorsableFlag": true,
-          "fine": "£200.00",
+          "fine": "£100.00",
           "interimImposedFinalSentence": "",
           "modeOfTrial": "Summary",
           "penaltyPoints": "",
+          "plea": "GUILTY",
           "results": [
             {
               "d20": false,
@@ -30,7 +34,7 @@
                   "label": "Amount of fine",
                   "promptIdentifier": "7cd1472f-2379-4f5b-9e67-98a43d86e122",
                   "promptReference": "AOF",
-                  "value": "£200.00"
+                  "value": "£100.00"
                 }
               ],
               "publishedForNows": false,
@@ -68,24 +72,91 @@
               "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956"
             }
           ],
+          "sentenceDate": "2026-05-19",
+          "sentencingCourtCode": "2577",
           "startDate": "2025-08-13",
           "title": "Supervisor of provisional licence holder use hand-held mobile phone / device - endorsable offence",
           "wording": "Supervisor of provisional licence holder use hand-held mobile phone / device - endorsable offence"
+        },
+        {
+          "allocationDecision": "Summary-only offence",
+          "civilOffence": false,
+          "code": "RC86818",
+          "convictingCourtCode": "2577",
+          "convictionDate": "2026-05-13",
+          "convictionStatus": "Convicted",
+          "dateFromWhichDisqRemoved": "",
+          "disqualificationPeriod": "",
+          "dttpDtetp": "",
+          "dvlaCode": "CU84",
+          "endorsableFlag": true,
+          "fine": "",
+          "interimImposedFinalSentence": "",
+          "modeOfTrial": "Summary",
+          "otherSentence": "E12M",
+          "penaltyPoints": "3",
+          "plea": "GUILTY",
+          "results": [
+            {
+              "d20": false,
+              "dvlaCode": "E",
+              "judicialResultCategory": "FINAL",
+              "label": "Conditional discharge",
+              "prompts": [
+                {
+                  "durationSequence": 1,
+                  "label": "Period of conditional discharge",
+                  "promptIdentifier": "d3205319-84cf-4c5b-9d7a-7e4bb1865054",
+                  "promptReference": "periodofConditionalDischarge",
+                  "value": "12 Months"
+                }
+              ],
+              "publishedForNows": false,
+              "resultIdentifier": "554c2622-c1cc-459e-a98d-b7f317ab065c"
+            },
+            {
+              "d20": true,
+              "judicialResultCategory": "ANCILLARY",
+              "label": "Driving record endorsed with penalty points",
+              "prompts": [
+                {
+                  "label": "Penalty points for this offence",
+                  "promptIdentifier": "a8719de4-7783-448a-b792-e3f94e670ad0",
+                  "promptReference": "PENPT",
+                  "value": "3"
+                }
+              ],
+              "publishedForNows": false,
+              "resultIdentifier": "cee54856-4450-4f28-a8a9-72b688726201"
+            },
+            {
+              "d20": false,
+              "judicialResultCategory": "ANCILLARY",
+              "label": "0: None or unknown",
+              "publishedForNows": true,
+              "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956"
+            }
+          ],
+          "sentenceDate": "2026-05-15",
+          "sentencingCourtCode": "2577",
+          "startDate": "2025-08-13",
+          "title": "Permit use of motor vehicle - driver not having proper control - endorsable offence",
+          "wording": "Permit use of motor vehicle - driver not having proper control - endorsable offence"
         }
       ],
       "hasSV": false,
       "initiationCode": "C",
-      "reference": "28DI5545805"
+      "reference": "28DI6433012"
     }
   ],
   "courtApplications": [
     {
-      "applicationReceivedDate": "2026-05-06",
-      "applicationReference": "28DI5545805",
+      "applicationReceivedDate": "2026-05-13",
+      "applicationReference": "28DI6433012",
       "applicationStatus": "FINALISED",
       "applicationType": "Appearance to make statutory declaration (other than SJP)",
       "applicationTypeId": "a6663f2a-c900-4bb4-a7d7-4be34cb2f1f7",
-      "id": "734e4884-1a6b-43ba-89ea-d38608645980",
+      "id": "7caa74b9-1962-4c59-95d7-0b3ac59ff73a",
       "results": [
         {
           "d20": false,
@@ -175,20 +246,20 @@
       "postCode": "TA1 1AT"
     },
     "dateOfBirth": "1991-02-18",
-    "firstName": "Craig",
+    "firstName": "Esther",
     "gender": "MALE",
-    "lastName": "Tremblay",
-    "name": "Craig Tremblay",
+    "lastName": "Keeling",
+    "name": "Esther Keeling",
     "title": "MR"
   },
   "distinctPrompts": [],
-  "identifier": "61279dda-81a6-4111-8f14-82c86bd880bf",
+  "identifier": "2f43a91c-78fe-4641-9c66-9e0960d417c8",
   "licenceProducedInCourt": "0: None or unknown",
-  "masterDefendantId": "df5587ad-01d6-4296-a1c6-a2e7f9678c91",
-  "materialId": "81f40152-abd7-4783-ab8f-08051e377935",
+  "masterDefendantId": "bb73a262-d23c-4558-b75f-62112b9e0518",
+  "materialId": "014f492c-a85d-450d-91cc-a757ace24cc8",
   "notificationType": "Update",
   "notificationWasPreviouslySent": true,
-  "orderDate": "2026-05-08",
+  "orderDate": "2026-05-19",
   "orderingCourt": {
     "address": {
       "address1": "176A Lavender Hill",
@@ -210,45 +281,51 @@
     "roomName": "Courtroom 01"
   },
   "orderingCourtCode": "2577",
-  "orderingHearingId": "c3a1e8e0-ddd9-476f-8d47-5dbe660ec216",
+  "orderingHearingId": "a8cf85b5-e2bb-4c65-a044-f82aedfad297",
   "previous": {
     "caseApplicationReferences": [
-      "28DI5545805"
+      "28DI6433012"
     ],
     "cases": [
       {
-        "caseId": "9c024dd1-c722-4473-934d-437dab1b84c3",
+        "caseId": "278513c9-ab07-41b1-b978-2c1c080197e6",
         "caseStatus": "INACTIVE",
         "defendantCaseOffences": [
           {
+            "allocationDecision": "Summary-only offence",
             "civilOffence": false,
             "code": "RC86818",
-            "convictionStatus": "Not Convicted",
+            "convictingCourtCode": "2577",
+            "convictionDate": "2026-05-13",
+            "convictionStatus": "Convicted",
             "dateFromWhichDisqRemoved": "",
             "disqualificationPeriod": "",
             "dttpDtetp": "",
             "dvlaCode": "CU84",
             "endorsableFlag": true,
-            "fine": "£200.00",
+            "fine": "",
             "interimImposedFinalSentence": "",
             "modeOfTrial": "Summary",
-            "penaltyPoints": "6",
+            "otherSentence": "E12M",
+            "penaltyPoints": "3",
+            "plea": "GUILTY",
             "results": [
               {
                 "d20": false,
+                "dvlaCode": "E",
                 "judicialResultCategory": "FINAL",
-                "label": "Fine",
+                "label": "Conditional discharge",
                 "prompts": [
                   {
-                    "label": "Amount of fine",
-                    "promptIdentifier": "7cd1472f-2379-4f5b-9e67-98a43d86e122",
-                    "promptReference": "AOF",
-                    "value": "£200.00"
+                    "durationSequence": 1,
+                    "label": "Period of conditional discharge",
+                    "promptIdentifier": "d3205319-84cf-4c5b-9d7a-7e4bb1865054",
+                    "promptReference": "periodofConditionalDischarge",
+                    "value": "12 Months"
                   }
                 ],
                 "publishedForNows": false,
-                "resultDefinitionGroup": "Imposition",
-                "resultIdentifier": "969f150c-cd05-46b0-9dd9-30891efcc766"
+                "resultIdentifier": "554c2622-c1cc-459e-a98d-b7f317ab065c"
               },
               {
                 "d20": true,
@@ -259,27 +336,11 @@
                     "label": "Penalty points for this offence",
                     "promptIdentifier": "a8719de4-7783-448a-b792-e3f94e670ad0",
                     "promptReference": "PENPT",
-                    "value": "6"
+                    "value": "3"
                   }
                 ],
                 "publishedForNows": false,
                 "resultIdentifier": "cee54856-4450-4f28-a8a9-72b688726201"
-              },
-              {
-                "d20": false,
-                "judicialResultCategory": "FINAL",
-                "label": "Pay by date",
-                "prompts": [
-                  {
-                    "label": "Date to pay in full by",
-                    "promptIdentifier": "ee7d253a-c629-11e8-a355-529269fb1459",
-                    "promptReference": "PBD",
-                    "value": "20/03/2025"
-                  }
-                ],
-                "publishedForNows": false,
-                "resultDefinitionGroup": "Payment terms",
-                "resultIdentifier": "bcb5a496-f7cf-11e8-8eb2-f2801f1b9fd1"
               },
               {
                 "d20": false,
@@ -289,6 +350,8 @@
                 "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956"
               }
             ],
+            "sentenceDate": "2026-05-15",
+            "sentencingCourtCode": "2577",
             "startDate": "2025-08-13",
             "title": "Permit use of motor vehicle - driver not having proper control - endorsable offence",
             "wording": "Permit use of motor vehicle - driver not having proper control - endorsable offence"
@@ -296,7 +359,7 @@
         ],
         "hasSV": false,
         "initiationCode": "C",
-        "reference": "28DI5545805"
+        "reference": "28DI6433012"
       }
     ],
     "defendant": {
@@ -307,19 +370,19 @@
         "postCode": "TA1 1AT"
       },
       "dateOfBirth": "1991-02-18",
-      "firstName": "Craig",
+      "firstName": "Esther",
       "gender": "MALE",
-      "lastName": "Tremblay",
-      "name": "Craig Tremblay",
+      "lastName": "Keeling",
+      "name": "Esther Keeling",
       "title": "MR"
     },
     "distinctPrompts": [],
-    "identifier": "f6939873-7e90-429e-8f82-8d3b03a6bca8",
+    "identifier": "c2292e13-a028-4ae5-b3ca-5c596a346f60",
     "licenceProducedInCourt": "0: None or unknown",
-    "masterDefendantId": "df5587ad-01d6-4296-a1c6-a2e7f9678c91",
-    "materialId": "e6582292-16b8-43ca-b3a1-d02322bc4015",
+    "masterDefendantId": "bb73a262-d23c-4558-b75f-62112b9e0518",
+    "materialId": "2a9f72cd-7442-4b06-b6c7-ee3c2b2b22b2",
     "notificationWasPreviouslySent": true,
-    "orderDate": "2026-05-07",
+    "orderDate": "2026-05-15",
     "orderingCourt": {
       "address": {
         "address1": "176A Lavender Hill",
@@ -340,14 +403,12 @@
       "roomId": "9e4932f7-97b2-3010-b942-ddd2624e4dd8",
       "roomName": "Courtroom 01"
     },
-    "orderingHearingId": "def401a4-bef2-4f57-afe4-f7e4d1ef3cd6",
+    "orderingHearingId": "ad88fcb4-6a81-443d-947e-ca89c2e3dcb6",
     "retrySequence": 0
   },
-  "removedEndorsements": [
-    "CU84"
-  ],
   "retrySequence": 0,
   "updatedEndorsements": [
-    "CU80"
+    "CU80",
+    "CU84"
   ]
 }

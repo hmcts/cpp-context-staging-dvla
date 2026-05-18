@@ -1,5 +1,5 @@
 {
-  "masterDefendantId": "df5587ad-01d6-4296-a1c6-a2e7f9678c91",
+  "masterDefendantId": "bb73a262-d23c-4558-b75f-62112b9e0518",
   "orderingCourt": {
     "address": {
       "address1": "176A Lavender Hill",
@@ -21,14 +21,14 @@
     "roomName": "Courtroom 01"
   },
   "nowContent": {
-    "orderDate": "2026-05-07",
+    "orderDate": "2026-05-15",
     "defendant": {
       "dateOfBirth": "1991-02-18",
       "gender": "MALE",
       "title": "MR",
-      "firstName": "Craig",
-      "lastName": "Tremblay",
-      "name": "Craig Tremblay",
+      "firstName": "Esther",
+      "lastName": "Keeling",
+      "name": "Esther Keeling",
       "address": {
         "line1": "21",
         "line2": "Furnburry Park Road",
@@ -37,23 +37,27 @@
       }
     },
     "caseApplicationReferences": [
-      "28DI5545805"
+      "28DI6433012"
     ],
     "cases": [
       {
         "caseStatus": "INACTIVE",
         "initiationCode": "C",
-        "reference": "28DI5545805",
-        "caseId": "9c024dd1-c722-4473-934d-437dab1b84c3",
+        "reference": "28DI6433012",
+        "caseId": "278513c9-ab07-41b1-b978-2c1c080197e6",
         "defendantCaseOffences": [
           {
             "title": "Supervisor of provisional licence holder use hand-held mobile phone / device - endorsable offence",
             "civilOffence": false,
             "dvlaCode": "CU80",
-            "convictionStatus": "Not Convicted",
+            "convictionDate": "2026-05-13",
+            "convictionStatus": "Convicted",
+            "plea": "GUILTY",
             "code": "RC86823",
             "modeOfTrial": "Summary",
+            "allocationDecision": "Summary-only offence",
             "endorsableFlag": true,
+            "convictingCourtCode": "2577",
             "wording": "Supervisor of provisional licence holder use hand-held mobile phone / device - endorsable offence",
             "startDate": "2025-08-13",
             "results": [
@@ -63,9 +67,9 @@
                 "prompts": [
                   {
                     "promptIdentifier": "70c98fa6-804d-11e8-adc0-fa7ae01bbebc",
-                    "promptReference": "26adaab7-e42c-4973-af39-da99d511a2a7",
+                    "promptReference": "f5fa2948-f403-453c-b3c0-e7a5a7fdcfca",
                     "label": "Next hearing in magistrates' court",
-                    "value": "Date of hearing:08/05/2026\nTime of hearing:10:00\nCourthouse organisation name:Lavender Hill Magistrates' Court\nCourthouse address line 1:176A Lavender Hill\nCourthouse address line 2:London\nCourthouse post code:SW11 1JU\nCourtroom:Courtroom 01\nHearing type:Bail Variation Application\nEstimated duration:10 MINUTES\nBooking reference:39f3abee-7b88-4243-b0ed-d1491b6f61f5"
+                    "value": "Date of hearing:19/05/2026\nTime of hearing:10:00\nCourthouse organisation name:Lavender Hill Magistrates' Court\nCourthouse address line 1:176A Lavender Hill\nCourthouse address line 2:London\nCourthouse post code:SW11 1JU\nCourtroom:Courtroom 01\nHearing type:Plea\nEstimated duration:20 MINUTES\nBooking reference:999ad1c3-c385-4a6e-93d1-e7b7fab371a8"
                   },
                   {
                     "promptIdentifier": "61f951c3-f18d-4a44-ae4a-0cad4efb4133",
@@ -75,13 +79,13 @@
                   },
                   {
                     "promptIdentifier": "9c1dcdfa-ec44-4167-bbd4-d29c3a63a7fc",
-                    "promptReference": "f37e3d0c-e5b1-4daa-8664-01bc23dbb865",
+                    "promptReference": "1e49337e-36d7-4e47-8b1f-bdbc810fe919",
                     "label": "Unexpected circumstances meant that the case could not be heard",
                     "value": ""
                   },
                   {
                     "promptIdentifier": "7fc17a01-2f5a-4433-aae9-28e0c959f73b",
-                    "promptReference": "867471b5-ea3c-4cc3-bf0d-3acfd58df93c",
+                    "promptReference": "d3e51fd2-1e62-43c7-946a-1fde01a6c407",
                     "label": "Adjournment reasons",
                     "value": ""
                   }
@@ -99,7 +103,7 @@
                     "promptIdentifier": "d27a5d86-d51f-4c6e-914b-cb4b0abc4283",
                     "promptReference": "HDATE",
                     "label": "Date of hearing",
-                    "value": "08/05/2026"
+                    "value": "19/05/2026"
                   },
                   {
                     "promptIdentifier": "4d125a5a-acbc-461d-a657-ba5643af85a6",
@@ -141,19 +145,19 @@
                     "promptIdentifier": "c1116d12-dd35-4171-807a-2cb845357d22",
                     "promptReference": "HTYPE",
                     "label": "Hearing type",
-                    "value": "Bail Variation Application"
+                    "value": "Plea"
                   },
                   {
                     "promptIdentifier": "d85cc2d7-66c8-471e-b6ff-c1bc60c6cdac",
                     "promptReference": "HEST",
                     "label": "Estimated duration",
-                    "value": "10 MINUTES"
+                    "value": "20 MINUTES"
                   },
                   {
                     "promptIdentifier": "e73e6ab8-9bfe-4135-9fe6-f526544584d6",
                     "promptReference": "bookingReference",
                     "label": "Booking reference",
-                    "value": "39f3abee-7b88-4243-b0ed-d1491b6f61f5"
+                    "value": "999ad1c3-c385-4a6e-93d1-e7b7fab371a8"
                   }
                 ],
                 "resultWording": "",
@@ -177,28 +181,33 @@
             "title": "Permit use of motor vehicle - driver not having proper control - endorsable offence",
             "civilOffence": false,
             "dvlaCode": "CU84",
-            "convictionStatus": "Not Convicted",
+            "convictionDate": "2026-05-13",
+            "convictionStatus": "Convicted",
+            "plea": "GUILTY",
             "code": "RC86818",
             "modeOfTrial": "Summary",
+            "allocationDecision": "Summary-only offence",
             "endorsableFlag": true,
+            "convictingCourtCode": "2577",
             "wording": "Permit use of motor vehicle - driver not having proper control - endorsable offence",
             "startDate": "2025-08-13",
             "results": [
               {
-                "resultIdentifier": "969f150c-cd05-46b0-9dd9-30891efcc766",
+                "resultIdentifier": "554c2622-c1cc-459e-a98d-b7f317ab065c",
                 "publishedForNows": false,
                 "prompts": [
                   {
-                    "promptIdentifier": "7cd1472f-2379-4f5b-9e67-98a43d86e122",
-                    "promptReference": "AOF",
-                    "label": "Amount of fine",
-                    "value": "£200.00"
+                    "promptIdentifier": "d3205319-84cf-4c5b-9d7a-7e4bb1865054",
+                    "promptReference": "periodofConditionalDischarge",
+                    "durationSequence": 1,
+                    "label": "Period of conditional discharge",
+                    "value": "12 Months"
                   }
                 ],
-                "resultDefinitionGroup": "Imposition",
                 "d20": false,
+                "dvlaCode": "E",
                 "judicialResultCategory": "FINAL",
-                "label": "Fine"
+                "label": "Conditional discharge"
               },
               {
                 "resultIdentifier": "cee54856-4450-4f28-a8a9-72b688726201",
@@ -208,28 +217,12 @@
                     "promptIdentifier": "a8719de4-7783-448a-b792-e3f94e670ad0",
                     "promptReference": "PENPT",
                     "label": "Penalty points for this offence",
-                    "value": "6"
+                    "value": "3"
                   }
                 ],
                 "d20": true,
                 "judicialResultCategory": "ANCILLARY",
                 "label": "Driving record endorsed with penalty points"
-              },
-              {
-                "resultIdentifier": "bcb5a496-f7cf-11e8-8eb2-f2801f1b9fd1",
-                "publishedForNows": false,
-                "prompts": [
-                  {
-                    "promptIdentifier": "ee7d253a-c629-11e8-a355-529269fb1459",
-                    "promptReference": "PBD",
-                    "label": "Date to pay in full by",
-                    "value": "20/03/2025"
-                  }
-                ],
-                "resultDefinitionGroup": "Payment terms",
-                "d20": false,
-                "judicialResultCategory": "FINAL",
-                "label": "Pay by date"
               },
               {
                 "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956",
@@ -247,9 +240,9 @@
       {
         "applicationType": "Appearance to make statutory declaration (other than SJP)",
         "applicationTypeId": "a6663f2a-c900-4bb4-a7d7-4be34cb2f1f7",
-        "applicationReceivedDate": "2026-05-06",
-        "id": "734e4884-1a6b-43ba-89ea-d38608645980",
-        "applicationReference": "28DI5545805",
+        "applicationReceivedDate": "2026-05-13",
+        "id": "7caa74b9-1962-4c59-95d7-0b3ac59ff73a",
+        "applicationReference": "28DI6433012",
         "applicationStatus": "FINALISED",
         "results": [
           {
@@ -334,5 +327,5 @@
     ]
   },
   "isReshare": false,
-  "orderingHearingId": "def401a4-bef2-4f57-afe4-f7e4d1ef3cd6"
+  "orderingHearingId": "ad88fcb4-6a81-443d-947e-ca89c2e3dcb6"
 }

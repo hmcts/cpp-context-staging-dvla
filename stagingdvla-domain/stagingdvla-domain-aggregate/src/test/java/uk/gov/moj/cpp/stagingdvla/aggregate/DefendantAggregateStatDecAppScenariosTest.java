@@ -207,30 +207,7 @@ class DefendantAggregateStatDecAppScenariosTest {
                                                 .add("previous", notNullValue()))
 
                 ),
-                Arguments.of("DD-40319-ac2B_1",
-                        defendantAggregateScenario()
-                                .withNotifyDriverStep(
-                                        "case hearing resulted",
-                                        "/testdata/drivernotifications/statdec/dd-40319/ac2B_1/case-resulted.json",
-                                        "/testdata/drivernotifications/statdec/dd-40319/ac2B_1/case-resulted-events.json",
-                                        jsonPathAssertions().add("notificationType", "New"))
-                                .withNotifyDriverStep(
-                                        "application hearing resulted",
-                                        "/testdata/drivernotifications/statdec/dd-40319/ac2B_1/app-resulted.json",
-                                        "/testdata/drivernotifications/statdec/dd-40319/ac2B_1/app-resulted-events.json",
-                                        jsonPathAssertions()
-                                                .add("notificationType", "Update")
-                                                .add("previous", notNullValue()))
-                                .withNotifyDriverStep(
-                                    "application hearing resulted",
-                                    "/testdata/drivernotifications/statdec/dd-40319/ac2B_1/adj_app-resulted.json",
-                                    "/testdata/drivernotifications/statdec/dd-40319/ac2B_1/adj_app-resulted-events.json",
-                                jsonPathAssertions()
-                                        .add("notificationType", "Update")
-                                        .add("previous", notNullValue()))
-
-                ),
-                Arguments.of("DD-40319-ac2C",
+                Arguments.of("DD-40319-ac2C Both offences have endorsement results in the both application hearings",
                         defendantAggregateScenario()
                                 .withNotifyDriverStep(
                                         "case hearing resulted",
@@ -248,6 +225,54 @@ class DefendantAggregateStatDecAppScenariosTest {
                                         "application hearing resulted",
                                         "/testdata/drivernotifications/statdec/dd-40319/ac2C/app-second-resulted.json",
                                         "/testdata/drivernotifications/statdec/dd-40319/ac2C/app-second-resulted-events.json",
+                                        jsonPathAssertions()
+                                                .add("notificationType", "Update")
+                                                .add("previous", notNullValue()))
+
+                ),
+                Arguments.of("DD-40319-ac2C1 fist offence resulted with endorsement and second offence is adjourn in the first " +
+                                "application hearing. In the adjourn hearing first offence doesn't have any result and second offence has endorsement result",
+                        defendantAggregateScenario()
+                                .withNotifyDriverStep(
+                                        "case hearing resulted",
+                                        "/testdata/drivernotifications/statdec/dd-40319/ac2C1/case-resulted.json",
+                                        "/testdata/drivernotifications/statdec/dd-40319/ac2C1/case-resulted-events.json",
+                                        jsonPathAssertions().add("notificationType", "New"))
+                                .withNotifyDriverStep(
+                                        "application hearing resulted",
+                                        "/testdata/drivernotifications/statdec/dd-40319/ac2C1/app-resulted.json",
+                                        "/testdata/drivernotifications/statdec/dd-40319/ac2C1/app-resulted-events.json",
+                                        jsonPathAssertions()
+                                                .add("notificationType", "Update")
+                                                .add("previous", notNullValue()))
+                                .withNotifyDriverStep(
+                                        "application hearing resulted",
+                                        "/testdata/drivernotifications/statdec/dd-40319/ac2C1/app-second-resulted.json",
+                                        "/testdata/drivernotifications/statdec/dd-40319/ac2C1/app-second-resulted-events.json",
+                                        jsonPathAssertions()
+                                                .add("notificationType", "Update")
+                                                .add("previous", notNullValue()))
+
+                ),
+                Arguments.of("DD-40319-ac2C2 fist offence resulted with endorsement and second offence is adjourn in the first " +
+                                "application hearing. In the adjourn hearing first offence has OATS result and second offence has endorsement result",
+                        defendantAggregateScenario()
+                                .withNotifyDriverStep(
+                                        "case hearing resulted",
+                                        "/testdata/drivernotifications/statdec/dd-40319/ac2C2/case-resulted.json",
+                                        "/testdata/drivernotifications/statdec/dd-40319/ac2C2/case-resulted-events.json",
+                                        jsonPathAssertions().add("notificationType", "New"))
+                                .withNotifyDriverStep(
+                                        "application hearing resulted",
+                                        "/testdata/drivernotifications/statdec/dd-40319/ac2C2/app-resulted.json",
+                                        "/testdata/drivernotifications/statdec/dd-40319/ac2C2/app-resulted-events.json",
+                                        jsonPathAssertions()
+                                                .add("notificationType", "Update")
+                                                .add("previous", notNullValue()))
+                                .withNotifyDriverStep(
+                                        "application hearing resulted",
+                                        "/testdata/drivernotifications/statdec/dd-40319/ac2C2/app-second-resulted.json",
+                                        "/testdata/drivernotifications/statdec/dd-40319/ac2C2/app-second-resulted-events.json",
                                         jsonPathAssertions()
                                                 .add("notificationType", "Update")
                                                 .add("previous", notNullValue()))

@@ -1,5 +1,5 @@
 {
-  "masterDefendantId": "df5587ad-01d6-4296-a1c6-a2e7f9678c91",
+  "masterDefendantId": "bb73a262-d23c-4558-b75f-62112b9e0518",
   "orderingCourt": {
     "address": {
       "address1": "176A Lavender Hill",
@@ -21,14 +21,14 @@
     "roomName": "Courtroom 01"
   },
   "nowContent": {
-    "orderDate": "2026-05-08",
+    "orderDate": "2026-05-19",
     "defendant": {
       "dateOfBirth": "1991-02-18",
       "gender": "MALE",
       "title": "MR",
-      "firstName": "Craig",
-      "lastName": "Tremblay",
-      "name": "Craig Tremblay",
+      "firstName": "Esther",
+      "lastName": "Keeling",
+      "name": "Esther Keeling",
       "address": {
         "line1": "21",
         "line2": "Furnburry Park Road",
@@ -37,23 +37,27 @@
       }
     },
     "caseApplicationReferences": [
-      "28DI5545805"
+      "28DI6433012"
     ],
     "cases": [
       {
         "caseStatus": "INACTIVE",
         "initiationCode": "C",
-        "reference": "28DI5545805",
-        "caseId": "9c024dd1-c722-4473-934d-437dab1b84c3",
+        "reference": "28DI6433012",
+        "caseId": "278513c9-ab07-41b1-b978-2c1c080197e6",
         "defendantCaseOffences": [
           {
             "title": "Supervisor of provisional licence holder use hand-held mobile phone / device - endorsable offence",
             "civilOffence": false,
             "dvlaCode": "CU80",
-            "convictionStatus": "Not Convicted",
+            "convictionDate": "2026-05-13",
+            "convictionStatus": "Convicted",
+            "plea": "GUILTY",
             "code": "RC86823",
             "modeOfTrial": "Summary",
+            "allocationDecision": "Summary-only offence",
             "endorsableFlag": true,
+            "convictingCourtCode": "2577",
             "wording": "Supervisor of provisional licence holder use hand-held mobile phone / device - endorsable offence",
             "startDate": "2025-08-13",
             "results": [
@@ -65,7 +69,7 @@
                     "promptIdentifier": "7cd1472f-2379-4f5b-9e67-98a43d86e122",
                     "promptReference": "AOF",
                     "label": "Amount of fine",
-                    "value": "£200.00"
+                    "value": "£100.00"
                   }
                 ],
                 "resultDefinitionGroup": "Imposition",
@@ -104,36 +108,6 @@
                 "label": "0: None or unknown"
               }
             ]
-          },
-          {
-            "title": "Permit use of motor vehicle - driver not having proper control - endorsable offence",
-            "civilOffence": false,
-            "dvlaCode": "CU84",
-            "convictionStatus": "Not Convicted",
-            "code": "RC86818",
-            "modeOfTrial": "Summary",
-            "endorsableFlag": true,
-            "wording": "Permit use of motor vehicle - driver not having proper control - endorsable offence",
-            "startDate": "2025-08-13",
-            "results": [
-              {
-                "resultIdentifier": "554c2622-c1cc-459e-a98d-b7f317ab065c",
-                "publishedForNows": false,
-                "prompts": [
-                  {
-                    "promptIdentifier": "d3205319-84cf-4c5b-9d7a-7e4bb1865054",
-                    "promptReference": "periodofConditionalDischarge",
-                    "durationSequence": 1,
-                    "label": "Period of conditional discharge",
-                    "value": "12 Months"
-                  }
-                ],
-                "d20": false,
-                "dvlaCode": "E",
-                "judicialResultCategory": "FINAL",
-                "label": "Conditional discharge"
-              }
-            ]
           }
         ]
       }
@@ -142,9 +116,9 @@
       {
         "applicationType": "Appearance to make statutory declaration (other than SJP)",
         "applicationTypeId": "a6663f2a-c900-4bb4-a7d7-4be34cb2f1f7",
-        "applicationReceivedDate": "2026-05-06",
-        "id": "734e4884-1a6b-43ba-89ea-d38608645980",
-        "applicationReference": "28DI5545805",
+        "applicationReceivedDate": "2026-05-13",
+        "id": "7caa74b9-1962-4c59-95d7-0b3ac59ff73a",
+        "applicationReference": "28DI6433012",
         "applicationStatus": "FINALISED",
         "results": [
           {
@@ -229,5 +203,5 @@
     ]
   },
   "isReshare": false,
-  "orderingHearingId": "c3a1e8e0-ddd9-476f-8d47-5dbe660ec216"
+  "orderingHearingId": "a8cf85b5-e2bb-4c65-a044-f82aedfad297"
 }

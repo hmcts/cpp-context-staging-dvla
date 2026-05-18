@@ -1,98 +1,47 @@
 {
   "caseApplicationReferences": [
-    "28DI5545805"
+    "28DI6433012"
   ],
   "cases": [
     {
-      "caseId": "9c024dd1-c722-4473-934d-437dab1b84c3",
+      "caseId": "278513c9-ab07-41b1-b978-2c1c080197e6",
       "caseStatus": "ACTIVE",
       "defendantCaseOffences": [
         {
+          "allocationDecision": "Summary-only offence",
           "civilOffence": false,
           "code": "RC86823",
-          "convictionStatus": "Not Convicted",
+          "convictingCourtCode": "2577",
+          "convictionDate": "2026-05-13",
+          "convictionStatus": "Convicted",
           "dateFromWhichDisqRemoved": "",
           "disqualificationPeriod": "",
           "dttpDtetp": "",
           "dvlaCode": "CU80",
           "endorsableFlag": true,
-          "fine": "£200.00",
+          "fine": "",
           "interimImposedFinalSentence": "",
           "modeOfTrial": "Summary",
-          "penaltyPoints": "2",
-          "results": [
-            {
-              "d20": false,
-              "judicialResultCategory": "FINAL",
-              "label": "Fine",
-              "prompts": [
-                {
-                  "label": "Amount of fine",
-                  "promptIdentifier": "7cd1472f-2379-4f5b-9e67-98a43d86e122",
-                  "promptReference": "AOF",
-                  "value": "£200.00"
-                }
-              ],
-              "publishedForNows": false,
-              "resultDefinitionGroup": "Imposition",
-              "resultIdentifier": "969f150c-cd05-46b0-9dd9-30891efcc766"
-            },
-            {
-              "d20": true,
-              "judicialResultCategory": "ANCILLARY",
-              "label": "Driving record endorsed with penalty points",
-              "prompts": [
-                {
-                  "label": "Penalty points for this offence",
-                  "promptIdentifier": "a8719de4-7783-448a-b792-e3f94e670ad0",
-                  "promptReference": "PENPT",
-                  "value": "2"
-                }
-              ],
-              "publishedForNows": false,
-              "resultIdentifier": "cee54856-4450-4f28-a8a9-72b688726201"
-            },
-            {
-              "d20": false,
-              "judicialResultCategory": "ANCILLARY",
-              "label": "0: None or unknown",
-              "publishedForNows": true,
-              "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956"
-            }
-          ],
-          "startDate": "2025-08-13",
-          "title": "Supervisor of provisional licence holder use hand-held mobile phone / device - endorsable offence",
-          "wording": "Supervisor of provisional licence holder use hand-held mobile phone / device - endorsable offence"
-        },
-        {
-          "civilOffence": false,
-          "code": "RC86818",
-          "convictionStatus": "Not Convicted",
-          "dateFromWhichDisqRemoved": "",
-          "disqualificationPeriod": "",
-          "dttpDtetp": "",
-          "dvlaCode": "CU84",
-          "endorsableFlag": true,
-          "fine": "£300.00",
-          "interimImposedFinalSentence": "",
-          "modeOfTrial": "Summary",
+          "otherSentence": "E06M",
           "penaltyPoints": "",
+          "plea": "GUILTY",
           "results": [
             {
               "d20": false,
+              "dvlaCode": "E",
               "judicialResultCategory": "FINAL",
-              "label": "Fine",
+              "label": "Conditional discharge",
               "prompts": [
                 {
-                  "label": "Amount of fine",
-                  "promptIdentifier": "7cd1472f-2379-4f5b-9e67-98a43d86e122",
-                  "promptReference": "AOF",
-                  "value": "£300.00"
+                  "durationSequence": 1,
+                  "label": "Period of conditional discharge",
+                  "promptIdentifier": "d3205319-84cf-4c5b-9d7a-7e4bb1865054",
+                  "promptReference": "periodofConditionalDischarge",
+                  "value": "6 Months"
                 }
               ],
               "publishedForNows": false,
-              "resultDefinitionGroup": "Imposition",
-              "resultIdentifier": "969f150c-cd05-46b0-9dd9-30891efcc766"
+              "resultIdentifier": "554c2622-c1cc-459e-a98d-b7f317ab065c"
             },
             {
               "d20": true,
@@ -110,13 +59,78 @@
             }
           ],
           "startDate": "2025-08-13",
+          "title": "Supervisor of provisional licence holder use hand-held mobile phone / device - endorsable offence",
+          "wording": "Supervisor of provisional licence holder use hand-held mobile phone / device - endorsable offence"
+        },
+        {
+          "allocationDecision": "Summary-only offence",
+          "civilOffence": false,
+          "code": "RC86818",
+          "convictingCourtCode": "2577",
+          "convictionDate": "2026-05-13",
+          "convictionStatus": "Convicted",
+          "dateFromWhichDisqRemoved": "",
+          "disqualificationPeriod": "000600",
+          "dttpDtetp": "",
+          "dvlaCode": "CU84",
+          "endorsableFlag": true,
+          "fine": "",
+          "interimImposedFinalSentence": "",
+          "modeOfTrial": "Summary",
+          "otherSentence": "E06M",
+          "penaltyPoints": "",
+          "plea": "GUILTY",
+          "results": [
+            {
+              "d20": false,
+              "dvlaCode": "E",
+              "judicialResultCategory": "FINAL",
+              "label": "Conditional discharge",
+              "prompts": [
+                {
+                  "durationSequence": 1,
+                  "label": "Period of conditional discharge",
+                  "promptIdentifier": "d3205319-84cf-4c5b-9d7a-7e4bb1865054",
+                  "promptReference": "periodofConditionalDischarge",
+                  "value": "6 Months"
+                }
+              ],
+              "publishedForNows": false,
+              "resultIdentifier": "554c2622-c1cc-459e-a98d-b7f317ab065c"
+            },
+            {
+              "d20": true,
+              "judicialResultCategory": "ANCILLARY",
+              "label": "Discretionary with ordinary disqualification",
+              "prompts": [
+                {
+                  "durationSequence": 1,
+                  "label": "Disqualification period",
+                  "promptIdentifier": "2bf54447-328c-4c1b-a123-341adbd52172",
+                  "promptReference": "disqualificationPeriod",
+                  "value": "6 Months"
+                }
+              ],
+              "publishedForNows": false,
+              "resultIdentifier": "ccfc452e-ebe4-4cd7-b8a0-4f90768447b4",
+              "resultWording": "Disqualified for holding or obtaining a driving licence. Discretionary disqualification. Driving record endorsed. Section 34(2) Road Traffic Offenders Act 1988"
+            },
+            {
+              "d20": false,
+              "judicialResultCategory": "ANCILLARY",
+              "label": "0: None or unknown",
+              "publishedForNows": true,
+              "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956"
+            }
+          ],
+          "startDate": "2025-08-13",
           "title": "Permit use of motor vehicle - driver not having proper control - endorsable offence",
           "wording": "Permit use of motor vehicle - driver not having proper control - endorsable offence"
         }
       ],
       "hasSV": false,
       "initiationCode": "C",
-      "reference": "28DI5545805"
+      "reference": "28DI6433012"
     }
   ],
   "courtApplications": [],
@@ -128,19 +142,19 @@
       "postCode": "TA1 1AT"
     },
     "dateOfBirth": "1991-02-18",
-    "firstName": "Craig",
+    "firstName": "Esther",
     "gender": "MALE",
-    "lastName": "Tremblay",
-    "name": "Craig Tremblay",
+    "lastName": "Keeling",
+    "name": "Esther Keeling",
     "title": "MR"
   },
   "distinctPrompts": [],
-  "identifier": "433a97ce-8f7a-49b2-91b2-e34938fb8f16",
+  "identifier": "cdd5d982-7b9a-4160-835c-3d933d030f3c",
   "licenceProducedInCourt": "0: None or unknown",
-  "masterDefendantId": "df5587ad-01d6-4296-a1c6-a2e7f9678c91",
-  "materialId": "004233b5-43cd-4645-bdee-9a516c769c1b",
+  "masterDefendantId": "bb73a262-d23c-4558-b75f-62112b9e0518",
+  "materialId": "b32da282-408f-4715-bc3d-1bd249711e5e",
   "notificationType": "New",
-  "orderDate": "2026-05-06",
+  "orderDate": "2026-05-13",
   "orderingCourt": {
     "address": {
       "address1": "176A Lavender Hill",
@@ -162,6 +176,6 @@
     "roomName": "Courtroom 02"
   },
   "orderingCourtCode": "2577",
-  "orderingHearingId": "022b4a7d-ae2c-4245-8c9c-496c3045be6a",
+  "orderingHearingId": "82416ef6-7e1e-4949-bc5c-1f790090cd80",
   "retrySequence": 0
 }

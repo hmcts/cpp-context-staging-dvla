@@ -137,7 +137,8 @@ public class OffenceUtil {
                                                          final DefendantCaseOffences previousOffence,
                                                          final List<CourtApplications> courtApplications,
                                                          final List<String> nonEndorsableOffenceCodes,
-                                                         final List<ApplicationTypes> sjpCaseToCcReferredApplications) {
+                                                         final List<ApplicationTypes> sjpCaseToCcReferredApplications,
+                                                         final List<CourtApplications> previousCourtApplications) {
         boolean nonEndorsable = nonEndorsableOffenceCodes.contains(getDvlaCode(previousOffence));
 
         if (hasAppealResultOrGranted(courtApplications) || isCaseReopen(courtApplications, sjpCaseToCcReferredApplications)) {
@@ -148,7 +149,16 @@ public class OffenceUtil {
             return getEndorsementStatusForSuspendDisqualificationPendingAppeal(currentOffence, previousOffence, courtApplications);
         } else if (isApplicationContainsOtherTypes(courtApplications)) {
             return getEndorsementStatusForOtherApplication(previousOffence);
-        } else if (!nonEndorsable && isAmendment) {
+        } else if(isStdecGranted(courtApplications)) {
+            return getEndorsementStatusForStDec(nonEndorsable, isAmendment, currentOffence, previousOffence, courtApplications, previousCourtApplications);
+        }
+        else {
+            return getEndorsementStatus(isAmendment, currentOffence, courtApplications, nonEndorsable);
+        }
+    }
+
+    private static EndorsementStatus getEndorsementStatus(final boolean isAmendment, final DefendantCaseOffences currentOffence, final List<CourtApplications> courtApplications, final boolean nonEndorsable) {
+        if (!nonEndorsable && isAmendment) {
             return isNull(currentOffence) ? REMOVE : UPDATE_NOMERGE;
         } else if (!nonEndorsable && hasResultType(courtApplications, DSPAS)) {
             return UPDATE_MERGE;
@@ -252,6 +262,29 @@ public class OffenceUtil {
             return NO_UPDATE_PREV_NOT_ENDORSED;
         }
 
+    }
+
+    public static EndorsementStatus getEndorsementStatusForStDec(final boolean nonEndorsable, final boolean isAmendment,
+                                                                 final DefendantCaseOffences currentOffence, final DefendantCaseOffences previousOffence,
+                                                                 final List<CourtApplications> courtApplications, final List<CourtApplications> previousCourtApplications) {
+
+        if (isStdecGranted(previousCourtApplications)) {
+            if (isNull(currentOffence)) {
+                if (hasD20Endorsement(previousOffence)) {
+                    return NO_UPDATE_PREV_ENDORSED;
+                } else {
+                    return NO_UPDATE_PREV_NOT_ENDORSED;
+                }
+            } else if (hasResultType(currentOffence, OATS)) {
+                if (hasD20Endorsement(previousOffence)) {
+                    return OATS_PREV_ENDORSED;
+                } else {
+                    return OATS_PREV_NOT_ENDORSED;
+                }
+            }
+        }
+
+        return getEndorsementStatus(isAmendment, currentOffence, courtApplications, nonEndorsable);
     }
 
     public static String getDvlaCode(DefendantCaseOffences offence) {
