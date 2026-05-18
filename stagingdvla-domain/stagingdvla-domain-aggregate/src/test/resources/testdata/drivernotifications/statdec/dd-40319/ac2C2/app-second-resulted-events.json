@@ -1,26 +1,49 @@
 {
   "caseApplicationReferences": [
-    "28DI5545805"
+    "28DI8598166"
   ],
   "cases": [
     {
-      "caseId": "9c024dd1-c722-4473-934d-437dab1b84c3",
+      "caseId": "677e1b9b-4455-4afb-a79f-7b5022d3a445",
       "caseStatus": "INACTIVE",
       "defendantCaseOffences": [
         {
           "civilOffence": false,
-          "code": "RC86823",
+          "code": "PS90015",
           "convictionStatus": "Not Convicted",
           "dateFromWhichDisqRemoved": "",
-          "disqualificationPeriod": "",
+          "disqualificationPeriod": "000300",
           "dttpDtetp": "",
-          "dvlaCode": "CU80",
-          "endorsableFlag": true,
-          "fine": "£200.00",
+          "dvlaCode": "NE98",
+          "endorsableFlag": false,
+          "fine": "£300.00",
           "interimImposedFinalSentence": "",
           "modeOfTrial": "Summary",
           "penaltyPoints": "",
           "results": [
+            {
+              "d20": true,
+              "judicialResultCategory": "ANCILLARY",
+              "label": "Discretionary with ordinary disqualification",
+              "prompts": [
+                {
+                  "durationSequence": 1,
+                  "label": "Disqualification period",
+                  "promptIdentifier": "2bf54447-328c-4c1b-a123-341adbd52172",
+                  "promptReference": "disqualificationPeriod",
+                  "value": "3 Months"
+                },
+                {
+                  "label": "Defendant driving licence number",
+                  "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+                  "promptReference": "defendantDrivingLicenceNumber",
+                  "value": "VANFL002222OW9PH"
+                }
+              ],
+              "publishedForNows": false,
+              "resultIdentifier": "ccfc452e-ebe4-4cd7-b8a0-4f90768447b4",
+              "resultWording": "Disqualified for holding or obtaining a driving licence. Discretionary disqualification. Driving record endorsed. Section 34(2) Road Traffic Offenders Act 1988"
+            },
             {
               "d20": false,
               "judicialResultCategory": "FINAL",
@@ -30,19 +53,12 @@
                   "label": "Amount of fine",
                   "promptIdentifier": "7cd1472f-2379-4f5b-9e67-98a43d86e122",
                   "promptReference": "AOF",
-                  "value": "£200.00"
+                  "value": "£300.00"
                 }
               ],
               "publishedForNows": false,
               "resultDefinitionGroup": "Imposition",
               "resultIdentifier": "969f150c-cd05-46b0-9dd9-30891efcc766"
-            },
-            {
-              "d20": true,
-              "judicialResultCategory": "ANCILLARY",
-              "label": "Driving record endorsed (no points)",
-              "publishedForNows": false,
-              "resultIdentifier": "b0aeb4fc-df63-4e2f-af88-97e3f23e847f"
             },
             {
               "d20": false,
@@ -53,7 +69,7 @@
                   "label": "Date to pay in full by",
                   "promptIdentifier": "ee7d253a-c629-11e8-a355-529269fb1459",
                   "promptReference": "PBD",
-                  "value": "20/03/2026"
+                  "value": "05/05/2027"
                 }
               ],
               "publishedForNows": false,
@@ -68,23 +84,23 @@
               "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956"
             }
           ],
-          "startDate": "2025-08-13",
-          "title": "Supervisor of provisional licence holder use hand-held mobile phone / device - endorsable offence",
-          "wording": "Supervisor of provisional licence holder use hand-held mobile phone / device - endorsable offence"
+          "startDate": "2022-11-28",
+          "title": "Public service vehicles - passenger failing to pay fare",
+          "wording": "Public service vehicles - passenger failing to pay fare"
         },
         {
           "civilOffence": false,
-          "code": "RC86818",
+          "code": "OF61102C",
           "convictionStatus": "Not Convicted",
           "dateFromWhichDisqRemoved": "",
           "disqualificationPeriod": "",
           "dttpDtetp": "",
-          "dvlaCode": "CU84",
-          "endorsableFlag": true,
-          "fine": "£200.00",
+          "dvlaCode": "NE98",
+          "endorsableFlag": false,
+          "fine": "£300.00",
           "interimImposedFinalSentence": "",
-          "modeOfTrial": "Summary",
-          "penaltyPoints": "6",
+          "modeOfTrial": "Indictable",
+          "penaltyPoints": "7",
           "results": [
             {
               "d20": false,
@@ -95,7 +111,7 @@
                   "label": "Amount of fine",
                   "promptIdentifier": "7cd1472f-2379-4f5b-9e67-98a43d86e122",
                   "promptReference": "AOF",
-                  "value": "£200.00"
+                  "value": "£300.00"
                 }
               ],
               "publishedForNows": false,
@@ -111,7 +127,13 @@
                   "label": "Penalty points for this offence",
                   "promptIdentifier": "a8719de4-7783-448a-b792-e3f94e670ad0",
                   "promptReference": "PENPT",
-                  "value": "6"
+                  "value": "7"
+                },
+                {
+                  "label": "Defendant driving licence number",
+                  "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+                  "promptReference": "defendantDrivingLicenceNumber",
+                  "value": "VANFL002222OW9PH"
                 }
               ],
               "publishedForNows": false,
@@ -126,7 +148,7 @@
                   "label": "Date to pay in full by",
                   "promptIdentifier": "ee7d253a-c629-11e8-a355-529269fb1459",
                   "promptReference": "PBD",
-                  "value": "20/03/2025"
+                  "value": "04/06/2027"
                 }
               ],
               "publishedForNows": false,
@@ -141,24 +163,24 @@
               "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956"
             }
           ],
-          "startDate": "2025-08-13",
-          "title": "Permit use of motor vehicle - driver not having proper control - endorsable offence",
-          "wording": "Permit use of motor vehicle - driver not having proper control - endorsable offence"
+          "startDate": "2022-12-12",
+          "title": "Conspire to assault a person thereby occasioning them actual bodily harm",
+          "wording": "Sarah Moen at Hand Summit, conspired together with Elaine Klein to assault Julie Rath, thereby occasioning actual bodily harm."
         }
       ],
       "hasSV": false,
       "initiationCode": "C",
-      "reference": "28DI5545805"
+      "reference": "28DI8598166"
     }
   ],
   "courtApplications": [
     {
-      "applicationReceivedDate": "2026-05-06",
-      "applicationReference": "28DI5545805",
+      "applicationReceivedDate": "2026-05-18",
+      "applicationReference": "28DI8598166",
       "applicationStatus": "FINALISED",
       "applicationType": "Appearance to make statutory declaration (other than SJP)",
       "applicationTypeId": "a6663f2a-c900-4bb4-a7d7-4be34cb2f1f7",
-      "id": "734e4884-1a6b-43ba-89ea-d38608645980",
+      "id": "37d11289-8bf1-4774-9c4c-5a1e76011cab",
       "results": [
         {
           "d20": false,
@@ -166,146 +188,86 @@
           "label": "Granted",
           "publishedForNows": false,
           "resultIdentifier": "2b3f7c20-8fc1-4fad-9076-df196c24b27e"
-        },
-        {
-          "d20": false,
-          "judicialResultCategory": "FINAL",
-          "label": "Statutory Declaration",
-          "prompts": [
-            {
-              "label": "Statutory declaration made under",
-              "promptIdentifier": "7b6ef0ac-2d0b-44e5-a68e-4720b96cc679",
-              "promptReference": "statutoryDeclarationMadeUnder",
-              "value": "Section 16E of the Magistrates' Courts Act 1980"
-            },
-            {
-              "label": "Financial penalties to be written off",
-              "promptIdentifier": "36e32c50-dbec-41c4-904b-25eb20c9c54a",
-              "promptReference": "financialPenaltiesToBeWrittenOff",
-              "value": "No"
-            },
-            {
-              "label": "Prosecutor to be notified organisation name",
-              "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
-              "promptReference": "prosecutortobenotifiedOrganisationName",
-              "value": "Derbyshire Police"
-            },
-            {
-              "label": "Prosecutor to be notified address line 1",
-              "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
-              "promptReference": "prosecutortobenotifiedAddress1",
-              "value": "Criminal Justice Department"
-            },
-            {
-              "label": "Prosecutor to be notified address line 2",
-              "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
-              "promptReference": "prosecutortobenotifiedAddress2",
-              "value": "Derbyshire Constabulary"
-            },
-            {
-              "label": "Prosecutor to be notified address line 3",
-              "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
-              "promptReference": "prosecutortobenotifiedAddress3",
-              "value": "Butterley Hall"
-            },
-            {
-              "label": "Prosecutor to be notified address line 4",
-              "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
-              "promptReference": "prosecutortobenotifiedAddress4",
-              "value": "Ripley"
-            },
-            {
-              "label": "Prosecutor to be notified address line 5",
-              "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
-              "promptReference": "prosecutortobenotifiedAddress5",
-              "value": "Derby"
-            },
-            {
-              "label": "Prosecutor to be notified post code",
-              "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
-              "promptReference": "prosecutortobenotifiedPostCode",
-              "value": "DE5 3RS"
-            },
-            {
-              "label": "Prosecutor to be notified email address 1",
-              "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
-              "promptReference": "prosecutortobenotifiedEmailAddress1",
-              "value": "criminaldataderbyshire@derbyshire.police.uk"
-            }
-          ],
-          "publishedForNows": false,
-          "resultDefinitionGroup": "Enforcement",
-          "resultIdentifier": "e2f6e11b-c3a2-4e76-8d29-fbede4174988"
         }
       ]
     }
   ],
   "defendant": {
     "address": {
-      "line1": "21",
-      "line2": "Furnburry Park Road",
-      "line3": "London",
-      "postCode": "TA1 1AT"
+      "line1": "9999A9999AAAA",
+      "line2": "Woodlane",
+      "line3": "addressline 3",
+      "line4": "Bristol",
+      "line5": "Avon",
+      "postCode": "SW11 3TQ"
     },
-    "dateOfBirth": "1991-02-18",
-    "firstName": "Craig",
+    "dateOfBirth": "2005-11-11",
+    "driverNumber": "VANFL002222OW9PH",
+    "firstName": "Sarah",
     "gender": "MALE",
-    "lastName": "Tremblay",
-    "name": "Craig Tremblay",
-    "title": "MR"
+    "lastName": "Moen",
+    "name": "Sarah Moen",
+    "title": "Mr"
   },
-  "distinctPrompts": [],
-  "identifier": "4a5cbe77-7b96-4552-ab45-b88bd5e9e5d1",
+  "distinctPrompts": [
+    {
+      "label": "Defendant driving licence number",
+      "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+      "promptReference": "defendantDrivingLicenceNumber",
+      "value": "VANFL002222OW9PH"
+    }
+  ],
+  "identifier": "f990d19b-95c6-490a-b387-30699369350d",
   "licenceProducedInCourt": "0: None or unknown",
-  "masterDefendantId": "df5587ad-01d6-4296-a1c6-a2e7f9678c91",
-  "materialId": "05c97965-e7c6-4880-944a-4f52e066a0f5",
+  "masterDefendantId": "81182449-452f-421e-b468-eb2ffc96cbdc",
+  "materialId": "c1ed5003-d8d4-489e-b54f-465f343eb15c",
   "notificationType": "Update",
   "notificationWasPreviouslySent": true,
-  "orderDate": "2026-05-08",
+  "orderDate": "2026-05-25",
   "orderingCourt": {
     "address": {
-      "address1": "176A Lavender Hill",
-      "address2": "London",
-      "address3": "",
+      "address1": "The Magistrates' Court",
+      "address2": "Barclay Road",
+      "address3": "Croydon",
       "address4": "",
       "address5": "",
-      "postcode": "SW11 1JU"
+      "postcode": "CR9 3NG"
     },
-    "code": "B01LY00",
-    "courtHearingLocation": "B01LY01",
-    "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+    "code": "B01EF00",
+    "courtHearingLocation": "B01EF01",
+    "id": "31b3d313-7a7c-4598-bb4b-c1bff9b00e26",
     "lja": {
-      "ljaCode": "2577",
-      "ljaName": "South West London Magistrates' Court"
+      "ljaCode": "2576",
+      "ljaName": "South London Magistrates' Court"
     },
-    "name": "Lavender Hill Magistrates' Court",
-    "roomId": "9e4932f7-97b2-3010-b942-ddd2624e4dd8",
+    "name": "Croydon Magistrates' Court",
+    "roomId": "bfb67c13-789c-373b-b442-52b82faf863e",
     "roomName": "Courtroom 01"
   },
-  "orderingCourtCode": "2577",
-  "orderingHearingId": "c3a1e8e0-ddd9-476f-8d47-5dbe660ec216",
+  "orderingCourtCode": "2576",
+  "orderingHearingId": "8d230449-4827-4d6c-89f9-cfb40c9c3caa",
   "previous": {
     "caseApplicationReferences": [
-      "28DI5545805"
+      "28DI8598166"
     ],
     "cases": [
       {
-        "caseId": "9c024dd1-c722-4473-934d-437dab1b84c3",
+        "caseId": "677e1b9b-4455-4afb-a79f-7b5022d3a445",
         "caseStatus": "INACTIVE",
         "defendantCaseOffences": [
           {
             "civilOffence": false,
-            "code": "RC86818",
+            "code": "OF61102C",
             "convictionStatus": "Not Convicted",
             "dateFromWhichDisqRemoved": "",
             "disqualificationPeriod": "",
             "dttpDtetp": "",
-            "dvlaCode": "CU84",
-            "endorsableFlag": true,
-            "fine": "£200.00",
+            "dvlaCode": "NE98",
+            "endorsableFlag": false,
+            "fine": "£300.00",
             "interimImposedFinalSentence": "",
-            "modeOfTrial": "Summary",
-            "penaltyPoints": "6",
+            "modeOfTrial": "Indictable",
+            "penaltyPoints": "7",
             "results": [
               {
                 "d20": false,
@@ -316,7 +278,7 @@
                     "label": "Amount of fine",
                     "promptIdentifier": "7cd1472f-2379-4f5b-9e67-98a43d86e122",
                     "promptReference": "AOF",
-                    "value": "£200.00"
+                    "value": "£300.00"
                   }
                 ],
                 "publishedForNows": false,
@@ -332,7 +294,13 @@
                     "label": "Penalty points for this offence",
                     "promptIdentifier": "a8719de4-7783-448a-b792-e3f94e670ad0",
                     "promptReference": "PENPT",
-                    "value": "6"
+                    "value": "7"
+                  },
+                  {
+                    "label": "Defendant driving licence number",
+                    "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+                    "promptReference": "defendantDrivingLicenceNumber",
+                    "value": "VANFL002222OW9PH"
                   }
                 ],
                 "publishedForNows": false,
@@ -347,7 +315,7 @@
                     "label": "Date to pay in full by",
                     "promptIdentifier": "ee7d253a-c629-11e8-a355-529269fb1459",
                     "promptReference": "PBD",
-                    "value": "20/03/2025"
+                    "value": "04/06/2027"
                   }
                 ],
                 "publishedForNows": false,
@@ -362,63 +330,73 @@
                 "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956"
               }
             ],
-            "startDate": "2025-08-13",
-            "title": "Permit use of motor vehicle - driver not having proper control - endorsable offence",
-            "wording": "Permit use of motor vehicle - driver not having proper control - endorsable offence"
+            "startDate": "2022-12-12",
+            "title": "Conspire to assault a person thereby occasioning them actual bodily harm",
+            "wording": "Sarah Moen at Hand Summit, conspired together with Elaine Klein to assault Julie Rath, thereby occasioning actual bodily harm."
           }
         ],
         "hasSV": false,
         "initiationCode": "C",
-        "reference": "28DI5545805"
+        "reference": "28DI8598166"
       }
     ],
     "defendant": {
       "address": {
-        "line1": "21",
-        "line2": "Furnburry Park Road",
-        "line3": "London",
-        "postCode": "TA1 1AT"
+        "line1": "9999A9999AAAA",
+        "line2": "Woodlane",
+        "line3": "addressline 3",
+        "line4": "Bristol",
+        "line5": "Avon",
+        "postCode": "SW11 3TQ"
       },
-      "dateOfBirth": "1991-02-18",
-      "firstName": "Craig",
+      "dateOfBirth": "2005-11-11",
+      "driverNumber": "VANFL002222OW9PH",
+      "firstName": "Sarah",
       "gender": "MALE",
-      "lastName": "Tremblay",
-      "name": "Craig Tremblay",
-      "title": "MR"
+      "lastName": "Moen",
+      "name": "Sarah Moen",
+      "title": "Mr"
     },
-    "distinctPrompts": [],
-    "identifier": "80ed2323-e07d-4435-963f-ffdc12a62857",
+    "distinctPrompts": [
+      {
+        "label": "Defendant driving licence number",
+        "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+        "promptReference": "defendantDrivingLicenceNumber",
+        "value": "VANFL002222OW9PH"
+      }
+    ],
+    "identifier": "c2bee598-63db-405c-8667-2bdcdd61795f",
     "licenceProducedInCourt": "0: None or unknown",
-    "masterDefendantId": "df5587ad-01d6-4296-a1c6-a2e7f9678c91",
-    "materialId": "0b6218d6-47b2-42a0-8fe4-99601c8757ef",
+    "masterDefendantId": "81182449-452f-421e-b468-eb2ffc96cbdc",
+    "materialId": "e8465601-586c-4716-bd47-02e871ca9284",
     "notificationWasPreviouslySent": true,
-    "orderDate": "2026-05-07",
+    "orderDate": "2026-05-20",
     "orderingCourt": {
       "address": {
-        "address1": "176A Lavender Hill",
-        "address2": "London",
-        "address3": "",
+        "address1": "The Magistrates' Court",
+        "address2": "Barclay Road",
+        "address3": "Croydon",
         "address4": "",
         "address5": "",
-        "postcode": "SW11 1JU"
+        "postcode": "CR9 3NG"
       },
-      "code": "B01LY00",
-      "courtHearingLocation": "B01LY01",
-      "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+      "code": "B01EF00",
+      "courtHearingLocation": "B01EF01",
+      "id": "31b3d313-7a7c-4598-bb4b-c1bff9b00e26",
       "lja": {
-        "ljaCode": "2577",
-        "ljaName": "South West London Magistrates' Court"
+        "ljaCode": "2576",
+        "ljaName": "South London Magistrates' Court"
       },
-      "name": "Lavender Hill Magistrates' Court",
-      "roomId": "9e4932f7-97b2-3010-b942-ddd2624e4dd8",
+      "name": "Croydon Magistrates' Court",
+      "roomId": "bfb67c13-789c-373b-b442-52b82faf863e",
       "roomName": "Courtroom 01"
     },
-    "orderingHearingId": "def401a4-bef2-4f57-afe4-f7e4d1ef3cd6",
+    "orderingHearingId": "d5d78db8-c206-42a3-8258-0128180f11ac",
     "retrySequence": 0
   },
   "retrySequence": 0,
   "updatedEndorsements": [
-    "CU80",
-    "CU84"
+    "NE98",
+    "NE98"
   ]
 }
