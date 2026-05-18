@@ -104,6 +104,24 @@ class DefendantAggregateStatDecAppScenariosTest {
                                         null)
 
                 ),
+
+                Arguments.of("DD-40382-ac3A1_2",
+                        defendantAggregateScenario()
+                                .withNotifyDriverStep(
+                                        "case hearing resulted",
+                                        "/testdata/drivernotifications/statdec/dd-40382/ac3A1/case-resulted.json",
+                                        "/testdata/drivernotifications/statdec/dd-40382/ac3A1/case-resulted-events.json",
+                                        jsonPathAssertions().add("notificationType", "New"))
+                                .withNotifyDriverStep(
+                                        "sjp refer to cc hearing resulted",
+                                        "/testdata/drivernotifications/statdec/dd-40382/ac3A1/app-resulted.json",
+                                        "/testdata/drivernotifications/statdec/dd-40382/ac3A1/app-resulted-events.json")
+                                .withNotifyDriverStep(
+                                        "application hearing resulted",
+                                        "/testdata/drivernotifications/statdec/dd-40382/ac3A1/app-resulted.json",
+                                        null)
+
+                ),
                 Arguments.of("DD-40382-ac4",
                         defendantAggregateScenario()
                                 .withNotifyDriverStep(
