@@ -500,7 +500,7 @@ public class DriverNotifiedEngine {
             final Cases currentCase = cases.stream()
                     .filter(aCase -> previousCase.getCaseId().equals(aCase.getCaseId())).findFirst().orElse(null);
             final List<CourtApplications> previousCourtApplications = Optional.ofNullable(previousDriverNotified.getCourtApplications()).orElse(emptyList()).stream()
-                    .filter(application -> application.getApplicationReference().equals(currentCase.getReference()))
+                    .filter(application -> nonNull(currentCase) && application.getApplicationReference().equals(currentCase.getReference()))
                     .toList();
             previousCase.getDefendantCaseOffences().forEach(previousOffence -> {
                 final DefendantCaseOffences currentOffence = getMatchingOffence(currentCase, previousOffence);

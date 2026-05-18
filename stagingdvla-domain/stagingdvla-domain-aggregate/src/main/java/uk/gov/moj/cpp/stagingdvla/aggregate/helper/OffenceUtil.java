@@ -268,7 +268,7 @@ public class OffenceUtil {
                                                                  final DefendantCaseOffences currentOffence, final DefendantCaseOffences previousOffence,
                                                                  final List<CourtApplications> courtApplications, final List<CourtApplications> previousCourtApplications) {
 
-        if (isNotEmpty(previousCourtApplications)) {
+        if (isStdecGranted(previousCourtApplications)) {
             if (isNull(currentOffence)) {
                 if (hasD20Endorsement(previousOffence)) {
                     return NO_UPDATE_PREV_ENDORSED;
