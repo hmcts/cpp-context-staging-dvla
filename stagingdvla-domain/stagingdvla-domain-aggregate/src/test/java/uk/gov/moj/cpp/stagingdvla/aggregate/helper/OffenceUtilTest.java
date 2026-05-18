@@ -10,6 +10,10 @@ import static uk.gov.justice.cpp.stagingdvla.event.Results.results;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ApplicationType.AACMC;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ApplicationType.ACP;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ApplicationType.APPRO;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.NO_UPDATE_PREV_ENDORSED;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.NO_UPDATE_PREV_NOT_ENDORSED;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.OATS_PREV_ENDORSED;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.OATS_PREV_NOT_ENDORSED;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.REMOVE;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.EndorsementStatus.UPDATE_MERGE;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.AACA;
@@ -37,6 +41,7 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.Res
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.WDRNNOT;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.WDRNOFF;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.getEndorsementStatus;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.getEndorsementStatusForStDec;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAnyD20Removed;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAnyResult;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAnyResultOrPromptModified;
@@ -339,6 +344,76 @@ class OffenceUtilTest {
         final AggregateConstants.EndorsementStatus endorsementStatus = getEndorsementStatus(false, null, null, courtApplications, emptyList(), null, emptyList());
 
         assertThat(endorsementStatus, is(REMOVE));
+    }
+
+    @Test
+    void shouldGetEndorsementStatusForStDecWhenCurrentOffenceIsNullAndPreviousOffenceHasEndorsement(){
+        final DefendantCaseOffences previousOffence = DefendantCaseOffences.defendantCaseOffences()
+                .withResults(List.of(results()
+                                .withD20(true)
+                        .build()))
+                .build();
+        final List<CourtApplications> courtApplications = getCourtApplications(G);
+        final List<CourtApplications> previousCourtApplications = getCourtApplications(G);
+
+        AggregateConstants.EndorsementStatus result = getEndorsementStatusForStDec(true,false,null,previousOffence, courtApplications,previousCourtApplications);
+        assertThat(result, is(NO_UPDATE_PREV_ENDORSED));
+    }
+
+    @Test
+    void shouldGetEndorsementStatusForStDecWhenCurrentOffenceIsNullAndPreviousOffenceHasNoEndorsement(){
+        final DefendantCaseOffences previousOffence = DefendantCaseOffences.defendantCaseOffences()
+                .withResults(List.of(results()
+                        .withD20(false)
+                        .build()))
+                .build();
+        final List<CourtApplications> courtApplications = getCourtApplications(G);
+        final List<CourtApplications> previousCourtApplications = getCourtApplications(G);
+
+        AggregateConstants.EndorsementStatus result = getEndorsementStatusForStDec(true,false,null,previousOffence, courtApplications,previousCourtApplications);
+        assertThat(result, is(NO_UPDATE_PREV_NOT_ENDORSED));
+    }
+
+    @Test
+    void shouldGetEndorsementStatusForStDecWhenCurrentOffenceIsOATSAndPreviousOffenceHasNoEndorsement(){
+        final DefendantCaseOffences previousOffence = DefendantCaseOffences.defendantCaseOffences()
+                .withResults(List.of(results()
+                        .withD20(false)
+                        .build()))
+                .build();
+
+        final DefendantCaseOffences currentOffence = DefendantCaseOffences.defendantCaseOffences()
+                .withResults(List.of(results()
+                                .withResultIdentifier(OATS.id)
+                        .withD20(false)
+                        .build()))
+                .build();
+        final List<CourtApplications> courtApplications = getCourtApplications(G);
+        final List<CourtApplications> previousCourtApplications = getCourtApplications(G);
+
+        AggregateConstants.EndorsementStatus result = getEndorsementStatusForStDec(true,false,currentOffence,previousOffence, courtApplications,previousCourtApplications);
+        assertThat(result, is(OATS_PREV_NOT_ENDORSED));
+    }
+
+    @Test
+    void shouldGetEndorsementStatusForStDecWhenCurrentOffenceIsOATSAndPreviousOffenceHasEndorsement(){
+        final DefendantCaseOffences previousOffence = DefendantCaseOffences.defendantCaseOffences()
+                .withResults(List.of(results()
+                        .withD20(true)
+                        .build()))
+                .build();
+
+        final DefendantCaseOffences currentOffence = DefendantCaseOffences.defendantCaseOffences()
+                .withResults(List.of(results()
+                        .withResultIdentifier(OATS.id)
+                        .withD20(false)
+                        .build()))
+                .build();
+        final List<CourtApplications> courtApplications = getCourtApplications(G);
+        final List<CourtApplications> previousCourtApplications = getCourtApplications(G);
+
+        AggregateConstants.EndorsementStatus result = getEndorsementStatusForStDec(true,false,currentOffence,previousOffence, courtApplications,previousCourtApplications);
+        assertThat(result, is(OATS_PREV_ENDORSED));
     }
 
     private Cases buildCases(String resultIdentifier, boolean d20) {
