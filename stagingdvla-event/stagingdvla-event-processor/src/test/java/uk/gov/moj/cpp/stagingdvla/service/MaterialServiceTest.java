@@ -4,24 +4,12 @@ import static java.util.UUID.randomUUID;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static uk.gov.justice.services.messaging.JsonEnvelope.envelopeFrom;
-import static uk.gov.justice.services.messaging.JsonEnvelope.metadataFrom;
-import static uk.gov.justice.services.messaging.JsonMetadata.ID;
-import static uk.gov.justice.services.messaging.JsonMetadata.NAME;
-import static uk.gov.justice.services.messaging.JsonMetadata.USER_ID;
-import static uk.gov.justice.services.messaging.JsonObjects.createObjectBuilder;
 import static uk.gov.justice.services.test.utils.core.messaging.MetadataBuilderFactory.metadataWithRandomUUID;
-import static uk.gov.moj.cpp.stagingdvla.notify.util.DrivingConvictionTransformUtil.transformToNotifyDrivingConviction;
-import static uk.gov.moj.cpp.stagingdvla.service.MaterialService.AUDIT_REPORT_ORIGINATOR_VALUE;
-import static uk.gov.moj.cpp.stagingdvla.service.MaterialService.CONTEXT;
-import static uk.gov.moj.cpp.stagingdvla.service.MaterialService.PROCESS_ID;
-import static uk.gov.moj.cpp.stagingdvla.service.MaterialService.SOURCE;
 
 import uk.gov.justice.services.core.sender.Sender;
 import uk.gov.justice.services.messaging.Envelope;
 import uk.gov.justice.services.messaging.JsonEnvelope;
 import uk.gov.justice.services.messaging.Metadata;
-import uk.gov.justice.services.messaging.MetadataBuilder;
 import uk.gov.moj.cpp.stagingdvla.exception.UserNotFoundException;
 
 import java.util.Optional;
@@ -99,7 +87,5 @@ public class MaterialServiceTest {
     public void shouldUploadMaterial() {
         assertThrows(UserNotFoundException.class, () -> service.uploadMaterial(randomUUID(), randomUUID(), (UUID) null));
     }
-
-
 
 }

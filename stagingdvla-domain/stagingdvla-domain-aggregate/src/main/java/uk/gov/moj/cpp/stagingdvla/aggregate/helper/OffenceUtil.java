@@ -15,6 +15,7 @@ import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 import static org.apache.commons.lang3.StringUtils.isNumeric;
 import static org.slf4j.LoggerFactory.getLogger;
 import static uk.gov.justice.core.courts.JudicialResultCategory.ANCILLARY;
+import static uk.gov.justice.core.courts.JudicialResultCategory.INTERMEDIARY;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ALCOHOL_DRUG_MAX_LEVEL;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.AOF;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ApplicationType.AACMC;
@@ -171,7 +172,7 @@ public class OffenceUtil {
                 } else {
                     return OATS_PREV_NOT_ENDORSED;
                 }
-            } else if (hasResultType(currentOffence, ADJ)) {
+            } else if (hasResultCategory(currentOffence, INTERMEDIARY)) {
                 if (hasD20Endorsement(previousOffence)) {
                     return NO_UPDATE_PREV_ENDORSED;
                 } else {
@@ -481,6 +482,11 @@ public class OffenceUtil {
     public static boolean hasResultCategoryOnly(final DefendantCaseOffences offence, final JudicialResultCategory judicialResultCategory) {
         return nonNull(offence) && isNotEmpty(offence.getResults()) &&
                 offence.getResults().stream().allMatch(result -> judicialResultCategory.equals(result.getJudicialResultCategory()));
+    }
+
+    public static boolean hasResultCategory(final DefendantCaseOffences offence, final JudicialResultCategory judicialResultCategory) {
+        return nonNull(offence) && isNotEmpty(offence.getResults()) &&
+                offence.getResults().stream().anyMatch(result -> judicialResultCategory.equals(result.getJudicialResultCategory()));
     }
 
     public static boolean hasResultType(final DefendantCaseOffences offence, final ResultType resultType) {
