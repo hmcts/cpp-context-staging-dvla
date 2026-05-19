@@ -113,8 +113,6 @@ public class DriverNotifiedEventAssertion {
         return hasDateFromWhichDisqRemoved(1, dateFromWhichDisqRemoved);
     }
 
-
-
     public DriverNotifiedEventAssertion hasConvictionDate(String convictionDate) {
         return hasConvictionDate(1, convictionDate);
     }
