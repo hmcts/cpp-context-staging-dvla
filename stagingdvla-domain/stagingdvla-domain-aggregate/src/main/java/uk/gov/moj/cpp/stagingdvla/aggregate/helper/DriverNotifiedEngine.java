@@ -293,11 +293,10 @@ public class DriverNotifiedEngine {
                 .build();
     }
 
-    private static boolean isStatDecApplicationAmendedToReject(final List<CourtApplications> courtApplications, final Boolean isReshare, final UUID hearingId,  final Map<UUID, DriverNotified> previousDriverNotifiedByHearing) {
-        return isApplicationNotGranted(courtApplications) && courtApplications.stream().anyMatch(OffenceUtil::isStDec) &&
-                nonNull(previousDriverNotifiedByHearing) && previousDriverNotifiedByHearing.containsKey(hearingId) &&
-                hasOneOfResultType(courtApplications, List.of(ADJ,RFSD,WDRN,WDRNOFF,WDRNNOT,DINE)) &&
-                Boolean.TRUE.equals(isReshare);
+    private static boolean isStatDecApplicationAmendedToReject(final List<CourtApplications> courtApplications, final Boolean isReshare, final UUID hearingId, final Map<UUID, DriverNotified> previousDriverNotifiedByHearing) {
+        return Boolean.TRUE.equals(isReshare) && nonNull(previousDriverNotifiedByHearing) && previousDriverNotifiedByHearing.containsKey(hearingId) &&
+                isApplicationNotGranted(courtApplications) && courtApplications.stream().anyMatch(OffenceUtil::isStDec) &&
+                hasOneOfResultType(courtApplications, List.of(ADJ, RFSD, WDRN, WDRNOFF, WDRNNOT, DINE));
     }
 
     private static List<Cases> getUpdatedCases(final Cases cases) {
@@ -393,7 +392,7 @@ public class DriverNotifiedEngine {
                 .withDttpDtetp(getDttpDtetp(currentOffence.getResults()))
                 .withInterimImposedFinalSentence(getInterimImposedFinalSentence(currentOffence.getResults()))
                 .withSentencingCourtCode(getSentencingCourtCode(currentOffence, previousOffence, amendmentDate, orderDate, orderingCourtCode, courtApplications))
-                .withSentenceDate(getSentenceDate(currentOffence, previousOffence, amendmentDate, orderDate,courtApplications))
+                .withSentenceDate(getSentenceDate(currentOffence, previousOffence, amendmentDate, orderDate, courtApplications))
                 .withDateFromWhichDisqRemoved(getDateFromWhichDisqRemoved(currentOffence.getResults()))
                 .withDateDisqSuspendedPendingAppeal(getDateDisqSuspendedPendingAppeal(currentOffence, courtApplications, previousOffence, amendmentDate, orderDate))
                 .withDateDisqReimposedFollowingAppeal(getDateDisqReimposedFollowingAppeal(courtApplications, orderDate))
@@ -520,7 +519,6 @@ public class DriverNotifiedEngine {
                         // Do nothing for all other cases
                     }
                 }
-
 
                 if (REMOVE.equals(endorsementStatus)) {
                     if (isNotEmpty(courtApplications) || isSjpCaseReferred(sjpCaseToCcReferredApplications)) {

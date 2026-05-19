@@ -143,16 +143,15 @@ public class OffenceUtil {
 
         if (hasAppealResultOrGranted(courtApplications) || isCaseReopen(courtApplications, sjpCaseToCcReferredApplications)) {
             return getEndorsementStatusForAppealAndReopen(currentOffence, previousOffence, courtApplications, sjpCaseToCcReferredApplications);
+        } else if (isStdecGranted(courtApplications)) {
+            return getEndorsementStatusForStDec(nonEndorsable, isAmendment, currentOffence, previousOffence, courtApplications, previousCourtApplications);
         } else if (isCriminalProceedingAppGranted(courtApplications)) {
             return getEndorsementStatusForCriminalProceeding(currentOffence, previousOffence, courtApplications);
         } else if (isSuspendDisqualificationPendingAppealAppGranted(courtApplications)) {
             return getEndorsementStatusForSuspendDisqualificationPendingAppeal(currentOffence, previousOffence, courtApplications);
         } else if (isApplicationContainsOtherTypes(courtApplications)) {
             return getEndorsementStatusForOtherApplication(previousOffence);
-        } else if(isStdecGranted(courtApplications)) {
-            return getEndorsementStatusForStDec(nonEndorsable, isAmendment, currentOffence, previousOffence, courtApplications, previousCourtApplications);
-        }
-        else {
+        } else {
             return getEndorsementStatus(isAmendment, currentOffence, courtApplications, nonEndorsable);
         }
     }
@@ -243,8 +242,8 @@ public class OffenceUtil {
         }
     }
 
-    public static EndorsementStatus getEndorsementStatusForSuspendDisqualificationPendingAppeal(final DefendantCaseOffences currentOffence,final DefendantCaseOffences previousOffence, final List<CourtApplications> courtApplications ){
-        if(hasDrivingDisqualificationSuspendedPendingAppeal(currentOffence, courtApplications)){
+    public static EndorsementStatus getEndorsementStatusForSuspendDisqualificationPendingAppeal(final DefendantCaseOffences currentOffence, final DefendantCaseOffences previousOffence, final List<CourtApplications> courtApplications) {
+        if (hasDrivingDisqualificationSuspendedPendingAppeal(currentOffence, courtApplications)) {
             return UPDATE_MERGE;
         } else {
             if (hasD20Endorsement(previousOffence)) {
@@ -261,7 +260,6 @@ public class OffenceUtil {
         } else {
             return NO_UPDATE_PREV_NOT_ENDORSED;
         }
-
     }
 
     public static EndorsementStatus getEndorsementStatusForStDec(final boolean nonEndorsable, final boolean isAmendment,
@@ -481,7 +479,7 @@ public class OffenceUtil {
         if (hasResultType(offence, DDRI)) {
             return false;
         } else if (nonNull(offence) && isNotEmpty(orderDate) && isNotEmpty(offence.getConvictionDate())) {
-            if(isStdecGranted(courtApplications)){
+            if (isStdecGranted(courtApplications)) {
                 return true;
             }
             return !orderDate.equalsIgnoreCase(offence.getConvictionDate());
@@ -562,14 +560,14 @@ public class OffenceUtil {
     public static boolean hasRemovalOfDisqualificationsResult(final List<DefendantCaseOffences> currentOffences, final CourtApplications courtApplication) {
         return nonNull(courtApplication)
                 && hasResultType(courtApplication, RDD) ||
-                (isNotEmpty(currentOffences) && currentOffences.stream().anyMatch( offences-> hasResultType(offences, RDD)));
+                (isNotEmpty(currentOffences) && currentOffences.stream().anyMatch(offences -> hasResultType(offences, RDD)));
     }
 
     public static boolean hasDrivingDisqualificationSuspendedPendingAppeal(final DefendantCaseOffences currentOffence, final List<CourtApplications> courtApplications) {
         return (isNotEmpty(courtApplications)
                 && courtApplications.stream()
                 .anyMatch(courtApplication -> hasAnyResultType(courtApplication.getResults(), List.of(DSPA.id, DSPAS.id))) ||
-                (nonNull(currentOffence) && hasAnyResultType(currentOffence.getResults() ,List.of(DSPA.id, DSPAS.id))));
+                (nonNull(currentOffence) && hasAnyResultType(currentOffence.getResults(), List.of(DSPA.id, DSPAS.id))));
     }
 
     public static boolean hasAnyResult(final DefendantCaseOffences offence, final List<ResultType> resultTypes) {
@@ -696,8 +694,7 @@ public class OffenceUtil {
             if (isSjpCaseReferToCC(currCase, courtApplications)) {
                 LOGGER.info("[Case Id:{}], this result has 'Refer for a full court hearing' result", currCase.getCaseId());
                 return false;
-            }
-            else if (isStdecGranted(courtApplications) || isSjpCaseReferredStDec(sjpCaseToCcReferredApplications) || isCaseReopen(courtApplications, sjpCaseToCcReferredApplications)) {
+            } else if (isStdecGranted(courtApplications) || isSjpCaseReferredStDec(sjpCaseToCcReferredApplications) || isCaseReopen(courtApplications, sjpCaseToCcReferredApplications)) {
                 LOGGER.info("[Case Id:{}], this result is an STDEC Granted or case reopen", currCase.getCaseId());
 
                 return true;
@@ -711,8 +708,7 @@ public class OffenceUtil {
                 return prevCase.getDefendantCaseOffences().
                         stream().
                         anyMatch(prevOffence -> hasD20Endorsement(prevOffence));
-            }
-            else {
+            } else {
                 LOGGER.info("[Case Id:{}], searching for D20 removals", currCase.getCaseId());
 
                 return prevCase.getDefendantCaseOffences().
@@ -917,11 +913,10 @@ public class OffenceUtil {
     }
 
     public static boolean isApplicationNotGranted(final List<CourtApplications> courtApplications) {
-        if (isNotEmpty(courtApplications) )
+        if (isNotEmpty(courtApplications))
             return courtApplications.stream()
                     .filter(ca -> isNotEmpty(ca.getResults()))
                     .noneMatch(ca -> isGranted(ca.getResults()));
-
         return false;
     }
 
