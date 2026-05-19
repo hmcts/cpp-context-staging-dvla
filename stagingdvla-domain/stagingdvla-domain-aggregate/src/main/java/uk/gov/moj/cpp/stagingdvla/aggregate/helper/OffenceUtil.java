@@ -143,16 +143,15 @@ public class OffenceUtil {
 
         if (hasAppealResultOrGranted(courtApplications) || isCaseReopen(courtApplications, sjpCaseToCcReferredApplications)) {
             return getEndorsementStatusForAppealAndReopen(currentOffence, previousOffence, courtApplications, sjpCaseToCcReferredApplications);
+        } else if (isStdecGranted(courtApplications)) {
+            return getEndorsementStatusForStDec(nonEndorsable, isAmendment, currentOffence, previousOffence, courtApplications, previousCourtApplications);
         } else if (isCriminalProceedingAppGranted(courtApplications)) {
             return getEndorsementStatusForCriminalProceeding(currentOffence, previousOffence, courtApplications);
         } else if (isSuspendDisqualificationPendingAppealAppGranted(courtApplications)) {
             return getEndorsementStatusForSuspendDisqualificationPendingAppeal(currentOffence, previousOffence, courtApplications);
         } else if (isApplicationContainsOtherTypes(courtApplications)) {
             return getEndorsementStatusForOtherApplication(previousOffence);
-        } else if(isStdecGranted(courtApplications)) {
-            return getEndorsementStatusForStDec(nonEndorsable, isAmendment, currentOffence, previousOffence, courtApplications, previousCourtApplications);
-        }
-        else {
+        } else {
             return getEndorsementStatus(isAmendment, currentOffence, courtApplications, nonEndorsable);
         }
     }

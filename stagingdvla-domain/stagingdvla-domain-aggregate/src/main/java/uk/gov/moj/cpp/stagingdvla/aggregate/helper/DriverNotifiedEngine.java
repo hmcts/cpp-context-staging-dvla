@@ -392,7 +392,7 @@ public class DriverNotifiedEngine {
                 .withDttpDtetp(getDttpDtetp(currentOffence.getResults()))
                 .withInterimImposedFinalSentence(getInterimImposedFinalSentence(currentOffence.getResults()))
                 .withSentencingCourtCode(getSentencingCourtCode(currentOffence, previousOffence, amendmentDate, orderDate, orderingCourtCode, courtApplications))
-                .withSentenceDate(getSentenceDate(currentOffence, previousOffence, amendmentDate, orderDate,courtApplications))
+                .withSentenceDate(getSentenceDate(currentOffence, previousOffence, amendmentDate, orderDate, courtApplications))
                 .withDateFromWhichDisqRemoved(getDateFromWhichDisqRemoved(currentOffence.getResults()))
                 .withDateDisqSuspendedPendingAppeal(getDateDisqSuspendedPendingAppeal(currentOffence, courtApplications, previousOffence, amendmentDate, orderDate))
                 .withDateDisqReimposedFollowingAppeal(getDateDisqReimposedFollowingAppeal(courtApplications, orderDate))
@@ -519,7 +519,6 @@ public class DriverNotifiedEngine {
                         // Do nothing for all other cases
                     }
                 }
-
 
                 if (REMOVE.equals(endorsementStatus)) {
                     if (isNotEmpty(courtApplications) || isSjpCaseReferred(sjpCaseToCcReferredApplications)) {
