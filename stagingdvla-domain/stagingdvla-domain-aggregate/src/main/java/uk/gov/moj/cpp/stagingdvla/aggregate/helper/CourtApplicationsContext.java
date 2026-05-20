@@ -17,7 +17,7 @@ import uk.gov.justice.cpp.stagingdvla.event.CourtApplications;
 import java.util.Arrays;
 import java.util.List;
 
-public class ApplicationContext {
+public class CourtApplicationsContext {
 
     private final List<CourtApplications> courtApplications;
     private final List<ApplicationTypes> sjpCaseToCcReferredApplications;
@@ -37,7 +37,7 @@ public class ApplicationContext {
         return sjpCaseToCcReferredApplications;
     }
 
-    public ApplicationContext(final List<CourtApplications> courtApplications, final List<ApplicationTypes> sjpCaseToCcReferredApplications) {
+    public CourtApplicationsContext(final List<CourtApplications> courtApplications, final List<ApplicationTypes> sjpCaseToCcReferredApplications) {
         this.courtApplications = courtApplications;
         this.sjpCaseToCcReferredApplications = sjpCaseToCcReferredApplications;
     }

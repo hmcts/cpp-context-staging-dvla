@@ -2,7 +2,6 @@ package uk.gov.moj.cpp.stagingdvla.aggregate.helper;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.emptyList;
-import static java.util.Collections.emptyMap;
 import static java.util.Collections.singletonList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -75,9 +74,9 @@ class OffenceUtilTest {
     void shouldRemoveD20DuringAmendAndReShare() {
         Cases previousCases = buildCases(RESULT_IDENTIFIER, Boolean.TRUE);
         Cases currentCases = buildCases(RESULT_IDENTIFIER, Boolean.FALSE);
-        final ApplicationContext applicationContext = new ApplicationContext(emptyList(), emptyList());
+        final CourtApplicationsContext courtApplicationsContext = new CourtApplicationsContext(emptyList(), emptyList());
 
-        boolean d20Removed = hasAnyD20Removed(previousCases, currentCases, applicationContext);
+        boolean d20Removed = hasAnyD20Removed(previousCases, currentCases, courtApplicationsContext);
 
         assertThat(d20Removed, is(false));
     }
@@ -90,7 +89,7 @@ class OffenceUtilTest {
         final List<Results> results = singletonList(results().withResultIdentifier(RFSD.id).build());
         final List<CourtApplications> courtApplications = singletonList(CourtApplications.courtApplications().withResults(results).build());
 
-        boolean isApplicationRefused = hasAnyD20Removed(previousCases, currentCases, new ApplicationContext(courtApplications, emptyList()));
+        boolean isApplicationRefused = hasAnyD20Removed(previousCases, currentCases, new CourtApplicationsContext(courtApplications, emptyList()));
 
         assertThat(isApplicationRefused, is(false));
     }
@@ -102,9 +101,9 @@ class OffenceUtilTest {
 
         final List<Results> results = singletonList(results().withResultIdentifier(ERR.id).build());
         final List<CourtApplications> courtApplications = singletonList(CourtApplications.courtApplications().withResults(results).build());
-        final ApplicationContext applicationContext = new ApplicationContext(courtApplications, emptyList());
+        final CourtApplicationsContext courtApplicationsContext = new CourtApplicationsContext(courtApplications, emptyList());
 
-        boolean isApplicationRefused = hasAnyD20Removed(previousCases, currentCases, applicationContext);
+        boolean isApplicationRefused = hasAnyD20Removed(previousCases, currentCases, courtApplicationsContext);
 
         assertThat(isApplicationRefused, is(false));
     }
@@ -124,9 +123,9 @@ class OffenceUtilTest {
 
         final List<Results> results = singletonList(results().withResultIdentifier(AACA.id).build());
         final List<CourtApplications> courtApplications = singletonList(CourtApplications.courtApplications().withResults(results).build());
-        final ApplicationContext applicationContext = new ApplicationContext(courtApplications, emptyList());
+        final CourtApplicationsContext courtApplicationsContext = new CourtApplicationsContext(courtApplications, emptyList());
 
-        boolean isApplicationRefused = hasAnyD20Removed(previousCases, currentCases, applicationContext);
+        boolean isApplicationRefused = hasAnyD20Removed(previousCases, currentCases, courtApplicationsContext);
 
         assertThat(isApplicationRefused, is(true));
     }
@@ -139,7 +138,7 @@ class OffenceUtilTest {
         final List<Results> results = asList(results().withResultIdentifier(G.id).build(), results().withResultIdentifier(COV.id).build());
         final List<CourtApplications> courtApplications = singletonList(CourtApplications.courtApplications().withResults(results).build());
 
-        boolean hasAnyD20Removed = hasAnyD20Removed(previousCases, currentCases, new ApplicationContext(courtApplications, emptyList()));
+        boolean hasAnyD20Removed = hasAnyD20Removed(previousCases, currentCases, new CourtApplicationsContext(courtApplications, emptyList()));
 
         assertThat(hasAnyD20Removed, is(false));
     }
@@ -159,9 +158,9 @@ class OffenceUtilTest {
 
         final List<Results> results = singletonList(results().withResultIdentifier(G.id).build());
         final List<CourtApplications> courtApplications = singletonList(CourtApplications.courtApplications().withResults(results).build());
-        final ApplicationContext applicationContext = new ApplicationContext(courtApplications, emptyList());
+        final CourtApplicationsContext courtApplicationsContext = new CourtApplicationsContext(courtApplications, emptyList());
 
-        boolean hasAnyD20Removed = hasAnyD20Removed(previousCases, currentCases, applicationContext);
+        boolean hasAnyD20Removed = hasAnyD20Removed(previousCases, currentCases, courtApplicationsContext);
 
         assertThat(hasAnyD20Removed, is(true));
     }
@@ -171,7 +170,7 @@ class OffenceUtilTest {
         final Cases currentCases = Cases.cases().withReference(caseReference).withCaseStatus("INACTIVE").build();
         final List<CourtApplications> courtApplications = singletonList(CourtApplications.courtApplications().withApplicationTypeId(ACP.id).build());
 
-        boolean hasAnyD20Removed = hasAnyD20Removed(null, currentCases, new ApplicationContext(courtApplications, emptyList()));
+        boolean hasAnyD20Removed = hasAnyD20Removed(null, currentCases, new CourtApplicationsContext(courtApplications, emptyList()));
 
         assertThat(hasAnyD20Removed, is(false));
     }
@@ -183,8 +182,8 @@ class OffenceUtilTest {
         final Cases currentCases = Cases.cases().withReference(caseReference).withCaseStatus("ACTIVE").build();
         final List<CourtApplications> courtApplications = singletonList(CourtApplications.courtApplications().withResults(results).withApplicationType("Appearance to make statutory declaration (other than SJP)").build());
 
-        final ApplicationContext applicationContext = new ApplicationContext(courtApplications, emptyList());
-        boolean hasAnyD20Removed = hasAnyD20Removed(previousCases, currentCases, applicationContext);
+        final CourtApplicationsContext courtApplicationsContext = new CourtApplicationsContext(courtApplications, emptyList());
+        boolean hasAnyD20Removed = hasAnyD20Removed(previousCases, currentCases, courtApplicationsContext);
 
         assertThat(hasAnyD20Removed, is(true));
     }
@@ -265,9 +264,9 @@ class OffenceUtilTest {
         Cases previousCases = buildCases(RESULT_IDENTIFIER, Boolean.TRUE);
 
         Cases currentCases = buildCases("RI02", Boolean.FALSE);
-        final ApplicationContext applicationContext = new ApplicationContext(emptyList(), emptyList());
+        final CourtApplicationsContext courtApplicationsContext = new CourtApplicationsContext(emptyList(), emptyList());
 
-        boolean d20Removed = hasAnyD20Removed(previousCases, currentCases, applicationContext);
+        boolean d20Removed = hasAnyD20Removed(previousCases, currentCases, courtApplicationsContext);
 
         assertThat(d20Removed, is(true));
     }
@@ -275,9 +274,9 @@ class OffenceUtilTest {
     @Test
     void shouldGetEndorsementStatusDSPAS() {
         final List<CourtApplications> courtApplications = getCourtApplications(DSPAS);
-        final ApplicationContext applicationContext = new ApplicationContext(courtApplications, emptyList());
+        final CourtApplicationsContext courtApplicationsContext = new CourtApplicationsContext(courtApplications, emptyList());
 
-        final AggregateConstants.EndorsementStatus endorsementStatus = getEndorsementStatus(false, null, null, applicationContext, emptyList(), null);
+        final AggregateConstants.EndorsementStatus endorsementStatus = getEndorsementStatus(false, null, null, courtApplicationsContext, emptyList(), null);
 
         assertThat(endorsementStatus, is(UPDATE_MERGE));
     }
@@ -285,8 +284,8 @@ class OffenceUtilTest {
     @Test
     void shouldGetEndorsementStatusDISM() {
         final List<CourtApplications> courtApplications = getCourtApplications(DISM);
-        final ApplicationContext applicationContext = new ApplicationContext(courtApplications, emptyList());
-        final AggregateConstants.EndorsementStatus endorsementStatus = getEndorsementStatus(false, null, null, applicationContext, emptyList(), null);
+        final CourtApplicationsContext courtApplicationsContext = new CourtApplicationsContext(courtApplications, emptyList());
+        final AggregateConstants.EndorsementStatus endorsementStatus = getEndorsementStatus(false, null, null, courtApplicationsContext, emptyList(), null);
 
         assertThat(endorsementStatus, is(REMOVE));
     }
@@ -294,9 +293,9 @@ class OffenceUtilTest {
     @Test
     void shouldGetEndorsementStatusDINE() {
         final List<CourtApplications> courtApplications = getCourtApplications(DINE);
-        final ApplicationContext applicationContext = new ApplicationContext(courtApplications, emptyList());
+        final CourtApplicationsContext courtApplicationsContext = new CourtApplicationsContext(courtApplications, emptyList());
 
-        final AggregateConstants.EndorsementStatus endorsementStatus = getEndorsementStatus(false, null, null, applicationContext, emptyList(), null);
+        final AggregateConstants.EndorsementStatus endorsementStatus = getEndorsementStatus(false, null, null, courtApplicationsContext, emptyList(), null);
 
         assertThat(endorsementStatus, is(REMOVE));
     }
@@ -304,9 +303,9 @@ class OffenceUtilTest {
     @Test
     void shouldGetEndorsementStatusDINI() {
         final List<CourtApplications> courtApplications = getCourtApplications(DINI);
-        final ApplicationContext applicationContext = new ApplicationContext(courtApplications, emptyList());
+        final CourtApplicationsContext courtApplicationsContext = new CourtApplicationsContext(courtApplications, emptyList());
 
-        final AggregateConstants.EndorsementStatus endorsementStatus = getEndorsementStatus(false, null, null, applicationContext, emptyList(), null);
+        final AggregateConstants.EndorsementStatus endorsementStatus = getEndorsementStatus(false, null, null, courtApplicationsContext, emptyList(), null);
 
         assertThat(endorsementStatus, is(REMOVE));
     }
@@ -314,9 +313,9 @@ class OffenceUtilTest {
     @Test
     void shouldGetEndorsementStatusDISC() {
         final List<CourtApplications> courtApplications = getCourtApplications(DISC);
-        final ApplicationContext applicationContext = new ApplicationContext(courtApplications, emptyList());
+        final CourtApplicationsContext courtApplicationsContext = new CourtApplicationsContext(courtApplications, emptyList());
 
-        final AggregateConstants.EndorsementStatus endorsementStatus = getEndorsementStatus(false, null, null, applicationContext, emptyList(), null);
+        final AggregateConstants.EndorsementStatus endorsementStatus = getEndorsementStatus(false, null, null, courtApplicationsContext, emptyList(), null);
 
         assertThat(endorsementStatus, is(REMOVE));
     }
@@ -324,9 +323,9 @@ class OffenceUtilTest {
     @Test
     void shouldGetEndorsementStatusDISCH() {
         final List<CourtApplications> courtApplications = getCourtApplications(DISCH);
-        final ApplicationContext applicationContext = new ApplicationContext(courtApplications, emptyList());
+        final CourtApplicationsContext courtApplicationsContext = new CourtApplicationsContext(courtApplications, emptyList());
 
-        final AggregateConstants.EndorsementStatus endorsementStatus = getEndorsementStatus(false, null, null, applicationContext, emptyList(), null);
+        final AggregateConstants.EndorsementStatus endorsementStatus = getEndorsementStatus(false, null, null, courtApplicationsContext, emptyList(), null);
 
         assertThat(endorsementStatus, is(REMOVE));
     }
@@ -334,9 +333,9 @@ class OffenceUtilTest {
     @Test
     void shouldGetEndorsementStatusWDRN() {
         final List<CourtApplications> courtApplications = getCourtApplications(WDRN);
-        final ApplicationContext applicationContext = new ApplicationContext(courtApplications, emptyList());
+        final CourtApplicationsContext courtApplicationsContext = new CourtApplicationsContext(courtApplications, emptyList());
 
-        final AggregateConstants.EndorsementStatus endorsementStatus = getEndorsementStatus(false, null, null, applicationContext, emptyList(), null);
+        final AggregateConstants.EndorsementStatus endorsementStatus = getEndorsementStatus(false, null, null, courtApplicationsContext, emptyList(), null);
 
         assertThat(endorsementStatus, is(REMOVE));
     }
@@ -344,9 +343,9 @@ class OffenceUtilTest {
     @Test
     void shouldGetEndorsementStatusWDRNOT() {
         final List<CourtApplications> courtApplications = getCourtApplications(WDRNNOT);
-        final ApplicationContext applicationContext = new ApplicationContext(courtApplications, emptyList());
+        final CourtApplicationsContext courtApplicationsContext = new CourtApplicationsContext(courtApplications, emptyList());
 
-        final AggregateConstants.EndorsementStatus endorsementStatus = getEndorsementStatus(false, null, null, applicationContext, emptyList(), null);
+        final AggregateConstants.EndorsementStatus endorsementStatus = getEndorsementStatus(false, null, null, courtApplicationsContext, emptyList(), null);
 
         assertThat(endorsementStatus, is(REMOVE));
     }
@@ -354,9 +353,9 @@ class OffenceUtilTest {
     @Test
     void shouldGetEndorsementStatusWDRNOFF() {
         final List<CourtApplications> courtApplications = getCourtApplications(WDRNOFF);
-        final ApplicationContext applicationContext = new ApplicationContext(courtApplications, emptyList());
+        final CourtApplicationsContext courtApplicationsContext = new CourtApplicationsContext(courtApplications, emptyList());
 
-        final AggregateConstants.EndorsementStatus endorsementStatus = getEndorsementStatus(false, null, null, applicationContext, emptyList(), null);
+        final AggregateConstants.EndorsementStatus endorsementStatus = getEndorsementStatus(false, null, null, courtApplicationsContext, emptyList(), null);
 
         assertThat(endorsementStatus, is(REMOVE));
     }
@@ -528,8 +527,8 @@ class OffenceUtilTest {
                         .withResults(results)
                         .build()
         );
-        final ApplicationContext applicationContext = new ApplicationContext(courtApplications, emptyList());
-        boolean hasAnyD20Removed = hasAnyD20Removed(previousCases, currentCases, applicationContext);
+        final CourtApplicationsContext courtApplicationsContext = new CourtApplicationsContext(courtApplications, emptyList());
+        boolean hasAnyD20Removed = hasAnyD20Removed(previousCases, currentCases, courtApplicationsContext);
 
         assertThat(hasAnyD20Removed, is(true));
     }
@@ -546,7 +545,7 @@ class OffenceUtilTest {
                         .build()
         );
 
-        boolean hasAnyD20Removed = hasAnyD20Removed(null, currentCases, new ApplicationContext(courtApplications, emptyList()));
+        boolean hasAnyD20Removed = hasAnyD20Removed(null, currentCases, new CourtApplicationsContext(courtApplications, emptyList()));
 
         assertThat(hasAnyD20Removed, is(false));
     }
@@ -563,7 +562,7 @@ class OffenceUtilTest {
                         .build()
         );
 
-        boolean hasAnyD20Removed = hasAnyD20Removed(null, currentCases, new ApplicationContext(courtApplications, emptyList()));
+        boolean hasAnyD20Removed = hasAnyD20Removed(null, currentCases, new CourtApplicationsContext(courtApplications, emptyList()));
 
         assertThat(hasAnyD20Removed, is(false));
     }
@@ -592,9 +591,9 @@ class OffenceUtilTest {
                         .withResults(results)
                         .build()
         );
-        final ApplicationContext applicationContext = new ApplicationContext(courtApplications, emptyList());
+        final CourtApplicationsContext courtApplicationsContext = new CourtApplicationsContext(courtApplications, emptyList());
 
-        boolean hasAnyD20Removed = hasAnyD20Removed(previousCases, currentCases, applicationContext);
+        boolean hasAnyD20Removed = hasAnyD20Removed(previousCases, currentCases, courtApplicationsContext);
 
         assertThat(hasAnyD20Removed, is(true));
     }
@@ -610,7 +609,7 @@ class OffenceUtilTest {
                         .build()))
                 .build();
 
-        boolean hasAnyD20Removed = hasAnyD20Removed(previousCases, currentCases, new ApplicationContext(emptyList(), emptyList()));
+        boolean hasAnyD20Removed = hasAnyD20Removed(previousCases, currentCases, new CourtApplicationsContext(emptyList(), emptyList()));
 
         assertThat(hasAnyD20Removed, is(false));
     }

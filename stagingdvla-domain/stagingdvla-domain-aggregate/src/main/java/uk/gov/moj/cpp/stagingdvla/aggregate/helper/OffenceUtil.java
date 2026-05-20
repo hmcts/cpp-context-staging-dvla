@@ -135,21 +135,21 @@ public class OffenceUtil {
     public static EndorsementStatus getEndorsementStatus(final boolean isAmendment,
                                                          final DefendantCaseOffences currentOffence,
                                                          final DefendantCaseOffences previousOffence,
-                                                         final ApplicationContext applicationContext,
+                                                         final CourtApplicationsContext courtApplicationsContext,
                                                          final List<String> nonEndorsableOffenceCodes,
                                                          final List<CourtApplications> previousCourtApplications) {
-        final List<CourtApplications> courtApplications = applicationContext.getCourtApplications();
+        final List<CourtApplications> courtApplications = courtApplicationsContext.getCourtApplications();
         boolean nonEndorsable = nonEndorsableOffenceCodes.contains(getDvlaCode(previousOffence));
 
-        if (applicationContext.isAppeal() || applicationContext.isCaseReopened()) {
+        if (courtApplicationsContext.isAppeal() || courtApplicationsContext.isCaseReopened()) {
             return getEndorsementStatusForAppealAndReopen(currentOffence, previousOffence, courtApplications);
-        } else if (applicationContext.isStatDec()) {
+        } else if (courtApplicationsContext.isStatDec()) {
             return getEndorsementStatusForStDec(nonEndorsable, isAmendment, currentOffence, previousOffence, courtApplications, previousCourtApplications);
-        } else if (applicationContext.isCriminalProceeding()) {
+        } else if (courtApplicationsContext.isCriminalProceeding()) {
             return getEndorsementStatusForCriminalProceeding(currentOffence, previousOffence, courtApplications);
-        } else if (applicationContext.isSuspendDisqualificationPendingAppeal()) {
+        } else if (courtApplicationsContext.isSuspendDisqualificationPendingAppeal()) {
             return getEndorsementStatusForSuspendDisqualificationPendingAppeal(currentOffence, previousOffence, courtApplications);
-        } else if (applicationContext.isOtherApplication()) {
+        } else if (courtApplicationsContext.isOtherApplication()) {
             return getEndorsementStatusForOtherApplication(previousOffence);
         } else {
             return getEndorsementStatus(isAmendment, currentOffence, courtApplications, nonEndorsable);
@@ -677,22 +677,22 @@ public class OffenceUtil {
      *
      * @param prevCase
      * @param currCase
-     * @param applicationContext
+     * @param courtApplicationsContext
      * @return true if there is any previously endorsed offense result removed and false otherwise
      */
 
     public static boolean hasAnyD20Removed(final Cases prevCase,
                                            final Cases currCase,
-                                           final ApplicationContext applicationContext) {
+                                           final CourtApplicationsContext courtApplicationsContext) {
 
-        if (check20Removal(prevCase, currCase, applicationContext.getCourtApplications())) {
-            if (isSjpCaseReferToCC(currCase, applicationContext.getCourtApplications())) {
+        if (check20Removal(prevCase, currCase, courtApplicationsContext.getCourtApplications())) {
+            if (isSjpCaseReferToCC(currCase, courtApplicationsContext.getCourtApplications())) {
                 LOGGER.info("[Case Id:{}], this result has 'Refer for a full court hearing' result", currCase.getCaseId());
                 return false;
-            } else if (applicationContext.isContextApplication()) {
+            } else if (courtApplicationsContext.isContextApplication()) {
                 LOGGER.info("[Case Id:{}], this result is an STDEC Granted or case reopen", currCase.getCaseId());
                 return true;
-            } else if (isAdjournmentOrError(currCase, applicationContext.getCourtApplications())) {
+            } else if (isAdjournmentOrError(currCase, courtApplicationsContext.getCourtApplications())) {
                 LOGGER.info("[Case Id:{}], this result is an adjournment", currCase.getCaseId());
 
                 return false;

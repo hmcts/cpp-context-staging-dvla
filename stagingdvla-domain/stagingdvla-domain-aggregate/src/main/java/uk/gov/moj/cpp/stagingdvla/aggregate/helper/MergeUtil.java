@@ -56,7 +56,7 @@ public class MergeUtil {
     public static DefendantCaseOffences mergeOffence(final DefendantCaseOffences offence,
                                                      final DefendantCaseOffences previousOffence,
                                                      final String orderDate, final String orderingCourtCode,
-                                                     final ApplicationContext applicationContext) {
+                                                     final CourtApplicationsContext courtApplicationsContext) {
         final DefendantCaseOffences mergedOffence = DefendantCaseOffences.defendantCaseOffences()
                 .withValuesFrom(offence)
                 .withTitle((String) mergeValue(offence.getTitle(), previousOffence.getTitle()))
@@ -76,7 +76,7 @@ public class MergeUtil {
                 .withAlcoholReadingMethodCode((String) mergeValue(offence.getAlcoholReadingMethodCode(), previousOffence.getAlcoholReadingMethodCode()))
                 .withAlcoholReadingMethodDescription((String) mergeValue(offence.getAlcoholReadingMethodDescription(), previousOffence.getAlcoholReadingMethodDescription()))
                 .withEndorsableFlag((Boolean) mergeValue(offence.getEndorsableFlag(), previousOffence.getEndorsableFlag()))
-                .withResults(applicationContext.isAppeal() || applicationContext.isCaseReopened()
+                .withResults(courtApplicationsContext.isAppeal() || courtApplicationsContext.isCaseReopened()
                         ? ((hasNoResult(offence) || hasAnyResultType(offence.getResults(), asList(OATS.id, ADJ.id)))
                         ? previousOffence.getResults() : mergeResultsV2(offence.getResults(), previousOffence.getResults()))
                         : mergeResultsV1(offence.getResults(), previousOffence.getResults()))
@@ -94,7 +94,7 @@ public class MergeUtil {
                 .withDateDisqReimposedFollowingAppeal((String) mergeValue(offence.getDateDisqReimposedFollowingAppeal(), previousOffence.getDateDisqReimposedFollowingAppeal()))
                 .build();
 
-        if (applicationContext.isAppeal() || applicationContext.isCaseReopened()) {
+        if (courtApplicationsContext.isAppeal() || courtApplicationsContext.isCaseReopened()) {
             final DefendantCaseOffences.Builder mergedOffenceWithAttributes = DefendantCaseOffences.defendantCaseOffences()
                     .withValuesFrom(mergedOffence)
                     .withFine(getFine(mergedOffence.getResults()))
@@ -116,9 +116,9 @@ public class MergeUtil {
             }
 
             return mergedOffenceWithAttributes.build();
-        } else if (applicationContext.isStatDec()) {
+        } else if (courtApplicationsContext.isStatDec()) {
             return updateMergedOffenceForStatDec(offence, previousOffence, orderDate, orderingCourtCode, mergedOffence);
-        } else if (applicationContext.isCriminalProceeding()) {
+        } else if (courtApplicationsContext.isCriminalProceeding()) {
             if (hasResultType(offence, RDD)) {
                 return DefendantCaseOffences.defendantCaseOffences()
                         .withValuesFrom(mergedOffence)
