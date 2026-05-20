@@ -136,11 +136,7 @@ public class DriverNotifiedEngine {
                         hearingId,
                         courtApplications,
                         previousDriverNotifiedByCaseAndHearing.get(currentCase.getReference()),
-                        sjpCaseToCcReferredApplications.stream()
-                                .filter(sjpCaseToCcReferred -> sjpCaseToCcReferred.getCaseReference().equalsIgnoreCase(currentCase.getReference()))
-                                .map(SjpCaseToCcReferred::getApplicationTypes)
-                                .flatMap(Collection::stream)
-                                .toList(),
+                        getSjpCaseToCcReferredApplicationsByCase(sjpCaseToCcReferredApplications, currentCase),
                         isReshare
                 ))
                 .filter(Objects::nonNull)
@@ -149,6 +145,14 @@ public class DriverNotifiedEngine {
         LOGGER.info("{} event(s) created for hearing id: {}", driverNotifiedList.size(), hearingId);
 
         return driverNotifiedList;
+    }
+
+    private static List<ApplicationTypes> getSjpCaseToCcReferredApplicationsByCase(final List<SjpCaseToCcReferred> sjpCaseToCcReferredApplications, final Cases currentCase) {
+        return sjpCaseToCcReferredApplications.stream()
+                .filter(sjpCaseToCcReferred -> sjpCaseToCcReferred.getCaseReference().equalsIgnoreCase(currentCase.getReference()))
+                .map(SjpCaseToCcReferred::getApplicationTypes)
+                .flatMap(Collection::stream)
+                .toList();
     }
 
     private static DriverNotified processCase(final DriverNotified previousDriverNotified,
