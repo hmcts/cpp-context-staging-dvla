@@ -45,14 +45,6 @@ import java.util.Set;
 @SuppressWarnings({"squid:S1118", "squid:S1188", "java:S3776"})
 public class MergeUtil {
 
-    public record ApplicationMergeContext(
-            boolean hasAppealResultOrGranted,
-            boolean isCaseReopened,
-            boolean isStatDec,
-            boolean isCriminalProceedingGranted,
-            boolean isSuspendDisqualificationPendingAppeal
-    ) {}
-
     public static DefendantCaseOffences mergeOffence(final DefendantCaseOffences offence,
                                                      final DefendantCaseOffences previousOffence,
                                                      final String orderDate, final String orderingCourtCode,
