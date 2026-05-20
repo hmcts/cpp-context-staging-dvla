@@ -675,7 +675,7 @@ public class DriverNotifiedEngine {
             while (caseOffencesIterator.hasNext()) {
                 final DefendantCaseOffences offence = caseOffencesIterator.next();
                 // remove only if: offence does not have any result provided in resultTypes and do not have D20 endorsement.
-                if (!(nonNull(previousCase) && (courtApplicationsContext.isAppeal() || courtApplicationsContext.isCaseReopened() || (courtApplicationsContext.isSuspendDisqualificationPendingAppeal() && hasAnyResultType(offence.getResults(), List.of(DSPA.id, DSPAS.id)))))
+                if (!(nonNull(previousCase) && (courtApplicationsContext.hasAppealResultOrGranted() || courtApplicationsContext.isCaseReopened() || (courtApplicationsContext.isSuspendDisqualificationPendingAppeal() && hasAnyResultType(offence.getResults(), List.of(DSPA.id, DSPAS.id)))))
                         && !(hasAnyResultType(offence.getResults(), resultTypes) || hasD20Endorsement(offence))) {
                     removedOffences.add(offence.getDvlaCode());
                     caseOffencesIterator.remove();

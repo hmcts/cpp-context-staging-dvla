@@ -68,7 +68,7 @@ public class MergeUtil {
                 .withAlcoholReadingMethodCode((String) mergeValue(offence.getAlcoholReadingMethodCode(), previousOffence.getAlcoholReadingMethodCode()))
                 .withAlcoholReadingMethodDescription((String) mergeValue(offence.getAlcoholReadingMethodDescription(), previousOffence.getAlcoholReadingMethodDescription()))
                 .withEndorsableFlag((Boolean) mergeValue(offence.getEndorsableFlag(), previousOffence.getEndorsableFlag()))
-                .withResults(courtApplicationsContext.isAppeal() || courtApplicationsContext.isCaseReopened()
+                .withResults(courtApplicationsContext.hasAppealResultOrGranted() || courtApplicationsContext.isCaseReopened()
                         ? ((hasNoResult(offence) || hasAnyResultType(offence.getResults(), asList(OATS.id, ADJ.id)))
                         ? previousOffence.getResults() : mergeResultsV2(offence.getResults(), previousOffence.getResults()))
                         : mergeResultsV1(offence.getResults(), previousOffence.getResults()))
@@ -86,7 +86,7 @@ public class MergeUtil {
                 .withDateDisqReimposedFollowingAppeal((String) mergeValue(offence.getDateDisqReimposedFollowingAppeal(), previousOffence.getDateDisqReimposedFollowingAppeal()))
                 .build();
 
-        if (courtApplicationsContext.isAppeal() || courtApplicationsContext.isCaseReopened()) {
+        if (courtApplicationsContext.hasAppealResultOrGranted() || courtApplicationsContext.isCaseReopened()) {
             final DefendantCaseOffences.Builder mergedOffenceWithAttributes = DefendantCaseOffences.defendantCaseOffences()
                     .withValuesFrom(mergedOffence)
                     .withFine(getFine(mergedOffence.getResults()))

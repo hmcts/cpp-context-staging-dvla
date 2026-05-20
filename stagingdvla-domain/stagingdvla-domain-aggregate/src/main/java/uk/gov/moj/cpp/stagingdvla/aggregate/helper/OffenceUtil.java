@@ -141,7 +141,7 @@ public class OffenceUtil {
         final List<CourtApplications> courtApplications = courtApplicationsContext.getCourtApplications();
         boolean nonEndorsable = nonEndorsableOffenceCodes.contains(getDvlaCode(previousOffence));
 
-        if (courtApplicationsContext.isAppeal() || courtApplicationsContext.isCaseReopened()) {
+        if (courtApplicationsContext.hasAppealResultOrGranted() || courtApplicationsContext.isCaseReopened()) {
             return getEndorsementStatusForAppealAndReopen(currentOffence, previousOffence, courtApplications);
         } else if (courtApplicationsContext.isStatDec()) {
             return getEndorsementStatusForStDec(nonEndorsable, isAmendment, currentOffence, previousOffence, courtApplications, previousCourtApplications);

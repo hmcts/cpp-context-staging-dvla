@@ -4,7 +4,6 @@ import static java.util.Objects.isNull;
 import static org.apache.commons.collections.CollectionUtils.isNotEmpty;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ApplicationType.APPRO;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ApplicationType.STDECSJP;
-import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAppealResultOrGranted;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.isApplicationContainsOtherTypes;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.isCaseReopen;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.isCriminalProceedingAppGranted;
@@ -22,7 +21,7 @@ public class CourtApplicationsContext {
     private final List<CourtApplications> courtApplications;
     private final List<ApplicationTypes> sjpCaseToCcReferredApplications;
 
-    private Boolean isAppeal;
+    private Boolean hasAppealResultOrGranted;
     private Boolean isCaseReopened;
     private Boolean isStatDec;
     private Boolean isCriminalProceeding;
@@ -57,11 +56,11 @@ public class CourtApplicationsContext {
         return isCaseReopened;
     }
 
-    public boolean isAppeal() {
-        if (isNull(isAppeal)) {
-            isAppeal = hasAppealResultOrGranted(courtApplications);
+    public boolean hasAppealResultOrGranted() {
+        if (isNull(hasAppealResultOrGranted)) {
+            hasAppealResultOrGranted = OffenceUtil.hasAppealResultOrGranted(courtApplications);
         }
-        return isAppeal;
+        return hasAppealResultOrGranted;
     }
 
     public boolean isCriminalProceeding() {
@@ -79,7 +78,7 @@ public class CourtApplicationsContext {
     }
 
     public boolean isContextApplication() {
-        return (isAppeal() || isCaseReopened() || isStatDec() || isCriminalProceeding() || isSuspendDisqualificationPendingAppeal() || isSjpCaseReferred()) && !isOtherApplication();
+        return (hasAppealResultOrGranted() || isCaseReopened() || isStatDec() || isCriminalProceeding() || isSuspendDisqualificationPendingAppeal() || isSjpCaseReferred()) && !isOtherApplication();
     }
 
     public boolean isOtherApplication() {
