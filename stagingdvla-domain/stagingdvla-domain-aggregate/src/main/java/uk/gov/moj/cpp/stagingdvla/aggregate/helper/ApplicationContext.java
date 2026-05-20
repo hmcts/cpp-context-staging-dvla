@@ -1,45 +1,98 @@
 package uk.gov.moj.cpp.stagingdvla.aggregate.helper;
 
+import static java.util.Objects.isNull;
 import static org.apache.commons.collections.CollectionUtils.isNotEmpty;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ApplicationType.APPRO;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ApplicationType.STDECSJP;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAppealResultOrGranted;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.isApplicationContainsOtherTypes;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.isCaseReopen;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.isCriminalProceedingAppGranted;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.isStdecGranted;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.isSuspendDisqualificationPendingAppealAppGranted;
 
 import uk.gov.justice.cpp.stagingdvla.event.ApplicationTypes;
+import uk.gov.justice.cpp.stagingdvla.event.CourtApplications;
 
 import java.util.Arrays;
 import java.util.List;
 
-public record ApplicationContext(boolean isAppeal,
-                                 boolean isCaseReopened,
-                                 boolean isStatDec,
-                                 boolean isCriminalProceeding,
-                                 boolean isSuspendDisqualificationPendingAppeal,
-                                 boolean isOtherApplication,
-                                 List<ApplicationTypes> sjpCaseToCcReferredApplications) {
+public class ApplicationContext {
 
-    @Override
-    public boolean isStatDec() {
-        return isStatDec || isSjpCaseReferredStDec();
+    private final List<CourtApplications> courtApplications;
+    private final List<ApplicationTypes> sjpCaseToCcReferredApplications;
+
+    private Boolean isAppeal;
+    private Boolean isCaseReopened;
+    private Boolean isStatDec;
+    private Boolean isCriminalProceeding;
+    private Boolean isSuspendDisqualificationPendingAppeal;
+    private Boolean isOtherApplication;
+
+    public List<CourtApplications> getCourtApplications() {
+        return courtApplications;
     }
 
-    @Override
+    public List<ApplicationTypes> getSjpCaseToCcReferredApplications() {
+        return sjpCaseToCcReferredApplications;
+    }
+
+    public ApplicationContext(final List<CourtApplications> courtApplications, final List<ApplicationTypes> sjpCaseToCcReferredApplications) {
+        this.courtApplications = courtApplications;
+        this.sjpCaseToCcReferredApplications = sjpCaseToCcReferredApplications;
+    }
+
+    public boolean isStatDec() {
+        if (isNull(isStatDec)) {
+            isStatDec = isStdecGranted(courtApplications) || isSjpCaseReferredStDec();
+        }
+        return isStatDec;
+    }
+
+
     public boolean isCaseReopened() {
-        return isCaseReopened || isSjpCaseReferredReopen();
+        if (isNull(isCaseReopened)) {
+            isCaseReopened = isCaseReopen(courtApplications) || isSjpCaseReferredReopen();
+        }
+        return isCaseReopened;
+    }
+
+    public boolean isAppeal() {
+        if (isNull(isAppeal)) {
+            isAppeal = hasAppealResultOrGranted(courtApplications);
+        }
+        return isAppeal;
+    }
+
+    public boolean isCriminalProceeding() {
+        if (isNull(isCriminalProceeding)) {
+            isCriminalProceeding = isCriminalProceedingAppGranted(courtApplications);
+        }
+        return isCriminalProceeding;
+    }
+
+    public boolean isSuspendDisqualificationPendingAppeal() {
+        if (isNull(isSuspendDisqualificationPendingAppeal)) {
+            isSuspendDisqualificationPendingAppeal = isSuspendDisqualificationPendingAppealAppGranted(courtApplications);
+        }
+        return isSuspendDisqualificationPendingAppeal;
     }
 
     public boolean isContextApplication() {
-        return (isAppeal || isCaseReopened || isStatDec || isCriminalProceeding || isSuspendDisqualificationPendingAppeal || isSjpCaseReferred()) && !isOtherApplication;
+        return (isAppeal() || isCaseReopened() || isStatDec() || isCriminalProceeding() || isSuspendDisqualificationPendingAppeal() || isSjpCaseReferred()) && !isOtherApplication();
     }
 
-    @Override
     public boolean isOtherApplication() {
-        return isOtherApplication || isSjpCaseReferredOtherApplications();
+        if (isNull(isOtherApplication)) {
+            isOtherApplication = isApplicationContainsOtherTypes(courtApplications) || isSjpCaseReferredOtherApplications();
+        }
+        return isOtherApplication;
     }
 
     public boolean isSjpCaseReferred() {
-        return isNotEmpty( sjpCaseToCcReferredApplications) &&
+        return isNotEmpty(sjpCaseToCcReferredApplications) &&
                 sjpCaseToCcReferredApplications.stream()
-                        .anyMatch(applicationTypes-> Arrays.stream(AggregateConstants.ApplicationType.values())
+                        .anyMatch(applicationTypes -> Arrays.stream(AggregateConstants.ApplicationType.values())
                                 .anyMatch(applicationType -> applicationType.id.equals(applicationTypes.getId()) ||
                                         applicationType.appType.equalsIgnoreCase(applicationTypes.getName())));
     }
@@ -63,5 +116,4 @@ public record ApplicationContext(boolean isAppeal,
                                 .anyMatch(applicationType -> sjpApplicationType.getName().equals(applicationType.appType)
                                         || sjpApplicationType.getId().equals(applicationType.id)));
     }
-
 }
