@@ -1,0 +1,301 @@
+{
+  "caseApplicationReferences": [
+    "ZG148219442"
+  ],
+  "cases": [
+    {
+      "caseId": "f2f0efef-3e85-44a4-85bc-8077e8bf191e",
+      "caseStatus": "INACTIVE",
+      "defendantCaseOffences": [],
+      "hasSV": false,
+      "initiationCode": "C",
+      "reference": "ZG148219442"
+    }
+  ],
+  "courtApplications": [
+    {
+      "applicationReceivedDate": "2026-05-19",
+      "applicationReference": "ZG148219442",
+      "applicationStatus": "FINALISED",
+      "applicationType": "Appeal against sentence by a Magistrates' Court to the Crown Court",
+      "applicationTypeId": "ef71f385-88f5-4e53-8b9f-d568af9ea90c",
+      "id": "87026cc0-fcd2-4026-a164-428a86bdb62e",
+      "results": [
+        {
+          "d20": false,
+          "judicialResultCategory": "FINAL",
+          "label": "Appeal against sentence allowed",
+          "prompts": [
+            {
+              "label": "Date sentence was imposed",
+              "promptIdentifier": "c946a5df-5849-4cca-b425-ecbd6bd704dc",
+              "promptReference": "dateSentenceWasImposed",
+              "value": "19/05/2026"
+            },
+            {
+              "label": "Reasons",
+              "promptIdentifier": "c10b4c83-1856-4ca9-9592-d8b8183a0324",
+              "promptReference": "reasons",
+              "value": "sentence was imposed"
+            }
+          ],
+          "publishedForNows": false,
+          "resultIdentifier": "d861586a-df88-440d-98d4-63cc2a680ae1",
+          "resultWording": ""
+        }
+      ]
+    }
+  ],
+  "defendant": {
+    "address": {
+      "line1": "72 Albert Road",
+      "line2": "Albert Road",
+      "line3": "Southsea",
+      "line4": "Hampshire",
+      "line5": "Portsmouth",
+      "postCode": "PO5 2SG"
+    },
+    "dateOfBirth": "1962-05-19",
+    "driverNumber": "VANFL002222OW9PH",
+    "firstName": "Lura",
+    "gender": "MALE",
+    "lastName": "Bosco",
+    "name": "Lura Bosco",
+    "title": "Mr"
+  },
+  "distinctPrompts": [
+    {
+      "label": "Defendant driving licence number",
+      "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+      "promptReference": "defendantDrivingLicenceNumber",
+      "value": "VANFL002222OW9PH"
+    }
+  ],
+  "identifier": "a4f32ec3-9191-40d8-9c7f-fa990eb3c79c",
+  "licenceProducedInCourt": "0: None or unknown",
+  "masterDefendantId": "4ac0e5d2-4473-44b3-a041-157ccee4e112",
+  "materialId": "94da116b-9a4c-477b-8080-a886056e5532",
+  "notificationType": "Remove",
+  "notificationWasPreviouslySent": true,
+  "orderDate": "2026-05-20",
+  "orderingCourt": {
+    "address": {
+      "address1": "1-15 Pocock Street",
+      "address2": "London",
+      "address3": "",
+      "address4": "",
+      "address5": "",
+      "postcode": "SE1 0BJ"
+    },
+    "code": "C01BL00",
+    "courtHearingLocation": "C01BL00",
+    "courtLocationCode": "0428",
+    "id": "89592405-c29b-3706-b1d3-b1dd3a08b227",
+    "lja": {
+      "ljaCode": "2570",
+      "ljaName": "Central London Magistrates' Court"
+    },
+    "name": "Blackfriars Crown Court",
+    "roomId": "d0624ee3-9198-3c8b-94d6-42fb197ebe5e",
+    "roomName": "Courtroom 01"
+  },
+  "orderingCourtCode": "0428",
+  "orderingHearingId": "1a924d98-1183-45c6-bc19-b45c999b69f7",
+  "previous": {
+    "caseApplicationReferences": [
+      "ZG148219442"
+    ],
+    "cases": [
+      {
+        "caseId": "f2f0efef-3e85-44a4-85bc-8077e8bf191e",
+        "caseStatus": "ACTIVE",
+        "defendantCaseOffences": [
+          {
+            "allocationDecision": "Summary-only offence",
+            "civilOffence": false,
+            "code": "RA88001",
+            "convictingCourtCode": "2577",
+            "convictionDate": "2026-05-19",
+            "convictionStatus": "Convicted",
+            "dateFromWhichDisqRemoved": "",
+            "disqualificationPeriod": "",
+            "dttpDtetp": "",
+            "dvlaCode": "IN10",
+            "endorsableFlag": true,
+            "fine": "",
+            "interimImposedFinalSentence": "",
+            "modeOfTrial": "Summary",
+            "otherSentence": "E12M",
+            "penaltyPoints": "",
+            "plea": "GUILTY",
+            "results": [
+              {
+                "d20": false,
+                "dvlaCode": "E",
+                "judicialResultCategory": "FINAL",
+                "label": "Conditional discharge",
+                "prompts": [
+                  {
+                    "durationSequence": 1,
+                    "label": "Period of conditional discharge",
+                    "promptIdentifier": "d3205319-84cf-4c5b-9d7a-7e4bb1865054",
+                    "promptReference": "periodofConditionalDischarge",
+                    "value": "12 Months"
+                  }
+                ],
+                "publishedForNows": false,
+                "resultIdentifier": "554c2622-c1cc-459e-a98d-b7f317ab065c"
+              },
+              {
+                "d20": true,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "Driving record endorsed (no points)",
+                "publishedForNows": false,
+                "resultIdentifier": "b0aeb4fc-df63-4e2f-af88-97e3f23e847f"
+              },
+              {
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "0: None or unknown",
+                "publishedForNows": true,
+                "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956"
+              }
+            ],
+            "startDate": "2026-03-20",
+            "title": "Use a motor vehicle on a road / public place without third party insurance",
+            "wording": "Use a motor vehicle on a road / public place without third party insurance"
+          },
+          {
+            "allocationDecision": "Summary-only offence",
+            "civilOffence": false,
+            "code": "RT88334",
+            "convictingCourtCode": "2577",
+            "convictionDate": "2026-05-19",
+            "convictionStatus": "Convicted",
+            "dateFromWhichDisqRemoved": "",
+            "disqualificationPeriod": "001200",
+            "dttpDtetp": "",
+            "dvlaCode": "LC20",
+            "endorsableFlag": true,
+            "fine": "£200.00",
+            "interimImposedFinalSentence": "",
+            "modeOfTrial": "Summary",
+            "penaltyPoints": "",
+            "plea": "GUILTY",
+            "results": [
+              {
+                "d20": true,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "Discretionary with ordinary disqualification",
+                "prompts": [
+                  {
+                    "durationSequence": 1,
+                    "label": "Disqualification period",
+                    "promptIdentifier": "2bf54447-328c-4c1b-a123-341adbd52172",
+                    "promptReference": "disqualificationPeriod",
+                    "value": "12 Months"
+                  },
+                  {
+                    "label": "Defendant driving licence number",
+                    "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+                    "promptReference": "defendantDrivingLicenceNumber",
+                    "value": "VANFL002222OW9PH"
+                  }
+                ],
+                "publishedForNows": false,
+                "resultIdentifier": "ccfc452e-ebe4-4cd7-b8a0-4f90768447b4",
+                "resultWording": "Disqualified for holding or obtaining a driving licence. Discretionary disqualification. Driving record endorsed. Section 34(2) Road Traffic Offenders Act 1988"
+              },
+              {
+                "d20": false,
+                "judicialResultCategory": "FINAL",
+                "label": "Fine",
+                "prompts": [
+                  {
+                    "label": "Amount of fine",
+                    "promptIdentifier": "7cd1472f-2379-4f5b-9e67-98a43d86e122",
+                    "promptReference": "AOF",
+                    "value": "£200.00"
+                  }
+                ],
+                "publishedForNows": false,
+                "resultDefinitionGroup": "Imposition",
+                "resultIdentifier": "969f150c-cd05-46b0-9dd9-30891efcc766"
+              },
+              {
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "0: None or unknown",
+                "publishedForNows": true,
+                "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956"
+              }
+            ],
+            "startDate": "2026-03-20",
+            "title": "Drive a motor vehicle otherwise than in accordance with a licence - endorsable offence",
+            "wording": "Drive a motor vehicle otherwise than in accordance with a licence - endorsable offence"
+          }
+        ],
+        "hasSV": false,
+        "initiationCode": "C",
+        "reference": "ZG148219442"
+      }
+    ],
+    "defendant": {
+      "address": {
+        "line1": "72 Albert Road",
+        "line2": "Albert Road",
+        "line3": "Southsea",
+        "line4": "Hampshire",
+        "line5": "Portsmouth",
+        "postCode": "PO5 2SG"
+      },
+      "dateOfBirth": "1962-05-19",
+      "driverNumber": "VANFL002222OW9PH",
+      "firstName": "Lura",
+      "gender": "MALE",
+      "lastName": "Bosco",
+      "name": "Lura Bosco",
+      "title": "Mr"
+    },
+    "distinctPrompts": [
+      {
+        "label": "Defendant driving licence number",
+        "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+        "promptReference": "defendantDrivingLicenceNumber",
+        "value": "VANFL002222OW9PH"
+      }
+    ],
+    "identifier": "1dfd31d4-c18a-4a28-a8ee-20b9d6992b95",
+    "licenceProducedInCourt": "0: None or unknown",
+    "masterDefendantId": "4ac0e5d2-4473-44b3-a041-157ccee4e112",
+    "materialId": "de0d5ec2-a2f4-4440-a913-79254057f16b",
+    "orderDate": "2026-05-19",
+    "orderingCourt": {
+      "address": {
+        "address1": "176A Lavender Hill",
+        "address2": "London",
+        "address3": "",
+        "address4": "",
+        "address5": "",
+        "postcode": "SW11 1JU"
+      },
+      "code": "B01LY00",
+      "courtHearingLocation": "B01LY01",
+      "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+      "lja": {
+        "ljaCode": "2577",
+        "ljaName": "South West London Magistrates' Court"
+      },
+      "name": "Lavender Hill Magistrates' Court",
+      "roomId": "9e4932f7-97b2-3010-b942-ddd2624e4dd8",
+      "roomName": "Courtroom 01"
+    },
+    "orderingHearingId": "2b5782d2-c637-4ce2-aa26-aa76a431f441",
+    "retrySequence": 0
+  },
+  "removedEndorsements": [
+    "IN10",
+    "LC20"
+  ],
+  "retrySequence": 0
+}

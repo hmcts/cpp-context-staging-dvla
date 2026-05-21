@@ -1,0 +1,189 @@
+{
+  "masterDefendantId": "122b1916-dfbd-47d6-a622-39eb4f6ef765",
+  "orderingCourt": {
+    "address": {
+      "address1": "1-15 Pocock Street",
+      "address2": "London",
+      "address3": "",
+      "address4": "",
+      "address5": "",
+      "postcode": "SE1 0BJ"
+    },
+    "code": "C01BL00",
+    "courtHearingLocation": "C01BL00",
+    "courtLocationCode": "0428",
+    "id": "89592405-c29b-3706-b1d3-b1dd3a08b227",
+    "lja": {
+      "ljaCode": "2570",
+      "ljaName": "Central London Magistrates' Court"
+    },
+    "name": "Blackfriars Crown Court",
+    "roomId": "d0624ee3-9198-3c8b-94d6-42fb197ebe5e",
+    "roomName": "Courtroom 01"
+  },
+  "nowContent": {
+    "orderDate": "2026-05-20",
+    "defendant": {
+      "dateOfBirth": "1976-05-19",
+      "gender": "MALE",
+      "driverNumber": "VANFL002222OW9PH",
+      "title": "Mr",
+      "firstName": "Delsie",
+      "lastName": "Bosco",
+      "name": "Delsie Bosco",
+      "address": {
+        "line1": "33 Bridge Street",
+        "line2": "Bridge Street",
+        "line3": "Stratford-upon-Avon",
+        "line4": "Warwickshire",
+        "postCode": "CV37 6AB"
+      }
+    },
+    "caseApplicationReferences": [
+      "IS148228747"
+    ],
+    "cases": [
+      {
+        "caseStatus": "INACTIVE",
+        "initiationCode": "C",
+        "reference": "IS148228747",
+        "caseId": "9158d3f4-9878-4266-a8a2-4b1d7c80163a",
+        "defendantCaseOffences": [
+          {
+            "title": "Use a motor vehicle on a road / public place without third party insurance",
+            "civilOffence": false,
+            "dvlaCode": "IN10",
+            "convictionDate": "2026-05-19",
+            "convictionStatus": "Convicted",
+            "plea": "GUILTY",
+            "code": "RA88001",
+            "modeOfTrial": "Summary",
+            "allocationDecision": "Summary-only offence",
+            "endorsableFlag": true,
+            "convictingCourtCode": "2577",
+            "wording": "Use a motor vehicle on a road / public place without third party insurance",
+            "startDate": "2026-03-20",
+            "results": [
+              {
+                "resultIdentifier": "554c2622-c1cc-459e-a98d-b7f317ab065c",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "d3205319-84cf-4c5b-9d7a-7e4bb1865054",
+                    "promptReference": "periodofConditionalDischarge",
+                    "durationSequence": 1,
+                    "label": "Period of conditional discharge",
+                    "value": "10 Months"
+                  }
+                ],
+                "d20": false,
+                "dvlaCode": "E",
+                "judicialResultCategory": "FINAL",
+                "label": "Conditional discharge"
+              },
+              {
+                "resultIdentifier": "f121db73-57fb-4f74-9ab1-0843aabe4605",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "dcaf502b-44d2-4be0-acfc-2f7d29142da6",
+                    "promptReference": "specialReasons",
+                    "label": "Special reasons",
+                    "value": "Test"
+                  }
+                ],
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "No endorsement - Special Reasons"
+              }
+            ]
+          },
+          {
+            "title": "Drive a motor vehicle otherwise than in accordance with a licence - endorsable offence",
+            "civilOffence": false,
+            "dvlaCode": "LC20",
+            "convictionDate": "2026-05-19",
+            "convictionStatus": "Convicted",
+            "plea": "GUILTY",
+            "code": "RT88334",
+            "modeOfTrial": "Summary",
+            "allocationDecision": "Summary-only offence",
+            "endorsableFlag": true,
+            "convictingCourtCode": "2577",
+            "wording": "Drive a motor vehicle otherwise than in accordance with a licence - endorsable offence",
+            "startDate": "2026-03-20",
+            "results": [
+              {
+                "resultIdentifier": "3e859586-bc86-407d-bd8e-c9a01d40d147",
+                "publishedForNows": false,
+                "d20": false,
+                "judicialResultCategory": "FINAL",
+                "label": "Offence not dealt with as part of application - original adjudication to stand"
+              }
+            ]
+          },
+          {
+            "title": "Cause use of motor vehicle with no insurance",
+            "civilOffence": false,
+            "dvlaCode": "IN14",
+            "convictionDate": "2026-05-19",
+            "convictionStatus": "Convicted",
+            "plea": "GUILTY",
+            "code": "RA88002",
+            "modeOfTrial": "Summary",
+            "allocationDecision": "Summary-only offence",
+            "endorsableFlag": true,
+            "convictingCourtCode": "2577",
+            "wording": "Cause use of motor vehicle with no insurance",
+            "startDate": "2026-03-20",
+            "results": [
+              {
+                "resultIdentifier": "3e859586-bc86-407d-bd8e-c9a01d40d147",
+                "publishedForNows": false,
+                "d20": false,
+                "judicialResultCategory": "FINAL",
+                "label": "Offence not dealt with as part of application - original adjudication to stand"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "courtApplications": [
+      {
+        "applicationType": "Appeal against sentence by a Magistrates' Court to the Crown Court",
+        "applicationTypeId": "ef71f385-88f5-4e53-8b9f-d568af9ea90c",
+        "applicationReceivedDate": "2026-05-19",
+        "id": "de2aa572-1bb1-41cb-9116-5f44143e8060",
+        "applicationReference": "IS148228747",
+        "applicationStatus": "FINALISED",
+        "results": [
+          {
+            "resultIdentifier": "d861586a-df88-440d-98d4-63cc2a680ae1",
+            "publishedForNows": false,
+            "prompts": [
+              {
+                "promptIdentifier": "c946a5df-5849-4cca-b425-ecbd6bd704dc",
+                "promptReference": "dateSentenceWasImposed",
+                "label": "Date sentence was imposed",
+                "value": "19/05/2026"
+              },
+              {
+                "promptIdentifier": "c10b4c83-1856-4ca9-9592-d8b8183a0324",
+                "promptReference": "reasons",
+                "label": "Reasons",
+                "value": "sentence was imposed"
+              }
+            ],
+            "resultWording": "",
+            "d20": false,
+            "judicialResultCategory": "FINAL",
+            "label": "Appeal against sentence allowed"
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": false,
+  "orderingHearingId": "99eb293b-de1c-4398-abc4-dc7dc35af046"
+}

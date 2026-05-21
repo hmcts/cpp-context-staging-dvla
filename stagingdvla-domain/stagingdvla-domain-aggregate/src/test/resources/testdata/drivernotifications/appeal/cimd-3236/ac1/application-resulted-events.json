@@ -1,0 +1,319 @@
+{
+  "caseApplicationReferences": [
+    "DJ148106934"
+  ],
+  "cases": [
+    {
+      "caseId": "09e5ddbf-082f-4567-a6dc-7b32082b0a9b",
+      "caseStatus": "INACTIVE",
+      "defendantCaseOffences": [
+        {
+          "alcoholReadingAmount": "500",
+          "alcoholReadingMethodCode": "A",
+          "alcoholReadingMethodDescription": "Blood",
+          "allocationDecision": "Summary-only offence",
+          "civilOffence": false,
+          "code": "RR84130",
+          "convictingCourtCode": "2577",
+          "convictionDate": "2026-05-14",
+          "convictionStatus": "Convicted",
+          "dateFromWhichDisqRemoved": "",
+          "disqualificationPeriod": "",
+          "dttpDtetp": "",
+          "dvlaCode": "SP40",
+          "endorsableFlag": true,
+          "fine": "",
+          "interimImposedFinalSentence": "",
+          "modeOfTrial": "Summary",
+          "otherSentence": "E12M",
+          "penaltyPoints": "8",
+          "plea": "GUILTY",
+          "results": [
+            {
+              "d20": true,
+              "judicialResultCategory": "ANCILLARY",
+              "label": "Driving record endorsed with penalty points",
+              "prompts": [
+                {
+                  "label": "Penalty points for this offence",
+                  "promptIdentifier": "a8719de4-7783-448a-b792-e3f94e670ad0",
+                  "promptReference": "PENPT",
+                  "value": "8"
+                },
+                {
+                  "label": "Defendant driving licence number",
+                  "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+                  "promptReference": "defendantDrivingLicenceNumber",
+                  "value": "VANFL002222OW9PH"
+                }
+              ],
+              "publishedForNows": false,
+              "resultIdentifier": "cee54856-4450-4f28-a8a9-72b688726201"
+            },
+            {
+              "d20": false,
+              "judicialResultCategory": "ANCILLARY",
+              "label": "0: None or unknown",
+              "publishedForNows": true,
+              "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956"
+            },
+            {
+              "d20": false,
+              "dvlaCode": "E",
+              "judicialResultCategory": "FINAL",
+              "label": "Conditional discharge",
+              "prompts": [
+                {
+                  "durationSequence": 1,
+                  "label": "Period of conditional discharge",
+                  "promptIdentifier": "d3205319-84cf-4c5b-9d7a-7e4bb1865054",
+                  "promptReference": "periodofConditionalDischarge",
+                  "value": "12 Months"
+                }
+              ],
+              "publishedForNows": false,
+              "resultIdentifier": "554c2622-c1cc-459e-a98d-b7f317ab065c"
+            }
+          ],
+          "sentenceDate": "2026-05-15",
+          "sentencingCourtCode": "0428",
+          "startDate": "2026-03-15",
+          "title": "Speeding - passenger motor vehicle and trailer exceeding 50 mph - single carriageway - manned equipment",
+          "wording": "Speeding - passenger motor vehicle and trailer exceeding 50 mph - single carriageway - manned equipment"
+        }
+      ],
+      "hasSV": false,
+      "initiationCode": "C",
+      "reference": "DJ148106934"
+    }
+  ],
+  "courtApplications": [
+    {
+      "applicationReceivedDate": "2026-05-14",
+      "applicationReference": "DJ148106934",
+      "applicationStatus": "FINALISED",
+      "applicationType": "Appeal against conviction by a Magistrates' Court to the Crown Court",
+      "applicationTypeId": "3fca31f0-7b30-47e8-8f3f-90601ad26b50",
+      "id": "785e8cb7-f7a7-46b1-a4a7-1609f879c5ec",
+      "results": [
+        {
+          "d20": false,
+          "judicialResultCategory": "FINAL",
+          "label": "Appeal against conviction allowed ",
+          "prompts": [
+            {
+              "label": "Reasons",
+              "promptIdentifier": "c10b4c83-1856-4ca9-9592-d8b8183a0324",
+              "promptReference": "reasons",
+              "value": "conviction was imposed"
+            },
+            {
+              "label": "Date of conviction",
+              "promptIdentifier": "e3764c59-4e25-4864-a3af-1c2e3390af99",
+              "promptReference": "dateOfConviction",
+              "value": "14/05/2026"
+            }
+          ],
+          "publishedForNows": false,
+          "resultIdentifier": "177f29cd-49e9-41d1-aafb-5730d7414dd4",
+          "resultWording": ""
+        }
+      ]
+    }
+  ],
+  "defendant": {
+    "address": {
+      "line1": "40 Market Place",
+      "line2": "Market Place",
+      "line3": "Bristol",
+      "postCode": "NW1 5BR"
+    },
+    "dateOfBirth": "1962-05-14",
+    "driverNumber": "VANFL002222OW9PH",
+    "firstName": "Gwen",
+    "gender": "MALE",
+    "lastName": "Dietrich",
+    "name": "Gwen Dietrich",
+    "title": "Mr"
+  },
+  "distinctPrompts": [
+    {
+      "label": "Defendant driving licence number",
+      "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+      "promptReference": "defendantDrivingLicenceNumber",
+      "value": "VANFL002222OW9PH"
+    }
+  ],
+  "identifier": "70b12211-118c-4759-9c2e-179389900602",
+  "licenceProducedInCourt": "0: None or unknown",
+  "masterDefendantId": "403ab228-db6f-4617-9267-6d5493a2b31f",
+  "materialId": "a94adccf-468e-4042-b76f-d26a15889ebc",
+  "notificationType": "Update",
+  "notificationWasPreviouslySent": true,
+  "orderDate": "2026-05-15",
+  "orderingCourt": {
+    "address": {
+      "address1": "1-15 Pocock Street",
+      "address2": "London",
+      "address3": "",
+      "address4": "",
+      "address5": "",
+      "postcode": "SE1 0BJ"
+    },
+    "code": "C01BL00",
+    "courtHearingLocation": "C01BL00",
+    "courtLocationCode": "0428",
+    "id": "89592405-c29b-3706-b1d3-b1dd3a08b227",
+    "lja": {
+      "ljaCode": "2570",
+      "ljaName": "Central London Magistrates' Court"
+    },
+    "name": "Blackfriars Crown Court",
+    "roomId": "d0624ee3-9198-3c8b-94d6-42fb197ebe5e",
+    "roomName": "Courtroom 01"
+  },
+  "orderingCourtCode": "0428",
+  "orderingHearingId": "168bb682-1355-4a56-829c-40a89c4179f9",
+  "previous": {
+    "caseApplicationReferences": [
+      "DJ148106934"
+    ],
+    "cases": [
+      {
+        "caseId": "09e5ddbf-082f-4567-a6dc-7b32082b0a9b",
+        "caseStatus": "ACTIVE",
+        "defendantCaseOffences": [
+          {
+            "alcoholReadingAmount": "500",
+            "alcoholReadingMethodCode": "A",
+            "alcoholReadingMethodDescription": "Blood",
+            "allocationDecision": "Summary-only offence",
+            "civilOffence": false,
+            "code": "RR84130",
+            "convictingCourtCode": "2577",
+            "convictionDate": "2026-05-14",
+            "convictionStatus": "Convicted",
+            "dateFromWhichDisqRemoved": "",
+            "disqualificationPeriod": "",
+            "dttpDtetp": "",
+            "dvlaCode": "SP40",
+            "endorsableFlag": true,
+            "fine": "",
+            "interimImposedFinalSentence": "",
+            "modeOfTrial": "Summary",
+            "otherSentence": "E12M",
+            "penaltyPoints": "6",
+            "plea": "GUILTY",
+            "results": [
+              {
+                "d20": false,
+                "dvlaCode": "E",
+                "judicialResultCategory": "FINAL",
+                "label": "Conditional discharge",
+                "prompts": [
+                  {
+                    "durationSequence": 1,
+                    "label": "Period of conditional discharge",
+                    "promptIdentifier": "d3205319-84cf-4c5b-9d7a-7e4bb1865054",
+                    "promptReference": "periodofConditionalDischarge",
+                    "value": "12 Months"
+                  }
+                ],
+                "publishedForNows": false,
+                "resultIdentifier": "554c2622-c1cc-459e-a98d-b7f317ab065c"
+              },
+              {
+                "d20": true,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "Driving record endorsed with penalty points",
+                "prompts": [
+                  {
+                    "label": "Penalty points for this offence",
+                    "promptIdentifier": "a8719de4-7783-448a-b792-e3f94e670ad0",
+                    "promptReference": "PENPT",
+                    "value": "6"
+                  },
+                  {
+                    "label": "Defendant driving licence number",
+                    "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+                    "promptReference": "defendantDrivingLicenceNumber",
+                    "value": "VANFL002222OW9PH"
+                  }
+                ],
+                "publishedForNows": false,
+                "resultIdentifier": "cee54856-4450-4f28-a8a9-72b688726201"
+              },
+              {
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "0: None or unknown",
+                "publishedForNows": true,
+                "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956"
+              }
+            ],
+            "startDate": "2026-03-15",
+            "title": "Speeding - passenger motor vehicle and trailer exceeding 50 mph - single carriageway - manned equipment",
+            "wording": "Speeding - passenger motor vehicle and trailer exceeding 50 mph - single carriageway - manned equipment"
+          }
+        ],
+        "hasSV": false,
+        "initiationCode": "C",
+        "reference": "DJ148106934"
+      }
+    ],
+    "defendant": {
+      "address": {
+        "line1": "40 Market Place",
+        "line2": "Market Place",
+        "line3": "Bristol",
+        "postCode": "NW1 5BR"
+      },
+      "dateOfBirth": "1962-05-14",
+      "driverNumber": "VANFL002222OW9PH",
+      "firstName": "Gwen",
+      "gender": "MALE",
+      "lastName": "Dietrich",
+      "name": "Gwen Dietrich",
+      "title": "Mr"
+    },
+    "distinctPrompts": [
+      {
+        "label": "Defendant driving licence number",
+        "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+        "promptReference": "defendantDrivingLicenceNumber",
+        "value": "VANFL002222OW9PH"
+      }
+    ],
+    "identifier": "ac9a4b4b-ab65-4301-990d-693d0ffc0963",
+    "licenceProducedInCourt": "0: None or unknown",
+    "masterDefendantId": "403ab228-db6f-4617-9267-6d5493a2b31f",
+    "materialId": "9f9db22d-bbc0-449e-b1a9-680c40f44b8c",
+    "orderDate": "2026-05-14",
+    "orderingCourt": {
+      "address": {
+        "address1": "176A Lavender Hill",
+        "address2": "London",
+        "address3": "",
+        "address4": "",
+        "address5": "",
+        "postcode": "SW11 1JU"
+      },
+      "code": "B01LY00",
+      "courtHearingLocation": "B01LY01",
+      "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+      "lja": {
+        "ljaCode": "2577",
+        "ljaName": "South West London Magistrates' Court"
+      },
+      "name": "Lavender Hill Magistrates' Court",
+      "roomId": "9e4932f7-97b2-3010-b942-ddd2624e4dd8",
+      "roomName": "Courtroom 01"
+    },
+    "orderingHearingId": "d22e3583-1b20-4b66-8d98-e0e636673691",
+    "retrySequence": 0
+  },
+  "retrySequence": 0,
+  "updatedEndorsements": [
+    "SP40"
+  ]
+}

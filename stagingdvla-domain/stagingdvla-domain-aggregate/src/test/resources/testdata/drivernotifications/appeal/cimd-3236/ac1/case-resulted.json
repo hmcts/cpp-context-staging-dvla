@@ -1,0 +1,121 @@
+{
+  "masterDefendantId": "403ab228-db6f-4617-9267-6d5493a2b31f",
+  "orderingCourt": {
+    "address": {
+      "address1": "176A Lavender Hill",
+      "address2": "London",
+      "address3": "",
+      "address4": "",
+      "address5": "",
+      "postcode": "SW11 1JU"
+    },
+    "code": "B01LY00",
+    "courtHearingLocation": "B01LY01",
+    "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+    "lja": {
+      "ljaCode": "2577",
+      "ljaName": "South West London Magistrates' Court"
+    },
+    "name": "Lavender Hill Magistrates' Court",
+    "roomId": "9e4932f7-97b2-3010-b942-ddd2624e4dd8",
+    "roomName": "Courtroom 01"
+  },
+  "nowContent": {
+    "orderDate": "2026-05-14",
+    "defendant": {
+      "dateOfBirth": "1962-05-14",
+      "gender": "MALE",
+      "driverNumber": "VANFL002222OW9PH",
+      "title": "Mr",
+      "firstName": "Gwen",
+      "lastName": "Dietrich",
+      "name": "Gwen Dietrich",
+      "address": {
+        "line1": "40 Market Place",
+        "line2": "Market Place",
+        "line3": "Bristol",
+        "postCode": "NW1 5BR"
+      }
+    },
+    "caseApplicationReferences": [
+      "DJ148106934"
+    ],
+    "cases": [
+      {
+        "caseStatus": "ACTIVE",
+        "initiationCode": "C",
+        "reference": "DJ148106934",
+        "caseId": "09e5ddbf-082f-4567-a6dc-7b32082b0a9b",
+        "defendantCaseOffences": [
+          {
+            "title": "Speeding - passenger motor vehicle and trailer exceeding 50 mph - single carriageway - manned equipment",
+            "civilOffence": false,
+            "dvlaCode": "SP40",
+            "convictionDate": "2026-05-14",
+            "convictionStatus": "Convicted",
+            "plea": "GUILTY",
+            "alcoholReadingAmount": 500,
+            "alcoholReadingMethodCode": "A",
+            "alcoholReadingMethodDescription": "Blood",
+            "code": "RR84130",
+            "modeOfTrial": "Summary",
+            "allocationDecision": "Summary-only offence",
+            "endorsableFlag": true,
+            "convictingCourtCode": "2577",
+            "wording": "Speeding - passenger motor vehicle and trailer exceeding 50 mph - single carriageway - manned equipment",
+            "startDate": "2026-03-15",
+            "results": [
+              {
+                "resultIdentifier": "554c2622-c1cc-459e-a98d-b7f317ab065c",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "d3205319-84cf-4c5b-9d7a-7e4bb1865054",
+                    "promptReference": "periodofConditionalDischarge",
+                    "durationSequence": 1,
+                    "label": "Period of conditional discharge",
+                    "value": "12 Months"
+                  }
+                ],
+                "d20": false,
+                "dvlaCode": "E",
+                "judicialResultCategory": "FINAL",
+                "label": "Conditional discharge"
+              },
+              {
+                "resultIdentifier": "cee54856-4450-4f28-a8a9-72b688726201",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "a8719de4-7783-448a-b792-e3f94e670ad0",
+                    "promptReference": "PENPT",
+                    "label": "Penalty points for this offence",
+                    "value": "6"
+                  },
+                  {
+                    "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+                    "promptReference": "defendantDrivingLicenceNumber",
+                    "label": "Defendant driving licence number",
+                    "value": "VANFL002222OW9PH"
+                  }
+                ],
+                "d20": true,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "Driving record endorsed with penalty points"
+              },
+              {
+                "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956",
+                "publishedForNows": true,
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "0: None or unknown"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": false,
+  "orderingHearingId": "d22e3583-1b20-4b66-8d98-e0e636673691"
+}
