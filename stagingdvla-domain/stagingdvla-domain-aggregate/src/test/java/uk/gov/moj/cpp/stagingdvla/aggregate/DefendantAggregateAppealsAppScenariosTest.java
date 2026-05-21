@@ -174,7 +174,8 @@ class DefendantAggregateAppealsAppScenariosTest {
                                                 .add("notificationType", "Update")
                                                 .add("oatsEndorsements", List.of("IN14"))
                                                 .add("previous", notNullValue()))
-                ), Arguments.of("cimd-3241-ac2",
+                ),
+                Arguments.of("cimd-3241-ac2",
                         defendantAggregateScenario()
                                 .withNotifyDriverStep(
                                         "case hearing resulted",
@@ -195,7 +196,8 @@ class DefendantAggregateAppealsAppScenariosTest {
                                         "/testdata/drivernotifications/appeal/cimd-3241/app-resulted-events-2.json",
                                         jsonPathAssertions()
                                                 .add("notificationType", "Update"))
-                ), Arguments.of("cimd-3232-ac1",
+                ),
+                Arguments.of("cimd-3232-ac1",
                         defendantAggregateScenario()
                                 .withNotifyDriverStep(
                                         "case hearing resulted",
@@ -207,7 +209,8 @@ class DefendantAggregateAppealsAppScenariosTest {
                                         "/testdata/drivernotifications/appeal/cimd-3232/ac1/application-resulted.json",
                                         "/testdata/drivernotifications/appeal/cimd-3232/ac1/application-resulted-events.json",
                                         jsonPathAssertions().add("notificationType", "Remove"))
-                ), Arguments.of("cimd-3242-ac1",
+                ),
+                Arguments.of("cimd-3242-ac1",
                         defendantAggregateScenario()
                                 .withNotifyDriverStep(
                                         "case hearing resulted",
@@ -219,7 +222,8 @@ class DefendantAggregateAppealsAppScenariosTest {
                                         "/testdata/drivernotifications/appeal/cimd-3242/ac1/application-resulted.json",
                                         "/testdata/drivernotifications/appeal/cimd-3242/ac1/application-resulted-events.json",
                                         jsonPathAssertions().add("notificationType", "Remove"))
-                ), Arguments.of("cimd-3242-ac2",
+                ),
+                Arguments.of("cimd-3242-ac2",
                         defendantAggregateScenario()
                                 .withNotifyDriverStep(
                                         "case hearing resulted",
@@ -231,7 +235,8 @@ class DefendantAggregateAppealsAppScenariosTest {
                                         "/testdata/drivernotifications/appeal/cimd-3242/ac2/application-resulted.json",
                                         "/testdata/drivernotifications/appeal/cimd-3242/ac2/application-resulted-events.json",
                                         jsonPathAssertions().add("notificationType", "Remove"))
-                ), Arguments.of("cimd-3242-ac3",
+                ),
+                Arguments.of("cimd-3242-ac3",
                         defendantAggregateScenario()
                                 .withNotifyDriverStep(
                                         "case hearing resulted",
@@ -243,7 +248,8 @@ class DefendantAggregateAppealsAppScenariosTest {
                                         "/testdata/drivernotifications/appeal/cimd-3242/ac3/application-resulted.json",
                                         "/testdata/drivernotifications/appeal/cimd-3242/ac3/application-resulted-events.json",
                                         jsonPathAssertions().add("notificationType", "Remove"))
-                ), Arguments.of("cimd-3242-ac4",
+                ),
+                Arguments.of("cimd-3242-ac4",
                         defendantAggregateScenario()
                                 .withNotifyDriverStep(
                                         "case hearing resulted",
@@ -255,7 +261,8 @@ class DefendantAggregateAppealsAppScenariosTest {
                                         "/testdata/drivernotifications/appeal/cimd-3242/ac4/application-resulted.json",
                                         "/testdata/drivernotifications/appeal/cimd-3242/ac4/application-resulted-events.json",
                                         jsonPathAssertions().add("notificationType", "Update"))
-                ), Arguments.of("cimd-3236-ac1",
+                ),
+                Arguments.of("cimd-3236-ac1",
                         defendantAggregateScenario()
                                 .withNotifyDriverStep(
                                         "case hearing resulted",
@@ -269,7 +276,8 @@ class DefendantAggregateAppealsAppScenariosTest {
                                         jsonPathAssertions()
                                                 .add("notificationType", "Update")
                                                 .add("previous", notNullValue()))
-                ), Arguments.of("cimd-3236-ac2",
+                ),
+                Arguments.of("cimd-3236-ac2",
                         defendantAggregateScenario()
                                 .withNotifyDriverStep(
                                         "case hearing resulted",
@@ -283,7 +291,8 @@ class DefendantAggregateAppealsAppScenariosTest {
                                         jsonPathAssertions()
                                                 .add("notificationType", "Update")
                                                 .add("previous", notNullValue()))
-                ), Arguments.of("cimd-3236-ac3",
+                ),
+                Arguments.of("cimd-3236-ac3",
                         defendantAggregateScenario()
                                 .withNotifyDriverStep(
                                         "case hearing resulted",
@@ -297,7 +306,8 @@ class DefendantAggregateAppealsAppScenariosTest {
                                         jsonPathAssertions()
                                                 .add("notificationType", "Update")
                                                 .add("previous", notNullValue()))
-                ), Arguments.of("cimd-3236-ac4",
+                ),
+                Arguments.of("cimd-3236-ac4",
                         defendantAggregateScenario()
                                 .withNotifyDriverStep(
                                         "case hearing resulted",
