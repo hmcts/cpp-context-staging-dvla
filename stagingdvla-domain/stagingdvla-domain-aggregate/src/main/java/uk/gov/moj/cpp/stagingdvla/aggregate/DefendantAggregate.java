@@ -225,8 +225,7 @@ public class DefendantAggregate implements Aggregate {
                     isWaitingRetryTrigger = false;
                     retrySequence = 0;
                 }),
-                when(SjpCaseToCcReferred.class).apply(previousSjpCaseToCcReferred::add
-                ),
+                when(SjpCaseToCcReferred.class).apply(previousSjpCaseToCcReferred::add),
                 otherwiseDoNothing());
     }
 
