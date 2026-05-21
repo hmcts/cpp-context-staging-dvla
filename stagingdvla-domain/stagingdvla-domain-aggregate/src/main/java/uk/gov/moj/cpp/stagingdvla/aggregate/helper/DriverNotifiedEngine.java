@@ -65,7 +65,6 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasPointsD
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasRemovalOfDisqualificationsResult;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasResultType;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.isApplicationNotGranted;
-import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.isCaseReopen;
 
 import uk.gov.justice.core.courts.CourtCentre;
 import uk.gov.justice.core.courts.nowdocument.Nowdefendant;
@@ -291,6 +290,11 @@ public class DriverNotifiedEngine {
                 .build();
     }
 
+    /**
+     * DD-40319: Checks whether StatDec application has been amended to
+     * "rejected" during an amend-and-reshare process,
+     * and determines if it should be sent based on previous notifications
+     */
     private static boolean isStatDecApplicationAmendedToReject(final List<CourtApplications> courtApplications, final Boolean isReshare, final UUID hearingId, final Map<UUID, DriverNotified> previousDriverNotifiedByHearing) {
         return Boolean.TRUE.equals(isReshare) && nonNull(previousDriverNotifiedByHearing) && previousDriverNotifiedByHearing.containsKey(hearingId) &&
                 isApplicationNotGranted(courtApplications) && courtApplications.stream().anyMatch(OffenceUtil::isStDec) &&
