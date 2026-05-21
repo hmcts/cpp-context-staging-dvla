@@ -2,6 +2,7 @@ package uk.gov.moj.cpp.stagingdvla.aggregate;
 
 
 import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.DefendantAggregateTestSteps.JsonPathAssertions.jsonPathAssertions;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.DefendantAggregateTestSteps.defendantAggregateScenario;
@@ -25,7 +26,11 @@ class DefendantAggregateAppealsAppScenariosTest {
                                         "case hearing resulted",
                                         "/testdata/drivernotifications/appeal/cimd-3237/ac1/case-resulted.json",
                                         "/testdata/drivernotifications/appeal/cimd-3237/ac1/case-resulted-events.json",
-                                        jsonPathAssertions().add("notificationType", "New"))
+                                        jsonPathAssertions()
+                                                .add("notificationType", "New")
+                                                .add("previous", nullValue())
+                                                .add("cases[0].defendantCaseOffences.size()", 2)
+                                )
                                 .withNotifyDriverStep(
                                         "application hearing resulted",
                                         "/testdata/drivernotifications/appeal/cimd-3237/ac1/app-resulted.json",
@@ -33,7 +38,8 @@ class DefendantAggregateAppealsAppScenariosTest {
                                         jsonPathAssertions()
                                                 .add("notificationType", "Update")
                                                 .add("oatsEndorsements", List.of("IN10"))
-                                                .add("previous", notNullValue())
+                                                .add("previous.cases[0].defendantCaseOffences.size()", 2)
+                                                .add("cases[0].defendantCaseOffences.size()", 2)
                                 )
 
                 ),
