@@ -53,17 +53,17 @@ public class DefendantAggregate implements Aggregate {
                                        final UUID hearingId,
                                        final List<CourtApplications> courtApplications,
                                        final UUID masterDefendantId,
-                                       final Boolean isReshare) {
+                                       final boolean isReshare) {
 
-        final List<SjpCaseToCcReferred> sjpCaseReferredEvents = new ArrayList<>();
+        final List<SjpCaseToCcReferred> allSjpCaseReferredEvents = new ArrayList<>();
         final List<SjpCaseToCcReferred> currentSjpCaseReferredEvents = getSjpCaseReferredEvents(currentCases, courtApplications);
         if (isNotEmpty(previousSjpCaseToCcReferred) && isNotEmpty(currentSjpCaseReferredEvents) &&
                 isCurrentSjpReferredEventAlreadyPresentInPrevious(currentSjpCaseReferredEvents)) {
             LOGGER.info("Sjp refer to CC is already present for hearingId {}", hearingId);
             return null;
         }
-        sjpCaseReferredEvents.addAll(currentSjpCaseReferredEvents);
-        sjpCaseReferredEvents.addAll(previousSjpCaseToCcReferred);
+        allSjpCaseReferredEvents.addAll(currentSjpCaseReferredEvents);
+        allSjpCaseReferredEvents.addAll(previousSjpCaseToCcReferred);
 
         // Create a new event for each incoming cases
         final List<DriverNotified> driverNotifiedEvents = transformDriverNotified(
@@ -76,7 +76,7 @@ public class DefendantAggregate implements Aggregate {
                 hearingId,
                 courtApplications,
                 previousDriverNotifiedByCaseAndHearing,
-                sjpCaseReferredEvents,
+                allSjpCaseReferredEvents,
                 isReshare);
         if (driverNotifiedEvents.isEmpty() && currentSjpCaseReferredEvents.isEmpty()) {
             if (LOGGER.isInfoEnabled()) {
@@ -141,7 +141,7 @@ public class DefendantAggregate implements Aggregate {
     }
 
     private void streamingEvents(final Stream.Builder<Object> streamBuilder, final List<DriverNotified> driverNotifiedEvents, final UUID masterDefendantId) {
-        driverNotifiedEvents.stream().forEach(
+        driverNotifiedEvents.forEach(
                 e -> {
                     if (this.isWaitingRetryTrigger) {
                         streamBuilder.add(getNextRetryCancelledEvent(previousDriverNotified.getIdentifier(), masterDefendantId));
@@ -225,8 +225,7 @@ public class DefendantAggregate implements Aggregate {
                     isWaitingRetryTrigger = false;
                     retrySequence = 0;
                 }),
-                when(SjpCaseToCcReferred.class).apply(previousSjpCaseToCcReferred::add
-                ),
+                when(SjpCaseToCcReferred.class).apply(previousSjpCaseToCcReferred::add),
                 otherwiseDoNothing());
     }
 
