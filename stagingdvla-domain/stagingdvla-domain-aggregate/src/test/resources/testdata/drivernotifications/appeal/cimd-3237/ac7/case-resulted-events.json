@@ -1,0 +1,208 @@
+{
+  "caseApplicationReferences": [
+    "SJ148099569"
+  ],
+  "cases": [
+    {
+      "caseId": "40323c8b-a3e0-4bdd-968d-a9ddd7b0d131",
+      "defendantCaseOffences": [
+        {
+          "civilOffence": false,
+          "code": "RA88002",
+          "convictingCourtCode": "2577",
+          "convictionDate": "2026-05-22",
+          "convictionStatus": "Convicted",
+          "dateFromWhichDisqRemoved": "",
+          "disqualificationPeriod": "",
+          "dttpDtetp": "",
+          "dvlaCode": "IN14",
+          "endorsableFlag": true,
+          "fine": "£100.00",
+          "interimImposedFinalSentence": "",
+          "modeOfTrial": "1",
+          "penaltyPoints": "6",
+          "plea": "GUILTY",
+          "results": [
+            {
+              "d20": false,
+              "label": "Fine",
+              "prompts": [
+                {
+                  "durationSequence": 0,
+                  "label": "Amount of fine",
+                  "promptIdentifier": "7cd1472f-2379-4f5b-9e67-98a43d86e122",
+                  "promptReference": "AOF",
+                  "value": "£100.00"
+                }
+              ],
+              "publishedForNows": false,
+              "resultDefinitionGroup": "Imposition",
+              "resultIdentifier": "969f150c-cd05-46b0-9dd9-30891efcc766"
+            },
+            {
+              "d20": false,
+              "label": "Compensation",
+              "prompts": [
+                {
+                  "durationSequence": 0,
+                  "label": "Amount of compensation",
+                  "promptIdentifier": "26985e5b-fe1f-4d7d-a21a-57207c5966e7",
+                  "promptReference": "AOCOM",
+                  "value": "£10.00"
+                },
+                {
+                  "durationSequence": 0,
+                  "label": "Major creditor organisation name",
+                  "promptIdentifier": "af921cf4-06e7-4f6b-a4ea-dcb58aab0dbe",
+                  "promptReference": "cREDNAMEOrganisationName",
+                  "value": "Driver and Vehicle Licensing Agency"
+                }
+              ],
+              "publishedForNows": false,
+              "resultDefinitionGroup": "Imposition",
+              "resultIdentifier": "ae89b99c-e0e3-47b5-b218-24d4fca3ca53"
+            },
+            {
+              "d20": true,
+              "label": "Driving record endorsed with penalty points",
+              "prompts": [
+                {
+                  "durationSequence": 0,
+                  "label": "Penalty points for this offence",
+                  "promptIdentifier": "a8719de4-7783-448a-b792-e3f94e670ad0",
+                  "promptReference": "PENPT",
+                  "value": "6"
+                },
+                {
+                  "durationSequence": 0,
+                  "label": "Defendant driving licence number",
+                  "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+                  "promptReference": "defendantDrivingLicenceNumber"
+                }
+              ],
+              "publishedForNows": false,
+              "resultIdentifier": "cee54856-4450-4f28-a8a9-72b688726201"
+            },
+            {
+              "d20": false,
+              "label": "Licence produced in court",
+              "publishedForNows": false,
+              "resultIdentifier": "ea1ee5a4-be13-48dc-8411-78f22e01c236"
+            },
+            {
+              "d20": false,
+              "label": "0: None or unknown",
+              "publishedForNows": true,
+              "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956"
+            }
+          ],
+          "startDate": "2026-05-07",
+          "title": "Cause use of motor vehicle with no insurance",
+          "wording": "Cause use of motor vehicle with no insurance"
+        },
+        {
+          "civilOffence": false,
+          "code": "RC86851",
+          "convictingCourtCode": "2577",
+          "convictionDate": "2026-05-22",
+          "convictionStatus": "Convicted",
+          "dateFromWhichDisqRemoved": "",
+          "disqualificationPeriod": "",
+          "dttpDtetp": "",
+          "dvlaCode": "CU10",
+          "endorsableFlag": true,
+          "fine": "",
+          "interimImposedFinalSentence": "",
+          "modeOfTrial": "1",
+          "otherSentence": "E12M",
+          "penaltyPoints": "",
+          "plea": "GUILTY",
+          "results": [
+            {
+              "d20": false,
+              "dvlaCode": "E",
+              "label": "Conditional discharge",
+              "prompts": [
+                {
+                  "durationSequence": 1,
+                  "label": "Period of conditional discharge",
+                  "promptIdentifier": "d3205319-84cf-4c5b-9d7a-7e4bb1865054",
+                  "promptReference": "periodofConditionalDischarge",
+                  "value": "12 Months"
+                }
+              ],
+              "publishedForNows": false,
+              "resultIdentifier": "554c2622-c1cc-459e-a98d-b7f317ab065c"
+            },
+            {
+              "d20": true,
+              "label": "Driving record endorsed (no points)",
+              "publishedForNows": false,
+              "resultIdentifier": "b0aeb4fc-df63-4e2f-af88-97e3f23e847f"
+            },
+            {
+              "d20": false,
+              "label": "Licence produced in court",
+              "publishedForNows": false,
+              "resultIdentifier": "ea1ee5a4-be13-48dc-8411-78f22e01c236"
+            },
+            {
+              "d20": false,
+              "label": "0: None or unknown",
+              "publishedForNows": true,
+              "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956"
+            }
+          ],
+          "startDate": "2026-04-12",
+          "title": "Vehicle defect - permit use of a motor vehicle / trailer with defective brakes",
+          "wording": "Vehicle defect - permit use of a motor vehicle / trailer with defective brakes"
+        }
+      ],
+      "hasSV": false,
+      "initiationCode": "J",
+      "reference": "SJ148099569"
+    }
+  ],
+  "courtApplications": [],
+  "defendant": {
+    "address": {
+      "line1": "FLAT - 25A",
+      "line2": "Constable Street",
+      "line3": "Bristol",
+      "line4": "England",
+      "line5": "UK",
+      "postCode": "IG1 1YY"
+    },
+    "dateOfBirth": "2000-01-01",
+    "firstName": "FlmdgyEh",
+    "gender": "MALE",
+    "lastName": "SmithsVCle",
+    "name": "FlmdgyEh SmithsVCle",
+    "title": "Mr"
+  },
+  "distinctPrompts": [],
+  "identifier": "8569dffb-3775-4368-86fb-fcc763a0cfa1",
+  "licenceProducedInCourt": "0: None or unknown",
+  "masterDefendantId": "c260a28f-b3a6-43b8-a4f2-531022f81949",
+  "materialId": "97d6657f-23df-4edb-b8aa-62e1b1c8d290",
+  "notificationType": "New",
+  "orderDate": "2026-05-22",
+  "orderingCourt": {
+    "address": {
+      "address1": "176A Lavender Hill",
+      "address2": "London",
+      "postcode": "SW11 1JU"
+    },
+    "code": "B01LY00",
+    "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+    "lja": {
+      "ljaCode": "2577",
+      "ljaName": "Lavender Hill Magistrates' Court",
+      "welshLjaName": "Llys Ynadon Lavender Hill"
+    },
+    "name": "Lavender Hill Magistrates' Court"
+  },
+  "orderingCourtCode": "2577",
+  "orderingHearingId": "7feba246-5a1a-4b08-b033-470756989aad",
+  "retrySequence": 0
+}
