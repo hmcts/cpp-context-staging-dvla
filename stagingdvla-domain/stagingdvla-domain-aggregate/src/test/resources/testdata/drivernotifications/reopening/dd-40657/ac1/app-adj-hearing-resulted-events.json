@@ -115,7 +115,6 @@
           "fine": "£200.00",
           "interimImposedFinalSentence": "",
           "modeOfTrial": "Summary",
-          "otherSentence": "E12M",
           "penaltyPoints": "",
           "results": [
             {
@@ -194,7 +193,7 @@
           "dttpDtetp": "",
           "dvlaCode": "CU30",
           "endorsableFlag": true,
-          "fine": "£500.00",
+          "fine": "",
           "interimImposedFinalSentence": "",
           "modeOfTrial": "Summary",
           "otherSentence": "E12M",
@@ -527,7 +526,7 @@
             "dttpDtetp": "",
             "dvlaCode": "CU30",
             "endorsableFlag": true,
-            "fine": "£500.00",
+            "fine": "",
             "interimImposedFinalSentence": "",
             "modeOfTrial": "Summary",
             "otherSentence": "E12M",
