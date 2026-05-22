@@ -126,6 +126,28 @@ class DefendantAggregateAppealsAppScenariosTest {
                                 )
 
                 ),
+                Arguments.of("CIMD-3237-ac7",
+                        defendantAggregateScenario()
+                                .withNotifyDriverStep(
+                                        "case hearing resulted",
+                                        "/testdata/drivernotifications/appeal/cimd-3237/ac7/case-resulted.json",
+                                        "/testdata/drivernotifications/appeal/cimd-3237/ac7/case-resulted-events.json",
+                                        jsonPathAssertions()
+                                                .add("notificationType", "New")
+                                                .add("previous", nullValue())
+                                                .add("cases[0].defendantCaseOffences.size()", 2))
+                                .withNotifyDriverStep(
+                                        "application hearing resulted",
+                                        "/testdata/drivernotifications/appeal/cimd-3237/ac7/app-resulted.json",
+                                        "/testdata/drivernotifications/appeal/cimd-3237/ac7/app-resulted-events.json",
+                                        jsonPathAssertions()
+                                                .add("notificationType", "Update")
+                                                .add("oatsEndorsements", List.of("IN14", "CU10"))
+                                                .add("previous", notNullValue())
+                                                .add("previous.cases[0].defendantCaseOffences.size()", 2)
+                                                .add("cases[0].defendantCaseOffences.size()", 3))
+
+                ),
                 Arguments.of("CIMD-3240-ac1",
                         defendantAggregateScenario()
                                 .withNotifyDriverStep(
