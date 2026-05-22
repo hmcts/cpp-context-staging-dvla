@@ -1,0 +1,477 @@
+{
+  "caseApplicationReferences": [
+    "SJ143323511"
+  ],
+  "cases": [
+    {
+      "caseId": "5efc17c6-d7c5-4a34-ae78-cd9a7f1885e1",
+      "caseStatus": "INACTIVE",
+      "defendantCaseOffences": [
+        {
+          "civilOffence": false,
+          "code": "RT88334",
+          "convictingCourtCode": "2577",
+          "convictionDate": "2026-05-21",
+          "convictionStatus": "Convicted",
+          "dateFromWhichDisqRemoved": "",
+          "disqualificationPeriod": "",
+          "dttpDtetp": "",
+          "dvlaCode": "LC20",
+          "endorsableFlag": true,
+          "fine": "£120.00",
+          "interimImposedFinalSentence": "",
+          "modeOfTrial": "1",
+          "penaltyPoints": "",
+          "plea": "GUILTY",
+          "results": [
+            {
+              "d20": false,
+              "judicialResultCategory": "FINAL",
+              "label": "Fine",
+              "prompts": [
+                {
+                  "durationSequence": 0,
+                  "label": "Amount of fine",
+                  "promptIdentifier": "7cd1472f-2379-4f5b-9e67-98a43d86e122",
+                  "promptReference": "AOF",
+                  "value": "£120.00"
+                }
+              ],
+              "publishedForNows": false,
+              "resultDefinitionGroup": "Imposition",
+              "resultIdentifier": "969f150c-cd05-46b0-9dd9-30891efcc766"
+            },
+            {
+              "d20": true,
+              "judicialResultCategory": "ANCILLARY",
+              "label": "Driving record endorsed (no points)",
+              "publishedForNows": false,
+              "resultIdentifier": "b0aeb4fc-df63-4e2f-af88-97e3f23e847f"
+            },
+            {
+              "d20": false,
+              "judicialResultCategory": "ANCILLARY",
+              "label": "Licence produced in court",
+              "publishedForNows": false,
+              "resultIdentifier": "ea1ee5a4-be13-48dc-8411-78f22e01c236"
+            },
+            {
+              "d20": false,
+              "judicialResultCategory": "ANCILLARY",
+              "label": "0: None or unknown",
+              "publishedForNows": true,
+              "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956"
+            }
+          ],
+          "startDate": "2026-04-11",
+          "title": "Drive a motor vehicle otherwise than in accordance with a licence - endorsable offence",
+          "wording": "Drive a motor vehicle otherwise than in accordance with a licence - endorsable offence"
+        },
+        {
+          "civilOffence": false,
+          "code": "RA88001",
+          "convictingCourtCode": "2577",
+          "convictionDate": "2026-05-21",
+          "convictionStatus": "Convicted",
+          "dateFromWhichDisqRemoved": "",
+          "disqualificationPeriod": "",
+          "dttpDtetp": "",
+          "dvlaCode": "IN10",
+          "endorsableFlag": true,
+          "fine": "£200.00",
+          "interimImposedFinalSentence": "",
+          "modeOfTrial": "1",
+          "penaltyPoints": "8",
+          "plea": "GUILTY",
+          "results": [
+            {
+              "d20": false,
+              "judicialResultCategory": "FINAL",
+              "label": "Fine",
+              "prompts": [
+                {
+                  "durationSequence": 0,
+                  "label": "Amount of fine",
+                  "promptIdentifier": "7cd1472f-2379-4f5b-9e67-98a43d86e122",
+                  "promptReference": "AOF",
+                  "value": "£200.00"
+                }
+              ],
+              "publishedForNows": false,
+              "resultDefinitionGroup": "Imposition",
+              "resultIdentifier": "969f150c-cd05-46b0-9dd9-30891efcc766"
+            },
+            {
+              "d20": true,
+              "judicialResultCategory": "ANCILLARY",
+              "label": "Driving record endorsed with penalty points",
+              "prompts": [
+                {
+                  "durationSequence": 0,
+                  "label": "Penalty points for this offence",
+                  "promptIdentifier": "a8719de4-7783-448a-b792-e3f94e670ad0",
+                  "promptReference": "PENPT",
+                  "value": "8"
+                }
+              ],
+              "publishedForNows": false,
+              "resultIdentifier": "cee54856-4450-4f28-a8a9-72b688726201"
+            },
+            {
+              "d20": false,
+              "judicialResultCategory": "ANCILLARY",
+              "label": "Collection order",
+              "prompts": [
+                {
+                  "label": "Collection order type",
+                  "promptIdentifier": "6b36e5ff-e116-4dc3-b438-8c02d493959e",
+                  "promptReference": "collectionOrderType",
+                  "value": "Make payments as ordered"
+                }
+              ],
+              "publishedForNows": false,
+              "resultIdentifier": "9ea0d845-5096-44f6-9ce0-8ae801141eac"
+            },
+            {
+              "d20": false,
+              "judicialResultCategory": "FINAL",
+              "label": "Pay by date",
+              "prompts": [
+                {
+                  "label": "Date to pay in full by",
+                  "promptIdentifier": "ee7d253a-c629-11e8-a355-529269fb1459",
+                  "promptReference": "PBD",
+                  "value": "01/06/2026"
+                }
+              ],
+              "publishedForNows": false,
+              "resultDefinitionGroup": "Payment terms",
+              "resultIdentifier": "bcb5a496-f7cf-11e8-8eb2-f2801f1b9fd1"
+            },
+            {
+              "d20": false,
+              "judicialResultCategory": "ANCILLARY",
+              "label": "0: None or unknown",
+              "publishedForNows": true,
+              "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956"
+            }
+          ],
+          "sentenceDate": "2026-05-23",
+          "sentencingCourtCode": "0418",
+          "startDate": "2026-05-06",
+          "title": "Use a motor vehicle on a road / public place without third party insurance",
+          "wording": "Use a motor vehicle on a road / public place without third party insurance"
+        }
+      ],
+      "hasSV": false,
+      "initiationCode": "C",
+      "reference": "SJ143323511"
+    }
+  ],
+  "courtApplications": [
+    {
+      "applicationReceivedDate": "2026-05-21",
+      "applicationReference": "SJ143323511",
+      "applicationStatus": "FINALISED",
+      "applicationType": "Appeal against sentence by a Magistrates' Court to the Crown Court",
+      "applicationTypeId": "ef71f385-88f5-4e53-8b9f-d568af9ea90c",
+      "id": "1f7a9e5b-48a9-4e39-9c8d-faacd7dbb9b6",
+      "results": [
+        {
+          "d20": false,
+          "judicialResultCategory": "FINAL",
+          "label": "Appeal against sentence allowed",
+          "prompts": [
+            {
+              "label": "Date sentence was imposed",
+              "promptIdentifier": "c946a5df-5849-4cca-b425-ecbd6bd704dc",
+              "promptReference": "dateSentenceWasImposed",
+              "value": "21/05/2026"
+            },
+            {
+              "label": "Reasons",
+              "promptIdentifier": "c10b4c83-1856-4ca9-9592-d8b8183a0324",
+              "promptReference": "reasons",
+              "value": "sentence was imposed"
+            }
+          ],
+          "publishedForNows": false,
+          "resultIdentifier": "d861586a-df88-440d-98d4-63cc2a680ae1",
+          "resultWording": ""
+        },
+        {
+          "d20": false,
+          "judicialResultCategory": "FINAL",
+          "label": "Granted",
+          "publishedForNows": false,
+          "resultIdentifier": "2b3f7c20-8fc1-4fad-9076-df196c24b27e"
+        }
+      ]
+    }
+  ],
+  "defendant": {
+    "address": {
+      "line1": "FLAT - 25A",
+      "line2": "Park square Street",
+      "line3": "Bristol",
+      "line4": "England",
+      "line5": "UK",
+      "postCode": "SA6 1YY"
+    },
+    "dateOfBirth": "1956-05-21",
+    "firstName": "Quintin",
+    "gender": "MALE",
+    "lastName": "Haag",
+    "name": "Quintin Haag",
+    "title": "MR"
+  },
+  "distinctPrompts": [],
+  "identifier": "1a2c9efe-78be-446d-8f8b-35dbc1aa7774",
+  "licenceProducedInCourt": "0: None or unknown",
+  "masterDefendantId": "38c0576e-3c67-4cd6-a06f-30a83239e44c",
+  "materialId": "c9f11583-da8f-4594-bd37-3997f697a4d6",
+  "notificationType": "Update",
+  "notificationWasPreviouslySent": true,
+  "orderDate": "2026-05-23",
+  "orderingCourt": {
+    "address": {
+      "address1": "The Law Courts",
+      "address2": "Altyre Road",
+      "address3": "Croydon",
+      "address4": "",
+      "address5": "",
+      "postcode": "CR9 5AB"
+    },
+    "code": "C01CY00",
+    "courtHearingLocation": "C01CY00",
+    "courtLocationCode": "0418",
+    "id": "07e45c88-9e5d-3e44-b664-d5345bb13be2",
+    "lja": {
+      "ljaCode": "2576",
+      "ljaName": "South London Magistrates' Court"
+    },
+    "name": "Croydon Crown Court",
+    "roomId": "731816c1-5ee4-373a-9bda-840e13a5bcb0",
+    "roomName": "Courtroom 01"
+  },
+  "orderingCourtCode": "0418",
+  "orderingHearingId": "6f9dc26e-9f4e-4b2c-b6d7-3050898f96db",
+  "previous": {
+    "caseApplicationReferences": [
+      "SJ143323511"
+    ],
+    "cases": [
+      {
+        "caseId": "5efc17c6-d7c5-4a34-ae78-cd9a7f1885e1",
+        "defendantCaseOffences": [
+          {
+            "civilOffence": false,
+            "code": "RT88334",
+            "convictingCourtCode": "2577",
+            "convictionDate": "2026-05-21",
+            "convictionStatus": "Convicted",
+            "dateFromWhichDisqRemoved": "",
+            "disqualificationPeriod": "",
+            "dttpDtetp": "",
+            "dvlaCode": "LC20",
+            "endorsableFlag": true,
+            "fine": "£120.00",
+            "interimImposedFinalSentence": "",
+            "modeOfTrial": "1",
+            "penaltyPoints": "",
+            "plea": "GUILTY",
+            "results": [
+              {
+                "d20": false,
+                "judicialResultCategory": "FINAL",
+                "label": "Fine",
+                "prompts": [
+                  {
+                    "durationSequence": 0,
+                    "label": "Amount of fine",
+                    "promptIdentifier": "7cd1472f-2379-4f5b-9e67-98a43d86e122",
+                    "promptReference": "AOF",
+                    "value": "£120.00"
+                  }
+                ],
+                "publishedForNows": false,
+                "resultDefinitionGroup": "Imposition",
+                "resultIdentifier": "969f150c-cd05-46b0-9dd9-30891efcc766"
+              },
+              {
+                "d20": true,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "Driving record endorsed (no points)",
+                "publishedForNows": false,
+                "resultIdentifier": "b0aeb4fc-df63-4e2f-af88-97e3f23e847f"
+              },
+              {
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "Licence produced in court",
+                "publishedForNows": false,
+                "resultIdentifier": "ea1ee5a4-be13-48dc-8411-78f22e01c236"
+              },
+              {
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "0: None or unknown",
+                "publishedForNows": true,
+                "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956"
+              }
+            ],
+            "startDate": "2026-04-11",
+            "title": "Drive a motor vehicle otherwise than in accordance with a licence - endorsable offence",
+            "wording": "Drive a motor vehicle otherwise than in accordance with a licence - endorsable offence"
+          },
+          {
+            "civilOffence": false,
+            "code": "RA88001",
+            "convictingCourtCode": "2577",
+            "convictionDate": "2026-05-21",
+            "convictionStatus": "Convicted",
+            "dateFromWhichDisqRemoved": "",
+            "disqualificationPeriod": "",
+            "dttpDtetp": "",
+            "dvlaCode": "IN10",
+            "endorsableFlag": true,
+            "fine": "£180.00",
+            "interimImposedFinalSentence": "",
+            "modeOfTrial": "1",
+            "penaltyPoints": "6",
+            "plea": "GUILTY",
+            "results": [
+              {
+                "d20": false,
+                "judicialResultCategory": "FINAL",
+                "label": "Fine",
+                "prompts": [
+                  {
+                    "durationSequence": 0,
+                    "label": "Amount of fine",
+                    "promptIdentifier": "7cd1472f-2379-4f5b-9e67-98a43d86e122",
+                    "promptReference": "AOF",
+                    "value": "£180.00"
+                  }
+                ],
+                "publishedForNows": false,
+                "resultDefinitionGroup": "Imposition",
+                "resultIdentifier": "969f150c-cd05-46b0-9dd9-30891efcc766"
+              },
+              {
+                "d20": false,
+                "judicialResultCategory": "FINAL",
+                "label": "Compensation",
+                "prompts": [
+                  {
+                    "durationSequence": 0,
+                    "label": "Amount of compensation",
+                    "promptIdentifier": "26985e5b-fe1f-4d7d-a21a-57207c5966e7",
+                    "promptReference": "AOCOM",
+                    "value": "£8.91"
+                  },
+                  {
+                    "durationSequence": 0,
+                    "label": "Major creditor organisation name",
+                    "promptIdentifier": "af921cf4-06e7-4f6b-a4ea-dcb58aab0dbe",
+                    "promptReference": "cREDNAMEOrganisationName",
+                    "value": "Driver and Vehicle Licensing Agency"
+                  }
+                ],
+                "publishedForNows": false,
+                "resultDefinitionGroup": "Imposition",
+                "resultIdentifier": "ae89b99c-e0e3-47b5-b218-24d4fca3ca53"
+              },
+              {
+                "d20": true,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "Driving record endorsed with penalty points",
+                "prompts": [
+                  {
+                    "durationSequence": 0,
+                    "label": "Penalty points for this offence",
+                    "promptIdentifier": "a8719de4-7783-448a-b792-e3f94e670ad0",
+                    "promptReference": "PENPT",
+                    "value": "6"
+                  },
+                  {
+                    "durationSequence": 0,
+                    "label": "Defendant driving licence number",
+                    "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+                    "promptReference": "defendantDrivingLicenceNumber"
+                  }
+                ],
+                "publishedForNows": false,
+                "resultIdentifier": "cee54856-4450-4f28-a8a9-72b688726201"
+              },
+              {
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "Licence produced in court",
+                "publishedForNows": false,
+                "resultIdentifier": "ea1ee5a4-be13-48dc-8411-78f22e01c236"
+              },
+              {
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "0: None or unknown",
+                "publishedForNows": true,
+                "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956"
+              }
+            ],
+            "startDate": "2026-05-06",
+            "title": "Use a motor vehicle on a road / public place without third party insurance",
+            "wording": "Use a motor vehicle on a road / public place without third party insurance"
+          }
+        ],
+        "hasSV": false,
+        "initiationCode": "J",
+        "reference": "SJ143323511"
+      }
+    ],
+    "defendant": {
+      "address": {
+        "line1": "FLAT - 25A",
+        "line2": "Park square Street",
+        "line3": "Bristol",
+        "line4": "England",
+        "line5": "UK",
+        "postCode": "SA6 1YY"
+      },
+      "dateOfBirth": "1956-05-21",
+      "firstName": "Quintin",
+      "gender": "MALE",
+      "lastName": "Haag",
+      "name": "Quintin Haag",
+      "title": "Mr"
+    },
+    "distinctPrompts": [],
+    "identifier": "5642d961-403c-450d-b5a7-5f2994d0726d",
+    "licenceProducedInCourt": "0: None or unknown",
+    "masterDefendantId": "38c0576e-3c67-4cd6-a06f-30a83239e44c",
+    "materialId": "204bc44b-0736-40f5-974f-ba8dc9957742",
+    "orderDate": "2026-05-21",
+    "orderingCourt": {
+      "address": {
+        "address1": "176A Lavender Hill",
+        "address2": "London",
+        "postcode": "SW11 1JU"
+      },
+      "code": "B01LY00",
+      "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+      "lja": {
+        "ljaCode": "2577",
+        "ljaName": "Lavender Hill Magistrates' Court",
+        "welshLjaName": "Llys Ynadon Lavender Hill"
+      },
+      "name": "Lavender Hill Magistrates' Court"
+    },
+    "orderingHearingId": "09a0f4bf-975d-474e-9e97-d2f83c4fdd00",
+    "retrySequence": 0
+  },
+  "retrySequence": 0,
+  "updatedEndorsements": [
+    "IN10",
+    "LC20"
+  ]
+}
