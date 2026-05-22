@@ -27,6 +27,8 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Stream;
 
+import org.junit.jupiter.params.provider.Arguments;
+
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
@@ -46,6 +48,17 @@ class DefendantAggregateTestSteps {
     private static final JsonObjectToObjectConverter jsonToObjectConverter = new JsonObjectToObjectConverter(new ObjectMapperProducer().objectMapper());
     private static final ObjectToJsonObjectConverter objectToJsonObjectConverter = new ObjectToJsonObjectConverter(new ObjectMapperProducer().objectMapper());
 
+    static Stream<Arguments> scenarios(final Arguments... args) {
+        for (final Arguments entry : args) {
+            if (entry.get().length != 2) {
+                throw new IllegalStateException(
+                        "Scenario '" + entry.get()[0] + "' has " + entry.get().length +
+                        " arguments — a nested Arguments.of() was likely passed instead of being separated by a comma");
+            }
+        }
+        return Stream.of(args);
+    }
+
     static DefendantAggregateTestSteps.Scenario defendantAggregateScenario() {
         return new DefendantAggregateTestSteps.Scenario();
     }
@@ -55,8 +68,9 @@ class DefendantAggregateTestSteps {
         List<StepData> steps = new ArrayList<>();
 
         public void run(final String name, final DefendantAggregate aggregate) {
+            LOGGER.info("*RUNNING SCENARIO: {}", name);
             for (StepData step : steps) {
-                LOGGER.info("Running {} step", step.stepName);
+                LOGGER.info("**RUNNING STEP: {}", step.stepName);
                 final Stream<Object> eventStream = aggregate.notifyDriver(
                         step.input.orderDate(),
                         step.input.orderingCourt(),
@@ -68,7 +82,7 @@ class DefendantAggregateTestSteps {
                         step.input.masterDefendantId(),
                         step.input.isReshare
                 );
-                if (isNull(step.expectedEventsJsonFile)) {
+                if (isNull(step.expectedEventsAssertion.expectedEventsJsonFile)) {
                     assertThat(name + " - Events were produced", eventStream, IsNull.nullValue());
                 } else {
                     assertThat(name + " - No events were produced", eventStream, IsNull.notNullValue());
@@ -77,7 +91,7 @@ class DefendantAggregateTestSteps {
                             .map(Object::toString)
                             .peek(event -> LOGGER.info("Produced event: {}", event))
                             .toList();
-                    final String jsonFilePath = step.expectedEventsJsonFile();
+                    final String jsonFilePath = step.expectedEventsAssertion.expectedEventsJsonFile;
                     String expectedEventsJson = payloadAsString(jsonFilePath, Map.of());
                     expectedEventsJson = applySrcDirective(expectedEventsJson, jsonFilePath);
                     final JsonArray expectedEventsArray = jsonStringToArray(expectedEventsJson);
@@ -86,18 +100,14 @@ class DefendantAggregateTestSteps {
                         final String expectedEventPayload = objectToJsonObjectConverter.convert(expectedEventsArray.getJsonObject(i)).toString();
                         final String actualEventPayload = actualEvents.get(i);
                         assertThat(actualEventPayload, JsonMatcher.matchesJson(expectedEventPayload, FIELDS_TO_CHECK_PRESENCE_ONLY));
-                        assertJsonPaths(actualEventPayload, step.jsonpathAssertions);
+                        assertJsonPaths(actualEventPayload, step.expectedEventsAssertion.jsonpathAssertions);
                     }
                 }
 
             }
         }
 
-        public Scenario withNotifyDriverStep(final String stepName, final String notificationJsonFile, final String expectedEventsJsonFile) {
-            return withNotifyDriverStep(stepName, notificationJsonFile, expectedEventsJsonFile, new JsonPathAssertions());
-        }
-
-        public Scenario withNotifyDriverStep(final String stepName, final String notificationJsonFile, final String expectedEventsJsonFile, final JsonPathAssertions jsonpathAssertions) {
+        public Scenario withNotifyDriverStep(final String stepName, final String notificationJsonFile, final ExpectedEventsAssertion expectedEventsAssertion) {
             final JsonObject notification = stringToJsonConverter.convert(payloadAsString(notificationJsonFile, Map.of()));
             final Boolean isReshare = notification.getBoolean("isReshare");
             final JsonObject nowContent = notification.getJsonObject("nowContent");
@@ -125,7 +135,7 @@ class DefendantAggregateTestSteps {
                             courtApplications,
                             UUID.fromString(notification.getString("masterDefendantId")),
                             isReshare
-                    ), expectedEventsJsonFile, jsonpathAssertions));
+                    ), expectedEventsAssertion));
             return this;
         }
     }
@@ -199,7 +209,39 @@ class DefendantAggregateTestSteps {
         }
     }
 
-    record StepData(String stepName, NotificationData input, String expectedEventsJsonFile, JsonPathAssertions jsonpathAssertions) {
+    record StepData(String stepName, NotificationData input, ExpectedEventsAssertion expectedEventsAssertion) {
+    }
+
+    static final class ExpectedEventsAssertion {
+        final String expectedEventsJsonFile;
+        final JsonPathAssertions jsonpathAssertions;
+
+        private ExpectedEventsAssertion(final String expectedEventsJsonFile, final JsonPathAssertions jsonpathAssertions) {
+            this.expectedEventsJsonFile = expectedEventsJsonFile;
+            this.jsonpathAssertions = jsonpathAssertions;
+        }
+
+        /**
+         * Creates an instance of ExpectedEventsAssertion based on the provided JSON file containing expected events. This is JSON is matched with actual events JSON.
+         */
+        public static ExpectedEventsAssertion expectedEventsJson(final String expectedEventsJsonFile) {
+            return new ExpectedEventsAssertion(expectedEventsJsonFile, JsonPathAssertions.jsonPathAssertions());
+        }
+
+        /**
+         * Creates and returns a new instance of ExpectedEventsAssertion that represents no expected events.
+         * This assertion is useful when there are no predefined expected events to validate against.
+         */
+        public static ExpectedEventsAssertion noExpectedEvents() {
+            return new ExpectedEventsAssertion(null, JsonPathAssertions.jsonPathAssertions());
+        }
+
+        /**
+         * Creates and returns a new instance of ExpectedEventsAssertion with the specified JsonPathAssertions.
+         */
+        public ExpectedEventsAssertion withAssertions(final JsonPathAssertions jsonpathAssertions) {
+            return new ExpectedEventsAssertion(this.expectedEventsJsonFile, jsonpathAssertions);
+        }
     }
 
     static final class JsonPathAssertions {
