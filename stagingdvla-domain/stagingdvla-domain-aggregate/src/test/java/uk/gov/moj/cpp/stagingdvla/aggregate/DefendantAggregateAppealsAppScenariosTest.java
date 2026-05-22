@@ -368,7 +368,10 @@ class DefendantAggregateAppealsAppScenariosTest {
                                                 .withAssertions(
                                                         jsonPathAssertions()
                                                                 .add("notificationType", "Update")
-                                                                .add("previous", notNullValue())))
+                                                                .add("previous", notNullValue())
+                                                                .add("cases[0].defendantCaseOffences.size()", 2)
+                                                                .add("previous.cases[0].defendantCaseOffences.size()", 2)
+                                                                .add("updatedEndorsements", List.of("IN10", "LC20"))))
                 ),
                 Arguments.of("cimd-3232-ac2",
                         defendantAggregateScenario()
@@ -383,7 +386,9 @@ class DefendantAggregateAppealsAppScenariosTest {
                                         expectedEventsJson("/testdata/drivernotifications/appeal/cimd-3232/ac2/application-resulted-events.json").withAssertions(
                                                 jsonPathAssertions()
                                                         .add("notificationType", "Update")
-                                                        .add("previous", notNullValue())))
+                                                        .add("previous", notNullValue())
+                                                        .add("cases[0].defendantCaseOffences.size()", 1)
+                                                        .add("previous.cases[0].defendantCaseOffences.size()", 2)))
                 ),
                 Arguments.of("CIMD-3235-ac1",
                         defendantAggregateScenario()
@@ -398,7 +403,10 @@ class DefendantAggregateAppealsAppScenariosTest {
                                         expectedEventsJson("/testdata/drivernotifications/appeal/cimd-3235/ac1/app-resulted-events.json").withAssertions(
                                                 jsonPathAssertions()
                                                         .add("notificationType", "Update")
-                                                        .add("previous", notNullValue())))
+                                                        .add("previous", notNullValue())
+                                                        .add("cases[0].defendantCaseOffences.size()", 2)
+                                                        .add("previous.cases[0].defendantCaseOffences.size()", 2)
+                                                        .add("updatedEndorsements", List.of("LC20", "IN10"))))
                 )
         );
     }
