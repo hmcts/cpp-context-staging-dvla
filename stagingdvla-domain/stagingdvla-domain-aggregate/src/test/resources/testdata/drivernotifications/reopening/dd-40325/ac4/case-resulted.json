@@ -1,0 +1,279 @@
+{
+  "masterDefendantId": "8f883820-9fd1-4725-88bd-91fd40313214",
+  "orderingCourt": {
+    "address": {
+      "address1": "Grove Street",
+      "address2": "Redditch",
+      "address3": "Worcestershire",
+      "postcode": "B98 8DB"
+    },
+    "code": "B22KS00",
+    "id": "39fe3360-b3b5-3285-a3df-a75feb4e463c",
+    "lja": {
+      "ljaCode": "1894",
+      "ljaName": "Redditch Magistrates' Court",
+      "welshLjaName": "Llys Ynadon Redditch"
+    },
+    "name": "Redditch Magistrates' Court"
+  },
+  "nowContent": {
+    "orderDate": "2026-03-31",
+    "defendant": {
+      "dateOfBirth": "1957-03-31",
+      "gender": "MALE",
+      "title": "Mr",
+      "firstName": "FlmIRaSo",
+      "lastName": "Smithn5ZU2",
+      "name": "FlmIRaSo Smithn5ZU2",
+      "address": {
+        "line1": "FLAT - 25A",
+        "line2": "Constable Street",
+        "line3": "Bristol",
+        "line4": "England",
+        "line5": "UK",
+        "postCode": "IG1 1YY"
+      }
+    },
+    "caseApplicationReferences": [
+      "SJ142251679"
+    ],
+    "cases": [
+      {
+        "initiationCode": "J",
+        "reference": "SJ142251679",
+        "caseId": "e0c2baa0-874e-4a5c-b7ca-f9735057d564",
+        "defendantCaseOffences": [
+          {
+            "title": "Keep a vehicle without a valid vehicle licence",
+            "civilOffence": false,
+            "convictionDate": "2026-03-31",
+            "convictionStatus": "Convicted",
+            "code": "VE94015",
+            "modeOfTrial": "1",
+            "endorsableFlag": false,
+            "convictingCourtCode": "1894",
+            "wording": "Keeping a vehicle without a valid vehicle licence",
+            "startDate": "2026-03-31",
+            "results": [
+              {
+                "resultIdentifier": "5edd3a3a-8dc7-43e4-96c4-10fed16278ac",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "f7c7c088-f88e-4c28-917c-78571517aca1",
+                    "promptReference": "AOBD",
+                    "durationSequence": 0,
+                    "label": "Amount of back duty",
+                    "value": "£100.00"
+                  }
+                ],
+                "resultDefinitionGroup": "Imposition",
+                "d20": false,
+                "judicialResultCategory": "FINAL",
+                "label": "Vehicle Excise Back Duty"
+              },
+              {
+                "resultIdentifier": "fcb26a5f-28cc-483e-b430-d823fac808df",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "b3dfed9a-efba-4126-a08d-cf37d18b4563",
+                    "promptReference": "AOF",
+                    "durationSequence": 0,
+                    "label": "Amount of excise penalty",
+                    "value": "£220.00"
+                  }
+                ],
+                "resultDefinitionGroup": "Imposition",
+                "d20": false,
+                "judicialResultCategory": "FINAL",
+                "label": "Excise penalty"
+              },
+              {
+                "resultIdentifier": "ae89b99c-e0e3-47b5-b218-24d4fca3ca53",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "26985e5b-fe1f-4d7d-a21a-57207c5966e7",
+                    "promptReference": "AOCOM",
+                    "durationSequence": 0,
+                    "label": "Amount of compensation",
+                    "value": "£10.00"
+                  },
+                  {
+                    "promptIdentifier": "af921cf4-06e7-4f6b-a4ea-dcb58aab0dbe",
+                    "promptReference": "cREDNAMEOrganisationName",
+                    "durationSequence": 0,
+                    "label": "Major creditor organisation name",
+                    "value": "West Mercia Police"
+                  }
+                ],
+                "resultDefinitionGroup": "Imposition",
+                "d20": false,
+                "judicialResultCategory": "FINAL",
+                "label": "Compensation"
+              }
+            ]
+          },
+          {
+            "title": "Cause use of motor vehicle with no insurance",
+            "civilOffence": false,
+            "dvlaCode": "IN14",
+            "convictionDate": "2026-03-31",
+            "convictionStatus": "Convicted",
+            "code": "RA88002",
+            "modeOfTrial": "1",
+            "endorsableFlag": true,
+            "convictingCourtCode": "1894",
+            "wording": "Cause use of motor vehicle with no insurance",
+            "startDate": "2026-03-16",
+            "results": [
+              {
+                "resultIdentifier": "969f150c-cd05-46b0-9dd9-30891efcc766",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "7cd1472f-2379-4f5b-9e67-98a43d86e122",
+                    "promptReference": "AOF",
+                    "durationSequence": 0,
+                    "label": "Amount of fine",
+                    "value": "£200.00"
+                  }
+                ],
+                "resultDefinitionGroup": "Imposition",
+                "d20": false,
+                "judicialResultCategory": "FINAL",
+                "label": "Fine"
+              },
+              {
+                "resultIdentifier": "ae89b99c-e0e3-47b5-b218-24d4fca3ca53",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "26985e5b-fe1f-4d7d-a21a-57207c5966e7",
+                    "promptReference": "AOCOM",
+                    "durationSequence": 0,
+                    "label": "Amount of compensation",
+                    "value": "£8.91"
+                  },
+                  {
+                    "promptIdentifier": "af921cf4-06e7-4f6b-a4ea-dcb58aab0dbe",
+                    "promptReference": "cREDNAMEOrganisationName",
+                    "durationSequence": 0,
+                    "label": "Major creditor organisation name",
+                    "value": "West Mercia Police"
+                  }
+                ],
+                "resultDefinitionGroup": "Imposition",
+                "d20": false,
+                "judicialResultCategory": "FINAL",
+                "label": "Compensation"
+              },
+              {
+                "resultIdentifier": "ccfc452e-ebe4-4cd7-b8a0-4f90768447b4",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "2bf54447-328c-4c1b-a123-341adbd52172",
+                    "promptReference": "disqualificationPeriod",
+                    "durationSequence": 1,
+                    "label": "Disqualification period",
+                    "value": "12 Months"
+                  }
+                ],
+                "resultWording": "Disqualified for holding or obtaining a driving licence. Discretionary disqualification. Driving record endorsed. Section 34(2) Road Traffic Offenders Act 1988",
+                "d20": true,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "Discretionary with ordinary disqualification"
+              },
+              {
+                "resultIdentifier": "ea1ee5a4-be13-48dc-8411-78f22e01c236",
+                "publishedForNows": false,
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "Licence produced in court"
+              },
+              {
+                "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956",
+                "publishedForNows": true,
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "0: None or unknown"
+              }
+            ]
+          },
+          {
+            "title": "Vehicle defect - permit use of a motor vehicle / trailer with defective brakes",
+            "civilOffence": false,
+            "dvlaCode": "CU10",
+            "convictionDate": "2026-03-31",
+            "convictionStatus": "Convicted",
+            "code": "RC86851",
+            "modeOfTrial": "1",
+            "endorsableFlag": true,
+            "convictingCourtCode": "1894",
+            "wording": "Vehicle defect - permit use of a motor vehicle / trailer with defective brakes",
+            "startDate": "2026-02-19",
+            "results": [
+              {
+                "resultIdentifier": "554c2622-c1cc-459e-a98d-b7f317ab065c",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "d3205319-84cf-4c5b-9d7a-7e4bb1865054",
+                    "promptReference": "periodofConditionalDischarge",
+                    "durationSequence": 1,
+                    "label": "Period of conditional discharge",
+                    "value": "12 Months"
+                  }
+                ],
+                "d20": false,
+                "dvlaCode": "E",
+                "judicialResultCategory": "FINAL",
+                "label": "Conditional discharge"
+              },
+              {
+                "resultIdentifier": "cee54856-4450-4f28-a8a9-72b688726201",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "a8719de4-7783-448a-b792-e3f94e670ad0",
+                    "promptReference": "PENPT",
+                    "durationSequence": 0,
+                    "label": "Penalty points for this offence",
+                    "value": "6"
+                  },
+                  {
+                    "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+                    "promptReference": "defendantDrivingLicenceNumber",
+                    "durationSequence": 0,
+                    "label": "Defendant driving licence number"
+                  }
+                ],
+                "d20": true,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "Driving record endorsed with penalty points"
+              },
+              {
+                "resultIdentifier": "ea1ee5a4-be13-48dc-8411-78f22e01c236",
+                "publishedForNows": false,
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "Licence produced in court"
+              },
+              {
+                "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956",
+                "publishedForNows": true,
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "0: None or unknown"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": false,
+  "orderingHearingId": "0fef3e9e-b036-433e-8e13-b377a65e3ea8"
+}

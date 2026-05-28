@@ -74,6 +74,7 @@ public class AggregateConstants {
         G("2b3f7c20-8fc1-4fad-9076-df196c24b27e"),
         TEXT("98138ec8-5dd3-11e8-9c2d-fa7ae01bbebc"),
         ADJ("d278650c-e429-11e8-9f32-f2801f1b9fd1"),
+        ADJOURNSJP("f7784e82-20b5-4d2c-b174-6fd57ebf8d7c"),
         ERR("c36fed37-b635-4303-b514-2273e9e2594d"),
         OATS("3e859586-bc86-407d-bd8e-c9a01d40d147"),
         DISM("14d66587-8fbe-424f-a369-b1144f1684e3"),
@@ -83,9 +84,12 @@ public class AggregateConstants {
         DISCH("d3139b79-696b-4cb7-a39d-7f06fcc24f4a"),
         WDRN("eb2e4c4f-b738-4a4d-9cce-0572cecb7cb8"),
         WDRNOFF("e0ae61f5-bbfa-4562-bc6d-ac59a484a06b"),
+        WDRNNOT("6feb0f2e-8d1e-40c7-af2c-05b28c69e5fc"),
         DER("f42fa098-0f7b-4269-ac4f-b10c9b6832d7"),
         NESR("f121db73-57fb-4f74-9ab1-0843aabe4605"),
-        NDSR("808313d1-f450-4410-b2f1-97409d7b4074");
+        NDSR("808313d1-f450-4410-b2f1-97409d7b4074"),
+        SUMRCC("600edfc3-a584-4f9f-a52e-5bb8a99646c1"),
+        RDD("b5ee3936-2cd5-47f4-9192-3737c7093a7f");
 
         public final String id;
 
@@ -99,7 +103,10 @@ public class AggregateConstants {
         AACMC("57810183-a5c2-3195-8748-c6b97eda1ebd", "MC80802", "Appeal against conviction by a Magistrates' Court to the Crown Court"),
         AACSMC("36f3b0c3-9f75-31aa-a226-cfee69216160", "MC80801", "Appeal against conviction and sentence by a Magistrates' Court to the Crown Court"),
         ACP("4e281610-96aa-3711-aecf-59df86b6c6bb", "AP00501", "Application within criminal proceedings"),
-        APPRO("44c238d9-3bc2-3cf3-a2eb-a7d1437b8383", "MC80524", "Application to reopen case");
+        APPRO("44c238d9-3bc2-3cf3-a2eb-a7d1437b8383", "MC80524", "Application to reopen case"),
+        ASDPA("c3bee4e7-c45d-4d6a-8647-4dc7c089b1e6", "RO88504", "Application to suspend disqualification pending appeal"),
+        STDEC("e842d688-2c7a-4f61-ba73-0a477db06721","MC80527","Appearance to make statutory declaration (other than SJP)"),
+        STDECSJP("c715f9a1-c79f-4912-8454-c196748272bf","MC80528","Appearance to make statutory declaration (SJP case)");
 
         public final String id;
         public final String code;

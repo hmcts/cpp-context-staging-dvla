@@ -1,0 +1,272 @@
+{
+  "caseApplicationReferences": [
+    "28DI1965421"
+  ],
+  "cases": [
+    {
+      "caseId": "2e832196-eab9-4b48-9ffd-59c3af3b7690",
+      "caseStatus": "ACTIVE",
+      "defendantCaseOffences": [
+        {
+          "civilOffence": false,
+          "code": "RR84141",
+          "convictionStatus": "Not Convicted",
+          "dateFromWhichDisqRemoved": "01/12/2026",
+          "disqualificationPeriod": "000600",
+          "dttpDtetp": "",
+          "dvlaCode": "NE98",
+          "endorsableFlag": false,
+          "fine": "",
+          "interimImposedFinalSentence": "",
+          "modeOfTrial": "Summary",
+          "penaltyPoints": "",
+          "results": [
+            {
+              "d20": true,
+              "judicialResultCategory": "ANCILLARY",
+              "label": "Discretionary with ordinary disqualification",
+              "prompts": [
+                {
+                  "durationSequence": 1,
+                  "label": "Disqualification period",
+                  "promptIdentifier": "2bf54447-328c-4c1b-a123-341adbd52172",
+                  "promptReference": "disqualificationPeriod",
+                  "value": "6 Months"
+                }
+              ],
+              "publishedForNows": false,
+              "resultIdentifier": "ccfc452e-ebe4-4cd7-b8a0-4f90768447b4",
+              "resultWording": "Disqualified for holding or obtaining a driving licence. Discretionary disqualification. Driving record endorsed. Section 34(2) Road Traffic Offenders Act 1988"
+            },
+            {
+              "d20": false,
+              "judicialResultCategory": "ANCILLARY",
+              "label": "0: None or unknown",
+              "publishedForNows": true,
+              "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956"
+            }
+          ],
+          "startDate": "2024-07-12",
+          "title": "Drive vehicle with axle weight exceeding maximum permitted - local traffic order within Greater London",
+          "wording": "Before 08 Aug 2024 at Croydon drove a motor vehicle, namely VH89712 Tesla Model X, on a road, namely Aby Road, subject of a local traffic order, namely Transport for London , when the weight conveyed to the road surface by one of its axles exceeded the maximum permitted axle weight of 11500 kg."
+        }
+      ],
+      "hasSV": false,
+      "initiationCode": "C",
+      "reference": "28DI1965421"
+    }
+  ],
+  "courtApplications": [
+    {
+      "applicationReceivedDate": "2026-04-29",
+      "applicationReference": "28DI1965421",
+      "applicationStatus": "FINALISED",
+      "applicationType": "Application within criminal proceedings",
+      "applicationTypeId": "fde5dd50-fb49-4100-8c46-4c10096fb136",
+      "id": "1531c835-a2be-4159-9e34-69b8a96a4159",
+      "results": [
+        {
+          "d20": false,
+          "judicialResultCategory": "FINAL",
+          "label": "Granted",
+          "publishedForNows": false,
+          "resultIdentifier": "2b3f7c20-8fc1-4fad-9076-df196c24b27e"
+        },
+        {
+          "d20": true,
+          "judicialResultCategory": "FINAL",
+          "label": "Removal of Driving Disqualification",
+          "prompts": [
+            {
+              "label": "Date disqualification imposed",
+              "promptIdentifier": "fb28be9c-0f74-4c02-a70e-0fffa9b0614b",
+              "promptReference": "dateDisqualificationImposed",
+              "value": "01/05/2026"
+            },
+            {
+              "label": "Date disqualification ends",
+              "promptIdentifier": "7a6d9bb9-a042-4234-8b92-d871437fd15a",
+              "promptReference": "dateDisqualificationEnds",
+              "value": "01/12/2026"
+            },
+            {
+              "label": "Original date of conviction",
+              "promptIdentifier": "73f005c6-11e7-4d45-a378-85ea5919e553",
+              "promptReference": "originalDateOfConviction",
+              "value": "28/04/2026"
+            },
+            {
+              "label": "Original offence date",
+              "promptIdentifier": "37ee2b08-1950-4b04-bea5-f6f66b768bb0",
+              "promptReference": "originalOffenceDate",
+              "value": "24/04/2026"
+            },
+            {
+              "label": "DVLA offence code",
+              "promptIdentifier": "5813ddb2-e987-44fd-bdcf-4148e6fb9cda",
+              "promptReference": "dVLAOffenceCode",
+              "value": "1234"
+            },
+            {
+              "label": "Original convicting court",
+              "promptIdentifier": "c70597c0-a333-4828-959f-e6c8174a311c",
+              "promptReference": "originalConvictingCourt",
+              "value": "test"
+            }
+          ],
+          "publishedForNows": false,
+          "resultIdentifier": "b5ee3936-2cd5-47f4-9192-3737c7093a7f"
+        }
+      ]
+    }
+  ],
+  "defendant": {
+    "address": {
+      "line1": "21",
+      "line2": "Furnburry Park Road",
+      "line3": "London",
+      "postCode": "SW11 3TQ"
+    },
+    "dateOfBirth": "2001-02-18",
+    "firstName": "Cloyd",
+    "gender": "MALE",
+    "lastName": "Langworth",
+    "name": "Cloyd Langworth",
+    "title": "MR"
+  },
+  "distinctPrompts": [],
+  "identifier": "ccdf1d1e-8d2d-4935-ab30-f0fa04cc7384",
+  "licenceProducedInCourt": "0: None or unknown",
+  "masterDefendantId": "10736b9c-4986-4f02-abe0-5cf7d546c4f0",
+  "materialId": "eba58fd0-53e9-4f1e-b01c-bdb5e9aed856",
+  "notificationType": "Update",
+  "notificationWasPreviouslySent": true,
+  "orderDate": "2026-04-30",
+  "orderingCourt": {
+    "address": {
+      "address1": "The Magistrates' Court",
+      "address2": "Barclay Road",
+      "address3": "Croydon",
+      "address4": "",
+      "address5": "",
+      "postcode": "CR9 3NG"
+    },
+    "code": "B01EF00",
+    "courtHearingLocation": "B01EF01",
+    "id": "31b3d313-7a7c-4598-bb4b-c1bff9b00e26",
+    "lja": {
+      "ljaCode": "2576",
+      "ljaName": "South London Magistrates' Court"
+    },
+    "name": "Croydon Magistrates' Court",
+    "roomId": "bfb67c13-789c-373b-b442-52b82faf863e",
+    "roomName": "Courtroom 01"
+  },
+  "orderingCourtCode": "2576",
+  "orderingHearingId": "2d0fbede-eac0-4f1e-8a28-4743db46a41c",
+  "previous": {
+    "caseApplicationReferences": [
+      "28DI1965421"
+    ],
+    "cases": [
+      {
+        "caseId": "2e832196-eab9-4b48-9ffd-59c3af3b7690",
+        "caseStatus": "ACTIVE",
+        "defendantCaseOffences": [
+          {
+            "civilOffence": false,
+            "code": "RR84141",
+            "convictionStatus": "Not Convicted",
+            "dateFromWhichDisqRemoved": "",
+            "disqualificationPeriod": "000600",
+            "dttpDtetp": "",
+            "dvlaCode": "NE98",
+            "endorsableFlag": false,
+            "fine": "",
+            "interimImposedFinalSentence": "",
+            "modeOfTrial": "Summary",
+            "penaltyPoints": "",
+            "results": [
+              {
+                "d20": true,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "Discretionary with ordinary disqualification",
+                "prompts": [
+                  {
+                    "durationSequence": 1,
+                    "label": "Disqualification period",
+                    "promptIdentifier": "2bf54447-328c-4c1b-a123-341adbd52172",
+                    "promptReference": "disqualificationPeriod",
+                    "value": "6 Months"
+                  }
+                ],
+                "publishedForNows": false,
+                "resultIdentifier": "ccfc452e-ebe4-4cd7-b8a0-4f90768447b4",
+                "resultWording": "Disqualified for holding or obtaining a driving licence. Discretionary disqualification. Driving record endorsed. Section 34(2) Road Traffic Offenders Act 1988"
+              },
+              {
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "0: None or unknown",
+                "publishedForNows": true,
+                "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956"
+              }
+            ],
+            "startDate": "2024-07-12",
+            "title": "Drive vehicle with axle weight exceeding maximum permitted - local traffic order within Greater London",
+            "wording": "Before 08 Aug 2024 at Croydon drove a motor vehicle, namely VH89712 Tesla Model X, on a road, namely Aby Road, subject of a local traffic order, namely Transport for London , when the weight conveyed to the road surface by one of its axles exceeded the maximum permitted axle weight of 11500 kg."
+          }
+        ],
+        "hasSV": false,
+        "initiationCode": "C",
+        "reference": "28DI1965421"
+      }
+    ],
+    "defendant": {
+      "address": {
+        "line1": "21",
+        "line2": "Furnburry Park Road",
+        "line3": "London",
+        "postCode": "SW11 3TQ"
+      },
+      "dateOfBirth": "2001-02-18",
+      "firstName": "Cloyd",
+      "gender": "MALE",
+      "lastName": "Langworth",
+      "name": "Cloyd Langworth",
+      "title": "MR"
+    },
+    "distinctPrompts": [],
+    "identifier": "bc081352-3495-4b70-b3cd-4d62e634b961",
+    "licenceProducedInCourt": "0: None or unknown",
+    "masterDefendantId": "10736b9c-4986-4f02-abe0-5cf7d546c4f0",
+    "materialId": "29ebe05c-0465-4f49-9658-e129bc9dcdfe",
+    "orderDate": "2026-04-29",
+    "orderingCourt": {
+      "address": {
+        "address1": "176A Lavender Hill",
+        "address2": "London",
+        "address3": "",
+        "address4": "",
+        "address5": "",
+        "postcode": "SW11 1JU"
+      },
+      "code": "B01LY00",
+      "courtHearingLocation": "B01LY01",
+      "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+      "lja": {
+        "ljaCode": "2577",
+        "ljaName": "South West London Magistrates' Court"
+      },
+      "name": "Lavender Hill Magistrates' Court",
+      "roomId": "9e4932f7-97b2-3010-b942-ddd2624e4dd8",
+      "roomName": "Courtroom 01"
+    },
+    "orderingHearingId": "67f70092-5abb-49cf-a676-8377edd69b1e",
+    "retrySequence": 0
+  },
+  "retrySequence": 0,
+  "updatedEndorsements": [
+    "NE98"
+  ]
+}

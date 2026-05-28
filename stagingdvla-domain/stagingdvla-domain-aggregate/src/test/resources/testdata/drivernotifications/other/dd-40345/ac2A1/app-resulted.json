@@ -1,0 +1,120 @@
+{
+  "masterDefendantId": "ee9a5141-e50e-45ba-a30f-340ad3c0d43f",
+  "orderingCourt": {
+    "address": {
+      "address1": "176A Lavender Hill",
+      "address2": "London",
+      "address3": "",
+      "address4": "",
+      "address5": "",
+      "postcode": "SW11 1JU"
+    },
+    "code": "B01LY00",
+    "courtHearingLocation": "B01LY01",
+    "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+    "lja": {
+      "ljaCode": "2577",
+      "ljaName": "South West London Magistrates' Court"
+    },
+    "name": "Lavender Hill Magistrates' Court",
+    "roomId": "9e4932f7-97b2-3010-b942-ddd2624e4dd8",
+    "roomName": "Courtroom 01"
+  },
+  "nowContent": {
+    "orderDate": "2026-05-13",
+    "defendant": {
+      "dateOfBirth": "1999-05-12",
+      "gender": "MALE",
+      "driverNumber": "VANFL002222OW9PH",
+      "title": "Mr",
+      "firstName": "Rosamond",
+      "lastName": "Schulist",
+      "name": "Rosamond Schulist",
+      "address": {
+        "line1": "33 Bridge Street",
+        "line2": "Bridge Street",
+        "line3": "Stratford-upon-Avon",
+        "line4": "Warwickshire",
+        "postCode": "NW1 5BR"
+      }
+    },
+    "caseApplicationReferences": [
+      "QL408573247"
+    ],
+    "cases": [
+      {
+        "caseStatus": "INACTIVE",
+        "initiationCode": "C",
+        "reference": "QL408573247",
+        "caseId": "5ec90ae4-ca1f-47bd-9754-5d4aa98cd75c",
+        "defendantCaseOffences": []
+      }
+    ],
+    "courtApplications": [
+      {
+        "applicationType": "Application within criminal proceedings",
+        "applicationTypeId": "fde5dd50-fb49-4100-8c46-4c10096fb136",
+        "applicationReceivedDate": "2026-05-12",
+        "id": "048885a0-96b7-4d44-94f8-3e6e308bafd2",
+        "applicationReference": "QL408573247",
+        "applicationStatus": "FINALISED",
+        "results": [
+          {
+            "resultIdentifier": "2b3f7c20-8fc1-4fad-9076-df196c24b27e",
+            "publishedForNows": false,
+            "d20": false,
+            "judicialResultCategory": "FINAL",
+            "label": "Granted"
+          },
+          {
+            "resultIdentifier": "b5ee3936-2cd5-47f4-9192-3737c7093a7f",
+            "publishedForNows": false,
+            "prompts": [
+              {
+                "promptIdentifier": "fb28be9c-0f74-4c02-a70e-0fffa9b0614b",
+                "promptReference": "dateDisqualificationImposed",
+                "label": "Date disqualification imposed",
+                "value": "13/05/2026"
+              },
+              {
+                "promptIdentifier": "7a6d9bb9-a042-4234-8b92-d871437fd15a",
+                "promptReference": "dateDisqualificationEnds",
+                "label": "Date disqualification ends",
+                "value": "22/05/2026"
+              },
+              {
+                "promptIdentifier": "73f005c6-11e7-4d45-a378-85ea5919e553",
+                "promptReference": "originalDateOfConviction",
+                "label": "Original date of conviction",
+                "value": "11/05/2026"
+              },
+              {
+                "promptIdentifier": "37ee2b08-1950-4b04-bea5-f6f66b768bb0",
+                "promptReference": "originalOffenceDate",
+                "label": "Original offence date",
+                "value": "10/05/2026"
+              },
+              {
+                "promptIdentifier": "5813ddb2-e987-44fd-bdcf-4148e6fb9cda",
+                "promptReference": "dVLAOffenceCode",
+                "label": "DVLA offence code",
+                "value": "5432"
+              },
+              {
+                "promptIdentifier": "c70597c0-a333-4828-959f-e6c8174a311c",
+                "promptReference": "originalConvictingCourt",
+                "label": "Original convicting court",
+                "value": "Luton Crown Court"
+              }
+            ],
+            "d20": true,
+            "judicialResultCategory": "FINAL",
+            "label": "Removal of Driving Disqualification"
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": false,
+  "orderingHearingId": "e9410ead-71eb-4f16-9bfa-92a0c28b20e1"
+}

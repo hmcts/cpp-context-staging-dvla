@@ -1,6 +1,5 @@
 package uk.gov.moj.stagingdvla.it;
 
-import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
@@ -1713,6 +1712,7 @@ public class DvlaNotificationScenariosIT extends AbstractIntegrationTest {
     // D20 Scenarios for application(stat dec) amend and reshare - Start
 
     /**
+     * Updated with DD-40345
      * Given that a case is created in CC with 1 defendant
      * And has an endorsable offence
      * And is listed for hearing
@@ -1722,9 +1722,9 @@ public class DvlaNotificationScenariosIT extends AbstractIntegrationTest {
      * And a D20 API notification is generated for the case
      * When the HMTC user creates an application e.g. “Application within criminal proceedings" linked to the case
      * And list for a court hearing
-     * And a Application is resulted with Granted and COV (community order varied)
+     * And a Application is resulted with Granted
      * And shares the result
-     * Then generate update notification
+     * Then generate no notification
      *
      * @throws IOException
      */
@@ -1752,7 +1752,51 @@ public class DvlaNotificationScenariosIT extends AbstractIntegrationTest {
         verifyDVLANotificationCommandInvoked(driverNotifiedList);
         verifyGenerateDocumentStubCommandInvoked(driverNotifiedList);
 
-        driverNotifiedList = sendAndVerifyEvent("applicationAmendReshare/scenario1/command2.json",  1);
+        sendAndVerifyEvent("applicationAmendReshare/scenario1/command2.json",  0);
+    }
+
+    /**
+     * Updated with DD-40345
+     * Given that a case is created in CC with 1 defendant
+     * And has an endorsable offence
+     * And is listed for hearing
+     * And an endorsement result is entered against offences on the case
+     * And a Community order is entered against the offence
+     * And shared
+     * And a D20 API notification is generated for the case
+     * When the HMTC user creates an application e.g. “Application within criminal proceedings" linked to the case
+     * And list for a court hearing
+     * And a Application is resulted with Granted and RDD
+     * And shares the result
+     * Then generate no notification
+     *
+     * @throws IOException
+     */
+    @Test
+    public void applicationAmendReshareScenario1a() throws IOException {
+        List<DriverNotified> driverNotifiedList = sendAndVerifyEvent("applicationAmendReshare/scenario1a/command1.json",  1);
+
+        DriverNotifiedEventAssertion.with(driverNotifiedList.get(0))
+                .hasCaseReference("JW74896350")
+                .hasNoUpdatedEndorsements()
+                .hasNoRemovedEndorsements()
+                .hasCourtApplications(0)
+                .hasOffences(1)
+                .hasOffenceCode("RT88319")
+                .hasDVLACode("IN14")
+                .hasDisqualificationPeriod(EMPTY_STRING)
+                .hasDrugLevel("500")
+                .hasPenaltyPoints("3")
+                .hasConvictingCourt("2577")
+                .hasConvictionDate("2023-04-23")
+                .hasAmountOfFine(EMPTY_STRING)
+                .hasResults(5)
+                .hasWording("Has a violent past and fear that he will commit further offences and interfere with witnesse");
+
+        verifyDVLANotificationCommandInvoked(driverNotifiedList);
+        verifyGenerateDocumentStubCommandInvoked(driverNotifiedList);
+
+        driverNotifiedList = sendAndVerifyEvent("applicationAmendReshare/scenario1a/command2.json",  1);
 
         DriverNotifiedEventAssertion.with(driverNotifiedList.get(0))
                 .hasCaseReference("JW74896350")
@@ -2011,26 +2055,15 @@ public class DvlaNotificationScenariosIT extends AbstractIntegrationTest {
         verifyGenerateDocumentStubCommandInvoked(driverNotifiedList);
 
 
-        driverNotifiedList = sendAndVerifyEvent("applicationAmendReshare/scenario4c/command2.json",  1);
-
-        DriverNotifiedEventAssertion.with(driverNotifiedList.get(0))
-                .hasCaseReference("JW127755221")
-                .hasNoUpdatedEndorsements()
-                .hasRemovedEndorsementContains("TS30")
-                .hasCourtApplications(1)
-                .hasOffences(0)
-                .hasPreviousCase();
-
-        verifyDVLANotificationCommandInvoked(driverNotifiedList);
-        verifyGenerateDocumentStubCommandInvoked(driverNotifiedList);
+        sendAndVerifyEvent("applicationAmendReshare/scenario4c/command2.json",  0);
 
         driverNotifiedList = sendAndVerifyEvent("applicationAmendReshare/scenario4c/command3.json",  1);
 
         DriverNotifiedEventAssertion.with(driverNotifiedList.get(0))
                 .hasCaseReference("JW127755221")
-                .hasNoUpdatedEndorsements()
+                .hasUpdatedEndorsementContains("TS30")
                 .hasNoRemovedEndorsements()
-                .hasCourtApplications(0)
+                .hasCourtApplications(1)
                 .hasOffences(1)
                 .hasOffenceCode("CA03012")
                 .hasDVLACode("TS30")
@@ -2083,26 +2116,15 @@ public class DvlaNotificationScenariosIT extends AbstractIntegrationTest {
         verifyDVLANotificationCommandInvoked(driverNotifiedList);
         verifyGenerateDocumentStubCommandInvoked(driverNotifiedList);
 
-        driverNotifiedList = sendAndVerifyEvent("applicationAmendReshare/scenario4d/command2.json",  1);
-
-        DriverNotifiedEventAssertion.with(driverNotifiedList.get(0))
-                .hasCaseReference("JW133764758")
-                .hasNoUpdatedEndorsements()
-                .hasRemovedEndorsementContains("TS30")
-                .hasCourtApplications(1)
-                .hasOffences(0)
-                .hasPreviousCase();
-
-        verifyDVLANotificationCommandInvoked(driverNotifiedList);
-        verifyGenerateDocumentStubCommandInvoked(driverNotifiedList);
+        sendAndVerifyEvent("applicationAmendReshare/scenario4d/command2.json",  0);
 
         driverNotifiedList = sendAndVerifyEvent("applicationAmendReshare/scenario4d/command3.json",  1);
 
         DriverNotifiedEventAssertion.with(driverNotifiedList.get(0))
                 .hasCaseReference("JW133764758")
-                .hasNoUpdatedEndorsements()
+                .hasUpdatedEndorsementContains("TS30")
                 .hasNoRemovedEndorsements()
-                .hasCourtApplications(0)
+                .hasCourtApplications(1)
                 .hasOffences(1)
                 .hasOffenceCode("CA03012")
                 .hasDVLACode("TS30")
@@ -2231,6 +2253,8 @@ public class DvlaNotificationScenariosIT extends AbstractIntegrationTest {
     }
     /**
      * Scenario DD-38336: Application resulted in ERR - No D20 remove
+     * Test is updated for DD-40345 as Granted application result with RDD
+     * result should  send D20 and update Date disqualification ends
      *
      * GIVEN that an CC case has been resulted with an endorsement
      * AND subsequently a Application has been created for the case
@@ -2240,8 +2264,8 @@ public class DvlaNotificationScenariosIT extends AbstractIntegrationTest {
      * AND in a subsequent hearing, the Application is resulted with an ERR
      * WHEN the result is shared
      * THEN no remove endorsement generated
-     * WHEN same resulted ammended and shared with G and withdrawal
-     * THEN it should generate update D20
+     * WHEN same resulted ammended and shared with G
+     * THEN it should generate no update D20
      * @throws IOException
      */
     @Test
@@ -2270,19 +2294,23 @@ public class DvlaNotificationScenariosIT extends AbstractIntegrationTest {
                 .hasUpdatedEndorsementContains("SP50")
                 .hasNoRemovedEndorsements()
                 .hasCourtApplications(1)
-                .hasOffences(1);
+                .hasOffences(1)
+                .hasDateFromWhichDisqRemoved("03/04/2026");
+
     }
 
     /**
      * Scenario DD-38336: Application resulted in ERR - No D20 remove
+     * Test is updated for DD-40345 as Granted application result without RDD
+     * result should not send D20
      *
      * GIVEN that an CC case has been resulted with an endorsement
      * AND subsequently a Application has been created for the case
      * AND the Application has been referred to box work
      * AND the application offences have been adjourned to another day
      * AND the result has been shared
-     * AND in a subsequent hearing, the Application is resulted with G and withdrawal
-     * THEN it should generate update D20
+     * AND in a subsequent hearing, the Application is resulted with G
+     * THEN it should generate no update D20
      * @throws IOException
      */
     @Test
@@ -2303,14 +2331,8 @@ public class DvlaNotificationScenariosIT extends AbstractIntegrationTest {
                 .hasWording("A fine not exceeding level five on the standard scale.Time limit for prosecutions:6 monthsOn the 12th March 2015 the limit on fines imposed by a Magistrates? court was removed ? as such, the potential fine on summary conviction in relation to an offence committed after this date is unlimited.");
 
         sendAndVerifyEvent("applicationAmendReshare/dd-38336/c/command2.json",  0);
-        driverNotifiedList = sendAndVerifyEvent("applicationAmendReshare/dd-38336/c/command3.json",  1);
+        sendAndVerifyEvent("applicationAmendReshare/dd-38336/c/command3.json",  0);
 
-        DriverNotifiedEventAssertion.with(driverNotifiedList.get(0))
-                .hasCaseReference("DVLA02022455")
-                .hasUpdatedEndorsementContains("SP50")
-                .hasNoRemovedEndorsements()
-                .hasCourtApplications(1)
-                .hasOffences(1);
     }
 
     /**
@@ -2351,24 +2373,14 @@ public class DvlaNotificationScenariosIT extends AbstractIntegrationTest {
         verifyDVLANotificationCommandInvoked(driverNotifiedList);
         verifyGenerateDocumentStubCommandInvoked(driverNotifiedList);
 
-        driverNotifiedList = sendAndVerifyEvent("applicationAmendReshare/scenario4g/command2.json",  1);
-        verify(driverNotifiedList.get(0), "JW33206369", is(notNullValue()), is(nullValue()), null, is(notNullValue()), asList("TS10"));
-        DriverNotifiedEventAssertion.with(driverNotifiedList.get(0))
-                .hasCaseReference("JW33206369")
-                .hasNoUpdatedEndorsements()
-                .hasRemovedEndorsementContains("TS10")
-                .hasCourtApplications(1)
-                .hasOffences(0)
-                .hasPreviousCase();
+        sendAndVerifyEvent("applicationAmendReshare/scenario4g/command2.json",  0);
 
-        verifyDVLANotificationCommandInvoked(driverNotifiedList);
-        verifyGenerateDocumentStubCommandInvoked(driverNotifiedList);
 
         driverNotifiedList = sendAndVerifyEvent("applicationAmendReshare/scenario4g/command3.json",  1);
-        verify(driverNotifiedList.get(0), "JW33206369", is(notNullValue()), is(nullValue()), null, is(nullValue()), null);
+        verify(driverNotifiedList.get(0), "JW33206369", is(notNullValue()), is(List.of("TS10")), List.of("TS10"), is(nullValue()), null);
         DriverNotifiedEventAssertion.with(driverNotifiedList.get(0))
                 .hasCaseReference("JW33206369")
-                .hasNoUpdatedEndorsements()
+                .hasUpdatedEndorsementContains("TS10")
                 .hasNoRemovedEndorsements()
                 .hasCourtApplications(0)
                 .hasOffences(1)
@@ -2426,24 +2438,13 @@ public class DvlaNotificationScenariosIT extends AbstractIntegrationTest {
         verifyDVLANotificationCommandInvoked(driverNotifiedList);
         verifyGenerateDocumentStubCommandInvoked(driverNotifiedList);
 
-        driverNotifiedList = sendAndVerifyEvent("applicationAmendReshare/scenario4h/command2.json",  1);
-
-        DriverNotifiedEventAssertion.with(driverNotifiedList.get(0))
-                .hasCaseReference("JW34086049")
-                .hasNoUpdatedEndorsements()
-                .hasRemovedEndorsementContains("TS10")
-                .hasCourtApplications(1)
-                .hasOffences(0)
-                .hasPreviousCase();
-
-        verifyDVLANotificationCommandInvoked(driverNotifiedList);
-        verifyGenerateDocumentStubCommandInvoked(driverNotifiedList);
+        sendAndVerifyEvent("applicationAmendReshare/scenario4h/command2.json",  0);
 
         driverNotifiedList = sendAndVerifyEvent("applicationAmendReshare/scenario4h/command3.json",  1);
 
         DriverNotifiedEventAssertion.with(driverNotifiedList.get(0))
                 .hasCaseReference("JW34086049")
-                .hasNoUpdatedEndorsements()
+                .hasUpdatedEndorsementContains("TS10")
                 .hasNoRemovedEndorsements()
                 .hasCourtApplications(0)
                 .hasOffences(1)
@@ -2567,24 +2568,13 @@ public class DvlaNotificationScenariosIT extends AbstractIntegrationTest {
         verifyGenerateDocumentStubCommandInvoked(driverNotifiedList);
 
 
-        driverNotifiedList = sendAndVerifyEvent("applicationAmendReshare/scenario5b/command2.json",  1);
-
-        DriverNotifiedEventAssertion.with(driverNotifiedList.get(0))
-                .hasCaseReference("JW135641358")
-                .hasNoUpdatedEndorsements()
-                .hasRemovedEndorsementContains("TS10")
-                .hasCourtApplications(1)
-                .hasOffences(0)
-                .hasPreviousCase();
-
-        verifyDVLANotificationCommandInvoked(driverNotifiedList);
-        verifyGenerateDocumentStubCommandInvoked(driverNotifiedList);
+        sendAndVerifyEvent("applicationAmendReshare/scenario5b/command2.json",  0);
 
         driverNotifiedList = sendAndVerifyEvent("applicationAmendReshare/scenario5b/command3.json",  1);
 
         DriverNotifiedEventAssertion.with(driverNotifiedList.get(0))
                 .hasCaseReference("JW135641358")
-                .hasNoUpdatedEndorsements()
+                .hasUpdatedEndorsementContains("TS10")
                 .hasNoRemovedEndorsements()
                 .hasCourtApplications(0)
                 .hasOffences(1)
@@ -2711,24 +2701,13 @@ public class DvlaNotificationScenariosIT extends AbstractIntegrationTest {
         verifyGenerateDocumentStubCommandInvoked(driverNotifiedList);
 
 
-        driverNotifiedList = sendAndVerifyEvent("applicationAmendReshare/scenario6b/command2.json",  1);
-
-        DriverNotifiedEventAssertion.with(driverNotifiedList.get(0))
-                .hasCaseReference("JW136915653")
-                .hasNoUpdatedEndorsements()
-                .hasRemovedEndorsementContains("TS10")
-                .hasCourtApplications(1)
-                .hasOffences(0)
-                .hasPreviousCase();
-
-        verifyDVLANotificationCommandInvoked(driverNotifiedList);
-        verifyGenerateDocumentStubCommandInvoked(driverNotifiedList);
+        sendAndVerifyEvent("applicationAmendReshare/scenario6b/command2.json",  0);
 
         driverNotifiedList = sendAndVerifyEvent("applicationAmendReshare/scenario6b/command3.json",  1);
 
         DriverNotifiedEventAssertion.with(driverNotifiedList.get(0))
                 .hasCaseReference("JW136915653")
-                .hasNoUpdatedEndorsements()
+                .hasUpdatedEndorsementContains("TS10")
                 .hasNoRemovedEndorsements()
                 .hasCourtApplications(0)
                 .hasOffences(1)

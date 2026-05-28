@@ -9,6 +9,7 @@ import static org.apache.commons.collections.CollectionUtils.isNotEmpty;
 import static org.apache.commons.lang3.StringUtils.isNotEmpty;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.ADJ;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.OATS;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.RDD;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.getDistinctPromptReferences;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.DisqualificationPeriodHelper.getDisqualificationPeriod;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.getDateFromWhichDisqRemoved;
@@ -22,6 +23,7 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasAnyResu
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasD20Endorsement;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasNoResult;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasNonD20Endorsement;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.OffenceUtil.hasResultType;
 
 import uk.gov.justice.core.courts.JudicialResultCategory;
 import uk.gov.justice.core.courts.nowdocument.NowText;
@@ -45,7 +47,8 @@ public class MergeUtil {
 
     public static DefendantCaseOffences mergeOffence(final DefendantCaseOffences offence,
                                                      final DefendantCaseOffences previousOffence,
-                                                     final String orderDate, final String orderingCourtCode, final boolean hasAppealResultOrGranted) {
+                                                     final String orderDate, final String orderingCourtCode,
+                                                     final CourtApplicationsContext courtApplicationsContext) {
         final DefendantCaseOffences mergedOffence = DefendantCaseOffences.defendantCaseOffences()
                 .withValuesFrom(offence)
                 .withTitle((String) mergeValue(offence.getTitle(), previousOffence.getTitle()))
@@ -65,7 +68,7 @@ public class MergeUtil {
                 .withAlcoholReadingMethodCode((String) mergeValue(offence.getAlcoholReadingMethodCode(), previousOffence.getAlcoholReadingMethodCode()))
                 .withAlcoholReadingMethodDescription((String) mergeValue(offence.getAlcoholReadingMethodDescription(), previousOffence.getAlcoholReadingMethodDescription()))
                 .withEndorsableFlag((Boolean) mergeValue(offence.getEndorsableFlag(), previousOffence.getEndorsableFlag()))
-                .withResults(hasAppealResultOrGranted
+                .withResults(courtApplicationsContext.hasAppealResultOrGranted() || courtApplicationsContext.isCaseReopened()
                         ? ((hasNoResult(offence) || hasAnyResultType(offence.getResults(), asList(OATS.id, ADJ.id)))
                         ? previousOffence.getResults() : mergeResultsV2(offence.getResults(), previousOffence.getResults()))
                         : mergeResultsV1(offence.getResults(), previousOffence.getResults()))
@@ -83,7 +86,7 @@ public class MergeUtil {
                 .withDateDisqReimposedFollowingAppeal((String) mergeValue(offence.getDateDisqReimposedFollowingAppeal(), previousOffence.getDateDisqReimposedFollowingAppeal()))
                 .build();
 
-        if (hasAppealResultOrGranted) {
+        if (courtApplicationsContext.hasAppealResultOrGranted() || courtApplicationsContext.isCaseReopened()) {
             final DefendantCaseOffences.Builder mergedOffenceWithAttributes = DefendantCaseOffences.defendantCaseOffences()
                     .withValuesFrom(mergedOffence)
                     .withFine(getFine(mergedOffence.getResults()))
@@ -105,9 +108,37 @@ public class MergeUtil {
             }
 
             return mergedOffenceWithAttributes.build();
+        } else if (courtApplicationsContext.isStatDec()) {
+            return updateMergedOffenceForStatDec(offence, previousOffence, orderDate, orderingCourtCode, mergedOffence);
+        } else if (courtApplicationsContext.isCriminalProceeding()) {
+            if (hasResultType(offence, RDD)) {
+                return DefendantCaseOffences.defendantCaseOffences()
+                        .withValuesFrom(mergedOffence)
+                        .withDateFromWhichDisqRemoved(getDateFromWhichDisqRemoved(offence.getResults()))
+                        .build();
+            }
+            return mergedOffence;
+
         } else {
             return mergedOffence;
         }
+    }
+
+    private static DefendantCaseOffences updateMergedOffenceForStatDec(final DefendantCaseOffences offence, final DefendantCaseOffences previousOffence, final String orderDate, final String orderingCourtCode, final DefendantCaseOffences mergedOffence) {
+        final DefendantCaseOffences.Builder mergedOffenceWithAttributes = DefendantCaseOffences.defendantCaseOffences().withValuesFrom(mergedOffence)
+                .withFine(offence.getFine())
+                .withPenaltyPoints(offence.getPenaltyPoints())
+                .withDisqualificationPeriod(offence.getDisqualificationPeriod())
+                .withOtherSentence(offence.getOtherSentence())
+                .withSuspendedSentence(offence.getSuspendedSentence())
+                .withDttpDtetp(offence.getDttpDtetp())
+                .withInterimImposedFinalSentence(offence.getInterimImposedFinalSentence())
+                .withDateFromWhichDisqRemoved(offence.getDateFromWhichDisqRemoved());
+        if (isNotEmpty(mergedOffence.getConvictionDate())) {
+             mergedOffenceWithAttributes.withSentenceDate(nonNull(previousOffence) && isNotEmpty(previousOffence.getSentenceDate()) ? previousOffence.getSentenceDate() : orderDate);
+             mergedOffenceWithAttributes.withSentencingCourtCode(nonNull(previousOffence) && isNotEmpty(previousOffence.getSentencingCourtCode()) ? previousOffence.getSentencingCourtCode() : orderingCourtCode);
+         }
+        return mergedOffenceWithAttributes.build();
     }
 
     private static List<Results> mergeResultsV1(final List<Results> results, final List<Results> previousResults) {

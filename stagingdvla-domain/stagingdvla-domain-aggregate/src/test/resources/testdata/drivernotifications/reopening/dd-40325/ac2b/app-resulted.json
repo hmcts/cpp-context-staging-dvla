@@ -1,0 +1,550 @@
+{
+  "masterDefendantId": "80385e0e-7d7d-4d1f-b57e-263d225ada5c",
+  "orderingCourt": {
+    "address": {
+      "address1": "1-15 Pocock Street",
+      "address2": "London",
+      "address3": "",
+      "address4": "",
+      "address5": "",
+      "postcode": "SE1 0BJ"
+    },
+    "code": "C01BL00",
+    "courtHearingLocation": "C01BL00",
+    "courtLocationCode": "0428",
+    "id": "89592405-c29b-3706-b1d3-b1dd3a08b227",
+    "lja": {
+      "ljaCode": "2570",
+      "ljaName": "Central London Magistrates' Court"
+    },
+    "name": "Blackfriars Crown Court",
+    "roomId": "d0624ee3-9198-3c8b-94d6-42fb197ebe5e",
+    "roomName": "Courtroom 01"
+  },
+  "nowContent": {
+    "orderDate": "2026-04-16",
+    "defendant": {
+      "dateOfBirth": "1997-04-15",
+      "gender": "MALE",
+      "driverNumber": "VANFL002222OW9PH",
+      "title": "Mr",
+      "firstName": "Angle",
+      "lastName": "Lockman",
+      "name": "Angle Lockman",
+      "address": {
+        "line1": "50 Main Street",
+        "line2": "Main Street",
+        "line3": "Liverpool",
+        "line4": "Merseyside",
+        "postCode": "L1 1AA"
+      }
+    },
+    "caseApplicationReferences": [
+      "QE408636187"
+    ],
+    "cases": [
+      {
+        "caseStatus": "INACTIVE",
+        "initiationCode": "C",
+        "reference": "QE408636187",
+        "caseId": "3d8223c5-348a-49d3-b3df-bf2bf88cfb22",
+        "defendantCaseOffences": [
+          {
+            "title": "Use a motor vehicle on a road / public place without third party insurance",
+            "civilOffence": false,
+            "dvlaCode": "IN10",
+            "convictionDate": "2026-04-15",
+            "convictionStatus": "Convicted",
+            "plea": "GUILTY",
+            "code": "RA88001",
+            "modeOfTrial": "Summary",
+            "allocationDecision": "Summary-only offence",
+            "endorsableFlag": true,
+            "convictingCourtCode": "2577",
+            "wording": "Use a motor vehicle on a road / public place without third party insurance",
+            "startDate": "2026-02-14",
+            "results": [
+              {
+                "resultIdentifier": "d076bd4a-17d5-4720-899a-1c6f96e3b35f",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "fbed768b-ee95-4434-87c8-e81cbc8d24c8",
+                    "promptReference": "df4f5636-0b59-44a0-86ed-e1d659899dba",
+                    "label": "Next hearing in Crown Court",
+                    "value": "Fixed Date:16/04/2026\nTime of hearing:10:00\nCourthouse organisation name:Blackfriars Crown Court\nCourthouse address line 1:1-15 Pocock Street\nCourthouse address line 2:London\nCourthouse post code:SE1 0BJ\nCourtroom:Courtroom 01\nHearing type:Plea and Trial Preparation\nEstimated duration:1 HOURS"
+                  },
+                  {
+                    "promptIdentifier": "61f951c3-f18d-4a44-ae4a-0cad4efb4133",
+                    "promptReference": "defendantToAttendTheNextHearing",
+                    "label": "Defendant to attend the next hearing",
+                    "value": "Yes"
+                  },
+                  {
+                    "promptIdentifier": "a1f2e6d7-7a21-41f8-9a9a-854b25a606d4",
+                    "promptReference": "6546f3b4-47df-4acb-a8d6-f71148e61237",
+                    "label": "Insufficient court time to hear the case",
+                    "value": ""
+                  },
+                  {
+                    "promptIdentifier": "7fc17a01-2f5a-4433-aae9-28e0c959f73b",
+                    "promptReference": "6eaa1f31-d42b-443a-96c6-c27b6eee2c51",
+                    "label": "Adjournment reasons",
+                    "value": ""
+                  }
+                ],
+                "d20": false,
+                "judicialResultCategory": "INTERMEDIARY",
+                "label": "Remand unconditional bail"
+              },
+              {
+                "resultIdentifier": "a1f2e6d7-7a21-41f8-9a9a-854b25a606d4",
+                "publishedForNows": true,
+                "resultWording": "",
+                "resultDefinitionGroup": "Adjournment reasons",
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "Insufficient court time to hear the case"
+              },
+              {
+                "resultIdentifier": "fbed768b-ee95-4434-87c8-e81cbc8d24c8",
+                "publishedForNows": true,
+                "prompts": [
+                  {
+                    "promptIdentifier": "aea2ee79-47b4-4023-9a95-1b327e6e03d5",
+                    "promptReference": "fixedDate",
+                    "label": "Fixed Date",
+                    "value": "16/04/2026"
+                  },
+                  {
+                    "promptIdentifier": "4d125a5a-acbc-461d-a657-ba5643af85a6",
+                    "promptReference": "timeOfHearing",
+                    "label": "Time of hearing",
+                    "value": "10:00"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEOrganisationName",
+                    "label": "Courthouse organisation name",
+                    "value": "Blackfriars Crown Court"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEAddress1",
+                    "label": "Courthouse address line 1",
+                    "value": "1-15 Pocock Street"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEAddress2",
+                    "label": "Courthouse address line 2",
+                    "value": "London"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEPostCode",
+                    "label": "Courthouse post code",
+                    "value": "SE1 0BJ"
+                  },
+                  {
+                    "promptIdentifier": "49ec9b26-dd63-4637-b2e9-55ba9948a90f",
+                    "promptReference": "HCROOM",
+                    "label": "Courtroom",
+                    "value": "Courtroom 01"
+                  },
+                  {
+                    "promptIdentifier": "c1116d12-dd35-4171-807a-2cb845357d22",
+                    "promptReference": "HTYPE",
+                    "label": "Hearing type",
+                    "value": "Plea and Trial Preparation"
+                  },
+                  {
+                    "promptIdentifier": "d85cc2d7-66c8-471e-b6ff-c1bc60c6cdac",
+                    "promptReference": "HEST",
+                    "label": "Estimated duration",
+                    "value": "1 HOURS"
+                  }
+                ],
+                "resultWording": "",
+                "resultDefinitionGroup": "Next hearing",
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "Next hearing in Crown Court"
+              }
+            ]
+          },
+          {
+            "title": "Drive a motor vehicle otherwise than in accordance with a licence - endorsable offence",
+            "civilOffence": false,
+            "dvlaCode": "LC20",
+            "convictionDate": "2026-04-15",
+            "convictionStatus": "Convicted",
+            "plea": "GUILTY",
+            "code": "RT88334",
+            "modeOfTrial": "Summary",
+            "allocationDecision": "Summary-only offence",
+            "endorsableFlag": true,
+            "convictingCourtCode": "2577",
+            "wording": "Drive a motor vehicle otherwise than in accordance with a licence - endorsable offence",
+            "startDate": "2026-02-14",
+            "results": [
+              {
+                "resultIdentifier": "d076bd4a-17d5-4720-899a-1c6f96e3b35f",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "fbed768b-ee95-4434-87c8-e81cbc8d24c8",
+                    "promptReference": "db16d2f8-b679-4a38-a6b2-f4fdf385f5cf",
+                    "label": "Next hearing in Crown Court",
+                    "value": "Fixed Date:16/04/2026\nTime of hearing:10:00\nCourthouse organisation name:Blackfriars Crown Court\nCourthouse address line 1:1-15 Pocock Street\nCourthouse address line 2:London\nCourthouse post code:SE1 0BJ\nCourtroom:Courtroom 01\nHearing type:Plea and Trial Preparation\nEstimated duration:1 HOURS"
+                  },
+                  {
+                    "promptIdentifier": "61f951c3-f18d-4a44-ae4a-0cad4efb4133",
+                    "promptReference": "defendantToAttendTheNextHearing",
+                    "label": "Defendant to attend the next hearing",
+                    "value": "Yes"
+                  },
+                  {
+                    "promptIdentifier": "a1f2e6d7-7a21-41f8-9a9a-854b25a606d4",
+                    "promptReference": "97b561bd-9b58-4fc5-80cd-eae42e725aa3",
+                    "label": "Insufficient court time to hear the case",
+                    "value": ""
+                  },
+                  {
+                    "promptIdentifier": "7fc17a01-2f5a-4433-aae9-28e0c959f73b",
+                    "promptReference": "62999377-68f9-45ca-b726-79139228a485",
+                    "label": "Adjournment reasons",
+                    "value": ""
+                  }
+                ],
+                "d20": false,
+                "judicialResultCategory": "INTERMEDIARY",
+                "label": "Remand unconditional bail"
+              },
+              {
+                "resultIdentifier": "a1f2e6d7-7a21-41f8-9a9a-854b25a606d4",
+                "publishedForNows": true,
+                "resultWording": "",
+                "resultDefinitionGroup": "Adjournment reasons",
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "Insufficient court time to hear the case"
+              },
+              {
+                "resultIdentifier": "fbed768b-ee95-4434-87c8-e81cbc8d24c8",
+                "publishedForNows": true,
+                "prompts": [
+                  {
+                    "promptIdentifier": "aea2ee79-47b4-4023-9a95-1b327e6e03d5",
+                    "promptReference": "fixedDate",
+                    "label": "Fixed Date",
+                    "value": "16/04/2026"
+                  },
+                  {
+                    "promptIdentifier": "4d125a5a-acbc-461d-a657-ba5643af85a6",
+                    "promptReference": "timeOfHearing",
+                    "label": "Time of hearing",
+                    "value": "10:00"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEOrganisationName",
+                    "label": "Courthouse organisation name",
+                    "value": "Blackfriars Crown Court"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEAddress1",
+                    "label": "Courthouse address line 1",
+                    "value": "1-15 Pocock Street"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEAddress2",
+                    "label": "Courthouse address line 2",
+                    "value": "London"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEPostCode",
+                    "label": "Courthouse post code",
+                    "value": "SE1 0BJ"
+                  },
+                  {
+                    "promptIdentifier": "49ec9b26-dd63-4637-b2e9-55ba9948a90f",
+                    "promptReference": "HCROOM",
+                    "label": "Courtroom",
+                    "value": "Courtroom 01"
+                  },
+                  {
+                    "promptIdentifier": "c1116d12-dd35-4171-807a-2cb845357d22",
+                    "promptReference": "HTYPE",
+                    "label": "Hearing type",
+                    "value": "Plea and Trial Preparation"
+                  },
+                  {
+                    "promptIdentifier": "d85cc2d7-66c8-471e-b6ff-c1bc60c6cdac",
+                    "promptReference": "HEST",
+                    "label": "Estimated duration",
+                    "value": "1 HOURS"
+                  }
+                ],
+                "resultWording": "",
+                "resultDefinitionGroup": "Next hearing",
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "Next hearing in Crown Court"
+              }
+            ]
+          },
+          {
+            "title": "Cause use of motor vehicle with no insurance",
+            "civilOffence": false,
+            "dvlaCode": "IN14",
+            "convictionDate": "2026-04-15",
+            "convictionStatus": "Convicted",
+            "plea": "GUILTY",
+            "code": "RA88002",
+            "modeOfTrial": "Summary",
+            "allocationDecision": "Summary-only offence",
+            "endorsableFlag": true,
+            "convictingCourtCode": "2577",
+            "wording": "Cause use of motor vehicle with no insurance",
+            "startDate": "2026-02-14",
+            "results": [
+              {
+                "resultIdentifier": "d076bd4a-17d5-4720-899a-1c6f96e3b35f",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "fbed768b-ee95-4434-87c8-e81cbc8d24c8",
+                    "promptReference": "dcd69bb8-c2f1-4b33-a76f-c1397bad36b1",
+                    "label": "Next hearing in Crown Court",
+                    "value": "Fixed Date:16/04/2026\nTime of hearing:10:00\nCourthouse organisation name:Blackfriars Crown Court\nCourthouse address line 1:1-15 Pocock Street\nCourthouse address line 2:London\nCourthouse post code:SE1 0BJ\nCourtroom:Courtroom 01\nHearing type:Plea and Trial Preparation\nEstimated duration:1 HOURS"
+                  },
+                  {
+                    "promptIdentifier": "61f951c3-f18d-4a44-ae4a-0cad4efb4133",
+                    "promptReference": "defendantToAttendTheNextHearing",
+                    "label": "Defendant to attend the next hearing",
+                    "value": "Yes"
+                  },
+                  {
+                    "promptIdentifier": "a1f2e6d7-7a21-41f8-9a9a-854b25a606d4",
+                    "promptReference": "3fda115d-2404-4ecd-a795-a42f44489903",
+                    "label": "Insufficient court time to hear the case",
+                    "value": ""
+                  },
+                  {
+                    "promptIdentifier": "7fc17a01-2f5a-4433-aae9-28e0c959f73b",
+                    "promptReference": "ed31cfe5-5cec-4423-94bc-14b71d0f1aa7",
+                    "label": "Adjournment reasons",
+                    "value": ""
+                  }
+                ],
+                "d20": false,
+                "judicialResultCategory": "INTERMEDIARY",
+                "label": "Remand unconditional bail"
+              },
+              {
+                "resultIdentifier": "a1f2e6d7-7a21-41f8-9a9a-854b25a606d4",
+                "publishedForNows": true,
+                "resultWording": "",
+                "resultDefinitionGroup": "Adjournment reasons",
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "Insufficient court time to hear the case"
+              },
+              {
+                "resultIdentifier": "fbed768b-ee95-4434-87c8-e81cbc8d24c8",
+                "publishedForNows": true,
+                "prompts": [
+                  {
+                    "promptIdentifier": "aea2ee79-47b4-4023-9a95-1b327e6e03d5",
+                    "promptReference": "fixedDate",
+                    "label": "Fixed Date",
+                    "value": "16/04/2026"
+                  },
+                  {
+                    "promptIdentifier": "4d125a5a-acbc-461d-a657-ba5643af85a6",
+                    "promptReference": "timeOfHearing",
+                    "label": "Time of hearing",
+                    "value": "10:00"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEOrganisationName",
+                    "label": "Courthouse organisation name",
+                    "value": "Blackfriars Crown Court"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEAddress1",
+                    "label": "Courthouse address line 1",
+                    "value": "1-15 Pocock Street"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEAddress2",
+                    "label": "Courthouse address line 2",
+                    "value": "London"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEPostCode",
+                    "label": "Courthouse post code",
+                    "value": "SE1 0BJ"
+                  },
+                  {
+                    "promptIdentifier": "49ec9b26-dd63-4637-b2e9-55ba9948a90f",
+                    "promptReference": "HCROOM",
+                    "label": "Courtroom",
+                    "value": "Courtroom 01"
+                  },
+                  {
+                    "promptIdentifier": "c1116d12-dd35-4171-807a-2cb845357d22",
+                    "promptReference": "HTYPE",
+                    "label": "Hearing type",
+                    "value": "Plea and Trial Preparation"
+                  },
+                  {
+                    "promptIdentifier": "d85cc2d7-66c8-471e-b6ff-c1bc60c6cdac",
+                    "promptReference": "HEST",
+                    "label": "Estimated duration",
+                    "value": "1 HOURS"
+                  }
+                ],
+                "resultWording": "",
+                "resultDefinitionGroup": "Next hearing",
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "Next hearing in Crown Court"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "courtApplications": [
+      {
+        "applicationType": "Application to reopen case",
+        "applicationTypeId": "9d2ae0fe-d4d0-43ca-ab7a-7a2556cafe5e",
+        "applicationReceivedDate": "2026-04-15",
+        "id": "412ff4cb-4f80-407f-92c1-a037fc63ce22",
+        "applicationReference": "QE408636187",
+        "applicationStatus": "LISTED",
+        "results": [
+          {
+            "resultIdentifier": "d278650c-e429-11e8-9f32-f2801f1b9fd1",
+            "publishedForNows": false,
+            "prompts": [
+              {
+                "promptIdentifier": "fbed768b-ee95-4434-87c8-e81cbc8d24c8",
+                "promptReference": "08165132-1966-4390-ae26-013ab5b01e1a",
+                "label": "Next hearing in Crown Court",
+                "value": "Fixed Date:16/04/2026\nTime of hearing:10:00\nCourthouse organisation name:Blackfriars Crown Court\nCourthouse address line 1:1-15 Pocock Street\nCourthouse address line 2:London\nCourthouse post code:SE1 0BJ\nCourtroom:Courtroom 01\nHearing type:Plea and Trial Preparation\nEstimated duration:1 HOURS"
+              },
+              {
+                "promptIdentifier": "61f951c3-f18d-4a44-ae4a-0cad4efb4133",
+                "promptReference": "defendantToAttendTheNextHearing",
+                "label": "Defendant to attend the next hearing",
+                "value": "Yes"
+              },
+              {
+                "promptIdentifier": "69ff04d5-84e8-4a61-8478-82c2999c1969",
+                "promptReference": "47a61eab-eb26-478c-97d5-d66c7be65a39",
+                "label": "To attend or a warrant to issue",
+                "value": ""
+              },
+              {
+                "promptIdentifier": "7fc17a01-2f5a-4433-aae9-28e0c959f73b",
+                "promptReference": "61196b2b-0d2e-41b1-8e0d-85e321b1e68b",
+                "label": "Adjournment reasons",
+                "value": ""
+              }
+            ],
+            "resultWording": "",
+            "d20": false,
+            "judicialResultCategory": "INTERMEDIARY",
+            "label": "Adjournment"
+          },
+          {
+            "resultIdentifier": "69ff04d5-84e8-4a61-8478-82c2999c1969",
+            "publishedForNows": true,
+            "resultWording": "",
+            "resultDefinitionGroup": "Adjournment reasons",
+            "d20": false,
+            "judicialResultCategory": "ANCILLARY",
+            "label": "To attend or a warrant to issue"
+          },
+          {
+            "resultIdentifier": "fbed768b-ee95-4434-87c8-e81cbc8d24c8",
+            "publishedForNows": true,
+            "prompts": [
+              {
+                "promptIdentifier": "aea2ee79-47b4-4023-9a95-1b327e6e03d5",
+                "promptReference": "fixedDate",
+                "label": "Fixed Date",
+                "value": "16/04/2026"
+              },
+              {
+                "promptIdentifier": "4d125a5a-acbc-461d-a657-ba5643af85a6",
+                "promptReference": "timeOfHearing",
+                "label": "Time of hearing",
+                "value": "10:00"
+              },
+              {
+                "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                "promptReference": "hCHOUSEOrganisationName",
+                "label": "Courthouse organisation name",
+                "value": "Blackfriars Crown Court"
+              },
+              {
+                "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                "promptReference": "hCHOUSEAddress1",
+                "label": "Courthouse address line 1",
+                "value": "1-15 Pocock Street"
+              },
+              {
+                "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                "promptReference": "hCHOUSEAddress2",
+                "label": "Courthouse address line 2",
+                "value": "London"
+              },
+              {
+                "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                "promptReference": "hCHOUSEPostCode",
+                "label": "Courthouse post code",
+                "value": "SE1 0BJ"
+              },
+              {
+                "promptIdentifier": "49ec9b26-dd63-4637-b2e9-55ba9948a90f",
+                "promptReference": "HCROOM",
+                "label": "Courtroom",
+                "value": "Courtroom 01"
+              },
+              {
+                "promptIdentifier": "c1116d12-dd35-4171-807a-2cb845357d22",
+                "promptReference": "HTYPE",
+                "label": "Hearing type",
+                "value": "Plea and Trial Preparation"
+              },
+              {
+                "promptIdentifier": "d85cc2d7-66c8-471e-b6ff-c1bc60c6cdac",
+                "promptReference": "HEST",
+                "label": "Estimated duration",
+                "value": "1 HOURS"
+              }
+            ],
+            "resultWording": "",
+            "resultDefinitionGroup": "Next hearing",
+            "d20": false,
+            "judicialResultCategory": "ANCILLARY",
+            "label": "Next hearing in Crown Court"
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": false,
+  "orderingHearingId": "b757991e-84ad-43cc-ae3d-7eca9bdfdd0f"
+}

@@ -1,0 +1,139 @@
+{
+  "masterDefendantId": "403ab228-db6f-4617-9267-6d5493a2b31f",
+  "orderingCourt": {
+    "address": {
+      "address1": "1-15 Pocock Street",
+      "address2": "London",
+      "address3": "",
+      "address4": "",
+      "address5": "",
+      "postcode": "SE1 0BJ"
+    },
+    "code": "C01BL00",
+    "courtHearingLocation": "C01BL00",
+    "courtLocationCode": "0428",
+    "id": "89592405-c29b-3706-b1d3-b1dd3a08b227",
+    "lja": {
+      "ljaCode": "2570",
+      "ljaName": "Central London Magistrates' Court"
+    },
+    "name": "Blackfriars Crown Court",
+    "roomId": "d0624ee3-9198-3c8b-94d6-42fb197ebe5e",
+    "roomName": "Courtroom 01"
+  },
+  "nowContent": {
+    "orderDate": "2026-05-15",
+    "defendant": {
+      "dateOfBirth": "1962-05-14",
+      "gender": "MALE",
+      "driverNumber": "VANFL002222OW9PH",
+      "title": "Mr",
+      "firstName": "Gwen",
+      "lastName": "Dietrich",
+      "name": "Gwen Dietrich",
+      "address": {
+        "line1": "40 Market Place",
+        "line2": "Market Place",
+        "line3": "Bristol",
+        "postCode": "NW1 5BR"
+      }
+    },
+    "caseApplicationReferences": [
+      "DJ148106934"
+    ],
+    "cases": [
+      {
+        "caseStatus": "INACTIVE",
+        "initiationCode": "C",
+        "reference": "DJ148106934",
+        "caseId": "09e5ddbf-082f-4567-a6dc-7b32082b0a9b",
+        "defendantCaseOffences": [
+          {
+            "title": "Speeding - passenger motor vehicle and trailer exceeding 50 mph - single carriageway - manned equipment",
+            "civilOffence": false,
+            "dvlaCode": "SP40",
+            "convictionDate": "2026-05-14",
+            "convictionStatus": "Convicted",
+            "plea": "GUILTY",
+            "alcoholReadingAmount": 500,
+            "alcoholReadingMethodCode": "A",
+            "alcoholReadingMethodDescription": "Blood",
+            "code": "RR84130",
+            "modeOfTrial": "Summary",
+            "allocationDecision": "Summary-only offence",
+            "endorsableFlag": true,
+            "convictingCourtCode": "2577",
+            "wording": "Speeding - passenger motor vehicle and trailer exceeding 50 mph - single carriageway - manned equipment",
+            "startDate": "2026-03-15",
+            "results": [
+              {
+                "resultIdentifier": "cee54856-4450-4f28-a8a9-72b688726201",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "a8719de4-7783-448a-b792-e3f94e670ad0",
+                    "promptReference": "PENPT",
+                    "label": "Penalty points for this offence",
+                    "value": "8"
+                  },
+                  {
+                    "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+                    "promptReference": "defendantDrivingLicenceNumber",
+                    "label": "Defendant driving licence number",
+                    "value": "VANFL002222OW9PH"
+                  }
+                ],
+                "d20": true,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "Driving record endorsed with penalty points"
+              },
+              {
+                "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956",
+                "publishedForNows": true,
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "0: None or unknown"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "courtApplications": [
+      {
+        "applicationType": "Appeal against conviction by a Magistrates' Court to the Crown Court",
+        "applicationTypeId": "3fca31f0-7b30-47e8-8f3f-90601ad26b50",
+        "applicationReceivedDate": "2026-05-14",
+        "id": "785e8cb7-f7a7-46b1-a4a7-1609f879c5ec",
+        "applicationReference": "DJ148106934",
+        "applicationStatus": "FINALISED",
+        "results": [
+          {
+            "resultIdentifier": "177f29cd-49e9-41d1-aafb-5730d7414dd4",
+            "publishedForNows": false,
+            "prompts": [
+              {
+                "promptIdentifier": "c10b4c83-1856-4ca9-9592-d8b8183a0324",
+                "promptReference": "reasons",
+                "label": "Reasons",
+                "value": "conviction was imposed"
+              },
+              {
+                "promptIdentifier": "e3764c59-4e25-4864-a3af-1c2e3390af99",
+                "promptReference": "dateOfConviction",
+                "label": "Date of conviction",
+                "value": "14/05/2026"
+              }
+            ],
+            "resultWording": "",
+            "d20": false,
+            "judicialResultCategory": "FINAL",
+            "label": "Appeal against conviction allowed "
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": false,
+  "orderingHearingId": "168bb682-1355-4a56-829c-40a89c4179f9"
+}

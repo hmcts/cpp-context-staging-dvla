@@ -110,6 +110,9 @@
     },
     "previous": {
       "$ref": "#/definitions/now"
+    },
+    "isResetToPreviousEvent": {
+      "type": "boolean"
     }
   },
   "required": [
