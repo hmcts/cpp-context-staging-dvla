@@ -1,0 +1,253 @@
+{
+  "masterDefendantId": "e95256af-c0ea-4460-80af-0113ead1e51e",
+  "orderingCourt": {
+    "address": {
+      "address1": "1-15 Pocock Street",
+      "address2": "London",
+      "address3": "",
+      "address4": "",
+      "address5": "",
+      "postcode": "SE1 0BJ"
+    },
+    "code": "C01BL00",
+    "courtHearingLocation": "C01BL00",
+    "courtLocationCode": "0428",
+    "id": "89592405-c29b-3706-b1d3-b1dd3a08b227",
+    "lja": {
+      "ljaCode": "2570",
+      "ljaName": "Central London Magistrates' Court"
+    },
+    "name": "Blackfriars Crown Court",
+    "roomId": "d0624ee3-9198-3c8b-94d6-42fb197ebe5e",
+    "roomName": "Courtroom 01"
+  },
+  "nowContent": {
+    "orderDate": "2026-05-15",
+    "defendant": {
+      "dateOfBirth": "2001-05-14",
+      "gender": "MALE",
+      "driverNumber": "VANFL002222OW9PH",
+      "title": "Mr",
+      "firstName": "Leigha",
+      "lastName": "Streich",
+      "name": "Leigha Streich",
+      "address": {
+        "line1": "50 Main Street",
+        "line2": "Main Street",
+        "line3": "Liverpool",
+        "line4": "Merseyside",
+        "postCode": "L1 1AA"
+      }
+    },
+    "caseApplicationReferences": [
+      "HH148193161"
+    ],
+    "cases": [
+      {
+        "caseStatus": "INACTIVE",
+        "initiationCode": "C",
+        "reference": "HH148193161",
+        "caseId": "dc55630f-f75f-4439-8ece-6df56dba97ac",
+        "defendantCaseOffences": [
+          {
+            "title": "Use a motor vehicle on a road / public place without third party insurance",
+            "civilOffence": false,
+            "dvlaCode": "IN10",
+            "convictionDate": "2026-05-14",
+            "convictionStatus": "Convicted",
+            "plea": "GUILTY",
+            "code": "RA88001",
+            "modeOfTrial": "Summary",
+            "allocationDecision": "Summary-only offence",
+            "endorsableFlag": true,
+            "convictingCourtCode": "2577",
+            "wording": "Use a motor vehicle on a road / public place without third party insurance",
+            "startDate": "2026-03-15",
+            "results": [
+              {
+                "resultIdentifier": "969f150c-cd05-46b0-9dd9-30891efcc766",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "7cd1472f-2379-4f5b-9e67-98a43d86e122",
+                    "promptReference": "AOF",
+                    "label": "Amount of fine",
+                    "value": "£100.00"
+                  }
+                ],
+                "resultDefinitionGroup": "Imposition",
+                "d20": false,
+                "judicialResultCategory": "FINAL",
+                "label": "Fine"
+              },
+              {
+                "resultIdentifier": "f121db73-57fb-4f74-9ab1-0843aabe4605",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "dcaf502b-44d2-4be0-acfc-2f7d29142da6",
+                    "promptReference": "specialReasons",
+                    "label": "Special reasons",
+                    "value": "Test"
+                  }
+                ],
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "No endorsement - Special Reasons"
+              },
+              {
+                "resultIdentifier": "9ea0d845-5096-44f6-9ce0-8ae801141eac",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "6b36e5ff-e116-4dc3-b438-8c02d493959e",
+                    "promptReference": "collectionOrderType",
+                    "label": "Collection order type",
+                    "value": "Make payments as ordered"
+                  }
+                ],
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "Collection order"
+              },
+              {
+                "resultIdentifier": "bcb5a496-f7cf-11e8-8eb2-f2801f1b9fd1",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "ee7d253a-c629-11e8-a355-529269fb1459",
+                    "promptReference": "PBD",
+                    "label": "Date to pay in full by",
+                    "value": "25/05/2026"
+                  }
+                ],
+                "resultDefinitionGroup": "Payment terms",
+                "d20": false,
+                "judicialResultCategory": "FINAL",
+                "label": "Pay by date"
+              }
+            ]
+          },
+          {
+            "title": "Drive a motor vehicle otherwise than in accordance with a licence - endorsable offence",
+            "civilOffence": false,
+            "dvlaCode": "LC20",
+            "convictionDate": "2026-05-14",
+            "convictionStatus": "Convicted",
+            "plea": "GUILTY",
+            "code": "RT88334",
+            "modeOfTrial": "Summary",
+            "allocationDecision": "Summary-only offence",
+            "endorsableFlag": true,
+            "convictingCourtCode": "2577",
+            "wording": "Drive a motor vehicle otherwise than in accordance with a licence - endorsable offence",
+            "startDate": "2026-03-15",
+            "results": [
+              {
+                "resultIdentifier": "969f150c-cd05-46b0-9dd9-30891efcc766",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "7cd1472f-2379-4f5b-9e67-98a43d86e122",
+                    "promptReference": "AOF",
+                    "label": "Amount of fine",
+                    "value": "£50.00"
+                  }
+                ],
+                "resultDefinitionGroup": "Imposition",
+                "d20": false,
+                "judicialResultCategory": "FINAL",
+                "label": "Fine"
+              },
+              {
+                "resultIdentifier": "f121db73-57fb-4f74-9ab1-0843aabe4605",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "dcaf502b-44d2-4be0-acfc-2f7d29142da6",
+                    "promptReference": "specialReasons",
+                    "label": "Special reasons",
+                    "value": "Test"
+                  }
+                ],
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "No endorsement - Special Reasons"
+              }
+            ]
+          },
+          {
+            "title": "Cause use of motor vehicle with no insurance",
+            "civilOffence": false,
+            "dvlaCode": "IN14",
+            "convictionDate": "2026-05-14",
+            "convictionStatus": "Convicted",
+            "plea": "GUILTY",
+            "code": "RA88002",
+            "modeOfTrial": "Summary",
+            "allocationDecision": "Summary-only offence",
+            "endorsableFlag": true,
+            "convictingCourtCode": "2577",
+            "wording": "Cause use of motor vehicle with no insurance",
+            "startDate": "2026-03-15",
+            "results": [
+              {
+                "resultIdentifier": "554c2622-c1cc-459e-a98d-b7f317ab065c",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "d3205319-84cf-4c5b-9d7a-7e4bb1865054",
+                    "promptReference": "periodofConditionalDischarge",
+                    "durationSequence": 1,
+                    "label": "Period of conditional discharge",
+                    "value": "12 Months"
+                  }
+                ],
+                "d20": false,
+                "dvlaCode": "E",
+                "judicialResultCategory": "FINAL",
+                "label": "Conditional discharge"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "courtApplications": [
+      {
+        "applicationType": "Appeal against sentence by a Magistrates' Court to the Crown Court",
+        "applicationTypeId": "ef71f385-88f5-4e53-8b9f-d568af9ea90c",
+        "applicationReceivedDate": "2026-05-14",
+        "id": "b62fe9da-665d-45ff-b7ab-2d8792b04307",
+        "applicationReference": "HH148193161",
+        "applicationStatus": "FINALISED",
+        "results": [
+          {
+            "resultIdentifier": "d861586a-df88-440d-98d4-63cc2a680ae1",
+            "publishedForNows": false,
+            "prompts": [
+              {
+                "promptIdentifier": "c946a5df-5849-4cca-b425-ecbd6bd704dc",
+                "promptReference": "dateSentenceWasImposed",
+                "label": "Date sentence was imposed",
+                "value": "14/05/2026"
+              },
+              {
+                "promptIdentifier": "c10b4c83-1856-4ca9-9592-d8b8183a0324",
+                "promptReference": "reasons",
+                "label": "Reasons",
+                "value": "sentence was imposed"
+              }
+            ],
+            "resultWording": "",
+            "d20": false,
+            "judicialResultCategory": "FINAL",
+            "label": "Appeal against sentence allowed"
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": false,
+  "orderingHearingId": "a5d46ff5-4b4f-4f34-9ae6-ba581f601d13"
+}

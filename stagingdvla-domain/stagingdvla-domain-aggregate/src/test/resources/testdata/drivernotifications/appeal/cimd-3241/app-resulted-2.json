@@ -1,0 +1,193 @@
+{
+  "masterDefendantId": "586a5599-763e-463b-aa8c-9d50406bfbda",
+  "orderingCourt": {
+    "address": {
+      "address1": "The Law Courts",
+      "address2": "Alexandra Road",
+      "address3": "Wimbledon",
+      "address4": "",
+      "address5": "",
+      "postcode": "SW19 7JP"
+    },
+    "code": "B01OK00",
+    "courtHearingLocation": "B01OK05",
+    "id": "d9bff7d8-6168-4163-ad77-3b98d61de174",
+    "lja": {
+      "ljaCode": "2577",
+      "ljaName": "South West London Magistrates' Court"
+    },
+    "name": "Wimbledon Magistrates' Court",
+    "roomId": "1414ea28-8b0e-3ba7-8f97-f2bb6d5dd38c",
+    "roomName": "Courtroom 05"
+  },
+  "nowContent": {
+    "orderDate": "2026-04-28",
+    "defendant": {
+      "dateOfBirth": "1966-04-24",
+      "gender": "MALE",
+      "driverNumber": "VANFL002222OW9PH",
+      "title": "Mr",
+      "firstName": "Antionette",
+      "lastName": "Hills",
+      "name": "Antionette Hills",
+      "address": {
+        "line1": "14 The Crescent",
+        "line2": "The Crescent",
+        "line3": "Salford Quays",
+        "line4": "Greater Manchester",
+        "line5": "Salford",
+        "postCode": "M5 4PE"
+      }
+    },
+    "caseApplicationReferences": [
+      "AJ143182547"
+    ],
+    "cases": [
+      {
+        "caseStatus": "INACTIVE",
+        "initiationCode": "C",
+        "reference": "AJ143182547",
+        "caseId": "ef913120-3584-41c4-b4c3-68223e5bc78e",
+        "defendantCaseOffences": [
+          {
+            "title": "Drive a motor vehicle otherwise than in accordance with a licence - endorsable offence",
+            "civilOffence": false,
+            "dvlaCode": "LC20",
+            "convictionDate": "2026-04-24",
+            "convictionStatus": "Convicted",
+            "plea": "GUILTY",
+            "code": "RT88334",
+            "modeOfTrial": "Summary",
+            "allocationDecision": "Summary-only offence",
+            "endorsableFlag": true,
+            "convictingCourtCode": "2570",
+            "wording": "Drive a motor vehicle otherwise than in accordance with a licence - endorsable offence",
+            "startDate": "2026-02-23",
+            "results": [
+              {
+                "resultIdentifier": "ccfc452e-ebe4-4cd7-b8a0-4f90768447b4",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "2bf54447-328c-4c1b-a123-341adbd52172",
+                    "promptReference": "disqualificationPeriod",
+                    "durationSequence": 1,
+                    "label": "Disqualification period",
+                    "value": "12 Months"
+                  },
+                  {
+                    "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+                    "promptReference": "defendantDrivingLicenceNumber",
+                    "label": "Defendant driving licence number",
+                    "value": "VANFL002222OW9PH"
+                  }
+                ],
+                "resultWording": "Disqualified for holding or obtaining a driving licence. Discretionary disqualification. Driving record endorsed. Section 34(2) Road Traffic Offenders Act 1988",
+                "d20": true,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "Discretionary with ordinary disqualification"
+              },
+              {
+                "resultIdentifier": "969f150c-cd05-46b0-9dd9-30891efcc766",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "7cd1472f-2379-4f5b-9e67-98a43d86e122",
+                    "promptReference": "AOF",
+                    "label": "Amount of fine",
+                    "value": "£166.00"
+                  }
+                ],
+                "resultDefinitionGroup": "Imposition",
+                "d20": false,
+                "judicialResultCategory": "FINAL",
+                "label": "Fine"
+              },
+              {
+                "resultIdentifier": "9ea0d845-5096-44f6-9ce0-8ae801141eac",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "6b36e5ff-e116-4dc3-b438-8c02d493959e",
+                    "promptReference": "collectionOrderType",
+                    "label": "Collection order type",
+                    "value": "Make payments as ordered"
+                  }
+                ],
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "Collection order"
+              },
+              {
+                "resultIdentifier": "bcb5a496-f7cf-11e8-8eb2-f2801f1b9fd1",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "ee7d253a-c629-11e8-a355-529269fb1459",
+                    "promptReference": "PBD",
+                    "label": "Date to pay in full by",
+                    "value": "05/05/2026"
+                  }
+                ],
+                "resultDefinitionGroup": "Payment terms",
+                "d20": false,
+                "judicialResultCategory": "FINAL",
+                "label": "Pay by date"
+              },
+              {
+                "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956",
+                "publishedForNows": true,
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "0: None or unknown"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "courtApplications": [
+      {
+        "applicationType": "Appeal against sentence by a Magistrates' Court to the Crown Court",
+        "applicationTypeId": "ef71f385-88f5-4e53-8b9f-d568af9ea90c",
+        "applicationReceivedDate": "2026-04-24",
+        "id": "76384d25-fb8c-4c90-844e-58c8a27e590c",
+        "applicationReference": "AJ143182547",
+        "applicationStatus": "FINALISED",
+        "results": [
+          {
+            "resultIdentifier": "d861586a-df88-440d-98d4-63cc2a680ae1",
+            "publishedForNows": false,
+            "prompts": [
+              {
+                "promptIdentifier": "c946a5df-5849-4cca-b425-ecbd6bd704dc",
+                "promptReference": "dateSentenceWasImposed",
+                "label": "Date sentence was imposed",
+                "value": "24/04/2026"
+              },
+              {
+                "promptIdentifier": "c10b4c83-1856-4ca9-9592-d8b8183a0324",
+                "promptReference": "reasons",
+                "label": "Reasons",
+                "value": "sentence was imposed"
+              }
+            ],
+            "resultWording": "",
+            "d20": false,
+            "judicialResultCategory": "FINAL",
+            "label": "Appeal against sentence allowed"
+          },
+          {
+            "resultIdentifier": "2b3f7c20-8fc1-4fad-9076-df196c24b27e",
+            "publishedForNows": false,
+            "d20": false,
+            "judicialResultCategory": "FINAL",
+            "label": "Granted"
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": false,
+  "orderingHearingId": "44ebf263-a5fb-4326-9101-8bca09748cca"
+}

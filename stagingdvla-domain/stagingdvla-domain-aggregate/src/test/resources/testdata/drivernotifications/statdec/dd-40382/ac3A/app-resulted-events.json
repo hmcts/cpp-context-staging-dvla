@@ -1,0 +1,338 @@
+[
+  {
+    "caseApplicationReferences": [
+      "28DI3868325"
+    ],
+    "cases": [
+      {
+        "caseId": "e07ad1a8-8842-438e-91cf-193d4a4a5d98",
+        "caseStatus": "INACTIVE",
+        "defendantCaseOffences": [],
+        "hasSV": false,
+        "initiationCode": "J",
+        "reference": "28DI3868325"
+      }
+    ],
+    "courtApplications": [
+      {
+        "applicationReceivedDate": "2026-05-08",
+        "applicationReference": "11SL2BMHQA",
+        "applicationStatus": "FINALISED",
+        "applicationType": "Appearance to make statutory declaration (SJP case)",
+        "applicationTypeId": "99f6114d-a92b-4c89-986a-ac3ef1294130",
+        "id": "0ca4a55d-dd8f-4849-9cc4-61d969872156",
+        "results": [
+          {
+            "d20": false,
+            "judicialResultCategory": "FINAL",
+            "label": "Statutory Declaration",
+            "prompts": [
+              {
+                "durationSequence": 0,
+                "label": "Statutory declaration made under",
+                "promptIdentifier": "7b6ef0ac-2d0b-44e5-a68e-4720b96cc679",
+                "promptReference": "statutoryDeclarationMadeUnder",
+                "value": "Section 14 of the Magistrates' Courts Act 1980"
+              },
+              {
+                "durationSequence": 0,
+                "label": "Financial penalties to be written off",
+                "promptIdentifier": "36e32c50-dbec-41c4-904b-25eb20c9c54a",
+                "promptReference": "financialPenaltiesToBeWrittenOff",
+                "value": "Yes"
+              },
+              {
+                "durationSequence": 0,
+                "label": "Prosecutor to be notified organisation name",
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedOrganisationName",
+                "value": "Driver and Vehicle Licensing Agency"
+              },
+              {
+                "durationSequence": 0,
+                "label": "Prosecutor to be notified organisation name",
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedOrganisationName",
+                "value": "Finance Operations"
+              },
+              {
+                "durationSequence": 0,
+                "label": "Prosecutor to be notified organisation name",
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedOrganisationName",
+                "value": "C3 East"
+              },
+              {
+                "durationSequence": 0,
+                "label": "Prosecutor to be notified organisation name",
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedOrganisationName",
+                "value": "DVLA"
+              },
+              {
+                "durationSequence": 0,
+                "label": "Prosecutor to be notified organisation name",
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedOrganisationName",
+                "value": "Longview Road"
+              },
+              {
+                "durationSequence": 0,
+                "label": "Prosecutor to be notified organisation name",
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedOrganisationName",
+                "value": "Swansea"
+              },
+              {
+                "durationSequence": 0,
+                "label": "Prosecutor to be notified organisation name",
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedOrganisationName",
+                "value": "SA6 7JL"
+              }
+            ],
+            "publishedForNows": false,
+            "resultDefinitionGroup": "Enforcement",
+            "resultIdentifier": "e2f6e11b-c3a2-4e76-8d29-fbede4174988"
+          },
+          {
+            "d20": false,
+            "judicialResultCategory": "ANCILLARY",
+            "label": "Driving endorsement to be removed",
+            "prompts": [
+              {
+                "durationSequence": 0,
+                "label": "Original court code",
+                "promptIdentifier": "b49bf4fa-0b1e-4079-b85a-c0113a46b91b",
+                "promptReference": "originalCourtCode",
+                "value": "2577"
+              },
+              {
+                "durationSequence": 0,
+                "label": "Original conviction date",
+                "promptIdentifier": "0cd86af5-10d8-4fd1-a78a-8a0e80179034",
+                "promptReference": "originalConvictionDate",
+                "value": "2026-05-08"
+              },
+              {
+                "durationSequence": 0,
+                "label": "Original offence date",
+                "promptIdentifier": "37ee2b08-1950-4b04-bea5-f6f66b768bb0",
+                "promptReference": "originalOffenceDate",
+                "value": "2025-11-25"
+              },
+              {
+                "durationSequence": 0,
+                "label": "DVLA endorsement code",
+                "promptIdentifier": "1a2a23ea-c70d-4a5c-afa7-09dc514f84cc",
+                "promptReference": "dVLAEndorsementCode",
+                "value": "CU84"
+              }
+            ],
+            "publishedForNows": true,
+            "resultIdentifier": "f42fa098-0f7b-4269-ac4f-b10c9b6832d7"
+          }
+        ]
+      }
+    ],
+    "defendant": {
+      "address": {
+        "line1": "9999A9999AAAA",
+        "line2": "Woodlane",
+        "line3": "addressline 3",
+        "line4": "Bristol",
+        "line5": "Avon"
+      },
+      "dateOfBirth": "1981-11-11",
+      "driverNumber": "VANFL002222OW9PH",
+      "firstName": "jack",
+      "gender": "MALE",
+      "lastName": "Smith",
+      "name": "jack Smith",
+      "title": "MR"
+    },
+    "distinctPrompts": [
+      {
+        "durationSequence": 0,
+        "label": "Defendant driving licence number",
+        "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+        "promptReference": "defendantDrivingLicenceNumber",
+        "value": "VANFL002222OW9PH"
+      }
+    ],
+    "identifier": "00780069-692e-4d54-8d8d-cee14c4091e5",
+    "licenceProducedInCourt": "5: DVLA held not produced",
+    "masterDefendantId": "f8c2364f-5f9c-4b39-8897-4aa83f552329",
+    "materialId": "d423f23c-f07b-406f-96b3-5e320c00992b",
+    "notificationType": "Remove",
+    "notificationWasPreviouslySent": true,
+    "orderDate": "2026-05-08",
+    "orderingCourt": {
+      "address": {
+        "address1": "176A Lavender Hill",
+        "address2": "London",
+        "postcode": "SW11 1JU"
+      },
+      "code": "B01LY00",
+      "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+      "lja": {
+        "ljaCode": "2577",
+        "ljaName": "Lavender Hill Magistrates' Court",
+        "welshLjaName": "Llys Ynadon Lavender Hill"
+      },
+      "name": "Lavender Hill Magistrates' Court"
+    },
+    "orderingCourtCode": "2577",
+    "orderingHearingId": "005d3e2b-fdb1-406d-882e-4f54f4f75dac",
+    "previous": {
+      "caseApplicationReferences": [
+        "28DI3868325"
+      ],
+      "cases": [
+        {
+          "caseId": "e07ad1a8-8842-438e-91cf-193d4a4a5d98",
+          "defendantCaseOffences": [
+            {
+              "civilOffence": false,
+              "code": "RC86818",
+              "convictingCourtCode": "2577",
+              "convictionDate": "2026-05-08",
+              "convictionStatus": "Convicted",
+              "dateFromWhichDisqRemoved": "",
+              "disqualificationPeriod": "",
+              "dttpDtetp": "",
+              "dvlaCode": "CU84",
+              "endorsableFlag": true,
+              "fine": "£200.00",
+              "interimImposedFinalSentence": "",
+              "modeOfTrial": "1",
+              "penaltyPoints": "6",
+              "plea": "GUILTY",
+              "results": [
+                {
+                  "d20": false,
+                  "judicialResultCategory": "FINAL",
+                  "label": "Fine",
+                  "prompts": [
+                    {
+                      "durationSequence": 0,
+                      "label": "Amount of fine",
+                      "promptIdentifier": "7cd1472f-2379-4f5b-9e67-98a43d86e122",
+                      "promptReference": "AOF",
+                      "value": "£200.00"
+                    }
+                  ],
+                  "publishedForNows": false,
+                  "resultDefinitionGroup": "Imposition",
+                  "resultIdentifier": "969f150c-cd05-46b0-9dd9-30891efcc766"
+                },
+                {
+                  "d20": true,
+                  "judicialResultCategory": "ANCILLARY",
+                  "label": "Driving record endorsed with penalty points",
+                  "prompts": [
+                    {
+                      "durationSequence": 0,
+                      "label": "Penalty points for this offence",
+                      "promptIdentifier": "a8719de4-7783-448a-b792-e3f94e670ad0",
+                      "promptReference": "PENPT",
+                      "value": "6"
+                    },
+                    {
+                      "durationSequence": 0,
+                      "label": "Defendant driving licence number",
+                      "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+                      "promptReference": "defendantDrivingLicenceNumber",
+                      "value": "VANFL002222OW9PH"
+                    }
+                  ],
+                  "publishedForNows": false,
+                  "resultIdentifier": "cee54856-4450-4f28-a8a9-72b688726201"
+                },
+                {
+                  "d20": false,
+                  "judicialResultCategory": "ANCILLARY",
+                  "label": "Licence produced in court",
+                  "publishedForNows": false,
+                  "resultIdentifier": "ea1ee5a4-be13-48dc-8411-78f22e01c236"
+                },
+                {
+                  "d20": false,
+                  "judicialResultCategory": "ANCILLARY",
+                  "label": "5: DVLA held not produced",
+                  "publishedForNows": true,
+                  "resultIdentifier": "5c5a693f-c26c-4352-bbb3-ac72dd141e88"
+                }
+              ],
+              "startDate": "2025-11-25",
+              "title": "Permit use of motor vehicle - driver not having proper control - endorsable offence",
+              "wording": "Permit use of motor vehicle - driver not having proper control - endorsable offence."
+            }
+          ],
+          "hasSV": false,
+          "initiationCode": "J",
+          "reference": "28DI3868325"
+        }
+      ],
+      "defendant": {
+        "address": {
+          "line1": "9999A9999AAAA",
+          "line2": "Woodlane",
+          "line3": "addressline 3",
+          "line4": "Bristol",
+          "line5": "Avon"
+        },
+        "dateOfBirth": "1981-11-11",
+        "firstName": "jack",
+        "gender": "MALE",
+        "lastName": "Smith",
+        "name": "jack Smith",
+        "title": "Mr"
+      },
+      "distinctPrompts": [
+        {
+          "durationSequence": 0,
+          "label": "Defendant driving licence number",
+          "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+          "promptReference": "defendantDrivingLicenceNumber",
+          "value": "VANFL002222OW9PH"
+        }
+      ],
+      "identifier": "5e8e487b-6925-4d89-8f8b-db808b2925c8",
+      "licenceProducedInCourt": "5: DVLA held not produced",
+      "masterDefendantId": "f8c2364f-5f9c-4b39-8897-4aa83f552329",
+      "materialId": "55c90b34-2a08-49bc-a812-d8969cca8610",
+      "orderDate": "2026-05-08",
+      "orderingCourt": {
+        "address": {
+          "address1": "176A Lavender Hill",
+          "address2": "London",
+          "postcode": "SW11 1JU"
+        },
+        "code": "B01LY00",
+        "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+        "lja": {
+          "ljaCode": "2577",
+          "ljaName": "Lavender Hill Magistrates' Court",
+          "welshLjaName": "Llys Ynadon Lavender Hill"
+        },
+        "name": "Lavender Hill Magistrates' Court"
+      },
+      "orderingHearingId": "6386ec28-6252-41e8-94be-699d26b34074",
+      "retrySequence": 0
+    },
+    "removedEndorsements": [
+      "CU84"
+    ],
+    "retrySequence": 0
+  },
+  {
+    "applicationTypes": [
+      {
+        "id": "99f6114d-a92b-4c89-986a-ac3ef1294130",
+        "name": "Appearance to make statutory declaration (SJP case)"
+      }
+    ],
+    "caseReference": "28DI3868325"
+  }
+]

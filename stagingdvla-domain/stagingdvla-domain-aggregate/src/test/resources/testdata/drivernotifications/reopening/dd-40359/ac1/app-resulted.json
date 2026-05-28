@@ -1,0 +1,200 @@
+{
+  "masterDefendantId": "b9713bd7-3989-4d65-a6c3-d5b0ea394322",
+  "orderingCourt": {
+    "address": {
+      "address1": "The Magistrates' Court",
+      "address2": "Barclay Road",
+      "address3": "Croydon",
+      "address4": "",
+      "address5": "",
+      "postcode": "CR9 3NG"
+    },
+    "code": "B01EF00",
+    "courtHearingLocation": "B01EF01",
+    "id": "31b3d313-7a7c-4598-bb4b-c1bff9b00e26",
+    "lja": {
+      "ljaCode": "2576",
+      "ljaName": "South London Magistrates' Court"
+    },
+    "name": "Croydon Magistrates' Court",
+    "roomId": "bfb67c13-789c-373b-b442-52b82faf863e",
+    "roomName": "Courtroom 01"
+  },
+  "nowContent": {
+    "orderDate": "2026-04-15",
+    "defendant": {
+      "dateOfBirth": "2005-11-11",
+      "gender": "MALE",
+      "driverNumber": "VANFL002222OW9PH",
+      "title": "Mr",
+      "firstName": "Daphney",
+      "lastName": "Mohr",
+      "name": "Daphney Mohr",
+      "address": {
+        "line1": "9999A9999AAAA",
+        "line2": "Woodlane",
+        "line3": "addressline 3",
+        "line4": "Bristol",
+        "line5": "Avon",
+        "postCode": "SW11 3TQ"
+      }
+    },
+    "caseApplicationReferences": [
+      "28DI8610740"
+    ],
+    "cases": [
+      {
+        "caseStatus": "INACTIVE",
+        "initiationCode": "C",
+        "reference": "28DI8610740",
+        "caseId": "f0522d70-6f03-4b4a-a1a7-ebc5004ad2eb",
+        "defendantCaseOffences": [
+          {
+            "title": "Conspire to assault a person thereby occasioning them actual bodily harm",
+            "civilOffence": false,
+            "convictionStatus": "Not Convicted",
+            "code": "OF61102C",
+            "modeOfTrial": "Indictable",
+            "endorsableFlag": false,
+            "wording": "Daphney Mohr at Hirthe Road, conspired together with Ivan Goldner I to assault Sheldon Leannon, thereby occasioning actual bodily harm.",
+            "startDate": "2022-12-12",
+            "results": [
+              {
+                "resultIdentifier": "eb2e4c4f-b738-4a4d-9cce-0572cecb7cb8",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "6f305506-9919-4e7b-bd57-c4c352ec3e3e",
+                    "promptReference": "details",
+                    "label": "Details",
+                    "value": "Civil application withdrawn"
+                  }
+                ],
+                "resultDefinitionGroup": "WOAEXTEND",
+                "d20": false,
+                "judicialResultCategory": "FINAL",
+                "label": "Withdrawn"
+              }
+            ]
+          },
+          {
+            "title": "Public service vehicles - passenger failing to pay fare",
+            "civilOffence": false,
+            "convictionStatus": "Not Convicted",
+            "code": "PS90015",
+            "modeOfTrial": "Summary",
+            "endorsableFlag": false,
+            "wording": "Public service vehicles - passenger failing to pay fare",
+            "startDate": "2022-11-28",
+            "results": [
+              {
+                "resultIdentifier": "eb2e4c4f-b738-4a4d-9cce-0572cecb7cb8",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "6f305506-9919-4e7b-bd57-c4c352ec3e3e",
+                    "promptReference": "details",
+                    "label": "Details",
+                    "value": "Civil application withdrawn"
+                  }
+                ],
+                "resultDefinitionGroup": "WOAEXTEND",
+                "d20": false,
+                "judicialResultCategory": "FINAL",
+                "label": "Withdrawn"
+              }
+            ]
+          },
+          {
+            "title": "Robbery",
+            "civilOffence": false,
+            "convictionStatus": "Not Convicted",
+            "code": "TH68023",
+            "modeOfTrial": "Indictable",
+            "endorsableFlag": false,
+            "wording": "From 13th November 2018, an aggravated version of this offence applies where the offence is committed against an emergency worker acting in the exercise of his / her functions as such a worker, as per section 1 of the Assaults on emergency Workers (Offences) Act 2018; see offence wording document H19568.",
+            "startDate": "2019-11-28",
+            "results": [
+              {
+                "resultIdentifier": "eb2e4c4f-b738-4a4d-9cce-0572cecb7cb8",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "6f305506-9919-4e7b-bd57-c4c352ec3e3e",
+                    "promptReference": "details",
+                    "label": "Details",
+                    "value": "Civil application withdrawn"
+                  }
+                ],
+                "resultDefinitionGroup": "WOAEXTEND",
+                "d20": false,
+                "judicialResultCategory": "FINAL",
+                "label": "Withdrawn"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "courtApplications": [
+      {
+        "applicationType": "Application to reopen case",
+        "applicationTypeId": "9d2ae0fe-d4d0-43ca-ab7a-7a2556cafe5e",
+        "applicationReceivedDate": "2026-04-14",
+        "id": "251f1c0d-8e18-4e4b-863d-0f7fc8125580",
+        "applicationReference": "28DI8610740",
+        "applicationStatus": "FINALISED",
+        "results": [
+          {
+            "resultIdentifier": "2b3f7c20-8fc1-4fad-9076-df196c24b27e",
+            "publishedForNows": false,
+            "d20": false,
+            "judicialResultCategory": "FINAL",
+            "label": "Granted"
+          },
+          {
+            "resultIdentifier": "e3fb46ee-e406-4f73-9bf1-71d513da8cc7",
+            "publishedForNows": false,
+            "prompts": [
+              {
+                "promptIdentifier": "3872ea68-92d9-469f-9929-c676745982ef",
+                "promptReference": "reopenedUnder",
+                "label": "Re-opened under",
+                "value": "Section 155 Powers of Criminal Courts (Sentencing) Act 2000"
+              },
+              {
+                "promptIdentifier": "5797feb0-7678-4193-ad16-944365e9a68a",
+                "promptReference": "convictionAndSentenceImposedOnSpecifiedDateAreSetAside",
+                "label": "Conviction and sentence imposed on specified date are set aside",
+                "value": "03/03/2027"
+              },
+              {
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedOrganisationName",
+                "label": "Prosecutor to be notified organisation name",
+                "value": "test"
+              },
+              {
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedAddress1",
+                "label": "Prosecutor to be notified address line 1",
+                "value": "test"
+              },
+              {
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedPostCode",
+                "label": "Prosecutor to be notified post code",
+                "value": "MK6 7FG"
+              }
+            ],
+            "d20": false,
+            "judicialResultCategory": "FINAL",
+            "label": "Case reopened"
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": false,
+  "orderingHearingId": "fa4ca31f-134b-46e5-ac83-e5c3aabdecfe"
+}

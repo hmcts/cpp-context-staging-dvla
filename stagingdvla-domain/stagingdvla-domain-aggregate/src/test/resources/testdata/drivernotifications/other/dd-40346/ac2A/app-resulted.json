@@ -1,0 +1,93 @@
+{
+  "masterDefendantId": "44bb404e-1261-4c22-a0ac-dfbe2c355cc7",
+  "orderingCourt": {
+    "address": {
+      "address1": "176A Lavender Hill",
+      "address2": "London",
+      "address3": "",
+      "address4": "",
+      "address5": "",
+      "postcode": "SW11 1JU"
+    },
+    "code": "B01LY00",
+    "courtHearingLocation": "B01LY01",
+    "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+    "lja": {
+      "ljaCode": "2577",
+      "ljaName": "South West London Magistrates' Court"
+    },
+    "name": "Lavender Hill Magistrates' Court",
+    "roomId": "9e4932f7-97b2-3010-b942-ddd2624e4dd8",
+    "roomName": "Courtroom 01"
+  },
+  "nowContent": {
+    "orderDate": "2026-05-13",
+    "defendant": {
+      "dateOfBirth": "1991-02-18",
+      "gender": "MALE",
+      "title": "MR",
+      "firstName": "Cathrine",
+      "lastName": "Rice",
+      "name": "Cathrine Rice",
+      "address": {
+        "line1": "21",
+        "line2": "Furnburry Park Road",
+        "line3": "London",
+        "postCode": "SW11 3TQ"
+      }
+    },
+    "caseApplicationReferences": [
+      "28DI1866702"
+    ],
+    "cases": [
+      {
+        "caseStatus": "INACTIVE",
+        "initiationCode": "C",
+        "reference": "28DI1866702",
+        "caseId": "986a3c5d-01a2-4e12-8263-d9d5177787b1",
+        "defendantCaseOffences": [
+          {
+            "title": "Theft of motor vehicle",
+            "civilOffence": false,
+            "convictionStatus": "Not Convicted",
+            "code": "TH68013",
+            "modeOfTrial": "Either Way",
+            "endorsableFlag": false,
+            "wording": "Theft of motor vehicle",
+            "startDate": "2025-08-13",
+            "results": [
+              {
+                "resultIdentifier": "238fc228-f948-430e-b0a1-7c9bdcafac46",
+                "publishedForNows": false,
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "Driving disqualification suspended pending appeal"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "courtApplications": [
+      {
+        "applicationType": "Application to suspend disqualification pending appeal",
+        "applicationTypeId": "effc82d1-a5e9-43f0-b248-de3b11dcf7bb",
+        "applicationReceivedDate": "2026-05-13",
+        "id": "07a0f5a0-f177-4ec8-8ecd-32baf1cdb8cf",
+        "applicationReference": "28DI1866702",
+        "applicationStatus": "FINALISED",
+        "results": [
+          {
+            "resultIdentifier": "2b3f7c20-8fc1-4fad-9076-df196c24b27e",
+            "publishedForNows": false,
+            "d20": false,
+            "judicialResultCategory": "FINAL",
+            "label": "Granted"
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": false,
+  "orderingHearingId": "340b723a-bd2b-4a8a-9711-5c1bab7664dd"
+}

@@ -1,0 +1,267 @@
+{
+  "masterDefendantId": "d1d7b29e-4286-4094-825e-0b4ae09a8878",
+  "orderingCourt": {
+    "address": {
+      "address1": "The Magistrates' Court",
+      "address2": "Barclay Road",
+      "address3": "Croydon",
+      "address4": "",
+      "address5": "",
+      "postcode": "CR9 3NG"
+    },
+    "code": "B01EF00",
+    "courtHearingLocation": "B01EF01",
+    "id": "31b3d313-7a7c-4598-bb4b-c1bff9b00e26",
+    "lja": {
+      "ljaCode": "2576",
+      "ljaName": "South London Magistrates' Court"
+    },
+    "name": "Croydon Magistrates' Court",
+    "roomId": "bfb67c13-789c-373b-b442-52b82faf863e",
+    "roomName": "Courtroom 01"
+  },
+  "nowContent": {
+    "orderDate": "2026-04-21",
+    "defendant": {
+      "dateOfBirth": "2005-11-11",
+      "gender": "MALE",
+      "driverNumber": "VANFL002222OW9PH",
+      "title": "Mr",
+      "firstName": "Camille",
+      "lastName": "Friesen",
+      "name": "Camille Friesen",
+      "address": {
+        "line1": "9999A9999AAAA",
+        "line2": "Woodlane",
+        "line3": "addressline 3",
+        "line4": "Bristol",
+        "line5": "Avon",
+        "postCode": "SW11 3TQ"
+      }
+    },
+    "caseApplicationReferences": [
+      "28DI3738303"
+    ],
+    "cases": [
+      {
+        "caseStatus": "ACTIVE",
+        "initiationCode": "C",
+        "reference": "28DI3738303",
+        "caseId": "d06b5e00-30bd-4630-be03-8e43771009d2",
+        "defendantCaseOffences": [
+          {
+            "title": "Conspire to assault a person thereby occasioning them actual bodily harm",
+            "civilOffence": false,
+            "convictionStatus": "Not Convicted",
+            "code": "OF61102C",
+            "modeOfTrial": "Indictable",
+            "endorsableFlag": false,
+            "wording": "Camille Friesen at Rodriguez Loop, conspired together with Mabel Gislason to assault Tommie Bergnaum, thereby occasioning actual bodily harm.",
+            "startDate": "2022-12-12",
+            "results": [
+              {
+                "resultIdentifier": "ccfc452e-ebe4-4cd7-b8a0-4f90768447b4",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "2bf54447-328c-4c1b-a123-341adbd52172",
+                    "promptReference": "disqualificationPeriod",
+                    "durationSequence": 1,
+                    "label": "Disqualification period",
+                    "value": "12 Months"
+                  },
+                  {
+                    "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+                    "promptReference": "defendantDrivingLicenceNumber",
+                    "label": "Defendant driving licence number",
+                    "value": "VANFL002222OW9PH"
+                  }
+                ],
+                "resultWording": "Disqualified for holding or obtaining a driving licence. Discretionary disqualification. Driving record endorsed. Section 34(2) Road Traffic Offenders Act 1988",
+                "d20": true,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "Discretionary with ordinary disqualification"
+              },
+              {
+                "resultIdentifier": "969f150c-cd05-46b0-9dd9-30891efcc766",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "7cd1472f-2379-4f5b-9e67-98a43d86e122",
+                    "promptReference": "AOF",
+                    "label": "Amount of fine",
+                    "value": "£200.00"
+                  }
+                ],
+                "resultDefinitionGroup": "Imposition",
+                "d20": false,
+                "judicialResultCategory": "FINAL",
+                "label": "Fine"
+              },
+              {
+                "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956",
+                "publishedForNows": true,
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "0: None or unknown"
+              }
+            ]
+          },
+          {
+            "title": "Public service vehicles - passenger failing to pay fare",
+            "civilOffence": false,
+            "convictionStatus": "Not Convicted",
+            "code": "PS90015",
+            "modeOfTrial": "Summary",
+            "endorsableFlag": false,
+            "wording": "Public service vehicles - passenger failing to pay fare",
+            "startDate": "2022-11-28",
+            "results": [
+              {
+                "resultIdentifier": "d278650c-e429-11e8-9f32-f2801f1b9fd1",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "70c98fa6-804d-11e8-adc0-fa7ae01bbebc",
+                    "promptReference": "5f146eaf-c068-4628-86af-472af3c9c018",
+                    "label": "Next hearing in magistrates' court",
+                    "value": "Date of hearing:24/04/2026\nTime of hearing:10:00\nCourthouse organisation name:Croydon Magistrates' Court\nCourthouse address line 1:The Magistrates' Court\nCourthouse address line 2:Barclay Road\nCourthouse address line 3:Croydon\nCourthouse post code:CR9 3NG\nCourtroom:Courtroom 01\nHearing type:Application\nEstimated duration:20 MINUTES\nBooking reference:f2cf9384-de44-49a7-9a23-fe3db2d5cf5d"
+                  },
+                  {
+                    "promptIdentifier": "61f951c3-f18d-4a44-ae4a-0cad4efb4133",
+                    "promptReference": "defendantToAttendTheNextHearing",
+                    "label": "Defendant to attend the next hearing",
+                    "value": "Yes"
+                  },
+                  {
+                    "promptIdentifier": "69ff04d5-84e8-4a61-8478-82c2999c1969",
+                    "promptReference": "1204e8da-2523-4c81-a99d-33fbcbabed7d",
+                    "label": "To attend or a warrant to issue",
+                    "value": ""
+                  },
+                  {
+                    "promptIdentifier": "7fc17a01-2f5a-4433-aae9-28e0c959f73b",
+                    "promptReference": "1cbf867b-517f-4d03-a8d4-e6fda0e7c600",
+                    "label": "Adjournment reasons",
+                    "value": ""
+                  }
+                ],
+                "resultWording": "",
+                "d20": false,
+                "judicialResultCategory": "INTERMEDIARY",
+                "label": "Adjournment"
+              },
+              {
+                "resultIdentifier": "69ff04d5-84e8-4a61-8478-82c2999c1969",
+                "publishedForNows": true,
+                "resultWording": "",
+                "resultDefinitionGroup": "Adjournment reasons",
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "To attend or a warrant to issue"
+              },
+              {
+                "resultIdentifier": "70c98fa6-804d-11e8-adc0-fa7ae01bbebc",
+                "publishedForNows": true,
+                "prompts": [
+                  {
+                    "promptIdentifier": "d27a5d86-d51f-4c6e-914b-cb4b0abc4283",
+                    "promptReference": "HDATE",
+                    "label": "Date of hearing",
+                    "value": "24/04/2026"
+                  },
+                  {
+                    "promptIdentifier": "4d125a5a-acbc-461d-a657-ba5643af85a6",
+                    "promptReference": "timeOfHearing",
+                    "label": "Time of hearing",
+                    "value": "10:00"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEOrganisationName",
+                    "label": "Courthouse organisation name",
+                    "value": "Croydon Magistrates' Court"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEAddress1",
+                    "label": "Courthouse address line 1",
+                    "value": "The Magistrates' Court"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEAddress2",
+                    "label": "Courthouse address line 2",
+                    "value": "Barclay Road"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEAddress3",
+                    "label": "Courthouse address line 3",
+                    "value": "Croydon"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEPostCode",
+                    "label": "Courthouse post code",
+                    "value": "CR9 3NG"
+                  },
+                  {
+                    "promptIdentifier": "49ec9b26-dd63-4637-b2e9-55ba9948a90f",
+                    "promptReference": "HCROOM",
+                    "label": "Courtroom",
+                    "value": "Courtroom 01"
+                  },
+                  {
+                    "promptIdentifier": "c1116d12-dd35-4171-807a-2cb845357d22",
+                    "promptReference": "HTYPE",
+                    "label": "Hearing type",
+                    "value": "Application"
+                  },
+                  {
+                    "promptIdentifier": "d85cc2d7-66c8-471e-b6ff-c1bc60c6cdac",
+                    "promptReference": "HEST",
+                    "label": "Estimated duration",
+                    "value": "20 MINUTES"
+                  },
+                  {
+                    "promptIdentifier": "e73e6ab8-9bfe-4135-9fe6-f526544584d6",
+                    "promptReference": "bookingReference",
+                    "label": "Booking reference",
+                    "value": "f2cf9384-de44-49a7-9a23-fe3db2d5cf5d"
+                  }
+                ],
+                "resultWording": "",
+                "resultDefinitionGroup": "Next hearing",
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "Next hearing in magistrates' court"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "courtApplications": [
+      {
+        "applicationType": "Appearance to make statutory declaration (other than SJP)",
+        "applicationTypeId": "a6663f2a-c900-4bb4-a7d7-4be34cb2f1f7",
+        "applicationReceivedDate": "2026-04-20",
+        "id": "5cb8e156-511e-4d97-a280-689c93d9f4af",
+        "applicationReference": "28DI3738303",
+        "applicationStatus": "FINALISED",
+        "results": [
+          {
+            "resultIdentifier": "2b3f7c20-8fc1-4fad-9076-df196c24b27e",
+            "publishedForNows": false,
+            "d20": false,
+            "judicialResultCategory": "FINAL",
+            "label": "Granted"
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": false,
+  "orderingHearingId": "b75a9b69-1a1d-4c39-892a-86acec67d6dc"
+}

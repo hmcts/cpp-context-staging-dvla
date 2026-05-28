@@ -1,0 +1,89 @@
+{
+  "masterDefendantId": "1670b495-dfb3-4d62-aa01-f40b6077cb4b",
+  "orderingCourt": {
+    "address": {
+      "address1": "176A Lavender Hill",
+      "address2": "London",
+      "address3": "",
+      "address4": "",
+      "address5": "",
+      "postcode": "SW11 1JU"
+    },
+    "code": "B01LY00",
+    "courtHearingLocation": "B01LY01",
+    "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+    "lja": {
+      "ljaCode": "2577",
+      "ljaName": "South West London Magistrates' Court"
+    },
+    "name": "Lavender Hill Magistrates' Court",
+    "roomId": "9e4932f7-97b2-3010-b942-ddd2624e4dd8",
+    "roomName": "Courtroom 01"
+  },
+  "nowContent": {
+    "orderDate": "2026-04-27",
+    "defendant": {
+      "dateOfBirth": "2001-02-18",
+      "gender": "MALE",
+      "title": "MR",
+      "firstName": "Leonardo",
+      "lastName": "Hettinger",
+      "name": "Leonardo Hettinger",
+      "address": {
+        "line1": "21",
+        "line2": "Furnburry Park Road",
+        "line3": "London",
+        "postCode": "SW11 3TQ"
+      }
+    },
+    "caseApplicationReferences": [
+      "28DI2035955"
+    ],
+    "cases": [
+      {
+        "caseStatus": "ACTIVE",
+        "initiationCode": "C",
+        "reference": "28DI2035955",
+        "caseId": "5dc459f6-f434-4711-b5f1-3a632ce1aeb2",
+        "defendantCaseOffences": [
+          {
+            "title": "Drive vehicle with axle weight exceeding maximum permitted - local traffic order within Greater London",
+            "civilOffence": false,
+            "convictionStatus": "Not Convicted",
+            "code": "RR84141",
+            "modeOfTrial": "Summary",
+            "endorsableFlag": false,
+            "wording": "Before 08 Aug 2024 at Croydon drove a motor vehicle, namely VH89712 Tesla Model X, on a road, namely Aby Road, subject of a local traffic order, namely Transport for London , when the weight conveyed to the road surface by one of its axles exceeded the maximum permitted axle weight of 11500 kg.",
+            "startDate": "2024-07-12",
+            "results": [
+              {
+                "resultIdentifier": "cee54856-4450-4f28-a8a9-72b688726201",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "a8719de4-7783-448a-b792-e3f94e670ad0",
+                    "promptReference": "PENPT",
+                    "label": "Penalty points for this offence",
+                    "value": "6"
+                  }
+                ],
+                "d20": true,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "Driving record endorsed with penalty points"
+              },
+              {
+                "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956",
+                "publishedForNows": true,
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "0: None or unknown"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": false,
+  "orderingHearingId": "329702b5-743a-4e46-af38-c550dbfac6d2"
+}

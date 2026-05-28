@@ -1,0 +1,140 @@
+{
+  "caseApplicationReferences": [
+    "28DI3868325"
+  ],
+  "cases": [
+    {
+      "caseId": "e07ad1a8-8842-438e-91cf-193d4a4a5d98",
+      "defendantCaseOffences": [
+        {
+          "civilOffence": false,
+          "code": "RC86818",
+          "convictingCourtCode": "2577",
+          "convictionDate": "2026-05-08",
+          "convictionStatus": "Convicted",
+          "dateFromWhichDisqRemoved": "",
+          "disqualificationPeriod": "",
+          "dttpDtetp": "",
+          "dvlaCode": "CU84",
+          "endorsableFlag": true,
+          "fine": "£200.00",
+          "interimImposedFinalSentence": "",
+          "modeOfTrial": "1",
+          "penaltyPoints": "6",
+          "plea": "GUILTY",
+          "results": [
+            {
+              "d20": false,
+              "judicialResultCategory": "FINAL",
+              "label": "Fine",
+              "prompts": [
+                {
+                  "durationSequence": 0,
+                  "label": "Amount of fine",
+                  "promptIdentifier": "7cd1472f-2379-4f5b-9e67-98a43d86e122",
+                  "promptReference": "AOF",
+                  "value": "£200.00"
+                }
+              ],
+              "publishedForNows": false,
+              "resultDefinitionGroup": "Imposition",
+              "resultIdentifier": "969f150c-cd05-46b0-9dd9-30891efcc766"
+            },
+            {
+              "d20": true,
+              "judicialResultCategory": "ANCILLARY",
+              "label": "Driving record endorsed with penalty points",
+              "prompts": [
+                {
+                  "durationSequence": 0,
+                  "label": "Penalty points for this offence",
+                  "promptIdentifier": "a8719de4-7783-448a-b792-e3f94e670ad0",
+                  "promptReference": "PENPT",
+                  "value": "6"
+                },
+                {
+                  "durationSequence": 0,
+                  "label": "Defendant driving licence number",
+                  "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+                  "promptReference": "defendantDrivingLicenceNumber",
+                  "value": "VANFL002222OW9PH"
+                }
+              ],
+              "publishedForNows": false,
+              "resultIdentifier": "cee54856-4450-4f28-a8a9-72b688726201"
+            },
+            {
+              "d20": false,
+              "judicialResultCategory": "ANCILLARY",
+              "label": "Licence produced in court",
+              "publishedForNows": false,
+              "resultIdentifier": "ea1ee5a4-be13-48dc-8411-78f22e01c236"
+            },
+            {
+              "d20": false,
+              "judicialResultCategory": "ANCILLARY",
+              "label": "5: DVLA held not produced",
+              "publishedForNows": true,
+              "resultIdentifier": "5c5a693f-c26c-4352-bbb3-ac72dd141e88"
+            }
+          ],
+          "startDate": "2025-11-25",
+          "title": "Permit use of motor vehicle - driver not having proper control - endorsable offence",
+          "wording": "Permit use of motor vehicle - driver not having proper control - endorsable offence."
+        }
+      ],
+      "hasSV": false,
+      "initiationCode": "J",
+      "reference": "28DI3868325"
+    }
+  ],
+  "courtApplications": [],
+  "defendant": {
+    "address": {
+      "line1": "9999A9999AAAA",
+      "line2": "Woodlane",
+      "line3": "addressline 3",
+      "line4": "Bristol",
+      "line5": "Avon"
+    },
+    "dateOfBirth": "1981-11-11",
+    "firstName": "jack",
+    "gender": "MALE",
+    "lastName": "Smith",
+    "name": "jack Smith",
+    "title": "Mr"
+  },
+  "distinctPrompts": [
+    {
+      "durationSequence": 0,
+      "label": "Defendant driving licence number",
+      "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+      "promptReference": "defendantDrivingLicenceNumber",
+      "value": "VANFL002222OW9PH"
+    }
+  ],
+  "identifier": "955e96f6-7457-447e-ae11-eb90ba6814c9",
+  "licenceProducedInCourt": "5: DVLA held not produced",
+  "masterDefendantId": "f8c2364f-5f9c-4b39-8897-4aa83f552329",
+  "materialId": "fdb910ae-06ce-4ecc-983c-d9932d6128ce",
+  "notificationType": "New",
+  "orderDate": "2026-05-08",
+  "orderingCourt": {
+    "address": {
+      "address1": "176A Lavender Hill",
+      "address2": "London",
+      "postcode": "SW11 1JU"
+    },
+    "code": "B01LY00",
+    "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+    "lja": {
+      "ljaCode": "2577",
+      "ljaName": "Lavender Hill Magistrates' Court",
+      "welshLjaName": "Llys Ynadon Lavender Hill"
+    },
+    "name": "Lavender Hill Magistrates' Court"
+  },
+  "orderingCourtCode": "2577",
+  "orderingHearingId": "6386ec28-6252-41e8-94be-699d26b34074",
+  "retrySequence": 0
+}

@@ -1,0 +1,512 @@
+{
+  "masterDefendantId": "4af8c736-ea98-47e0-a9ad-5576c9550889",
+  "orderingCourt": {
+    "address": {
+      "address1": "The Magistrates' Court",
+      "address2": "Barclay Road",
+      "address3": "Croydon",
+      "address4": "",
+      "address5": "",
+      "postcode": "CR9 3NG"
+    },
+    "code": "B01EF00",
+    "courtHearingLocation": "B01EF01",
+    "id": "31b3d313-7a7c-4598-bb4b-c1bff9b00e26",
+    "lja": {
+      "ljaCode": "2576",
+      "ljaName": "South London Magistrates' Court"
+    },
+    "name": "Croydon Magistrates' Court",
+    "roomId": "bfb67c13-789c-373b-b442-52b82faf863e",
+    "roomName": "Courtroom 01"
+  },
+  "nowContent": {
+    "orderDate": "2026-04-01",
+    "defendant": {
+      "dateOfBirth": "2005-11-11",
+      "gender": "MALE",
+      "driverNumber": "VANFL002222OW9PH",
+      "title": "Mr",
+      "firstName": "Lesly",
+      "lastName": "Botsford",
+      "name": "Lesly Botsford",
+      "address": {
+        "line1": "9999A9999AAAA",
+        "line2": "Woodlane",
+        "line3": "addressline 3",
+        "line4": "Bristol",
+        "line5": "Avon",
+        "postCode": "SW11 3TQ"
+      }
+    },
+    "caseApplicationReferences": [
+      "28DI8841325"
+    ],
+    "cases": [
+      {
+        "caseStatus": "INACTIVE",
+        "initiationCode": "C",
+        "reference": "28DI8841325",
+        "caseId": "47a1e1d9-a9a4-4427-9169-7aad0c8b95fb",
+        "defendantCaseOffences": [
+          {
+            "title": "Conspire to assault a person thereby occasioning them actual bodily harm",
+            "civilOffence": false,
+            "convictionStatus": "Not Convicted",
+            "code": "OF61102C",
+            "modeOfTrial": "Indictable",
+            "endorsableFlag": false,
+            "wording": "Lesly Botsford at DuBuque Point, conspired together with Michelle Romaguera to assault Fannie Lind, thereby occasioning actual bodily harm.",
+            "startDate": "2022-12-12",
+            "results": [
+              {
+                "resultIdentifier": "d278650c-e429-11e8-9f32-f2801f1b9fd1",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "70c98fa6-804d-11e8-adc0-fa7ae01bbebc",
+                    "promptReference": "f5158741-717d-460c-9a0c-861d45b58834",
+                    "label": "Next hearing in magistrates' court",
+                    "value": "Date of hearing:02/04/2026\nTime of hearing:10:00\nCourthouse organisation name:Bexley Magistrates' Court\nCourthouse address line 1:Norwich Place\nCourthouse address line 2:Bexleyheath\nCourthouse address line 3:Kent\nCourthouse post code:DA6 7ND\nCourtroom:Courtroom 01\nHearing type:Application\nEstimated duration:20 MINUTES\nBooking reference:a7028ef9-7b31-4719-8da2-f5bdc462d740"
+                  },
+                  {
+                    "promptIdentifier": "150a22a8-05d0-4be1-ada7-a0d512a63b5d",
+                    "promptReference": "defendantExcusedAttendanceAtNextHearing",
+                    "label": "Defendant excused attendance at next hearing",
+                    "value": "Yes"
+                  },
+                  {
+                    "promptIdentifier": "7fc17a01-2f5a-4433-aae9-28e0c959f73b",
+                    "promptReference": "7f2515c5-3fd8-49e4-9a3a-26fd3d756992",
+                    "label": "Adjournment reasons",
+                    "value": ""
+                  }
+                ],
+                "resultWording": "",
+                "d20": false,
+                "judicialResultCategory": "INTERMEDIARY",
+                "label": "Adjournment"
+              },
+              {
+                "resultIdentifier": "69ff04d5-84e8-4a61-8478-82c2999c1969",
+                "publishedForNows": true,
+                "resultWording": "",
+                "resultDefinitionGroup": "Adjournment reasons",
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "To attend or a warrant to issue"
+              },
+              {
+                "resultIdentifier": "70c98fa6-804d-11e8-adc0-fa7ae01bbebc",
+                "publishedForNows": true,
+                "prompts": [
+                  {
+                    "promptIdentifier": "d27a5d86-d51f-4c6e-914b-cb4b0abc4283",
+                    "promptReference": "HDATE",
+                    "label": "Date of hearing",
+                    "value": "02/04/2026"
+                  },
+                  {
+                    "promptIdentifier": "4d125a5a-acbc-461d-a657-ba5643af85a6",
+                    "promptReference": "timeOfHearing",
+                    "label": "Time of hearing",
+                    "value": "10:00"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEOrganisationName",
+                    "label": "Courthouse organisation name",
+                    "value": "Bexley Magistrates' Court"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEAddress1",
+                    "label": "Courthouse address line 1",
+                    "value": "Norwich Place"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEAddress2",
+                    "label": "Courthouse address line 2",
+                    "value": "Bexleyheath"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEAddress3",
+                    "label": "Courthouse address line 3",
+                    "value": "Kent"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEPostCode",
+                    "label": "Courthouse post code",
+                    "value": "DA6 7ND"
+                  },
+                  {
+                    "promptIdentifier": "49ec9b26-dd63-4637-b2e9-55ba9948a90f",
+                    "promptReference": "HCROOM",
+                    "label": "Courtroom",
+                    "value": "Courtroom 01"
+                  },
+                  {
+                    "promptIdentifier": "c1116d12-dd35-4171-807a-2cb845357d22",
+                    "promptReference": "HTYPE",
+                    "label": "Hearing type",
+                    "value": "Application"
+                  },
+                  {
+                    "promptIdentifier": "d85cc2d7-66c8-471e-b6ff-c1bc60c6cdac",
+                    "promptReference": "HEST",
+                    "label": "Estimated duration",
+                    "value": "20 MINUTES"
+                  },
+                  {
+                    "promptIdentifier": "e73e6ab8-9bfe-4135-9fe6-f526544584d6",
+                    "promptReference": "bookingReference",
+                    "label": "Booking reference",
+                    "value": "a7028ef9-7b31-4719-8da2-f5bdc462d740"
+                  }
+                ],
+                "resultWording": "",
+                "resultDefinitionGroup": "Next hearing",
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "Next hearing in magistrates' court"
+              }
+            ]
+          },
+          {
+            "title": "Public service vehicles - passenger failing to pay fare",
+            "civilOffence": false,
+            "convictionStatus": "Not Convicted",
+            "code": "PS90015",
+            "modeOfTrial": "Summary",
+            "endorsableFlag": false,
+            "wording": "Public service vehicles - passenger failing to pay fare",
+            "startDate": "2022-11-28",
+            "results": [
+              {
+                "resultIdentifier": "d278650c-e429-11e8-9f32-f2801f1b9fd1",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "70c98fa6-804d-11e8-adc0-fa7ae01bbebc",
+                    "promptReference": "c315fdf4-16af-4a0f-8ab7-f577926ca21d",
+                    "label": "Next hearing in magistrates' court",
+                    "value": "Date of hearing:02/04/2026\nTime of hearing:10:00\nCourthouse organisation name:Bexley Magistrates' Court\nCourthouse address line 1:Norwich Place\nCourthouse address line 2:Bexleyheath\nCourthouse address line 3:Kent\nCourthouse post code:DA6 7ND\nCourtroom:Courtroom 01\nHearing type:Application\nEstimated duration:20 MINUTES\nBooking reference:f94299b3-4586-4248-b8b6-f19558087e86"
+                  },
+                  {
+                    "promptIdentifier": "150a22a8-05d0-4be1-ada7-a0d512a63b5d",
+                    "promptReference": "defendantExcusedAttendanceAtNextHearing",
+                    "label": "Defendant excused attendance at next hearing",
+                    "value": "Yes"
+                  },
+                  {
+                    "promptIdentifier": "69ff04d5-84e8-4a61-8478-82c2999c1969",
+                    "promptReference": "f0a6919a-0b08-4eeb-b0df-d340d050abd6",
+                    "label": "To attend or a warrant to issue",
+                    "value": ""
+                  },
+                  {
+                    "promptIdentifier": "69ff04d5-84e8-4a61-8478-82c2999c1969",
+                    "promptReference": "172bacd0-dac0-44ef-8653-95a8ed5fe066",
+                    "label": "To attend or a warrant to issue",
+                    "value": ""
+                  },
+                  {
+                    "promptIdentifier": "7fc17a01-2f5a-4433-aae9-28e0c959f73b",
+                    "promptReference": "82804498-8f05-4017-80ac-152c2af3e093",
+                    "label": "Adjournment reasons",
+                    "value": ""
+                  }
+                ],
+                "resultWording": "",
+                "d20": false,
+                "judicialResultCategory": "INTERMEDIARY",
+                "label": "Adjournment"
+              },
+              {
+                "resultIdentifier": "69ff04d5-84e8-4a61-8478-82c2999c1969",
+                "publishedForNows": true,
+                "resultWording": "",
+                "resultDefinitionGroup": "Adjournment reasons",
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "To attend or a warrant to issue"
+              },
+              {
+                "resultIdentifier": "70c98fa6-804d-11e8-adc0-fa7ae01bbebc",
+                "publishedForNows": true,
+                "prompts": [
+                  {
+                    "promptIdentifier": "d27a5d86-d51f-4c6e-914b-cb4b0abc4283",
+                    "promptReference": "HDATE",
+                    "label": "Date of hearing",
+                    "value": "02/04/2026"
+                  },
+                  {
+                    "promptIdentifier": "4d125a5a-acbc-461d-a657-ba5643af85a6",
+                    "promptReference": "timeOfHearing",
+                    "label": "Time of hearing",
+                    "value": "10:00"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEOrganisationName",
+                    "label": "Courthouse organisation name",
+                    "value": "Bexley Magistrates' Court"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEAddress1",
+                    "label": "Courthouse address line 1",
+                    "value": "Norwich Place"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEAddress2",
+                    "label": "Courthouse address line 2",
+                    "value": "Bexleyheath"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEAddress3",
+                    "label": "Courthouse address line 3",
+                    "value": "Kent"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEPostCode",
+                    "label": "Courthouse post code",
+                    "value": "DA6 7ND"
+                  },
+                  {
+                    "promptIdentifier": "49ec9b26-dd63-4637-b2e9-55ba9948a90f",
+                    "promptReference": "HCROOM",
+                    "label": "Courtroom",
+                    "value": "Courtroom 01"
+                  },
+                  {
+                    "promptIdentifier": "c1116d12-dd35-4171-807a-2cb845357d22",
+                    "promptReference": "HTYPE",
+                    "label": "Hearing type",
+                    "value": "Application"
+                  },
+                  {
+                    "promptIdentifier": "d85cc2d7-66c8-471e-b6ff-c1bc60c6cdac",
+                    "promptReference": "HEST",
+                    "label": "Estimated duration",
+                    "value": "20 MINUTES"
+                  },
+                  {
+                    "promptIdentifier": "e73e6ab8-9bfe-4135-9fe6-f526544584d6",
+                    "promptReference": "bookingReference",
+                    "label": "Booking reference",
+                    "value": "f94299b3-4586-4248-b8b6-f19558087e86"
+                  }
+                ],
+                "resultWording": "",
+                "resultDefinitionGroup": "Next hearing",
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "Next hearing in magistrates' court"
+              }
+            ]
+          },
+          {
+            "title": "Robbery",
+            "civilOffence": false,
+            "convictionStatus": "Not Convicted",
+            "code": "TH68023",
+            "modeOfTrial": "Indictable",
+            "endorsableFlag": false,
+            "wording": "From 13th November 2018, an aggravated version of this offence applies where the offence is committed against an emergency worker acting in the exercise of his / her functions as such a worker, as per section 1 of the Assaults on emergency Workers (Offences) Act 2018; see offence wording document H19568.",
+            "startDate": "2019-11-28",
+            "results": [
+              {
+                "resultIdentifier": "d278650c-e429-11e8-9f32-f2801f1b9fd1",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "70c98fa6-804d-11e8-adc0-fa7ae01bbebc",
+                    "promptReference": "ee79c8b9-a898-4c47-990d-895d629f2081",
+                    "label": "Next hearing in magistrates' court",
+                    "value": "Date of hearing:02/04/2026\nTime of hearing:10:00\nCourthouse organisation name:Bexley Magistrates' Court\nCourthouse address line 1:Norwich Place\nCourthouse address line 2:Bexleyheath\nCourthouse address line 3:Kent\nCourthouse post code:DA6 7ND\nCourtroom:Courtroom 01\nHearing type:Application\nEstimated duration:20 MINUTES\nBooking reference:1732fc82-e669-49e9-bf43-fa7b7e7c8768"
+                  },
+                  {
+                    "promptIdentifier": "150a22a8-05d0-4be1-ada7-a0d512a63b5d",
+                    "promptReference": "defendantExcusedAttendanceAtNextHearing",
+                    "label": "Defendant excused attendance at next hearing",
+                    "value": "Yes"
+                  },
+                  {
+                    "promptIdentifier": "69ff04d5-84e8-4a61-8478-82c2999c1969",
+                    "promptReference": "3efb2249-de7f-4191-89aa-02647ef3471f",
+                    "label": "To attend or a warrant to issue",
+                    "value": ""
+                  },
+                  {
+                    "promptIdentifier": "7fc17a01-2f5a-4433-aae9-28e0c959f73b",
+                    "promptReference": "b8602376-894f-4d3e-9d05-bf291b797b49",
+                    "label": "Adjournment reasons",
+                    "value": ""
+                  }
+                ],
+                "resultWording": "",
+                "d20": false,
+                "judicialResultCategory": "INTERMEDIARY",
+                "label": "Adjournment"
+              },
+              {
+                "resultIdentifier": "69ff04d5-84e8-4a61-8478-82c2999c1969",
+                "publishedForNows": true,
+                "resultWording": "",
+                "resultDefinitionGroup": "Adjournment reasons",
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "To attend or a warrant to issue"
+              },
+              {
+                "resultIdentifier": "70c98fa6-804d-11e8-adc0-fa7ae01bbebc",
+                "publishedForNows": true,
+                "prompts": [
+                  {
+                    "promptIdentifier": "d27a5d86-d51f-4c6e-914b-cb4b0abc4283",
+                    "promptReference": "HDATE",
+                    "label": "Date of hearing",
+                    "value": "02/04/2026"
+                  },
+                  {
+                    "promptIdentifier": "4d125a5a-acbc-461d-a657-ba5643af85a6",
+                    "promptReference": "timeOfHearing",
+                    "label": "Time of hearing",
+                    "value": "10:00"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEOrganisationName",
+                    "label": "Courthouse organisation name",
+                    "value": "Bexley Magistrates' Court"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEAddress1",
+                    "label": "Courthouse address line 1",
+                    "value": "Norwich Place"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEAddress2",
+                    "label": "Courthouse address line 2",
+                    "value": "Bexleyheath"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEAddress3",
+                    "label": "Courthouse address line 3",
+                    "value": "Kent"
+                  },
+                  {
+                    "promptIdentifier": "66868c04-72c4-46d9-a4fc-860a82107475",
+                    "promptReference": "hCHOUSEPostCode",
+                    "label": "Courthouse post code",
+                    "value": "DA6 7ND"
+                  },
+                  {
+                    "promptIdentifier": "49ec9b26-dd63-4637-b2e9-55ba9948a90f",
+                    "promptReference": "HCROOM",
+                    "label": "Courtroom",
+                    "value": "Courtroom 01"
+                  },
+                  {
+                    "promptIdentifier": "c1116d12-dd35-4171-807a-2cb845357d22",
+                    "promptReference": "HTYPE",
+                    "label": "Hearing type",
+                    "value": "Application"
+                  },
+                  {
+                    "promptIdentifier": "d85cc2d7-66c8-471e-b6ff-c1bc60c6cdac",
+                    "promptReference": "HEST",
+                    "label": "Estimated duration",
+                    "value": "20 MINUTES"
+                  },
+                  {
+                    "promptIdentifier": "e73e6ab8-9bfe-4135-9fe6-f526544584d6",
+                    "promptReference": "bookingReference",
+                    "label": "Booking reference",
+                    "value": "1732fc82-e669-49e9-bf43-fa7b7e7c8768"
+                  }
+                ],
+                "resultWording": "",
+                "resultDefinitionGroup": "Next hearing",
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "Next hearing in magistrates' court"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "courtApplications": [
+      {
+        "applicationType": "Application to reopen case",
+        "applicationTypeId": "9d2ae0fe-d4d0-43ca-ab7a-7a2556cafe5e",
+        "applicationReceivedDate": "2026-03-31",
+        "id": "a1b8d191-d7be-4bab-8b91-d51d401d8edd",
+        "applicationReference": "28DI8841325",
+        "applicationStatus": "FINALISED",
+        "results": [
+          {
+            "resultIdentifier": "2b3f7c20-8fc1-4fad-9076-df196c24b27e",
+            "publishedForNows": false,
+            "d20": false,
+            "judicialResultCategory": "FINAL",
+            "label": "Granted"
+          },
+          {
+            "resultIdentifier": "e3fb46ee-e406-4f73-9bf1-71d513da8cc7",
+            "publishedForNows": false,
+            "prompts": [
+              {
+                "promptIdentifier": "3872ea68-92d9-469f-9929-c676745982ef",
+                "promptReference": "reopenedUnder",
+                "label": "Re-opened under",
+                "value": "Section 155 Powers of Criminal Courts (Sentencing) Act 2000"
+              },
+              {
+                "promptIdentifier": "5797feb0-7678-4193-ad16-944365e9a68a",
+                "promptReference": "convictionAndSentenceImposedOnSpecifiedDateAreSetAside",
+                "label": "Conviction and sentence imposed on specified date are set aside",
+                "value": "03/03/2027"
+              },
+              {
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedOrganisationName",
+                "label": "Prosecutor to be notified organisation name",
+                "value": "test"
+              },
+              {
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedAddress1",
+                "label": "Prosecutor to be notified address line 1",
+                "value": "test"
+              },
+              {
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedPostCode",
+                "label": "Prosecutor to be notified post code",
+                "value": "MK6 6AD"
+              }
+            ],
+            "d20": false,
+            "judicialResultCategory": "FINAL",
+            "label": "Case reopened"
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": false,
+  "orderingHearingId": "208c8f4d-9db4-4934-a2e4-ecb9f59deb61"
+}

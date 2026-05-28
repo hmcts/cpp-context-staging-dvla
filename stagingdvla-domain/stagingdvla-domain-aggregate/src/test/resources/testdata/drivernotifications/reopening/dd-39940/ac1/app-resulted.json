@@ -1,0 +1,338 @@
+{
+  "masterDefendantId": "63c75273-9d85-4d7e-acf9-17defbfee050",
+  "orderingCourt": {
+    "address": {
+      "address1": "176A Lavender Hill",
+      "address2": "London",
+      "postcode": "SW11 1JU"
+    },
+    "code": "B01LY00",
+    "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+    "lja": {
+      "ljaCode": "2577",
+      "ljaName": "Lavender Hill Magistrates' Court",
+      "welshLjaName": "Llys Ynadon Lavender Hill"
+    },
+    "name": "Lavender Hill Magistrates' Court"
+  },
+  "nowContent": {
+    "orderDate": "2026-04-16",
+    "defendant": {
+      "dateOfBirth": "1956-04-16",
+      "gender": "MALE",
+      "title": "MR",
+      "firstName": "Flmli1OZ",
+      "lastName": "SmithUJZR5",
+      "name": "Flmli1OZ SmithUJZR5",
+      "address": {
+        "line1": "FLAT - 25A",
+        "line2": "Constable Street",
+        "line3": "Bristol",
+        "line4": "England",
+        "line5": "UK",
+        "postCode": "IG1 1YY"
+      }
+    },
+    "caseApplicationReferences": [
+      "SJ915416459"
+    ],
+    "cases": [
+      {
+        "caseStatus": "INACTIVE",
+        "initiationCode": "J",
+        "reference": "SJ915416459",
+        "caseId": "d5a2aaad-bdad-4ffa-b151-222b80ba27eb",
+        "defendantCaseOffences": [
+          {
+            "title": "Keep a vehicle without a valid vehicle licence",
+            "civilOffence": false,
+            "convictionDate": "2026-04-16",
+            "convictionStatus": "Convicted",
+            "code": "VE94015",
+            "wording": "Wording: Keep a vehicle without a valid vehicle licence",
+            "startDate": "2026-04-01",
+            "results": [
+              {
+                "resultIdentifier": "b9c6047b-fb84-4b12-97a1-2175e4b8bbac",
+                "publishedForNows": false,
+                "resultWording": "",
+                "d20": false,
+                "dvlaCode": "J",
+                "judicialResultCategory": "FINAL",
+                "label": "Absolute discharge"
+              },
+              {
+                "resultIdentifier": "5edd3a3a-8dc7-43e4-96c4-10fed16278ac",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "f7c7c088-f88e-4c28-917c-78571517aca1",
+                    "promptReference": "AOBD",
+                    "durationSequence": 0,
+                    "label": "Amount of back duty",
+                    "value": "£340.30"
+                  }
+                ],
+                "resultDefinitionGroup": "Imposition",
+                "d20": false,
+                "judicialResultCategory": "FINAL",
+                "label": "Vehicle Excise Back Duty"
+              },
+              {
+                "resultIdentifier": "ae89b99c-e0e3-47b5-b218-24d4fca3ca53",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "26985e5b-fe1f-4d7d-a21a-57207c5966e7",
+                    "promptReference": "AOCOM",
+                    "durationSequence": 0,
+                    "label": "Amount of compensation",
+                    "value": "£8.91"
+                  },
+                  {
+                    "promptIdentifier": "af921cf4-06e7-4f6b-a4ea-dcb58aab0dbe",
+                    "promptReference": "cREDNAMEOrganisationName",
+                    "durationSequence": 0,
+                    "label": "Major creditor organisation name",
+                    "value": "British Transport Police"
+                  }
+                ],
+                "resultDefinitionGroup": "Imposition",
+                "d20": false,
+                "judicialResultCategory": "FINAL",
+                "label": "Compensation"
+              },
+              {
+                "resultIdentifier": "9ea0d845-5096-44f6-9ce0-8ae801141eac",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "6b36e5ff-e116-4dc3-b438-8c02d493959e",
+                    "promptReference": "collectionOrderType",
+                    "durationSequence": 0,
+                    "label": "Collection order type",
+                    "value": "Make payments as ordered"
+                  },
+                  {
+                    "promptIdentifier": "369b6e22-4678-4b04-9fe9-5bb53bed5067",
+                    "promptReference": "reasonForNotMakingAnAttachmentOfEarningsOrderOrDeductionFromBenefitApplication",
+                    "durationSequence": 0,
+                    "label": "Reason for not making an attachment of earnings order or deduction from benefit application",
+                    "value": "No information from defendant"
+                  }
+                ],
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "Collection order"
+              },
+              {
+                "resultIdentifier": "204fc6b8-d6c9-4fb8-acd0-47d23c087625",
+                "publishedForNows": false,
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "No surcharge"
+              },
+              {
+                "resultIdentifier": "bcb5a496-f7cf-11e8-8eb2-f2801f1b9fd1",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "ee7d253a-c629-11e8-a355-529269fb1459",
+                    "promptReference": "PBD",
+                    "durationSequence": 0,
+                    "label": "Date to pay in full by",
+                    "value": "30/04/2026"
+                  }
+                ],
+                "resultDefinitionGroup": "Payment terms",
+                "d20": false,
+                "judicialResultCategory": "FINAL",
+                "label": "Pay by date"
+              }
+            ]
+          },
+          {
+            "title": "Speeding - passenger motor vehicle and trailer exceeding 50 mph - single carriageway - manned equipment",
+            "civilOffence": false,
+            "dvlaCode": "SP40",
+            "convictionDate": "2026-04-16",
+            "convictionStatus": "Convicted",
+            "code": "RR84130",
+            "wording": "Speeding - passenger motor vehicle and trailer exceeding 50 mph - single carriageway - manned equipment",
+            "startDate": "2026-04-01",
+            "results": [
+              {
+                "resultIdentifier": "b9c6047b-fb84-4b12-97a1-2175e4b8bbac",
+                "publishedForNows": false,
+                "resultWording": "",
+                "d20": false,
+                "dvlaCode": "J",
+                "judicialResultCategory": "FINAL",
+                "label": "Absolute discharge"
+              },
+              {
+                "resultIdentifier": "ae89b99c-e0e3-47b5-b218-24d4fca3ca53",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "26985e5b-fe1f-4d7d-a21a-57207c5966e7",
+                    "promptReference": "AOCOM",
+                    "durationSequence": 0,
+                    "label": "Amount of compensation",
+                    "value": "£8.91"
+                  },
+                  {
+                    "promptIdentifier": "af921cf4-06e7-4f6b-a4ea-dcb58aab0dbe",
+                    "promptReference": "cREDNAMEOrganisationName",
+                    "durationSequence": 0,
+                    "label": "Major creditor organisation name",
+                    "value": "British Transport Police"
+                  }
+                ],
+                "resultDefinitionGroup": "Imposition",
+                "d20": false,
+                "judicialResultCategory": "FINAL",
+                "label": "Compensation"
+              }
+            ]
+          },
+          {
+            "title": "Vehicle defect - permit use of a motor vehicle / trailer with defective brakes",
+            "civilOffence": false,
+            "dvlaCode": "CU10",
+            "convictionDate": "2026-04-16",
+            "convictionStatus": "Convicted",
+            "code": "RC86851",
+            "wording": "Vehicle defect - permit use of a motor vehicle / trailer with defective brakes",
+            "startDate": "2026-03-07",
+            "results": [
+              {
+                "resultIdentifier": "3e859586-bc86-407d-bd8e-c9a01d40d147",
+                "publishedForNows": false,
+                "d20": false,
+                "judicialResultCategory": "FINAL",
+                "label": "Offence not dealt with as part of application - original adjudication to stand"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "courtApplications": [
+      {
+        "applicationType": "Application to reopen case",
+        "applicationTypeId": "9d2ae0fe-d4d0-43ca-ab7a-7a2556cafe5e",
+        "applicationReceivedDate": "2026-04-16",
+        "id": "3174ff45-970f-44ac-a184-cd3c465cb854",
+        "applicationReference": "KAOQQ0VC91",
+        "applicationStatus": "FINALISED",
+        "results": [
+          {
+            "resultIdentifier": "e3fb46ee-e406-4f73-9bf1-71d513da8cc7",
+            "publishedForNows": false,
+            "prompts": [
+              {
+                "promptIdentifier": "3872ea68-92d9-469f-9929-c676745982ef",
+                "promptReference": "reopenedUnder",
+                "durationSequence": 0,
+                "label": "Re-opened under",
+                "value": "Section 14 of the Magistrates' Courts Act 1980"
+              },
+              {
+                "promptIdentifier": "36e32c50-dbec-41c4-904b-25eb20c9c54a",
+                "promptReference": "financialPenaltiesToBeWrittenOff",
+                "durationSequence": 0,
+                "label": "Financial penalties to be written off",
+                "value": "Yes"
+              },
+              {
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedOrganisationName",
+                "durationSequence": 0,
+                "label": "Prosecutor to be notified organisation name",
+                "value": "British Transport Police"
+              },
+              {
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedOrganisationName",
+                "durationSequence": 0,
+                "label": "Prosecutor to be notified organisation name",
+                "value": "Albany House"
+              },
+              {
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedOrganisationName",
+                "durationSequence": 0,
+                "label": "Prosecutor to be notified organisation name",
+                "value": "98 Petty France"
+              },
+              {
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedOrganisationName",
+                "durationSequence": 0,
+                "label": "Prosecutor to be notified organisation name",
+                "value": "London"
+              },
+              {
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedOrganisationName",
+                "durationSequence": 0,
+                "label": "Prosecutor to be notified organisation name",
+                "value": "SW1H 9EA"
+              },
+              {
+                "promptIdentifier": "5797feb0-7678-4193-ad16-944365e9a68a",
+                "promptReference": "convictionAndSentenceImposedOnSpecifiedDateAreSetAside",
+                "durationSequence": 0,
+                "label": "Conviction and sentence imposed on specified date are set aside",
+                "value": "2026-04-16T15:23:47.606Z[UTC]"
+              }
+            ],
+            "d20": false,
+            "judicialResultCategory": "FINAL",
+            "label": "Case reopened"
+          },
+          {
+            "resultIdentifier": "f42fa098-0f7b-4269-ac4f-b10c9b6832d7",
+            "publishedForNows": true,
+            "prompts": [
+              {
+                "promptIdentifier": "b49bf4fa-0b1e-4079-b85a-c0113a46b91b",
+                "promptReference": "originalCourtCode",
+                "durationSequence": 0,
+                "label": "Original court code",
+                "value": "2577"
+              },
+              {
+                "promptIdentifier": "0cd86af5-10d8-4fd1-a78a-8a0e80179034",
+                "promptReference": "originalConvictionDate",
+                "durationSequence": 0,
+                "label": "Original conviction date",
+                "value": "2026-04-16"
+              },
+              {
+                "promptIdentifier": "37ee2b08-1950-4b04-bea5-f6f66b768bb0",
+                "promptReference": "originalOffenceDate",
+                "durationSequence": 0,
+                "label": "Original offence date",
+                "value": "2026-03-07"
+              },
+              {
+                "promptIdentifier": "1a2a23ea-c70d-4a5c-afa7-09dc514f84cc",
+                "promptReference": "dVLAEndorsementCode",
+                "durationSequence": 0,
+                "label": "DVLA endorsement code",
+                "value": "CU10"
+              }
+            ],
+            "d20": false,
+            "judicialResultCategory": "ANCILLARY",
+            "label": "Driving endorsement to be removed"
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": false,
+  "orderingHearingId": "4c887863-a0d6-4e53-a9e5-50a837eeb8e3"
+}

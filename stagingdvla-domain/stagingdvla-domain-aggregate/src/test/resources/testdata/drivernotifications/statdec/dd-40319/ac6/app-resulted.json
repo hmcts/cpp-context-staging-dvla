@@ -1,0 +1,189 @@
+{
+  "masterDefendantId": "b76a24d4-e71d-432c-867c-a8478e20c88d",
+  "orderingCourt": {
+    "address": {
+      "address1": "176A Lavender Hill",
+      "address2": "London",
+      "address3": "",
+      "address4": "",
+      "address5": "",
+      "postcode": "SW11 1JU"
+    },
+    "code": "B01LY00",
+    "courtHearingLocation": "B01LY01",
+    "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+    "lja": {
+      "ljaCode": "2577",
+      "ljaName": "South West London Magistrates' Court"
+    },
+    "name": "Lavender Hill Magistrates' Court",
+    "roomId": "9e4932f7-97b2-3010-b942-ddd2624e4dd8",
+    "roomName": "Courtroom 01"
+  },
+  "nowContent": {
+    "orderDate": "2026-05-12",
+    "defendant": {
+      "gender": "MALE",
+      "driverNumber": "AFESL811111B99TX",
+      "title": "MR",
+      "firstName": "Gussie",
+      "lastName": "DARE",
+      "name": "Gussie DARE",
+      "address": {
+        "line1": "21",
+        "line2": "Furnburry Park Road",
+        "line3": "London"
+      }
+    },
+    "caseApplicationReferences": [
+      "28DI1105479"
+    ],
+    "cases": [
+      {
+        "caseStatus": "INACTIVE",
+        "initiationCode": "C",
+        "reference": "28DI1105479",
+        "caseId": "d2f2fa7e-2bc6-445c-9985-3ba26eb2a71d",
+        "defendantCaseOffences": [
+          {
+            "title": "Possess / control TV set with intent another use install without a licence",
+            "civilOffence": false,
+            "convictionDate": "2026-05-12",
+            "convictionStatus": "Convicted",
+            "plea": "GUILTY",
+            "code": "CA03012",
+            "modeOfTrial": "Summary",
+            "allocationDecision": "Summary-only offence",
+            "endorsableFlag": false,
+            "convictingCourtCode": "2577",
+            "wording": "Have set up a TV cable without a valid license.",
+            "startDate": "2022-12-12",
+            "results": [
+              {
+                "resultIdentifier": "cee54856-4450-4f28-a8a9-72b688726201",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "11a939b1-71e6-4065-8c29-007e4b52da7a",
+                    "promptReference": "licenceIssueNumber",
+                    "label": "Licence issue number",
+                    "value": "23"
+                  },
+                  {
+                    "promptIdentifier": "a8719de4-7783-448a-b792-e3f94e670ad0",
+                    "promptReference": "PENPT",
+                    "label": "Penalty points for this offence",
+                    "value": "3"
+                  },
+                  {
+                    "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+                    "promptReference": "defendantDrivingLicenceNumber",
+                    "label": "Defendant driving licence number",
+                    "value": "AFESL811111B99TX"
+                  }
+                ],
+                "d20": true,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "Driving record endorsed with penalty points"
+              },
+              {
+                "resultIdentifier": "c83def9d-9a92-4ea0-8923-87fdd7601077",
+                "publishedForNows": true,
+                "prompts": [
+                  {
+                    "promptIdentifier": "11a939b1-71e6-4065-8c29-007e4b52da7a",
+                    "promptReference": "licenceIssueNumber",
+                    "label": "Licence issue number",
+                    "value": "23"
+                  }
+                ],
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "2: Full DVLA produced"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "courtApplications": [
+      {
+        "applicationType": "Appearance to make statutory declaration (other than SJP)",
+        "applicationTypeId": "a6663f2a-c900-4bb4-a7d7-4be34cb2f1f7",
+        "applicationReceivedDate": "2026-05-12",
+        "id": "37bb1cbd-1bfb-45bd-a8c1-2ae98ca7809b",
+        "applicationReference": "28DI1105479",
+        "applicationStatus": "FINALISED",
+        "results": [
+          {
+            "resultIdentifier": "2b3f7c20-8fc1-4fad-9076-df196c24b27e",
+            "publishedForNows": false,
+            "d20": false,
+            "judicialResultCategory": "FINAL",
+            "label": "Granted"
+          },
+          {
+            "resultIdentifier": "e2f6e11b-c3a2-4e76-8d29-fbede4174988",
+            "publishedForNows": false,
+            "prompts": [
+              {
+                "promptIdentifier": "7b6ef0ac-2d0b-44e5-a68e-4720b96cc679",
+                "promptReference": "statutoryDeclarationMadeUnder",
+                "label": "Statutory declaration made under",
+                "value": "Section 14 of the Magistrates' Courts Act 1980"
+              },
+              {
+                "promptIdentifier": "36e32c50-dbec-41c4-904b-25eb20c9c54a",
+                "promptReference": "financialPenaltiesToBeWrittenOff",
+                "label": "Financial penalties to be written off",
+                "value": "No"
+              },
+              {
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedOrganisationName",
+                "label": "Prosecutor to be notified organisation name",
+                "value": "City of London Police"
+              },
+              {
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedAddress1",
+                "label": "Prosecutor to be notified address line 1",
+                "value": "Bishopsgate police station"
+              },
+              {
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedAddress2",
+                "label": "Prosecutor to be notified address line 2",
+                "value": "182, Bishopsgate"
+              },
+              {
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedAddress5",
+                "label": "Prosecutor to be notified address line 5",
+                "value": "London"
+              },
+              {
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedPostCode",
+                "label": "Prosecutor to be notified post code",
+                "value": "EC2M 4NP"
+              },
+              {
+                "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+                "promptReference": "prosecutortobenotifiedEmailAddress1",
+                "label": "Prosecutor to be notified email address 1",
+                "value": "casebuilderscpsmemos@cityoflondon.police.uk"
+              }
+            ],
+            "resultDefinitionGroup": "Enforcement",
+            "d20": false,
+            "judicialResultCategory": "FINAL",
+            "label": "Statutory Declaration"
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": false,
+  "orderingHearingId": "ab3c9d2e-6b34-4800-824a-f117daca916d"
+}

@@ -1,0 +1,150 @@
+{
+  "masterDefendantId": "cbdd8d6a-7b44-4c13-ba99-b8b4fa325b0d",
+  "orderingCourt": {
+    "address": {
+      "address1": "176A Lavender Hill",
+      "address2": "London",
+      "address3": "",
+      "address4": "",
+      "address5": "",
+      "postcode": "SW11 1JU"
+    },
+    "code": "B01LY00",
+    "courtHearingLocation": "B01LY01",
+    "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+    "lja": {
+      "ljaCode": "2577",
+      "ljaName": "South West London Magistrates' Court"
+    },
+    "name": "Lavender Hill Magistrates' Court",
+    "roomId": "9e4932f7-97b2-3010-b942-ddd2624e4dd8",
+    "roomName": "Courtroom 01"
+  },
+  "nowContent": {
+    "orderDate": "2026-03-24",
+    "defendant": {
+      "dateOfBirth": "2005-11-11",
+      "gender": "MALE",
+      "driverNumber": "VANFL002222OW9PH",
+      "title": "Mr",
+      "firstName": "Vernie",
+      "lastName": "Turcotte",
+      "name": "Vernie Turcotte",
+      "address": {
+        "line1": "9999A9999AAAA",
+        "line2": "Woodlane",
+        "line3": "addressline 3",
+        "line4": "Bristol",
+        "line5": "Avon",
+        "postCode": "SW11 3TQ"
+      }
+    },
+    "caseApplicationReferences": [
+      "28DI1818813"
+    ],
+    "cases": [
+      {
+        "caseStatus": "ACTIVE",
+        "initiationCode": "C",
+        "reference": "28DI1818813",
+        "caseId": "d73f960d-3c46-4622-9ea3-bc3891b5f60a",
+        "defendantCaseOffences": [
+          {
+            "title": "Conspire to assault a person thereby occasioning them actual bodily harm",
+            "civilOffence": false,
+            "convictionStatus": "Not Convicted",
+            "code": "OF61102C",
+            "modeOfTrial": "Indictable",
+            "endorsableFlag": false,
+            "wording": "Vernie Turcotte at Block Rue, conspired together with Ms. Marcella Cruickshank to assault Ryan Morar, thereby occasioning actual bodily harm.",
+            "startDate": "2022-12-12",
+            "results": [
+              {
+                "resultIdentifier": "969f150c-cd05-46b0-9dd9-30891efcc766",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "7cd1472f-2379-4f5b-9e67-98a43d86e122",
+                    "promptReference": "AOF",
+                    "label": "Amount of fine",
+                    "value": "£300.00"
+                  }
+                ],
+                "resultDefinitionGroup": "Imposition",
+                "d20": false,
+                "label": "Fine"
+              },
+              {
+                "resultIdentifier": "b0aeb4fc-df63-4e2f-af88-97e3f23e847f",
+                "publishedForNows": false,
+                "d20": true,
+                "label": "Driving record endorsed (no points)"
+              },
+              {
+                "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956",
+                "publishedForNows": true,
+                "d20": false,
+                "label": "0: None or unknown"
+              }
+            ]
+          },
+          {
+            "title": "Public service vehicles - passenger failing to pay fare",
+            "civilOffence": false,
+            "convictionStatus": "Not Convicted",
+            "code": "PS90015",
+            "modeOfTrial": "Summary",
+            "endorsableFlag": false,
+            "wording": "Public service vehicles - passenger failing to pay fare",
+            "startDate": "2022-11-28",
+            "results": [
+              {
+                "resultIdentifier": "969f150c-cd05-46b0-9dd9-30891efcc766",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "7cd1472f-2379-4f5b-9e67-98a43d86e122",
+                    "promptReference": "AOF",
+                    "label": "Amount of fine",
+                    "value": "£400.00"
+                  }
+                ],
+                "resultDefinitionGroup": "Imposition",
+                "d20": false,
+                "label": "Fine"
+              },
+              {
+                "resultIdentifier": "cee54856-4450-4f28-a8a9-72b688726201",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "a8719de4-7783-448a-b792-e3f94e670ad0",
+                    "promptReference": "PENPT",
+                    "label": "Penalty points for this offence",
+                    "value": "6"
+                  },
+                  {
+                    "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+                    "promptReference": "defendantDrivingLicenceNumber",
+                    "label": "Defendant driving licence number",
+                    "value": "VANFL002222OW9PH"
+                  }
+                ],
+                "d20": true,
+                "label": "Driving record endorsed with penalty points"
+              },
+              {
+                "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956",
+                "publishedForNows": true,
+                "d20": false,
+                "label": "0: None or unknown"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": false,
+  "orderingHearingId": "bfef9354-6ac8-4b99-b415-2e9dc93e11f5"
+}

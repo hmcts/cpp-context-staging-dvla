@@ -1,0 +1,280 @@
+{
+  "masterDefendantId": "44ac8c13-d119-41c4-85d6-508d4ac8a8cc",
+  "orderingCourt": {
+    "address": {
+      "address1": "1-15 Pocock Street",
+      "address2": "London",
+      "address3": "",
+      "address4": "",
+      "address5": "",
+      "postcode": "SE1 0BJ"
+    },
+    "code": "C01BL00",
+    "courtHearingLocation": "C01BL00",
+    "courtLocationCode": "0428",
+    "id": "89592405-c29b-3706-b1d3-b1dd3a08b227",
+    "lja": {
+      "ljaCode": "2570",
+      "ljaName": "Central London Magistrates' Court"
+    },
+    "name": "Blackfriars Crown Court",
+    "roomId": "d0624ee3-9198-3c8b-94d6-42fb197ebe5e",
+    "roomName": "Courtroom 01"
+  },
+  "nowContent": {
+    "orderDate": "2026-05-15",
+    "defendant": {
+      "dateOfBirth": "2002-05-14",
+      "gender": "MALE",
+      "driverNumber": "VANFL002222OW9PH",
+      "title": "Mr",
+      "firstName": "Jackelyn",
+      "lastName": "Kovacek",
+      "name": "Jackelyn Kovacek",
+      "address": {
+        "line1": "14 The Crescent",
+        "line2": "The Crescent",
+        "line3": "Salford Quays",
+        "line4": "Greater Manchester",
+        "line5": "Salford",
+        "postCode": "M5 4PE"
+      }
+    },
+    "caseApplicationReferences": [
+      "KQ148209927"
+    ],
+    "cases": [
+      {
+        "caseStatus": "INACTIVE",
+        "initiationCode": "C",
+        "reference": "KQ148209927",
+        "caseId": "e7996345-3343-4be4-be5f-bada3a4372f4",
+        "defendantCaseOffences": [
+          {
+            "title": "Use a motor vehicle on a road / public place without third party insurance",
+            "civilOffence": false,
+            "dvlaCode": "IN10",
+            "convictionDate": "2026-05-14",
+            "convictionStatus": "Convicted",
+            "plea": "GUILTY",
+            "code": "RA88001",
+            "modeOfTrial": "Summary",
+            "allocationDecision": "Summary-only offence",
+            "endorsableFlag": true,
+            "convictingCourtCode": "2577",
+            "wording": "Use a motor vehicle on a road / public place without third party insurance",
+            "startDate": "2026-03-15",
+            "results": [
+              {
+                "resultIdentifier": "f5d492b8-a09b-4f70-9ceb-aa06c306a7dc",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "f63b0bb5-7d93-4dab-bc3d-b4bd27152871",
+                    "promptReference": "AOC",
+                    "label": "Amount of costs",
+                    "value": "£85.00"
+                  }
+                ],
+                "resultDefinitionGroup": "Imposition",
+                "d20": false,
+                "judicialResultCategory": "FINAL",
+                "label": "Costs to Crown Prosecution Service"
+              },
+              {
+                "resultIdentifier": "f121db73-57fb-4f74-9ab1-0843aabe4605",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "dcaf502b-44d2-4be0-acfc-2f7d29142da6",
+                    "promptReference": "specialReasons",
+                    "label": "Special reasons",
+                    "value": "Test"
+                  }
+                ],
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "No endorsement - Special Reasons"
+              },
+              {
+                "resultIdentifier": "9ea0d845-5096-44f6-9ce0-8ae801141eac",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "6b36e5ff-e116-4dc3-b438-8c02d493959e",
+                    "promptReference": "collectionOrderType",
+                    "label": "Collection order type",
+                    "value": "Make payments as ordered"
+                  }
+                ],
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "Collection order"
+              },
+              {
+                "resultIdentifier": "bcb5a496-f7cf-11e8-8eb2-f2801f1b9fd1",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "ee7d253a-c629-11e8-a355-529269fb1459",
+                    "promptReference": "PBD",
+                    "label": "Date to pay in full by",
+                    "value": "25/05/2026"
+                  }
+                ],
+                "resultDefinitionGroup": "Payment terms",
+                "d20": false,
+                "judicialResultCategory": "FINAL",
+                "label": "Pay by date"
+              }
+            ]
+          },
+          {
+            "title": "Drive a motor vehicle otherwise than in accordance with a licence - endorsable offence",
+            "civilOffence": false,
+            "dvlaCode": "LC20",
+            "convictionDate": "2026-05-14",
+            "convictionStatus": "Convicted",
+            "plea": "GUILTY",
+            "code": "RT88334",
+            "modeOfTrial": "Summary",
+            "allocationDecision": "Summary-only offence",
+            "endorsableFlag": true,
+            "convictingCourtCode": "2577",
+            "wording": "Drive a motor vehicle otherwise than in accordance with a licence - endorsable offence",
+            "startDate": "2026-03-15",
+            "results": [
+              {
+                "resultIdentifier": "ae89b99c-e0e3-47b5-b218-24d4fca3ca53",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "26985e5b-fe1f-4d7d-a21a-57207c5966e7",
+                    "promptReference": "AOCOM",
+                    "label": "Amount of compensation",
+                    "value": "£200.00"
+                  },
+                  {
+                    "promptIdentifier": "af921cf4-06e7-4f6b-a4ea-dcb58aab0dbe",
+                    "promptReference": "cREDNAMEOrganisationName",
+                    "label": "Major creditor organisation name",
+                    "value": "Aldi Stores"
+                  },
+                  {
+                    "promptIdentifier": "af921cf4-06e7-4f6b-a4ea-dcb58aab0dbe",
+                    "promptReference": "cREDNAMEAddress1",
+                    "label": "Major creditor address line 1",
+                    "value": "London Road"
+                  },
+                  {
+                    "promptIdentifier": "af921cf4-06e7-4f6b-a4ea-dcb58aab0dbe",
+                    "promptReference": "cREDNAMEAddress2",
+                    "label": "Major creditor address line 2",
+                    "value": "Northfleet"
+                  },
+                  {
+                    "promptIdentifier": "af921cf4-06e7-4f6b-a4ea-dcb58aab0dbe",
+                    "promptReference": "cREDNAMEAddress3",
+                    "label": "Major creditor address line 3",
+                    "value": "Gravesend"
+                  },
+                  {
+                    "promptIdentifier": "af921cf4-06e7-4f6b-a4ea-dcb58aab0dbe",
+                    "promptReference": "cREDNAMEAddress4",
+                    "label": "Major creditor address line 4",
+                    "value": "Kent"
+                  },
+                  {
+                    "promptIdentifier": "af921cf4-06e7-4f6b-a4ea-dcb58aab0dbe",
+                    "promptReference": "cREDNAMEPostCode",
+                    "label": "Major creditor post code",
+                    "value": "DA11 9LY"
+                  }
+                ],
+                "resultDefinitionGroup": "Imposition",
+                "d20": false,
+                "judicialResultCategory": "FINAL",
+                "label": "Compensation"
+              },
+              {
+                "resultIdentifier": "f121db73-57fb-4f74-9ab1-0843aabe4605",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "dcaf502b-44d2-4be0-acfc-2f7d29142da6",
+                    "promptReference": "specialReasons",
+                    "label": "Special reasons",
+                    "value": "Test"
+                  }
+                ],
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "No endorsement - Special Reasons"
+              }
+            ]
+          },
+          {
+            "title": "Cause use of motor vehicle with no insurance",
+            "civilOffence": false,
+            "dvlaCode": "IN14",
+            "convictionDate": "2026-05-14",
+            "convictionStatus": "Convicted",
+            "plea": "GUILTY",
+            "code": "RA88002",
+            "modeOfTrial": "Summary",
+            "allocationDecision": "Summary-only offence",
+            "endorsableFlag": true,
+            "convictingCourtCode": "2577",
+            "wording": "Cause use of motor vehicle with no insurance",
+            "startDate": "2026-03-15",
+            "results": [
+              {
+                "resultIdentifier": "3e859586-bc86-407d-bd8e-c9a01d40d147",
+                "publishedForNows": false,
+                "d20": false,
+                "judicialResultCategory": "FINAL",
+                "label": "Offence not dealt with as part of application - original adjudication to stand"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "courtApplications": [
+      {
+        "applicationType": "Appeal against sentence by a Magistrates' Court to the Crown Court",
+        "applicationTypeId": "ef71f385-88f5-4e53-8b9f-d568af9ea90c",
+        "applicationReceivedDate": "2026-05-14",
+        "id": "aff509c0-8ff2-4a34-a4b6-bffc2647aab4",
+        "applicationReference": "KQ148209927",
+        "applicationStatus": "FINALISED",
+        "results": [
+          {
+            "resultIdentifier": "d861586a-df88-440d-98d4-63cc2a680ae1",
+            "publishedForNows": false,
+            "prompts": [
+              {
+                "promptIdentifier": "c946a5df-5849-4cca-b425-ecbd6bd704dc",
+                "promptReference": "dateSentenceWasImposed",
+                "label": "Date sentence was imposed",
+                "value": "14/05/2026"
+              },
+              {
+                "promptIdentifier": "c10b4c83-1856-4ca9-9592-d8b8183a0324",
+                "promptReference": "reasons",
+                "label": "Reasons",
+                "value": "sentence was imposed"
+              }
+            ],
+            "resultWording": "",
+            "d20": false,
+            "judicialResultCategory": "FINAL",
+            "label": "Appeal against sentence allowed"
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": false,
+  "orderingHearingId": "b91abdf5-54de-48f5-a40b-be07f3c5a1b6"
+}

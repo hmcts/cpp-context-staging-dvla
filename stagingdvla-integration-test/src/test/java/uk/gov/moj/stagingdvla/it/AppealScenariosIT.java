@@ -1324,11 +1324,11 @@ public class AppealScenariosIT extends AbstractIntegrationTest {
 
         DriverNotifiedEventAssertion.with(driverNotifiedList.get(0))
                 .hasCaseReference("JW29150867")
-                .hasNotificationType(NotificationType.REMOVE)
-                .hasRemovedEndorsementContains("IN10")
-                .hasNoUpdatedEndorsements()
+                .hasNotificationType(NotificationType.UPDATE)
+                .hasUpdatedEndorsementContains("IN10")
+                .hasNoRemovedEndorsements()
                 .hasCourtApplications(1)
-                .hasOffences(0);
+                .hasOffences(1);
 
         verifyDVLANotificationCommandInvoked(driverNotifiedList);
         verifyGenerateDocumentStubCommandInvoked(driverNotifiedList);

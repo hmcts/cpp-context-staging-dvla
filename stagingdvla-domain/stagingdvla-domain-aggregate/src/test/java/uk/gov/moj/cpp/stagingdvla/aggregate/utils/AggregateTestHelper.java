@@ -5,6 +5,7 @@ import static java.util.Objects.nonNull;
 import static java.util.UUID.randomUUID;
 import static org.apache.commons.collections.CollectionUtils.isNotEmpty;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
+import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ApplicationType.STDEC;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.CONVICTED;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.ADJ;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.ResultType.DDDL;
@@ -22,6 +23,7 @@ import uk.gov.justice.cpp.stagingdvla.event.DefendantCaseOffences;
 import uk.gov.justice.cpp.stagingdvla.event.DriverNotified;
 import uk.gov.justice.cpp.stagingdvla.event.Prompts;
 import uk.gov.justice.cpp.stagingdvla.event.Results;
+import uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -406,6 +408,7 @@ public class AggregateTestHelper {
                         CourtApplications.courtApplications()
                                 .withApplicationCode(code)
                                 .withId(randomUUID())
+                                .withApplicationType(STDEC.appType)
                                 .withApplicationReference(randomUUID().toString())
                                 .withApplicationReceivedDate(LocalDate.now().toString())
                                 .withResults(getResults(prefix, d20, prompts, pointsDisqualificationCode, dvlaCode, option, resultIdentifiers))

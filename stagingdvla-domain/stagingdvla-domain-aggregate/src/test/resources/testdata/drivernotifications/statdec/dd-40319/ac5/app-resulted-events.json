@@ -1,0 +1,221 @@
+{
+  "caseApplicationReferences": [
+    "28DI2035955"
+  ],
+  "cases": [
+    {
+      "caseId": "5dc459f6-f434-4711-b5f1-3a632ce1aeb2",
+      "caseStatus": "ACTIVE",
+      "defendantCaseOffences": [],
+      "hasSV": false,
+      "initiationCode": "C",
+      "reference": "28DI2035955"
+    }
+  ],
+  "courtApplications": [
+    {
+      "applicationReceivedDate": "2026-04-27",
+      "applicationReference": "28DI2035955",
+      "applicationStatus": "FINALISED",
+      "applicationType": "Appearance to make statutory declaration (other than SJP)",
+      "applicationTypeId": "a6663f2a-c900-4bb4-a7d7-4be34cb2f1f7",
+      "id": "a078eaca-677a-4115-b128-a30029a63b72",
+      "results": [
+        {
+          "d20": false,
+          "judicialResultCategory": "FINAL",
+          "label": "Granted",
+          "publishedForNows": false,
+          "resultIdentifier": "2b3f7c20-8fc1-4fad-9076-df196c24b27e"
+        },
+        {
+          "d20": false,
+          "judicialResultCategory": "FINAL",
+          "label": "Statutory Declaration",
+          "prompts": [
+            {
+              "label": "Statutory declaration made under",
+              "promptIdentifier": "7b6ef0ac-2d0b-44e5-a68e-4720b96cc679",
+              "promptReference": "statutoryDeclarationMadeUnder",
+              "value": "Section 14 of the Magistrates' Courts Act 1980"
+            },
+            {
+              "label": "Financial penalties to be written off",
+              "promptIdentifier": "36e32c50-dbec-41c4-904b-25eb20c9c54a",
+              "promptReference": "financialPenaltiesToBeWrittenOff",
+              "value": "No"
+            },
+            {
+              "label": "Prosecutor to be notified organisation name",
+              "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+              "promptReference": "prosecutortobenotifiedOrganisationName",
+              "value": "test"
+            },
+            {
+              "label": "Prosecutor to be notified address line 1",
+              "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+              "promptReference": "prosecutortobenotifiedAddress1",
+              "value": "test"
+            },
+            {
+              "label": "Prosecutor to be notified post code",
+              "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+              "promptReference": "prosecutortobenotifiedPostCode",
+              "value": "MK5 6AF"
+            }
+          ],
+          "publishedForNows": false,
+          "resultDefinitionGroup": "Enforcement",
+          "resultIdentifier": "e2f6e11b-c3a2-4e76-8d29-fbede4174988"
+        }
+      ]
+    }
+  ],
+  "defendant": {
+    "address": {
+      "line1": "21",
+      "line2": "Furnburry Park Road",
+      "line3": "London",
+      "postCode": "SW11 3TQ"
+    },
+    "dateOfBirth": "2001-02-18",
+    "firstName": "Leonardo",
+    "gender": "MALE",
+    "lastName": "Hettinger",
+    "name": "Leonardo Hettinger",
+    "title": "MR"
+  },
+  "distinctPrompts": [],
+  "identifier": "7cab5915-99c3-4cd4-bc02-69a77fea3c7d",
+  "licenceProducedInCourt": "0: None or unknown",
+  "masterDefendantId": "1670b495-dfb3-4d62-aa01-f40b6077cb4b",
+  "materialId": "a46be592-0d5f-4559-9e83-268738e0878e",
+  "notificationType": "Remove",
+  "notificationWasPreviouslySent": true,
+  "orderDate": "2026-04-29",
+  "orderingCourt": {
+    "address": {
+      "address1": "The Magistrates' Court",
+      "address2": "Barclay Road",
+      "address3": "Croydon",
+      "address4": "",
+      "address5": "",
+      "postcode": "CR9 3NG"
+    },
+    "code": "B01EF00",
+    "courtHearingLocation": "B01EF01",
+    "id": "31b3d313-7a7c-4598-bb4b-c1bff9b00e26",
+    "lja": {
+      "ljaCode": "2576",
+      "ljaName": "South London Magistrates' Court"
+    },
+    "name": "Croydon Magistrates' Court",
+    "roomId": "bfb67c13-789c-373b-b442-52b82faf863e",
+    "roomName": "Courtroom 01"
+  },
+  "orderingCourtCode": "2576",
+  "orderingHearingId": "72ddfafb-dcc1-4a00-95c9-472d1b30e722",
+  "previous": {
+    "caseApplicationReferences": [
+      "28DI2035955"
+    ],
+    "cases": [
+      {
+        "caseId": "5dc459f6-f434-4711-b5f1-3a632ce1aeb2",
+        "caseStatus": "ACTIVE",
+        "defendantCaseOffences": [
+          {
+            "civilOffence": false,
+            "code": "RR84141",
+            "convictionStatus": "Not Convicted",
+            "dateFromWhichDisqRemoved": "",
+            "disqualificationPeriod": "",
+            "dttpDtetp": "",
+            "dvlaCode": "NE98",
+            "endorsableFlag": false,
+            "fine": "",
+            "interimImposedFinalSentence": "",
+            "modeOfTrial": "Summary",
+            "penaltyPoints": "6",
+            "results": [
+              {
+                "d20": true,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "Driving record endorsed with penalty points",
+                "prompts": [
+                  {
+                    "label": "Penalty points for this offence",
+                    "promptIdentifier": "a8719de4-7783-448a-b792-e3f94e670ad0",
+                    "promptReference": "PENPT",
+                    "value": "6"
+                  }
+                ],
+                "publishedForNows": false,
+                "resultIdentifier": "cee54856-4450-4f28-a8a9-72b688726201"
+              },
+              {
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "0: None or unknown",
+                "publishedForNows": true,
+                "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956"
+              }
+            ],
+            "startDate": "2024-07-12",
+            "title": "Drive vehicle with axle weight exceeding maximum permitted - local traffic order within Greater London",
+            "wording": "Before 08 Aug 2024 at Croydon drove a motor vehicle, namely VH89712 Tesla Model X, on a road, namely Aby Road, subject of a local traffic order, namely Transport for London , when the weight conveyed to the road surface by one of its axles exceeded the maximum permitted axle weight of 11500 kg."
+          }
+        ],
+        "hasSV": false,
+        "initiationCode": "C",
+        "reference": "28DI2035955"
+      }
+    ],
+    "defendant": {
+      "address": {
+        "line1": "21",
+        "line2": "Furnburry Park Road",
+        "line3": "London",
+        "postCode": "SW11 3TQ"
+      },
+      "dateOfBirth": "2001-02-18",
+      "firstName": "Leonardo",
+      "gender": "MALE",
+      "lastName": "Hettinger",
+      "name": "Leonardo Hettinger",
+      "title": "MR"
+    },
+    "distinctPrompts": [],
+    "identifier": "60653c08-7c03-4aab-827a-a77bb1477711",
+    "licenceProducedInCourt": "0: None or unknown",
+    "masterDefendantId": "1670b495-dfb3-4d62-aa01-f40b6077cb4b",
+    "materialId": "8c937156-f827-4b3d-b560-9d0f5f06c33b",
+    "orderDate": "2026-04-27",
+    "orderingCourt": {
+      "address": {
+        "address1": "176A Lavender Hill",
+        "address2": "London",
+        "address3": "",
+        "address4": "",
+        "address5": "",
+        "postcode": "SW11 1JU"
+      },
+      "code": "B01LY00",
+      "courtHearingLocation": "B01LY01",
+      "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+      "lja": {
+        "ljaCode": "2577",
+        "ljaName": "South West London Magistrates' Court"
+      },
+      "name": "Lavender Hill Magistrates' Court",
+      "roomId": "9e4932f7-97b2-3010-b942-ddd2624e4dd8",
+      "roomName": "Courtroom 01"
+    },
+    "orderingHearingId": "329702b5-743a-4e46-af38-c550dbfac6d2",
+    "retrySequence": 0
+  },
+  "removedEndorsements": [
+    "NE98"
+  ],
+  "retrySequence": 0
+}

@@ -1,0 +1,216 @@
+{
+  "caseApplicationReferences": [
+    "28DI1105479"
+  ],
+  "cases": [
+    {
+      "caseId": "d2f2fa7e-2bc6-445c-9985-3ba26eb2a71d",
+      "caseStatus": "INACTIVE",
+      "defendantCaseOffences": [
+        {
+          "allocationDecision": "Summary-only offence",
+          "civilOffence": false,
+          "code": "CA03012",
+          "convictingCourtCode": "2577",
+          "convictionDate": "2026-05-12",
+          "convictionStatus": "Convicted",
+          "dateFromWhichDisqRemoved": "",
+          "disqualificationPeriod": "",
+          "dttpDtetp": "",
+          "dvlaCode": "NE98",
+          "endorsableFlag": false,
+          "fine": "",
+          "interimImposedFinalSentence": "",
+          "modeOfTrial": "Summary",
+          "penaltyPoints": "3",
+          "plea": "GUILTY",
+          "results": [
+            {
+              "d20": true,
+              "judicialResultCategory": "ANCILLARY",
+              "label": "Driving record endorsed with penalty points",
+              "prompts": [
+                {
+                  "label": "Licence issue number",
+                  "promptIdentifier": "11a939b1-71e6-4065-8c29-007e4b52da7a",
+                  "promptReference": "licenceIssueNumber",
+                  "value": "23"
+                },
+                {
+                  "label": "Penalty points for this offence",
+                  "promptIdentifier": "a8719de4-7783-448a-b792-e3f94e670ad0",
+                  "promptReference": "PENPT",
+                  "value": "3"
+                },
+                {
+                  "label": "Defendant driving licence number",
+                  "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+                  "promptReference": "defendantDrivingLicenceNumber",
+                  "value": "AFESL811111B99TX"
+                }
+              ],
+              "publishedForNows": false,
+              "resultIdentifier": "cee54856-4450-4f28-a8a9-72b688726201"
+            },
+            {
+              "d20": false,
+              "judicialResultCategory": "ANCILLARY",
+              "label": "2: Full DVLA produced",
+              "prompts": [
+                {
+                  "label": "Licence issue number",
+                  "promptIdentifier": "11a939b1-71e6-4065-8c29-007e4b52da7a",
+                  "promptReference": "licenceIssueNumber",
+                  "value": "23"
+                }
+              ],
+              "publishedForNows": true,
+              "resultIdentifier": "c83def9d-9a92-4ea0-8923-87fdd7601077"
+            }
+          ],
+          "sentenceDate": "2026-05-12",
+          "sentencingCourtCode": "2577",
+          "startDate": "2022-12-12",
+          "title": "Possess / control TV set with intent another use install without a licence",
+          "wording": "Have set up a TV cable without a valid license."
+        }
+      ],
+      "hasSV": false,
+      "initiationCode": "C",
+      "reference": "28DI1105479"
+    }
+  ],
+  "courtApplications": [
+    {
+      "applicationReceivedDate": "2026-05-12",
+      "applicationReference": "28DI1105479",
+      "applicationStatus": "FINALISED",
+      "applicationType": "Appearance to make statutory declaration (other than SJP)",
+      "applicationTypeId": "a6663f2a-c900-4bb4-a7d7-4be34cb2f1f7",
+      "id": "37bb1cbd-1bfb-45bd-a8c1-2ae98ca7809b",
+      "results": [
+        {
+          "d20": false,
+          "judicialResultCategory": "FINAL",
+          "label": "Granted",
+          "publishedForNows": false,
+          "resultIdentifier": "2b3f7c20-8fc1-4fad-9076-df196c24b27e"
+        },
+        {
+          "d20": false,
+          "judicialResultCategory": "FINAL",
+          "label": "Statutory Declaration",
+          "prompts": [
+            {
+              "label": "Statutory declaration made under",
+              "promptIdentifier": "7b6ef0ac-2d0b-44e5-a68e-4720b96cc679",
+              "promptReference": "statutoryDeclarationMadeUnder",
+              "value": "Section 14 of the Magistrates' Courts Act 1980"
+            },
+            {
+              "label": "Financial penalties to be written off",
+              "promptIdentifier": "36e32c50-dbec-41c4-904b-25eb20c9c54a",
+              "promptReference": "financialPenaltiesToBeWrittenOff",
+              "value": "No"
+            },
+            {
+              "label": "Prosecutor to be notified organisation name",
+              "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+              "promptReference": "prosecutortobenotifiedOrganisationName",
+              "value": "City of London Police"
+            },
+            {
+              "label": "Prosecutor to be notified address line 1",
+              "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+              "promptReference": "prosecutortobenotifiedAddress1",
+              "value": "Bishopsgate police station"
+            },
+            {
+              "label": "Prosecutor to be notified address line 2",
+              "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+              "promptReference": "prosecutortobenotifiedAddress2",
+              "value": "182, Bishopsgate"
+            },
+            {
+              "label": "Prosecutor to be notified address line 5",
+              "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+              "promptReference": "prosecutortobenotifiedAddress5",
+              "value": "London"
+            },
+            {
+              "label": "Prosecutor to be notified post code",
+              "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+              "promptReference": "prosecutortobenotifiedPostCode",
+              "value": "EC2M 4NP"
+            },
+            {
+              "label": "Prosecutor to be notified email address 1",
+              "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+              "promptReference": "prosecutortobenotifiedEmailAddress1",
+              "value": "casebuilderscpsmemos@cityoflondon.police.uk"
+            }
+          ],
+          "publishedForNows": false,
+          "resultDefinitionGroup": "Enforcement",
+          "resultIdentifier": "e2f6e11b-c3a2-4e76-8d29-fbede4174988"
+        }
+      ]
+    }
+  ],
+  "defendant": {
+    "address": {
+      "line1": "21",
+      "line2": "Furnburry Park Road",
+      "line3": "London"
+    },
+    "driverNumber": "AFESL811111B99TX",
+    "firstName": "Gussie",
+    "gender": "MALE",
+    "lastName": "DARE",
+    "name": "Gussie DARE",
+    "title": "MR"
+  },
+  "distinctPrompts": [
+    {
+      "label": "Defendant driving licence number",
+      "promptIdentifier": "a593ae4a-9d69-45b9-9585-c11aeed28404",
+      "promptReference": "defendantDrivingLicenceNumber",
+      "value": "AFESL811111B99TX"
+    },
+    {
+      "label": "Licence issue number",
+      "promptIdentifier": "11a939b1-71e6-4065-8c29-007e4b52da7a",
+      "promptReference": "licenceIssueNumber",
+      "value": "23"
+    }
+  ],
+  "identifier": "fb35cd3d-3e8b-488a-9fcc-49e9f63b18e9",
+  "licenceProducedInCourt": "2: Full DVLA produced",
+  "masterDefendantId": "b76a24d4-e71d-432c-867c-a8478e20c88d",
+  "materialId": "da4d2fa7-05b2-44c3-98a8-b0ce8b72dbef",
+  "notificationType": "New",
+  "orderDate": "2026-05-12",
+  "orderingCourt": {
+    "address": {
+      "address1": "176A Lavender Hill",
+      "address2": "London",
+      "address3": "",
+      "address4": "",
+      "address5": "",
+      "postcode": "SW11 1JU"
+    },
+    "code": "B01LY00",
+    "courtHearingLocation": "B01LY01",
+    "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+    "lja": {
+      "ljaCode": "2577",
+      "ljaName": "South West London Magistrates' Court"
+    },
+    "name": "Lavender Hill Magistrates' Court",
+    "roomId": "9e4932f7-97b2-3010-b942-ddd2624e4dd8",
+    "roomName": "Courtroom 01"
+  },
+  "orderingCourtCode": "2577",
+  "orderingHearingId": "ab3c9d2e-6b34-4800-824a-f117daca916d",
+  "retrySequence": 0
+}

@@ -76,6 +76,7 @@
                   }
                 ],
                 "d20": false,
+                "judicialResultCategory": "FINAL",
                 "label": "Sentence varied"
               },
               {

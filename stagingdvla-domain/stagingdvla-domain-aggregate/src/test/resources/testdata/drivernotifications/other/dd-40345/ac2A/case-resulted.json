@@ -1,0 +1,91 @@
+{
+  "masterDefendantId": "6114345c-4bf0-4c4d-821a-694acd4ef4ff",
+  "orderingCourt": {
+    "address": {
+      "address1": "The Magistrates' Court",
+      "address2": "Barclay Road",
+      "address3": "Croydon",
+      "address4": "",
+      "address5": "",
+      "postcode": "CR9 3NG"
+    },
+    "code": "B01EF00",
+    "courtHearingLocation": "B01EF01",
+    "id": "31b3d313-7a7c-4598-bb4b-c1bff9b00e26",
+    "lja": {
+      "ljaCode": "2576",
+      "ljaName": "South London Magistrates' Court"
+    },
+    "name": "Croydon Magistrates' Court",
+    "roomId": "bfb67c13-789c-373b-b442-52b82faf863e",
+    "roomName": "Courtroom 01"
+  },
+  "nowContent": {
+    "orderDate": "2026-04-29",
+    "defendant": {
+      "dateOfBirth": "2001-02-18",
+      "gender": "MALE",
+      "title": "MR",
+      "firstName": "Jovani",
+      "lastName": "Funk",
+      "name": "Jovani Funk",
+      "address": {
+        "line1": "21",
+        "line2": "Furnburry Park Road",
+        "line3": "London",
+        "postCode": "SW11 3TQ"
+      }
+    },
+    "caseApplicationReferences": [
+      "28DI1228727"
+    ],
+    "cases": [
+      {
+        "caseStatus": "ACTIVE",
+        "initiationCode": "C",
+        "reference": "28DI1228727",
+        "caseId": "4755f88f-ceac-4553-9bce-6e9c5a18d3e9",
+        "defendantCaseOffences": [
+          {
+            "title": "Drive vehicle with axle weight exceeding maximum permitted - local traffic order within Greater London",
+            "civilOffence": false,
+            "convictionStatus": "Not Convicted",
+            "code": "RR84141",
+            "modeOfTrial": "Summary",
+            "endorsableFlag": false,
+            "wording": "Before 08 Aug 2024 at Croydon drove a motor vehicle, namely VH89712 Tesla Model X, on a road, namely Aby Road, subject of a local traffic order, namely Transport for London , when the weight conveyed to the road surface by one of its axles exceeded the maximum permitted axle weight of 11500 kg.",
+            "startDate": "2024-07-12",
+            "results": [
+              {
+                "resultIdentifier": "ccfc452e-ebe4-4cd7-b8a0-4f90768447b4",
+                "publishedForNows": false,
+                "prompts": [
+                  {
+                    "promptIdentifier": "2bf54447-328c-4c1b-a123-341adbd52172",
+                    "promptReference": "disqualificationPeriod",
+                    "durationSequence": 1,
+                    "label": "Disqualification period",
+                    "value": "6 Months"
+                  }
+                ],
+                "resultWording": "Disqualified for holding or obtaining a driving licence. Discretionary disqualification. Driving record endorsed. Section 34(2) Road Traffic Offenders Act 1988",
+                "d20": true,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "Discretionary with ordinary disqualification"
+              },
+              {
+                "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956",
+                "publishedForNows": true,
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "0: None or unknown"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "isReshare": false,
+  "orderingHearingId": "817db3f8-ef25-4d09-8444-0eabf9fe183d"
+}

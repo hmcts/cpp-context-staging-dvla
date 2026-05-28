@@ -109,6 +109,10 @@ public class DriverNotifiedEventAssertion {
         return hasDisqualificationPeriod(1, disQualificationPeriod);
     }
 
+    public DriverNotifiedEventAssertion hasDateFromWhichDisqRemoved(String dateFromWhichDisqRemoved) {
+        return hasDateFromWhichDisqRemoved(1, dateFromWhichDisqRemoved);
+    }
+
     public DriverNotifiedEventAssertion hasConvictionDate(String convictionDate) {
         return hasConvictionDate(1, convictionDate);
     }
@@ -164,6 +168,10 @@ public class DriverNotifiedEventAssertion {
 
     public DriverNotifiedEventAssertion hasDisqualificationPeriod(int offenceNumber, String disQualificationPeriod) {
         return validate(getOffence(offenceNumber), DefendantCaseOffences::getDisqualificationPeriod, disQualificationPeriod);
+    }
+
+    public DriverNotifiedEventAssertion hasDateFromWhichDisqRemoved(int offenceNumber, String dateFromWhichDisqRemoved) {
+        return validate(getOffence(offenceNumber), DefendantCaseOffences::getDateFromWhichDisqRemoved, dateFromWhichDisqRemoved);
     }
 
     public DriverNotifiedEventAssertion hasDateDisqReimposedFollowingAppeal(int offenceNumber, String dateDisqReimposedFollowingAppeal) {
