@@ -35,7 +35,7 @@ import uk.gov.moj.stagingdvla.util.FileUtil;
 import java.io.IOException;
 import java.util.UUID;
 
-import javax.jms.MessageConsumer;
+import jakarta.jms.MessageConsumer;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableMap;

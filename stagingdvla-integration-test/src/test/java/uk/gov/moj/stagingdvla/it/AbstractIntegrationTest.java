@@ -42,11 +42,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import javax.jms.MessageConsumer;
-import javax.json.JsonObject;
-import javax.ws.rs.core.MultivaluedHashMap;
-import javax.ws.rs.core.MultivaluedMap;
-import javax.ws.rs.core.Response;
+import jakarta.jms.MessageConsumer;
+import jakarta.json.JsonObject;
+import jakarta.ws.rs.core.MultivaluedHashMap;
+import jakarta.ws.rs.core.MultivaluedMap;
+import jakarta.ws.rs.core.Response;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Joiner;

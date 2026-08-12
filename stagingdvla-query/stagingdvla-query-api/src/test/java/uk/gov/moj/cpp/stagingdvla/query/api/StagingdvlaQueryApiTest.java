@@ -46,7 +46,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import javax.ws.rs.BadRequestException;
+import jakarta.ws.rs.BadRequestException;
 
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;

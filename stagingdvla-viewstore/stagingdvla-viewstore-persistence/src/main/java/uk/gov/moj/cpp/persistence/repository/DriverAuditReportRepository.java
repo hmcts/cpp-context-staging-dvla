@@ -5,19 +5,45 @@ import uk.gov.moj.cpp.persistence.entity.DriverAuditReportEntity;
 import java.util.List;
 import java.util.UUID;
 
-import org.apache.deltaspike.data.api.EntityRepository;
-import org.apache.deltaspike.data.api.Query;
-import org.apache.deltaspike.data.api.QueryParam;
-import org.apache.deltaspike.data.api.Repository;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 
-@Repository
-public interface DriverAuditReportRepository extends EntityRepository<DriverAuditReportEntity, UUID> {
+@ApplicationScoped
+public class DriverAuditReportRepository {
 
+    @PersistenceContext(unitName = "stagingdvla-persistence-unit")
+    EntityManager entityManager;
 
-    @Query(value = "from DriverAuditReportEntity dar where dar.userId = :userId order by dar.dateTime desc")
-    List<DriverAuditReportEntity> findByUserIdOrderByDateTimeDesc(@QueryParam("userId") final UUID userId);
+    public DriverAuditReportEntity save(final DriverAuditReportEntity driverAuditReportEntity) {
+        return entityManager.merge(driverAuditReportEntity);
+    }
 
-    DriverAuditReportEntity findByIdAndUserIdAndMaterialId(final UUID id, final UUID userId, final UUID materialId);
+    public DriverAuditReportEntity findBy(final UUID id) {
+        return entityManager.find(DriverAuditReportEntity.class, id);
+    }
 
+    public void remove(final DriverAuditReportEntity driverAuditReportEntity) {
+        entityManager.remove(entityManager.contains(driverAuditReportEntity)
+                ? driverAuditReportEntity
+                : entityManager.merge(driverAuditReportEntity));
+    }
 
+    public List<DriverAuditReportEntity> findByUserIdOrderByDateTimeDesc(final UUID userId) {
+        return entityManager.createQuery(
+                        "SELECT dar FROM DriverAuditReportEntity dar WHERE dar.userId = :userId ORDER BY dar.dateTime DESC", DriverAuditReportEntity.class)
+                .setParameter("userId", userId)
+                .getResultList();
+    }
+
+    public DriverAuditReportEntity findByIdAndUserIdAndMaterialId(final UUID id, final UUID userId, final UUID materialId) {
+        return entityManager.createQuery(
+                        "SELECT dar FROM DriverAuditReportEntity dar WHERE dar.id = :id AND dar.userId = :userId AND dar.materialId = :materialId", DriverAuditReportEntity.class)
+                .setParameter("id", id)
+                .setParameter("userId", userId)
+                .setParameter("materialId", materialId)
+                .getResultStream()
+                .findFirst()
+                .orElse(null);
+    }
 }
