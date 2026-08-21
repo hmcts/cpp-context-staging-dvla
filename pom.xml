@@ -11,7 +11,7 @@
 
     <groupId>uk.gov.moj.cpp.staging.dvla</groupId>
     <artifactId>stagingdvla-parent</artifactId>
-    <version>25.104.0-M1-SNAPSHOT</version>
+    <version>25.104.1-M1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>stagingdvla Context - Parent Module</name>
