@@ -8,24 +8,37 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
-import org.apache.deltaspike.data.api.EntityRepository;
-import org.apache.deltaspike.data.api.Query;
-import org.apache.deltaspike.data.api.QueryParam;
-import org.apache.deltaspike.data.api.Repository;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 
-@Repository
-public interface DriverAuditRepository extends EntityRepository<DriverAuditEntity, UUID> {
+@ApplicationScoped
+public class DriverAuditRepository {
 
-    String BASE_QRY = "SELECT * FROM driver_audit h WHERE h.date_time >= :startDate AND h.date_time <= :endDate";
-    String DLN_QRY = " AND h.driving_license_number = :drivingLicenseNumber";
-    String EMAIL_QRY = " AND LOWER(h.user_email) = LOWER(:userEmail)";
+    private static final String BASE_QRY = "SELECT * FROM driver_audit h WHERE h.date_time >= :startDate AND h.date_time <= :endDate";
+    private static final String DLN_QRY = " AND h.driving_license_number = :drivingLicenseNumber";
+    private static final String EMAIL_QRY = " AND LOWER(h.user_email) = LOWER(:userEmail)";
+    private static final String START_DATE = "startDate";
+    private static final String END_DATE = "endDate";
 
-    List<DriverAuditEntity> findByUserId(UUID userId);
+    @PersistenceContext(unitName = "stagingdvla-persistence-unit")
+    EntityManager entityManager;
 
-    default List<DriverAuditEntity> findAllActiveDriverAuditRecords(@QueryParam("startDate") final LocalDateTime startDate,
-                                                                    @QueryParam("endDate") final LocalDateTime endDate,
-                                                                    @QueryParam("drivingLicenseNumber") final String drivingLicenseNumber,
-                                                                    @QueryParam("userEmail") final String userEmail) {
+    public DriverAuditEntity save(final DriverAuditEntity driverAuditEntity) {
+        return entityManager.merge(driverAuditEntity);
+    }
+
+    public List<DriverAuditEntity> findByUserId(final UUID userId) {
+        return entityManager.createQuery(
+                        "SELECT d FROM DriverAuditEntity d WHERE d.userId = :userId", DriverAuditEntity.class)
+                .setParameter("userId", userId)
+                .getResultList();
+    }
+
+    public List<DriverAuditEntity> findAllActiveDriverAuditRecords(final LocalDateTime startDate,
+                                                                   final LocalDateTime endDate,
+                                                                   final String drivingLicenseNumber,
+                                                                   final String userEmail) {
         if (isBlank(drivingLicenseNumber) && isBlank(userEmail)) {
             return findAllAuditRecords(startDate, endDate);
         } else if (isBlank(drivingLicenseNumber)) {
@@ -37,25 +50,39 @@ public interface DriverAuditRepository extends EntityRepository<DriverAuditEntit
         }
     }
 
+    @SuppressWarnings("unchecked")
+    public List<DriverAuditEntity> findAllAuditRecords(final LocalDateTime startDate, final LocalDateTime endDate) {
+        return entityManager.createNativeQuery(BASE_QRY, DriverAuditEntity.class)
+                .setParameter(START_DATE, startDate)
+                .setParameter(END_DATE, endDate)
+                .getResultList();
+    }
 
-    @Query(value = BASE_QRY, isNative = true)
-    List<DriverAuditEntity> findAllAuditRecords(@QueryParam("startDate") final LocalDateTime startDate,
-                                                @QueryParam("endDate") final LocalDateTime endDate);
+    @SuppressWarnings("unchecked")
+    public List<DriverAuditEntity> findByDrivingLicenseNumber(final LocalDateTime startDate, final LocalDateTime endDate, final String drivingLicenseNumber) {
+        return entityManager.createNativeQuery(BASE_QRY + DLN_QRY, DriverAuditEntity.class)
+                .setParameter(START_DATE, startDate)
+                .setParameter(END_DATE, endDate)
+                .setParameter("drivingLicenseNumber", drivingLicenseNumber)
+                .getResultList();
+    }
 
-    @Query(value = BASE_QRY + DLN_QRY, isNative = true)
-    List<DriverAuditEntity> findByDrivingLicenseNumber(@QueryParam("startDate") final LocalDateTime startDate,
-                                                       @QueryParam("endDate") final LocalDateTime endDate,
-                                                       @QueryParam("drivingLicenseNumber") final String drivingLicenseNumber);
+    @SuppressWarnings("unchecked")
+    public List<DriverAuditEntity> findByEmail(final LocalDateTime startDate, final LocalDateTime endDate, final String userEmail) {
+        return entityManager.createNativeQuery(BASE_QRY + EMAIL_QRY, DriverAuditEntity.class)
+                .setParameter(START_DATE, startDate)
+                .setParameter(END_DATE, endDate)
+                .setParameter("userEmail", userEmail)
+                .getResultList();
+    }
 
-    @Query(value = BASE_QRY + EMAIL_QRY, isNative = true)
-    List<DriverAuditEntity> findByEmail(@QueryParam("startDate") final LocalDateTime startDate,
-                                        @QueryParam("endDate") final LocalDateTime endDate,
-                                        @QueryParam("userEmail") final String userEmail);
-
-    @Query(value = BASE_QRY + DLN_QRY + EMAIL_QRY, isNative = true)
-    List<DriverAuditEntity> findByEmailAndDrivingLicenseNumber(@QueryParam("startDate") final LocalDateTime startDate,
-                                                               @QueryParam("endDate") final LocalDateTime endDate,
-                                                               @QueryParam("drivingLicenseNumber") final String drivingLicenseNumber,
-                                                               @QueryParam("userEmail") final String userEmail);
-
+    @SuppressWarnings("unchecked")
+    public List<DriverAuditEntity> findByEmailAndDrivingLicenseNumber(final LocalDateTime startDate, final LocalDateTime endDate, final String drivingLicenseNumber, final String userEmail) {
+        return entityManager.createNativeQuery(BASE_QRY + DLN_QRY + EMAIL_QRY, DriverAuditEntity.class)
+                .setParameter(START_DATE, startDate)
+                .setParameter(END_DATE, endDate)
+                .setParameter("drivingLicenseNumber", drivingLicenseNumber)
+                .setParameter("userEmail", userEmail)
+                .getResultList();
+    }
 }

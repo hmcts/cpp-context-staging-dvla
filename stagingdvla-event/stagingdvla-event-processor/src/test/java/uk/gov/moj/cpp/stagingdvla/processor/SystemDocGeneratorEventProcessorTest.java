@@ -27,7 +27,7 @@ import uk.gov.justice.services.fileservice.client.FileService;
 import uk.gov.justice.services.fileservice.domain.FileReference;
 import uk.gov.justice.services.messaging.Envelope;
 import uk.gov.justice.services.messaging.JsonEnvelope;
-import uk.gov.moj.cpp.material.url.MaterialUrlGenerator;
+import uk.gov.moj.cpp.stagingdvla.material.client.MaterialUrlGenerator;
 import uk.gov.moj.cpp.stagingdvla.service.ApplicationParameters;
 import uk.gov.moj.cpp.stagingdvla.service.UploadMaterialContext;
 import uk.gov.moj.cpp.stagingdvla.service.UploadMaterialService;
@@ -38,7 +38,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 import java.util.UUID;
 
-import javax.json.JsonObject;
+import jakarta.json.JsonObject;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.io.Resources;

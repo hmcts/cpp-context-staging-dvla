@@ -3,43 +3,93 @@ package uk.gov.moj.cpp.persistence.repository;
 import static java.util.UUID.randomUUID;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
 
+import uk.gov.justice.services.common.util.UtcClock;
+import uk.gov.justice.services.test.utils.persistence.HibernateTestEntityManagerProvider;
 import uk.gov.moj.cpp.persistence.entity.DriverAuditReportEntity;
 
-import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.UUID;
 
-import javax.inject.Inject;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 
-import org.apache.deltaspike.testcontrol.api.junit.CdiTestRunner;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-@RunWith(CdiTestRunner.class)
 public class DriverAuditReportRepositoryTest {
 
+    private static final String PERSISTENCE_UNIT = "stagingdvla-test-persistence-unit";
     private static final UUID USER_ID = randomUUID();
-    @Inject
+
+    @RegisterExtension
+    static HibernateTestEntityManagerProvider hibernateTestEntityManagerProvider =
+            new HibernateTestEntityManagerProvider(PERSISTENCE_UNIT);
+
     private DriverAuditReportRepository driverAuditReportRepository;
+
+    @BeforeEach
+    void openEntityManagerAndCreateRepository() {
+        driverAuditReportRepository = new DriverAuditReportRepository();
+        hibernateTestEntityManagerProvider.injectEntityManagerInto(driverAuditReportRepository);
+    }
 
     @Test
     public void shouldSaveAndRetrieveByUserId() {
 
-        DriverAuditReportEntity driverAuditReportEntity1 = new DriverAuditReportEntity(randomUUID(), USER_ID, ZonedDateTime.now(), "reportSearchCriteria", "status", "file_RX123RE", randomUUID());
-        DriverAuditReportEntity driverAuditReportEntity2 = new DriverAuditReportEntity(randomUUID(), USER_ID, ZonedDateTime.now(), "reportSearchCriteria", "status", "file_ZX5677T", randomUUID());
+        final DriverAuditReportEntity driverAuditReportEntity1 = driverAuditReportRepository.save(aReport(randomUUID()));
+        final DriverAuditReportEntity driverAuditReportEntity2 = driverAuditReportRepository.save(aReport(randomUUID()));
 
-        driverAuditReportRepository.save(driverAuditReportEntity1);
-        driverAuditReportRepository.save(driverAuditReportEntity2);
-
-        List<DriverAuditReportEntity> userIdList = driverAuditReportRepository.findByUserIdOrderByDateTimeDesc(USER_ID);
+        final List<DriverAuditReportEntity> userIdList = driverAuditReportRepository.findByUserIdOrderByDateTimeDesc(USER_ID);
         assertThat(userIdList.size(), equalTo(2));
-        verifyCaseText(userIdList.get(0), driverAuditReportEntity1);
-        verifyCaseText(userIdList.get(1), driverAuditReportEntity2);
-
+        assertThat(userIdList.get(0).getUserId(), equalTo(USER_ID));
+        assertThat(userIdList.get(1).getUserId(), equalTo(USER_ID));
+        assertThat(userIdList, org.hamcrest.Matchers.containsInAnyOrder(driverAuditReportEntity1, driverAuditReportEntity2));
     }
 
-    private void verifyCaseText(final DriverAuditReportEntity actual, final DriverAuditReportEntity expected) {
-        assertThat(actual.getUserId(), equalTo(USER_ID));
+    @Test
+    public void shouldFindById() {
+        final DriverAuditReportEntity saved = driverAuditReportRepository.save(aReport(randomUUID()));
+
+        assertThat(driverAuditReportRepository.findBy(saved.getId()), is(saved));
+    }
+
+    @Test
+    public void shouldFindByIdAndUserIdAndMaterialId() {
+        final UUID materialId = randomUUID();
+        final DriverAuditReportEntity saved = driverAuditReportRepository.save(aReport(materialId));
+
+        assertThat(driverAuditReportRepository.findByIdAndUserIdAndMaterialId(saved.getId(), USER_ID, materialId), is(saved));
+    }
+
+    @Test
+    public void shouldReturnNullWhenNotFoundByIdAndUserIdAndMaterialId() {
+        driverAuditReportRepository.save(aReport(randomUUID()));
+
+        assertThat(driverAuditReportRepository.findByIdAndUserIdAndMaterialId(randomUUID(), randomUUID(), randomUUID()), is(nullValue()));
+    }
+
+    @Test
+    public void shouldRemove() {
+        final DriverAuditReportEntity saved = driverAuditReportRepository.save(aReport(randomUUID()));
+
+        driverAuditReportRepository.remove(saved);
+
+        assertThat(driverAuditReportRepository.findByUserIdOrderByDateTimeDesc(USER_ID).size(), is(0));
+    }
+
+    @Test
+    public void shouldRemoveADetachedReportByMergingItFirst() {
+        final DriverAuditReportEntity saved = driverAuditReportRepository.save(aReport(randomUUID()));
+        // a fresh instance with the same id is not managed, so remove() takes the merge branch
+        final DriverAuditReportEntity detached = new DriverAuditReportEntity(saved.getId(), USER_ID, new UtcClock().now(), "reportSearchCriteria", "status", "file", randomUUID());
+
+        driverAuditReportRepository.remove(detached);
+
+        assertThat(driverAuditReportRepository.findByUserIdOrderByDateTimeDesc(USER_ID).size(), is(0));
+    }
+
+    private DriverAuditReportEntity aReport(final UUID materialId) {
+        return new DriverAuditReportEntity(randomUUID(), USER_ID, new UtcClock().now(), "reportSearchCriteria", "status", "file_" + materialId, materialId);
     }
 }

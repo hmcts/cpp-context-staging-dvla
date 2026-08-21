@@ -5,24 +5,32 @@ import static java.util.UUID.randomUUID;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
+import uk.gov.justice.services.test.utils.persistence.HibernateTestEntityManagerProvider;
 import uk.gov.moj.cpp.persistence.entity.CaseTextEntity;
 
 import java.util.List;
 import java.util.UUID;
 
-import javax.inject.Inject;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 
-import org.apache.deltaspike.testcontrol.api.junit.CdiTestRunner;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-@RunWith(CdiTestRunner.class)
 public class CaseTextRepositoryTest {
 
+    private static final String PERSISTENCE_UNIT = "stagingdvla-test-persistence-unit";
     private static final UUID CASE_ID = randomUUID();
 
-    @Inject
+    @RegisterExtension
+    static HibernateTestEntityManagerProvider hibernateTestEntityManagerProvider =
+            new HibernateTestEntityManagerProvider(PERSISTENCE_UNIT);
+
     private CaseTextRepository caseTextRepository;
+
+    @BeforeEach
+    void openEntityManagerAndCreateRepository() {
+        caseTextRepository = new CaseTextRepository();
+        hibernateTestEntityManagerProvider.injectEntityManagerInto(caseTextRepository);
+    }
 
     @Test
     public void shouldSaveAndReadACaseTextAndOrderByCreatedDateDesc() {

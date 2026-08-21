@@ -36,7 +36,7 @@ import uk.gov.justice.services.fileservice.domain.FileReference;
 import uk.gov.justice.services.messaging.Envelope;
 import uk.gov.justice.services.messaging.JsonEnvelope;
 import uk.gov.justice.services.messaging.Metadata;
-import uk.gov.moj.cpp.material.url.MaterialUrlGenerator;
+import uk.gov.moj.cpp.stagingdvla.material.client.MaterialUrlGenerator;
 import uk.gov.moj.cpp.stagingdvla.SjpDocumentTypes;
 import uk.gov.moj.cpp.stagingdvla.service.ApplicationParameters;
 import uk.gov.moj.cpp.stagingdvla.service.UploadMaterialContext;
@@ -48,9 +48,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
-import javax.inject.Inject;
-import javax.json.JsonObject;
-import javax.json.JsonReader;
+import jakarta.inject.Inject;
+import jakarta.json.JsonObject;
+import jakarta.json.JsonReader;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -3,7 +3,7 @@
     <parent>
         <artifactId>stagingdvla-parent</artifactId>
         <groupId>uk.gov.moj.cpp.staging.dvla</groupId>
-        <version>17.104.95-SNAPSHOT</version>
+        <version>25.104.0-M1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -35,7 +35,7 @@
                     <groupId>org.jboss.logging</groupId>
                 </exclusion>
                 <exclusion>
-                    <groupId>org.apache.activemq</groupId>
+                    <groupId>org.apache.artemis</groupId>
                     <artifactId>artemis-jms-client</artifactId>
                 </exclusion>
             </exclusions>
@@ -88,7 +88,7 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.apache.activemq</groupId>
+            <groupId>org.apache.artemis</groupId>
             <artifactId>artemis-jms-client</artifactId>
             <scope>test</scope>
         </dependency>

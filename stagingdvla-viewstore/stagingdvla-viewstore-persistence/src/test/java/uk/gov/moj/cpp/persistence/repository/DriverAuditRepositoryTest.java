@@ -4,6 +4,8 @@ import static java.util.UUID.randomUUID;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
+import uk.gov.justice.services.common.util.UtcClock;
+import uk.gov.justice.services.test.utils.persistence.HibernateTestEntityManagerProvider;
 import uk.gov.moj.cpp.persistence.entity.DriverAuditEntity;
 
 import java.time.LocalDate;
@@ -12,26 +14,34 @@ import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.UUID;
 
-import javax.inject.Inject;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 
-import org.apache.deltaspike.testcontrol.api.junit.CdiTestRunner;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-@RunWith(CdiTestRunner.class)
 public class DriverAuditRepositoryTest {
 
+    private static final String PERSISTENCE_UNIT = "stagingdvla-test-persistence-unit";
     private static final UUID USER_ID = randomUUID();
-    @Inject
+
+    @RegisterExtension
+    static HibernateTestEntityManagerProvider hibernateTestEntityManagerProvider =
+            new HibernateTestEntityManagerProvider(PERSISTENCE_UNIT);
+
     private DriverAuditRepository driverAuditRepository;
+
+    @BeforeEach
+    void openEntityManagerAndCreateRepository() {
+        driverAuditRepository = new DriverAuditRepository();
+        hibernateTestEntityManagerProvider.injectEntityManagerInto(driverAuditRepository);
+    }
 
     @Test
     public void shouldSaveAndRetrieveByUserId() {
 
         final UUID userId = randomUUID();
 
-        DriverAuditEntity driverAuditEntity1 = new DriverAuditEntity(randomUUID(), userId, "user@gmail.com", ZonedDateTime.now(), "reasonType", "CaseUrn", "TX456789", "peter", "parker", "MALE", "CR01hb", LocalDate.now());
-        DriverAuditEntity driverAuditEntity2 = new DriverAuditEntity(randomUUID(), userId, "user@gmail.com", ZonedDateTime.now(), "reasonType", "CaseUrn", "TX456789", "peter", "parker", "MALE", "CR01hb", LocalDate.now());
+        DriverAuditEntity driverAuditEntity1 = new DriverAuditEntity(randomUUID(), userId, "user@gmail.com", new UtcClock().now(), "reasonType", "CaseUrn", "TX456789", "peter", "parker", "MALE", "CR01hb", LocalDate.now());
+        DriverAuditEntity driverAuditEntity2 = new DriverAuditEntity(randomUUID(), userId, "user@gmail.com", new UtcClock().now(), "reasonType", "CaseUrn", "TX456789", "peter", "parker", "MALE", "CR01hb", LocalDate.now());
 
         driverAuditRepository.save(driverAuditEntity1);
         driverAuditRepository.save(driverAuditEntity2);
@@ -45,7 +55,7 @@ public class DriverAuditRepositoryTest {
 
     @Test
     public void shouldFindAllActiveDriverAuditRecords_withNullFilters_returnsAllWithinDateRangeInclusive() {
-        final ZonedDateTime now = ZonedDateTime.now();
+        final ZonedDateTime now = new UtcClock().now();
         final ZonedDateTime start = now.minusDays(10);
         final ZonedDateTime end = now.minusDays(5);
 
@@ -73,7 +83,7 @@ public class DriverAuditRepositoryTest {
 
     @Test
     public void shouldFilterByDrivingLicenseNumber_whenProvided() {
-        final ZonedDateTime now = ZonedDateTime.now();
+        final ZonedDateTime now = new UtcClock().now();
         final LocalDateTime start = now.minusDays(1).toLocalDateTime();
         final LocalDateTime end = now.plusDays(1).toLocalDateTime();
 
@@ -92,7 +102,7 @@ public class DriverAuditRepositoryTest {
 
     @Test
     public void shouldFilterByUserEmail_caseInsensitive_whenProvided() {
-        final ZonedDateTime now = ZonedDateTime.now();
+        final ZonedDateTime now = new UtcClock().now();
         final LocalDateTime start = now.minusDays(1).toLocalDateTime();
         final LocalDateTime end = now.plusDays(1).toLocalDateTime();
 
@@ -117,7 +127,7 @@ public class DriverAuditRepositoryTest {
 
     @Test
     public void shouldApplyBothFilters_whenBothProvided() {
-        final ZonedDateTime now = ZonedDateTime.now();
+        final ZonedDateTime now = new UtcClock().now();
         final LocalDateTime start = now.minusDays(1).toLocalDateTime();
         final LocalDateTime end = now.plusDays(1).toLocalDateTime();
 
