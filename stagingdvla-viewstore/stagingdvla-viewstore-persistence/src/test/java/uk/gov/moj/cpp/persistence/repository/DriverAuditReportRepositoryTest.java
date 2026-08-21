@@ -78,6 +78,17 @@ public class DriverAuditReportRepositoryTest {
         assertThat(driverAuditReportRepository.findByUserIdOrderByDateTimeDesc(USER_ID).size(), is(0));
     }
 
+    @Test
+    public void shouldRemoveADetachedReportByMergingItFirst() {
+        final DriverAuditReportEntity saved = driverAuditReportRepository.save(aReport(randomUUID()));
+        // a fresh instance with the same id is not managed, so remove() takes the merge branch
+        final DriverAuditReportEntity detached = new DriverAuditReportEntity(saved.getId(), USER_ID, new UtcClock().now(), "reportSearchCriteria", "status", "file", randomUUID());
+
+        driverAuditReportRepository.remove(detached);
+
+        assertThat(driverAuditReportRepository.findByUserIdOrderByDateTimeDesc(USER_ID).size(), is(0));
+    }
+
     private DriverAuditReportEntity aReport(final UUID materialId) {
         return new DriverAuditReportEntity(randomUUID(), USER_ID, new UtcClock().now(), "reportSearchCriteria", "status", "file_" + materialId, materialId);
     }

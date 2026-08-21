@@ -65,6 +65,17 @@ public class DrivingConvictionRetryRepositoryTest {
         assertThat(drivingConvictionRetryRepository.findAll().size(), is(0));
     }
 
+    @Test
+    public void shouldRemoveADetachedEntityByMergingItFirst() {
+        final DrivingConvictionRetryEntity saved = drivingConvictionRetryRepository.save(anEntity());
+        // a fresh instance with the same id is not managed, so remove() takes the merge branch
+        final DrivingConvictionRetryEntity detached = new DrivingConvictionRetryEntity(saved.getConvictionId(), randomUUID(), now());
+
+        drivingConvictionRetryRepository.remove(detached);
+
+        assertThat(drivingConvictionRetryRepository.findAll().size(), is(0));
+    }
+
     private DrivingConvictionRetryEntity anEntity() {
         return new DrivingConvictionRetryEntity(randomUUID(), randomUUID(), now());
     }
