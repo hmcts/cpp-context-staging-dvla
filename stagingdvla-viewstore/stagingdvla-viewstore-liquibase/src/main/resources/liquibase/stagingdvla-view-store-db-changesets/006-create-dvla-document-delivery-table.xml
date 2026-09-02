@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="create-dvla-document-delivery-table"
+               logicalFilePath="006-create-dvla-document-delivery-table.xml"
+               author="cpp.context.staging.dvla">
+        <createTable tableName="dvla_document_delivery">
+            <column name="material_id" type="UUID">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="created_at" type="DATETIME TZ">
+                <constraints nullable="false"/>
+            </column>
+            <column name="material_status" type="VARCHAR(32)">
+            </column>
+            <column name="email_status" type="VARCHAR(32)">
+            </column>
+            <column name="payload_blob_uri" type="TEXT">
+            </column>
+            <column name="document_blob_uri" type="TEXT">
+            </column>
+        </createTable>
+
+        <rollback>
+            <dropTable tableName="dvla_document_delivery"/>
+        </rollback>
+
+    </changeSet>
+</databaseChangeLog>

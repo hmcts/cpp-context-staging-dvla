@@ -11,7 +11,7 @@
 
     <groupId>uk.gov.moj.cpp.staging.dvla</groupId>
     <artifactId>stagingdvla-parent</artifactId>
-    <version>17.104.95-SNAPSHOT</version>
+    <version>17.104.95-CHD-2786-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>stagingdvla Context - Parent Module</name>
@@ -29,7 +29,7 @@
         <coredomain.version>17.104.4</coredomain.version>
         <usersgroups.version>17.104.48</usersgroups.version>
         <commons-text.version>1.10.0</commons-text.version>
-        <progression.version>17.0.249</progression.version>
+        <progression.version>17.0.286</progression.version>
         <sjp.version>17.103.166</sjp.version>
         <jgitflow.maven.developBranchName>main</jgitflow.maven.developBranchName>
         <h2.version>1.4.196</h2.version>
