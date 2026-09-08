@@ -3,7 +3,7 @@
     <parent>
         <artifactId>stagingdvla-event</artifactId>
         <groupId>uk.gov.moj.cpp.staging.dvla</groupId>
-        <version>17.104.95-SNAPSHOT</version>
+        <version>17.104.95-CHD-2845-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -37,15 +37,9 @@
             <artifactId>lombok</artifactId>
         </dependency>
         <dependency>
-            <groupId>uk.gov.moj.cpp.material</groupId>
-            <artifactId>material-client</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>uk.gov.justice.services</groupId>
-                    <artifactId>test-utils-core</artifactId>
-                </exclusion>
-            </exclusions>
-            <version>${material.version}</version>
+            <groupId>uk.gov.moj.cpp.staging.dvla</groupId>
+            <artifactId>stagingdvla-common-material-client</artifactId>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>

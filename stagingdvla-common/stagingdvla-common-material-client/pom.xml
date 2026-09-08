@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>stagingdvla-parent</artifactId>
+        <artifactId>stagingdvla-common</artifactId>
         <groupId>uk.gov.moj.cpp.staging.dvla</groupId>
         <version>17.104.95-CHD-2845-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>stagingdvla-healthchecks</artifactId>
+    <artifactId>stagingdvla-common-material-client</artifactId>
+
+    <description>
+        Self-contained copy of material's material-client HTTP adapter, owned by staging-dvla.
+        Decouples staging-dvla from the material-client JAR (see PEG-3448). Runtime behaviour is
+        unchanged - staging-dvla still calls material over HTTP exactly as before.
+    </description>
 
     <dependencies>
         <dependency>
@@ -16,8 +22,12 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>uk.gov.justice.event-store</groupId>
-            <artifactId>healthchecks</artifactId>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>uk.gov.justice.services</groupId>
+            <artifactId>common</artifactId>
         </dependency>
 
         <!-- Test Dependencies -->
@@ -36,8 +46,5 @@
             <artifactId>hamcrest</artifactId>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
-
-
 </project>
