@@ -15,6 +15,7 @@ import static uk.gov.justice.services.test.utils.core.reflection.ReflectionUtil.
 import uk.gov.justice.core.courts.MaterialDetails;
 import uk.gov.justice.core.courts.RecordNowsMaterialRequest;
 import uk.gov.justice.core.courts.StagingdvlaSendEmailNotification;
+import uk.gov.justice.cpp.stagingdvla.command.RecordEmailDeliveryOutcome;
 import uk.gov.justice.services.common.converter.JsonObjectToObjectConverter;
 import uk.gov.justice.services.common.converter.ObjectToJsonObjectConverter;
 import uk.gov.justice.services.common.converter.jackson.ObjectMapperProducer;
@@ -106,5 +107,35 @@ public class MaterialStatusHandlerTest {
         handler.sendEmailNotification(command);
 
         verify(eventStream, times(0)).append(any());
+    }
+
+    @Test
+    public void shouldHandleRecordEmailDeliveryOutcome() {
+        assertThat(handler, isHandler(COMMAND_HANDLER)
+                .with(method("recordEmailDeliveryOutcome")
+                        .thatHandles(MaterialStatusHandler.STAGINGDVLA_COMMAND_RECORD_EMAIL_DELIVERY_OUTCOME)));
+    }
+
+    @Test
+    public void shouldAppendEmailDeliveryOutcomeToTheMaterialStream() throws Exception {
+        final MaterialAggregate materialAggregate = new MaterialAggregate();
+        when(eventSource.getStreamById(any())).thenReturn(eventStream);
+        when(aggregateService.get(eventStream, MaterialAggregate.class)).thenReturn(materialAggregate);
+        final UUID materialId = UUID.randomUUID();
+        final RecordEmailDeliveryOutcome commandObject = RecordEmailDeliveryOutcome.recordEmailDeliveryOutcome()
+                .withMaterialId(materialId)
+                .withDelivered(true)
+                .withNotificationId(UUID.randomUUID())
+                .build();
+
+        final JsonEnvelope command = envelopeFrom(metadataWithRandomUUID(
+                MaterialStatusHandler.STAGINGDVLA_COMMAND_RECORD_EMAIL_DELIVERY_OUTCOME),
+                objectToJsonObjectConverter.convert(commandObject));
+
+        handler.recordEmailDeliveryOutcome(command);
+
+        verify(eventSource).getStreamById(materialId);
+        final ArgumentCaptor<Stream> argumentCaptor = ArgumentCaptor.forClass(Stream.class);
+        verify(eventStream).append(argumentCaptor.capture());
     }
 }

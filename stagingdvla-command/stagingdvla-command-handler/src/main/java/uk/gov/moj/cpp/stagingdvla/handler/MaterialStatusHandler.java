@@ -5,6 +5,7 @@ import static uk.gov.justice.services.core.enveloper.Enveloper.toEnvelopeWithMet
 
 import uk.gov.justice.core.courts.RecordNowsMaterialRequest;
 import uk.gov.justice.core.courts.StagingdvlaSendEmailNotification;
+import uk.gov.justice.cpp.stagingdvla.command.RecordEmailDeliveryOutcome;
 import uk.gov.justice.services.common.converter.JsonObjectToObjectConverter;
 import uk.gov.justice.services.core.aggregate.AggregateService;
 import uk.gov.justice.services.core.annotation.Component;
@@ -33,6 +34,7 @@ public class MaterialStatusHandler {
 
     public static final String STAGINGDVLA_COMMAND_RECORD_NOWS_MATERIAL_REQUEST = "stagingdvla.command.record-nows-material-request";
     public static final String STAGING_DVLA_COMMAND_SEND_EMAIL_NOTIFICATION = "stagingdvla.command.send-email-notification";
+    public static final String STAGINGDVLA_COMMAND_RECORD_EMAIL_DELIVERY_OUTCOME = "stagingdvla.command.record-email-delivery-outcome";
     @Inject
     private EventSource eventSource;
 
@@ -74,6 +76,18 @@ public class MaterialStatusHandler {
         if(nonNull(events)) {
             appendEventsToStream(envelope, eventStream, events);
         }
+    }
+
+    @Handles(STAGINGDVLA_COMMAND_RECORD_EMAIL_DELIVERY_OUTCOME)
+    public void recordEmailDeliveryOutcome(final JsonEnvelope envelope) throws EventStreamException {
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("{} {}", STAGINGDVLA_COMMAND_RECORD_EMAIL_DELIVERY_OUTCOME, envelope.toObfuscatedDebugString());
+        }
+        final RecordEmailDeliveryOutcome outcome = jsonObjectToObjectConverter.convert(envelope.payloadAsJsonObject(), RecordEmailDeliveryOutcome.class);
+        final EventStream eventStream = eventSource.getStreamById(outcome.getMaterialId());
+        final MaterialAggregate materialAggregate = aggregateService.get(eventStream, MaterialAggregate.class);
+        final Stream<Object> events = materialAggregate.recordEmailDeliveryOutcome(outcome);
+        appendEventsToStream(envelope, eventStream, events);
     }
 
 }

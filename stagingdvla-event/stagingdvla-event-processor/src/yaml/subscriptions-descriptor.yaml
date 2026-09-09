@@ -34,5 +34,10 @@ subscriptions_descriptor:
         - name: public.systemdocgenerator.events.document-available
           schema_uri: http://moj.gov.uk/cpp/json/schemas/systemdocgenerator/events/public/document-available.json
 
+          #Notification notify - email delivery outcome for the D20 notification
+        - name: public.notificationnotify.events.notification-sent
+          schema_uri: http://moj.gov.uk/cpp/json/schemas/notificationnotify/events/public/notification-sent.json
+        - name: public.notificationnotify.events.notification-failed
+          schema_uri: http://moj.gov.uk/cpp/json/schemas/notificationnotify/events/public/notification-failed.json
 
       event_source_name: public.event.source
