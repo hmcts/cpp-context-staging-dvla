@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://justice.gov.uk/cpp/stagingdvla/command/record-email-delivery-outcome.json",
+  "description": "Records the outcome of the D20 email notification, as reported by notificationnotify",
+  "type": "object",
+  "properties": {
+    "materialId": {
+      "$ref": "http://justice.gov.uk/domain/core/common/definitions.json#/definitions/uuid"
+    },
+    "delivered": {
+      "type": "boolean"
+    },
+    "notificationId": {
+      "$ref": "http://justice.gov.uk/domain/core/common/definitions.json#/definitions/uuid"
+    },
+    "occurredAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "errorMessage": {
+      "type": "string"
+    },
+    "statusCode": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "materialId",
+    "delivered"
+  ],
+  "additionalProperties": false
+}

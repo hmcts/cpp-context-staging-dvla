@@ -19,4 +19,8 @@ subscriptions_descriptor:
           schema_uri: http://justice.gov.uk/cpp/stagingdvla/event/driver-search-audit-report-deleted.json
         - name: stagingdvla.event.driver-search-audit-report-stored
           schema_uri: http://justice.gov.uk/cpp/stagingdvla/event/driver-search-audit-report-stored.json
+        - name: stagingdvla.event.email-notification-delivered
+          schema_uri: http://justice.gov.uk/cpp/stagingdvla/event/email-notification-delivered.json
+        - name: stagingdvla.event.email-notification-delivery-failed
+          schema_uri: http://justice.gov.uk/cpp/stagingdvla/event/email-notification-delivery-failed.json
       event_source_name: stagingdvla

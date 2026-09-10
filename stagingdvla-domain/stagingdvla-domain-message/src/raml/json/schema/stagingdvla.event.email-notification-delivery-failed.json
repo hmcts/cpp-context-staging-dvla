@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://justice.gov.uk/cpp/stagingdvla/event/email-notification-delivery-failed.json",
+  "description": "The D20 email notification failed to be delivered by notificationnotify",
+  "type": "object",
+  "properties": {
+    "materialId": {
+      "$ref": "http://justice.gov.uk/domain/core/common/definitions.json#/definitions/uuid"
+    },
+    "notificationId": {
+      "$ref": "http://justice.gov.uk/domain/core/common/definitions.json#/definitions/uuid"
+    },
+    "occurredAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "errorMessage": {
+      "type": "string"
+    },
+    "statusCode": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "materialId"
+  ],
+  "additionalProperties": false
+}

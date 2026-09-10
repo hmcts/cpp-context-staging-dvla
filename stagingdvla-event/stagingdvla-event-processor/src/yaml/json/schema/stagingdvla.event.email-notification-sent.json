@@ -5,6 +5,10 @@
   "properties": {
     "details":{
       "$ref": "http://justice.gov.uk/core/courts/materialDetails.json#"
+    },
+    "notificationId": {
+      "description": "Id of the notification this event requests, minted by the aggregate so the send can be traced from this event through to notificationnotify. Optional: events recorded before it was introduced do not carry one.",
+      "$ref": "http://justice.gov.uk/domain/core/common/definitions.json#/definitions/uuid"
     }
   },
   "required": [
@@ -12,4 +16,3 @@
   ],
   "additionalProperties": false
 }
-

@@ -29,6 +29,7 @@ import uk.gov.justice.services.core.sender.Sender;
 import uk.gov.justice.services.messaging.Envelope;
 import uk.gov.justice.services.messaging.JsonEnvelope;
 import uk.gov.moj.cpp.material.url.MaterialUrlGenerator;
+import uk.gov.moj.cpp.stagingdvla.domain.constants.StagingDvlaClientContext;
 import uk.gov.moj.cpp.stagingdvla.exception.NotifyDrivingConvictionException;
 import uk.gov.moj.cpp.stagingdvla.notify.azure.DvlaApimConfig;
 import uk.gov.moj.cpp.stagingdvla.notify.driving.conviction.NotifyDrivingConvictionResponse;
@@ -36,6 +37,7 @@ import uk.gov.moj.cpp.stagingdvla.service.ApplicationParameters;
 import uk.gov.moj.cpp.stagingdvla.service.DocumentGeneratorService;
 import uk.gov.moj.cpp.stagingdvla.service.NotificationNotifyService;
 import uk.gov.moj.cpp.stagingdvla.service.NotifyDrivingConvictionService;
+import uk.gov.moj.cpp.stagingdvla.service.SystemIdMapperService;
 import uk.gov.moj.cpp.stagingdvla.service.scheduler.NotifyDrivingConvictionRetryScheduler;
 
 import java.util.ArrayList;
@@ -57,6 +59,7 @@ public class DriverNotifiedEventProcessor {
 
     private static final String FIELD_NOTIFICATION_ID = "notificationId";
     private static final String FIELD_TEMPLATE_ID = "templateId";
+    private static final String FIELD_CLIENT_CONTEXT = "clientContext";
     private static final String SEND_TO_ADDRESS = "sendToAddress";
     private static final String MATERIAL_URL = "materialUrl";
     private static final String PERSONALISATION = "personalisation";
@@ -80,6 +83,9 @@ public class DriverNotifiedEventProcessor {
 
     @Inject
     private NotificationNotifyService notificationNotifyService;
+
+    @Inject
+    private SystemIdMapperService systemIdMapperService;
 
     @Inject
     private MaterialUrlGenerator materialUrlGenerator;
@@ -188,7 +194,20 @@ public class DriverNotifiedEventProcessor {
         }
         final EmailChannel emailChannel = emailNotification.getDetails().getEmailNotifications().get(0);
         final JsonObjectBuilder notifyObjectBuilder = createObjectBuilder();
-        notifyObjectBuilder.add(FIELD_NOTIFICATION_ID, randomUUID().toString());
+        // The notification id is minted by the aggregate and carried on this event, so the send is
+        // traceable from the event store through to notificationnotify. Events recorded before that
+        // field existed carry none, so fall back to a fresh id for them.
+        final UUID notificationId = resolveNotificationId(emailNotification);
+
+        // Mapped to the materialId before the send, so a notification result event can never arrive
+        // ahead of the mapping it needs. materialId is required on materialDetails.json, so it is
+        // always present here.
+        systemIdMapperService.mapNotificationIdToMaterialId(emailNotification.getDetails().getMaterialId(), notificationId);
+
+        notifyObjectBuilder.add(FIELD_NOTIFICATION_ID, notificationId.toString());
+        // Identifies the owning context on the result events. Every subscriber receives every
+        // notification event on the platform, so each needs to recognise its own.
+        notifyObjectBuilder.add(FIELD_CLIENT_CONTEXT, StagingDvlaClientContext.CLIENT_CONTEXT);
         notifyObjectBuilder.add(FIELD_TEMPLATE_ID, emailChannel.getTemplateId().toString());
         notifyObjectBuilder.add(SEND_TO_ADDRESS, emailChannel.getSendToAddress());
         notifyObjectBuilder.add(MATERIAL_URL, emailChannel.getMaterialUrl());
@@ -196,6 +215,20 @@ public class DriverNotifiedEventProcessor {
                 .add(SUBJECT, getPersonalisationValue(emailChannel.getPersonalisation()))
                 .build());
         this.notificationNotifyService.sendEmailNotification(envelope, notifyObjectBuilder.build());
+    }
+
+    /**
+     * The notification id recorded on the event by {@code MaterialAggregate}, or a fresh one for
+     * events written before that field existed. The field is optional on
+     * {@code stagingdvla.event.email-notification-sent} precisely so those older events stay valid.
+     */
+    private UUID resolveNotificationId(final EmailNotificationSent emailNotification) {
+        if (nonNull(emailNotification.getNotificationId())) {
+            return emailNotification.getNotificationId();
+        }
+        final UUID generated = randomUUID();
+        LOGGER.info("email-notification-sent carried no notificationId - generated {} for this send", generated);
+        return generated;
     }
 
     private String getEmailAddress(final DriverNotified driverNotified) {
