@@ -23,12 +23,15 @@ import uk.gov.moj.cpp.stagingdvla.query.view.request.DriverAuditQueryParameters;
 import uk.gov.moj.cpp.stagingdvla.query.view.request.DriverImageQueryParameters;
 import uk.gov.moj.cpp.stagingdvla.query.view.request.DriverQueryParameters;
 import uk.gov.moj.cpp.stagingdvla.query.view.request.DriverSummaryQueryParameters;
+import uk.gov.moj.cpp.stagingdvla.query.view.request.DvlaDocumentDeliveryQueryParameters;
 import uk.gov.moj.cpp.stagingdvla.query.view.request.SearchCriteria;
 import uk.gov.moj.cpp.stagingdvla.query.view.request.SearchReason;
 import uk.gov.moj.cpp.stagingdvla.query.view.response.DriverImageResponse;
 import uk.gov.moj.cpp.stagingdvla.query.view.response.DriverResponse;
 import uk.gov.moj.cpp.stagingdvla.query.view.response.DriverSummaryResponse;
+import uk.gov.moj.cpp.stagingdvla.query.view.response.DvlaDocumentDeliveryResponse;
 import uk.gov.moj.cpp.stagingdvla.query.view.service.DriverService;
+import uk.gov.moj.cpp.stagingdvla.query.view.service.DvlaDocumentDeliveryService;
 
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
@@ -48,6 +51,7 @@ public class StagingdvlaQueryApi {
     private static final String DRIVER_RESPONSE = "stagingdvla.query.driver-response";
     private static final String DRIVER_SUMMARY_RESPONSE = "stagingdvla.query.driver-summary-response";
     private static final String DRIVER_IMAGE_RESPONSE = "stagingdvla.query.driver-image-response";
+    private static final String DVLA_DOCUMENT_DELIVERY_RESPONSE = "stagingdvla.query.dvla-document-delivery";
     private static final Pattern UK_POSTCODE_PATTERN = Pattern.compile(
             "^(GIR 0AA|(?:(?:[A-Z]{1,2}[0-9][0-9A-Z]?)|(?:[A-Z][A-Z][0-9][0-9A-Z]?)) ?[0-9][A-Z]{2})$",
             Pattern.CASE_INSENSITIVE
@@ -61,6 +65,9 @@ public class StagingdvlaQueryApi {
 
     @Inject
     private StagingdvlaQueryView stagingdvlaQueryView;
+
+    @Inject
+    private DvlaDocumentDeliveryService dvlaDocumentDeliveryService;
 
     @Inject
     Sender sender;
@@ -134,6 +141,15 @@ public class StagingdvlaQueryApi {
     @Handles("stagingdvla.query.driver-search-audit-reports")
     public Envelope findDriverAuditSearchReports(final JsonEnvelope envelope) {
         return stagingdvlaQueryView.getDriverAuditSearchReports(envelope);
+    }
+
+    @Handles("stagingdvla.query.dvla-document-delivery")
+    public Envelope<DvlaDocumentDeliveryResponse> findDvlaDocumentDeliveries(final Envelope<DvlaDocumentDeliveryQueryParameters> envelope) {
+        final DvlaDocumentDeliveryResponse response = dvlaDocumentDeliveryService.findDocumentDeliveries(envelope.payload());
+
+        return envelop(response)
+                .withName(DVLA_DOCUMENT_DELIVERY_RESPONSE)
+                .withMetadataFrom(envelope);
     }
 
     public void processDriverAuditInformation(final DriverQueryParameters queryParameters,

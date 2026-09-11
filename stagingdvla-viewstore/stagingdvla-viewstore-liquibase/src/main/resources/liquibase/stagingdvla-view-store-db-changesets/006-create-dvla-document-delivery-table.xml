@@ -21,6 +21,12 @@
             </column>
             <column name="document_blob_uri" type="TEXT">
             </column>
+            <column name="case_id" type="UUID">
+            </column>
+            <column name="sjp_correlation_id" type="UUID">
+            </column>
+            <column name="sjp_status" type="VARCHAR(32)">
+            </column>
         </createTable>
 
         <rollback>

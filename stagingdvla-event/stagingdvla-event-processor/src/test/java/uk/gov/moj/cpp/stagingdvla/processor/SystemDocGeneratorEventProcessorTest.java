@@ -9,8 +9,12 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.isA;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static uk.gov.justice.services.messaging.JsonEnvelope.envelopeFrom;
@@ -35,6 +39,7 @@ import uk.gov.moj.cpp.stagingdvla.service.UploadMaterialService;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -71,6 +76,9 @@ public class SystemDocGeneratorEventProcessorTest {
 
     @Captor
     private ArgumentCaptor<Envelope<JsonObject>> envelopeCaptor;
+
+    @Captor
+    private ArgumentCaptor<Envelope<JsonObject>> sendAsAdminEnvelopeCaptor;
 
     private final ObjectMapper objectMapper = new ObjectMapperProducer().objectMapper();
 
@@ -173,6 +181,8 @@ public class SystemDocGeneratorEventProcessorTest {
         assertThat(uploadMaterialContext, notNullValue());
         assertThat(uploadMaterialContext.getEmailNotifications(), notNullValue());
         assertThat(uploadMaterialContext.getEmailNotifications(), hasSize(1));
+
+        verify(sender, never()).sendAsAdmin(any());
     }
 
     @Test
@@ -215,6 +225,12 @@ public class SystemDocGeneratorEventProcessorTest {
         assertThat(uploadMaterialContext, notNullValue());
         assertThat(uploadMaterialContext.getEmailNotifications(), nullValue());
 
+        verify(sender).sendAsAdmin(sendAsAdminEnvelopeCaptor.capture());
+        final Envelope<JsonObject> documentDeliveryCommand = sendAsAdminEnvelopeCaptor.getValue();
+        assertThat(documentDeliveryCommand.metadata().name(), is("stagingdvla.command.handler.driver-notification-document-delivery"));
+        assertThat(documentDeliveryCommand.payload().getString("materialId"), is(materialId));
+        assertThat(documentDeliveryCommand.payload().getString("emailStatus"), is("NOT_REQUIRED"));
+        assertThat(documentDeliveryCommand.payload().containsKey("materialStatus"), is(false));
     }
 
     @Test
@@ -248,8 +264,10 @@ public class SystemDocGeneratorEventProcessorTest {
 
         // then
         systemDocGeneratorEventProcessor.handleDocumentAvailable(requestMessage);
-        verify(sender).send(envelopeCaptor.capture());
-        final Envelope<JsonObject> addCourtDocumentRequestToProgression = envelopeCaptor.getValue();
+        verify(sender, times(1)).send(envelopeCaptor.capture());
+        final Envelope<JsonObject> addCourtDocumentRequestToProgression = envelopeCaptor.getAllValues().stream()
+                .filter(envelope -> "sjp.upload-case-document".equals(envelope.metadata().name()))
+                .findFirst().orElseThrow();
         assertThat(addCourtDocumentRequestToProgression.metadata().name(), is("sjp.upload-case-document"));
         assertThat(addCourtDocumentRequestToProgression.payload().getString("caseId"), is(caseId.toString()));
         assertThat(addCourtDocumentRequestToProgression.payload().getString("caseDocument"), is(documentFileServiceId.toString()));
@@ -260,6 +278,15 @@ public class SystemDocGeneratorEventProcessorTest {
         assertThat(uploadMaterialContext.getEmailNotifications(), notNullValue());
         assertThat(uploadMaterialContext.getEmailNotifications(), hasSize(1));
 
+        verify(sender, times(1)).sendAsAdmin(sendAsAdminEnvelopeCaptor.capture());
+        final Envelope<JsonObject> documentDeliverySjpCaseCommand = sendAsAdminEnvelopeCaptor.getAllValues().stream()
+                .filter(envelope -> "stagingdvla.command.handler.driver-notification-document-delivery".equals(envelope.metadata().name()))
+                .findFirst().orElseThrow();
+        assertThat(documentDeliverySjpCaseCommand.metadata().name(), is("stagingdvla.command.handler.driver-notification-document-delivery"));
+        assertThat(documentDeliverySjpCaseCommand.payload().getString("materialId"), is(materialId));
+        assertThat(documentDeliverySjpCaseCommand.payload().getString("caseId"), is(caseId));
+        assertThat(documentDeliverySjpCaseCommand.payload().getString("sjpCorrelationId"), is(documentFileServiceId.toString()));
+        assertThat(documentDeliverySjpCaseCommand.payload().getString("sjpStatus"), is("PENDING"));
     }
 
     @Test
@@ -291,8 +318,10 @@ public class SystemDocGeneratorEventProcessorTest {
 
         // then
         systemDocGeneratorEventProcessor.handleDocumentAvailable(requestMessage);
-        verify(sender).send(envelopeCaptor.capture());
-        final Envelope<JsonObject> addCourtDocumentRequestToProgression = envelopeCaptor.getValue();
+        verify(sender, times(1)).send(envelopeCaptor.capture());
+        final Envelope<JsonObject> addCourtDocumentRequestToProgression = envelopeCaptor.getAllValues().stream()
+                .filter(envelope -> "sjp.upload-case-document".equals(envelope.metadata().name()))
+                .findFirst().orElseThrow();
         assertThat(addCourtDocumentRequestToProgression.metadata().name(), is("sjp.upload-case-document"));
         assertThat(addCourtDocumentRequestToProgression.payload().getString("caseId"), is(caseId.toString()));
         assertThat(addCourtDocumentRequestToProgression.payload().getString("caseDocument"), is(documentFileServiceId.toString()));
@@ -301,8 +330,26 @@ public class SystemDocGeneratorEventProcessorTest {
         final UploadMaterialContext uploadMaterialContext = uploadMaterialContextCaptor.getValue();
         assertThat(uploadMaterialContext, notNullValue());
         assertThat(uploadMaterialContext.getEmailNotifications(), nullValue());
-    }
 
+        verify(sender, times(2)).sendAsAdmin(sendAsAdminEnvelopeCaptor.capture());
+        final List<Envelope<JsonObject>> sendAsAdminEnvelopes = sendAsAdminEnvelopeCaptor.getAllValues();
+
+        final Envelope<JsonObject> documentDeliveryCommand = sendAsAdminEnvelopes.stream()
+                .filter(envelope -> !envelope.payload().containsKey("caseId"))
+                .findFirst().orElseThrow();
+        assertThat(documentDeliveryCommand.payload().getString("materialId"), is(materialId));
+        assertThat(documentDeliveryCommand.payload().getString("emailStatus"), is("NOT_REQUIRED"));
+        assertThat(documentDeliveryCommand.payload().containsKey("materialStatus"), is(false));
+
+        final Envelope<JsonObject> documentDeliverySjpCaseCommand = sendAsAdminEnvelopes.stream()
+                .filter(envelope -> envelope.payload().containsKey("caseId"))
+                .findFirst().orElseThrow();
+        assertThat(documentDeliverySjpCaseCommand.metadata().name(), is("stagingdvla.command.handler.driver-notification-document-delivery"));
+        assertThat(documentDeliverySjpCaseCommand.payload().getString("materialId"), is(materialId));
+        assertThat(documentDeliverySjpCaseCommand.payload().getString("caseId"), is(caseId));
+        assertThat(documentDeliverySjpCaseCommand.payload().getString("sjpCorrelationId"), is(documentFileServiceId.toString()));
+        assertThat(documentDeliverySjpCaseCommand.payload().getString("sjpStatus"), is("PENDING"));
+    }
     private String buildDriverNotifiedString(final String resourcename, final int retrySequence) throws IOException {
         String inputPayload = Resources.toString(getResource(resourcename), defaultCharset());
         inputPayload = inputPayload.replace("MASTER_DEFENDANT_ID", masterDefendantId)

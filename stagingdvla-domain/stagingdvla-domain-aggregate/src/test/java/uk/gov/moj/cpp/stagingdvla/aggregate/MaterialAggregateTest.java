@@ -7,6 +7,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import uk.gov.justice.core.courts.MaterialDetails;
 import uk.gov.justice.core.courts.NowsMaterialRequestRecorded;
+import uk.gov.justice.cpp.stagingdvla.event.DvlaDocumentDeliveryRecorded;
 
 import java.util.List;
 import java.util.UUID;
@@ -43,6 +44,39 @@ public class MaterialAggregateTest {
         final Object object = eventStream.get(0);
         assertThat(object.getClass(), is(CoreMatchers.equalTo(NowsMaterialRequestRecorded.class)));
         assertThat(eventStream.get(0).getClass(), is(CoreMatchers.equalTo(NowsMaterialRequestRecorded.class)));
+    }
+
+    @Test
+    public void shouldRecordDocumentDelivery() {
+        final UUID materialId = randomUUID();
+
+        final List<Object> eventStream = aggregate.recordDocumentDelivery(
+                materialId, "PENDING", "SENT", "payload/blob/uri", "document/blob/uri", null, null, null).collect(toList());
+
+        assertThat(eventStream.size(), is(1));
+        final DvlaDocumentDeliveryRecorded event = (DvlaDocumentDeliveryRecorded) eventStream.get(0);
+        assertThat(event.getMaterialId(), is(materialId));
+        assertThat(event.getMaterialStatus(), is("PENDING"));
+        assertThat(event.getEmailStatus(), is("SENT"));
+        assertThat(event.getPayloadBlobUri(), is("payload/blob/uri"));
+        assertThat(event.getDocumentBlobUri(), is("document/blob/uri"));
+    }
+
+    @Test
+    public void shouldRecordDocumentDeliveryWithSjpCaseFields() {
+        final UUID materialId = randomUUID();
+        final UUID caseId = randomUUID();
+        final UUID sjpCorrelationId = randomUUID();
+
+        final List<Object> eventStream = aggregate.recordDocumentDelivery(
+                materialId, null, null, null, null, caseId, sjpCorrelationId, "PENDING").collect(toList());
+
+        assertThat(eventStream.size(), is(1));
+        final DvlaDocumentDeliveryRecorded event = (DvlaDocumentDeliveryRecorded) eventStream.get(0);
+        assertThat(event.getMaterialId(), is(materialId));
+        assertThat(event.getCaseId(), is(caseId));
+        assertThat(event.getSjpCorrelationId(), is(sjpCorrelationId));
+        assertThat(event.getSjpStatus(), is("PENDING"));
     }
 
 }
