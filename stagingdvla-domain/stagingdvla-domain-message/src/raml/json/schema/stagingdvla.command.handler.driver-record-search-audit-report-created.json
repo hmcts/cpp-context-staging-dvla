@@ -9,11 +9,31 @@
     },
     "reportFileId": {
       "type": "string"
+    },
+    "payloadFileUri": {
+      "type": "string",
+      "format": "uri"
+    },
+    "destinationFileUri": {
+      "type": "string",
+      "format": "uri"
     }
   },
   "required": [
-    "id",
-    "reportFileId"
+    "id"
+  ],
+  "oneOf": [
+    {
+      "required": [
+        "reportFileId"
+      ]
+    },
+    {
+      "required": [
+        "payloadFileUri",
+        "destinationFileUri"
+      ]
+    }
   ],
   "additionalProperties": false
 }
