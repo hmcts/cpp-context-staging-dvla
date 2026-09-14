@@ -1,41 +1,58 @@
 package uk.gov.moj.stagingdvla.it;
 
 import static com.google.common.collect.ImmutableMap.of;
+import static com.jayway.jsonpath.matchers.JsonPathMatchers.hasNoJsonPath;
 import static com.jayway.jsonpath.matchers.JsonPathMatchers.isJson;
 import static com.jayway.jsonpath.matchers.JsonPathMatchers.withJsonPath;
 import static java.util.UUID.randomUUID;
 import static org.apache.http.HttpStatus.SC_ACCEPTED;
+import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.hasItem;
+import static org.hamcrest.Matchers.hasKey;
+import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.nullValue;
 import static uk.gov.justice.services.test.utils.core.reflection.ReflectionUtil.setField;
 import static uk.gov.moj.cpp.platform.test.feature.toggle.FeatureStubber.stubFeaturesFor;
 import static uk.gov.moj.stagingdvla.stubs.DVLANotificationStub.verifyDVLANotificationCommandInvoked;
+import static uk.gov.moj.stagingdvla.stubs.DocumentGeneratorStub.latestGenerateDocumentRequests;
+import static uk.gov.moj.stagingdvla.stubs.DocumentGeneratorStub.publishDocumentAvailableEvent;
 import static uk.gov.moj.stagingdvla.stubs.DocumentGeneratorStub.stubDocumentCreate;
 import static uk.gov.moj.stagingdvla.stubs.DocumentGeneratorStub.stubGenerateDocument;
 import static uk.gov.moj.stagingdvla.stubs.DocumentGeneratorStub.verifyGenerateDocumentStubCommandInvoked;
 import static uk.gov.moj.stagingdvla.stubs.MaterialStub.verifyMaterialCreated;
 import static uk.gov.moj.stagingdvla.stubs.ProgressionStub.stubProgressionAddCourtDocument;
+import static uk.gov.moj.stagingdvla.stubs.SjpStub.stubSjpUploadCaseDocument;
 import static uk.gov.moj.stagingdvla.util.QueueUtil.EventListener;
 import static uk.gov.moj.stagingdvla.util.QueueUtil.listenFor;
 import static uk.gov.moj.stagingdvla.util.QueueUtil.privateEvents;
 import static uk.gov.moj.stagingdvla.util.QueueUtil.retrieveMessage;
 import static uk.gov.moj.stagingdvla.util.QueueUtil.retrieveMessageAsJsonObject;
+import static uk.gov.moj.stagingdvla.util.RestHelper.pollForResponse;
 import static uk.gov.moj.stagingdvla.util.RestHelper.postCommandWithUserId;
+import static uk.gov.moj.stagingdvla.util.StubUtil.stubUser;
 import static uk.gov.moj.stagingdvla.util.WireMockStubUtils.setupAsAuthorisedUser;
 
 import uk.gov.justice.cpp.stagingdvla.event.DriverNotified;
+import uk.gov.justice.cpp.stagingdvla.event.DvlaDocumentDeliveryRecorded;
 import uk.gov.justice.services.common.converter.JsonObjectToObjectConverter;
 import uk.gov.justice.services.common.converter.ObjectToJsonObjectConverter;
 import uk.gov.justice.services.common.converter.jackson.ObjectMapperProducer;
 import uk.gov.moj.stagingdvla.util.FileUtil;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 import javax.jms.MessageConsumer;
+import javax.json.JsonObject;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableMap;
@@ -52,14 +69,17 @@ public class DvlaNotificationIT extends AbstractIntegrationTest {
     private String hearingId;
     private String defendantId;
     private String caseId;
+    private String caseId2;
 
     private final ObjectMapper objectMapper = new ObjectMapperProducer().objectMapper();
     private final JsonObjectToObjectConverter jsonToObjectConverter = new JsonObjectToObjectConverter(objectMapper);
     private final ObjectToJsonObjectConverter objectToJsonObjectConverter = new ObjectToJsonObjectConverter(objectMapper);
 
     private final MessageConsumer consumerForDriverNotified = privateEvents.createPrivateConsumer("stagingdvla.event.driver-notified");
+    private final MessageConsumer consumerForDvlaDocumentDeliveryRecorded = privateEvents.createPrivateConsumer("stagingdvla.event.dvla-document-delivery-recorded");
 
     private final String DRIVER_NOTIFICATION_MEDIA_TYPE = "application/vnd.stagingdvla.command.driver-notification+json";
+    private final String DVLA_DOCUMENT_DELIVERY_MEDIA_TYPE = "application/vnd.stagingdvla.query.dvla-document-delivery+json";
     private final String DRIVER_NOTIFICATION_COMMAND_PAYLOAD = "stagingdvla.command.driver-notification.json";
     private final String DRIVER_D20REMOVAL_NOTIFICATION_COMMAND_PAYLOAD = "stagingdvla.command.driver-d20removal-notification.json";
     private final String DRIVER_NOTIFICATION_COMMAND_PAYLOAD_WITH_CONVICTING_COURT = "stagingdvla.command.driver-notification-with-convicting-court.json";
@@ -72,6 +92,7 @@ public class DvlaNotificationIT extends AbstractIntegrationTest {
     private final String DRIVER_NOTIFICATION_COMMAND_PAYLOAD_LINKED_CASE_3 = "stagingdvla.command.driver-notification-linkedcase-3.json";
     private final String DRIVER_NOTIFICATION_COMMAND_PAYLOAD_SJP_GENERATE_D20 = "stagingdvla.command.driver-notification-sjp-generate-d20.json";
     private final String DRIVER_NOTIFICATION_COMMAND_PAYLOAD_SJP_APPLICATION_GRANTED = "stagingdvla.command.driver-notification-sjp-application-granted.json";
+    private final String DRIVER_NOTIFICATION_COMMAND_PAYLOAD_SJP_CASE = "stagingdvla.command.driver-notification-sjp-case.json";
 
     private static final String STAGINGDVLA_CONTEXT = "stagingdvla";
 
@@ -81,6 +102,7 @@ public class DvlaNotificationIT extends AbstractIntegrationTest {
         stubDocumentCreate("Dummy");
         stubGenerateDocument("Dummy");
         stubProgressionAddCourtDocument();
+        stubSjpUploadCaseDocument();
         final ImmutableMap<String, Boolean> features = of("driverOut", true);
         stubFeaturesFor(STAGINGDVLA_CONTEXT, features);
     }
@@ -91,6 +113,7 @@ public class DvlaNotificationIT extends AbstractIntegrationTest {
         hearingId = randomUUID().toString();
         defendantId = randomUUID().toString();
         caseId = randomUUID().toString();
+        caseId2 = randomUUID().toString();
         setField(this.objectToJsonObjectConverter, "mapper", new ObjectMapperProducer().objectMapper());
         setField(this.jsonToObjectConverter, "objectMapper", new ObjectMapperProducer().objectMapper());
     }
@@ -111,11 +134,42 @@ public class DvlaNotificationIT extends AbstractIntegrationTest {
         assertThat(writeResponse.getStatusCode(), equalTo(SC_ACCEPTED));
 
         //Then
-        verifyEventIsCreated();
+        final DriverNotified driverNotified = jsonToObjectConverter.convert(
+                retrieveMessageAsJsonObject(consumerForDriverNotified).get(), DriverNotified.class);
+        assertThat(driverNotified, is(notNullValue()));
+
         verifyMaterialCreated();
         verifyDVLANotificationCommandInvoked();
         verifyGenerateDocumentStubCommandInvoked();
 
+        // stagingdvla.command.handler.driver-notification-document-delivery is invoked internally
+        // (once per document generation/upload step of the flow) - verify the flow's final
+        // stagingdvla.event.dvla-document-delivery-recorded event
+        final DvlaDocumentDeliveryRecorded finalDocumentDeliveryRecorded = retrieveFinalDvlaDocumentDeliveryRecordedEvent();
+        assertThat(finalDocumentDeliveryRecorded, is(notNullValue()));
+        assertThat(finalDocumentDeliveryRecorded.getMaterialId(), is(equalTo(driverNotified.getMaterialId())));
+
+        // verify the read side (dvla-document-delivery query API) reflects what the event stream just recorded -
+        // this is a non-SJP notification, so the delivery should carry no sjp case fields
+        final String queryUserId = randomUUID().toString();
+        stubUser(queryUserId);
+        final String materialId = driverNotified.getMaterialId().toString();
+        pollForResponse("/dvla-document-deliveries?materialId=" + materialId + "&materialStatus=PENDING",
+                DVLA_DOCUMENT_DELIVERY_MEDIA_TYPE, queryUserId,
+                allOf(
+                        withJsonPath("$.documentDeliveries[0].materialId", equalTo(materialId)),
+                        withJsonPath("$.documentDeliveries[0].materialStatus"),
+                        hasNoJsonPath("$.documentDeliveries[0].caseId")
+                ));
+    }
+
+    private DvlaDocumentDeliveryRecorded retrieveFinalDvlaDocumentDeliveryRecordedEvent() {
+        DvlaDocumentDeliveryRecorded lastEvent = null;
+        Optional<JsonObject> jsonObject;
+        while ((jsonObject = retrieveMessageAsJsonObject(consumerForDvlaDocumentDeliveryRecorded)).isPresent()) {
+            lastEvent = jsonToObjectConverter.convert(jsonObject.get(), DvlaDocumentDeliveryRecorded.class);
+        }
+        return lastEvent;
     }
 
     @Test
@@ -305,9 +359,89 @@ public class DvlaNotificationIT extends AbstractIntegrationTest {
         verifyGenerateDocumentStubCommandInvoked();
     }
 
+    @Test
+    public void shouldRecordDvlaDocumentDeliverySjpCaseWhenDocumentAvailableForSjpCase() throws IOException {
+        //Given: create the driver notification for an SJP case (initiationCode "J") carrying two cases.
+        // DefendantAggregate/DriverNotifiedEngine creates one DriverNotified event PER incoming case
+        // (its own materialId, its own document-generation cycle) - so this posts a single command
+        // but two independent materials flow through the pipeline below.
+        final String body = getPayload(DRIVER_NOTIFICATION_COMMAND_PAYLOAD_SJP_CASE);
+
+        final Response writeResponse = postCommandWithUserId(getWriteUrl("/driver-notification"),
+                DRIVER_NOTIFICATION_MEDIA_TYPE, body, USER_GROUP);
+        assertThat(writeResponse.getStatusCode(), equalTo(SC_ACCEPTED));
+
+        // two separate driver-notified events come back, one per case/material
+        final Map<String, String> materialIdByCaseId = new HashMap<>();
+        for (int i = 0; i < 2; i++) {
+            final DriverNotified driverNotified = jsonToObjectConverter.convert(
+                    retrieveMessageAsJsonObject(consumerForDriverNotified).get(), DriverNotified.class);
+            assertThat(driverNotified.getCases(), hasSize(1));
+            materialIdByCaseId.put(driverNotified.getCases().get(0).getCaseId().toString(), driverNotified.getMaterialId().toString());
+        }
+        assertThat(materialIdByCaseId.keySet(), containsInAnyOrder(caseId, caseId2));
+
+        final String queryUserId = randomUUID().toString();
+        stubUser(queryUserId);
+
+        // drain the Pending status raised by the document generation step for each material, before triggering document-available
+        for (int i = 0; i < 2; i++) {
+            final JsonPath documentGeneratedEvent = retrieveMessage(consumerForDvlaDocumentDeliveryRecorded);
+            assertThat(documentGeneratedEvent, is(notNullValue()));
+            assertThat(materialIdByCaseId.values(), hasItem(documentGeneratedEvent.getString("materialId")));
+            assertThat(documentGeneratedEvent.getString("materialStatus"), equalTo("PENDING"));
+        }
+
+        // capture the two genuine document-generation requests (one per material) that were actually stored,
+        // so each manually published document-available event resolves against real file-service data
+        final List<JsonPath> generateDocumentRequests = latestGenerateDocumentRequests(2);
+
+        //When/Then: simulate systemdocgenerator raising document-available for each generated document in turn,
+        // and verify the resulting SJP case document-delivery event matches that document's own material/case
+        for (final JsonPath generateDocumentRequest : generateDocumentRequests) {
+            final String payloadFileServiceId = generateDocumentRequest.getString("payloadFileServiceId");
+            final String sourceCorrelationId = generateDocumentRequest.getString("sourceCorrelationId");
+            final String documentFileServiceId = publishDocumentAvailableEvent(payloadFileServiceId, sourceCorrelationId);
+
+            // handleDvlaDocumentAvailable sends more than one dvla-document-delivery-recorded event per
+            // material for this fixture (emailStatus=Not Required, then the sjpStatus one below, plus an
+            // async materialStatus=Completed once the material upload lands) - they all land on this same
+            // consumer now that both tables/events are merged, so drain until we find the SJP-case one
+            // (identified by carrying a caseId) rather than assuming it's the very next message
+            final JsonPath sjpCaseDocumentDeliveryEvent = retrieveSjpCaseDocumentDeliveryEvent();
+            final String eventCaseId = sjpCaseDocumentDeliveryEvent.getString("caseId");
+            assertThat(materialIdByCaseId, hasKey(eventCaseId));
+            assertThat(sjpCaseDocumentDeliveryEvent.getString("materialId"), equalTo(materialIdByCaseId.get(eventCaseId)));
+            assertThat(sjpCaseDocumentDeliveryEvent.getString("sjpCorrelationId"), equalTo(documentFileServiceId));
+            assertThat(sjpCaseDocumentDeliveryEvent.getString("sjpStatus"), equalTo("PENDING"));
+
+            // verify the read side (dvla-document-delivery query API), filtering by caseId, joins back
+            // to the right material and carries this case's own sjp status - not the other case's
+            pollForResponse("/dvla-document-deliveries?caseId=" + eventCaseId,
+                    DVLA_DOCUMENT_DELIVERY_MEDIA_TYPE, queryUserId,
+                    allOf(
+                            withJsonPath("$.documentDeliveries[0].materialId", equalTo(materialIdByCaseId.get(eventCaseId))),
+                            withJsonPath("$.documentDeliveries[0].caseId", equalTo(eventCaseId)),
+                            withJsonPath("$.documentDeliveries[0].sjpCorrelationId", equalTo(documentFileServiceId)),
+                            withJsonPath("$.documentDeliveries[0].sjpStatus", equalTo(sjpCaseDocumentDeliveryEvent.getString("sjpStatus")))
+                    ));
+        }
+    }
+
+    private JsonPath retrieveSjpCaseDocumentDeliveryEvent() {
+        JsonPath event;
+        do {
+            event = retrieveMessage(consumerForDvlaDocumentDeliveryRecorded);
+            assertThat(event, is(notNullValue()));
+        } while (event.getString("caseId") == null);
+        return event;
+    }
+
+
     private String getPayload(String fileName) {
         String body = FileUtil.getPayload(fileName);
         body = body.replaceAll("%HEARING_ID%", hearingId)
+                .replaceAll("%CASE_ID_2%", caseId2)
                 .replaceAll("%CASE_ID%", caseId)
                 .replaceAll("%DEFENDANT_ID%", defendantId);
         return body;

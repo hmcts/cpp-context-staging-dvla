@@ -1,0 +1,71 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://justice.gov.uk/json/schemas/domains/stagingdvla/stagingdvla.query.dvla-document-delivery.json",
+  "type": "object",
+  "properties": {
+    "documentDeliveries": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/documentDelivery"
+      },
+      "minItems": 0
+    },
+    "pageNumber": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "pageSize": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "totalResults": {
+      "type": "integer",
+      "minimum": 0
+    }
+  },
+  "required": [
+    "documentDeliveries",
+    "pageNumber",
+    "pageSize",
+    "totalResults"
+  ],
+  "definitions": {
+    "documentDelivery": {
+      "type": "object",
+      "properties": {
+        "materialId": {
+          "$ref": "http://justice.gov.uk/domain/core/common/definitions.json#/definitions/uuid"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "materialStatus": {
+          "type": "string"
+        },
+        "emailStatus": {
+          "type": "string"
+        },
+        "payloadBlobUri": {
+          "type": "string"
+        },
+        "documentBlobUri": {
+          "type": "string"
+        },
+        "caseId": {
+          "$ref": "http://justice.gov.uk/domain/core/common/definitions.json#/definitions/uuid"
+        },
+        "sjpCorrelationId": {
+          "$ref": "http://justice.gov.uk/domain/core/common/definitions.json#/definitions/uuid"
+        },
+        "sjpStatus": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "materialId",
+        "createdAt"
+      ]
+    }
+  }
+}

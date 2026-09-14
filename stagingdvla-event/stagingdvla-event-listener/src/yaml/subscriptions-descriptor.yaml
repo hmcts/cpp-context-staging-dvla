@@ -13,6 +13,8 @@ subscriptions_descriptor:
           schema_uri: http://justice.gov.uk/cpp/stagingdvla/event/driver-notified-next-retry-cancelled.json
         - name: stagingdvla.event.driver-audit-record
           schema_uri: http://justice.gov.uk/cpp/stagingdvla/event/driver-audit-record.json
+        - name: stagingdvla.event.dvla-document-delivery-recorded
+          schema_uri: http://justice.gov.uk/cpp/stagingdvla/event/dvla-document-delivery-recorded.json
         - name: stagingdvla.event.driver-search-audit-report-requested
           schema_uri: http://justice.gov.uk/cpp/stagingdvla/event/driver-search-audit-report-requested.json
         - name: stagingdvla.event.driver-search-audit-report-deleted

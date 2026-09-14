@@ -208,6 +208,54 @@ baseUri: http://localhost:8080/stagingdvla-query-api/query/api/rest/stagingdvla
             example: !include json/stagingdvla.query.driver-search-audit-reports.json
 
 
+/dvla-document-deliveries:
+  description: |
+    return DVLA document delivery records, including SJP case details where applicable.
+    At least one of materialId, caseId or materialStatus must be supplied - unfiltered
+    "return everything" requests are rejected with a 400. caseId and materialStatus can each
+    match many records and are paginated with pageNumber/pageSize; materialId is the primary
+    key so it can only ever match zero or one record.
+  get:
+    description: |
+      ...
+      (mapping):
+          responseType: application/vnd.stagingdvla.query.dvla-document-delivery+json
+          name: stagingdvla.query.dvla-document-delivery
+      ...
+    queryParameters:
+      materialId:
+        description: Material ID of the DVLA document delivery
+        type: string
+        example: b44fa9bb-dc36-4375-83a9-ff1bc4cd4374
+        required: false
+      caseId:
+        description: SJP case ID associated with the document delivery
+        type: string
+        example: c44fa9bb-dc36-4375-83a9-ff1bc4cd4374
+        required: false
+      materialStatus:
+        description: Document delivery (material) status
+        type: string
+        example: SENT
+        required: false
+      pageNumber:
+        description: 1-based page number, used when filtering by caseId and/or materialStatus. Defaults to 1.
+        type: integer
+        example: 1
+        required: false
+      pageSize:
+        description: Page size, used when filtering by caseId and/or materialStatus. Defaults to 20, maximum 100.
+        type: integer
+        example: 20
+        required: false
+    responses:
+      200:
+        body:
+          application/vnd.stagingdvla.query.dvla-document-delivery+json:
+            schema: !include json/schema/stagingdvla.query.dvla-document-delivery.json
+            example: !include json/stagingdvla.query.dvla-document-delivery.json
+
+
 /driver-audit-report/{reportId}/material/{materialId}:
   uriParameters:
     reportId:

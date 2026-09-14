@@ -8,8 +8,10 @@ import static uk.gov.justice.domain.aggregate.matcher.EventSwitcher.when;
 import uk.gov.justice.core.courts.EmailNotificationSent;
 import uk.gov.justice.core.courts.MaterialDetails;
 import uk.gov.justice.core.courts.NowsMaterialRequestRecorded;
+import uk.gov.justice.cpp.stagingdvla.event.DvlaDocumentDeliveryRecorded;
 import uk.gov.justice.domain.aggregate.Aggregate;
 
+import java.util.UUID;
 import java.util.stream.Stream;
 
 public class MaterialAggregate implements Aggregate {
@@ -36,6 +38,22 @@ public class MaterialAggregate implements Aggregate {
             return Stream.of(new EmailNotificationSent(this.details));
         }
         return null;
+    }
+
+    public Stream<Object> recordDocumentDelivery(final UUID materialId, final String materialStatus,
+                                                   final String emailStatus, final String payloadBlobUri, final String documentBlobUri,
+                                                   final UUID caseId, final UUID sjpCorrelationId, final String sjpStatus) {
+        return apply(Stream.of(DvlaDocumentDeliveryRecorded
+                .dvlaDocumentDeliveryRecorded()
+                .withMaterialId(materialId)
+                .withMaterialStatus(materialStatus)
+                .withEmailStatus(emailStatus)
+                .withPayloadBlobUri(payloadBlobUri)
+                .withDocumentBlobUri(documentBlobUri)
+                .withCaseId(caseId)
+                .withSjpCorrelationId(sjpCorrelationId)
+                .withSjpStatus(sjpStatus)
+                .build()));
     }
 
 }

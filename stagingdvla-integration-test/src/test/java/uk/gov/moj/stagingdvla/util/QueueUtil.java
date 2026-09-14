@@ -17,7 +17,9 @@ import javax.jms.MessageProducer;
 import javax.jms.Session;
 import javax.jms.TextMessage;
 import javax.jms.Topic;
+import javax.json.Json;
 import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 
 import io.restassured.path.json.JsonPath;
 import org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory;
@@ -43,6 +45,8 @@ public class QueueUtil {
     private static final long MESSAGE_RETRIEVE_TRIAL_TIMEOUT = 1000;
     private static final int RETRY_TIMEOUT_IN_MILLIS = 5000;
     private static final int DEFAULT_POLL_TIMEOUT_IN_MILLIS = 3000;
+    private static final String CPPNAME_PROPERTY = "CPPNAME";
+    private static final String METADATA_KEY = "_metadata";
 
     private Session session;
 
@@ -313,6 +317,25 @@ public class QueueUtil {
             } catch (JMSException e) {
                 throw new RuntimeException(e);
             }
+        }
+    }
+
+    /**
+     * Publishes a message onto this topic, simulating an event raised by an external
+     * (not locally deployed) service — e.g. material.material-added raised by the material context.
+     */
+    public void publish(final String eventName, final JsonObject metadata, final JsonObject payload) {
+        try {
+            final JsonObjectBuilder envelopeBuilder = Json.createObjectBuilder();
+            payload.forEach(envelopeBuilder::add);
+            envelopeBuilder.add(METADATA_KEY, metadata);
+
+            final TextMessage message = session.createTextMessage(envelopeBuilder.build().toString());
+            message.setStringProperty(CPPNAME_PROPERTY, eventName);
+
+            createProducer().send(message);
+        } catch (final JMSException e) {
+            throw new RuntimeException(e);
         }
     }
 }

@@ -1,8 +1,16 @@
 package uk.gov.moj.cpp.stagingdvla.service;
 
+import static uk.gov.justice.services.core.annotation.Component.EVENT_PROCESSOR;
+import static uk.gov.justice.services.messaging.Envelope.metadataFrom;
+import static uk.gov.justice.services.messaging.JsonObjects.createObjectBuilder;
+
 import uk.gov.justice.cpp.stagingdvla.event.DriverNotified;
 import uk.gov.justice.services.common.converter.ObjectToJsonObjectConverter;
+import uk.gov.justice.services.core.annotation.ServiceComponent;
+import uk.gov.justice.services.core.sender.Sender;
+import uk.gov.justice.services.messaging.Envelope;
 import uk.gov.justice.services.messaging.JsonEnvelope;
+import uk.gov.moj.cpp.stagingdvla.domain.constants.DvlaDocumentDeliveryMaterialStatus;
 
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -19,6 +27,7 @@ public class DocumentGeneratorService {
 
     public static final String DVLA_DOCUMENT_TEMPLATE_NAME = "EDT_DriverOutNotification";
     public static final String DVLA_DOCUMENT_ORDER = "DVLADocumentOrder";
+    public static final String STAGINGDVLA_COMMAND_HANDLER_DRIVER_NOTIFICATION_DOCUMENT_DELIVERY = "stagingdvla.command.handler.driver-notification-document-delivery";
     private static final Logger LOGGER = LoggerFactory.getLogger(DocumentGeneratorService.class);
     private static final DateTimeFormatter TIMESTAMP_FORMATTER = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
     private static final String ERROR_MESSAGE = "Error while uploading document generation or upload ";
@@ -29,6 +38,10 @@ public class DocumentGeneratorService {
     private final ObjectToJsonObjectConverter objectToJsonObjectConverter;
 
     private final FileService fileService;
+
+    @Inject
+    @ServiceComponent(EVENT_PROCESSOR)
+    private Sender sender;
 
     @Inject
     public DocumentGeneratorService(
@@ -62,9 +75,24 @@ public class DocumentGeneratorService {
                     fileId);
             systemDocGeneratorService.generateDocument(documentGenerationRequest, originatingEnvelope);
 
+            recordDocumentDeliveryStatus(originatingEnvelope, driverNotified.getMaterialId());
         } catch (RuntimeException e) {
             LOGGER.error(ERROR_MESSAGE, e);
         }
+
+
+    }
+
+    private void recordDocumentDeliveryStatus(final JsonEnvelope originatingEnvelope, final UUID materialId) {
+        final JsonObject payload = createObjectBuilder()
+                .add("materialId", materialId.toString())
+                .add("materialStatus", DvlaDocumentDeliveryMaterialStatus.PENDING.name())
+                .build();
+
+        sender.sendAsAdmin(Envelope.envelopeFrom(
+                metadataFrom(originatingEnvelope.metadata())
+                        .withName(STAGINGDVLA_COMMAND_HANDLER_DRIVER_NOTIFICATION_DOCUMENT_DELIVERY),
+                payload));
     }
 
     private String getTimeStampAmendedFileName(final String fileName) {

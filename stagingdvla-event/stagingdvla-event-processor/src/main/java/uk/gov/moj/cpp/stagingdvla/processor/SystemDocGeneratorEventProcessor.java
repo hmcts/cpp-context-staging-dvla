@@ -38,6 +38,8 @@ import uk.gov.justice.services.messaging.JsonEnvelope;
 import uk.gov.justice.services.messaging.Metadata;
 import uk.gov.moj.cpp.material.url.MaterialUrlGenerator;
 import uk.gov.moj.cpp.stagingdvla.SjpDocumentTypes;
+import uk.gov.moj.cpp.stagingdvla.domain.constants.DvlaDocumentDeliveryEmailStatus;
+import uk.gov.moj.cpp.stagingdvla.domain.constants.DvlaDocumentDeliveryMaterialStatus;
 import uk.gov.moj.cpp.stagingdvla.service.ApplicationParameters;
 import uk.gov.moj.cpp.stagingdvla.service.UploadMaterialContext;
 import uk.gov.moj.cpp.stagingdvla.service.UploadMaterialService;
@@ -70,6 +72,7 @@ public class SystemDocGeneratorEventProcessor {
     public static final String SOURCE_CORRELATION_ID = "sourceCorrelationId";
     public static final String PAYLOAD_FILE_SERVICE_ID = "payloadFileServiceId";
     public static final String ORIGINATING_SOURCE = "originatingSource";
+    public static final String STAGINGDVLA_COMMAND_HANDLER_DRIVER_NOTIFICATION_DOCUMENT_DELIVERY = "stagingdvla.command.handler.driver-notification-document-delivery";
 
     private static final String CODE_FOR_SJP_CASE = "J";
     private static final String MATERIAL_ID = "materialId";
@@ -160,6 +163,8 @@ public class SystemDocGeneratorEventProcessor {
 
                 if (shouldSendEmailNotification(driverNotified)) {
                     emailNotifications = getEmailNotification(driverNotified);
+                } else {
+                    recordEmailNotRequired(envelope, driverNotified.getMaterialId());
                 }
 
                 final UUID generateDocumentFileId = fromString(documentFileServiceId);
@@ -184,6 +189,17 @@ public class SystemDocGeneratorEventProcessor {
         } catch (FileServiceException fileServiceException) {
             LOGGER.error("failed to retrieve json payload from file service", fileServiceException);
         }
+    }
+
+    private void recordEmailNotRequired(final JsonEnvelope originatingEvent, final UUID materialId) {
+        final JsonObject payload = createObjectBuilder()
+                .add(MATERIAL_ID, materialId.toString())
+                .add("emailStatus", DvlaDocumentDeliveryEmailStatus.NOT_REQUIRED.name())
+                .build();
+
+        sender.sendAsAdmin(Envelope.envelopeFrom(
+                metadataFrom(originatingEvent.metadata()).withName(STAGINGDVLA_COMMAND_HANDLER_DRIVER_NOTIFICATION_DOCUMENT_DELIVERY).build(),
+                payload));
     }
 
     private static boolean shouldSendEmailNotification(final DriverNotified driverNotified) {
@@ -272,7 +288,23 @@ public class SystemDocGeneratorEventProcessor {
                     uploadCaseDocumentPayload);
 
             sender.send(envelope);
+            recordDocumentDeliverySjpCase(sender, metadata, driverNotified.getMaterialId(), c.getCaseId(), fileId, DvlaDocumentDeliveryMaterialStatus.PENDING);
         });
+    }
+
+    private static void recordDocumentDeliverySjpCase(final Sender sender, final Metadata metadata, final UUID materialId,
+                                                        final UUID caseId, final UUID sjpCorrelationId,
+                                                        final DvlaDocumentDeliveryMaterialStatus sjpStatus) {
+        final JsonObject payload = createObjectBuilder()
+                .add(MATERIAL_ID, materialId.toString())
+                .add("caseId", caseId.toString())
+                .add("sjpCorrelationId", sjpCorrelationId.toString())
+                .add("sjpStatus", sjpStatus.name())
+                .build();
+
+        sender.sendAsAdmin(Envelope.envelopeFrom(
+                JsonEnvelope.metadataFrom(metadata).withName(STAGINGDVLA_COMMAND_HANDLER_DRIVER_NOTIFICATION_DOCUMENT_DELIVERY),
+                payload));
     }
 
     private void addCourtDocumentForCCCase(final Sender sender, final Metadata metadata, final DriverNotified driverNotified, final String fileName) {
