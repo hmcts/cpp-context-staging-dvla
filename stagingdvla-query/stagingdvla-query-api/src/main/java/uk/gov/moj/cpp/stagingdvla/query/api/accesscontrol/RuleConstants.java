@@ -33,4 +33,8 @@ public class RuleConstants {
         return new String[]{GROUP_AUDITORS};
     }
 
+    public static String[] getQueryDvlaDocumentDelivery() {
+        return new String[]{GROUP_SYSTEM_USERS, GROUP_SECOND_LINE_SUPPORT};
+    }
+
 }

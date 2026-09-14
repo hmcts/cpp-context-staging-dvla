@@ -37,6 +37,7 @@ import uk.gov.moj.cpp.stagingdvla.service.DocumentGeneratorService;
 import uk.gov.moj.cpp.stagingdvla.service.NotificationNotifyService;
 import uk.gov.moj.cpp.stagingdvla.service.NotifyDrivingConvictionService;
 import uk.gov.moj.cpp.stagingdvla.service.scheduler.NotifyDrivingConvictionRetryScheduler;
+import uk.gov.moj.cpp.stagingdvla.domain.constants.DvlaDocumentDeliveryEmailStatus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,6 +66,7 @@ public class DriverNotifiedEventProcessor {
     private static final String NEW_ENDORSEMENT = "New Endorsement - ";
     private static final String UPDATED_ENDORSEMENT = "Updated Endorsement - ";
     private static final String REMOVAL_OF_ENDORSEMENT = "Removal of Endorsement - ";
+    private static final String STAGINGDVLA_COMMAND_HANDLER_DRIVER_NOTIFICATION_DOCUMENT_DELIVERY = "stagingdvla.command.handler.driver-notification-document-delivery";
 
     @Inject
     private Sender sender;
@@ -195,7 +197,21 @@ public class DriverNotifiedEventProcessor {
         notifyObjectBuilder.add(PERSONALISATION, createObjectBuilder()
                 .add(SUBJECT, getPersonalisationValue(emailChannel.getPersonalisation()))
                 .build());
+
+        final UUID materialId = emailNotification.getDetails().getMaterialId();
         this.notificationNotifyService.sendEmailNotification(envelope, notifyObjectBuilder.build());
+        recordDocumentDeliveryStatus(envelope, materialId);
+    }
+
+    private void recordDocumentDeliveryStatus(final JsonEnvelope originatingEvent, final UUID materialId) {
+        final JsonObject payload = createObjectBuilder()
+                .add("materialId", materialId.toString())
+                .add("emailStatus", DvlaDocumentDeliveryEmailStatus.PENDING.name())
+                .build();
+
+        sender.sendAsAdmin(Envelope.envelopeFrom(
+                metadataFrom(originatingEvent.metadata()).withName(STAGINGDVLA_COMMAND_HANDLER_DRIVER_NOTIFICATION_DOCUMENT_DELIVERY).build(),
+                payload));
     }
 
     private String getEmailAddress(final DriverNotified driverNotified) {

@@ -11,6 +11,7 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static uk.gov.justice.services.test.utils.core.reflection.ReflectionUtil.setField;
 
 import uk.gov.justice.core.courts.CourtCentre;
 import uk.gov.justice.cpp.stagingdvla.event.Cases;
@@ -18,7 +19,9 @@ import uk.gov.justice.cpp.stagingdvla.event.DriverNotified;
 import uk.gov.justice.services.common.converter.ObjectToJsonObjectConverter;
 import uk.gov.justice.services.common.converter.StringToJsonObjectConverter;
 import uk.gov.justice.services.core.sender.Sender;
+import uk.gov.justice.services.messaging.Envelope;
 import uk.gov.justice.services.messaging.JsonEnvelope;
+import uk.gov.moj.cpp.stagingdvla.domain.constants.DvlaDocumentDeliveryMaterialStatus;
 import java.util.Collections;
 import java.util.UUID;
 
@@ -27,6 +30,7 @@ import static uk.gov.justice.services.test.utils.core.messaging.MetadataBuilderF
 import javax.json.JsonObject;
 
 import com.google.common.io.Resources;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -61,6 +65,11 @@ public class DocumentGeneratorServiceTest {
     private static final String PROGRESSION_ADD_COURT_DOCUMENT = "progression.add-court-document";
     private static final String SJP_UPLOAD_CASE_DOCUMENT = "sjp.upload-case-document" ;
 
+    @BeforeEach
+    public void setUp() {
+        setField(documentGeneratorService, "sender", sender);
+    }
+
     @Test
     public void shouldGenerateDvlaDocument() throws Exception {
         String code = "C" ;
@@ -88,6 +97,8 @@ public class DocumentGeneratorServiceTest {
         assertThat(request.getTemplateIdentifier(),is("EDT_DriverOutNotification"));
         assertThat(request.getSourceCorrelationId(),is(userId.toString()));
         assertThat(request.getPayloadFileServiceId(),is(payloadFileId));
+
+        verifyDocumentDeliveryStatusRecorded(driverNotified, DvlaDocumentDeliveryMaterialStatus.PENDING);
     }
 
     @Test
@@ -117,8 +128,19 @@ public class DocumentGeneratorServiceTest {
         assertThat(request.getTemplateIdentifier(),is("EDT_DriverOutNotification"));
         assertThat(request.getSourceCorrelationId(),is(userId.toString()));
         assertThat(request.getPayloadFileServiceId(),is(payloadFileId));
+
+        verifyDocumentDeliveryStatusRecorded(driverNotified, DvlaDocumentDeliveryMaterialStatus.PENDING);
     }
 
+    private void verifyDocumentDeliveryStatusRecorded(final DriverNotified driverNotified, final DvlaDocumentDeliveryMaterialStatus expectedStatus) {
+        final ArgumentCaptor<Envelope> envelopeArgumentCaptor = ArgumentCaptor.forClass(Envelope.class);
+        verify(sender).sendAsAdmin(envelopeArgumentCaptor.capture());
+
+        final Envelope<JsonObject> capturedEnvelope = envelopeArgumentCaptor.getValue();
+        assertThat(capturedEnvelope.metadata().name(), is(DocumentGeneratorService.STAGINGDVLA_COMMAND_HANDLER_DRIVER_NOTIFICATION_DOCUMENT_DELIVERY));
+        assertThat(capturedEnvelope.payload().getString("materialId"), is(driverNotified.getMaterialId().toString()));
+        assertThat(capturedEnvelope.payload().getString("materialStatus"), is(expectedStatus.name()));
+    }
 
     public static DriverNotified generateDriverNotified(String initiationCode) {
         DriverNotified driverNotified = DriverNotified.driverNotified()

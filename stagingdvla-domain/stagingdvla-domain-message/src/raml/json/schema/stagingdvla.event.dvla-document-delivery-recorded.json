@@ -1,0 +1,44 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://justice.gov.uk/cpp/stagingdvla/event/dvla-document-delivery-recorded.json",
+  "description": "Records or updates the DVLA document delivery status for a material",
+  "type": "object",
+  "properties": {
+    "materialId": {
+      "description": "The identifier of the material this document delivery record relates to",
+      "$ref": "http://justice.gov.uk/domain/core/common/definitions.json#/definitions/uuid"
+    },
+    "materialStatus": {
+      "description": "The status of the material",
+      "type": "string"
+    },
+    "emailStatus": {
+      "description": "The status of the email notification",
+      "type": "string"
+    },
+    "payloadBlobUri": {
+      "description": "The blob storage URI of the payload",
+      "type": "string"
+    },
+    "documentBlobUri": {
+      "description": "The blob storage URI of the document",
+      "type": "string"
+    },
+    "caseId": {
+      "description": "The identifier of the SJP case this material relates to",
+      "$ref": "http://justice.gov.uk/domain/core/common/definitions.json#/definitions/uuid"
+    },
+    "sjpCorrelationId": {
+      "description": "The correlation identifier for the SJP case processing",
+      "$ref": "http://justice.gov.uk/domain/core/common/definitions.json#/definitions/uuid"
+    },
+    "sjpStatus": {
+      "description": "The SJP status of the material for this case (one of the DvlaDocumentDeliveryMaterialStatus values: PENDING, SUCCESS, FAILED)",
+      "type": "string"
+    }
+  },
+  "required": [
+    "materialId"
+  ],
+  "additionalProperties": false
+}

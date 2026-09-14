@@ -64,5 +64,14 @@ rule "Query - Rule for Driver Search Audit Report Download"
     $outcome.setSuccess(true);
 end
 
+rule "Query - Rule for DVLA Document Delivery"
+  when
+    $outcome: Outcome();
+    $action: Action(name == "stagingdvla.query.dvla-document-delivery");
+    eval(userAndGroupProvider.isMemberOfAnyOfTheSuppliedGroups($action, RuleConstants.getQueryDvlaDocumentDelivery()));
+  then
+    $outcome.setSuccess(true);
+end
+
 
 

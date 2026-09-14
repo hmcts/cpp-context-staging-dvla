@@ -21,6 +21,7 @@ import uk.gov.moj.cpp.stagingdvla.query.view.StagingdvlaQueryView;
 import uk.gov.moj.cpp.stagingdvla.query.view.request.DriverAuditQueryParameters;
 import uk.gov.moj.cpp.stagingdvla.query.view.request.DriverQueryParameters;
 import uk.gov.moj.cpp.stagingdvla.query.view.request.DriverSummaryQueryParameters;
+import uk.gov.moj.cpp.stagingdvla.query.view.request.DvlaDocumentDeliveryQueryParameters;
 import uk.gov.moj.cpp.stagingdvla.query.view.response.Address;
 import uk.gov.moj.cpp.stagingdvla.query.view.response.Disqualification;
 import uk.gov.moj.cpp.stagingdvla.query.view.response.Driver;
@@ -37,11 +38,14 @@ import uk.gov.moj.cpp.stagingdvla.query.view.response.PrisonSentenceSuspendedPer
 import uk.gov.moj.cpp.stagingdvla.query.view.response.Restriction;
 import uk.gov.moj.cpp.stagingdvla.query.view.response.TestPass;
 import uk.gov.moj.cpp.stagingdvla.query.view.response.TokenValidity;
+import uk.gov.moj.cpp.stagingdvla.query.view.response.DvlaDocumentDeliveryResponse;
 import uk.gov.moj.cpp.stagingdvla.query.view.response.UnstructuredAddress;
 import uk.gov.moj.cpp.stagingdvla.query.view.service.DriverService;
+import uk.gov.moj.cpp.stagingdvla.query.view.service.DvlaDocumentDeliveryService;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -66,6 +70,9 @@ public class StagingdvlaQueryApiTest {
 
     @Mock
     private DriverService service;
+
+    @Mock
+    private DvlaDocumentDeliveryService dvlaDocumentDeliveryService;
 
     @Mock
     StagingdvlaQueryView stagingdvlaQueryView;
@@ -104,6 +111,22 @@ public class StagingdvlaQueryApiTest {
 
         assertThat(driverResponseEnvelope.metadata(), withMetadataEnvelopedFrom(envelope));
         assertThat(driverResponseEnvelope.payload(), is(driverResponse));
+    }
+
+    @Test
+    void shouldReturnDvlaDocumentDeliveries() {
+        final DvlaDocumentDeliveryQueryParameters queryParameters = new DvlaDocumentDeliveryQueryParameters(
+                UUID.randomUUID().toString(), null, "SENT");
+        final DvlaDocumentDeliveryResponse response = new DvlaDocumentDeliveryResponse(List.of(), 1, 20, 0);
+        final Envelope<DvlaDocumentDeliveryQueryParameters> envelope = envelopeFrom(metadataWithDefaults()
+                .withName("stagingdvla.query.dvla-document-delivery"), queryParameters);
+
+        when(dvlaDocumentDeliveryService.findDocumentDeliveries(queryParameters)).thenReturn(response);
+
+        final Envelope<DvlaDocumentDeliveryResponse> responseEnvelope = stagingdvlaQueryApi.findDvlaDocumentDeliveries(envelope);
+
+        assertThat(responseEnvelope.metadata(), withMetadataEnvelopedFrom(envelope));
+        assertThat(responseEnvelope.payload(), is(response));
     }
 
     @Test

@@ -12,11 +12,16 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.isA;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import uk.gov.justice.core.courts.EmailNotificationSent;
+import uk.gov.justice.core.courts.MaterialDetails;
+import uk.gov.justice.core.courts.Personalisation;
+import uk.gov.justice.core.courts.notification.EmailChannel;
 import uk.gov.justice.cpp.stagingdvla.event.DriverNotified;
 import uk.gov.justice.services.common.converter.JsonObjectToObjectConverter;
 import uk.gov.justice.services.common.converter.StringToJsonObjectConverter;
@@ -32,11 +37,15 @@ import uk.gov.moj.cpp.stagingdvla.notify.azure.DvlaApimConfig;
 import uk.gov.moj.cpp.stagingdvla.notify.driving.conviction.NotifyDrivingConvictionResponse;
 import uk.gov.moj.cpp.stagingdvla.service.ApplicationParameters;
 import uk.gov.moj.cpp.stagingdvla.service.DocumentGeneratorService;
+import uk.gov.moj.cpp.stagingdvla.service.NotificationNotifyService;
 import uk.gov.moj.cpp.stagingdvla.service.NotifyDrivingConvictionService;
 import uk.gov.moj.cpp.stagingdvla.service.scheduler.NotifyDrivingConvictionRetryScheduler;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.UUID;
 
+import javax.json.Json;
 import javax.json.JsonObject;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -88,6 +97,9 @@ public class DriverNotifiedEventProcessorTest {
 
     @Mock
     private NotifyDrivingConvictionResponse notifyDrivingConvictionResponse;
+
+    @Mock
+    private NotificationNotifyService notificationNotifyService;
 
     @Mock
     private NotifyDrivingConvictionRetryScheduler scheduler;
@@ -230,6 +242,52 @@ public class DriverNotifiedEventProcessorTest {
 
         verify(notifyDrivingConvictionService, times(0)).notifyDrivingConviction(any());
         verify(documentGeneratorService, times(1)).generateDvlaDocument(any(), any(), any());
+    }
+
+    @Test
+    public void shouldRecordEmailStatusAsPENDINGWhenEmailNotificationSentSuccessfully() {
+        final UUID materialId = randomUUID();
+        final JsonEnvelope event = emailNotificationSentEventFor(materialId);
+
+        driverNotifiedEventProcessor.handleSentEmailNotificationEvent(event);
+
+        verify(notificationNotifyService).sendEmailNotification(any(), any());
+        verify(sender).sendAsAdmin(envelopeArgumentCaptor.capture());
+
+        final Envelope documentDeliveryCommand = envelopeArgumentCaptor.getValue();
+        assertThat(documentDeliveryCommand.metadata().name(), is("stagingdvla.command.handler.driver-notification-document-delivery"));
+        final JsonObject payload = (JsonObject) documentDeliveryCommand.payload();
+        assertThat(payload.getString("materialId"), is(materialId.toString()));
+        assertThat(payload.getString("emailStatus"), is("PENDING"));
+        assertThat(payload.containsKey("materialStatus"), is(false));
+    }
+
+    private JsonEnvelope emailNotificationSentEventFor(final UUID materialId) {
+        final EmailChannel emailChannel = EmailChannel.emailChannel()
+                .withMaterialUrl("http://material-url")
+                .withPersonalisation(Personalisation.personalisation()
+                        .withAdditionalProperty("subject", "subject-value").build())
+                .withSendToAddress("test@example.com")
+                .withTemplateId(randomUUID())
+                .build();
+
+        final MaterialDetails materialDetails = MaterialDetails.materialDetails()
+                .withMaterialId(materialId)
+                .withEmailNotifications(Collections.singletonList(emailChannel))
+                .build();
+
+        final EmailNotificationSent emailNotificationSent = EmailNotificationSent.emailNotificationSent()
+                .withDetails(materialDetails)
+                .build();
+
+        final JsonEnvelope event = JsonEnvelope.envelopeFrom(
+                MetadataBuilderFactory.metadataWithRandomUUID("stagingdvla.event.email-notification-sent"),
+                Json.createObjectBuilder().build());
+
+        when(jsonObjectToObjectConverter.convert(event.payloadAsJsonObject(), EmailNotificationSent.class))
+                .thenReturn(emailNotificationSent);
+
+        return event;
     }
 
     private JsonEnvelope getRequestPayload(final String fileName, final String eventName, final int retrySequence) throws IOException {
