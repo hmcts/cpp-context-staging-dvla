@@ -41,13 +41,33 @@
       "items": {
         "$ref": "http://justice.gov.uk/core/courts/notification/email-channel.json"
       }
+    },
+    "payloadFileUri": {
+      "type": "string",
+      "format": "uri"
+    },
+    "destinationFileUri": {
+      "type": "string",
+      "format": "uri"
     }
   },
   "required": [
     "userId",
-    "fileId",
     "hearingId",
     "materialId"
+  ],
+  "oneOf": [
+    {
+      "required": [
+        "fileId"
+      ]
+    },
+    {
+      "required": [
+        "payloadFileUri",
+        "destinationFileUri"
+      ]
+    }
   ],
   "additionalProperties": false
 }

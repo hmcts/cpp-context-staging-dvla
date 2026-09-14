@@ -12,12 +12,32 @@
     },
     "materialId": {
       "$ref": "http://justice.gov.uk/domain/core/common/definitions.json#/definitions/uuid"
+    },
+    "payloadFileUri": {
+      "type": "string",
+      "format": "uri"
+    },
+    "destinationFileUri": {
+      "type": "string",
+      "format": "uri"
     }
   },
   "required": [
     "id",
-    "reportFileId",
     "materialId"
+  ],
+  "oneOf": [
+    {
+      "required": [
+        "reportFileId"
+      ]
+    },
+    {
+      "required": [
+        "payloadFileUri",
+        "destinationFileUri"
+      ]
+    }
   ],
   "additionalProperties": false
 }
