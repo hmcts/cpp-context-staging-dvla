@@ -3,7 +3,7 @@ package uk.gov.moj.cpp.stagingdvla.query.view.service;
 import static java.util.UUID.fromString;
 import static org.slf4j.LoggerFactory.getLogger;
 
-import uk.gov.moj.cpp.material.client.MaterialClient;
+import uk.gov.moj.cpp.stagingdvla.material.client.MaterialClient;
 import uk.gov.moj.cpp.stagingdvla.query.api.error.SystemUserIdNotAvailableException;
 import uk.gov.moj.cpp.systemusers.ServiceContextSystemUserProvider;
 
