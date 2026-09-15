@@ -64,7 +64,7 @@ public class DvlaDocumentDeliveryEventListenerTest {
 
     @Test
     public void shouldInsertNewRecordAndSetCreatedAt() {
-        final JsonEnvelope event = eventFor(recordedWith("PENDING", "SENT", "payload/blob/uri", "document/blob/uri", null, null, null));
+        final JsonEnvelope event = eventFor(recordedWith("PENDING", "payload/blob/uri", "document/blob/uri", null, null, null));
 
         when(dvlaDocumentDeliveryRepository.findBy(MATERIAL_ID)).thenReturn(null);
 
@@ -77,7 +77,6 @@ public class DvlaDocumentDeliveryEventListenerTest {
         assertThat(entity.getMaterialId(), is(MATERIAL_ID));
         assertThat(entity.getCreatedAt(), is(notNullValue()));
         assertThat(entity.getMaterialStatus(), is("PENDING"));
-        assertThat(entity.getEmailStatus(), is("SENT"));
         assertThat(entity.getPayloadBlobUri(), is("payload/blob/uri"));
         assertThat(entity.getDocumentBlobUri(), is("document/blob/uri"));
 
@@ -88,7 +87,7 @@ public class DvlaDocumentDeliveryEventListenerTest {
     public void shouldInsertNewRecordWithSjpCaseFields() {
         final UUID caseId = randomUUID();
         final UUID sjpCorrelationId = randomUUID();
-        final JsonEnvelope event = eventFor(recordedWith(null, null, null, null, caseId, sjpCorrelationId, "PENDING"));
+        final JsonEnvelope event = eventFor(recordedWith(null, null, null, caseId, sjpCorrelationId, "PENDING"));
 
         when(dvlaDocumentDeliveryRepository.findBy(MATERIAL_ID)).thenReturn(null);
 
@@ -110,10 +109,10 @@ public class DvlaDocumentDeliveryEventListenerTest {
     public void shouldUpdateOnlyNonNullFieldsAndPreserveExistingValues() {
         final ZonedDateTime existingCreatedAt = now();
         final DvlaDocumentDeliveryEntity existingEntity = new DvlaDocumentDeliveryEntity(
-                MATERIAL_ID, existingCreatedAt, "PENDING", "SENT", "existing/payload/uri", "existing/document/uri",
+                MATERIAL_ID, existingCreatedAt, "PENDING", "existing/payload/uri", "existing/document/uri",
                 randomUUID(), randomUUID(), "PENDING");
 
-        final JsonEnvelope event = eventFor(recordedWith("COMPLETED", null, null, null, null, null, "COMPLETED"));
+        final JsonEnvelope event = eventFor(recordedWith("COMPLETED", null, null, null, null, "COMPLETED"));
 
         when(dvlaDocumentDeliveryRepository.findBy(MATERIAL_ID)).thenReturn(existingEntity);
 
@@ -126,7 +125,6 @@ public class DvlaDocumentDeliveryEventListenerTest {
         assertThat(entity.getMaterialId(), is(MATERIAL_ID));
         assertThat(entity.getCreatedAt(), is(existingCreatedAt));
         assertThat(entity.getMaterialStatus(), is("COMPLETED"));
-        assertThat(entity.getEmailStatus(), is("SENT"));
         assertThat(entity.getPayloadBlobUri(), is("existing/payload/uri"));
         assertThat(entity.getDocumentBlobUri(), is("existing/document/uri"));
         assertThat(entity.getCaseId(), is(existingEntity.getCaseId()));
@@ -136,14 +134,13 @@ public class DvlaDocumentDeliveryEventListenerTest {
         verifyNoMoreInteractions(dvlaDocumentDeliveryRepository);
     }
 
-    private DvlaDocumentDeliveryRecorded recordedWith(final String materialStatus, final String emailStatus,
+    private DvlaDocumentDeliveryRecorded recordedWith(final String materialStatus,
                                                         final String payloadBlobUri, final String documentBlobUri,
                                                         final UUID caseId, final UUID sjpCorrelationId, final String sjpStatus) {
         return DvlaDocumentDeliveryRecorded
                 .dvlaDocumentDeliveryRecorded()
                 .withMaterialId(MATERIAL_ID)
                 .withMaterialStatus(materialStatus)
-                .withEmailStatus(emailStatus)
                 .withPayloadBlobUri(payloadBlobUri)
                 .withDocumentBlobUri(documentBlobUri)
                 .withCaseId(caseId)

@@ -93,6 +93,15 @@ public class DocumentGeneratorStub {
     // above), so it never raises document-available itself — this publishes it in its place.
     // Returns the generated documentFileServiceId so tests can assert on it downstream.
     public static String publishDocumentAvailableEvent(final String payloadFileServiceId, final String sourceCorrelationId) {
+        return publishDocumentAvailableEvent(payloadFileServiceId, sourceCorrelationId, DVLA_DOCUMENT_ORDER, "EDT_DriverOutNotification", "pdf");
+    }
+
+    // Same as above but for originatingSource/templateIdentifier/conversionFormat combinations other than
+    // the DVLA driver-notification document order - e.g. "DvlaAuditRecords"/"DvlaAuditRecords"/"csv" for
+    // the driver-search-audit-report flow (see SystemDocGeneratorEventProcessor.handleDocumentAvailable).
+    public static String publishDocumentAvailableEvent(final String payloadFileServiceId, final String sourceCorrelationId,
+                                                        final String originatingSource, final String templateIdentifier,
+                                                        final String conversionFormat) {
         final JsonObject metadata = createObjectBuilder()
                 .add("id", UUID.randomUUID().toString())
                 .add("name", DOCUMENT_AVAILABLE_EVENT)
@@ -101,12 +110,12 @@ public class DocumentGeneratorStub {
         final String documentFileServiceId = UUID.randomUUID().toString();
         final String now = DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(ZonedDateTime.now());
         final JsonObject payload = createObjectBuilder()
-                .add("originatingSource", DVLA_DOCUMENT_ORDER)
+                .add("originatingSource", originatingSource)
                 .add("documentFileServiceId", documentFileServiceId)
                 .add("sourceCorrelationId", sourceCorrelationId)
                 .add("payloadFileServiceId", payloadFileServiceId)
-                .add("templateIdentifier", "EDT_DriverOutNotification")
-                .add("conversionFormat", "pdf")
+                .add("templateIdentifier", templateIdentifier)
+                .add("conversionFormat", conversionFormat)
                 .add("requestedTime", now)
                 .add("generatedTime", now)
                 .add("generateVersion", 1)

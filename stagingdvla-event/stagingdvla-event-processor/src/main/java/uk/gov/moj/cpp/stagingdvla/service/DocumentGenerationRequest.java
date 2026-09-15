@@ -13,17 +13,23 @@ public class DocumentGenerationRequest {
     private final ConversionFormat conversionFormat;
     private final String sourceCorrelationId;
     private final UUID payloadFileServiceId;
+    private final String payloadFileUri;
+    private final String destinationFileUri;
 
     public DocumentGenerationRequest(final String originatingSource,
                                      final String templateIdentifier,
                                      final ConversionFormat conversionFormat,
                                      final String sourceCorrelationId,
-                                     final UUID payloadFileServiceId) {
+                                     final UUID payloadFileServiceId,
+                                     final String payloadFileUri,
+                                     String destinationFileUri) {
         this.originatingSource = originatingSource;
         this.templateIdentifier = templateIdentifier;
         this.conversionFormat = conversionFormat;
         this.sourceCorrelationId = sourceCorrelationId;
         this.payloadFileServiceId = payloadFileServiceId;
+        this.payloadFileUri = payloadFileUri;
+        this.destinationFileUri = destinationFileUri;
     }
 
     public String getOriginatingSource() {
@@ -44,6 +50,14 @@ public class DocumentGenerationRequest {
 
     public UUID getPayloadFileServiceId() {
         return payloadFileServiceId;
+    }
+
+    public String getPayloadFileUri() {
+        return payloadFileUri;
+    }
+
+    public String getDestinationFileUri() {
+        return destinationFileUri;
     }
 
     @Override

@@ -11,7 +11,6 @@ public class DvlaDocumentDeliveryView implements Serializable {
     private UUID materialId;
     private ZonedDateTime createdAt;
     private String materialStatus;
-    private String emailStatus;
     private String payloadBlobUri;
     private String documentBlobUri;
     private UUID caseId;
@@ -23,12 +22,11 @@ public class DvlaDocumentDeliveryView implements Serializable {
 
     @SuppressWarnings("squid:S00107")
     public DvlaDocumentDeliveryView(final UUID materialId, final ZonedDateTime createdAt, final String materialStatus,
-                                     final String emailStatus, final String payloadBlobUri, final String documentBlobUri,
+                                     final String payloadBlobUri, final String documentBlobUri,
                                      final UUID caseId, final UUID sjpCorrelationId, final String sjpStatus) {
         this.materialId = materialId;
         this.createdAt = createdAt;
         this.materialStatus = materialStatus;
-        this.emailStatus = emailStatus;
         this.payloadBlobUri = payloadBlobUri;
         this.documentBlobUri = documentBlobUri;
         this.caseId = caseId;
@@ -46,10 +44,6 @@ public class DvlaDocumentDeliveryView implements Serializable {
 
     public String getMaterialStatus() {
         return materialStatus;
-    }
-
-    public String getEmailStatus() {
-        return emailStatus;
     }
 
     public String getPayloadBlobUri() {

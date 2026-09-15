@@ -51,13 +51,12 @@ public class MaterialAggregateTest {
         final UUID materialId = randomUUID();
 
         final List<Object> eventStream = aggregate.recordDocumentDelivery(
-                materialId, "PENDING", "SENT", "payload/blob/uri", "document/blob/uri", null, null, null).collect(toList());
+                materialId, "PENDING", "payload/blob/uri", "document/blob/uri", null, null, null).collect(toList());
 
         assertThat(eventStream.size(), is(1));
         final DvlaDocumentDeliveryRecorded event = (DvlaDocumentDeliveryRecorded) eventStream.get(0);
         assertThat(event.getMaterialId(), is(materialId));
         assertThat(event.getMaterialStatus(), is("PENDING"));
-        assertThat(event.getEmailStatus(), is("SENT"));
         assertThat(event.getPayloadBlobUri(), is("payload/blob/uri"));
         assertThat(event.getDocumentBlobUri(), is("document/blob/uri"));
     }
@@ -69,7 +68,7 @@ public class MaterialAggregateTest {
         final UUID sjpCorrelationId = randomUUID();
 
         final List<Object> eventStream = aggregate.recordDocumentDelivery(
-                materialId, null, null, null, null, caseId, sjpCorrelationId, "PENDING").collect(toList());
+                materialId, null, null, null, caseId, sjpCorrelationId, "PENDING").collect(toList());
 
         assertThat(eventStream.size(), is(1));
         final DvlaDocumentDeliveryRecorded event = (DvlaDocumentDeliveryRecorded) eventStream.get(0);

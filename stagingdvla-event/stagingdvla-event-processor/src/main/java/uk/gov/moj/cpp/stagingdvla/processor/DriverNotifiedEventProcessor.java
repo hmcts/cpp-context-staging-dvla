@@ -17,12 +17,15 @@ import static uk.gov.moj.cpp.stagingdvla.notify.util.DrivingConvictionTransformU
 import static uk.gov.moj.cpp.stagingdvla.notify.util.DrivingConvictionTransformUtil.getEndorsementType;
 import static uk.gov.moj.cpp.stagingdvla.notify.util.DrivingConvictionTransformUtil.hasMultipleConvictingCourts;
 import static uk.gov.moj.cpp.stagingdvla.notify.util.DrivingConvictionTransformUtil.hasMultipleConvictionDates;
+import static uk.gov.moj.cpp.stagingdvla.service.DocumentGeneratorService.DVLA_DOCUMENT_ORDER;
+import static uk.gov.moj.cpp.stagingdvla.service.DocumentGeneratorService.DVLA_DOCUMENT_TEMPLATE_NAME;
 
 import uk.gov.justice.core.courts.EmailNotificationSent;
 import uk.gov.justice.core.courts.Personalisation;
 import uk.gov.justice.core.courts.notification.EmailChannel;
 import uk.gov.justice.cpp.stagingdvla.event.DriverNotified;
 import uk.gov.justice.services.common.converter.JsonObjectToObjectConverter;
+import uk.gov.justice.services.common.converter.ObjectToJsonObjectConverter;
 import uk.gov.justice.services.core.annotation.Handles;
 import uk.gov.justice.services.core.annotation.ServiceComponent;
 import uk.gov.justice.services.core.sender.Sender;
@@ -33,11 +36,11 @@ import uk.gov.moj.cpp.stagingdvla.exception.NotifyDrivingConvictionException;
 import uk.gov.moj.cpp.stagingdvla.notify.azure.DvlaApimConfig;
 import uk.gov.moj.cpp.stagingdvla.notify.driving.conviction.NotifyDrivingConvictionResponse;
 import uk.gov.moj.cpp.stagingdvla.service.ApplicationParameters;
+import uk.gov.moj.cpp.stagingdvla.service.ConversionFormat;
 import uk.gov.moj.cpp.stagingdvla.service.DocumentGeneratorService;
 import uk.gov.moj.cpp.stagingdvla.service.NotificationNotifyService;
 import uk.gov.moj.cpp.stagingdvla.service.NotifyDrivingConvictionService;
 import uk.gov.moj.cpp.stagingdvla.service.scheduler.NotifyDrivingConvictionRetryScheduler;
-import uk.gov.moj.cpp.stagingdvla.domain.constants.DvlaDocumentDeliveryEmailStatus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,13 +69,15 @@ public class DriverNotifiedEventProcessor {
     private static final String NEW_ENDORSEMENT = "New Endorsement - ";
     private static final String UPDATED_ENDORSEMENT = "Updated Endorsement - ";
     private static final String REMOVAL_OF_ENDORSEMENT = "Removal of Endorsement - ";
-    private static final String STAGINGDVLA_COMMAND_HANDLER_DRIVER_NOTIFICATION_DOCUMENT_DELIVERY = "stagingdvla.command.handler.driver-notification-document-delivery";
 
     @Inject
     private Sender sender;
 
     @Inject
     private JsonObjectToObjectConverter jsonObjectToObjectConverter;
+
+    @Inject
+    private ObjectToJsonObjectConverter objectToJsonObjectConverter;
 
     @Inject
     private DocumentGeneratorService documentGeneratorService;
@@ -117,7 +122,13 @@ public class DriverNotifiedEventProcessor {
         }
         if(Optional.ofNullable(driverNotified.getRetrySequence()).orElse(0) == 0) {
             LOGGER.info("DriverNotifiedEventProcessor - Calling to systemdoc for document generation");
-            documentGeneratorService.generateDvlaDocument(envelope, userId, driverNotified);
+            final JsonObject nowsDocumentOrderJson = objectToJsonObjectConverter.convert(driverNotified);
+            documentGeneratorService.generateDocument(envelope,  driverNotified.getMaterialId(),
+                    nowsDocumentOrderJson,
+                    documentGeneratorService.getMaterialIdAmendedFileName(DVLA_DOCUMENT_ORDER, driverNotified.getMaterialId().toString()),
+                    DVLA_DOCUMENT_TEMPLATE_NAME,
+                    ConversionFormat.PDF,
+                    DVLA_DOCUMENT_ORDER);
         }
     }
 
@@ -198,20 +209,7 @@ public class DriverNotifiedEventProcessor {
                 .add(SUBJECT, getPersonalisationValue(emailChannel.getPersonalisation()))
                 .build());
 
-        final UUID materialId = emailNotification.getDetails().getMaterialId();
         this.notificationNotifyService.sendEmailNotification(envelope, notifyObjectBuilder.build());
-        recordDocumentDeliveryStatus(envelope, materialId);
-    }
-
-    private void recordDocumentDeliveryStatus(final JsonEnvelope originatingEvent, final UUID materialId) {
-        final JsonObject payload = createObjectBuilder()
-                .add("materialId", materialId.toString())
-                .add("emailStatus", DvlaDocumentDeliveryEmailStatus.PENDING.name())
-                .build();
-
-        sender.sendAsAdmin(Envelope.envelopeFrom(
-                metadataFrom(originatingEvent.metadata()).withName(STAGINGDVLA_COMMAND_HANDLER_DRIVER_NOTIFICATION_DOCUMENT_DELIVERY).build(),
-                payload));
     }
 
     private String getEmailAddress(final DriverNotified driverNotified) {
