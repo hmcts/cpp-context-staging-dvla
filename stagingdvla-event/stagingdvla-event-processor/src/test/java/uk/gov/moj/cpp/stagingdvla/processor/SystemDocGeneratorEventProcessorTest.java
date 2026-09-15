@@ -9,10 +9,8 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.isA;
-import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -39,7 +37,6 @@ import uk.gov.moj.cpp.stagingdvla.service.UploadMaterialService;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -224,13 +221,6 @@ public class SystemDocGeneratorEventProcessorTest {
         final UploadMaterialContext uploadMaterialContext = uploadMaterialContextCaptor.getValue();
         assertThat(uploadMaterialContext, notNullValue());
         assertThat(uploadMaterialContext.getEmailNotifications(), nullValue());
-
-        verify(sender).sendAsAdmin(sendAsAdminEnvelopeCaptor.capture());
-        final Envelope<JsonObject> documentDeliveryCommand = sendAsAdminEnvelopeCaptor.getValue();
-        assertThat(documentDeliveryCommand.metadata().name(), is("stagingdvla.command.handler.driver-notification-document-delivery"));
-        assertThat(documentDeliveryCommand.payload().getString("materialId"), is(materialId));
-        assertThat(documentDeliveryCommand.payload().getString("emailStatus"), is("NOT_REQUIRED"));
-        assertThat(documentDeliveryCommand.payload().containsKey("materialStatus"), is(false));
     }
 
     @Test
@@ -331,19 +321,8 @@ public class SystemDocGeneratorEventProcessorTest {
         assertThat(uploadMaterialContext, notNullValue());
         assertThat(uploadMaterialContext.getEmailNotifications(), nullValue());
 
-        verify(sender, times(2)).sendAsAdmin(sendAsAdminEnvelopeCaptor.capture());
-        final List<Envelope<JsonObject>> sendAsAdminEnvelopes = sendAsAdminEnvelopeCaptor.getAllValues();
-
-        final Envelope<JsonObject> documentDeliveryCommand = sendAsAdminEnvelopes.stream()
-                .filter(envelope -> !envelope.payload().containsKey("caseId"))
-                .findFirst().orElseThrow();
-        assertThat(documentDeliveryCommand.payload().getString("materialId"), is(materialId));
-        assertThat(documentDeliveryCommand.payload().getString("emailStatus"), is("NOT_REQUIRED"));
-        assertThat(documentDeliveryCommand.payload().containsKey("materialStatus"), is(false));
-
-        final Envelope<JsonObject> documentDeliverySjpCaseCommand = sendAsAdminEnvelopes.stream()
-                .filter(envelope -> envelope.payload().containsKey("caseId"))
-                .findFirst().orElseThrow();
+        verify(sender, times(1)).sendAsAdmin(sendAsAdminEnvelopeCaptor.capture());
+        final Envelope<JsonObject> documentDeliverySjpCaseCommand = sendAsAdminEnvelopeCaptor.getValue();
         assertThat(documentDeliverySjpCaseCommand.metadata().name(), is("stagingdvla.command.handler.driver-notification-document-delivery"));
         assertThat(documentDeliverySjpCaseCommand.payload().getString("materialId"), is(materialId));
         assertThat(documentDeliverySjpCaseCommand.payload().getString("caseId"), is(caseId));

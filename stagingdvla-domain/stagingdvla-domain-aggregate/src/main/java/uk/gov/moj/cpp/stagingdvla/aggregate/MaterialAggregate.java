@@ -41,13 +41,12 @@ public class MaterialAggregate implements Aggregate {
     }
 
     public Stream<Object> recordDocumentDelivery(final UUID materialId, final String materialStatus,
-                                                   final String emailStatus, final String payloadBlobUri, final String documentBlobUri,
+                                                   final String payloadBlobUri, final String documentBlobUri,
                                                    final UUID caseId, final UUID sjpCorrelationId, final String sjpStatus) {
         return apply(Stream.of(DvlaDocumentDeliveryRecorded
                 .dvlaDocumentDeliveryRecorded()
                 .withMaterialId(materialId)
                 .withMaterialStatus(materialStatus)
-                .withEmailStatus(emailStatus)
                 .withPayloadBlobUri(payloadBlobUri)
                 .withDocumentBlobUri(documentBlobUri)
                 .withCaseId(caseId)

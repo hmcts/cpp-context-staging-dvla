@@ -19,6 +19,7 @@ import static org.hamcrest.Matchers.nullValue;
 import static uk.gov.justice.services.test.utils.core.reflection.ReflectionUtil.setField;
 import static uk.gov.moj.cpp.platform.test.feature.toggle.FeatureStubber.stubFeaturesFor;
 import static uk.gov.moj.stagingdvla.stubs.DVLANotificationStub.verifyDVLANotificationCommandInvoked;
+import static uk.gov.moj.stagingdvla.stubs.DocumentGeneratorStub.latestGenerateDocumentRequest;
 import static uk.gov.moj.stagingdvla.stubs.DocumentGeneratorStub.latestGenerateDocumentRequests;
 import static uk.gov.moj.stagingdvla.stubs.DocumentGeneratorStub.publishDocumentAvailableEvent;
 import static uk.gov.moj.stagingdvla.stubs.DocumentGeneratorStub.stubDocumentCreate;
@@ -42,9 +43,11 @@ import uk.gov.justice.cpp.stagingdvla.event.DvlaDocumentDeliveryRecorded;
 import uk.gov.justice.services.common.converter.JsonObjectToObjectConverter;
 import uk.gov.justice.services.common.converter.ObjectToJsonObjectConverter;
 import uk.gov.justice.services.common.converter.jackson.ObjectMapperProducer;
+import uk.gov.moj.cpp.platform.test.feature.toggle.FeatureStubber;
 import uk.gov.moj.stagingdvla.util.FileUtil;
 
 import java.io.IOException;
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,6 +57,10 @@ import java.util.UUID;
 import javax.jms.MessageConsumer;
 import javax.json.JsonObject;
 
+import com.azure.core.http.jdk.httpclient.JdkHttpClientBuilder;
+import com.azure.storage.blob.BlobClient;
+import com.azure.storage.blob.BlobContainerClient;
+import com.azure.storage.blob.BlobServiceClientBuilder;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableMap;
 import io.restassured.path.json.JsonPath;
@@ -66,6 +73,14 @@ import org.junit.jupiter.api.Test;
 public class DvlaNotificationIT extends AbstractIntegrationTest {
 
     public static final String USER_GROUP = UUID.randomUUID().toString();
+
+    // azure.filestore.* JNDI values for the "azurite" docker-compose profile (cpp-developers-docker).
+    // WildFly (inside the docker network) reaches azurite via the "cpp-azurite" hostname, but this IT
+    // runs on the host JVM where that hostname doesn't resolve, so it uses the host-published port instead.
+    static final String AZURITE_CONNECTION_STRING = "DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://localhost:10000/devstoreaccount1;";
+    static final String AZURE_BLOB_CONTAINER_NAME = "stagingdvla-files";
+    static final String AZURE_BLOB_PATH_PREFIX = "internal/";
+
     private String hearingId;
     private String defendantId;
     private String caseId;
@@ -110,6 +125,8 @@ public class DvlaNotificationIT extends AbstractIntegrationTest {
     @Override
     @BeforeEach
     public void setup() {
+        final ImmutableMap<String, Boolean> features = of("dvlaFileStore", true);
+        FeatureStubber.stubFeaturesFor(STAGINGDVLA_CONTEXT, features);
         hearingId = randomUUID().toString();
         defendantId = randomUUID().toString();
         caseId = randomUUID().toString();
@@ -121,9 +138,6 @@ public class DvlaNotificationIT extends AbstractIntegrationTest {
 
     @Test
     public void shouldSendDvlaNotification() throws IOException {
-
-
-
         //Given
         final String body = getPayload(DRIVER_NOTIFICATION_COMMAND_PAYLOAD);
 
@@ -141,6 +155,16 @@ public class DvlaNotificationIT extends AbstractIntegrationTest {
         verifyMaterialCreated();
         verifyDVLANotificationCommandInvoked();
         verifyGenerateDocumentStubCommandInvoked();
+
+        // verify the actual generate-document request body, not just that it was called -
+        // values mirror what DocumentGeneratorService/SystemDocGeneratorService build for a
+        // driver-notification document order
+        final JsonPath generateDocumentRequest = latestGenerateDocumentRequest();
+        assertThat(generateDocumentRequest.getString("originatingSource"), equalTo("DVLADocumentOrder"));
+        assertThat(generateDocumentRequest.getString("templateIdentifier"), equalTo("EDT_DriverOutNotification"));
+        assertThat(generateDocumentRequest.getString("conversionFormat"), equalTo("pdf"));
+        assertThat(generateDocumentRequest.getString("sourceCorrelationId"), is(notNullValue()));
+        assertThat(generateDocumentRequest.getString("payloadFileServiceId"), is(notNullValue()));
 
         // stagingdvla.command.handler.driver-notification-document-delivery is invoked internally
         // (once per document generation/upload step of the flow) - verify the flow's final
@@ -161,6 +185,96 @@ public class DvlaNotificationIT extends AbstractIntegrationTest {
                         withJsonPath("$.documentDeliveries[0].materialStatus"),
                         hasNoJsonPath("$.documentDeliveries[0].caseId")
                 ));
+    }
+
+    @Test
+    public void shouldSendDvlaNotificationWithAzureBlob() throws IOException {
+        // dvlaFileStore=false -> DocumentGeneratorService falls back to the Azure blob upload path
+        // instead of the real file-service, so the generate-document request carries
+        // payloadFileUri/destinationFileUri rather than payloadFileServiceId
+        final ImmutableMap<String, Boolean> features = of("dvlaFileStore", false);
+        FeatureStubber.stubFeaturesFor(STAGINGDVLA_CONTEXT, features);
+
+        //Given
+        final String body = getPayload(DRIVER_NOTIFICATION_COMMAND_PAYLOAD);
+
+        //When
+        final Response writeResponse = postCommandWithUserId(getWriteUrl("/driver-notification"),
+                DRIVER_NOTIFICATION_MEDIA_TYPE, body, USER_GROUP);
+
+        assertThat(writeResponse.getStatusCode(), equalTo(SC_ACCEPTED));
+
+        //Then
+        final DriverNotified driverNotified = jsonToObjectConverter.convert(
+                retrieveMessageAsJsonObject(consumerForDriverNotified).get(), DriverNotified.class);
+        assertThat(driverNotified, is(notNullValue()));
+
+        verifyMaterialCreated();
+        verifyDVLANotificationCommandInvoked();
+        verifyGenerateDocumentStubCommandInvoked();
+
+        // verify the actual generate-document request body reflects the Azure blob path
+        final JsonPath generateDocumentRequest = latestGenerateDocumentRequest();
+        assertThat(generateDocumentRequest.getString("originatingSource"), equalTo("DVLADocumentOrder"));
+        assertThat(generateDocumentRequest.getString("templateIdentifier"), equalTo("EDT_DriverOutNotification"));
+        assertThat(generateDocumentRequest.getString("conversionFormat"), equalTo("pdf"));
+        assertThat(generateDocumentRequest.getString("sourceCorrelationId"),  is(notNullValue()));
+        assertThat(generateDocumentRequest.getString("payloadFileServiceId"), is(nullValue()));
+        final String payloadFileUri = generateDocumentRequest.getString("payloadFileUri");
+        assertThat(payloadFileUri, is(notNullValue()));
+        assertThat(generateDocumentRequest.getString("destinationFileUri"), equalTo(payloadFileUri + ".pdf"));
+
+        // verify the metadata written on the blob itself (DocumentGeneratorService.setMetadata),
+        // not just that some upload happened
+        verifyAzureBlobMetadata(driverNotified.getMaterialId(), payloadFileUri.replaceAll("^.*?(DVLADocumentOrder)", "$1"));
+
+        // stagingdvla.command.handler.driver-notification-document-delivery is invoked internally
+        // (once per document generation/upload step of the flow) - verify the flow's final
+        // stagingdvla.event.dvla-document-delivery-recorded event
+        final DvlaDocumentDeliveryRecorded finalDocumentDeliveryRecorded = retrieveFinalDvlaDocumentDeliveryRecordedEvent();
+        assertThat(finalDocumentDeliveryRecorded, is(notNullValue()));
+        assertThat(finalDocumentDeliveryRecorded.getMaterialId(), is(equalTo(driverNotified.getMaterialId())));
+
+        // verify the read side (dvla-document-delivery query API) reflects what the event stream just recorded -
+        // this is a non-SJP notification, so the delivery should carry no sjp case fields
+        final String queryUserId = randomUUID().toString();
+        stubUser(queryUserId);
+        final String materialId = driverNotified.getMaterialId().toString();
+        pollForResponse("/dvla-document-deliveries?materialId=" + materialId + "&materialStatus=PENDING",
+                DVLA_DOCUMENT_DELIVERY_MEDIA_TYPE, queryUserId,
+                allOf(
+                        withJsonPath("$.documentDeliveries[0].materialId", equalTo(materialId)),
+                        withJsonPath("$.documentDeliveries[0].materialStatus"),
+                        hasNoJsonPath("$.documentDeliveries[0].caseId")
+                ));
+    }
+
+    // Connects directly to the Azure blob store DocumentGeneratorService itself wrote to, and asserts
+    // on the metadata it set on the blob (correlation_id/fileName/conversionFormat/templateName/
+    // numberOfPages/fileSize) - see DocumentGeneratorService.generateDvlaDocument.
+    // The SDK's HTTP client lower-cases x-ms-meta-* header names when parsing the response, so
+    // although production code sets these keys in camelCase, BlobProperties.getMetadata() here
+    // returns them all-lowercase regardless (the portal/UI re-displays them in their original case).
+    private void verifyAzureBlobMetadata(final UUID materialId, final String fileName) {
+        final JdkHttpClientBuilder httpClientBuilder = new JdkHttpClientBuilder()
+                .connectionTimeout(Duration.ofSeconds(10))
+                .responseTimeout(Duration.ofSeconds(30));
+
+        final BlobContainerClient blobContainerClient = new BlobServiceClientBuilder()
+                .httpClient(httpClientBuilder.build())
+                .connectionString(AZURITE_CONNECTION_STRING)
+                .buildClient()
+                .getBlobContainerClient(AZURE_BLOB_CONTAINER_NAME);
+        final BlobClient blobClient = blobContainerClient.getBlobClient(AZURE_BLOB_PATH_PREFIX + fileName);
+
+        final Map<String, String> metadata = blobClient.getProperties().getMetadata();
+
+        assertThat(metadata.get("correlation_id"), equalTo(materialId.toString()));
+        assertThat(metadata.get("filename"), equalTo(fileName+".pdf"));
+        assertThat(metadata.get("conversionformat"), equalTo("PDF"));
+        assertThat(metadata.get("templatename"), equalTo("EDT_DriverOutNotification"));
+        assertThat(metadata.get("numberofpages"), equalTo("1"));
+        assertThat(metadata.get("filesize"), is(notNullValue()));
     }
 
     private DvlaDocumentDeliveryRecorded retrieveFinalDvlaDocumentDeliveryRecordedEvent() {
@@ -361,6 +475,10 @@ public class DvlaNotificationIT extends AbstractIntegrationTest {
 
     @Test
     public void shouldRecordDvlaDocumentDeliverySjpCaseWhenDocumentAvailableForSjpCase() throws IOException {
+        final ImmutableMap<String, Boolean> features = of("dvlaFileStore", true);
+        FeatureStubber.stubFeaturesFor("stagingdvla", features);
+
+
         //Given: create the driver notification for an SJP case (initiationCode "J") carrying two cases.
         // DefendantAggregate/DriverNotifiedEngine creates one DriverNotified event PER incoming case
         // (its own materialId, its own document-generation cycle) - so this posts a single command
@@ -404,10 +522,10 @@ public class DvlaNotificationIT extends AbstractIntegrationTest {
             final String documentFileServiceId = publishDocumentAvailableEvent(payloadFileServiceId, sourceCorrelationId);
 
             // handleDvlaDocumentAvailable sends more than one dvla-document-delivery-recorded event per
-            // material for this fixture (emailStatus=Not Required, then the sjpStatus one below, plus an
-            // async materialStatus=Completed once the material upload lands) - they all land on this same
-            // consumer now that both tables/events are merged, so drain until we find the SJP-case one
-            // (identified by carrying a caseId) rather than assuming it's the very next message
+            // material for this fixture (the sjpStatus one below, plus an async materialStatus=Completed
+            // once the material upload lands) - they all land on this same consumer now that both
+            // tables/events are merged, so drain until we find the SJP-case one (identified by carrying a
+            // caseId) rather than assuming it's the very next message
             final JsonPath sjpCaseDocumentDeliveryEvent = retrieveSjpCaseDocumentDeliveryEvent();
             final String eventCaseId = sjpCaseDocumentDeliveryEvent.getString("caseId");
             assertThat(materialIdByCaseId, hasKey(eventCaseId));

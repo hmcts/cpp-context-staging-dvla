@@ -12,7 +12,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.isA;
-import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -24,6 +23,7 @@ import uk.gov.justice.core.courts.Personalisation;
 import uk.gov.justice.core.courts.notification.EmailChannel;
 import uk.gov.justice.cpp.stagingdvla.event.DriverNotified;
 import uk.gov.justice.services.common.converter.JsonObjectToObjectConverter;
+import uk.gov.justice.services.common.converter.ObjectToJsonObjectConverter;
 import uk.gov.justice.services.common.converter.StringToJsonObjectConverter;
 import uk.gov.justice.services.common.converter.jackson.ObjectMapperProducer;
 import uk.gov.justice.services.core.sender.Sender;
@@ -87,6 +87,9 @@ public class DriverNotifiedEventProcessorTest {
     private DocumentGeneratorService documentGeneratorService;
 
     @Mock
+    private ObjectToJsonObjectConverter objectToJsonObjectConverter;
+
+    @Mock
     private ApplicationParameters applicationParameters;
 
     @Mock
@@ -120,17 +123,21 @@ public class DriverNotifiedEventProcessorTest {
 
     @Test
     public void shouldProcessDriverNotifiedMessage() throws IOException {
+        when(objectToJsonObjectConverter.convert(any())).thenReturn(Json.createObjectBuilder().build());
+
         driverNotifiedEventProcessor.handleDriverNotifiedEvent(getRequestPayload(UPDATED_DRIVER_NOTIFIED_JSON, STAGINGDVLA_EVENT_DRIVER_NOTIFIED, 0));
 
-        verify(documentGeneratorService, times(1)).generateDvlaDocument(any(), any(), any());
+        verify(documentGeneratorService, times(1)).generateDocument(any(), any(), any(), any(), any(), any(), any());
         verify(notifyDrivingConvictionService, times(0)).notifyDrivingConviction(any());
     }
 
     @Test
     public void shouldProcessDriverNotifiedMessageNoOffence() throws IOException {
+        when(objectToJsonObjectConverter.convert(any())).thenReturn(Json.createObjectBuilder().build());
+
         driverNotifiedEventProcessor.handleDriverNotifiedEvent(getRequestPayload(DRIVER_NOTIFIED_NO_OFFENCE_JSON, STAGINGDVLA_EVENT_DRIVER_NOTIFIED, 0));
 
-        verify(documentGeneratorService, times(1)).generateDvlaDocument(any(), any(), any());
+        verify(documentGeneratorService, times(1)).generateDocument(any(), any(), any(), any(), any(), any(), any());
         verify(notifyDrivingConvictionService, times(0)).notifyDrivingConviction(any());
     }
 
@@ -138,12 +145,13 @@ public class DriverNotifiedEventProcessorTest {
     public void shouldCallDvlaNotifyApi_WhenNewEndorsement() throws IOException {
         when(notifyDrivingConvictionService.notifyDrivingConviction(isA(DriverNotified.class))).thenReturn(notifyDrivingConvictionResponse);
         when(notifyDrivingConvictionResponse.getStatus()).thenReturn(SC_OK);
+        when(objectToJsonObjectConverter.convert(any())).thenReturn(Json.createObjectBuilder().build());
 
         driverNotifiedEventProcessor.handleDriverNotifiedEvent(
                 getRequestPayload(DRIVER_NOTIFIED_NEW_ENDORSEMENT_JSON, STAGINGDVLA_EVENT_DRIVER_NOTIFIED, 0));
 
         verify(notifyDrivingConvictionService, times(1)).notifyDrivingConviction(any(DriverNotified.class));
-        verify(documentGeneratorService, times(1)).generateDvlaDocument(any(), any(), any());
+        verify(documentGeneratorService, times(1)).generateDocument(any(), any(), any(), any(), any(), any(), any());
     }
 
     @Test
@@ -151,13 +159,14 @@ public class DriverNotifiedEventProcessorTest {
         when(notifyDrivingConvictionService.notifyDrivingConviction(isA(DriverNotified.class))).thenReturn(notifyDrivingConvictionResponse);
         when(dvlaApimConfig.getDrivingConvictionMaxRetry()).thenReturn("10");
         when(notifyDrivingConvictionResponse.getStatus()).thenReturn(SC_UNAUTHORIZED);
+        when(objectToJsonObjectConverter.convert(any())).thenReturn(Json.createObjectBuilder().build());
 
         driverNotifiedEventProcessor.handleDriverNotifiedEvent(
                 getRequestPayload(DRIVER_NOTIFIED_NEW_ENDORSEMENT_JSON, STAGINGDVLA_EVENT_DRIVER_NOTIFIED, 0));
 
         verify(notifyDrivingConvictionService, times(1)).notifyDrivingConviction(any(DriverNotified.class));
         verify(scheduler, times(1)).dvlaResponseReceived(NotifyDrivingConvictionRetryScheduler.DvlaResponseType.FAIL);
-        verify(documentGeneratorService, times(1)).generateDvlaDocument(any(), any(), any());
+        verify(documentGeneratorService, times(1)).generateDocument(any(), any(), any(), any(), any(), any(), any());
         verify(sender).sendAsAdmin(envelopeArgumentCaptor.capture());
         assertThat(envelopeArgumentCaptor.getValue().metadata().name(), is("stagingdvla.command.handler.schedule-next-retry-for-driver-notified"));
     }
@@ -167,13 +176,14 @@ public class DriverNotifiedEventProcessorTest {
         when(notifyDrivingConvictionService.notifyDrivingConviction(isA(DriverNotified.class))).thenReturn(notifyDrivingConvictionResponse);
         when(dvlaApimConfig.getDrivingConvictionMaxRetry()).thenReturn("10");
         when(notifyDrivingConvictionResponse.getStatus()).thenReturn(SC_INTERNAL_SERVER_ERROR);
+        when(objectToJsonObjectConverter.convert(any())).thenReturn(Json.createObjectBuilder().build());
 
         driverNotifiedEventProcessor.handleDriverNotifiedEvent(
                 getRequestPayload(DRIVER_NOTIFIED_NEW_ENDORSEMENT_JSON, STAGINGDVLA_EVENT_DRIVER_NOTIFIED, 0));
 
         verify(notifyDrivingConvictionService, times(1)).notifyDrivingConviction(any(DriverNotified.class));
         verify(scheduler, times(1)).dvlaResponseReceived(NotifyDrivingConvictionRetryScheduler.DvlaResponseType.FAIL);
-        verify(documentGeneratorService, times(1)).generateDvlaDocument(any(), any(), any());
+        verify(documentGeneratorService, times(1)).generateDocument(any(), any(), any(), any(), any(), any(), any());
         verify(sender).sendAsAdmin(envelopeArgumentCaptor.capture());
         assertThat(envelopeArgumentCaptor.getValue().metadata().name(), is("stagingdvla.command.handler.schedule-next-retry-for-driver-notified"));
     }
@@ -189,7 +199,7 @@ public class DriverNotifiedEventProcessorTest {
 
         verify(notifyDrivingConvictionService, times(1)).notifyDrivingConviction(any(DriverNotified.class));
         verify(scheduler, times(1)).dvlaResponseReceived(NotifyDrivingConvictionRetryScheduler.DvlaResponseType.FAIL);
-        verify(documentGeneratorService, never()).generateDvlaDocument(any(), any(), any());
+        verify(documentGeneratorService, never()).generateDocument(any(), any(), any(), any(), any(), any(), any());
         verify(sender).sendAsAdmin(envelopeArgumentCaptor.capture());
         assertThat(envelopeArgumentCaptor.getValue().metadata().name(), is("stagingdvla.command.handler.schedule-next-retry-for-driver-notified"));
     }
@@ -210,7 +220,7 @@ public class DriverNotifiedEventProcessorTest {
 
         verify(notifyDrivingConvictionService, times(1)).notifyDrivingConviction(any(DriverNotified.class));
         verify(scheduler, times(0)).dvlaResponseReceived(any());
-        verify(documentGeneratorService, times(0)).generateDvlaDocument(any(), any(), any());
+        verify(documentGeneratorService, times(0)).generateDocument(any(), any(), any(), any(), any(), any(), any());
         verify(sender, times(0)).sendAsAdmin(envelopeArgumentCaptor.capture());
     }
 
@@ -231,35 +241,45 @@ public class DriverNotifiedEventProcessorTest {
 
         verify(notifyDrivingConvictionService, times(1)).notifyDrivingConviction(any(DriverNotified.class));
         verify(scheduler, times(1)).dvlaResponseReceived(NotifyDrivingConvictionRetryScheduler.DvlaResponseType.FAIL);
-        verify(documentGeneratorService, times(0)).generateDvlaDocument(any(), any(), any());
+        verify(documentGeneratorService, times(0)).generateDocument(any(), any(), any(), any(), any(), any(), any());
+        verify(sender, times(0)).sendAsAdmin(any());
+    }
+
+    @SuppressWarnings("java:S5778")
+    @Test
+    public void shouldThrowExceptionWithEmptyStatusPlaceholder_WhenNotifyDrivingConvictionResponseIsNull() throws IOException {
+        // notifyDrivingConviction returning null (as opposed to a response with a null/error
+        // status) drives isRetryableErrorResponse's isNull(response) branch, and then - once max
+        // retry is reached - the nonNull(response) ? ... : EMPTY fallback in the exception
+        // message, neither of which the other retry/exception tests (which always stub a
+        // non-null response) exercise.
+        when(notifyDrivingConvictionService.notifyDrivingConviction(isA(DriverNotified.class))).thenReturn(null);
+        when(dvlaApimConfig.getDrivingConvictionMaxRetry()).thenReturn("10");
+
+        final NotifyDrivingConvictionException notifyDrivingConvictionException = assertThrows(NotifyDrivingConvictionException.class, () -> {
+            driverNotifiedEventProcessor.handleDriverNotifiedEvent(
+                    getRequestPayload(DRIVER_NOTIFIED_NEW_ENDORSEMENT_JSON, STAGINGDVLA_EVENT_DRIVER_NOTIFIED, 10));
+        });
+
+        assertThat(notifyDrivingConvictionException.getLocalizedMessage().contains("response.status: "), is(true));
+        assertThat(notifyDrivingConvictionException.getLocalizedMessage().contains(masterDefendantId), is(true));
+        assertThat(notifyDrivingConvictionException.getLocalizedMessage().contains(identifier), is(true));
+
+        verify(notifyDrivingConvictionService, times(1)).notifyDrivingConviction(any(DriverNotified.class));
+        verify(scheduler, times(1)).dvlaResponseReceived(NotifyDrivingConvictionRetryScheduler.DvlaResponseType.FAIL);
+        verify(documentGeneratorService, times(0)).generateDocument(any(), any(), any(), any(), any(), any(), any());
         verify(sender, times(0)).sendAsAdmin(any());
     }
 
     @Test
     public void shouldNotCallDvlaNotifyApiApi_WhenUpdateEndorsement() throws IOException {
+        when(objectToJsonObjectConverter.convert(any())).thenReturn(Json.createObjectBuilder().build());
+
         driverNotifiedEventProcessor.handleDriverNotifiedEvent(
                 getRequestPayload(DRIVER_NOTIFIED_UPDATE_ENDORSEMENT_JSON, STAGINGDVLA_EVENT_DRIVER_NOTIFIED, 0));
 
         verify(notifyDrivingConvictionService, times(0)).notifyDrivingConviction(any());
-        verify(documentGeneratorService, times(1)).generateDvlaDocument(any(), any(), any());
-    }
-
-    @Test
-    public void shouldRecordEmailStatusAsPENDINGWhenEmailNotificationSentSuccessfully() {
-        final UUID materialId = randomUUID();
-        final JsonEnvelope event = emailNotificationSentEventFor(materialId);
-
-        driverNotifiedEventProcessor.handleSentEmailNotificationEvent(event);
-
-        verify(notificationNotifyService).sendEmailNotification(any(), any());
-        verify(sender).sendAsAdmin(envelopeArgumentCaptor.capture());
-
-        final Envelope documentDeliveryCommand = envelopeArgumentCaptor.getValue();
-        assertThat(documentDeliveryCommand.metadata().name(), is("stagingdvla.command.handler.driver-notification-document-delivery"));
-        final JsonObject payload = (JsonObject) documentDeliveryCommand.payload();
-        assertThat(payload.getString("materialId"), is(materialId.toString()));
-        assertThat(payload.getString("emailStatus"), is("PENDING"));
-        assertThat(payload.containsKey("materialStatus"), is(false));
+        verify(documentGeneratorService, times(1)).generateDocument(any(), any(), any(), any(), any(), any(), any());
     }
 
     private JsonEnvelope emailNotificationSentEventFor(final UUID materialId) {

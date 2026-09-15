@@ -94,7 +94,7 @@ public class DvlaDocumentDeliveryService {
 
     private DvlaDocumentDeliveryView toView(final DvlaDocumentDeliveryEntity delivery) {
         return new DvlaDocumentDeliveryView(delivery.getMaterialId(), delivery.getCreatedAt(), delivery.getMaterialStatus(),
-                delivery.getEmailStatus(), delivery.getPayloadBlobUri(), delivery.getDocumentBlobUri(),
+                delivery.getPayloadBlobUri(), delivery.getDocumentBlobUri(),
                 delivery.getCaseId(), delivery.getSjpCorrelationId(), delivery.getSjpStatus());
     }
 
