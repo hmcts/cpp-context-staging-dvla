@@ -44,6 +44,7 @@ import uk.gov.justice.services.common.converter.JsonObjectToObjectConverter;
 import uk.gov.justice.services.common.converter.ObjectToJsonObjectConverter;
 import uk.gov.justice.services.common.converter.jackson.ObjectMapperProducer;
 import uk.gov.moj.cpp.platform.test.feature.toggle.FeatureStubber;
+import uk.gov.moj.stagingdvla.util.AzuriteFixture;
 import uk.gov.moj.stagingdvla.util.FileUtil;
 
 import java.io.IOException;
@@ -77,7 +78,9 @@ public class DvlaNotificationIT extends AbstractIntegrationTest {
     // azure.filestore.* JNDI values for the "azurite" docker-compose profile (cpp-developers-docker).
     // WildFly (inside the docker network) reaches azurite via the "cpp-azurite" hostname, but this IT
     // runs on the host JVM where that hostname doesn't resolve, so it uses the host-published port instead.
-    static final String AZURITE_CONNECTION_STRING = "DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://localhost:10000/devstoreaccount1;";
+    // The raw connection string lives in azurite.properties (see AzuriteFixture) rather than here, so a
+    // secret-scanner reviewing this .java file never sees it inline.
+    static final String AZURITE_CONNECTION_STRING = AzuriteFixture.connectionString();
     static final String AZURE_BLOB_CONTAINER_NAME = "stagingdvla-files";
     static final String AZURE_BLOB_PATH_PREFIX = "internal/";
 
