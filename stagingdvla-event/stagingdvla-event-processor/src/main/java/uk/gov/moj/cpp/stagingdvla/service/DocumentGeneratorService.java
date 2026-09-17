@@ -101,7 +101,6 @@ public class DocumentGeneratorService {
 
             recordDocumentDeliveryStatus(originatingEnvelope, materialId);
         } catch (RuntimeException e) {
-            e.printStackTrace();
             LOGGER.error(ERROR_MESSAGE, e);
         }
     }
