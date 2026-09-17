@@ -122,7 +122,8 @@ public class DocumentGeneratorService {
         FILE_SIZE, String.valueOf(byteArray.length))),
                 azureBlobConfiguration.getTransferTimeout(), NONE);
 
-        return new Result(blobClient.getBlobUrl(), blobClient.getBlobUrl() + "." + fileName.replaceAll(".*\\.", ""));
+        final String extension = fileName.substring(fileName.lastIndexOf('.') + 1);
+        return new Result(blobClient.getBlobUrl(), blobClient.getBlobUrl() + "." + extension);
     }
 
     private void recordDocumentDeliveryStatus(final JsonEnvelope originatingEnvelope, final UUID materialId) {

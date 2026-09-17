@@ -202,7 +202,7 @@ public class DocumentGeneratorServiceTest {
         assertThat(request.getSourceCorrelationId(), is(driverNotified.getMaterialId().toString()));
 
         assertThat(request.getPayloadFileUri(), is(blobUrl));
-        assertThat(request.getDestinationFileUri(), is(blobUrl + "." + fileName.replaceAll(".*\\.", "")));
+        assertThat(request.getDestinationFileUri(), is(blobUrl + "." + fileName.substring(fileName.lastIndexOf('.') + 1)));
 
         verifyDocumentDeliveryStatusRecorded(driverNotified, DvlaDocumentDeliveryMaterialStatus.PENDING);
     }
