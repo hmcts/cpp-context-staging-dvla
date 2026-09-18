@@ -6,6 +6,10 @@
     {
       "groupId": "e5679ef8-6de7-11e7-907b-a6006ad3dba0",
       "groupName": "Legal Advisers"
+    },
+    {
+      "groupId": "e5679ef8-6de7-11e7-907b-a6006ad3dba1",
+      "groupName": "Auditors"
     }
   ]
 }

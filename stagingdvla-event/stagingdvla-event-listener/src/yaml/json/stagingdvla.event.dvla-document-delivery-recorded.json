@@ -1,7 +1,6 @@
 {
   "materialId": "bbf80f48-970d-4b2c-8167-f048c719c89a",
   "materialStatus": "PENDING",
-  "emailStatus": "SENT",
   "payloadBlobUri": "payload/blob/uri",
   "documentBlobUri": "document/blob/uri",
   "caseId": "6a4f1f0a-3c1b-4e2a-9b3a-1e8f2c6d4a2b",

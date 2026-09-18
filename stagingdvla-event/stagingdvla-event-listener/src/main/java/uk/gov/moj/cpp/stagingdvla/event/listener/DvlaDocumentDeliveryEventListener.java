@@ -55,9 +55,6 @@ public class DvlaDocumentDeliveryEventListener {
         if (nonNull(recorded.getMaterialStatus())) {
             entity.setMaterialStatus(recorded.getMaterialStatus());
         }
-        if (nonNull(recorded.getEmailStatus())) {
-            entity.setEmailStatus(recorded.getEmailStatus());
-        }
         if (nonNull(recorded.getPayloadBlobUri())) {
             entity.setPayloadBlobUri(recorded.getPayloadBlobUri());
         }

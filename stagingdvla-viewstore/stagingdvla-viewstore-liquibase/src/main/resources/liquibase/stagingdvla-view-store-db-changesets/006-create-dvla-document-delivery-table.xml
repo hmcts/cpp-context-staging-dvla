@@ -15,8 +15,6 @@
             </column>
             <column name="material_status" type="VARCHAR(32)">
             </column>
-            <column name="email_status" type="VARCHAR(32)">
-            </column>
             <column name="payload_blob_uri" type="TEXT">
             </column>
             <column name="document_blob_uri" type="TEXT">

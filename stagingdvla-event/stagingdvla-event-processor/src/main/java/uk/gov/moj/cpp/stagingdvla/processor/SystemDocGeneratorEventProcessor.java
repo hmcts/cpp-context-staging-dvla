@@ -38,7 +38,6 @@ import uk.gov.justice.services.messaging.JsonEnvelope;
 import uk.gov.justice.services.messaging.Metadata;
 import uk.gov.moj.cpp.material.url.MaterialUrlGenerator;
 import uk.gov.moj.cpp.stagingdvla.SjpDocumentTypes;
-import uk.gov.moj.cpp.stagingdvla.domain.constants.DvlaDocumentDeliveryEmailStatus;
 import uk.gov.moj.cpp.stagingdvla.domain.constants.DvlaDocumentDeliveryMaterialStatus;
 import uk.gov.moj.cpp.stagingdvla.service.ApplicationParameters;
 import uk.gov.moj.cpp.stagingdvla.service.UploadMaterialContext;
@@ -163,8 +162,6 @@ public class SystemDocGeneratorEventProcessor {
 
                 if (shouldSendEmailNotification(driverNotified)) {
                     emailNotifications = getEmailNotification(driverNotified);
-                } else {
-                    recordEmailNotRequired(envelope, driverNotified.getMaterialId());
                 }
 
                 final UUID generateDocumentFileId = fromString(documentFileServiceId);
@@ -189,17 +186,6 @@ public class SystemDocGeneratorEventProcessor {
         } catch (FileServiceException fileServiceException) {
             LOGGER.error("failed to retrieve json payload from file service", fileServiceException);
         }
-    }
-
-    private void recordEmailNotRequired(final JsonEnvelope originatingEvent, final UUID materialId) {
-        final JsonObject payload = createObjectBuilder()
-                .add(MATERIAL_ID, materialId.toString())
-                .add("emailStatus", DvlaDocumentDeliveryEmailStatus.NOT_REQUIRED.name())
-                .build();
-
-        sender.sendAsAdmin(Envelope.envelopeFrom(
-                metadataFrom(originatingEvent.metadata()).withName(STAGINGDVLA_COMMAND_HANDLER_DRIVER_NOTIFICATION_DOCUMENT_DELIVERY).build(),
-                payload));
     }
 
     private static boolean shouldSendEmailNotification(final DriverNotified driverNotified) {

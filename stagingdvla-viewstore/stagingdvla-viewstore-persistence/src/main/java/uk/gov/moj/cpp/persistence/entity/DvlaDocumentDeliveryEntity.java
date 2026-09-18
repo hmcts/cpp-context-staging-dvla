@@ -26,9 +26,6 @@ public class DvlaDocumentDeliveryEntity implements Serializable {
     @Column(name = "material_status")
     private String materialStatus;
 
-    @Column(name = "email_status")
-    private String emailStatus;
-
     @Column(name = "payload_blob_uri")
     private String payloadBlobUri;
 
@@ -47,15 +44,14 @@ public class DvlaDocumentDeliveryEntity implements Serializable {
     public DvlaDocumentDeliveryEntity() {
     }
 
-    public DvlaDocumentDeliveryEntity(final UUID materialId, final ZonedDateTime createdAt, final String materialStatus, final String emailStatus, final String payloadBlobUri, final String documentBlobUri) {
-        this(materialId, createdAt, materialStatus, emailStatus, payloadBlobUri, documentBlobUri, null, null, null);
+    public DvlaDocumentDeliveryEntity(final UUID materialId, final ZonedDateTime createdAt, final String materialStatus, final String payloadBlobUri, final String documentBlobUri) {
+        this(materialId, createdAt, materialStatus, payloadBlobUri, documentBlobUri, null, null, null);
     }
 
-    public DvlaDocumentDeliveryEntity(final UUID materialId, final ZonedDateTime createdAt, final String materialStatus, final String emailStatus, final String payloadBlobUri, final String documentBlobUri, final UUID caseId, final UUID sjpCorrelationId, final String sjpStatus) {
+    public DvlaDocumentDeliveryEntity(final UUID materialId, final ZonedDateTime createdAt, final String materialStatus, final String payloadBlobUri, final String documentBlobUri, final UUID caseId, final UUID sjpCorrelationId, final String sjpStatus) {
         this.materialId = materialId;
         this.createdAt = createdAt;
         this.materialStatus = materialStatus;
-        this.emailStatus = emailStatus;
         this.payloadBlobUri = payloadBlobUri;
         this.documentBlobUri = documentBlobUri;
         this.caseId = caseId;
@@ -85,14 +81,6 @@ public class DvlaDocumentDeliveryEntity implements Serializable {
 
     public void setMaterialStatus(final String materialStatus) {
         this.materialStatus = materialStatus;
-    }
-
-    public String getEmailStatus() {
-        return emailStatus;
-    }
-
-    public void setEmailStatus(final String emailStatus) {
-        this.emailStatus = emailStatus;
     }
 
     public String getPayloadBlobUri() {

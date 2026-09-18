@@ -1,23 +1,13 @@
 package uk.gov.moj.cpp.stagingdvla.processor;
 
+
 import static java.lang.String.join;
 import static java.time.LocalDate.parse;
 import static java.util.UUID.fromString;
 import static uk.gov.justice.services.messaging.JsonObjects.createArrayBuilder;
 import static uk.gov.justice.services.messaging.JsonObjects.createObjectBuilder;
 import static uk.gov.justice.services.core.annotation.Component.EVENT_PROCESSOR;
-import static uk.gov.justice.services.messaging.Envelope.metadataFrom;
-import static uk.gov.moj.cpp.stagingdvla.helper.DriverSearchAuditHelper.CONVERSION_FORMAT;
-import static uk.gov.moj.cpp.stagingdvla.helper.DriverSearchAuditHelper.CSV;
 import static uk.gov.moj.cpp.stagingdvla.helper.DriverSearchAuditHelper.DVLA_AUDIT_RECORDS;
-import static uk.gov.moj.cpp.stagingdvla.helper.DriverSearchAuditHelper.FILE_NAME;
-import static uk.gov.moj.cpp.stagingdvla.helper.DriverSearchAuditHelper.FILE_SIZE;
-import static uk.gov.moj.cpp.stagingdvla.helper.DriverSearchAuditHelper.NUMBER_OF_PAGES;
-import static uk.gov.moj.cpp.stagingdvla.helper.DriverSearchAuditHelper.ORIGINATING_SOURCE;
-import static uk.gov.moj.cpp.stagingdvla.helper.DriverSearchAuditHelper.PAYLOAD_FILE_SERVICE_ID;
-import static uk.gov.moj.cpp.stagingdvla.helper.DriverSearchAuditHelper.SOURCE_CORRELATION_ID;
-import static uk.gov.moj.cpp.stagingdvla.helper.DriverSearchAuditHelper.TEMPLATE_IDENTIFIER;
-import static uk.gov.moj.cpp.stagingdvla.helper.DriverSearchAuditHelper.TEMPLATE_NAME;
 import static uk.gov.moj.cpp.stagingdvla.service.MaterialService.AUDIT_REPORT_ORIGINATOR_VALUE;
 
 import uk.gov.justice.cpp.stagingdvla.DriverAuditReportSearchCriteria;
@@ -31,21 +21,17 @@ import uk.gov.justice.services.core.annotation.ServiceComponent;
 import uk.gov.justice.services.core.dispatcher.SystemUserProvider;
 import uk.gov.justice.services.core.enveloper.Enveloper;
 import uk.gov.justice.services.core.sender.Sender;
-import uk.gov.justice.services.fileservice.api.FileRetriever;
 import uk.gov.justice.services.fileservice.api.FileServiceException;
-import uk.gov.justice.services.fileservice.api.FileStorer;
-import uk.gov.justice.services.messaging.Envelope;
+
 import uk.gov.justice.services.messaging.JsonEnvelope;
 import uk.gov.moj.cpp.persistence.entity.DriverAuditEntity;
 import uk.gov.moj.cpp.persistence.repository.DriverAuditRepository;
+import uk.gov.moj.cpp.stagingdvla.service.ConversionFormat;
+import uk.gov.moj.cpp.stagingdvla.service.DocumentGeneratorService;
 import uk.gov.moj.cpp.stagingdvla.service.MaterialService;
 
-import java.io.ByteArrayInputStream;
-import java.nio.charset.StandardCharsets;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -63,15 +49,11 @@ import org.slf4j.LoggerFactory;
 public class DriverSearchAuditReportEventProcessor {
     public static final String AUDIT_REPORT_PREFIX = "DriverAuditReport";
     private static final Logger LOGGER = LoggerFactory.getLogger(DriverSearchAuditReportEventProcessor.class.getCanonicalName());
-    public static final String DATE_FORMAT = "yyyy-MM-dd_hh-mm-ss";
+
     @Inject
     private JsonObjectToObjectConverter jsonObjectToObjectConverter;
     @Inject
     private DriverAuditRepository driverAuditRepository;
-    @Inject
-    private FileStorer fileStorer;
-    @Inject
-    private FileRetriever fileRetriever;
     @Inject
     private Sender sender;
     @Inject
@@ -81,9 +63,9 @@ public class DriverSearchAuditReportEventProcessor {
     @Inject
     private Enveloper enveloper;
 
-    public static byte[] jsonObjectAsByteArray(final JsonObject jsonObject) {
-        return jsonObject.toString().getBytes(StandardCharsets.UTF_8);
-    }
+
+    @Inject
+    private DocumentGeneratorService documentGeneratorService;
 
     @Handles("stagingdvla.event.driver-search-audit-report-requested")
     public void processDriverSearchAuditReportRequested(final JsonEnvelope envelope) throws FileServiceException {
@@ -94,11 +76,8 @@ public class DriverSearchAuditReportEventProcessor {
             final DriverAuditReportSearchCriteria driverAuditReportSearchCriteria = auditReportRequested.getReportSearchCriteria();
             final JsonObject docGeneratorPayload = getAuditReportDocumentGeneratorPayload(driverAuditReportSearchCriteria);
 
-            final UUID fileId = storeAuditReportDocumentGeneratorPayload(docGeneratorPayload,
-                    constructFileName(), DVLA_AUDIT_RECORDS);
-            LOGGER.info("Sending systemdocgenerator.generate-document request for reportId: {}",
-                    auditReportRequested.getId());
-            this.requestAuditReportDocumentGeneration(envelope, auditReportRequested.getId().toString(), fileId, DVLA_AUDIT_RECORDS, DVLA_AUDIT_RECORDS);
+            documentGeneratorService.generateDocument(envelope, auditReportRequested.getId(), docGeneratorPayload, constructFileName(auditReportRequested.getId().toString()), DVLA_AUDIT_RECORDS, ConversionFormat.CSV, DVLA_AUDIT_RECORDS);
+
         }
     }
 
@@ -200,43 +179,7 @@ public class DriverSearchAuditReportEventProcessor {
                 .build();
     }
 
-
-    private UUID storeAuditReportDocumentGeneratorPayload(final JsonObject docGeneratorPayload, final String fileName, final String templateName) throws FileServiceException {
-        final byte[] jsonPayloadInBytes = jsonObjectAsByteArray(docGeneratorPayload);
-
-        final JsonObject metadata = createObjectBuilder()
-                .add(FILE_NAME, fileName)
-                .add(CONVERSION_FORMAT, CSV)
-                .add(TEMPLATE_NAME, templateName)
-                .add(NUMBER_OF_PAGES, 1)
-                .add(FILE_SIZE, jsonPayloadInBytes.length)
-                .build();
-        return fileStorer.store(metadata, new ByteArrayInputStream(jsonPayloadInBytes));
-    }
-
-    private String constructFileName() {
-        return join("_", AUDIT_REPORT_PREFIX, new SimpleDateFormat(DATE_FORMAT).format(new Date())) + ".csv";
-    }
-
-    private void requestAuditReportDocumentGeneration(final JsonEnvelope eventEnvelope,
-                                                      final String reportId,
-                                                      final UUID payloadFileServiceUUID,
-                                                      final String originatingSource,
-                                                      final String templateIdentifier) {
-
-        final JsonObject docGeneratorPayload = createObjectBuilder()
-                .add(ORIGINATING_SOURCE, originatingSource)
-                .add(TEMPLATE_IDENTIFIER, templateIdentifier)
-                .add(CONVERSION_FORMAT, CSV)
-                .add(SOURCE_CORRELATION_ID, reportId)
-                .add(PAYLOAD_FILE_SERVICE_ID, payloadFileServiceUUID.toString())
-                .build();
-
-        sender.sendAsAdmin(
-                Envelope.envelopeFrom(
-                        metadataFrom(eventEnvelope.metadata()).withName("systemdocgenerator.generate-document"),
-                        docGeneratorPayload
-                )
-        );
+    private String constructFileName(final String materialId) {
+        return join("_", AUDIT_REPORT_PREFIX, materialId) + ".csv";
     }
 }

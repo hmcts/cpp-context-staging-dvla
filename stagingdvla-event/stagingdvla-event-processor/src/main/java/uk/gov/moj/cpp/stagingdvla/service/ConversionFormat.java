@@ -1,7 +1,8 @@
 package uk.gov.moj.cpp.stagingdvla.service;
 
 public enum ConversionFormat {
-    PDF("pdf");
+    PDF("pdf"),
+    CSV("csv");
 
     private final String value;
 

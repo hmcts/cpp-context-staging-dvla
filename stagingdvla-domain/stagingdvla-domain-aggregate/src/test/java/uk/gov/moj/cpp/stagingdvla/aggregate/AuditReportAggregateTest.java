@@ -88,6 +88,41 @@ public class AuditReportAggregateTest {
     }
 
     @Test
+    public void shouldSetCreatedEventMaterialIdToTheReportId() {
+        final DriverRecordSearchAuditReportCreated reportCreatedCommand = DriverRecordSearchAuditReportCreated.driverRecordSearchAuditReportCreated()
+                .withId(REPORT_ID)
+                .withReportFileId(REPORT_FILE_ID).build();
+
+        final List<Object> eventStream = aggregate.auditReportCreated(reportCreatedCommand).collect(toList());
+
+        assertThat(eventStream.size(), is(1));
+        final DriverSearchAuditReportCreated raisedEvent = (DriverSearchAuditReportCreated) eventStream.get(0);
+        assertThat(raisedEvent.getMaterialId(), is(REPORT_ID));
+        assertThat(raisedEvent.getId(), is(REPORT_ID));
+    }
+
+    @Test
+    public void shouldSetCreatedEventMaterialIdToTheReportIdForDifferentReports() {
+        final UUID firstReportId = randomUUID();
+        final UUID secondReportId = randomUUID();
+
+        final DriverSearchAuditReportCreated firstEvent = (DriverSearchAuditReportCreated) aggregate.auditReportCreated(
+                DriverRecordSearchAuditReportCreated.driverRecordSearchAuditReportCreated()
+                        .withId(firstReportId)
+                        .withReportFileId(REPORT_FILE_ID)
+                        .build()).collect(toList()).get(0);
+
+        final DriverSearchAuditReportCreated secondEvent = (DriverSearchAuditReportCreated) aggregate.auditReportCreated(
+                DriverRecordSearchAuditReportCreated.driverRecordSearchAuditReportCreated()
+                        .withId(secondReportId)
+                        .withReportFileId(REPORT_FILE_ID)
+                        .build()).collect(toList()).get(0);
+
+        assertThat(firstEvent.getMaterialId(), is(firstReportId));
+        assertThat(secondEvent.getMaterialId(), is(secondReportId));
+    }
+
+    @Test
     public void shouldStoreDriverSearchAuditReport() {
         final DriverSearchAuditReportStored reportStoredEvent = DriverSearchAuditReportStored.driverSearchAuditReportStored()
                 .withId(REPORT_ID)
