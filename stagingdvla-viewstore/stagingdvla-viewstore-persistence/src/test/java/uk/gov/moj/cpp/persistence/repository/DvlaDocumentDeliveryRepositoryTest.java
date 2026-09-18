@@ -34,7 +34,7 @@ public class DvlaDocumentDeliveryRepositoryTest {
 
         final UUID caseId = randomUUID();
         final UUID sjpCorrelationId = randomUUID();
-        final DvlaDocumentDeliveryEntity entity = new DvlaDocumentDeliveryEntity(materialId, createdAt, "PENDING", "SENT", "payload/blob/uri", "document/blob/uri",
+        final DvlaDocumentDeliveryEntity entity = new DvlaDocumentDeliveryEntity(materialId, createdAt, "PENDING", "payload/blob/uri", "document/blob/uri",
                 caseId, sjpCorrelationId, "AWAITING_RESULT");
 
         dvlaDocumentDeliveryRepository.save(entity);
@@ -44,7 +44,6 @@ public class DvlaDocumentDeliveryRepositoryTest {
         assertThat(retrieved.getMaterialId(), equalTo(materialId));
         assertThat(retrieved.getCreatedAt(), equalTo(createdAt));
         assertThat(retrieved.getMaterialStatus(), equalTo("PENDING"));
-        assertThat(retrieved.getEmailStatus(), equalTo("SENT"));
         assertThat(retrieved.getPayloadBlobUri(), equalTo("payload/blob/uri"));
         assertThat(retrieved.getDocumentBlobUri(), equalTo("document/blob/uri"));
         assertThat(retrieved.getCaseId(), equalTo(caseId));
@@ -56,9 +55,9 @@ public class DvlaDocumentDeliveryRepositoryTest {
     public void shouldRetrieveByCaseId() {
 
         final UUID caseId = randomUUID();
-        final DvlaDocumentDeliveryEntity withCase = new DvlaDocumentDeliveryEntity(randomUUID(), now(), "PENDING", null, null, null,
+        final DvlaDocumentDeliveryEntity withCase = new DvlaDocumentDeliveryEntity(randomUUID(), now(), "PENDING", null, null,
                 caseId, randomUUID(), "PENDING");
-        final DvlaDocumentDeliveryEntity withoutCase = new DvlaDocumentDeliveryEntity(randomUUID(), now(), "PENDING", null, null, null);
+        final DvlaDocumentDeliveryEntity withoutCase = new DvlaDocumentDeliveryEntity(randomUUID(), now(), "PENDING", null, null);
 
         dvlaDocumentDeliveryRepository.save(withCase);
         dvlaDocumentDeliveryRepository.save(withoutCase);
@@ -73,9 +72,9 @@ public class DvlaDocumentDeliveryRepositoryTest {
     public void shouldRetrieveByCaseIdAndMaterialStatus() {
 
         final UUID caseId = randomUUID();
-        final DvlaDocumentDeliveryEntity pendingWithCase = new DvlaDocumentDeliveryEntity(randomUUID(), now(), "PENDING", null, null, null,
+        final DvlaDocumentDeliveryEntity pendingWithCase = new DvlaDocumentDeliveryEntity(randomUUID(), now(), "PENDING", null, null,
                 caseId, randomUUID(), "PENDING");
-        final DvlaDocumentDeliveryEntity completedWithCase = new DvlaDocumentDeliveryEntity(randomUUID(), now(), "COMPLETED", null, null, null,
+        final DvlaDocumentDeliveryEntity completedWithCase = new DvlaDocumentDeliveryEntity(randomUUID(), now(), "COMPLETED", null, null,
                 caseId, randomUUID(), "PENDING");
 
         dvlaDocumentDeliveryRepository.save(pendingWithCase);
@@ -92,7 +91,7 @@ public class DvlaDocumentDeliveryRepositoryTest {
 
         final UUID caseId = randomUUID();
         for (int i = 0; i < 3; i++) {
-            dvlaDocumentDeliveryRepository.save(new DvlaDocumentDeliveryEntity(randomUUID(), now(), "PENDING", null, null, null,
+            dvlaDocumentDeliveryRepository.save(new DvlaDocumentDeliveryEntity(randomUUID(), now(), "PENDING", null, null,
                     caseId, randomUUID(), "PENDING"));
         }
 
@@ -113,7 +112,7 @@ public class DvlaDocumentDeliveryRepositoryTest {
         final UUID materialId = randomUUID();
         final ZonedDateTime createdAt = now();
 
-        final DvlaDocumentDeliveryEntity entity = new DvlaDocumentDeliveryEntity(materialId, createdAt, null, null, null, null);
+        final DvlaDocumentDeliveryEntity entity = new DvlaDocumentDeliveryEntity(materialId, createdAt, null, null, null);
 
         dvlaDocumentDeliveryRepository.save(entity);
 
@@ -121,7 +120,6 @@ public class DvlaDocumentDeliveryRepositoryTest {
 
         assertThat(retrieved.getMaterialId(), equalTo(materialId));
         assertThat(retrieved.getMaterialStatus(), nullValue());
-        assertThat(retrieved.getEmailStatus(), nullValue());
         assertThat(retrieved.getPayloadBlobUri(), nullValue());
         assertThat(retrieved.getDocumentBlobUri(), nullValue());
     }
@@ -129,9 +127,9 @@ public class DvlaDocumentDeliveryRepositoryTest {
     @Test
     public void shouldRetrieveAllByMaterialStatus() {
 
-        final DvlaDocumentDeliveryEntity sent = new DvlaDocumentDeliveryEntity(randomUUID(), now(), "SENT", "DELIVERED", null, null);
-        final DvlaDocumentDeliveryEntity sentToo = new DvlaDocumentDeliveryEntity(randomUUID(), now(), "SENT", "DELIVERED", null, null);
-        final DvlaDocumentDeliveryEntity pending = new DvlaDocumentDeliveryEntity(randomUUID(), now(), "PENDING", null, null, null);
+        final DvlaDocumentDeliveryEntity sent = new DvlaDocumentDeliveryEntity(randomUUID(), now(), "SENT", null, null);
+        final DvlaDocumentDeliveryEntity sentToo = new DvlaDocumentDeliveryEntity(randomUUID(), now(), "SENT", null, null);
+        final DvlaDocumentDeliveryEntity pending = new DvlaDocumentDeliveryEntity(randomUUID(), now(), "PENDING", null, null);
 
         dvlaDocumentDeliveryRepository.save(sent);
         dvlaDocumentDeliveryRepository.save(sentToo);

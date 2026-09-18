@@ -12,10 +12,6 @@
       "description": "The status of the material",
       "type": "string"
     },
-    "emailStatus": {
-      "description": "The status of the email notification",
-      "type": "string"
-    },
     "payloadBlobUri": {
       "description": "The blob storage URI of the payload",
       "type": "string"

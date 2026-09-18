@@ -21,13 +21,13 @@ public class FileService {
     @Inject
     private FileStorer fileStorer;
 
-    public UUID storePayload(final JsonObject payload, final String fileName, final String templateName) {
+    public UUID storePayload(final JsonObject payload, final String fileName, final String templateName, final ConversionFormat format) {
         try {
             final byte[] jsonPayloadInBytes = payload.toString().getBytes(StandardCharsets.UTF_8);
 
             final JsonObject metadata = createObjectBuilder()
                     .add("fileName", fileName)
-                    .add("conversionFormat", ConversionFormat.PDF.toString())
+                    .add("conversionFormat",format.toString())
                     .add("templateName", templateName)
                     .add("numberOfPages", 1)
                     .add("fileSize", jsonPayloadInBytes.length)

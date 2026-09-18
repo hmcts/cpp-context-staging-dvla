@@ -43,9 +43,6 @@
         "materialStatus": {
           "type": "string"
         },
-        "emailStatus": {
-          "type": "string"
-        },
         "payloadBlobUri": {
           "type": "string"
         },

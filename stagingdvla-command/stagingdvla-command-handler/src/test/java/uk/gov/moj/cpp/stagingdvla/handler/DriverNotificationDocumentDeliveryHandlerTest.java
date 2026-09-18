@@ -47,7 +47,6 @@ public class DriverNotificationDocumentDeliveryHandlerTest {
 
     private static final UUID MATERIAL_ID = randomUUID();
     private static final String MATERIAL_STATUS = "PENDING";
-    private static final String EMAIL_STATUS = "SENT";
     private static final String PAYLOAD_BLOB_URI = "payload/blob/uri";
     private static final String DOCUMENT_BLOB_URI = "document/blob/uri";
 
@@ -91,7 +90,6 @@ public class DriverNotificationDocumentDeliveryHandlerTest {
                         payload().isJson(allOf(
                                 withJsonPath("$.materialId", is(MATERIAL_ID.toString())),
                                 withJsonPath("$.materialStatus", is(MATERIAL_STATUS)),
-                                withJsonPath("$.emailStatus", is(EMAIL_STATUS)),
                                 withJsonPath("$.payloadBlobUri", is(PAYLOAD_BLOB_URI)),
                                 withJsonPath("$.documentBlobUri", is(DOCUMENT_BLOB_URI))
                         ))
@@ -146,7 +144,6 @@ public class DriverNotificationDocumentDeliveryHandlerTest {
                 .driverNotificationDocumentDelivery()
                 .withMaterialId(MATERIAL_ID)
                 .withMaterialStatus(MATERIAL_STATUS)
-                .withEmailStatus(EMAIL_STATUS)
                 .withPayloadBlobUri(PAYLOAD_BLOB_URI)
                 .withDocumentBlobUri(DOCUMENT_BLOB_URI)
                 .build();

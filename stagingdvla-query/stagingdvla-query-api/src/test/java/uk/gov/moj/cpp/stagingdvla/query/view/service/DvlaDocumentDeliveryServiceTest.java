@@ -220,13 +220,13 @@ class DvlaDocumentDeliveryServiceTest {
 
     private DvlaDocumentDeliveryEntity deliveryEntity(final UUID materialId, final String materialStatus) {
         final ZonedDateTime createdAt = now();
-        return new DvlaDocumentDeliveryEntity(materialId, createdAt, materialStatus, "DELIVERED", "payload/uri", "document/uri");
+        return new DvlaDocumentDeliveryEntity(materialId, createdAt, materialStatus, "payload/uri", "document/uri");
     }
 
     private DvlaDocumentDeliveryEntity deliveryEntityWithSjpCase(final UUID materialId, final String materialStatus,
                                                                   final UUID caseId, final UUID sjpCorrelationId, final String sjpStatus) {
         final ZonedDateTime createdAt = now();
-        return new DvlaDocumentDeliveryEntity(materialId, createdAt, materialStatus, "DELIVERED", "payload/uri", "document/uri",
+        return new DvlaDocumentDeliveryEntity(materialId, createdAt, materialStatus, "payload/uri", "document/uri",
                 caseId, sjpCorrelationId, sjpStatus);
     }
 }

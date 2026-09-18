@@ -48,7 +48,6 @@ public class DriverNotificationDocumentDeliveryHandler {
         final Stream<Object> events = materialAggregate.recordDocumentDelivery(
                 documentDelivery.getMaterialId(),
                 documentDelivery.getMaterialStatus(),
-                documentDelivery.getEmailStatus(),
                 documentDelivery.getPayloadBlobUri(),
                 documentDelivery.getDocumentBlobUri(),
                 documentDelivery.getCaseId(),
