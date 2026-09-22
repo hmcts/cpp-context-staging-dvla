@@ -35,7 +35,7 @@ buildDeployAndTest() {
   loginToDockerContainerRegistry
   buildWars
   undeployWarsFromDocker
-  buildAndStartContainers "--profile azurite"
+  buildAndStartContainers "--profile es --profile azurite"
   runLiquibase
   deployWiremock
   deployWars
