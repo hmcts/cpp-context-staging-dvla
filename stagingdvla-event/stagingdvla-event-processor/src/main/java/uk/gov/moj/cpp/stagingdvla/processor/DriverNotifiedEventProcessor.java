@@ -104,8 +104,6 @@ public class DriverNotifiedEventProcessor {
     public void handleDriverNotifiedEvent(final JsonEnvelope envelope) {
         final JsonObject requestJson = envelope.payloadAsJsonObject();
         final DriverNotified driverNotified = jsonObjectToObjectConverter.convert(requestJson, DriverNotified.class);
-        final UUID userId = fromString(envelope.metadata().userId().orElseThrow(() -> new RuntimeException("UserId missing from event.")));
-
         if (LOGGER.isInfoEnabled()) {
             LOGGER.info("Driver Notified event - {}", envelope.toObfuscatedDebugString());
         }
