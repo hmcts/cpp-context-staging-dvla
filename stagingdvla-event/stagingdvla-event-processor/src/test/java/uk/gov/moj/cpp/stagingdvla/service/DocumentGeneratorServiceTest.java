@@ -7,6 +7,7 @@ import static java.util.UUID.randomUUID;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
@@ -208,7 +209,7 @@ public class DocumentGeneratorServiceTest {
     }
 
     @Test
-    public void shouldSwallowExceptionAndNotRequestDocumentGenerationWhenBlobUploadFails() throws Exception {
+    public void shouldThrowExceptionAndNotRequestDocumentGenerationWhenBlobUploadFails() throws Exception {
         final DriverNotified driverNotified = generateDriverNotified("C");
 
         when(featureControlGuard.isFeatureEnabled("dvlaFileStore")).thenReturn(false);
@@ -224,11 +225,11 @@ public class DocumentGeneratorServiceTest {
         final JsonEnvelope envelope = envelopeFrom(metadataWithRandomUUID("public.systemdocgenerator.events.document-available"),
                 nowsDocumentOrderJson1);
 
-        documentGeneratorService.generateDocument(envelope, driverNotified.getMaterialId(), nowsDocumentOrderJson1,
+        assertThrows(RuntimeException.class, () -> documentGeneratorService.generateDocument(envelope, driverNotified.getMaterialId(), nowsDocumentOrderJson1,
                 documentGeneratorService.getMaterialIdAmendedFileName(DVLA_DOCUMENT_ORDER, driverNotified.getMaterialId().toString()),
                 DVLA_DOCUMENT_TEMPLATE_NAME,
                 ConversionFormat.PDF,
-                DVLA_DOCUMENT_ORDER);
+                DVLA_DOCUMENT_ORDER));
 
         verifyNoInteractions(systemDocGeneratorService);
         verify(sender, never()).sendAsAdmin(any());
