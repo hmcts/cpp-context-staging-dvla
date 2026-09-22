@@ -79,30 +79,26 @@ public class DocumentGeneratorService {
 
     @Transactional(Transactional.TxType.REQUIRES_NEW)
     public void generateDocument(final JsonEnvelope originatingEnvelope, final UUID materialId, final JsonObject payload, final String fileName, final String templateName, final ConversionFormat format, final String originatingSource) {
-        try {
-            final UUID fileId;
-            final Result result;
-            if (featureControlGuard.isFeatureEnabled("dvlaFileStore")) {
-                result = new Result(null, null);
-                fileId = fileService.storePayload(payload, fileName, templateName, format);
-            } else {
-                fileId = null;
-                result = uploadDocumentToAzureBlob(materialId, payload, fileName, format, templateName);
-            }
-            final DocumentGenerationRequest documentGenerationRequest = new DocumentGenerationRequest(
-                    originatingSource,
-                    templateName,
-                    format,
-                    materialId.toString(),
-                    fileId,
-                    result.payloadFileUri(),
-                    result.destinationFileUri());
-            systemDocGeneratorService.generateDocument(documentGenerationRequest, originatingEnvelope);
-
-            recordDocumentDeliveryStatus(originatingEnvelope, materialId);
-        } catch (RuntimeException e) {
-            LOGGER.error(ERROR_MESSAGE, e);
+        final UUID fileId;
+        final Result result;
+        if (featureControlGuard.isFeatureEnabled("dvlaFileStore")) {
+            result = new Result(null, null);
+            fileId = fileService.storePayload(payload, fileName, templateName, format);
+        } else {
+            fileId = null;
+            result = uploadDocumentToAzureBlob(materialId, payload, fileName, format, templateName);
         }
+        final DocumentGenerationRequest documentGenerationRequest = new DocumentGenerationRequest(
+                originatingSource,
+                templateName,
+                format,
+                materialId.toString(),
+                fileId,
+                result.payloadFileUri(),
+                result.destinationFileUri());
+        systemDocGeneratorService.generateDocument(documentGenerationRequest, originatingEnvelope);
+
+        recordDocumentDeliveryStatus(originatingEnvelope, materialId);
     }
 
     public record Result(String payloadFileUri, String destinationFileUri){}
