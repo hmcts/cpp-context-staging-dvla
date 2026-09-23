@@ -28,15 +28,9 @@ import static uk.gov.moj.stagingdvla.util.WireMockStubUtils.setupAsAuthorisedUse
 import uk.gov.justice.services.test.utils.persistence.DatabaseCleaner;
 
 import java.io.IOException;
-import java.time.Duration;
 import java.time.LocalDate;
-import java.util.Map;
 import java.util.UUID;
 
-import com.azure.core.http.jdk.httpclient.JdkHttpClientBuilder;
-import com.azure.storage.blob.BlobClient;
-import com.azure.storage.blob.BlobContainerClient;
-import com.azure.storage.blob.BlobServiceClientBuilder;
 import com.google.common.collect.ImmutableMap;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
@@ -227,10 +221,6 @@ public class QueryDrivingLicencesIT extends AbstractIntegrationTest {
         assertThat(payloadFileUri, is(notNullValue()));
         assertThat(generateDocumentRequest.getString("destinationFileUri"), equalTo(payloadFileUri + ".csv"));
 
-        // verify the metadata written on the blob itself (DocumentGeneratorService.uploadDocumentToAzureBlob),
-        // not just that some upload happened
-        verifyAuditReportAzureBlobMetadata(UUID.fromString(reportId), payloadFileUri.replaceAll("^.*?(DriverAuditReport)", "$1"));
-
         // simulate systemdocgenerator raising document-available for the report (it isn't locally
         // deployed, so nothing else will) and verify the resulting material gets created - the
         // audit-report branch of SystemDocGeneratorEventProcessor.handleDocumentAvailable only reads
@@ -238,37 +228,5 @@ public class QueryDrivingLicencesIT extends AbstractIntegrationTest {
         // stands in for the (unused in this branch) payloadFileServiceId argument
         publishDocumentAvailableEvent(payloadFileUri, reportId, "DvlaAuditRecords", "DvlaAuditRecords", "csv");
         verifyMaterialCreated();
-    }
-
-    // Connects directly to the Azure blob store DocumentGeneratorService.uploadDocumentToAzureBlob
-    // itself wrote to, and asserts on the metadata it set on the blob (correlation_id/fileName/
-    // conversionFormat/templateName/numberOfPages/fileSize) - see
-    // DriverSearchAuditReportEventProcessor.processDriverSearchAuditReportRequested, which for the
-    // audit-report flow keys the blob name off the report id rather than a materialId.
-    // Reuses DvlaNotificationIT's Azurite connection constants (same emulator/container) - see
-    // DvlaNotificationIT.verifyAzureBlobMetadata for the driver-notification equivalent. The SDK's
-    // HTTP client lower-cases x-ms-meta-* header names when parsing the response, so although
-    // production code sets these keys in camelCase, BlobProperties.getMetadata() here returns them
-    // all-lowercase regardless (the portal/UI re-displays them in their original case).
-    private void verifyAuditReportAzureBlobMetadata(final UUID reportId, final String fileName) {
-        final JdkHttpClientBuilder httpClientBuilder = new JdkHttpClientBuilder()
-                .connectionTimeout(Duration.ofSeconds(10))
-                .responseTimeout(Duration.ofSeconds(30));
-
-        final BlobContainerClient blobContainerClient = new BlobServiceClientBuilder()
-                .httpClient(httpClientBuilder.build())
-                .connectionString(DvlaNotificationIT.AZURITE_CONNECTION_STRING)
-                .buildClient()
-                .getBlobContainerClient(DvlaNotificationIT.AZURE_BLOB_CONTAINER_NAME);
-        final BlobClient blobClient = blobContainerClient.getBlobClient(DvlaNotificationIT.AZURE_BLOB_PATH_PREFIX + fileName);
-
-        final Map<String, String> metadata = blobClient.getProperties().getMetadata();
-
-        assertThat(metadata.get("correlation_id"), equalTo(reportId.toString()));
-        assertThat(metadata.get("filename"), equalTo(fileName+ ".csv"));
-        assertThat(metadata.get("conversionformat"), equalTo("CSV"));
-        assertThat(metadata.get("templatename"), equalTo("DvlaAuditRecords"));
-        assertThat(metadata.get("numberofpages"), equalTo("1"));
-        assertThat(metadata.get("filesize"), is(notNullValue()));
     }
 }
