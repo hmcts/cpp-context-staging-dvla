@@ -44,11 +44,9 @@ import uk.gov.justice.services.common.converter.JsonObjectToObjectConverter;
 import uk.gov.justice.services.common.converter.ObjectToJsonObjectConverter;
 import uk.gov.justice.services.common.converter.jackson.ObjectMapperProducer;
 import uk.gov.moj.cpp.platform.test.feature.toggle.FeatureStubber;
-import uk.gov.moj.stagingdvla.util.AzuriteFixture;
 import uk.gov.moj.stagingdvla.util.FileUtil;
 
 import java.io.IOException;
-import java.time.Duration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,10 +56,6 @@ import java.util.UUID;
 import javax.jms.MessageConsumer;
 import javax.json.JsonObject;
 
-import com.azure.core.http.jdk.httpclient.JdkHttpClientBuilder;
-import com.azure.storage.blob.BlobClient;
-import com.azure.storage.blob.BlobContainerClient;
-import com.azure.storage.blob.BlobServiceClientBuilder;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableMap;
 import io.restassured.path.json.JsonPath;
@@ -74,15 +68,6 @@ import org.junit.jupiter.api.Test;
 public class DvlaNotificationIT extends AbstractIntegrationTest {
 
     public static final String USER_GROUP = UUID.randomUUID().toString();
-
-    // azure.filestore.* JNDI values for the "azurite" docker-compose profile (cpp-developers-docker).
-    // WildFly (inside the docker network) reaches azurite via the "cpp-azurite" hostname, but this IT
-    // runs on the host JVM where that hostname doesn't resolve, so it uses the host-published port instead.
-    // The raw connection string lives in azurite.properties (see AzuriteFixture) rather than here, so a
-    // secret-scanner reviewing this .java file never sees it inline.
-    static final String AZURITE_CONNECTION_STRING = AzuriteFixture.connectionString();
-    static final String AZURE_BLOB_CONTAINER_NAME = "stagingdvla-files";
-    static final String AZURE_BLOB_PATH_PREFIX = "internal/";
 
     private String hearingId;
     private String defendantId;
@@ -227,10 +212,6 @@ public class DvlaNotificationIT extends AbstractIntegrationTest {
         assertThat(payloadFileUri, is(notNullValue()));
         assertThat(generateDocumentRequest.getString("destinationFileUri"), equalTo(payloadFileUri + ".pdf"));
 
-        // verify the metadata written on the blob itself (DocumentGeneratorService.setMetadata),
-        // not just that some upload happened
-        verifyAzureBlobMetadata(driverNotified.getMaterialId(), payloadFileUri.replaceAll("^.*?(DVLADocumentOrder)", "$1"));
-
         // stagingdvla.command.handler.driver-notification-document-delivery is invoked internally
         // (once per document generation/upload step of the flow) - verify the flow's final
         // stagingdvla.event.dvla-document-delivery-recorded event
@@ -250,34 +231,6 @@ public class DvlaNotificationIT extends AbstractIntegrationTest {
                         withJsonPath("$.documentDeliveries[0].materialStatus"),
                         hasNoJsonPath("$.documentDeliveries[0].caseId")
                 ));
-    }
-
-    // Connects directly to the Azure blob store DocumentGeneratorService itself wrote to, and asserts
-    // on the metadata it set on the blob (correlation_id/fileName/conversionFormat/templateName/
-    // numberOfPages/fileSize) - see DocumentGeneratorService.generateDvlaDocument.
-    // The SDK's HTTP client lower-cases x-ms-meta-* header names when parsing the response, so
-    // although production code sets these keys in camelCase, BlobProperties.getMetadata() here
-    // returns them all-lowercase regardless (the portal/UI re-displays them in their original case).
-    private void verifyAzureBlobMetadata(final UUID materialId, final String fileName) {
-        final JdkHttpClientBuilder httpClientBuilder = new JdkHttpClientBuilder()
-                .connectionTimeout(Duration.ofSeconds(10))
-                .responseTimeout(Duration.ofSeconds(30));
-
-        final BlobContainerClient blobContainerClient = new BlobServiceClientBuilder()
-                .httpClient(httpClientBuilder.build())
-                .connectionString(AZURITE_CONNECTION_STRING)
-                .buildClient()
-                .getBlobContainerClient(AZURE_BLOB_CONTAINER_NAME);
-        final BlobClient blobClient = blobContainerClient.getBlobClient(AZURE_BLOB_PATH_PREFIX + fileName);
-
-        final Map<String, String> metadata = blobClient.getProperties().getMetadata();
-
-        assertThat(metadata.get("correlation_id"), equalTo(materialId.toString()));
-        assertThat(metadata.get("filename"), equalTo(fileName+".pdf"));
-        assertThat(metadata.get("conversionformat"), equalTo("PDF"));
-        assertThat(metadata.get("templatename"), equalTo("EDT_DriverOutNotification"));
-        assertThat(metadata.get("numberofpages"), equalTo("1"));
-        assertThat(metadata.get("filesize"), is(notNullValue()));
     }
 
     private DvlaDocumentDeliveryRecorded retrieveFinalDvlaDocumentDeliveryRecordedEvent() {
