@@ -81,6 +81,8 @@ public class SystemDocGeneratorEventProcessor {
     private static final String DOCUMENT_TYPE_DESCRIPTION = "Electronic Notifications";
     private static final UUID CASE_DOCUMENT_TYPE_ID = fromString("f471eb51-614c-4447-bd8d-28f9c2815c9e");
     private static final String APPLICATION_PDF = "application/pdf";
+    private static final String DESTINATION_FILE_URI = "destinationFileUri";
+    private static final String PAYLOAD_FILE_URI = "payloadFileUri";
     @Inject
     private Sender sender;
 
@@ -236,10 +238,16 @@ public class SystemDocGeneratorEventProcessor {
         return sb.toString();
     }
 
+    /**
+     * @param originatingEnvelope the document-available event. Its payloadFileUri / destinationFileUri
+     *                            are null on the file-service path; when destinationFileUri is set, it
+     *                            is the reference that reaches material instead of {@code fileId}.
+     */
     private void addDocumentToMaterial(Sender sender, JsonEnvelope originatingEnvelope, final UUID fileId,
                                        final UUID userId, final String hearingId,
                                        final UUID materialId,
                                        final List<EmailChannel> emailNotifications) {
+        final JsonObject documentAvailablePayload = originatingEnvelope.payloadAsJsonObject();
 
         uploadMaterialService.uploadFile(new UploadMaterialContext()
                 .setSender(sender)
@@ -251,6 +259,8 @@ public class SystemDocGeneratorEventProcessor {
                 .setCaseId(null)
                 .setApplicationId(null)
                 .setEmailNotifications(emailNotifications)
+                .setPayloadFileUri(documentAvailablePayload.getString(PAYLOAD_FILE_URI, null))
+                .setDestinationFileUri(documentAvailablePayload.getString(DESTINATION_FILE_URI, null))
                 .build());
     }
 

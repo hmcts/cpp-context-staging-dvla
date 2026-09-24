@@ -1,6 +1,8 @@
 package uk.gov.moj.cpp.stagingdvla.service;
 
 import static java.util.UUID.randomUUID;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -28,6 +30,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 public class MaterialServiceTest {
+
+    private static final String DOCUMENT_URI = "https://sadevfilestore.blob.core.windows.net/stack-stagingdvla/internal/DVLADocumentOrder.pdf";
 
     @InjectMocks
     private MaterialService service;
@@ -85,6 +89,40 @@ public class MaterialServiceTest {
     @Test
     public void shouldUploadMaterial() {
         assertThrows(UserNotFoundException.class, () -> service.uploadMaterial(randomUUID(), randomUUID(), (UUID) null));
+    }
+
+    @Test
+    public void shouldSendFileUriAndNotFileServiceIdForABlobAddressedDocument() {
+        final UUID materialId = randomUUID();
+
+        service.uploadMaterialFromUri(DOCUMENT_URI, materialId, randomUUID());
+
+        verify(sender).send(jsonEnvelopeArgumentCaptor.capture());
+
+        final JsonObject payload = jsonEnvelopeArgumentCaptor.getValue().payloadAsJsonObject();
+        assertThat(payload.getString("fileUri"), is(DOCUMENT_URI));
+        assertThat(payload.getString("materialId"), is(materialId.toString()));
+
+        // material.command.upload-file is an exclusive oneOf and its handler rejects a command
+        // carrying more than one reference, so fileServiceId must be absent - not null.
+        assertThat(payload.containsKey("fileServiceId"), is(false));
+    }
+
+    @Test
+    public void shouldResolveUserIdFromTheEnvelopeWhenUploadingFromAUri() {
+        final String userId = UUID.randomUUID().toString();
+        when(envelope.metadata()).thenReturn(metadata);
+        when(metadata.userId()).thenReturn(Optional.of(userId));
+
+        service.uploadMaterialFromUri(DOCUMENT_URI, randomUUID(), envelope);
+
+        verify(sender).send(jsonEnvelopeArgumentCaptor.capture());
+        assertThat(jsonEnvelopeArgumentCaptor.getValue().payloadAsJsonObject().getString("fileUri"), is(DOCUMENT_URI));
+    }
+
+    @Test
+    public void shouldRejectAUriUploadWithNoUserId() {
+        assertThrows(UserNotFoundException.class, () -> service.uploadMaterialFromUri(DOCUMENT_URI, randomUUID(), (UUID) null));
     }
 
 }

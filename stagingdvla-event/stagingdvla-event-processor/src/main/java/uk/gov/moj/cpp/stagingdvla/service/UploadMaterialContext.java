@@ -28,6 +28,19 @@ public class UploadMaterialContext {
 
     private List<EmailChannel> emailNotifications;
 
+    /**
+     * Blob uri of the render payload, or null when the document is addressed by {@link #fileId}.
+     * Carried only to satisfy materialDetails.json's oneOf and for traceability - material never
+     * sees it.
+     */
+    private String payloadFileUri;
+
+    /**
+     * Blob uri of the rendered document, or null when it is addressed by {@link #fileId}. This is
+     * the reference that reaches material.
+     */
+    private String destinationFileUri;
+
     public Sender getSender() {
         return sender;
     }
@@ -104,6 +117,24 @@ public class UploadMaterialContext {
         return emailNotifications;
     }
 
+    public String getPayloadFileUri() {
+        return payloadFileUri;
+    }
+
+    public UploadMaterialContext setPayloadFileUri(final String payloadFileUri) {
+        this.payloadFileUri = payloadFileUri;
+        return this;
+    }
+
+    public String getDestinationFileUri() {
+        return destinationFileUri;
+    }
+
+    public UploadMaterialContext setDestinationFileUri(final String destinationFileUri) {
+        this.destinationFileUri = destinationFileUri;
+        return this;
+    }
+
     public UploadMaterialContext setEmailNotifications(final List<EmailChannel> emailNotifications) {
         this.emailNotifications = emailNotifications;
         return this;
@@ -120,6 +151,8 @@ public class UploadMaterialContext {
         uploadMaterialContext.setCaseId(caseId);
         uploadMaterialContext.setApplicationId(applicationId);
         uploadMaterialContext.setEmailNotifications(emailNotifications);
+        uploadMaterialContext.setPayloadFileUri(payloadFileUri);
+        uploadMaterialContext.setDestinationFileUri(destinationFileUri);
         return uploadMaterialContext;
     }
 }

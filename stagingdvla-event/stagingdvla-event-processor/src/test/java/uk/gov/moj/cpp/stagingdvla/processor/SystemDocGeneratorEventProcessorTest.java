@@ -64,6 +64,9 @@ public class SystemDocGeneratorEventProcessorTest {
     private final String templateId = randomUUID().toString();
     private final String caseId = randomUUID().toString();
 
+    private static final String PAYLOAD_URI = "https://sadevfilestore.blob.core.windows.net/stack-stagingdvla/internal/DVLADocumentOrder_20250108114536";
+    private static final String DESTINATION_URI = PAYLOAD_URI + ".pdf";
+
     @Mock
     private Sender sender;
 
@@ -221,6 +224,87 @@ public class SystemDocGeneratorEventProcessorTest {
         final UploadMaterialContext uploadMaterialContext = uploadMaterialContextCaptor.getValue();
         assertThat(uploadMaterialContext, notNullValue());
         assertThat(uploadMaterialContext.getEmailNotifications(), nullValue());
+    }
+
+    @Test
+    public void shouldCarryTheBlobUrisOnToTheMaterialUploadContext() throws FileServiceException, IOException {
+        // given
+        final UUID payloadFileId = randomUUID();
+        final UUID sourceCorrelationId = randomUUID();
+        final UUID documentFileServiceId = randomUUID();
+
+        // Both addressing modes at once, which the event schema's oneOf forbids in production. It is
+        // used here only because the payload is still recovered through payloadFileServiceId - once
+        // that read moves to the blob, this becomes an ordinary uri-only event. The assertions below
+        // are about the uris being threaded onward, which is independent of how the payload is read.
+        final JsonObject documentAvailablePayload = createObjectBuilder()
+                .add("originatingSource", DVLA_DOCUMENT_ORDER)
+                .add("documentFileServiceId", documentFileServiceId.toString())
+                .add("sourceCorrelationId", sourceCorrelationId.toString())
+                .add("payloadFileServiceId", payloadFileId.toString())
+                .add("payloadFileUri", PAYLOAD_URI)
+                .add("destinationFileUri", DESTINATION_URI)
+                .build();
+
+        final JsonEnvelope requestMessage = envelopeFrom(
+                metadataWithRandomUUID("public.systemdocgenerator.events.document-available"),
+                documentAvailablePayload);
+
+        final JsonObject fileMetadata = createObjectBuilder()
+                .add("fileName", "DVLADocumentOrder_20250108114536")
+                .build();
+
+        when(fileService.retrieve(any())).thenReturn(Optional.of(payloadFileReference));
+        when(payloadFileReference.getMetadata()).thenReturn(fileMetadata);
+        when(payloadFileReference.getContentStream()).thenReturn(new ByteArrayInputStream(buildDriverNotifiedString(DEFAULT_DRIVER_NOTIFIED_JSON, 0).getBytes(StandardCharsets.UTF_8)));
+
+        // when
+        systemDocGeneratorEventProcessor.handleDocumentAvailable(requestMessage);
+
+        // then
+        verify(uploadMaterialService).uploadFile(uploadMaterialContextCaptor.capture());
+        final UploadMaterialContext uploadMaterialContext = uploadMaterialContextCaptor.getValue();
+
+        assertThat(uploadMaterialContext.getDestinationFileUri(), is(DESTINATION_URI));
+        assertThat(uploadMaterialContext.getPayloadFileUri(), is(PAYLOAD_URI));
+    }
+
+    @Test
+    public void shouldLeaveTheBlobUrisNullForAFileServiceAddressedDocument() throws FileServiceException, IOException {
+        // given
+        final UUID payloadFileId = randomUUID();
+        final UUID sourceCorrelationId = randomUUID();
+        final UUID documentFileServiceId = randomUUID();
+
+        final JsonObject documentAvailablePayload = createObjectBuilder()
+                .add("originatingSource", DVLA_DOCUMENT_ORDER)
+                .add("documentFileServiceId", documentFileServiceId.toString())
+                .add("sourceCorrelationId", sourceCorrelationId.toString())
+                .add("payloadFileServiceId", payloadFileId.toString())
+                .build();
+
+        final JsonEnvelope requestMessage = envelopeFrom(
+                metadataWithRandomUUID("public.systemdocgenerator.events.document-available"),
+                documentAvailablePayload);
+
+        final JsonObject fileMetadata = createObjectBuilder()
+                .add("fileName", "DVLADocumentOrder_20250108114536")
+                .build();
+
+        when(fileService.retrieve(any())).thenReturn(Optional.of(payloadFileReference));
+        when(payloadFileReference.getMetadata()).thenReturn(fileMetadata);
+        when(payloadFileReference.getContentStream()).thenReturn(new ByteArrayInputStream(buildDriverNotifiedString(DEFAULT_DRIVER_NOTIFIED_JSON, 0).getBytes(StandardCharsets.UTF_8)));
+
+        // when
+        systemDocGeneratorEventProcessor.handleDocumentAvailable(requestMessage);
+
+        // then
+        verify(uploadMaterialService).uploadFile(uploadMaterialContextCaptor.capture());
+        final UploadMaterialContext uploadMaterialContext = uploadMaterialContextCaptor.getValue();
+
+        assertThat(uploadMaterialContext.getDestinationFileUri(), nullValue());
+        assertThat(uploadMaterialContext.getPayloadFileUri(), nullValue());
+        assertThat(uploadMaterialContext.getFileId(), is(documentFileServiceId));
     }
 
     @Test

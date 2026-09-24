@@ -29,10 +29,4 @@ subscriptions_descriptor:
         - name: public.systemdocgenerator.events.document-available
           schema_uri: http://moj.gov.uk/cpp/json/schemas/systemdocgenerator/events/public/document-available.json
 
-
-          #System doc generator
-        - name: public.systemdocgenerator.events.document-available
-          schema_uri: http://moj.gov.uk/cpp/json/schemas/systemdocgenerator/events/public/document-available.json
-
-
       event_source_name: public.event.source
