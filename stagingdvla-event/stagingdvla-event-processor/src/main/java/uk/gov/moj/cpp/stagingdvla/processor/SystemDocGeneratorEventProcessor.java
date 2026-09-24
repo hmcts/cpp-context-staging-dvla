@@ -81,6 +81,8 @@ public class SystemDocGeneratorEventProcessor {
     private static final String DOCUMENT_TYPE_DESCRIPTION = "Electronic Notifications";
     private static final UUID CASE_DOCUMENT_TYPE_ID = fromString("f471eb51-614c-4447-bd8d-28f9c2815c9e");
     private static final String APPLICATION_PDF = "application/pdf";
+    private static final String DESTINATION_FILE_URI = "destinationFileUri";
+    private static final String PAYLOAD_FILE_URI = "payloadFileUri";
     @Inject
     private Sender sender;
 
@@ -145,6 +147,8 @@ public class SystemDocGeneratorEventProcessor {
 
             final String documentFileServiceId = documentAvailablePayload.getString(DOCUMENT_FILE_SERVICE_ID);
             final UUID payloadFileId = fromString(documentAvailablePayload.getString(PAYLOAD_FILE_SERVICE_ID));
+            final String destinationFileUri = documentAvailablePayload.getString(DESTINATION_FILE_URI, null);
+            final String payloadFileUri = documentAvailablePayload.getString(PAYLOAD_FILE_URI, null);
             final FileReference payloadFileReference = fileService.retrieve(payloadFileId).orElseThrow(() -> new BadRequestException("Failed to retrieve file"));
             final String userId = documentAvailablePayload.getString(SOURCE_CORRELATION_ID);
 
@@ -167,7 +171,7 @@ public class SystemDocGeneratorEventProcessor {
                 final UUID generateDocumentFileId = fromString(documentFileServiceId);
 
                 addDocumentToMaterial(sender, envelope, generateDocumentFileId, fromString(userId), driverNotified.getOrderingHearingId().toString(), driverNotified.getMaterialId(),
-                        emailNotifications);
+                        emailNotifications, payloadFileUri, destinationFileUri);
 
                 //Sending material as court document to sjp for sjp case or progression for cc case
                 final boolean isSJPCase = driverNotified.getCases().stream().map(Cases::getInitiationCode).anyMatch(a -> nonNull(a) && a.equalsIgnoreCase(CODE_FOR_SJP_CASE));
@@ -236,10 +240,18 @@ public class SystemDocGeneratorEventProcessor {
         return sb.toString();
     }
 
+    /**
+     * @param payloadFileUri     blob uri of the render payload, null on the file-service path
+     * @param destinationFileUri blob uri of the rendered document, null on the file-service path.
+     *                           When set, this is the reference that reaches material instead of
+     *                           {@code fileId}.
+     */
     private void addDocumentToMaterial(Sender sender, JsonEnvelope originatingEnvelope, final UUID fileId,
                                        final UUID userId, final String hearingId,
                                        final UUID materialId,
-                                       final List<EmailChannel> emailNotifications) {
+                                       final List<EmailChannel> emailNotifications,
+                                       final String payloadFileUri,
+                                       final String destinationFileUri) {
 
         uploadMaterialService.uploadFile(new UploadMaterialContext()
                 .setSender(sender)
@@ -251,6 +263,8 @@ public class SystemDocGeneratorEventProcessor {
                 .setCaseId(null)
                 .setApplicationId(null)
                 .setEmailNotifications(emailNotifications)
+                .setPayloadFileUri(payloadFileUri)
+                .setDestinationFileUri(destinationFileUri)
                 .build());
     }
 

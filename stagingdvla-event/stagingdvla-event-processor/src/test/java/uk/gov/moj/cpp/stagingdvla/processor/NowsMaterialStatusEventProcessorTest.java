@@ -1,5 +1,6 @@
 package uk.gov.moj.cpp.stagingdvla.processor;
 
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static uk.gov.justice.services.messaging.JsonEnvelope.envelopeFrom;
 import static uk.gov.justice.services.messaging.JsonObjects.createArrayBuilder;
@@ -25,6 +26,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 public class NowsMaterialStatusEventProcessorTest {
+
+    private static final String PAYLOAD_URI = "https://sadevfilestore.blob.core.windows.net/stack-stagingdvla/internal/DVLADocumentOrder";
+    private static final String DESTINATION_URI = PAYLOAD_URI + ".pdf";
 
     @InjectMocks
     private NowsMaterialStatusEventProcessor nowsMaterialStatusEventProcessor;
@@ -71,6 +75,28 @@ public class NowsMaterialStatusEventProcessorTest {
         nowsMaterialStatusEventProcessor.processRequestRecorded(event);
 
         verify(materialService).uploadMaterial(Mockito.eq(fileId), Mockito.eq(materialId), Mockito.eq(event));
+    }
+
+    @Test
+    public void shouldUploadFromTheDestinationUriWhenTheDocumentIsBlobAddressed() {
+        final UUID materialId = UUID.randomUUID();
+        final JsonEnvelope event = envelopeFrom(
+                metadataWithRandomUUID("stagingdvla.event.nows-material-request-recorded"),
+                createObjectBuilder()
+                        .add("context", createObjectBuilder()
+                                .add("materialId", materialId.toString())
+                                .add("hearingId", materialId.toString())
+                                .add("userId", materialId.toString())
+                                .add("payloadFileUri", PAYLOAD_URI)
+                                .add("destinationFileUri", DESTINATION_URI)
+                                .build())
+                        .build());
+
+        nowsMaterialStatusEventProcessor.processRequestRecorded(event);
+
+        // the rendered document goes to material, not the render payload
+        verify(materialService).uploadMaterialFromUri(Mockito.eq(DESTINATION_URI), Mockito.eq(materialId), Mockito.eq(event));
+        verify(materialService, never()).uploadMaterial(Mockito.any(), Mockito.any(), Mockito.any(JsonEnvelope.class));
     }
 
 }

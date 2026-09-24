@@ -39,6 +39,7 @@ public class MaterialService {
     public static final String UPLOAD_MATERIAL = "material.command.upload-file";
     public static final String MATERIAL_ID = "materialId";
     public static final String FILE_SERVICE_ID = "fileServiceId";
+    public static final String FILE_URI = "fileUri";
     public static final String MISSING_USER_ID = "UserId missing from event.";
 
     @Inject
@@ -95,6 +96,30 @@ public class MaterialService {
     public void uploadMaterial(final UUID fileServiceId, final UUID materialId, final JsonEnvelope envelope) {
         final UUID userId = fromString(envelope.metadata().userId().orElseThrow(() -> new UserNotFoundException(MISSING_USER_ID)));
         uploadMaterial(fileServiceId, materialId, userId);
+    }
+
+    public void uploadMaterialFromUri(final String fileUri, final UUID materialId, final JsonEnvelope envelope) {
+        final UUID userId = fromString(envelope.metadata().userId().orElseThrow(() -> new UserNotFoundException(MISSING_USER_ID)));
+        uploadMaterialFromUri(fileUri, materialId, userId);
+    }
+
+    /**
+     * Blob-addressed sibling of {@link #uploadMaterial(UUID, UUID, UUID)}. material.command.upload-file
+     * is an exclusive oneOf over fileServiceId / fileCloudLocation / fileUri and its handler rejects a
+     * command carrying more than one, so exactly one reference goes on the payload.
+     */
+    public void uploadMaterialFromUri(final String fileUri, final UUID materialId, final UUID userId) {
+        if (isNull(userId)) {
+            throw new UserNotFoundException(MISSING_USER_ID);
+        }
+        final JsonObject uploadMaterialPayload = createObjectBuilder()
+                .add(MATERIAL_ID, materialId.toString())
+                .add(FILE_URI, fileUri)
+                .build();
+
+        LOGGER.info("requesting material service to upload file uri {} for material {}", fileUri, materialId);
+
+        sender.send(assembleEnvelopeWithPayloadAndMetaDetails(uploadMaterialPayload, UPLOAD_MATERIAL, userId.toString()));
     }
 
     public void uploadMaterial(final UUID fileServiceId, final UUID materialId, final UUID userId) {
