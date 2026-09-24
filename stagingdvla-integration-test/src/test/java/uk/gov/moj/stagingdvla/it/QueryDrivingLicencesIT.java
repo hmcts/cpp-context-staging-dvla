@@ -13,9 +13,9 @@ import static org.skyscreamer.jsonassert.JSONAssert.assertEquals;
 import static org.skyscreamer.jsonassert.JSONCompareMode.STRICT;
 import static uk.gov.moj.cpp.platform.test.feature.toggle.FeatureStubber.stubFeaturesFor;
 import static uk.gov.moj.stagingdvla.stubs.ApimStub.verifyQueryDrivingLicencesWithDefendantInformation;
-import static uk.gov.moj.stagingdvla.stubs.DocumentGeneratorStub.latestGenerateDocumentRequest;
+import static uk.gov.moj.stagingdvla.stubs.DocumentGeneratorStub.awaitGenerateDocumentRequest;
+import static uk.gov.moj.stagingdvla.stubs.DocumentGeneratorStub.generateDocumentRequestCount;
 import static uk.gov.moj.stagingdvla.stubs.DocumentGeneratorStub.publishDocumentAvailableEvent;
-import static uk.gov.moj.stagingdvla.stubs.DocumentGeneratorStub.verifyGenerateDocumentStubCommandInvoked;
 import static uk.gov.moj.stagingdvla.stubs.MaterialStub.verifyMaterialCreated;
 import static uk.gov.moj.stagingdvla.util.FileUtil.getPayload;
 import static uk.gov.moj.stagingdvla.util.RestHelper.pollForResponse;
@@ -154,14 +154,13 @@ public class QueryDrivingLicencesIT extends AbstractIntegrationTest {
 
         //When: request generation of the audit report covering that record
         final String generateReportBody = format("{\"startDate\":\"%s\",\"endDate\":\"%s\",\"email\":\"%s\"}", startDate, endDate, email);
+        final int generateDocumentRequestsBefore = generateDocumentRequestCount();
         final Response writeResponse = postCommandWithUserId(getWriteUrl("/driver-record-search-audit-report/generate"),
                 "application/vnd.stagingdvla.command.generate-driver-record-search-audit-report+json", generateReportBody, USER_ID);
         assertThat(writeResponse.getStatusCode(), equalTo(SC_ACCEPTED));
 
         //Then: systemdocgenerator is asked to generate the report document, with a real stored payload
-        verifyGenerateDocumentStubCommandInvoked();
-        final JsonPath generateDocumentRequest = latestGenerateDocumentRequest();
-        assertThat(generateDocumentRequest.getString("originatingSource"), equalTo("DvlaAuditRecords"));
+        final JsonPath generateDocumentRequest = awaitGenerateDocumentRequest("DvlaAuditRecords", generateDocumentRequestsBefore);
         assertThat(generateDocumentRequest.getString("templateIdentifier"), equalTo("DvlaAuditRecords"));
         assertThat(generateDocumentRequest.getString("conversionFormat"), equalTo("csv"));
         final String reportId = generateDocumentRequest.getString("sourceCorrelationId");
@@ -202,6 +201,7 @@ public class QueryDrivingLicencesIT extends AbstractIntegrationTest {
 
         //When: request generation of the audit report covering that record
         final String generateReportBody = format("{\"startDate\":\"%s\",\"endDate\":\"%s\",\"email\":\"%s\"}", startDate, endDate, email);
+        final int generateDocumentRequestsBefore = generateDocumentRequestCount();
         final Response writeResponse = postCommandWithUserId(getWriteUrl("/driver-record-search-audit-report/generate"),
                 "application/vnd.stagingdvla.command.generate-driver-record-search-audit-report+json", generateReportBody, USER_ID);
         assertThat(writeResponse.getStatusCode(), equalTo(SC_ACCEPTED));
@@ -209,9 +209,7 @@ public class QueryDrivingLicencesIT extends AbstractIntegrationTest {
         //Then: systemdocgenerator is asked to generate the report document, with the payload
         // uploaded to Azure blob storage - so the request carries payloadFileUri/destinationFileUri
         // rather than payloadFileServiceId
-        verifyGenerateDocumentStubCommandInvoked();
-        final JsonPath generateDocumentRequest = latestGenerateDocumentRequest();
-        assertThat(generateDocumentRequest.getString("originatingSource"), equalTo("DvlaAuditRecords"));
+        final JsonPath generateDocumentRequest = awaitGenerateDocumentRequest("DvlaAuditRecords", generateDocumentRequestsBefore);
         assertThat(generateDocumentRequest.getString("templateIdentifier"), equalTo("DvlaAuditRecords"));
         assertThat(generateDocumentRequest.getString("conversionFormat"), equalTo("csv"));
         final String reportId = generateDocumentRequest.getString("sourceCorrelationId");
