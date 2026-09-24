@@ -147,8 +147,6 @@ public class SystemDocGeneratorEventProcessor {
 
             final String documentFileServiceId = documentAvailablePayload.getString(DOCUMENT_FILE_SERVICE_ID);
             final UUID payloadFileId = fromString(documentAvailablePayload.getString(PAYLOAD_FILE_SERVICE_ID));
-            final String destinationFileUri = documentAvailablePayload.getString(DESTINATION_FILE_URI, null);
-            final String payloadFileUri = documentAvailablePayload.getString(PAYLOAD_FILE_URI, null);
             final FileReference payloadFileReference = fileService.retrieve(payloadFileId).orElseThrow(() -> new BadRequestException("Failed to retrieve file"));
             final String userId = documentAvailablePayload.getString(SOURCE_CORRELATION_ID);
 
@@ -171,7 +169,7 @@ public class SystemDocGeneratorEventProcessor {
                 final UUID generateDocumentFileId = fromString(documentFileServiceId);
 
                 addDocumentToMaterial(sender, envelope, generateDocumentFileId, fromString(userId), driverNotified.getOrderingHearingId().toString(), driverNotified.getMaterialId(),
-                        emailNotifications, payloadFileUri, destinationFileUri);
+                        emailNotifications);
 
                 //Sending material as court document to sjp for sjp case or progression for cc case
                 final boolean isSJPCase = driverNotified.getCases().stream().map(Cases::getInitiationCode).anyMatch(a -> nonNull(a) && a.equalsIgnoreCase(CODE_FOR_SJP_CASE));
@@ -241,17 +239,15 @@ public class SystemDocGeneratorEventProcessor {
     }
 
     /**
-     * @param payloadFileUri     blob uri of the render payload, null on the file-service path
-     * @param destinationFileUri blob uri of the rendered document, null on the file-service path.
-     *                           When set, this is the reference that reaches material instead of
-     *                           {@code fileId}.
+     * @param originatingEnvelope the document-available event. Its payloadFileUri / destinationFileUri
+     *                            are null on the file-service path; when destinationFileUri is set, it
+     *                            is the reference that reaches material instead of {@code fileId}.
      */
     private void addDocumentToMaterial(Sender sender, JsonEnvelope originatingEnvelope, final UUID fileId,
                                        final UUID userId, final String hearingId,
                                        final UUID materialId,
-                                       final List<EmailChannel> emailNotifications,
-                                       final String payloadFileUri,
-                                       final String destinationFileUri) {
+                                       final List<EmailChannel> emailNotifications) {
+        final JsonObject documentAvailablePayload = originatingEnvelope.payloadAsJsonObject();
 
         uploadMaterialService.uploadFile(new UploadMaterialContext()
                 .setSender(sender)
@@ -263,8 +259,8 @@ public class SystemDocGeneratorEventProcessor {
                 .setCaseId(null)
                 .setApplicationId(null)
                 .setEmailNotifications(emailNotifications)
-                .setPayloadFileUri(payloadFileUri)
-                .setDestinationFileUri(destinationFileUri)
+                .setPayloadFileUri(documentAvailablePayload.getString(PAYLOAD_FILE_URI, null))
+                .setDestinationFileUri(documentAvailablePayload.getString(DESTINATION_FILE_URI, null))
                 .build());
     }
 
