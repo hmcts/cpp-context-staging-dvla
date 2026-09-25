@@ -8,12 +8,16 @@ import static uk.gov.justice.services.core.annotation.Component.EVENT_PROCESSOR;
 import static uk.gov.justice.services.messaging.Envelope.metadataFrom;
 import static uk.gov.justice.services.messaging.JsonObjects.createObjectBuilder;
 import static uk.gov.justice.services.messaging.JsonObjects.createReader;
+import static uk.gov.moj.cpp.stagingdvla.domain.constants.DvlaDocumentDeliveryMaterialStatus.FAILED;
+import static uk.gov.moj.cpp.stagingdvla.domain.constants.DvlaDocumentDeliveryMaterialStatus.PENDING;
 import static uk.gov.moj.cpp.stagingdvla.helper.DriverSearchAuditHelper.FILE_NAME;
 import static uk.gov.moj.cpp.stagingdvla.helper.DriverSearchAuditHelper.isForDriverAuditReportDocument;
 import static uk.gov.moj.cpp.stagingdvla.notify.util.DrivingConvictionTransformUtil.EndorsementType.NEW;
 import static uk.gov.moj.cpp.stagingdvla.notify.util.DrivingConvictionTransformUtil.getEndorsementType;
 import static uk.gov.moj.cpp.stagingdvla.notify.util.DrivingConvictionTransformUtil.hasMultipleConvictingCourts;
 import static uk.gov.moj.cpp.stagingdvla.notify.util.DrivingConvictionTransformUtil.hasMultipleConvictionDates;
+import static uk.gov.moj.cpp.stagingdvla.service.DocumentDeliveryStatusService.DocumentDelivery.material;
+import static uk.gov.moj.cpp.stagingdvla.service.DocumentDeliveryStatusService.DocumentDelivery.sjpCase;
 
 import uk.gov.justice.core.courts.CourtDocument;
 import uk.gov.justice.core.courts.Material;
@@ -38,11 +42,12 @@ import uk.gov.justice.services.messaging.JsonEnvelope;
 import uk.gov.justice.services.messaging.Metadata;
 import uk.gov.moj.cpp.material.url.MaterialUrlGenerator;
 import uk.gov.moj.cpp.stagingdvla.SjpDocumentTypes;
-import uk.gov.moj.cpp.stagingdvla.domain.constants.DvlaDocumentDeliveryMaterialStatus;
 import uk.gov.moj.cpp.stagingdvla.service.ApplicationParameters;
+import uk.gov.moj.cpp.stagingdvla.service.DocumentDeliveryStatusService;
 import uk.gov.moj.cpp.stagingdvla.service.UploadMaterialContext;
 import uk.gov.moj.cpp.stagingdvla.service.UploadMaterialService;
 
+import java.nio.charset.StandardCharsets;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -51,8 +56,12 @@ import java.util.UUID;
 
 import javax.inject.Inject;
 import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 import javax.json.JsonReader;
 
+import com.azure.storage.blob.BlobClient;
+import com.azure.storage.blob.BlobContainerClient;
+import com.azure.storage.blob.BlobUrlParts;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -71,7 +80,6 @@ public class SystemDocGeneratorEventProcessor {
     public static final String SOURCE_CORRELATION_ID = "sourceCorrelationId";
     public static final String PAYLOAD_FILE_SERVICE_ID = "payloadFileServiceId";
     public static final String ORIGINATING_SOURCE = "originatingSource";
-    public static final String STAGINGDVLA_COMMAND_HANDLER_DRIVER_NOTIFICATION_DOCUMENT_DELIVERY = "stagingdvla.command.handler.driver-notification-document-delivery";
 
     private static final String CODE_FOR_SJP_CASE = "J";
     private static final String MATERIAL_ID = "materialId";
@@ -104,19 +112,31 @@ public class SystemDocGeneratorEventProcessor {
     @Inject
     private UploadMaterialService uploadMaterialService;
 
+    @Inject
+    private DocumentDeliveryStatusService documentDeliveryStatusService;
+
+    // Same bean DocumentGeneratorService.uploadDocumentToAzureBlob writes the driverNotified
+    // payload through (AzureFileStoreBlobContainerClientProducer) - reused here to read it back.
+    @Inject
+    private BlobContainerClient blobContainerClient;
+
+    private record Result(DriverNotified driverNotified, String fileName) {}
+
     @Handles(DOCUMENT_AVAILABLE_EVENT_NAME)
-    public void handleDocumentAvailable(final JsonEnvelope documentAvailableEvent) {
+    public void handleDocumentAvailable(final JsonEnvelope documentAvailableEvent) throws FileServiceException {
         final JsonObject documentAvailablePayload = documentAvailableEvent.payloadAsJsonObject();
         final String originatingSource = documentAvailablePayload.getString(ORIGINATING_SOURCE, "");
         if (isForDriverAuditReportDocument(originatingSource)) {
-            final String fileId = documentAvailablePayload.getString(DOCUMENT_FILE_SERVICE_ID);
+            final String fileId = documentAvailablePayload.getString(DOCUMENT_FILE_SERVICE_ID, null);
+            final String payloadFileUri = documentAvailablePayload.getString(PAYLOAD_FILE_URI, null);
+            final String destinationFileUri = documentAvailablePayload.getString(DESTINATION_FILE_URI, null);
             final String reportId = documentAvailablePayload.getString(SOURCE_CORRELATION_ID);
             LOGGER.info("Sending stagingdvla.command.handler.driver-record-search-audit-report-created for reportId: {}",
                     reportId);
             this.sender.send(Envelope.envelopeFrom(metadataFrom(documentAvailableEvent.metadata())
                             .withName("stagingdvla.command.handler.driver-record-search-audit-report-created")
                             .build(),
-                    this.objectToJsonObjectConverter.convert(buildHandleDriverAuditReportDocumentCreation(reportId, fileId))));
+                    this.objectToJsonObjectConverter.convert(buildHandleDriverAuditReportDocumentCreation(reportId, fileId, payloadFileUri, destinationFileUri))));
         }
 
         if (DVLA_DOCUMENT_ORDER.equalsIgnoreCase(originatingSource)) {
@@ -126,67 +146,69 @@ public class SystemDocGeneratorEventProcessor {
 
     @Handles(DOCUMENT_GENERATION_FAILED_EVENT_NAME)
     public void handleDocumentGenerationFailedEvent(final JsonEnvelope envelope) {
-        LOGGER.info(DOCUMENT_GENERATION_FAILED_EVENT_NAME + " failed {}", envelope.payload());
+        final JsonObject generationFailedPayload = envelope.payloadAsJsonObject();
+        final String originatingSource = generationFailedPayload.getString(ORIGINATING_SOURCE, "");
+        final String payloadFileUri = generationFailedPayload.getString(PAYLOAD_FILE_URI, null);
+        // only blob-backed stagingdvla documents are tracked (see MaterialAggregate.recordDocumentDelivery)
+        if (nonNull(payloadFileUri) && (DVLA_DOCUMENT_ORDER.equalsIgnoreCase(originatingSource) || isForDriverAuditReportDocument(originatingSource))) {
+            final String materialId = generationFailedPayload.getString(SOURCE_CORRELATION_ID);
 
-
-        final JsonObject documentAvailablePayload = envelope.payloadAsJsonObject();
-        final String originatingSource = documentAvailablePayload.getString(ORIGINATING_SOURCE, "");
-
-        final String masterDefendantId = documentAvailablePayload.getString(SOURCE_CORRELATION_ID);
-
-        final UUID payloadFileId = fromString(documentAvailablePayload.getString(PAYLOAD_FILE_SERVICE_ID));
-
-        if (DVLA_DOCUMENT_ORDER.equalsIgnoreCase(originatingSource)) {
-            LOGGER.error("Failed to generate the document for master defendant id - {} and payload - {} ", masterDefendantId, payloadFileId);
+            documentDeliveryStatusService.record(envelope.metadata(), material(fromString(materialId), FAILED));
         }
     }
 
-    private void handleDvlaDocumentAvailable(final JsonEnvelope envelope) {
-        try {
-            final JsonObject documentAvailablePayload = envelope.payloadAsJsonObject();
+    private void handleDvlaDocumentAvailable(final JsonEnvelope envelope) throws FileServiceException {
+        final JsonObject documentAvailablePayload = envelope.payloadAsJsonObject();
 
-            final String documentFileServiceId = documentAvailablePayload.getString(DOCUMENT_FILE_SERVICE_ID);
-            final UUID payloadFileId = fromString(documentAvailablePayload.getString(PAYLOAD_FILE_SERVICE_ID));
+        final String documentFileServiceId = documentAvailablePayload.getString(DOCUMENT_FILE_SERVICE_ID, null);
+        final UUID payloadFileId = documentAvailablePayload.containsKey(PAYLOAD_FILE_SERVICE_ID) ? fromString(documentAvailablePayload.getString(PAYLOAD_FILE_SERVICE_ID)) : null;
+        final String payloadFileUri = documentAvailablePayload.getString(PAYLOAD_FILE_URI, null);
+        final String destinationFileUri = documentAvailablePayload.getString(DESTINATION_FILE_URI, null);
+        final String userId = documentAvailablePayload.getString(SOURCE_CORRELATION_ID);
+        final Result result = getDriverNotifiedFromDocument(payloadFileId, payloadFileUri);
+        final DriverNotified driverNotified = result.driverNotified;
+
+        List<EmailChannel> emailNotifications = null;
+
+        if (shouldSendEmailNotification(driverNotified)) {
+            emailNotifications = getEmailNotification(driverNotified);
+        }
+        UUID generateDocumentFileId = nonNull(documentFileServiceId) ? fromString(documentFileServiceId) : null;
+
+        addDocumentToMaterial(sender, envelope, generateDocumentFileId, fromString(userId), driverNotified.getOrderingHearingId().toString(), driverNotified.getMaterialId(),
+                emailNotifications);
+
+        //Sending material as court document to sjp for sjp case or progression for cc case
+        final boolean isSJPCase = driverNotified.getCases().stream().map(Cases::getInitiationCode).anyMatch(a -> nonNull(a) && a.equalsIgnoreCase(CODE_FOR_SJP_CASE));
+        final Metadata metadata = metadataFrom(envelope.metadata()).withUserId(userId).build();
+
+        final String generateDocFileName = result.fileName;
+        if (isSJPCase) {
+            generateDocumentFileId = nonNull(documentFileServiceId) ? fromString(documentFileServiceId) : UUID.nameUUIDFromBytes(destinationFileUri.getBytes(StandardCharsets.UTF_8));
+            addCourtDocumentForSjpCase(metadata, driverNotified, generateDocFileName, generateDocumentFileId, destinationFileUri);
+        } else {
+            addCourtDocumentForCCCase(sender, metadata, driverNotified, generateDocFileName);
+        }
+    }
+
+    private Result getDriverNotifiedFromDocument(final UUID payloadFileId, final String payloadFileUri) throws FileServiceException {
+        if(nonNull(payloadFileId)){
             final FileReference payloadFileReference = fileService.retrieve(payloadFileId).orElseThrow(() -> new BadRequestException("Failed to retrieve file"));
-            final String userId = documentAvailablePayload.getString(SOURCE_CORRELATION_ID);
+            try (payloadFileReference; final JsonReader reader = createReader(payloadFileReference.getContentStream())) {
+                final JsonObject rawPayload = reader.readObject();
+                return new Result(jsonObjectToObjectConverter.convert(rawPayload, DriverNotified.class), payloadFileReference.getMetadata().getString(FILE_NAME));
+            }
+        } else {
+            final String blobName = BlobUrlParts.parse(payloadFileUri).getBlobName();
+            final BlobClient blobClient = blobContainerClient.getBlobClient(blobName);
 
-            LOGGER.info("Retrieved file reference '{}' successfully", payloadFileReference);
-
-            try (final JsonReader reader = createReader(payloadFileReference.getContentStream())) {
-
+            try (JsonReader reader = createReader(blobClient.downloadContent().toStream())) {
                 final JsonObject rawPayload = reader.readObject();
 
-                LOGGER.info("Read payload '{}'", rawPayload);
+                final String fileName = blobClient.getProperties().getMetadata().get(FILE_NAME.toLowerCase());
 
-                final DriverNotified driverNotified = jsonObjectToObjectConverter.convert(rawPayload, DriverNotified.class);
-
-                List<EmailChannel> emailNotifications = null;
-
-                if (shouldSendEmailNotification(driverNotified)) {
-                    emailNotifications = getEmailNotification(driverNotified);
-                }
-
-                final UUID generateDocumentFileId = fromString(documentFileServiceId);
-
-                addDocumentToMaterial(sender, envelope, generateDocumentFileId, fromString(userId), driverNotified.getOrderingHearingId().toString(), driverNotified.getMaterialId(),
-                        emailNotifications);
-
-                //Sending material as court document to sjp for sjp case or progression for cc case
-                final boolean isSJPCase = driverNotified.getCases().stream().map(Cases::getInitiationCode).anyMatch(a -> nonNull(a) && a.equalsIgnoreCase(CODE_FOR_SJP_CASE));
-                final Metadata metadata = metadataFrom(envelope.metadata()).withUserId(userId).build();
-
-                final String generateDocFileName = payloadFileReference.getMetadata().getString(FILE_NAME);
-                if (isSJPCase) {
-                    addCourtDocumentForSjpCase(sender, metadata, driverNotified, generateDocFileName, generateDocumentFileId);
-                } else {
-                    addCourtDocumentForCCCase(sender, metadata, driverNotified, generateDocFileName);
-                }
-            } finally {
-                payloadFileReference.close();
+                return new Result(jsonObjectToObjectConverter.convert(rawPayload, DriverNotified.class), fileName);
             }
-
-        } catch (FileServiceException fileServiceException) {
-            LOGGER.error("failed to retrieve json payload from file service", fileServiceException);
         }
     }
 
@@ -264,43 +286,32 @@ public class SystemDocGeneratorEventProcessor {
                 .build());
     }
 
-    private DriverRecordSearchAuditReportCreated buildHandleDriverAuditReportDocumentCreation(final String reportId, final String fileId) {
+    private DriverRecordSearchAuditReportCreated buildHandleDriverAuditReportDocumentCreation(final String reportId, final String fileId, final String payloadFileUri, final String destinationFileUri) {
         return new DriverRecordSearchAuditReportCreated.Builder()
                 .withId(fromString(reportId))
                 .withReportFileId(fileId)
+                .withPayloadFileUri(payloadFileUri)
+                .withDestinationFileUri(destinationFileUri)
                 .build();
     }
 
-    private static void addCourtDocumentForSjpCase(final Sender sender, final Metadata metadata, final DriverNotified driverNotified, final String fileName, final UUID fileId) {
+    private void addCourtDocumentForSjpCase(final Metadata metadata, final DriverNotified driverNotified, final String fileName, final UUID fileId, final String caseDocumentUri) {
         driverNotified.getCases().forEach(c -> {
-            final JsonObject uploadCaseDocumentPayload = createObjectBuilder()
+            final JsonObjectBuilder uploadCaseDocumentPayload = createObjectBuilder()
                     .add("caseId", c.getCaseId().toString())
                     .add("caseDocumentType", SjpDocumentTypes.ELECTRONIC_NOTIFICATIONS.name() + "-" + fileName)
-                    .add("caseDocument", fileId.toString())
-                    .build();
+                    .add("caseDocument", fileId.toString());
+            if (nonNull(caseDocumentUri)) {
+                uploadCaseDocumentPayload.add("caseDocumentUri", caseDocumentUri);
+            }
 
             final Envelope<JsonObject> envelope = Envelope.envelopeFrom(
                     JsonEnvelope.metadataFrom(metadata).withName(SJP_UPLOAD_CASE_DOCUMENT),
-                    uploadCaseDocumentPayload);
+                    uploadCaseDocumentPayload.build());
 
             sender.send(envelope);
-            recordDocumentDeliverySjpCase(sender, metadata, driverNotified.getMaterialId(), c.getCaseId(), fileId, DvlaDocumentDeliveryMaterialStatus.PENDING);
+            documentDeliveryStatusService.record(metadata, sjpCase(driverNotified.getMaterialId(), c.getCaseId(), fileId, PENDING));
         });
-    }
-
-    private static void recordDocumentDeliverySjpCase(final Sender sender, final Metadata metadata, final UUID materialId,
-                                                        final UUID caseId, final UUID sjpCorrelationId,
-                                                        final DvlaDocumentDeliveryMaterialStatus sjpStatus) {
-        final JsonObject payload = createObjectBuilder()
-                .add(MATERIAL_ID, materialId.toString())
-                .add("caseId", caseId.toString())
-                .add("sjpCorrelationId", sjpCorrelationId.toString())
-                .add("sjpStatus", sjpStatus.name())
-                .build();
-
-        sender.sendAsAdmin(Envelope.envelopeFrom(
-                JsonEnvelope.metadataFrom(metadata).withName(STAGINGDVLA_COMMAND_HANDLER_DRIVER_NOTIFICATION_DOCUMENT_DELIVERY),
-                payload));
     }
 
     private void addCourtDocumentForCCCase(final Sender sender, final Metadata metadata, final DriverNotified driverNotified, final String fileName) {

@@ -27,6 +27,10 @@
             </column>
         </createTable>
 
+        <createIndex tableName="dvla_document_delivery" indexName="dvla_document_delivery_document_blob_uri_idx">
+            <column name="document_blob_uri"/>
+        </createIndex>
+
         <rollback>
             <dropTable tableName="dvla_document_delivery"/>
         </rollback>

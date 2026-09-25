@@ -2,6 +2,7 @@ package uk.gov.moj.cpp.persistence.repository;
 
 import uk.gov.moj.cpp.persistence.entity.DvlaDocumentDeliveryEntity;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.apache.deltaspike.data.api.EntityRepository;
@@ -21,4 +22,6 @@ public interface DvlaDocumentDeliveryRepository extends EntityRepository<DvlaDoc
     QueryResult<DvlaDocumentDeliveryEntity> findByCaseId(UUID caseId);
 
     QueryResult<DvlaDocumentDeliveryEntity> findByCaseIdAndMaterialStatus(UUID caseId, String materialStatus);
+
+    List<DvlaDocumentDeliveryEntity> findByDocumentBlobUri(String documentBlobUri);
 }

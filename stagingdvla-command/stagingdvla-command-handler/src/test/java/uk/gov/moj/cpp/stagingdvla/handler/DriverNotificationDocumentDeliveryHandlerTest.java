@@ -108,9 +108,11 @@ public class DriverNotificationDocumentDeliveryHandlerTest {
         final DriverNotificationDocumentDelivery documentDelivery = DriverNotificationDocumentDelivery
                 .driverNotificationDocumentDelivery()
                 .withMaterialId(MATERIAL_ID)
+                .withPayloadBlobUri("url")
                 .withCaseId(caseId)
                 .withSjpCorrelationId(sjpCorrelationId)
                 .withSjpStatus("PENDING")
+                .withMaterialStatus("PENDING")
                 .build();
 
         final JsonEnvelope requestEnvelope = JsonEnvelope.envelopeFrom(

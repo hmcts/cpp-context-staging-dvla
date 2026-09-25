@@ -3,9 +3,8 @@ package uk.gov.moj.cpp.stagingdvla.processor;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static uk.gov.justice.services.messaging.JsonEnvelope.envelopeFrom;
 import static uk.gov.justice.services.messaging.JsonEnvelope.metadataFrom;
 import static uk.gov.justice.services.messaging.JsonMetadata.ID;
@@ -28,6 +27,7 @@ import uk.gov.justice.services.messaging.Envelope;
 import uk.gov.justice.services.messaging.JsonEnvelope;
 import uk.gov.justice.services.messaging.MetadataBuilder;
 import uk.gov.justice.services.messaging.spi.DefaultEnvelope;
+import uk.gov.moj.cpp.stagingdvla.service.DocumentDeliveryStatusService;
 
 import java.util.List;
 import java.util.UUID;
@@ -35,7 +35,6 @@ import java.util.UUID;
 import javax.json.JsonObject;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -60,6 +59,9 @@ public class MaterialAddedProcessorTest {
     @Mock
     private Sender sender;
 
+    @Spy
+    private DocumentDeliveryStatusService documentDeliveryStatusService = new DocumentDeliveryStatusService();
+
     @Captor
     private ArgumentCaptor<Envelope<?>> privateEventCaptor;
 
@@ -70,6 +72,7 @@ public class MaterialAddedProcessorTest {
     public void setup() {
         setField(this.jsonObjectToObjectConverter, "objectMapper", new ObjectMapperProducer().objectMapper());
         setField(this.objectToJsonObjectConverter, "mapper", new ObjectMapperProducer().objectMapper());
+        setField(this.documentDeliveryStatusService, "sender", sender);
     }
 
     @Test
@@ -99,6 +102,22 @@ public class MaterialAddedProcessorTest {
     }
 
     @Test
+    public void shouldRecordMaterialSuccessForAuditReportMaterial() {
+        final UUID materialId = UUID.randomUUID();
+
+        materialAddedProcessor.processEvent(materialAddedEventFor(AUDIT_REPORT_ORIGINATOR_VALUE, materialId));
+
+        assertMaterialSuccessRecorded(materialId);
+    }
+
+    @Test
+    public void shouldNotRecordMaterialStatusForOtherOriginator() {
+        materialAddedProcessor.processEvent(materialAddedEventFor("sjp", UUID.randomUUID()));
+
+        verifyNoInteractions(sender);
+    }
+
+    @Test
     public void shouldRecordCompletedAndPendingWhenEmailNotificationRequestSucceeds() {
         final UUID materialId = UUID.randomUUID();
         final JsonEnvelope event = materialAddedEventFor(ORIGINATOR_VALUE, materialId);
@@ -108,6 +127,10 @@ public class MaterialAddedProcessorTest {
         verify(sender).send(privateEventCaptor.capture());
         verifySendAtIndex(privateEventCaptor.getAllValues(), "stagingdvla.command.send-email-notification", 0);
 
+        assertMaterialSuccessRecorded(materialId);
+    }
+
+    private void assertMaterialSuccessRecorded(final UUID materialId) {
         verify(sender).sendAsAdmin(adminEnvelopeCaptor.capture());
         final DefaultEnvelope documentDeliveryEnvelope = (DefaultEnvelope) adminEnvelopeCaptor.getValue();
         assertThat(documentDeliveryEnvelope.metadata().name(), is("stagingdvla.command.handler.driver-notification-document-delivery"));

@@ -3,7 +3,9 @@ package uk.gov.moj.stagingdvla.it;
 import static com.google.common.collect.ImmutableMap.of;
 import static com.jayway.jsonpath.matchers.JsonPathMatchers.withJsonPath;
 import static java.lang.String.format;
+import static java.util.UUID.randomUUID;
 import static org.apache.http.HttpStatus.SC_ACCEPTED;
+import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -16,12 +18,16 @@ import static uk.gov.moj.stagingdvla.stubs.ApimStub.verifyQueryDrivingLicencesWi
 import static uk.gov.moj.stagingdvla.stubs.DocumentGeneratorStub.awaitGenerateDocumentRequest;
 import static uk.gov.moj.stagingdvla.stubs.DocumentGeneratorStub.generateDocumentRequestCount;
 import static uk.gov.moj.stagingdvla.stubs.DocumentGeneratorStub.publishDocumentAvailableEvent;
+import static uk.gov.moj.stagingdvla.stubs.DocumentGeneratorStub.stubGenerateDocument;
+import static uk.gov.moj.stagingdvla.stubs.DocumentGeneratorStub.verifyGenerateDocumentStubCommandInvoked;
+import static uk.gov.moj.stagingdvla.stubs.MaterialStub.publishMaterialAddedEventForAuditReport;
 import static uk.gov.moj.stagingdvla.stubs.MaterialStub.verifyMaterialCreated;
 import static uk.gov.moj.stagingdvla.util.FileUtil.getPayload;
 import static uk.gov.moj.stagingdvla.util.RestHelper.pollForResponse;
 import static uk.gov.moj.stagingdvla.util.RestHelper.pollForResponseWithBadRequest;
 import static uk.gov.moj.stagingdvla.util.RestHelper.postCommandWithUserId;
 import static uk.gov.moj.stagingdvla.util.StubUtil.setupLoggedInUsersPermissionQueryStub;
+import static uk.gov.moj.stagingdvla.util.StubUtil.stubUser;
 import static uk.gov.moj.stagingdvla.util.StubUtil.stubUsersAndGroupsForUserDetail;
 import static uk.gov.moj.stagingdvla.util.WireMockStubUtils.setupAsAuthorisedUser;
 
@@ -56,6 +62,7 @@ public class QueryDrivingLicencesIT extends AbstractIntegrationTest {
         setupLoggedInUsersPermissionQueryStub();
         stubUsersAndGroupsForUserDetail(UUID.fromString(USER_ID));
         setupAsAuthorisedUser(UUID.fromString(USER_ID), "stub-data/usersgroups.get-specific-groups-by-user.json");
+        stubGenerateDocument("dummy");
     }
 
     @AfterAll
@@ -183,7 +190,7 @@ public class QueryDrivingLicencesIT extends AbstractIntegrationTest {
         final ImmutableMap<String, Boolean> features = of("dvlaFileStore", false);
         stubFeaturesFor(CONTEXT_NAME, features);
 
-        final String reference = "AUDITREPORT" + UUID.randomUUID();
+        final String reference = "AUDITREPORT" ;
         final String startDate = LocalDate.now().minusDays(1).toString();
         final String endDate = LocalDate.now().plusDays(1).toString();
         final String email = "richard.chapman@acme.com";
@@ -217,7 +224,8 @@ public class QueryDrivingLicencesIT extends AbstractIntegrationTest {
         assertThat(generateDocumentRequest.getString("payloadFileServiceId"), is(nullValue()));
         final String payloadFileUri = generateDocumentRequest.getString("payloadFileUri");
         assertThat(payloadFileUri, is(notNullValue()));
-        assertThat(generateDocumentRequest.getString("destinationFileUri"), equalTo(payloadFileUri + ".csv"));
+        final String destinationFileUri = generateDocumentRequest.getString("destinationFileUri");
+        assertThat(destinationFileUri, equalTo(payloadFileUri + ".csv"));
 
         // simulate systemdocgenerator raising document-available for the report (it isn't locally
         // deployed, so nothing else will) and verify the resulting material gets created - the
@@ -226,5 +234,26 @@ public class QueryDrivingLicencesIT extends AbstractIntegrationTest {
         // stands in for the (unused in this branch) payloadFileServiceId argument
         publishDocumentAvailableEvent(payloadFileUri, reportId, "DvlaAuditRecords", "DvlaAuditRecords", "csv");
         verifyMaterialCreated();
+
+        // the real material context isn't deployed here either, so simulate its own eventual,
+        // asynchronous confirmation that the material was stored (material.material-added) - for
+        // the audit-report flow the material shares the report's own id (see
+        // AuditReportAggregate.auditReportCreated, which sets materialId = auditReportCreated.getId())
+        final UUID materialId = UUID.fromString(reportId);
+        publishMaterialAddedEventForAuditReport(materialId, USER_ID);
+
+        //Then: MaterialAddedProcessor records materialStatus=SUCCESS for stagingdvla's own
+        // originators (d20 and auditReport), so the audit-report material is recorded too - verify
+        // the read side reflects it
+        final String queryUserId = randomUUID().toString();
+        stubUser(queryUserId);
+        pollForResponse("/dvla-document-deliveries?materialId=" + materialId + "&materialStatus=SUCCESS",
+                "application/vnd.stagingdvla.query.dvla-document-delivery+json", queryUserId,
+                allOf(
+                        withJsonPath("$.documentDeliveries[0].materialId", equalTo(materialId.toString())),
+                        withJsonPath("$.documentDeliveries[0].materialStatus", equalTo("SUCCESS")),
+                        withJsonPath("$.documentDeliveries[0].payloadBlobUri", equalTo(payloadFileUri)),
+                        withJsonPath("$.documentDeliveries[0].documentBlobUri", equalTo(destinationFileUri))
+                ));
     }
 }
