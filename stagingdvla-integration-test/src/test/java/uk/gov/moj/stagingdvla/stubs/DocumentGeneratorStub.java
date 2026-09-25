@@ -23,6 +23,7 @@ import uk.gov.justice.cpp.stagingdvla.event.DriverNotified;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 import javax.json.JsonObject;
@@ -70,6 +71,26 @@ public class DocumentGeneratorStub {
             verify(requestPatternBuilder);
             return true;
         });
+    }
+
+    public static int generateDocumentRequestCount() {
+        return findAll(postRequestedFor(urlPathMatching(GENERATE_DOCUMENT_PATH))).size();
+    }
+
+    // Waits for a generate-document request with the given originatingSource that arrived after the
+    // first `previousCount` requests (take that from generateDocumentRequestCount() before triggering
+    // the generation). The journal is shared by every test and never reset, and other tests' document
+    // requests are sent asynchronously - so "any request exists" passes immediately and "the latest
+    // request" can be someone else's. This only returns a request this test caused.
+    public static JsonPath awaitGenerateDocumentRequest(final String originatingSource, final int previousCount) {
+        return await().atMost(30, SECONDS).pollInterval(500, MILLISECONDS).until(() -> {
+            final List<LoggedRequest> requests = findAll(postRequestedFor(urlPathMatching(GENERATE_DOCUMENT_PATH)));
+            return requests.subList(Math.min(previousCount, requests.size()), requests.size()).stream()
+                    .map(request -> new JsonPath(request.getBodyAsString()))
+                    .filter(body -> originatingSource.equals(body.getString("originatingSource")))
+                    .findFirst()
+                    .orElse(null);
+        }, Objects::nonNull);
     }
 
     // The generate-document request body carries the real payloadFileServiceId/sourceCorrelationId
