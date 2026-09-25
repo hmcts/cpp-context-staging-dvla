@@ -3,8 +3,9 @@ package uk.gov.moj.cpp.stagingdvla.processor;
 import static java.util.UUID.fromString;
 import static uk.gov.justice.services.core.enveloper.Enveloper.envelop;
 import static uk.gov.justice.services.messaging.Envelope.metadataFrom;
-import static uk.gov.justice.services.messaging.JsonObjects.createObjectBuilder;
+import static uk.gov.moj.cpp.stagingdvla.domain.constants.DvlaDocumentDeliveryMaterialStatus.SUCCESS;
 import static uk.gov.moj.cpp.stagingdvla.helper.DriverSearchAuditHelper.MATERIAL_ID;
+import static uk.gov.moj.cpp.stagingdvla.service.DocumentDeliveryStatusService.DocumentDelivery.material;
 import static uk.gov.moj.cpp.stagingdvla.service.MaterialService.AUDIT_REPORT_ORIGINATOR_VALUE;
 import static uk.gov.moj.cpp.stagingdvla.service.MaterialService.ORIGINATOR_VALUE;
 import static uk.gov.moj.cpp.stagingdvla.service.MaterialService.PROCESS_ID;
@@ -19,7 +20,7 @@ import uk.gov.justice.services.core.annotation.ServiceComponent;
 import uk.gov.justice.services.core.sender.Sender;
 import uk.gov.justice.services.messaging.Envelope;
 import uk.gov.justice.services.messaging.JsonEnvelope;
-import uk.gov.moj.cpp.stagingdvla.domain.constants.DvlaDocumentDeliveryMaterialStatus;
+import uk.gov.moj.cpp.stagingdvla.service.DocumentDeliveryStatusService;
 
 import java.util.UUID;
 
@@ -34,7 +35,6 @@ public class MaterialAddedProcessor {
 
     public static final String STAGING_DVLA_COMMAND_SEND_EMAIL_NOTIFICATION = "stagingdvla.command.send-email-notification";
     public static final String STAGING_DVLA_COMMAND_AUDIT_REPORT_STORED = "stagingdvla.command.handler.driver-record-search-audit-report-stored";
-    public static final String STAGINGDVLA_COMMAND_HANDLER_DRIVER_NOTIFICATION_DOCUMENT_DELIVERY = "stagingdvla.command.handler.driver-notification-document-delivery";
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MaterialAddedProcessor.class.getName());
     @Inject
@@ -43,17 +43,26 @@ public class MaterialAddedProcessor {
     @Inject
     private ObjectToJsonObjectConverter objectToJsonObjectConverter;
 
+    @Inject
+    private DocumentDeliveryStatusService documentDeliveryStatusService;
+
     @Handles("material.material-added")
     public void processEvent(final JsonEnvelope event) {
         LOGGER.info("Received MaterialAddedEvent {}", event.toObfuscatedDebugString());
         if (event.metadata().asJsonObject().containsKey(SOURCE) && ORIGINATOR_VALUE.equalsIgnoreCase(event.metadata().asJsonObject().getString(SOURCE))) {
-            recordDocumentDeliveryStatus(event);
             processDvlaMaterialNotificationRequest(event);
+            recordMaterialSuccess(event);
         }
 
         if (event.metadata().asJsonObject().containsKey(SOURCE) && AUDIT_REPORT_ORIGINATOR_VALUE.equalsIgnoreCase(event.metadata().asJsonObject().getString(SOURCE))) {
             handleDriverAuditReportUploadedEvent(event);
+            recordMaterialSuccess(event);
         }
+    }
+
+    private void recordMaterialSuccess(final JsonEnvelope event) {
+        documentDeliveryStatusService.record(event.metadata(),
+                material(fromString(event.payloadAsJsonObject().getString(MATERIAL_ID)), SUCCESS));
     }
 
     private void handleDriverAuditReportUploadedEvent(final JsonEnvelope event) {
@@ -77,18 +86,6 @@ public class MaterialAddedProcessor {
         final JsonObject payload = objectToJsonObjectConverter.convert(materialAdded);
         sender.send(envelop(payload).withName(STAGING_DVLA_COMMAND_SEND_EMAIL_NOTIFICATION).withMetadataFrom(event));
 
-    }
-
-    private void recordDocumentDeliveryStatus(final JsonEnvelope originatingEvent) {
-        final UUID materialId = UUID.fromString(originatingEvent.payloadAsJsonObject().getString(MATERIAL_ID));
-        final JsonObject payload = createObjectBuilder()
-                .add("materialId", materialId.toString())
-                .add("materialStatus", DvlaDocumentDeliveryMaterialStatus.SUCCESS.name())
-                .build();
-
-        sender.sendAsAdmin(envelop(payload)
-                .withName(STAGINGDVLA_COMMAND_HANDLER_DRIVER_NOTIFICATION_DOCUMENT_DELIVERY)
-                .withMetadataFrom(originatingEvent));
     }
 
 }

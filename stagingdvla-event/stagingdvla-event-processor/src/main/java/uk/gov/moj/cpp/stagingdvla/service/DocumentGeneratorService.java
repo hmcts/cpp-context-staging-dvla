@@ -3,24 +3,19 @@ package uk.gov.moj.cpp.stagingdvla.service;
 import static com.azure.core.util.BinaryData.fromStream;
 import static com.azure.core.util.Context.NONE;
 import static java.util.Map.of;
-import static uk.gov.justice.services.core.annotation.Component.EVENT_PROCESSOR;
-import static uk.gov.justice.services.messaging.Envelope.metadataFrom;
-import static uk.gov.justice.services.messaging.JsonObjects.createObjectBuilder;
+import static uk.gov.moj.cpp.stagingdvla.domain.constants.DvlaDocumentDeliveryMaterialStatus.PENDING;
 import static uk.gov.moj.cpp.stagingdvla.helper.DriverSearchAuditHelper.CONVERSION_FORMAT;
 import static uk.gov.moj.cpp.stagingdvla.helper.DriverSearchAuditHelper.FILE_NAME;
 import static uk.gov.moj.cpp.stagingdvla.helper.DriverSearchAuditHelper.FILE_SIZE;
 import static uk.gov.moj.cpp.stagingdvla.helper.DriverSearchAuditHelper.NUMBER_OF_PAGES;
 import static uk.gov.moj.cpp.stagingdvla.helper.DriverSearchAuditHelper.TEMPLATE_NAME;
+import static uk.gov.moj.cpp.stagingdvla.service.DocumentDeliveryStatusService.DocumentDelivery.material;
 
 import uk.gov.justice.services.common.converter.ObjectToJsonObjectConverter;
-import uk.gov.justice.services.core.annotation.ServiceComponent;
 import uk.gov.justice.services.core.featurecontrol.FeatureControlGuard;
-import uk.gov.justice.services.core.sender.Sender;
-import uk.gov.justice.services.messaging.Envelope;
 import uk.gov.justice.services.messaging.JsonEnvelope;
 import uk.gov.moj.cpp.stagingdvla.blobstore.AzureFileStoreBlobConfiguration;
 import uk.gov.moj.cpp.stagingdvla.blobstore.StoragePath;
-import uk.gov.moj.cpp.stagingdvla.domain.constants.DvlaDocumentDeliveryMaterialStatus;
 
 import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;
@@ -41,7 +36,6 @@ public class DocumentGeneratorService {
     private static final StoragePath BLOB_PATH = StoragePath.internal();
     public static final String DVLA_DOCUMENT_TEMPLATE_NAME = "EDT_DriverOutNotification";
     public static final String DVLA_DOCUMENT_ORDER = "DVLADocumentOrder";
-    public static final String STAGINGDVLA_COMMAND_HANDLER_DRIVER_NOTIFICATION_DOCUMENT_DELIVERY = "stagingdvla.command.handler.driver-notification-document-delivery";
     private static final Logger LOGGER = LoggerFactory.getLogger(DocumentGeneratorService.class);
     private static final String ERROR_MESSAGE = "Error while uploading document generation or upload ";
 
@@ -53,8 +47,7 @@ public class DocumentGeneratorService {
     private final FileService fileService;
 
     @Inject
-    @ServiceComponent(EVENT_PROCESSOR)
-    private Sender sender;
+    private DocumentDeliveryStatusService documentDeliveryStatusService;
 
     @Inject
     private BlobContainerClient blobContainerClient;
@@ -98,7 +91,8 @@ public class DocumentGeneratorService {
                 result.destinationFileUri());
         systemDocGeneratorService.generateDocument(documentGenerationRequest, originatingEnvelope);
 
-        recordDocumentDeliveryStatus(originatingEnvelope, materialId);
+        documentDeliveryStatusService.record(originatingEnvelope.metadata(),
+                material(materialId, PENDING, result.payloadFileUri(), result.destinationFileUri()));
     }
 
     public record Result(String payloadFileUri, String destinationFileUri){}
@@ -119,18 +113,6 @@ public class DocumentGeneratorService {
 
         final String extension = fileName.substring(fileName.lastIndexOf('.') + 1);
         return new Result(blobClient.getBlobUrl(), blobClient.getBlobUrl() + "." + extension);
-    }
-
-    private void recordDocumentDeliveryStatus(final JsonEnvelope originatingEnvelope, final UUID materialId) {
-        final JsonObject payload = createObjectBuilder()
-                .add("materialId", materialId.toString())
-                .add("materialStatus", DvlaDocumentDeliveryMaterialStatus.PENDING.name())
-                .build();
-
-        sender.sendAsAdmin(Envelope.envelopeFrom(
-                metadataFrom(originatingEnvelope.metadata())
-                        .withName(STAGINGDVLA_COMMAND_HANDLER_DRIVER_NOTIFICATION_DOCUMENT_DELIVERY),
-                payload));
     }
 
     public String getMaterialIdAmendedFileName(final String fileName, final String materialId) {

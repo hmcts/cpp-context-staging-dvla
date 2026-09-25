@@ -67,6 +67,10 @@ public class MaterialAggregateTest {
         final UUID caseId = randomUUID();
         final UUID sjpCorrelationId = randomUUID();
 
+        aggregate.recordDocumentDelivery(
+                materialId, "PENDING", "payload/blob/uri", "document/blob/uri", null, null, null).collect(toList());
+
+
         final List<Object> eventStream = aggregate.recordDocumentDelivery(
                 materialId, null, null, null, caseId, sjpCorrelationId, "PENDING").collect(toList());
 

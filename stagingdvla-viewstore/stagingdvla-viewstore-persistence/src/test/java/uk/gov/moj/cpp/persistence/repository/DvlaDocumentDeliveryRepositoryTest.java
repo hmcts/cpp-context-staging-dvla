@@ -87,6 +87,24 @@ public class DvlaDocumentDeliveryRepositoryTest {
     }
 
     @Test
+    public void shouldRetrieveByDocumentBlobUri() {
+
+        final String documentBlobUri = "https://filestore/stagingdvla/generated/" + randomUUID() + ".pdf";
+        final DvlaDocumentDeliveryEntity matching = new DvlaDocumentDeliveryEntity(randomUUID(), now(), "SUCCESS", "payload/blob/uri", documentBlobUri,
+                randomUUID(), randomUUID(), "PENDING");
+        final DvlaDocumentDeliveryEntity otherDocument = new DvlaDocumentDeliveryEntity(randomUUID(), now(), "SUCCESS", "payload/blob/uri", "other/document/blob/uri",
+                randomUUID(), randomUUID(), "PENDING");
+
+        dvlaDocumentDeliveryRepository.save(matching);
+        dvlaDocumentDeliveryRepository.save(otherDocument);
+
+        final List<DvlaDocumentDeliveryEntity> results = dvlaDocumentDeliveryRepository.findByDocumentBlobUri(documentBlobUri);
+
+        assertThat(results.size(), equalTo(1));
+        assertThat(results.get(0).getMaterialId(), equalTo(matching.getMaterialId()));
+    }
+
+    @Test
     public void shouldPageAndCountByCaseId() {
 
         final UUID caseId = randomUUID();

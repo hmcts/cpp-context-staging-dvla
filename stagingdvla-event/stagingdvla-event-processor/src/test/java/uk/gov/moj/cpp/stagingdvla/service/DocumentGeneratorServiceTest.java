@@ -72,6 +72,9 @@ public class DocumentGeneratorServiceTest {
     @Mock
     private FeatureControlGuard featureControlGuard;
 
+    @Spy
+    private DocumentDeliveryStatusService documentDeliveryStatusService = new DocumentDeliveryStatusService();
+
     @Mock
     private BlobContainerClient blobContainerClient;
 
@@ -91,7 +94,8 @@ public class DocumentGeneratorServiceTest {
 
     @BeforeEach
     public void setUp() {
-        setField(documentGeneratorService, "sender", sender);
+        setField(documentDeliveryStatusService, "sender", sender);
+        setField(documentGeneratorService, "documentDeliveryStatusService", documentDeliveryStatusService);
         setField(documentGeneratorService, "featureControlGuard", featureControlGuard);
         setField(documentGeneratorService, "blobContainerClient", blobContainerClient);
         setField(documentGeneratorService, "azureBlobConfiguration", azureBlobConfiguration);
@@ -127,7 +131,8 @@ public class DocumentGeneratorServiceTest {
         assertThat(request.getSourceCorrelationId(),is(driverNotified.getMaterialId().toString()));
         assertThat(request.getPayloadFileServiceId(),is(payloadFileId));
 
-        verifyDocumentDeliveryStatusRecorded(driverNotified, DvlaDocumentDeliveryMaterialStatus.PENDING);
+        // file-service path has no blob URIs, so PENDING is recorded without them
+        verifyDocumentDeliveryStatusRecorded(driverNotified, DvlaDocumentDeliveryMaterialStatus.PENDING, null, null);
     }
 
     @Test
@@ -160,7 +165,8 @@ public class DocumentGeneratorServiceTest {
         assertThat(request.getSourceCorrelationId(),is(driverNotified.getMaterialId().toString()));
         assertThat(request.getPayloadFileServiceId(),is(payloadFileId));
 
-        verifyDocumentDeliveryStatusRecorded(driverNotified, DvlaDocumentDeliveryMaterialStatus.PENDING);
+        // file-service path has no blob URIs, so PENDING is recorded without them
+        verifyDocumentDeliveryStatusRecorded(driverNotified, DvlaDocumentDeliveryMaterialStatus.PENDING, null, null);
     }
 
     @Test
@@ -205,7 +211,8 @@ public class DocumentGeneratorServiceTest {
         assertThat(request.getPayloadFileUri(), is(blobUrl));
         assertThat(request.getDestinationFileUri(), is(blobUrl + "." + fileName.substring(fileName.lastIndexOf('.') + 1)));
 
-        verifyDocumentDeliveryStatusRecorded(driverNotified, DvlaDocumentDeliveryMaterialStatus.PENDING);
+        verifyDocumentDeliveryStatusRecorded(driverNotified, DvlaDocumentDeliveryMaterialStatus.PENDING,
+                blobUrl, blobUrl + "." + fileName.substring(fileName.lastIndexOf('.') + 1));
     }
 
     @Test
@@ -235,14 +242,17 @@ public class DocumentGeneratorServiceTest {
         verify(sender, never()).sendAsAdmin(any());
     }
 
-    private void verifyDocumentDeliveryStatusRecorded(final DriverNotified driverNotified, final DvlaDocumentDeliveryMaterialStatus expectedStatus) {
+    private void verifyDocumentDeliveryStatusRecorded(final DriverNotified driverNotified, final DvlaDocumentDeliveryMaterialStatus expectedStatus,
+                                                      final String expectedPayloadFileUri, final String expectedDestinationFileUri) {
         final ArgumentCaptor<Envelope> envelopeArgumentCaptor = ArgumentCaptor.forClass(Envelope.class);
         verify(sender).sendAsAdmin(envelopeArgumentCaptor.capture());
 
         final Envelope<JsonObject> capturedEnvelope = envelopeArgumentCaptor.getValue();
-        assertThat(capturedEnvelope.metadata().name(), is(DocumentGeneratorService.STAGINGDVLA_COMMAND_HANDLER_DRIVER_NOTIFICATION_DOCUMENT_DELIVERY));
+        assertThat(capturedEnvelope.metadata().name(), is(DocumentDeliveryStatusService.STAGINGDVLA_COMMAND_HANDLER_DRIVER_NOTIFICATION_DOCUMENT_DELIVERY));
         assertThat(capturedEnvelope.payload().getString("materialId"), is(driverNotified.getMaterialId().toString()));
         assertThat(capturedEnvelope.payload().getString("materialStatus"), is(expectedStatus.name()));
+        assertThat(capturedEnvelope.payload().getString("payloadBlobUri", null), is(expectedPayloadFileUri));
+        assertThat(capturedEnvelope.payload().getString("documentBlobUri", null), is(expectedDestinationFileUri));
     }
 
     public static DriverNotified generateDriverNotified(String initiationCode) {

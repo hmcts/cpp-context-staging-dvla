@@ -37,6 +37,7 @@ public class DocumentGeneratorStub {
     public static final String PATH = "/systemdocgenerator-service/command/api/rest/systemdocgenerator/render";
     public static final String GENERATE_DOCUMENT_PATH = "/systemdocgenerator-service/command/api/rest/systemdocgenerator/generate-document";
     private static final String DOCUMENT_AVAILABLE_EVENT = "public.systemdocgenerator.events.document-available";
+    private static final String DOCUMENT_GENERATION_FAILED_EVENT = "public.systemdocgenerator.events.generation-failed";
     private static final String DVLA_DOCUMENT_ORDER = "DVLADocumentOrder";
 
     public static void stubDocumentCreate(String documentText) {
@@ -145,5 +146,62 @@ public class DocumentGeneratorStub {
         publicEvents.publish(DOCUMENT_AVAILABLE_EVENT, metadata, payload);
 
         return documentFileServiceId;
+    }
+
+    // The document-available schema is a oneOf: payloadFileServiceId+documentFileServiceId (above,
+    // the file-service path) or payloadFileUri+destinationFileUri (this one) - systemdocgenerator
+    // sends this shape when DocumentGeneratorService uploaded the input payload to Azure blob
+    // storage instead (dvlaFileStore=false), echoing back the same payloadFileUri/destinationFileUri
+    // it was asked to generate against.
+    public static void publishDocumentAvailableEventForAzureBlob(final String payloadFileUri, final String destinationFileUri,
+                                                                   final String sourceCorrelationId) {
+        final JsonObject metadata = createObjectBuilder()
+                .add("id", UUID.randomUUID().toString())
+                .add("name", DOCUMENT_AVAILABLE_EVENT)
+                .build();
+
+        final String now = DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(ZonedDateTime.now());
+        final JsonObject payload = createObjectBuilder()
+                .add("originatingSource", DVLA_DOCUMENT_ORDER)
+                .add("payloadFileUri", payloadFileUri)
+                .add("destinationFileUri", destinationFileUri)
+                .add("sourceCorrelationId", sourceCorrelationId)
+                .add("templateIdentifier", "EDT_DriverOutNotification")
+                .add("conversionFormat", "pdf")
+                .add("requestedTime", now)
+                .add("generatedTime", now)
+                .add("generateVersion", 1)
+                .build();
+
+        publicEvents.publish(DOCUMENT_AVAILABLE_EVENT, metadata, payload);
+    }
+
+    // The real systemdocgenerator service isn't deployed here (only its command-api is stubbed
+    // above), so it never raises generation-failed itself - this publishes it in its place, for the
+    // file-service path (payloadFileServiceId, matching what shouldSendDvlaNotification's
+    // generate-document request actually carries). sourceCorrelationId here is the driver
+    // notification's materialId - DocumentGeneratorService.generateDocument sets it to
+    // materialId.toString() on the outgoing request, and SystemDocGeneratorEventProcessor.
+    // handleDocumentGenerationFailedEvent reads it back the same way to key the delivery-status
+    // update it now sends.
+    public static void publishDocumentGenerationFailedEvent(final String payloadFileServiceId, final String sourceCorrelationId) {
+        final JsonObject metadata = createObjectBuilder()
+                .add("id", UUID.randomUUID().toString())
+                .add("name", DOCUMENT_GENERATION_FAILED_EVENT)
+                .build();
+
+        final String now = DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(ZonedDateTime.now());
+        final JsonObject payload = createObjectBuilder()
+                .add("originatingSource", DVLA_DOCUMENT_ORDER)
+                .add("payloadFileServiceId", payloadFileServiceId)
+                .add("sourceCorrelationId", sourceCorrelationId)
+                .add("templateIdentifier", "EDT_DriverOutNotification")
+                .add("conversionFormat", "pdf")
+                .add("requestedTime", now)
+                .add("failedTime", now)
+                .add("reason", "systemdocgenerator failed to render the document")
+                .build();
+
+        publicEvents.publish(DOCUMENT_GENERATION_FAILED_EVENT, metadata, payload);
     }
 }

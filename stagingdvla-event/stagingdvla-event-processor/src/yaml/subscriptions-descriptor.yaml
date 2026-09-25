@@ -26,7 +26,18 @@ subscriptions_descriptor:
       events:
         - name: material.material-added
           schema_uri: http://justice.gov.uk/json/schemas/domains/public/material/material-added
+
+          #System doc generator
         - name: public.systemdocgenerator.events.document-available
           schema_uri: http://moj.gov.uk/cpp/json/schemas/systemdocgenerator/events/public/document-available.json
+        - name: public.systemdocgenerator.events.generation-failed
+          schema_uri: http://moj.gov.uk/cpp/json/schemas/systemdocgenerator/events/public/generation-failed.json
+          #SJP
+        - name: public.sjp.case-document-added
+          schema_uri: http://cpp.moj.gov.uk/sjp/json/schema/event/public-case-document-added.json
+        - name: public.sjp.case-document-addition-failed
+          schema_uri: http://cpp.moj.gov.uk/sjp/json/schema/event/public-case-document-addition-failed.json
+        - name: public.sjp.events.case-document-upload-rejected
+          schema_uri: http://justice.gov.uk/json/schemas/domains/sjp/event/public-case-document-upload-rejected.json
 
       event_source_name: public.event.source
