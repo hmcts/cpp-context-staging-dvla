@@ -28,6 +28,7 @@ import uk.gov.justice.services.common.converter.JsonObjectToObjectConverter;
 import uk.gov.justice.services.common.converter.ObjectToJsonObjectConverter;
 import uk.gov.justice.services.core.annotation.Handles;
 import uk.gov.justice.services.core.annotation.ServiceComponent;
+import uk.gov.justice.services.core.featurecontrol.FeatureControlGuard;
 import uk.gov.justice.services.core.sender.Sender;
 import uk.gov.justice.services.messaging.Envelope;
 import uk.gov.justice.services.messaging.JsonEnvelope;
@@ -100,10 +101,15 @@ public class DriverNotifiedEventProcessor {
     @Inject
     private DvlaApimConfig dvlaApimConfig;
 
+    @Inject
+    private FeatureControlGuard featureControlGuard;
+
     @Handles("stagingdvla.event.driver-notified")
     public void handleDriverNotifiedEvent(final JsonEnvelope envelope) {
         final JsonObject requestJson = envelope.payloadAsJsonObject();
         final DriverNotified driverNotified = jsonObjectToObjectConverter.convert(requestJson, DriverNotified.class);
+        final UUID userId = fromString(envelope.metadata().userId().orElseThrow(() -> new RuntimeException("UserId missing from event.")));
+
         if (LOGGER.isInfoEnabled()) {
             LOGGER.info("Driver Notified event - {}", envelope.toObfuscatedDebugString());
         }
@@ -120,13 +126,17 @@ public class DriverNotifiedEventProcessor {
         }
         if(Optional.ofNullable(driverNotified.getRetrySequence()).orElse(0) == 0) {
             LOGGER.info("DriverNotifiedEventProcessor - Calling to systemdoc for document generation");
-            final JsonObject nowsDocumentOrderJson = objectToJsonObjectConverter.convert(driverNotified);
-            documentGeneratorService.generateDocument(envelope,  driverNotified.getMaterialId(),
-                    nowsDocumentOrderJson,
-                    documentGeneratorService.getMaterialIdAmendedFileName(DVLA_DOCUMENT_ORDER, driverNotified.getMaterialId().toString()),
-                    DVLA_DOCUMENT_TEMPLATE_NAME,
-                    ConversionFormat.PDF,
-                    DVLA_DOCUMENT_ORDER);
+            if (featureControlGuard.isFeatureEnabled("dvlaFileStore")) {
+                documentGeneratorService.generateDvlaDocument(envelope, userId, driverNotified);
+            } else {
+                final JsonObject nowsDocumentOrderJson = objectToJsonObjectConverter.convert(driverNotified);
+                documentGeneratorService.generateDocument(envelope,  driverNotified.getMaterialId(),
+                        nowsDocumentOrderJson,
+                        documentGeneratorService.getMaterialIdAmendedFileName(DVLA_DOCUMENT_ORDER, driverNotified.getMaterialId().toString()),
+                        DVLA_DOCUMENT_TEMPLATE_NAME,
+                        ConversionFormat.PDF,
+                        DVLA_DOCUMENT_ORDER);
+            }
         }
     }
 
@@ -206,7 +216,6 @@ public class DriverNotifiedEventProcessor {
         notifyObjectBuilder.add(PERSONALISATION, createObjectBuilder()
                 .add(SUBJECT, getPersonalisationValue(emailChannel.getPersonalisation()))
                 .build());
-
         this.notificationNotifyService.sendEmailNotification(envelope, notifyObjectBuilder.build());
     }
 

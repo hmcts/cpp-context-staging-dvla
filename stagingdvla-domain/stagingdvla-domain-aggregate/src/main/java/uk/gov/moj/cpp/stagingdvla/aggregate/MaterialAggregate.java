@@ -9,16 +9,22 @@ import static uk.gov.moj.cpp.stagingdvla.domain.constants.DvlaDocumentDeliveryMa
 import uk.gov.justice.core.courts.EmailNotificationSent;
 import uk.gov.justice.core.courts.MaterialDetails;
 import uk.gov.justice.core.courts.NowsMaterialRequestRecorded;
+import uk.gov.justice.cpp.stagingdvla.event.DocumentDeletedFromBlob;
 import uk.gov.justice.cpp.stagingdvla.event.DvlaDocumentDeliveryRecorded;
 import uk.gov.justice.domain.aggregate.Aggregate;
+import uk.gov.moj.cpp.stagingdvla.domain.constants.DvlaDocumentDeliveryMaterialStatus;
 
 import java.util.UUID;
 import java.util.stream.Stream;
 
 public class MaterialAggregate implements Aggregate {
-    private static final long serialVersionUID = 101L;
+    private static final long serialVersionUID = 102L;
     private MaterialDetails details;
     private boolean documentDeliveryTracked;
+    private boolean isSjpCase = false;
+    private boolean isMaterialStatusSuccess;
+    private String payloadBlobUri;
+    private String documentBlobUri;
 
     @Override
     public Object apply(final Object event) {
@@ -26,8 +32,21 @@ public class MaterialAggregate implements Aggregate {
                 when(NowsMaterialRequestRecorded.class).apply(e ->
                         details = e.getContext()
                 ),
-                when(DvlaDocumentDeliveryRecorded.class).apply(e ->
-                        documentDeliveryTracked = true
+                when(DvlaDocumentDeliveryRecorded.class).apply(e -> {
+                            this.documentDeliveryTracked = true;
+                            if(nonNull(e.getPayloadBlobUri())) {
+                                this.payloadBlobUri = e.getPayloadBlobUri();
+                            }
+                            if(nonNull(e.getDocumentBlobUri())) {
+                                this.documentBlobUri = e.getDocumentBlobUri();
+                            }
+                            if (!this.isSjpCase && nonNull(e.getCaseId())){
+                                this.isSjpCase = true;
+                            }
+                            if(DvlaDocumentDeliveryMaterialStatus.SUCCESS.name().equals(e.getMaterialStatus())){
+                                this.isMaterialStatusSuccess = true;
+                            }
+                        }
                 ),
                 otherwiseDoNothing()
         );
@@ -53,7 +72,8 @@ public class MaterialAggregate implements Aggregate {
         if (!documentDeliveryTracked && !isPendingWithBlob(materialStatus, payloadBlobUri)) {
             return Stream.empty();
         }
-        return apply(Stream.of(DvlaDocumentDeliveryRecorded.dvlaDocumentDeliveryRecorded()
+        final Stream.Builder<Object> events = Stream.builder();
+        events.add(DvlaDocumentDeliveryRecorded.dvlaDocumentDeliveryRecorded()
                 .withMaterialId(materialId)
                 .withMaterialStatus(materialStatus)
                 .withPayloadBlobUri(payloadBlobUri)
@@ -61,7 +81,17 @@ public class MaterialAggregate implements Aggregate {
                 .withCaseId(caseId)
                 .withSjpCorrelationId(sjpCorrelationId)
                 .withSjpStatus(sjpStatus)
-                .build()));
+                .build());
+        if((!this.isSjpCase && DvlaDocumentDeliveryMaterialStatus.SUCCESS.name().equals(materialStatus)) ||
+                (this.isSjpCase && DvlaDocumentDeliveryMaterialStatus.SUCCESS.name().equals(sjpStatus))){
+            events.add(DocumentDeletedFromBlob.documentDeletedFromBlob()
+                    .withMaterialId(materialId)
+                    .withPayloadBlobUri(this.payloadBlobUri)
+                    .withDocumentBlobUri(this.documentBlobUri)
+                    .build());
+        }
+
+        return apply(events.build());
     }
 
     private static boolean isPendingWithBlob(final String materialStatus, final String payloadBlobUri) {

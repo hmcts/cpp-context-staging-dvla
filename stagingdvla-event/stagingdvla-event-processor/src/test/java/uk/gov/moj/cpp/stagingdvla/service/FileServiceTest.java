@@ -46,7 +46,7 @@ public class FileServiceTest {
 
         when(fileStorer.store(any(JsonObject.class), any(ByteArrayInputStream.class))).thenReturn(expectedFileServiceId);
 
-        final UUID fileServiceId = fileService.storePayload(payload, "DriverAuditReport_20260916.csv", "DvlaAuditRecords", ConversionFormat.CSV);
+        final UUID fileServiceId = fileService.storePayload(payload, "DriverAuditReport_20260916.csv", "DvlaAuditRecords");
 
         assertThat(fileServiceId, is(expectedFileServiceId));
     }
@@ -58,15 +58,15 @@ public class FileServiceTest {
 
         when(fileStorer.store(any(JsonObject.class), any(ByteArrayInputStream.class))).thenReturn(randomUUID());
 
-        fileService.storePayload(payload, "DriverAuditReport_20260916.csv", "DvlaAuditRecords", ConversionFormat.CSV);
+        fileService.storePayload(payload, "DVLADocumentOrder_20260916.pdf", "EDT_DriverOutNotification");
 
         final ArgumentCaptor<JsonObject> metadataCaptor = ArgumentCaptor.forClass(JsonObject.class);
         verify(fileStorer).store(metadataCaptor.capture(), any(ByteArrayInputStream.class));
 
         final JsonObject metadata = metadataCaptor.getValue();
-        assertThat(metadata.getString("fileName"), is("DriverAuditReport_20260916.csv"));
-        assertThat(metadata.getString("conversionFormat"), is(ConversionFormat.CSV.toString()));
-        assertThat(metadata.getString("templateName"), is("DvlaAuditRecords"));
+        assertThat(metadata.getString("fileName"), is("DVLADocumentOrder_20260916.pdf"));
+        assertThat(metadata.getString("conversionFormat"), is(ConversionFormat.PDF.toString()));
+        assertThat(metadata.getString("templateName"), is("EDT_DriverOutNotification"));
         assertThat(metadata.getInt("numberOfPages"), is(1));
         assertThat(metadata.getInt("fileSize"), is(expectedFileSize));
     }
@@ -77,7 +77,7 @@ public class FileServiceTest {
 
         when(fileStorer.store(any(JsonObject.class), any(ByteArrayInputStream.class))).thenReturn(randomUUID());
 
-        fileService.storePayload(payload, "DVLADocumentOrder_20260916.pdf", "EDT_DriverOutNotification", ConversionFormat.PDF);
+        fileService.storePayload(payload, "DVLADocumentOrder_20260916.pdf", "EDT_DriverOutNotification");
 
         final ArgumentCaptor<JsonObject> metadataCaptor = ArgumentCaptor.forClass(JsonObject.class);
         verify(fileStorer).store(metadataCaptor.capture(), any(ByteArrayInputStream.class));
@@ -93,7 +93,7 @@ public class FileServiceTest {
         when(fileStorer.store(any(JsonObject.class), any(ByteArrayInputStream.class))).thenThrow(cause);
 
         final RuntimeException exception = assertThrows(RuntimeException.class,
-                () -> fileService.storePayload(payload, "fileName.csv", "templateName", ConversionFormat.CSV));
+                () -> fileService.storePayload(payload, "fileName.csv", "templateName"));
 
         assertThat(exception.getMessage(), is(cause.getMessage()));
     }

@@ -1,0 +1,5 @@
+{
+  "materialId": "390741aa-fafb-474a-a973-b3941347b95c",
+  "payloadBlobUri": "https://sadevfilestore.blob.core.windows.net/stack-stagingdvla/internal/DVLADocumentOrder",
+  "documentBlobUri": "https://sadevfilestore.blob.core.windows.net/stack-stagingdvla/internal/DVLADocumentOrder.pdf"
+}

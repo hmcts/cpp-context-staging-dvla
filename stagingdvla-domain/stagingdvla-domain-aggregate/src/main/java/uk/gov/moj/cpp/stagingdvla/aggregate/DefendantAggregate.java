@@ -22,7 +22,6 @@ import uk.gov.justice.domain.aggregate.Aggregate;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -53,7 +52,8 @@ public class DefendantAggregate implements Aggregate {
                                        final UUID hearingId,
                                        final List<CourtApplications> courtApplications,
                                        final UUID masterDefendantId,
-                                       final boolean isReshare) {
+                                       final boolean isReshare,
+                                       final boolean isBlobStore) {
 
         final List<SjpCaseToCcReferred> allSjpCaseReferredEvents = new ArrayList<>();
         final List<SjpCaseToCcReferred> currentSjpCaseReferredEvents = getSjpCaseReferredEvents(currentCases, courtApplications);
@@ -77,7 +77,8 @@ public class DefendantAggregate implements Aggregate {
                 courtApplications,
                 previousDriverNotifiedByCaseAndHearing,
                 allSjpCaseReferredEvents,
-                isReshare);
+                isReshare,
+                isBlobStore);
         if (driverNotifiedEvents.isEmpty() && currentSjpCaseReferredEvents.isEmpty()) {
             if (LOGGER.isInfoEnabled()) {
                 LOGGER.info("D20 not generated since there are no appeal/endorsable offences/change from previous offences for hearingId {}", hearingId);

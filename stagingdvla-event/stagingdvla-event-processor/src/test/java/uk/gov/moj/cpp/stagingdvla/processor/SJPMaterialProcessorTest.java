@@ -147,7 +147,7 @@ public class SJPMaterialProcessorTest {
 
         sjpMaterialProcessor.handleCaseDocumentFailedEvent(caseDocumentAdditionFailed(DOCUMENT_URI));
 
-        assertRecordedSjpStatus(SUCCESS);
+        assertRecordedSjpStatus(FAILED);
     }
 
     @Test

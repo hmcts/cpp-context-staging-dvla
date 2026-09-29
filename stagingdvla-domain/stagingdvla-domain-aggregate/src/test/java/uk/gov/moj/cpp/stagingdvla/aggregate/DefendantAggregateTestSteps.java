@@ -66,6 +66,7 @@ class DefendantAggregateTestSteps {
     static class Scenario {
         static final List<String> FIELDS_TO_CHECK_PRESENCE_ONLY = Arrays.asList("identifier", "materialId");
         List<StepData> steps = new ArrayList<>();
+        boolean blobStore = false;
 
         public void run(final String name, final DefendantAggregate aggregate) {
             LOGGER.info("*RUNNING SCENARIO: {}", name);
@@ -80,7 +81,8 @@ class DefendantAggregateTestSteps {
                         step.input.hearingId(),
                         step.input.courtApplications(),
                         step.input.masterDefendantId(),
-                        step.input.isReshare
+                        step.input.isReshare,
+                        blobStore
                 );
                 if (isNull(step.expectedEventsAssertion.expectedEventsJsonFile)) {
                     assertThat(name + " - Events were produced", eventStream, IsNull.nullValue());
@@ -101,9 +103,28 @@ class DefendantAggregateTestSteps {
                         final String actualEventPayload = actualEvents.get(i);
                         assertThat(actualEventPayload, JsonMatcher.matchesJson(expectedEventPayload, FIELDS_TO_CHECK_PRESENCE_ONLY));
                         assertJsonPaths(actualEventPayload, step.expectedEventsAssertion.jsonpathAssertions);
+                        if (blobStore) {
+                            assertIdentifierMatchesMaterialId(name, actualEventPayload);
+                        }
                     }
                 }
 
+            }
+        }
+
+        /**
+         * Runs the scenario with the dvlaFileStore feature disabled (blob store), where every driver-notified event
+         * must carry an identifier equal to its materialId.
+         */
+        public Scenario withBlobStore() {
+            this.blobStore = true;
+            return this;
+        }
+
+        private static void assertIdentifierMatchesMaterialId(final String name, final String actualEventPayload) {
+            final JsonObject event = stringToJsonConverter.convert(actualEventPayload);
+            if (event.containsKey("materialId")) {
+                assertThat(name + " - identifier should equal materialId for blob store", event.getString("identifier"), equalTo(event.getString("materialId")));
             }
         }
 

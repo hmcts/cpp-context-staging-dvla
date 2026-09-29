@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
@@ -25,8 +26,10 @@ import uk.gov.justice.cpp.stagingdvla.event.DriverSearchAuditReportStored;
 import uk.gov.justice.services.common.converter.JsonObjectToObjectConverter;
 import uk.gov.justice.services.common.converter.jackson.ObjectMapperProducer;
 import uk.gov.justice.services.core.dispatcher.SystemUserProvider;
+import uk.gov.justice.services.core.featurecontrol.FeatureControlGuard;
 import uk.gov.justice.services.core.sender.Sender;
 import uk.gov.justice.services.fileservice.api.FileServiceException;
+import uk.gov.justice.services.fileservice.api.FileStorer;
 import uk.gov.justice.services.messaging.Envelope;
 import uk.gov.justice.services.messaging.JsonEnvelope;
 import uk.gov.moj.cpp.persistence.entity.DriverAuditEntity;
@@ -35,6 +38,7 @@ import uk.gov.moj.cpp.stagingdvla.service.ConversionFormat;
 import uk.gov.moj.cpp.stagingdvla.service.DocumentGeneratorService;
 import uk.gov.moj.cpp.stagingdvla.service.MaterialService;
 
+import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.Collections;
@@ -82,11 +86,57 @@ public class DriverSearchAuditReportEventProcessorTest {
     private SystemUserProvider userProvider;
     @Mock
     private DocumentGeneratorService documentGeneratorService;
+    @Mock
+    private FileStorer fileStorer;
+    @Mock
+    private FeatureControlGuard featureControlGuard;
 
     @Test
-    public void shouldProcessDriverSearchAuditReportRequestedEvent() throws FileServiceException {
+    public void shouldStorePayloadAndRequestDocumentGenerationWithFileServiceIdWhenDvlaFileStoreEnabled() throws FileServiceException {
         // given
         final DriverSearchAuditReportRequested auditReportRequested = givenAuditReportRequested();
+        final UUID payloadFileServiceId = randomUUID();
+
+        when(featureControlGuard.isFeatureEnabled("dvlaFileStore")).thenReturn(true);
+        when(driverAuditRepository.findAllActiveDriverAuditRecords(any(), any(), anyString(), anyString()))
+                .thenReturn(Collections.emptyList());
+        when(fileStorer.store(any(JsonObject.class), any(InputStream.class))).thenReturn(payloadFileServiceId);
+
+        final JsonEnvelope requestMessage = givenRequestEnvelope(auditReportRequested);
+
+        // when
+        driverSearchAuditReportEventProcessor.processDriverSearchAuditReportRequested(requestMessage);
+
+        // then
+        final ArgumentCaptor<JsonObject> fileMetadataCaptor = ArgumentCaptor.forClass(JsonObject.class);
+        verify(fileStorer).store(fileMetadataCaptor.capture(), any(InputStream.class));
+        final JsonObject fileMetadata = fileMetadataCaptor.getValue();
+        assertThat(fileMetadata.getString("fileName").startsWith("DriverAuditReport_"), is(true));
+        assertThat(fileMetadata.getString("fileName").endsWith(".csv"), is(true));
+        assertThat(fileMetadata.getString("conversionFormat"), is("csv"));
+        assertThat(fileMetadata.getString("templateName"), is("DvlaAuditRecords"));
+        assertThat(fileMetadata.getInt("numberOfPages"), is(1));
+
+        verify(sender).sendAsAdmin(envelopeCaptor.capture());
+        final Envelope<JsonObject> generateDocumentCommand = envelopeCaptor.getValue();
+        assertEquals("systemdocgenerator.generate-document", generateDocumentCommand.metadata().name());
+        final JsonObject payload = generateDocumentCommand.payload();
+        assertThat(payload.getString("originatingSource"), is("DvlaAuditRecords"));
+        assertThat(payload.getString("templateIdentifier"), is("DvlaAuditRecords"));
+        assertThat(payload.getString("conversionFormat"), is("csv"));
+        assertThat(payload.getString("sourceCorrelationId"), is(auditReportRequested.getId().toString()));
+        assertThat(payload.getString("payloadFileServiceId"), is(payloadFileServiceId.toString()));
+        assertThat(payload.containsKey("payloadFileUri"), is(false));
+
+        verifyNoInteractions(documentGeneratorService);
+    }
+
+    @Test
+    public void shouldRequestDocumentGenerationViaBlobStorageWhenDvlaFileStoreDisabled() throws FileServiceException {
+        // given
+        final DriverSearchAuditReportRequested auditReportRequested = givenAuditReportRequested();
+
+        when(featureControlGuard.isFeatureEnabled("dvlaFileStore")).thenReturn(false);
 
         when(driverAuditRepository.findAllActiveDriverAuditRecords(any(), any(), anyString(), anyString()))
                 .thenReturn(Collections.emptyList());
@@ -102,11 +152,11 @@ public class DriverSearchAuditReportEventProcessorTest {
         assertThat(generatedDocumentCall.templateName, is("DvlaAuditRecords"));
         assertThat(generatedDocumentCall.originatingSource, is("DvlaAuditRecords"));
         assertThat(generatedDocumentCall.format, is(ConversionFormat.CSV));
-        assertThat(generatedDocumentCall.fileName.endsWith(".csv"), is(true));
+        assertThat(generatedDocumentCall.fileName, is("DriverAuditReport_" + auditReportRequested.getId() + ".csv"));
         assertThat(generatedDocumentCall.payload.containsKey("driverAuditRecords"), is(true));
-        // Document generation (including any file-store/blob-storage decision) is fully delegated
-        // to documentGeneratorService, so the processor itself must never touch sender directly.
-        verifyNoInteractions(sender);
+        // Blob-backed generation is fully delegated to documentGeneratorService, so the processor
+        // itself must never send the systemdocgenerator command.
+        verify(sender, never()).sendAsAdmin(any());
     }
 
     @Test
@@ -115,6 +165,7 @@ public class DriverSearchAuditReportEventProcessorTest {
         // were previously untested because every existing test stubbed the repository to return
         // an empty list, so the row-building loop body never ran.
         final DriverSearchAuditReportRequested auditReportRequested = givenAuditReportRequested();
+        when(featureControlGuard.isFeatureEnabled("dvlaFileStore")).thenReturn(false);
 
         final DriverAuditEntity populatedEntity = new DriverAuditEntity(randomUUID(), randomUUID(), "driver@example.com",
                 ZonedDateTime.now().minusDays(1), "SEARCH", "REF-1", "DRIVER123", "Jane", "Doe", "FEMALE", "SW1A 1AA",

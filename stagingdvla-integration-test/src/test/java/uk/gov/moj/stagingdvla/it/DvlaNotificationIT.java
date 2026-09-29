@@ -84,6 +84,7 @@ public class DvlaNotificationIT extends AbstractIntegrationTest {
 
     private final MessageConsumer consumerForDriverNotified = privateEvents.createPrivateConsumer("stagingdvla.event.driver-notified");
     private final MessageConsumer consumerForDvlaDocumentDeliveryRecorded = privateEvents.createPrivateConsumer("stagingdvla.event.dvla-document-delivery-recorded");
+    private final MessageConsumer consumerForDocumentDeletedFromBlob = privateEvents.createPrivateConsumer("stagingdvla.event.document-deleted-from-blob");
 
     private final String DRIVER_NOTIFICATION_MEDIA_TYPE = "application/vnd.stagingdvla.command.driver-notification+json";
     private final String DVLA_DOCUMENT_DELIVERY_MEDIA_TYPE = "application/vnd.stagingdvla.query.dvla-document-delivery+json";
@@ -164,7 +165,8 @@ public class DvlaNotificationIT extends AbstractIntegrationTest {
         // dvlaFileStore=false -> DocumentGeneratorService falls back to the Azure blob upload path
         // instead of the real file-service, so the generate-document request carries
         // payloadFileUri/destinationFileUri rather than payloadFileServiceId
-        final ImmutableMap<String, Boolean> features = of("dvlaFileStore", false);
+        // dvlaFileStoreDelete=true -> DocumentDeletedFromBlobEventProcessor deletes both blobs once delivery completes
+        final ImmutableMap<String, Boolean> features = of("dvlaFileStore", false, "dvlaFileStoreDelete", true);
         FeatureStubber.stubFeaturesFor(STAGINGDVLA_CONTEXT, features);
 
         //Given
@@ -254,6 +256,10 @@ public class DvlaNotificationIT extends AbstractIntegrationTest {
                         withJsonPath("$.documentDeliveries[0].payloadBlobUri", equalTo(payloadFileUri)),
                         withJsonPath("$.documentDeliveries[0].documentBlobUri", equalTo(destinationFileUri))
                 ));
+
+        //Then: material SUCCESS completes a non-SJP delivery, so MaterialAggregate raises
+        // document-deleted-from-blob for the payload and rendered document blobs
+        verifyDocumentDeletedFromBlob(materialId, payloadFileUri, destinationFileUri);
     }
 
     private DvlaDocumentDeliveryRecorded retrieveFinalDvlaDocumentDeliveryRecordedEvent() {
@@ -457,7 +463,8 @@ public class DvlaNotificationIT extends AbstractIntegrationTest {
         // driverOut=false flow: dvlaFileStore=false -> DocumentGeneratorService uploads the payload to Azure
         // blob storage, and only a PENDING record carrying the blob URIs starts document-delivery tracking
         // (MaterialAggregate.recordDocumentDelivery)
-        final ImmutableMap<String, Boolean> features = of("driverOut", false, "dvlaFileStore", false);
+        // dvlaFileStoreDelete=true -> DocumentDeletedFromBlobEventProcessor deletes both blobs once delivery completes
+        final ImmutableMap<String, Boolean> features = of("driverOut", false, "dvlaFileStore", false, "dvlaFileStoreDelete", true);
         FeatureStubber.stubFeaturesFor(STAGINGDVLA_CONTEXT, features);
 
         //Given: create the driver notification for an SJP case (initiationCode "J") carrying two cases.
@@ -548,6 +555,9 @@ public class DvlaNotificationIT extends AbstractIntegrationTest {
             //Then: MaterialAddedProcessor records this material's delivery as materialStatus SUCCESS
             final JsonPath materialSuccessDocumentDeliveryEvent = retrieveMaterialSuccessDocumentDeliveryEvent(caseMaterialId);
             assertThat(materialSuccessDocumentDeliveryEvent.getString("materialStatus"), equalTo("SUCCESS"));
+            // ...but on an SJP case material SUCCESS alone must not delete the blobs - SJP still reads the document
+            // from documentBlobUri (a deletion would be appended with the SUCCESS record, so a short wait suffices)
+            assertThat(retrieveMessage(consumerForDocumentDeletedFromBlob), is(nullValue()));
 
             //When: the real sjp context isn't deployed here (only its command-api is stubbed), so
             // simulate it filing the document on the case - public.sjp.case-document-added echoes the
@@ -570,7 +580,20 @@ public class DvlaNotificationIT extends AbstractIntegrationTest {
                             withJsonPath("$.documentDeliveries[0].sjpStatus", equalTo("SUCCESS")),
                             withJsonPath("$.documentDeliveries[0].documentBlobUri", equalTo(destinationFileUri))
                     ));
+
+            //Then: for an SJP case the delivery completes on sjpStatus SUCCESS (not on material SUCCESS
+            // above), so only now does MaterialAggregate raise document-deleted-from-blob for this material
+            verifyDocumentDeletedFromBlob(caseMaterialId, payloadFileUri, destinationFileUri);
         }
+    }
+
+    // matched on materialId, as other materials' deletions may be on the same consumer
+    private void verifyDocumentDeletedFromBlob(final String materialId, final String payloadBlobUri, final String documentBlobUri) {
+        final JsonPath documentDeletedFromBlob = retrieveMessage(consumerForDocumentDeletedFromBlob,
+                isJson(withJsonPath("$.materialId", equalTo(materialId))));
+        assertThat(documentDeletedFromBlob, is(notNullValue()));
+        assertThat(documentDeletedFromBlob.getString("payloadBlobUri"), equalTo(payloadBlobUri));
+        assertThat(documentDeletedFromBlob.getString("documentBlobUri"), equalTo(documentBlobUri));
     }
 
     private JsonPath retrieveSjpCaseDocumentDeliveryEvent() {

@@ -4,6 +4,7 @@ import static java.util.UUID.randomUUID;
 import static java.util.stream.Collectors.toList;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.utils.AggregateTestHelper.getCases;
@@ -55,10 +56,25 @@ public class DefendantAggregateTest {
         final List<Object> eventStream = aggregate.notifyDriver("orderDate",
                 getOrderingCourt(prefix, false), null,
                 getDefendant(prefix), currentCases,
-                randomUUID(), null, randomUUID(), false).collect(toList());
+                randomUUID(), null, randomUUID(), false, false).collect(toList());
 
         assertThat(eventStream.size(), is(1));
         assertThat(eventStream.get(0).getClass(), is(equalTo(DriverNotified.class)));
+    }
+
+    @Test
+    public void shouldNotifyDriverWithIdentifierSameAsMaterialIdWhenBlobStore() {
+        final String prefix = "current";
+        final List<Cases> currentCases = getCases(prefix, false, null, null, null, 3);
+        final List<Object> eventStream = aggregate.notifyDriver("orderDate",
+                getOrderingCourt(prefix, false), null,
+                getDefendant(prefix), currentCases,
+                randomUUID(), null, randomUUID(), false, true).collect(toList());
+
+        assertThat(eventStream.size(), is(1));
+        final DriverNotified driverNotified = (DriverNotified) eventStream.get(0);
+        assertThat(driverNotified.getMaterialId(), is(notNullValue()));
+        assertThat(driverNotified.getIdentifier(), is(equalTo(driverNotified.getMaterialId())));
     }
 
     @Test
@@ -78,7 +94,7 @@ public class DefendantAggregateTest {
         final List<Object> eventStream = aggregate.notifyDriver("orderDate",
                 getOrderingCourt(prefix, false), null,
                 getDefendant(prefix), cases,
-                randomUUID(), null, randomUUID(), false).collect(toList());
+                randomUUID(), null, randomUUID(), false, false).collect(toList());
 
         assertThat(eventStream.size(), is(1));
         assertThat(eventStream.get(0).getClass(), is(equalTo(DriverNotified.class)));
@@ -100,7 +116,7 @@ public class DefendantAggregateTest {
         List<Object> eventStream = aggregate.notifyDriver("orderDate",
                 getOrderingCourt(prefix, false), null,
                 getDefendant(prefix), currentCases,
-                randomUUID(), null, randomUUID(), false).collect(toList());
+                randomUUID(), null, randomUUID(), false, false).collect(toList());
 
         assertThat(eventStream.size(), is(1));
         assertThat(eventStream.get(0).getClass(), is(equalTo(DriverNotified.class)));
@@ -112,7 +128,7 @@ public class DefendantAggregateTest {
        final Stream<Object> events = aggregate.notifyDriver("orderDate",
                 getOrderingCourt(prefix, false), LocalDate.now().toString(),
                 getDefendant(prefix), currentCases,
-                randomUUID(), null, randomUUID(), false);
+                randomUUID(), null, randomUUID(), false, false);
 
 
        assertThat(events, nullValue());
@@ -140,7 +156,7 @@ public class DefendantAggregateTest {
         Stream<Object> eventStream = aggregate.notifyDriver("orderDate",
                 getOrderingCourt(prefix, false), null,
                 getDefendant(prefix), currentCases,
-                randomUUID(), null, randomUUID(), false);
+                randomUUID(), null, randomUUID(), false, false);
 
         assertThat(eventStream, nullValue());
 
@@ -148,7 +164,7 @@ public class DefendantAggregateTest {
         final List<Object> events = aggregate.notifyDriver("orderDate",
                 getOrderingCourt(prefix, false), LocalDate.now().toString(),
                 getDefendant(prefix), currentCases,
-                randomUUID(), null, randomUUID(), false).toList();
+                randomUUID(), null, randomUUID(), false, false).toList();
 
 
         assertThat(events.size(), is(1));
@@ -176,7 +192,7 @@ public class DefendantAggregateTest {
         final List<Object> eventStream = aggregate.notifyDriver("orderDate",
                 getOrderingCourt(prefix, false), "amendDate",
                 getDefendant(prefix), cases2,
-                randomUUID(), null, randomUUID(), false).collect(toList());
+                randomUUID(), null, randomUUID(), false, false).collect(toList());
 
         assertThat(eventStream.size(), is(1));
         assertThat(eventStream.get(0).getClass(), is(equalTo(DriverNotified.class)));
@@ -194,7 +210,7 @@ public class DefendantAggregateTest {
         final Stream<Object> eventStream = aggregate.notifyDriver("orderDate",
                 getOrderingCourt(prefix, false), null,
                 getDefendant(prefix), cases,
-                randomUUID(), null, randomUUID(), false);
+                randomUUID(), null, randomUUID(), false, false);
 
         assertThat(eventStream, is(nullValue()));
     }
@@ -209,7 +225,7 @@ public class DefendantAggregateTest {
         final List<Object> eventStream = aggregate.notifyDriver("orderDate",
                 getOrderingCourt(prefix, false), null,
                 getDefendant(prefix), currentCases,
-                randomUUID(), null, MASTER_DEFENDANT_ID, false).collect(toList());
+                randomUUID(), null, MASTER_DEFENDANT_ID, false, false).collect(toList());
 
         assertThat(eventStream.size(), is(2));
         assertThat(eventStream.get(0).getClass(), is(equalTo(DriverNotifiedNextRetryCancelled.class)));
