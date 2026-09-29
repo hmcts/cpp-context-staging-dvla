@@ -49,7 +49,7 @@ public class SJPMaterialProcessor {
     // SJP publishes this when the case document is already on the case (duplicate filing).
     @Handles("public.sjp.case-document-addition-failed")
     public void handleCaseDocumentFailedEvent(final JsonEnvelope envelope) {
-        recordSjpStatus(envelope, envelope.payloadAsJsonObject().getString(DOCUMENT_URI, null), SUCCESS);
+        recordSjpStatus(envelope, envelope.payloadAsJsonObject().getString(DOCUMENT_URI, null), FAILED);
     }
 
     // SJP publishes this when it refuses the upload (case referred for court hearing / not managed
