@@ -85,6 +85,32 @@ public class AuditReportAggregateTest {
         final Object object = eventStream.get(0);
         assertThat(object.getClass(), is(CoreMatchers.equalTo(DriverSearchAuditReportCreated.class)));
         assertThat(eventStream.get(0).getClass(), is(CoreMatchers.equalTo(DriverSearchAuditReportCreated.class)));
+        final DriverSearchAuditReportCreated reportCreated = (DriverSearchAuditReportCreated) object;
+        assertThat(reportCreated.getReportFileId(), is(REPORT_FILE_ID));
+        assertThat(reportCreated.getMaterialId(), is(CoreMatchers.not(REPORT_ID)));
+        assertThat(reportCreated.getPayloadFileUri(), is(CoreMatchers.nullValue()));
+        assertThat(reportCreated.getDestinationFileUri(), is(CoreMatchers.nullValue()));
+    }
+
+    @Test
+    public void shouldCreateDriverSearchAuditReportWithReportIdAsMaterialIdForAzureBlob() {
+        final String payloadFileUri = "https://filestore.blob.core.windows.net/stagingdvla/DriverAuditReport.json";
+        final String destinationFileUri = payloadFileUri + ".csv";
+        final DriverRecordSearchAuditReportCreated reportCreatedCommand = DriverRecordSearchAuditReportCreated.driverRecordSearchAuditReportCreated()
+                .withId(REPORT_ID)
+                .withPayloadFileUri(payloadFileUri)
+                .withDestinationFileUri(destinationFileUri)
+                .build();
+
+        final List<Object> eventStream = aggregate.auditReportCreatedForBlobUri(reportCreatedCommand).collect(toList());
+
+        assertThat(eventStream.size(), is(1));
+        final DriverSearchAuditReportCreated reportCreated = (DriverSearchAuditReportCreated) eventStream.get(0);
+        assertThat(reportCreated.getId(), is(REPORT_ID));
+        assertThat(reportCreated.getMaterialId(), is(REPORT_ID));
+        assertThat(reportCreated.getPayloadFileUri(), is(payloadFileUri));
+        assertThat(reportCreated.getDestinationFileUri(), is(destinationFileUri));
+        assertThat(reportCreated.getReportFileId(), is(CoreMatchers.nullValue()));
     }
 
     @Test

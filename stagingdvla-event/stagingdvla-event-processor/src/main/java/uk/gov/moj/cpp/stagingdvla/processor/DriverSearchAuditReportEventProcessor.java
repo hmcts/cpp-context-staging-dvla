@@ -50,6 +50,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -122,12 +123,17 @@ public class DriverSearchAuditReportEventProcessor {
                     .convert(event.payloadAsJsonObject(), DriverSearchAuditReportCreated.class);
 
             final UUID reportId = auditReportCreated.getId();
-            final String fileServiceId = auditReportCreated.getReportFileId();
             final Optional<UUID> contextSystemUserId = userProvider.getContextSystemUserId();
+            if(Objects.isNull(auditReportCreated.getPayloadFileUri())) {
+                final String fileServiceId = auditReportCreated.getReportFileId();
 
-            LOGGER.info("Sending material.command.upload-file for reportId: {}", reportId);
-            materialService.uploadMaterial(fromString(fileServiceId), auditReportCreated.getMaterialId(),
-                    contextSystemUserId.orElse(null), AUDIT_REPORT_ORIGINATOR_VALUE, reportId);
+                LOGGER.info("Sending material.command.upload-file for reportId: {}", reportId);
+                materialService.uploadMaterial(fromString(fileServiceId), auditReportCreated.getMaterialId(),
+                        contextSystemUserId.orElse(null), AUDIT_REPORT_ORIGINATOR_VALUE, reportId);
+            } else {
+                materialService.uploadMaterialFromUri(auditReportCreated.getDestinationFileUri(), auditReportCreated.getMaterialId(),
+                        contextSystemUserId.orElse(null), AUDIT_REPORT_ORIGINATOR_VALUE, reportId);
+            }
         }
     }
 
