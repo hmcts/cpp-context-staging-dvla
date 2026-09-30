@@ -145,9 +145,9 @@ public class QueryDrivingLicencesIT extends AbstractIntegrationTest {
 
     @Test
     void shouldGenerateDriverSearchAuditReport() throws IOException {
-        // feature toggle must be on: dvlaFileStore=true routes report generation through the real
+        // feature toggle must be off: dvlaFileStore=false routes report generation through the real
         // file-service store path (see DriverSearchAuditReportEventProcessor.processDriverSearchAuditReportRequested)
-        final ImmutableMap<String, Boolean> features = of("dvlaFileStore", true);
+        final ImmutableMap<String, Boolean> features = of("dvlaFileStore", false);
         stubFeaturesFor(CONTEXT_NAME, features);
 
         final String reference = "AUDITREPORT" + UUID.randomUUID();
@@ -190,12 +190,12 @@ public class QueryDrivingLicencesIT extends AbstractIntegrationTest {
 
     @Test
     void shouldGenerateDriverSearchAuditReportWithAzureBlob() throws IOException {
-        // feature toggle off: dvlaFileStore=false routes report generation through the Azure blob
-        // fallback path instead of the real file-service store (see
+        // feature toggle on: dvlaFileStore=true routes report generation through the Azure blob
+        // path instead of the real file-service store (see
         // DriverSearchAuditReportEventProcessor.processDriverSearchAuditReportRequested and
         // DocumentGeneratorService.uploadDocumentToAzureBlob)
         // dvlaFileStoreDelete=true -> DocumentDeletedFromBlobEventProcessor deletes both blobs once delivery completes
-        final ImmutableMap<String, Boolean> features = of("dvlaFileStore", false, "dvlaFileStoreDelete", true);
+        final ImmutableMap<String, Boolean> features = of("dvlaFileStore", true, "dvlaFileStoreDelete", true);
         stubFeaturesFor(CONTEXT_NAME, features);
 
         final String reference = "AUDITREPORT" ;

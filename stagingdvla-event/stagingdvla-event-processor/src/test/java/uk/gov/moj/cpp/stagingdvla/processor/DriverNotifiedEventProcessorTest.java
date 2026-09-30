@@ -122,7 +122,7 @@ public class DriverNotifiedEventProcessorTest {
 
     @Test
     public void shouldProcessDriverNotifiedMessage() throws IOException {
-        when(featureControlGuard.isFeatureEnabled("dvlaFileStore")).thenReturn(true);
+        when(featureControlGuard.isFeatureEnabled("dvlaFileStore")).thenReturn(false);
         driverNotifiedEventProcessor.handleDriverNotifiedEvent(getRequestPayload(UPDATED_DRIVER_NOTIFIED_JSON, STAGINGDVLA_EVENT_DRIVER_NOTIFIED, 0));
 
         verify(documentGeneratorService, times(1)).generateDvlaDocument(any(), any(), any());
@@ -131,7 +131,7 @@ public class DriverNotifiedEventProcessorTest {
 
     @Test
     public void shouldProcessDriverNotifiedMessageNoOffence() throws IOException {
-        when(featureControlGuard.isFeatureEnabled("dvlaFileStore")).thenReturn(true);
+        when(featureControlGuard.isFeatureEnabled("dvlaFileStore")).thenReturn(false);
         driverNotifiedEventProcessor.handleDriverNotifiedEvent(getRequestPayload(DRIVER_NOTIFIED_NO_OFFENCE_JSON, STAGINGDVLA_EVENT_DRIVER_NOTIFIED, 0));
 
         verify(documentGeneratorService, times(1)).generateDvlaDocument(any(), any(), any());
@@ -140,7 +140,7 @@ public class DriverNotifiedEventProcessorTest {
 
     @Test
     public void shouldCallDvlaNotifyApi_WhenNewEndorsement() throws IOException {
-        when(featureControlGuard.isFeatureEnabled("dvlaFileStore")).thenReturn(true);
+        when(featureControlGuard.isFeatureEnabled("dvlaFileStore")).thenReturn(false);
         when(notifyDrivingConvictionService.notifyDrivingConviction(isA(DriverNotified.class))).thenReturn(notifyDrivingConvictionResponse);
         when(notifyDrivingConvictionResponse.getStatus()).thenReturn(SC_OK);
 
@@ -153,7 +153,7 @@ public class DriverNotifiedEventProcessorTest {
 
     @Test
     public void shouldScheduleRetry_WhenNewEndorsementReturned401Error() throws IOException {
-        when(featureControlGuard.isFeatureEnabled("dvlaFileStore")).thenReturn(true);
+        when(featureControlGuard.isFeatureEnabled("dvlaFileStore")).thenReturn(false);
         when(notifyDrivingConvictionService.notifyDrivingConviction(isA(DriverNotified.class))).thenReturn(notifyDrivingConvictionResponse);
         when(dvlaApimConfig.getDrivingConvictionMaxRetry()).thenReturn("10");
         when(notifyDrivingConvictionResponse.getStatus()).thenReturn(SC_UNAUTHORIZED);
@@ -170,7 +170,7 @@ public class DriverNotifiedEventProcessorTest {
 
     @Test
     public void shouldScheduleRetry_WhenNewEndorsementReturned500Error() throws IOException {
-        when(featureControlGuard.isFeatureEnabled("dvlaFileStore")).thenReturn(true);
+        when(featureControlGuard.isFeatureEnabled("dvlaFileStore")).thenReturn(false);
         when(notifyDrivingConvictionService.notifyDrivingConviction(isA(DriverNotified.class))).thenReturn(notifyDrivingConvictionResponse);
         when(dvlaApimConfig.getDrivingConvictionMaxRetry()).thenReturn("10");
         when(notifyDrivingConvictionResponse.getStatus()).thenReturn(SC_INTERNAL_SERVER_ERROR);
@@ -244,7 +244,7 @@ public class DriverNotifiedEventProcessorTest {
 
     @Test
     public void shouldNotCallDvlaNotifyApiApi_WhenUpdateEndorsement() throws IOException {
-        when(featureControlGuard.isFeatureEnabled("dvlaFileStore")).thenReturn(true);
+        when(featureControlGuard.isFeatureEnabled("dvlaFileStore")).thenReturn(false);
         driverNotifiedEventProcessor.handleDriverNotifiedEvent(
                 getRequestPayload(DRIVER_NOTIFIED_UPDATE_ENDORSEMENT_JSON, STAGINGDVLA_EVENT_DRIVER_NOTIFIED, 0));
 
@@ -253,8 +253,8 @@ public class DriverNotifiedEventProcessorTest {
     }
 
     @Test
-    public void shouldPassTheEventUserIdToDvlaDocumentGenerationWhenDvlaFileStoreEnabled() throws IOException {
-        when(featureControlGuard.isFeatureEnabled("dvlaFileStore")).thenReturn(true);
+    public void shouldPassTheEventUserIdToDvlaDocumentGenerationWhenDvlaFileStoreDisabled() throws IOException {
+        when(featureControlGuard.isFeatureEnabled("dvlaFileStore")).thenReturn(false);
         final UUID userId = randomUUID();
         final JsonEnvelope envelope = getRequestPayload(UPDATED_DRIVER_NOTIFIED_JSON, STAGINGDVLA_EVENT_DRIVER_NOTIFIED, 0, userId);
 
@@ -267,8 +267,8 @@ public class DriverNotifiedEventProcessorTest {
     }
 
     @Test
-    public void shouldGenerateDocumentViaBlobStorageWhenDvlaFileStoreDisabled() throws IOException {
-        when(featureControlGuard.isFeatureEnabled("dvlaFileStore")).thenReturn(false);
+    public void shouldGenerateDocumentViaBlobStorageWhenDvlaFileStoreEnabled() throws IOException {
+        when(featureControlGuard.isFeatureEnabled("dvlaFileStore")).thenReturn(true);
         final JsonObject nowsDocumentOrderJson = Json.createObjectBuilder().add("materialId", materialId).build();
         final String fileName = DVLA_DOCUMENT_ORDER + "_" + materialId + ".pdf";
         when(objectToJsonObjectConverter.convert(any(DriverNotified.class))).thenReturn(nowsDocumentOrderJson);
@@ -284,7 +284,7 @@ public class DriverNotifiedEventProcessorTest {
     }
 
     @Test
-    public void shouldNotCreateTheDocumentDuringRetryWhenDvlaFileStoreDisabled() throws IOException {
+    public void shouldNotCreateTheDocumentDuringRetryWhenDvlaFileStoreEnabled() throws IOException {
         when(notifyDrivingConvictionService.notifyDrivingConviction(isA(DriverNotified.class))).thenReturn(notifyDrivingConvictionResponse);
         when(dvlaApimConfig.getDrivingConvictionMaxRetry()).thenReturn("10");
         when(notifyDrivingConvictionResponse.getStatus()).thenReturn(SC_INTERNAL_SERVER_ERROR);

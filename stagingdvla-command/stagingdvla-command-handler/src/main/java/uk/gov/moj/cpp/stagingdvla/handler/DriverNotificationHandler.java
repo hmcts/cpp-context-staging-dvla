@@ -52,7 +52,7 @@ public class DriverNotificationHandler {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("received request {} {}", STAGINGDVLA_COMMAND_HANDLER_DRIVER_NOTIFICATION, envelope.metadata().asJsonObject());
         }
-        final boolean isBlobStore = !featureControlGuard.isFeatureEnabled("dvlaFileStore");
+        final boolean isBlobStore = featureControlGuard.isFeatureEnabled("dvlaFileStore");
 
         final DriverNotification driverNotification = envelope.payload();
 

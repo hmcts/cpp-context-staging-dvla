@@ -103,7 +103,7 @@ public class DriverSearchAuditReportEventProcessor {
             final DriverAuditReportSearchCriteria driverAuditReportSearchCriteria = auditReportRequested.getReportSearchCriteria();
             final JsonObject docGeneratorPayload = getAuditReportDocumentGeneratorPayload(driverAuditReportSearchCriteria);
 
-            if (featureControlGuard.isFeatureEnabled("dvlaFileStore")) {
+            if (!featureControlGuard.isFeatureEnabled("dvlaFileStore")) {
                 final UUID fileId = storeAuditReportDocumentGeneratorPayload(docGeneratorPayload,
                         constructFileName(), DVLA_AUDIT_RECORDS);
                 LOGGER.info("Sending systemdocgenerator.generate-document request for reportId: {}",

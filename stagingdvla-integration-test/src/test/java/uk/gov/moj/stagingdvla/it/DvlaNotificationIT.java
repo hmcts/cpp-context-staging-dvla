@@ -118,7 +118,7 @@ public class DvlaNotificationIT extends AbstractIntegrationTest {
     @Override
     @BeforeEach
     public void setup() {
-        final ImmutableMap<String, Boolean> features = of("dvlaFileStore", true);
+        final ImmutableMap<String, Boolean> features = of("dvlaFileStore", false);
         FeatureStubber.stubFeaturesFor(STAGINGDVLA_CONTEXT, features);
         hearingId = randomUUID().toString();
         defendantId = randomUUID().toString();
@@ -162,11 +162,11 @@ public class DvlaNotificationIT extends AbstractIntegrationTest {
 
     @Test
     public void shouldSendDvlaNotificationWithAzureBlob() throws IOException {
-        // dvlaFileStore=false -> DocumentGeneratorService falls back to the Azure blob upload path
+        // dvlaFileStore=true -> DocumentGeneratorService uses the Azure blob upload path
         // instead of the real file-service, so the generate-document request carries
         // payloadFileUri/destinationFileUri rather than payloadFileServiceId
         // dvlaFileStoreDelete=true -> DocumentDeletedFromBlobEventProcessor deletes both blobs once delivery completes
-        final ImmutableMap<String, Boolean> features = of("dvlaFileStore", false, "dvlaFileStoreDelete", true);
+        final ImmutableMap<String, Boolean> features = of("dvlaFileStore", true, "dvlaFileStoreDelete", true);
         FeatureStubber.stubFeaturesFor(STAGINGDVLA_CONTEXT, features);
 
         //Given
@@ -460,11 +460,11 @@ public class DvlaNotificationIT extends AbstractIntegrationTest {
 
     @Test
     public void shouldRecordDvlaDocumentDeliverySjpCaseWhenDocumentAvailableForSjpCase() throws IOException {
-        // driverOut=false flow: dvlaFileStore=false -> DocumentGeneratorService uploads the payload to Azure
+        // driverOut=false flow: dvlaFileStore=true -> DocumentGeneratorService uploads the payload to Azure
         // blob storage, and only a PENDING record carrying the blob URIs starts document-delivery tracking
         // (MaterialAggregate.recordDocumentDelivery)
         // dvlaFileStoreDelete=true -> DocumentDeletedFromBlobEventProcessor deletes both blobs once delivery completes
-        final ImmutableMap<String, Boolean> features = of("driverOut", false, "dvlaFileStore", false, "dvlaFileStoreDelete", true);
+        final ImmutableMap<String, Boolean> features = of("driverOut", false, "dvlaFileStore", true, "dvlaFileStoreDelete", true);
         FeatureStubber.stubFeaturesFor(STAGINGDVLA_CONTEXT, features);
 
         //Given: create the driver notification for an SJP case (initiationCode "J") carrying two cases.

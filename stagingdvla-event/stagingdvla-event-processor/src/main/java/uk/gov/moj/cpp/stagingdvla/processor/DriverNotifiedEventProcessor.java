@@ -126,7 +126,7 @@ public class DriverNotifiedEventProcessor {
         }
         if(Optional.ofNullable(driverNotified.getRetrySequence()).orElse(0) == 0) {
             LOGGER.info("DriverNotifiedEventProcessor - Calling to systemdoc for document generation");
-            if (featureControlGuard.isFeatureEnabled("dvlaFileStore")) {
+            if (!featureControlGuard.isFeatureEnabled("dvlaFileStore")) {
                 documentGeneratorService.generateDvlaDocument(envelope, userId, driverNotified);
             } else {
                 final JsonObject nowsDocumentOrderJson = objectToJsonObjectConverter.convert(driverNotified);

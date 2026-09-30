@@ -104,7 +104,7 @@ public class DriverNotificationHandlerTest {
         final DefendantAggregate defendantAggregate = new DefendantAggregate();
         when(eventSource.getStreamById(any())).thenReturn(eventStream);
         when(aggregateService.get(eventStream, DefendantAggregate.class)).thenReturn(defendantAggregate);
-        when(featureControlGuard.isFeatureEnabled("dvlaFileStore")).thenReturn(true);
+        when(featureControlGuard.isFeatureEnabled("dvlaFileStore")).thenReturn(false);
 
         final Envelope<DriverNotification> envelope = createDriverNotification("J");
         handler.handleDriverNotification(envelope);
@@ -112,11 +112,11 @@ public class DriverNotificationHandlerTest {
     }
 
     @Test
-    public void shouldProcessDriverNotificationAndRaiseEventWithIdentifierSameAsMaterialIdWhenDvlaFileStoreDisabled() throws Exception {
+    public void shouldProcessDriverNotificationAndRaiseEventWithIdentifierSameAsMaterialIdWhenDvlaFileStoreEnabled() throws Exception {
         final DefendantAggregate defendantAggregate = new DefendantAggregate();
         when(eventSource.getStreamById(any())).thenReturn(eventStream);
         when(aggregateService.get(eventStream, DefendantAggregate.class)).thenReturn(defendantAggregate);
-        when(featureControlGuard.isFeatureEnabled("dvlaFileStore")).thenReturn(false);
+        when(featureControlGuard.isFeatureEnabled("dvlaFileStore")).thenReturn(true);
 
         final Envelope<DriverNotification> envelope = createDriverNotification("J");
         handler.handleDriverNotification(envelope);
@@ -132,7 +132,7 @@ public class DriverNotificationHandlerTest {
         final DefendantAggregate defendantAggregate = new DefendantAggregate();
         when(eventSource.getStreamById(any())).thenReturn(eventStream);
         when(aggregateService.get(eventStream, DefendantAggregate.class)).thenReturn(defendantAggregate);
-        when(featureControlGuard.isFeatureEnabled("dvlaFileStore")).thenReturn(true);
+        when(featureControlGuard.isFeatureEnabled("dvlaFileStore")).thenReturn(false);
 
         final Envelope<DriverNotification> envelope = createDriverNotification(null);
         handler.handleDriverNotification(envelope);
@@ -144,7 +144,7 @@ public class DriverNotificationHandlerTest {
         final DefendantAggregate defendantAggregate = new DefendantAggregate();
         when(eventSource.getStreamById(any())).thenReturn(eventStream);
         when(aggregateService.get(eventStream, DefendantAggregate.class)).thenReturn(defendantAggregate);
-        when(featureControlGuard.isFeatureEnabled("dvlaFileStore")).thenReturn(true);
+        when(featureControlGuard.isFeatureEnabled("dvlaFileStore")).thenReturn(false);
 
         final Envelope<DriverNotification> envelope = createDriverNotification("J", "ACTIVE", null);
         handler.handleDriverNotification(envelope);
@@ -156,7 +156,7 @@ public class DriverNotificationHandlerTest {
         final DefendantAggregate defendantAggregate = new DefendantAggregate();
         when(eventSource.getStreamById(any())).thenReturn(eventStream);
         when(aggregateService.get(eventStream, DefendantAggregate.class)).thenReturn(defendantAggregate);
-        when(featureControlGuard.isFeatureEnabled("dvlaFileStore")).thenReturn(true);
+        when(featureControlGuard.isFeatureEnabled("dvlaFileStore")).thenReturn(false);
 
         final Envelope<DriverNotification> envelope = createDriverNotification("J", null, randomUUID().toString());
         handler.handleDriverNotification(envelope);

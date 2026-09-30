@@ -92,12 +92,12 @@ public class DriverSearchAuditReportEventProcessorTest {
     private FeatureControlGuard featureControlGuard;
 
     @Test
-    public void shouldStorePayloadAndRequestDocumentGenerationWithFileServiceIdWhenDvlaFileStoreEnabled() throws FileServiceException {
+    public void shouldStorePayloadAndRequestDocumentGenerationWithFileServiceIdWhenDvlaFileStoreDisabled() throws FileServiceException {
         // given
         final DriverSearchAuditReportRequested auditReportRequested = givenAuditReportRequested();
         final UUID payloadFileServiceId = randomUUID();
 
-        when(featureControlGuard.isFeatureEnabled("dvlaFileStore")).thenReturn(true);
+        when(featureControlGuard.isFeatureEnabled("dvlaFileStore")).thenReturn(false);
         when(driverAuditRepository.findAllActiveDriverAuditRecords(any(), any(), anyString(), anyString()))
                 .thenReturn(Collections.emptyList());
         when(fileStorer.store(any(JsonObject.class), any(InputStream.class))).thenReturn(payloadFileServiceId);
@@ -132,11 +132,11 @@ public class DriverSearchAuditReportEventProcessorTest {
     }
 
     @Test
-    public void shouldRequestDocumentGenerationViaBlobStorageWhenDvlaFileStoreDisabled() throws FileServiceException {
+    public void shouldRequestDocumentGenerationViaBlobStorageWhenDvlaFileStoreEnabled() throws FileServiceException {
         // given
         final DriverSearchAuditReportRequested auditReportRequested = givenAuditReportRequested();
 
-        when(featureControlGuard.isFeatureEnabled("dvlaFileStore")).thenReturn(false);
+        when(featureControlGuard.isFeatureEnabled("dvlaFileStore")).thenReturn(true);
 
         when(driverAuditRepository.findAllActiveDriverAuditRecords(any(), any(), anyString(), anyString()))
                 .thenReturn(Collections.emptyList());
@@ -165,7 +165,7 @@ public class DriverSearchAuditReportEventProcessorTest {
         // were previously untested because every existing test stubbed the repository to return
         // an empty list, so the row-building loop body never ran.
         final DriverSearchAuditReportRequested auditReportRequested = givenAuditReportRequested();
-        when(featureControlGuard.isFeatureEnabled("dvlaFileStore")).thenReturn(false);
+        when(featureControlGuard.isFeatureEnabled("dvlaFileStore")).thenReturn(true);
 
         final DriverAuditEntity populatedEntity = new DriverAuditEntity(randomUUID(), randomUUID(), "driver@example.com",
                 ZonedDateTime.now().minusDays(1), "SEARCH", "REF-1", "DRIVER123", "Jane", "Doe", "FEMALE", "SW1A 1AA",

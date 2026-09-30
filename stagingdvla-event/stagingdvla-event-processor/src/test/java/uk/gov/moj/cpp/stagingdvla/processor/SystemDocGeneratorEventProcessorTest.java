@@ -422,7 +422,7 @@ public class SystemDocGeneratorEventProcessorTest {
 
     // The document-available contract's other oneOf branch (see document-available.json): when
     // DocumentGeneratorService uploaded the driverNotified payload to Azure blob storage instead
-    // of the file-service (dvlaFileStore=false), systemdocgenerator echoes back
+    // of the file-service (dvlaFileStore=true), systemdocgenerator echoes back
     // payloadFileUri/destinationFileUri instead of payloadFileServiceId/documentFileServiceId.
     private static final String AZURE_BLOB_BASE_URL = "http://cpp-azurite:10000/devstoreaccount1/stagingdvla-files/";
 

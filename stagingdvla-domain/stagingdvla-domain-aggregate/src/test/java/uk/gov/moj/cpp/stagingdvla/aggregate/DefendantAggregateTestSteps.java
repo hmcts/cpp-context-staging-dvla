@@ -113,7 +113,7 @@ class DefendantAggregateTestSteps {
         }
 
         /**
-         * Runs the scenario with the dvlaFileStore feature disabled (blob store), where every driver-notified event
+         * Runs the scenario with the dvlaFileStore feature enabled (blob store), where every driver-notified event
          * must carry an identifier equal to its materialId.
          */
         public Scenario withBlobStore() {
