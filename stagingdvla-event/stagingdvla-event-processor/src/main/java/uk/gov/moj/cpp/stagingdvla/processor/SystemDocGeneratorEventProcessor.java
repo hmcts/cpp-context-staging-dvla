@@ -124,7 +124,7 @@ public class SystemDocGeneratorEventProcessor {
     private record Result(DriverNotified driverNotified, String fileName) {}
 
     @Handles(DOCUMENT_AVAILABLE_EVENT_NAME)
-    public void handleDocumentAvailable(final JsonEnvelope documentAvailableEvent) throws FileServiceException {
+    public void handleDocumentAvailable(final JsonEnvelope documentAvailableEvent)  {
         final JsonObject documentAvailablePayload = documentAvailableEvent.payloadAsJsonObject();
         final String originatingSource = documentAvailablePayload.getString(ORIGINATING_SOURCE, "");
         if (isForDriverAuditReportDocument(originatingSource)) {
