@@ -19,8 +19,10 @@ import static uk.gov.moj.stagingdvla.stubs.ApimStub.verifyQueryDrivingLicencesWi
 import static uk.gov.moj.stagingdvla.stubs.DocumentGeneratorStub.awaitGenerateDocumentRequest;
 import static uk.gov.moj.stagingdvla.stubs.DocumentGeneratorStub.generateDocumentRequestCount;
 import static uk.gov.moj.stagingdvla.stubs.DocumentGeneratorStub.publishDocumentAvailableEvent;
+import static uk.gov.moj.stagingdvla.stubs.DocumentGeneratorStub.publishDocumentAvailableEventForAzureBlob;
 import static uk.gov.moj.stagingdvla.stubs.DocumentGeneratorStub.stubGenerateDocument;
-import static uk.gov.moj.stagingdvla.stubs.DocumentGeneratorStub.verifyGenerateDocumentStubCommandInvoked;
+import static uk.gov.moj.stagingdvla.stubs.MaterialStub.AUDIT_REPORT_ORIGINATOR;
+import static uk.gov.moj.stagingdvla.stubs.MaterialStub.awaitMaterialUploadRequest;
 import static uk.gov.moj.stagingdvla.stubs.MaterialStub.publishMaterialAddedEventForAuditReport;
 import static uk.gov.moj.stagingdvla.stubs.MaterialStub.verifyMaterialCreated;
 import static uk.gov.moj.stagingdvla.util.FileUtil.getPayload;
@@ -81,6 +83,9 @@ public class QueryDrivingLicencesIT extends AbstractIntegrationTest {
         DATABASE_CLEANER.cleanEventStoreTables(CONTEXT_NAME);
         DATABASE_CLEANER.cleanStreamStatusTable(CONTEXT_NAME);
         DATABASE_CLEANER.cleanStreamBufferTable(CONTEXT_NAME);
+        // event_number is re-derived from MAX(event_number) in event_log, so truncating event_log restarts
+        // numbering at 1 - processed_event must go too, or its (event_number, source, component) key clashes
+        DATABASE_CLEANER.cleanProcessedEventTable(CONTEXT_NAME);
         DATABASE_CLEANER.cleanViewStoreTables(CONTEXT_NAME, tableName);
     }
 
@@ -236,18 +241,29 @@ public class QueryDrivingLicencesIT extends AbstractIntegrationTest {
         assertThat(destinationFileUri, equalTo(payloadFileUri + ".csv"));
 
         // simulate systemdocgenerator raising document-available for the report (it isn't locally
-        // deployed, so nothing else will) and verify the resulting material gets created - the
-        // audit-report branch of SystemDocGeneratorEventProcessor.handleDocumentAvailable only reads
-        // documentFileServiceId/sourceCorrelationId from the payload, so payloadFileUri simply
-        // stands in for the (unused in this branch) payloadFileServiceId argument
-        publishDocumentAvailableEvent(payloadFileUri, reportId, "DvlaAuditRecords", "DvlaAuditRecords", "csv");
-        verifyMaterialCreated();
+        // deployed, so nothing else will) and verify the resulting material gets created - on the
+        // Azure blob path the document-available contract's other oneOf branch applies
+        // (payloadFileUri/destinationFileUri, no payloadFileServiceId/documentFileServiceId - see the
+        // schema's document-available.json), echoing back the same URIs DocumentGeneratorService
+        // uploaded the payload to/asked the rendered report to be written to
+        publishDocumentAvailableEventForAzureBlob(payloadFileUri, destinationFileUri, reportId,
+                "DvlaAuditRecords", "DvlaAuditRecords", "csv");
+        final UUID materialId = UUID.fromString(reportId);
+        //Then: DriverSearchAuditReportEventProcessor.processDriverSearchAuditReportCreated asks the
+        // material context to store the rendered report via material.command.upload-file - on the
+        // Azure blob path it references the report by fileUri (the destination blob), never by
+        // fileServiceId, since the command's payload is an exclusive oneOf over the two
+        final JsonPath materialUploadRequest = awaitMaterialUploadRequest(materialId.toString());
+        assertThat(materialUploadRequest.getString("fileUri"), equalTo(destinationFileUri));
+        assertThat(materialUploadRequest.getString("fileServiceId"), is(nullValue()));
+        // the originator travels in _metadata and is echoed back by the material context on
+        // material.material-added - MaterialAddedProcessor only reacts to "auditReport" for this flow
+        assertThat(materialUploadRequest.getString("_metadata.originator"), equalTo(AUDIT_REPORT_ORIGINATOR));
 
         // the real material context isn't deployed here either, so simulate its own eventual,
         // asynchronous confirmation that the material was stored (material.material-added) - for
         // the audit-report flow the material shares the report's own id (see
         // AuditReportAggregate.auditReportCreated, which sets materialId = auditReportCreated.getId())
-        final UUID materialId = UUID.fromString(reportId);
         publishMaterialAddedEventForAuditReport(materialId, USER_ID);
 
         //Then: MaterialAddedProcessor records materialStatus=SUCCESS for stagingdvla's own

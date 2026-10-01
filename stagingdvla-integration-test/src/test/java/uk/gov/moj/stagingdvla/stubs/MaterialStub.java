@@ -1,13 +1,16 @@
 package uk.gov.moj.stagingdvla.stubs;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
+import static com.github.tomakehurst.wiremock.client.WireMock.findAll;
 import static com.github.tomakehurst.wiremock.client.WireMock.get;
 import static com.github.tomakehurst.wiremock.client.WireMock.getRequestedFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.post;
+import static com.github.tomakehurst.wiremock.client.WireMock.postRequestedFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlPathEqualTo;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlPathMatching;
 import static com.github.tomakehurst.wiremock.client.WireMock.verify;
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static javax.json.Json.createObjectBuilder;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
@@ -17,11 +20,13 @@ import static org.awaitility.Awaitility.await;
 import static uk.gov.moj.stagingdvla.it.AbstractIntegrationTest.waitForStubToBeReady;
 import static uk.gov.moj.stagingdvla.util.QueueUtil.publicEvents;
 
+import java.util.Objects;
 import java.util.UUID;
 
 import javax.json.JsonObject;
 
 import com.github.tomakehurst.wiremock.matching.RequestPatternBuilder;
+import io.restassured.path.json.JsonPath;
 
 public class MaterialStub {
 
@@ -31,11 +36,11 @@ public class MaterialStub {
     // MaterialAddedProcessor only reacts when metadata.originator == "d20" (MaterialService.
     // ORIGINATOR_VALUE) - the value the real material context echoes back, inherited from the
     // stagingdvla.command.record-nows-material-request that originally asked it to create this material
-    private static final String ORIGINATOR = "d20";
+    public static final String ORIGINATOR = "d20";
     // MaterialService.AUDIT_REPORT_ORIGINATOR_VALUE - the originator value for the driver-search
     // audit-report flow's own material creation, gating MaterialAddedProcessor.
     // handleDriverAuditReportUploadedEvent
-    private static final String AUDIT_REPORT_ORIGINATOR = "auditReport";
+    public static final String AUDIT_REPORT_ORIGINATOR = "auditReport";
 
     public static void stubMaterialUploadFile() {
 
@@ -102,5 +107,21 @@ public class MaterialStub {
                 .build();
 
         publicEvents.publish(MATERIAL_ADDED_EVENT, metadata, payload);
+    }
+
+    // Waits for the material.command.upload-file POST that NowsMaterialStatusEventProcessor or
+    // DriverSearchAuditReportEventProcessor sends (via MaterialService.uploadMaterialFromUri) for this
+    // materialId, and returns its body so the test can assert on the file reference it carries and on
+    // the _metadata MaterialService embeds in it (e.g. _metadata.originator). Matched by materialId
+    // rather than "any request", because the WireMock journal is shared by every test and never
+    // reset - and unlike verifyMaterialCreated() this only looks at POSTs, so the stub-readiness GET
+    // can't satisfy it.
+    public static JsonPath awaitMaterialUploadRequest(final String materialId) {
+        return await().atMost(30, SECONDS).pollInterval(500, MILLISECONDS).until(() ->
+                findAll(postRequestedFor(urlPathEqualTo(UPLOAD_MATERIAL_COMMAND))).stream()
+                        .map(request -> new JsonPath(request.getBodyAsString()))
+                        .filter(body -> materialId.equals(body.getString("materialId")))
+                        .findFirst()
+                        .orElse(null), Objects::nonNull);
     }
 }

@@ -25,6 +25,8 @@ import static uk.gov.moj.stagingdvla.stubs.DocumentGeneratorStub.publishDocument
 import static uk.gov.moj.stagingdvla.stubs.DocumentGeneratorStub.stubDocumentCreate;
 import static uk.gov.moj.stagingdvla.stubs.DocumentGeneratorStub.stubGenerateDocument;
 import static uk.gov.moj.stagingdvla.stubs.DocumentGeneratorStub.verifyGenerateDocumentStubCommandInvoked;
+import static uk.gov.moj.stagingdvla.stubs.MaterialStub.ORIGINATOR;
+import static uk.gov.moj.stagingdvla.stubs.MaterialStub.awaitMaterialUploadRequest;
 import static uk.gov.moj.stagingdvla.stubs.MaterialStub.publishMaterialAddedEvent;
 import static uk.gov.moj.stagingdvla.stubs.MaterialStub.verifyMaterialCreated;
 import static uk.gov.moj.stagingdvla.stubs.ProgressionStub.stubProgressionAddCourtDocument;
@@ -233,6 +235,17 @@ public class DvlaNotificationIT extends AbstractIntegrationTest {
         //Then: SystemDocGeneratorEventProcessor.handleDvlaDocumentAvailable delivers the generated
         // document onward as a court document for this (non-SJP) case
         verifyProgressionAddCourtDocumentInvoked();
+
+        //Then: NowsMaterialStatusEventProcessor asks the material context to store the rendered
+        // document via material.command.upload-file - on the Azure blob path it references the
+        // document by fileUri (the destination blob), never by fileServiceId, since the command's
+        // payload is an exclusive oneOf over the two
+        final JsonPath materialUploadRequest = awaitMaterialUploadRequest(materialId);
+        assertThat(materialUploadRequest.getString("fileUri"), equalTo(destinationFileUri));
+        assertThat(materialUploadRequest.getString("fileServiceId"), is(nullValue()));
+        // the originator travels in _metadata and is echoed back by the material context on
+        // material.material-added - MaterialAddedProcessor only reacts to "d20" for this flow
+        assertThat(materialUploadRequest.getString("_metadata.originator"), equalTo(ORIGINATOR));
 
         // the real material context isn't deployed here either, so simulate its own eventual,
         // asynchronous confirmation that the material was stored (material.material-added) -

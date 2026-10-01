@@ -21,6 +21,7 @@ import uk.gov.justice.services.messaging.JsonEnvelope;
 import uk.gov.moj.cpp.stagingdvla.aggregate.AuditReportAggregate;
 
 import java.time.ZonedDateTime;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Stream;
 
@@ -68,8 +69,12 @@ public class DriverSearchAuditReportHandler {
         final DriverRecordSearchAuditReportCreated auditReportCreated = envelope.payload();
         final EventStream eventStream = eventSource.getStreamById(auditReportCreated.getId());
         final AuditReportAggregate auditReportAggregate = aggregateService.get(eventStream, AuditReportAggregate.class);
-
-        final Stream<Object> events = auditReportAggregate.auditReportCreated(auditReportCreated);
+        final Stream<Object> events;
+        if(Objects.isNull(auditReportCreated.getPayloadFileUri())) {
+            events = auditReportAggregate.auditReportCreated(auditReportCreated);
+        } else {
+            events = auditReportAggregate.auditReportCreatedForBlobUri(auditReportCreated);
+        }
         eventStream.append(events.map(toEnvelopeWithMetadataFrom(envelope)));
     }
 

@@ -65,6 +65,19 @@ public class AuditReportAggregate implements Aggregate {
         return apply(streamBuilder.build());
     }
 
+    public Stream<Object> auditReportCreatedForBlobUri(final DriverRecordSearchAuditReportCreated auditReportCreated) {
+        final Stream.Builder<Object> streamBuilder = Stream.builder();
+
+        streamBuilder.add(DriverSearchAuditReportCreated.driverSearchAuditReportCreated()
+                .withId(auditReportCreated.getId())
+                .withMaterialId(auditReportCreated.getId())
+                .withPayloadFileUri(auditReportCreated.getPayloadFileUri())
+                .withDestinationFileUri(auditReportCreated.getDestinationFileUri())
+                .build());
+
+        return apply(streamBuilder.build());
+    }
+
     public Stream<Object> auditReportStored(final DriverRecordSearchAuditReportStored auditReportStored) {
         final Stream.Builder<Object> streamBuilder = Stream.builder();
 

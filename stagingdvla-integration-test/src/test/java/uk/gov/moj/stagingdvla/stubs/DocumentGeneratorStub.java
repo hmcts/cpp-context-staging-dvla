@@ -176,6 +176,34 @@ public class DocumentGeneratorStub {
         publicEvents.publish(DOCUMENT_AVAILABLE_EVENT, metadata, payload);
     }
 
+    // Same as above but for originatingSource/templateIdentifier/conversionFormat combinations other than
+    // the DVLA driver-notification document order - e.g. "DvlaAuditRecords"/"DvlaAuditRecords"/"csv" for
+    // the driver-search-audit-report flow's Azure blob path, where systemdocgenerator echoes back the
+    // payloadFileUri/destinationFileUri it was asked to generate against and no file-service ids.
+    public static void publishDocumentAvailableEventForAzureBlob(final String payloadFileUri, final String destinationFileUri,
+                                                                   final String sourceCorrelationId, final String originatingSource,
+                                                                   final String templateIdentifier, final String conversionFormat) {
+        final JsonObject metadata = createObjectBuilder()
+                .add("id", UUID.randomUUID().toString())
+                .add("name", DOCUMENT_AVAILABLE_EVENT)
+                .build();
+
+        final String now = DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(ZonedDateTime.now());
+        final JsonObject payload = createObjectBuilder()
+                .add("originatingSource", originatingSource)
+                .add("payloadFileUri", payloadFileUri)
+                .add("destinationFileUri", destinationFileUri)
+                .add("sourceCorrelationId", sourceCorrelationId)
+                .add("templateIdentifier", templateIdentifier)
+                .add("conversionFormat", conversionFormat)
+                .add("requestedTime", now)
+                .add("generatedTime", now)
+                .add("generateVersion", 1)
+                .build();
+
+        publicEvents.publish(DOCUMENT_AVAILABLE_EVENT, metadata, payload);
+    }
+
     // The real systemdocgenerator service isn't deployed here (only its command-api is stubbed
     // above), so it never raises generation-failed itself - this publishes it in its place, for the
     // file-service path (payloadFileServiceId, matching what shouldSendDvlaNotification's
