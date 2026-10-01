@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://justice.gov.uk/cpp/stagingdvla/event/document-deleted-from-blob.json",
+  "description": "The DVLA document payload and rendered document have been deleted from blob storage for a material",
+  "type": "object",
+  "properties": {
+    "materialId": {
+      "description": "The identifier of the material the deleted blobs relate to",
+      "$ref": "http://justice.gov.uk/domain/core/common/definitions.json#/definitions/uuid"
+    },
+    "payloadBlobUri": {
+      "description": "The blob storage URI of the deleted payload",
+      "type": "string"
+    },
+    "documentBlobUri": {
+      "description": "The blob storage URI of the deleted document",
+      "type": "string"
+    }
+  },
+  "required": [
+    "materialId",
+    "payloadBlobUri",
+    "documentBlobUri"
+  ],
+  "additionalProperties": false
+}

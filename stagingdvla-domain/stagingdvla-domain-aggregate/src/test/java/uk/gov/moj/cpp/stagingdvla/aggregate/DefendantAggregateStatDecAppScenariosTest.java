@@ -411,4 +411,10 @@ class DefendantAggregateStatDecAppScenariosTest {
     void shouldCreateDVLANotificationForStatDecApplication(final String name, final Scenario scenario) {
         assertDoesNotThrow(() -> scenario.run(name, new DefendantAggregate()));
     }
+
+    @ParameterizedTest(name = "{index} => {0}")
+    @MethodSource("testScenarios")
+    void shouldCreateDVLANotificationForStatDecApplicationWhenBlobStore(final String name, final Scenario scenario) {
+        assertDoesNotThrow(() -> scenario.withBlobStore().run(name, new DefendantAggregate()));
+    }
 }

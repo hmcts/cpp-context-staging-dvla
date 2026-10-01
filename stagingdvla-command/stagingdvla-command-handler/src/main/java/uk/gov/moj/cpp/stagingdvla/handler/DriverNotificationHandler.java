@@ -16,6 +16,7 @@ import uk.gov.justice.cpp.stagingdvla.event.Results;
 import uk.gov.justice.services.core.aggregate.AggregateService;
 import uk.gov.justice.services.core.annotation.Handles;
 import uk.gov.justice.services.core.annotation.ServiceComponent;
+import uk.gov.justice.services.core.featurecontrol.FeatureControlGuard;
 import uk.gov.justice.services.eventsourcing.source.core.EventSource;
 import uk.gov.justice.services.eventsourcing.source.core.EventStream;
 import uk.gov.justice.services.eventsourcing.source.core.exception.EventStreamException;
@@ -43,11 +44,15 @@ public class DriverNotificationHandler {
     @Inject
     private AggregateService aggregateService;
 
+    @Inject
+    private FeatureControlGuard featureControlGuard;
+
     @Handles(STAGINGDVLA_COMMAND_HANDLER_DRIVER_NOTIFICATION)
     public void handleDriverNotification(final Envelope<DriverNotification> envelope) throws EventStreamException {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("received request {} {}", STAGINGDVLA_COMMAND_HANDLER_DRIVER_NOTIFICATION, envelope.metadata().asJsonObject());
         }
+        final boolean isBlobStore = featureControlGuard.isFeatureEnabled("dvlaFileStore");
 
         final DriverNotification driverNotification = envelope.payload();
 
@@ -66,7 +71,8 @@ public class DriverNotificationHandler {
                         driverNotification.getOrderingHearingId(),
                         getCourtApplications(driverNotification.getNowContent().getCourtApplications()),
                         driverNotification.getMasterDefendantId(),
-                        driverNotification.getIsReshare());
+                        driverNotification.getIsReshare(),
+                        isBlobStore);
 
         if (nonNull(events)) {
             appendEventsToStream(envelope, eventStream, events);

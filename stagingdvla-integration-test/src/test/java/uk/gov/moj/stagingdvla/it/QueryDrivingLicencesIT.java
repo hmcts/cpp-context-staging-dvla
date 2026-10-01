@@ -1,6 +1,7 @@
 package uk.gov.moj.stagingdvla.it;
 
 import static com.google.common.collect.ImmutableMap.of;
+import static com.jayway.jsonpath.matchers.JsonPathMatchers.isJson;
 import static com.jayway.jsonpath.matchers.JsonPathMatchers.withJsonPath;
 import static java.lang.String.format;
 import static java.util.UUID.randomUUID;
@@ -23,6 +24,8 @@ import static uk.gov.moj.stagingdvla.stubs.DocumentGeneratorStub.verifyGenerateD
 import static uk.gov.moj.stagingdvla.stubs.MaterialStub.publishMaterialAddedEventForAuditReport;
 import static uk.gov.moj.stagingdvla.stubs.MaterialStub.verifyMaterialCreated;
 import static uk.gov.moj.stagingdvla.util.FileUtil.getPayload;
+import static uk.gov.moj.stagingdvla.util.QueueUtil.privateEvents;
+import static uk.gov.moj.stagingdvla.util.QueueUtil.retrieveMessage;
 import static uk.gov.moj.stagingdvla.util.RestHelper.pollForResponse;
 import static uk.gov.moj.stagingdvla.util.RestHelper.pollForResponseWithBadRequest;
 import static uk.gov.moj.stagingdvla.util.RestHelper.postCommandWithUserId;
@@ -36,6 +39,8 @@ import uk.gov.justice.services.test.utils.persistence.DatabaseCleaner;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.UUID;
+
+import javax.jms.MessageConsumer;
 
 import com.google.common.collect.ImmutableMap;
 import io.restassured.path.json.JsonPath;
@@ -52,6 +57,8 @@ public class QueryDrivingLicencesIT extends AbstractIntegrationTest {
     private static final String CONTEXT_NAME = "stagingdvla";
     private static final String TABLE = "driver_audit";
     private static final DatabaseCleaner DATABASE_CLEANER = new DatabaseCleaner();
+
+    private final MessageConsumer consumerForDocumentDeletedFromBlob = privateEvents.createPrivateConsumer("stagingdvla.event.document-deleted-from-blob");
 
     @BeforeAll
     public static void init() {
@@ -138,9 +145,9 @@ public class QueryDrivingLicencesIT extends AbstractIntegrationTest {
 
     @Test
     void shouldGenerateDriverSearchAuditReport() throws IOException {
-        // feature toggle must be on: dvlaFileStore=true routes report generation through the real
+        // feature toggle must be off: dvlaFileStore=false routes report generation through the real
         // file-service store path (see DriverSearchAuditReportEventProcessor.processDriverSearchAuditReportRequested)
-        final ImmutableMap<String, Boolean> features = of("dvlaFileStore", true);
+        final ImmutableMap<String, Boolean> features = of("dvlaFileStore", false);
         stubFeaturesFor(CONTEXT_NAME, features);
 
         final String reference = "AUDITREPORT" + UUID.randomUUID();
@@ -183,11 +190,12 @@ public class QueryDrivingLicencesIT extends AbstractIntegrationTest {
 
     @Test
     void shouldGenerateDriverSearchAuditReportWithAzureBlob() throws IOException {
-        // feature toggle off: dvlaFileStore=false routes report generation through the Azure blob
-        // fallback path instead of the real file-service store (see
+        // feature toggle on: dvlaFileStore=true routes report generation through the Azure blob
+        // path instead of the real file-service store (see
         // DriverSearchAuditReportEventProcessor.processDriverSearchAuditReportRequested and
         // DocumentGeneratorService.uploadDocumentToAzureBlob)
-        final ImmutableMap<String, Boolean> features = of("dvlaFileStore", false);
+        // dvlaFileStoreDelete=true -> DocumentDeletedFromBlobEventProcessor deletes both blobs once delivery completes
+        final ImmutableMap<String, Boolean> features = of("dvlaFileStore", true, "dvlaFileStoreDelete", true);
         stubFeaturesFor(CONTEXT_NAME, features);
 
         final String reference = "AUDITREPORT" ;
@@ -255,5 +263,13 @@ public class QueryDrivingLicencesIT extends AbstractIntegrationTest {
                         withJsonPath("$.documentDeliveries[0].payloadBlobUri", equalTo(payloadFileUri)),
                         withJsonPath("$.documentDeliveries[0].documentBlobUri", equalTo(destinationFileUri))
                 ));
+
+        //Then: material SUCCESS completes the (non-SJP) audit-report delivery, so MaterialAggregate raises
+        // document-deleted-from-blob for the report's payload and rendered document blobs
+        final JsonPath documentDeletedFromBlob = retrieveMessage(consumerForDocumentDeletedFromBlob,
+                isJson(withJsonPath("$.materialId", equalTo(materialId.toString()))));
+        assertThat(documentDeletedFromBlob, is(notNullValue()));
+        assertThat(documentDeletedFromBlob.getString("payloadBlobUri"), equalTo(payloadFileUri));
+        assertThat(documentDeletedFromBlob.getString("documentBlobUri"), equalTo(destinationFileUri));
     }
 }

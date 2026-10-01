@@ -122,7 +122,7 @@ public class DriverNotifiedEngine {
             final List<CourtApplications> courtApplications,
             final Map<String, Map<UUID,DriverNotified>> previousDriverNotifiedByCaseAndHearing,
             final List<SjpCaseToCcReferred> sjpCaseToCcReferredApplications,
-            final boolean isReshare) {
+            final boolean isReshare, final boolean isBlobStore) {
 
         final List<DriverNotified> driverNotifiedList = currentCases
                 .stream()
@@ -136,7 +136,8 @@ public class DriverNotifiedEngine {
                         courtApplications,
                         previousDriverNotifiedByCaseAndHearing.get(currentCase.getReference()),
                         getSjpCaseToCcReferredApplicationsByCase(sjpCaseToCcReferredApplications, currentCase),
-                        isReshare
+                        isReshare,
+                        isBlobStore
                 ))
                 .filter(Objects::nonNull)
                 .collect(toList());
@@ -164,13 +165,13 @@ public class DriverNotifiedEngine {
                                               final List<CourtApplications> courtApplications,
                                               final Map<UUID,DriverNotified> previousDriverNotifiedByHearing,
                                               final List<ApplicationTypes> sjpCaseToCcReferredApplications,
-                                              final boolean isReshare) {
+                                              final boolean isReshare, final boolean isBlobStore) {
 
         LOGGER.info("Processing case: {}", currentCase.getReference());
         final CourtApplicationsContext courtApplicationsContext = new CourtApplicationsContext(courtApplications, sjpCaseToCcReferredApplications);
 
         if (isStatDecApplicationAmendedToReject(courtApplications, isReshare, hearingId, previousDriverNotifiedByHearing)) {
-            return getLatestDriverNotifiedFromPreviousHearing(previousDriverNotified,orderDate,hearingId, currentCase,courtApplications, previousDriverNotifiedByHearing);
+            return getLatestDriverNotifiedFromPreviousHearing(previousDriverNotified,orderDate,hearingId, currentCase,courtApplications, previousDriverNotifiedByHearing, isBlobStore);
         }
 
         // Get previous case using reference number
@@ -208,11 +209,13 @@ public class DriverNotifiedEngine {
             final List<Cases> cases = getUpdatedCases(currentCase);
             final List<String> nonEndorsableOffenceCodes = removeNonEndorsableOffences(previousCase, currentCase, courtApplicationsContext);
             final String orderingCourtCode = getCourtCode(orderingCourt);
+            final UUID materialId = randomUUID();
+            final UUID identifier = isBlobStore ? materialId : randomUUID();
 
             final DriverNotified.Builder builder = DriverNotified.driverNotified()
                     .withOrderDate(orderDate)
                     .withAmendmentDate(amendmentDate)
-                    .withMaterialId(UUID.randomUUID())
+                    .withMaterialId(materialId)
                     .withOrderingHearingId(hearingId)
                     .withOrderingCourt(orderingCourt)
                     .withOrderingCourtCode(orderingCourtCode)
@@ -237,7 +240,7 @@ public class DriverNotifiedEngine {
             builder.withDistinctPrompts(new ArrayList<>(distinctPrompts.values()));
             builder.withLicenceProducedInCourt(getLicenceProducedInCourt(cases, previousDriverNotified));
             builder.withCases(cases);
-            builder.withIdentifier(randomUUID());
+            builder.withIdentifier(identifier);
 
             return builder.build();
         }
@@ -249,19 +252,22 @@ public class DriverNotifiedEngine {
                                                                              final UUID hearingId,
                                                                              final Cases currentCase,
                                                                              final List<CourtApplications> courtApplications,
-                                                                             final Map<UUID, DriverNotified> previousDriverNotifiedByHearing) {
+                                                                             final Map<UUID, DriverNotified> previousDriverNotifiedByHearing,
+                                                                             final boolean isBlobStore) {
         final DriverNotified latestDriverNotifiedPriorToCurrentHearing = previousDriverNotifiedByHearing.values().stream()
                 .filter(event -> !event.getOrderingHearingId().equals(hearingId))
                 .max(Comparator.comparing(DriverNotified::getOrderDate))
                 .orElse(null);
         if (isNull(latestDriverNotifiedPriorToCurrentHearing)) {
             if (nonNull(previousDriverNotified)) {
+                final UUID materialId = randomUUID();
+                final UUID identifier = isBlobStore ? materialId : randomUUID();
                 return DriverNotified.driverNotified()
                         .withValuesFrom(previousDriverNotified)
                         .withNotificationType(NotificationType.REMOVE)
                         .withNotificationWasPreviouslySent(true)
-                        .withMaterialId(randomUUID())
-                        .withIdentifier(randomUUID())
+                        .withMaterialId(materialId)
+                        .withIdentifier(identifier)
                         .withPrevious(getPrevious(previousDriverNotified))
                         .withCases(previousDriverNotified.getCases().stream()
                                 .map(c -> Cases.cases().withValuesFrom(c).withDefendantCaseOffences(emptyList()).build())
@@ -275,6 +281,8 @@ public class DriverNotifiedEngine {
         } else if (NotificationType.REMOVE.equals(latestDriverNotifiedPriorToCurrentHearing.getNotificationType()) && NotificationType.REMOVE.equals(previousDriverNotified.getNotificationType())) {
             return null;
         }
+        final UUID materialId = randomUUID();
+        final UUID identifier = isBlobStore ? materialId : randomUUID();
         return DriverNotified.driverNotified()
                 .withValuesFrom(latestDriverNotifiedPriorToCurrentHearing)
                 .withOrderingHearingId(hearingId)
@@ -284,8 +292,8 @@ public class DriverNotifiedEngine {
                 .withCourtApplications(courtApplications)
                 .withOrderDate(orderDate)
                 .withIsResetToPreviousEvent(true)
-                .withMaterialId(UUID.randomUUID())
-                .withIdentifier(randomUUID())
+                .withMaterialId(materialId)
+                .withIdentifier(identifier)
                 .withPrevious(getPrevious(previousDriverNotified))
                 .build();
     }

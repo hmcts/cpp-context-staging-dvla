@@ -1,5 +1,6 @@
 package uk.gov.moj.cpp.stagingdvla.aggregate;
 
+import static java.util.UUID.randomUUID;
 import static uk.gov.justice.domain.aggregate.matcher.EventSwitcher.match;
 import static uk.gov.justice.domain.aggregate.matcher.EventSwitcher.otherwiseDoNothing;
 import static uk.gov.justice.domain.aggregate.matcher.EventSwitcher.when;
@@ -58,7 +59,7 @@ public class AuditReportAggregate implements Aggregate {
         streamBuilder.add(DriverSearchAuditReportCreated.driverSearchAuditReportCreated()
                 .withId(auditReportCreated.getId())
                 .withReportFileId(auditReportCreated.getReportFileId())
-                .withMaterialId(auditReportCreated.getId())
+                .withMaterialId(randomUUID())
                 .build());
 
         return apply(streamBuilder.build());

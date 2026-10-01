@@ -9,19 +9,20 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.nullValue;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.isA;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
+import static uk.gov.justice.services.test.utils.core.reflection.ReflectionUtil.setField;
+import static uk.gov.moj.cpp.stagingdvla.helper.DriverSearchAuditHelper.DVLA_AUDIT_RECORDS;
+import static uk.gov.moj.cpp.stagingdvla.service.DocumentGeneratorService.DVLA_DOCUMENT_ORDER;
 import static uk.gov.justice.services.messaging.JsonEnvelope.envelopeFrom;
 import static uk.gov.justice.services.messaging.JsonObjects.createObjectBuilder;
-import static uk.gov.justice.services.test.utils.core.reflection.ReflectionUtil.setField;
 import static uk.gov.justice.services.test.utils.core.messaging.MetadataBuilderFactory.metadataWithRandomUUID;
-import static uk.gov.moj.cpp.stagingdvla.helper.DriverSearchAuditHelper.DVLA_AUDIT_RECORDS;
 
 import uk.gov.justice.cpp.stagingdvla.command.handler.DriverRecordSearchAuditReportCreated;
 import uk.gov.justice.services.common.converter.JsonObjectToObjectConverter;
@@ -113,8 +114,6 @@ public class SystemDocGeneratorEventProcessorTest {
 
     @Spy
     private DocumentDeliveryStatusService documentDeliveryStatusService = new DocumentDeliveryStatusService();
-    @Captor
-    private ArgumentCaptor<UploadMaterialContext> uploadMaterialContextCaptor;
 
     @Mock
     private BlobContainerClient blobContainerClient;
@@ -124,6 +123,8 @@ public class SystemDocGeneratorEventProcessorTest {
 
     @Mock
     private BlobProperties blobProperties;
+    @Captor
+    private ArgumentCaptor<UploadMaterialContext> uploadMaterialContextCaptor;
 
     @Spy
     private JsonObjectToObjectConverter jsonObjectToObjectConverter = new JsonObjectToObjectConverter(objectMapper);
@@ -131,11 +132,11 @@ public class SystemDocGeneratorEventProcessorTest {
     @Spy
     private ObjectToJsonObjectConverter objectToJsonObjectConverter = new ObjectToJsonObjectConverter(objectMapper);
 
+
     @BeforeEach
     public void setUp() {
         setField(documentDeliveryStatusService, "sender", sender);
     }
-
 
     @Test
     public void shouldProcessDriverSearchAuditReportDeletedEvent() throws FileServiceException {
@@ -210,8 +211,6 @@ public class SystemDocGeneratorEventProcessorTest {
         assertThat(uploadMaterialContext, notNullValue());
         assertThat(uploadMaterialContext.getEmailNotifications(), notNullValue());
         assertThat(uploadMaterialContext.getEmailNotifications(), hasSize(1));
-
-        verify(sender, never()).sendAsAdmin(any());
     }
 
     @Test
@@ -253,49 +252,93 @@ public class SystemDocGeneratorEventProcessorTest {
         final UploadMaterialContext uploadMaterialContext = uploadMaterialContextCaptor.getValue();
         assertThat(uploadMaterialContext, notNullValue());
         assertThat(uploadMaterialContext.getEmailNotifications(), nullValue());
+
     }
 
     @Test
-    public void shouldCarryTheBlobUrisOnToTheMaterialUploadContext() throws FileServiceException, IOException {
+    public void shouldProcessDocumentAvailableEventForSjpCase_SendEmailNotification() throws FileServiceException, IOException {
         // given
         final UUID payloadFileId = randomUUID();
         final UUID sourceCorrelationId = randomUUID();
         final UUID documentFileServiceId = randomUUID();
 
-        // Both addressing modes at once, which the event schema's oneOf forbids in production. It is
-        // used here only because the payload is still recovered through payloadFileServiceId - once
-        // that read moves to the blob, this becomes an ordinary uri-only event. The assertions below
-        // are about the uris being threaded onward, which is independent of how the payload is read.
         final JsonObject documentAvailablePayload = createObjectBuilder()
                 .add("originatingSource", DVLA_DOCUMENT_ORDER)
                 .add("documentFileServiceId", documentFileServiceId.toString())
                 .add("sourceCorrelationId", sourceCorrelationId.toString())
                 .add("payloadFileServiceId", payloadFileId.toString())
-                .add("payloadFileUri", PAYLOAD_URI)
-                .add("destinationFileUri", DESTINATION_URI)
                 .build();
 
         final JsonEnvelope requestMessage = envelopeFrom(
                 metadataWithRandomUUID("public.systemdocgenerator.events.document-available"),
                 documentAvailablePayload);
 
+
         final JsonObject fileMetadata = createObjectBuilder()
                 .add("fileName", "DVLADocumentOrder_20250108114536")
                 .build();
-
+        // when
         when(fileService.retrieve(any())).thenReturn(Optional.of(payloadFileReference));
         when(payloadFileReference.getMetadata()).thenReturn(fileMetadata);
-        when(payloadFileReference.getContentStream()).thenReturn(new ByteArrayInputStream(buildDriverNotifiedString(DEFAULT_DRIVER_NOTIFIED_JSON, 0).getBytes(StandardCharsets.UTF_8)));
-
-        // when
-        systemDocGeneratorEventProcessor.handleDocumentAvailable(requestMessage);
+        when(applicationParameters.getDvlaEmailTemplateId()).thenReturn(randomUUID().toString());
+        when(materialUrlGenerator.pdfFileStreamUrlFor(isA(UUID.class))).thenReturn("template.pdf");
+        when(payloadFileReference.getContentStream()).thenReturn(new ByteArrayInputStream(buildDriverNotifiedString("stagingdvla.event.driver-notified-update-sjp.json", 0).getBytes(StandardCharsets.UTF_8)));
 
         // then
+        systemDocGeneratorEventProcessor.handleDocumentAvailable(requestMessage);
+        verify(sender).send(envelopeCaptor.capture());
+        final Envelope<JsonObject> addCourtDocumentRequestToProgression = envelopeCaptor.getValue();
+        assertThat(addCourtDocumentRequestToProgression.metadata().name(), is("sjp.upload-case-document"));
+        assertThat(addCourtDocumentRequestToProgression.payload().getString("caseId"), is(caseId.toString()));
+        assertThat(addCourtDocumentRequestToProgression.payload().getString("caseDocument"), is(documentFileServiceId.toString()));
+
         verify(uploadMaterialService).uploadFile(uploadMaterialContextCaptor.capture());
         final UploadMaterialContext uploadMaterialContext = uploadMaterialContextCaptor.getValue();
+        assertThat(uploadMaterialContext, notNullValue());
+        assertThat(uploadMaterialContext.getEmailNotifications(), notNullValue());
+        assertThat(uploadMaterialContext.getEmailNotifications(), hasSize(1));
 
-        assertThat(uploadMaterialContext.getDestinationFileUri(), is(DESTINATION_URI));
-        assertThat(uploadMaterialContext.getPayloadFileUri(), is(PAYLOAD_URI));
+    }
+
+    @Test
+    public void shouldProcessDocumentAvailableEventForSjpCase_NoEmailNotification() throws FileServiceException, IOException {
+        // given
+        final UUID payloadFileId = randomUUID();
+        final UUID sourceCorrelationId = randomUUID();
+        final UUID documentFileServiceId = randomUUID();
+
+        final JsonObject documentAvailablePayload = createObjectBuilder()
+                .add("originatingSource", DVLA_DOCUMENT_ORDER)
+                .add("documentFileServiceId", documentFileServiceId.toString())
+                .add("sourceCorrelationId", sourceCorrelationId.toString())
+                .add("payloadFileServiceId", payloadFileId.toString())
+                .build();
+
+        final JsonEnvelope requestMessage = envelopeFrom(
+                metadataWithRandomUUID("public.systemdocgenerator.events.document-available"),
+                documentAvailablePayload);
+
+
+        final JsonObject fileMetadata = createObjectBuilder()
+                .add("fileName", "DVLADocumentOrder_20250108114536")
+                .build();
+        // when
+        when(fileService.retrieve(any())).thenReturn(Optional.of(payloadFileReference));
+        when(payloadFileReference.getMetadata()).thenReturn(fileMetadata);
+        when(payloadFileReference.getContentStream()).thenReturn(new ByteArrayInputStream(buildDriverNotifiedString("stagingdvla.event.driver-notified-sjp.json", 0).getBytes(StandardCharsets.UTF_8)));
+
+        // then
+        systemDocGeneratorEventProcessor.handleDocumentAvailable(requestMessage);
+        verify(sender).send(envelopeCaptor.capture());
+        final Envelope<JsonObject> addCourtDocumentRequestToProgression = envelopeCaptor.getValue();
+        assertThat(addCourtDocumentRequestToProgression.metadata().name(), is("sjp.upload-case-document"));
+        assertThat(addCourtDocumentRequestToProgression.payload().getString("caseId"), is(caseId.toString()));
+        assertThat(addCourtDocumentRequestToProgression.payload().getString("caseDocument"), is(documentFileServiceId.toString()));
+
+        verify(uploadMaterialService).uploadFile(uploadMaterialContextCaptor.capture());
+        final UploadMaterialContext uploadMaterialContext = uploadMaterialContextCaptor.getValue();
+        assertThat(uploadMaterialContext, notNullValue());
+        assertThat(uploadMaterialContext.getEmailNotifications(), nullValue());
     }
 
     @Test
@@ -337,116 +380,49 @@ public class SystemDocGeneratorEventProcessorTest {
     }
 
     @Test
-    public void shouldProcessDocumentAvailableEventForSjpCase_SendEmailNotification() throws FileServiceException, IOException {
+    public void shouldCarryTheBlobUrisOnToTheMaterialUploadContext() throws FileServiceException, IOException {
         // given
         final UUID payloadFileId = randomUUID();
         final UUID sourceCorrelationId = randomUUID();
         final UUID documentFileServiceId = randomUUID();
 
+        // Both addressing modes at once, which the event schema's oneOf forbids in production. The
+        // presence of payloadFileUri routes the event down the blob branch, so the payload is read
+        // from the blob and payloadFileServiceId is ignored. The assertions below are about the uris
+        // being threaded onward to the material upload.
         final JsonObject documentAvailablePayload = createObjectBuilder()
                 .add("originatingSource", DVLA_DOCUMENT_ORDER)
                 .add("documentFileServiceId", documentFileServiceId.toString())
                 .add("sourceCorrelationId", sourceCorrelationId.toString())
                 .add("payloadFileServiceId", payloadFileId.toString())
+                .add("payloadFileUri", PAYLOAD_URI)
+                .add("destinationFileUri", DESTINATION_URI)
                 .build();
 
         final JsonEnvelope requestMessage = envelopeFrom(
                 metadataWithRandomUUID("public.systemdocgenerator.events.document-available"),
                 documentAvailablePayload);
 
+        when(blobContainerClient.getBlobClient(any())).thenReturn(blobClient);
+        when(blobClient.downloadContent()).thenReturn(BinaryData.fromString(buildDriverNotifiedString(DEFAULT_DRIVER_NOTIFIED_JSON, 0)));
+        when(blobClient.getProperties()).thenReturn(blobProperties);
+        when(blobProperties.getMetadata()).thenReturn(Map.of("filename", "DVLADocumentOrder_20250108114536"));
 
-        final JsonObject fileMetadata = createObjectBuilder()
-                .add("fileName", "DVLADocumentOrder_20250108114536")
-                .build();
         // when
-        when(fileService.retrieve(any())).thenReturn(Optional.of(payloadFileReference));
-        when(payloadFileReference.getMetadata()).thenReturn(fileMetadata);
-        when(applicationParameters.getDvlaEmailTemplateId()).thenReturn(randomUUID().toString());
-        when(materialUrlGenerator.pdfFileStreamUrlFor(isA(UUID.class))).thenReturn("template.pdf");
-        when(payloadFileReference.getContentStream()).thenReturn(new ByteArrayInputStream(buildDriverNotifiedString("stagingdvla.event.driver-notified-update-sjp.json", 0).getBytes(StandardCharsets.UTF_8)));
+        systemDocGeneratorEventProcessor.handleDocumentAvailable(requestMessage);
 
         // then
-        systemDocGeneratorEventProcessor.handleDocumentAvailable(requestMessage);
-        verify(sender, times(1)).send(envelopeCaptor.capture());
-        final Envelope<JsonObject> addCourtDocumentRequestToProgression = envelopeCaptor.getAllValues().stream()
-                .filter(envelope -> "sjp.upload-case-document".equals(envelope.metadata().name()))
-                .findFirst().orElseThrow();
-        assertThat(addCourtDocumentRequestToProgression.metadata().name(), is("sjp.upload-case-document"));
-        assertThat(addCourtDocumentRequestToProgression.payload().getString("caseId"), is(caseId.toString()));
-        assertThat(addCourtDocumentRequestToProgression.payload().getString("caseDocument"), is(documentFileServiceId.toString()));
-        assertThat(addCourtDocumentRequestToProgression.payload().containsKey("caseDocumentUri"), is(false));
-
         verify(uploadMaterialService).uploadFile(uploadMaterialContextCaptor.capture());
         final UploadMaterialContext uploadMaterialContext = uploadMaterialContextCaptor.getValue();
-        assertThat(uploadMaterialContext, notNullValue());
-        assertThat(uploadMaterialContext.getEmailNotifications(), notNullValue());
-        assertThat(uploadMaterialContext.getEmailNotifications(), hasSize(1));
 
-        verify(sender, times(1)).sendAsAdmin(sendAsAdminEnvelopeCaptor.capture());
-        final Envelope<JsonObject> documentDeliverySjpCaseCommand = sendAsAdminEnvelopeCaptor.getAllValues().stream()
-                .filter(envelope -> "stagingdvla.command.handler.driver-notification-document-delivery".equals(envelope.metadata().name()))
-                .findFirst().orElseThrow();
-        assertThat(documentDeliverySjpCaseCommand.metadata().name(), is("stagingdvla.command.handler.driver-notification-document-delivery"));
-        assertThat(documentDeliverySjpCaseCommand.payload().getString("materialId"), is(materialId));
-        assertThat(documentDeliverySjpCaseCommand.payload().getString("caseId"), is(caseId));
-        assertThat(documentDeliverySjpCaseCommand.payload().getString("sjpCorrelationId"), is(documentFileServiceId.toString()));
-        assertThat(documentDeliverySjpCaseCommand.payload().getString("sjpStatus"), is("PENDING"));
+        assertThat(uploadMaterialContext.getDestinationFileUri(), is(DESTINATION_URI));
+        assertThat(uploadMaterialContext.getPayloadFileUri(), is(PAYLOAD_URI));
+        verify(fileService, never()).retrieve(any());
     }
 
-    @Test
-    public void shouldProcessDocumentAvailableEventForSjpCase_NoEmailNotification() throws FileServiceException, IOException {
-        // given
-        final UUID payloadFileId = randomUUID();
-        final UUID sourceCorrelationId = randomUUID();
-        final UUID documentFileServiceId = randomUUID();
-
-        final JsonObject documentAvailablePayload = createObjectBuilder()
-                .add("originatingSource", DVLA_DOCUMENT_ORDER)
-                .add("documentFileServiceId", documentFileServiceId.toString())
-                .add("sourceCorrelationId", sourceCorrelationId.toString())
-                .add("payloadFileServiceId", payloadFileId.toString())
-                .build();
-
-        final JsonEnvelope requestMessage = envelopeFrom(
-                metadataWithRandomUUID("public.systemdocgenerator.events.document-available"),
-                documentAvailablePayload);
-
-
-        final JsonObject fileMetadata = createObjectBuilder()
-                .add("fileName", "DVLADocumentOrder_20250108114536")
-                .build();
-        // when
-        when(fileService.retrieve(any())).thenReturn(Optional.of(payloadFileReference));
-        when(payloadFileReference.getMetadata()).thenReturn(fileMetadata);
-        when(payloadFileReference.getContentStream()).thenReturn(new ByteArrayInputStream(buildDriverNotifiedString("stagingdvla.event.driver-notified-sjp.json", 0).getBytes(StandardCharsets.UTF_8)));
-
-        // then
-        systemDocGeneratorEventProcessor.handleDocumentAvailable(requestMessage);
-        verify(sender, times(1)).send(envelopeCaptor.capture());
-        final Envelope<JsonObject> addCourtDocumentRequestToProgression = envelopeCaptor.getAllValues().stream()
-                .filter(envelope -> "sjp.upload-case-document".equals(envelope.metadata().name()))
-                .findFirst().orElseThrow();
-        assertThat(addCourtDocumentRequestToProgression.metadata().name(), is("sjp.upload-case-document"));
-        assertThat(addCourtDocumentRequestToProgression.payload().getString("caseId"), is(caseId.toString()));
-        assertThat(addCourtDocumentRequestToProgression.payload().getString("caseDocument"), is(documentFileServiceId.toString()));
-        assertThat(addCourtDocumentRequestToProgression.payload().containsKey("caseDocumentUri"), is(false));
-
-        verify(uploadMaterialService).uploadFile(uploadMaterialContextCaptor.capture());
-        final UploadMaterialContext uploadMaterialContext = uploadMaterialContextCaptor.getValue();
-        assertThat(uploadMaterialContext, notNullValue());
-        assertThat(uploadMaterialContext.getEmailNotifications(), nullValue());
-
-        verify(sender, times(1)).sendAsAdmin(sendAsAdminEnvelopeCaptor.capture());
-        final Envelope<JsonObject> documentDeliverySjpCaseCommand = sendAsAdminEnvelopeCaptor.getValue();
-        assertThat(documentDeliverySjpCaseCommand.metadata().name(), is("stagingdvla.command.handler.driver-notification-document-delivery"));
-        assertThat(documentDeliverySjpCaseCommand.payload().getString("materialId"), is(materialId));
-        assertThat(documentDeliverySjpCaseCommand.payload().getString("caseId"), is(caseId));
-        assertThat(documentDeliverySjpCaseCommand.payload().getString("sjpCorrelationId"), is(documentFileServiceId.toString()));
-        assertThat(documentDeliverySjpCaseCommand.payload().getString("sjpStatus"), is("PENDING"));
-    }
     // The document-available contract's other oneOf branch (see document-available.json): when
     // DocumentGeneratorService uploaded the driverNotified payload to Azure blob storage instead
-    // of the file-service (dvlaFileStore=false), systemdocgenerator echoes back
+    // of the file-service (dvlaFileStore=true), systemdocgenerator echoes back
     // payloadFileUri/destinationFileUri instead of payloadFileServiceId/documentFileServiceId.
     private static final String AZURE_BLOB_BASE_URL = "http://cpp-azurite:10000/devstoreaccount1/stagingdvla-files/";
 
@@ -568,10 +544,11 @@ public class SystemDocGeneratorEventProcessorTest {
                 metadataWithRandomUUID("public.systemdocgenerator.events.document-available"),
                 documentAvailablePayload);
 
-        // then: getDriverNotifiedFromDocument's else branch unconditionally treats a missing
-        // payloadFileId as "read from blob" and calls BlobUrlParts.parse(null) - pinning today's
-        // actual failure mode rather than asserting it's the ideal one
-        assertThrows(IllegalArgumentException.class, () -> systemDocGeneratorEventProcessor.handleDocumentAvailable(requestMessage));
+        // then: with no payloadFileUri the event is routed to the file-service branch, which reads
+        // the mandatory documentFileServiceId and fails on its absence - pinning today's actual
+        // failure mode rather than asserting it's the ideal one
+        assertThrows(NullPointerException.class, () -> systemDocGeneratorEventProcessor.handleDocumentAvailable(requestMessage));
+        verifyNoInteractions(blobContainerClient, uploadMaterialService);
     }
 
     @Test

@@ -11,21 +11,21 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static uk.gov.moj.cpp.stagingdvla.service.DocumentGeneratorService.DVLA_DOCUMENT_ORDER;
+import static uk.gov.moj.cpp.stagingdvla.service.DocumentGeneratorService.DVLA_DOCUMENT_TEMPLATE_NAME;
 
-import uk.gov.justice.core.courts.EmailNotificationSent;
-import uk.gov.justice.core.courts.MaterialDetails;
-import uk.gov.justice.core.courts.Personalisation;
-import uk.gov.justice.core.courts.notification.EmailChannel;
 import uk.gov.justice.cpp.stagingdvla.event.DriverNotified;
 import uk.gov.justice.services.common.converter.JsonObjectToObjectConverter;
 import uk.gov.justice.services.common.converter.ObjectToJsonObjectConverter;
 import uk.gov.justice.services.common.converter.StringToJsonObjectConverter;
 import uk.gov.justice.services.common.converter.jackson.ObjectMapperProducer;
+import uk.gov.justice.services.core.featurecontrol.FeatureControlGuard;
 import uk.gov.justice.services.core.sender.Sender;
 import uk.gov.justice.services.messaging.Envelope;
 import uk.gov.justice.services.messaging.JsonEnvelope;
@@ -36,13 +36,12 @@ import uk.gov.moj.cpp.stagingdvla.exception.NotifyDrivingConvictionException;
 import uk.gov.moj.cpp.stagingdvla.notify.azure.DvlaApimConfig;
 import uk.gov.moj.cpp.stagingdvla.notify.driving.conviction.NotifyDrivingConvictionResponse;
 import uk.gov.moj.cpp.stagingdvla.service.ApplicationParameters;
+import uk.gov.moj.cpp.stagingdvla.service.ConversionFormat;
 import uk.gov.moj.cpp.stagingdvla.service.DocumentGeneratorService;
-import uk.gov.moj.cpp.stagingdvla.service.NotificationNotifyService;
 import uk.gov.moj.cpp.stagingdvla.service.NotifyDrivingConvictionService;
 import uk.gov.moj.cpp.stagingdvla.service.scheduler.NotifyDrivingConvictionRetryScheduler;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.UUID;
 
 import javax.json.Json;
@@ -102,9 +101,6 @@ public class DriverNotifiedEventProcessorTest {
     private NotifyDrivingConvictionResponse notifyDrivingConvictionResponse;
 
     @Mock
-    private NotificationNotifyService notificationNotifyService;
-
-    @Mock
     private NotifyDrivingConvictionRetryScheduler scheduler;
 
     @Mock
@@ -116,6 +112,9 @@ public class DriverNotifiedEventProcessorTest {
     @Mock
     Sender sender;
 
+    @Mock
+    private FeatureControlGuard featureControlGuard;
+
     private final String identifier = randomUUID().toString();
     private final String masterDefendantId = randomUUID().toString();
     private final String materialId = randomUUID().toString();
@@ -123,67 +122,65 @@ public class DriverNotifiedEventProcessorTest {
 
     @Test
     public void shouldProcessDriverNotifiedMessage() throws IOException {
-        when(objectToJsonObjectConverter.convert(any())).thenReturn(Json.createObjectBuilder().build());
-
+        when(featureControlGuard.isFeatureEnabled("dvlaFileStore")).thenReturn(false);
         driverNotifiedEventProcessor.handleDriverNotifiedEvent(getRequestPayload(UPDATED_DRIVER_NOTIFIED_JSON, STAGINGDVLA_EVENT_DRIVER_NOTIFIED, 0));
 
-        verify(documentGeneratorService, times(1)).generateDocument(any(), any(), any(), any(), any(), any(), any());
+        verify(documentGeneratorService, times(1)).generateDvlaDocument(any(), any(), any());
         verify(notifyDrivingConvictionService, times(0)).notifyDrivingConviction(any());
     }
 
     @Test
     public void shouldProcessDriverNotifiedMessageNoOffence() throws IOException {
-        when(objectToJsonObjectConverter.convert(any())).thenReturn(Json.createObjectBuilder().build());
-
+        when(featureControlGuard.isFeatureEnabled("dvlaFileStore")).thenReturn(false);
         driverNotifiedEventProcessor.handleDriverNotifiedEvent(getRequestPayload(DRIVER_NOTIFIED_NO_OFFENCE_JSON, STAGINGDVLA_EVENT_DRIVER_NOTIFIED, 0));
 
-        verify(documentGeneratorService, times(1)).generateDocument(any(), any(), any(), any(), any(), any(), any());
+        verify(documentGeneratorService, times(1)).generateDvlaDocument(any(), any(), any());
         verify(notifyDrivingConvictionService, times(0)).notifyDrivingConviction(any());
     }
 
     @Test
     public void shouldCallDvlaNotifyApi_WhenNewEndorsement() throws IOException {
+        when(featureControlGuard.isFeatureEnabled("dvlaFileStore")).thenReturn(false);
         when(notifyDrivingConvictionService.notifyDrivingConviction(isA(DriverNotified.class))).thenReturn(notifyDrivingConvictionResponse);
         when(notifyDrivingConvictionResponse.getStatus()).thenReturn(SC_OK);
-        when(objectToJsonObjectConverter.convert(any())).thenReturn(Json.createObjectBuilder().build());
 
         driverNotifiedEventProcessor.handleDriverNotifiedEvent(
                 getRequestPayload(DRIVER_NOTIFIED_NEW_ENDORSEMENT_JSON, STAGINGDVLA_EVENT_DRIVER_NOTIFIED, 0));
 
         verify(notifyDrivingConvictionService, times(1)).notifyDrivingConviction(any(DriverNotified.class));
-        verify(documentGeneratorService, times(1)).generateDocument(any(), any(), any(), any(), any(), any(), any());
+        verify(documentGeneratorService, times(1)).generateDvlaDocument(any(), any(), any());
     }
 
     @Test
     public void shouldScheduleRetry_WhenNewEndorsementReturned401Error() throws IOException {
+        when(featureControlGuard.isFeatureEnabled("dvlaFileStore")).thenReturn(false);
         when(notifyDrivingConvictionService.notifyDrivingConviction(isA(DriverNotified.class))).thenReturn(notifyDrivingConvictionResponse);
         when(dvlaApimConfig.getDrivingConvictionMaxRetry()).thenReturn("10");
         when(notifyDrivingConvictionResponse.getStatus()).thenReturn(SC_UNAUTHORIZED);
-        when(objectToJsonObjectConverter.convert(any())).thenReturn(Json.createObjectBuilder().build());
 
         driverNotifiedEventProcessor.handleDriverNotifiedEvent(
                 getRequestPayload(DRIVER_NOTIFIED_NEW_ENDORSEMENT_JSON, STAGINGDVLA_EVENT_DRIVER_NOTIFIED, 0));
 
         verify(notifyDrivingConvictionService, times(1)).notifyDrivingConviction(any(DriverNotified.class));
         verify(scheduler, times(1)).dvlaResponseReceived(NotifyDrivingConvictionRetryScheduler.DvlaResponseType.FAIL);
-        verify(documentGeneratorService, times(1)).generateDocument(any(), any(), any(), any(), any(), any(), any());
+        verify(documentGeneratorService, times(1)).generateDvlaDocument(any(), any(), any());
         verify(sender).sendAsAdmin(envelopeArgumentCaptor.capture());
         assertThat(envelopeArgumentCaptor.getValue().metadata().name(), is("stagingdvla.command.handler.schedule-next-retry-for-driver-notified"));
     }
 
     @Test
     public void shouldScheduleRetry_WhenNewEndorsementReturned500Error() throws IOException {
+        when(featureControlGuard.isFeatureEnabled("dvlaFileStore")).thenReturn(false);
         when(notifyDrivingConvictionService.notifyDrivingConviction(isA(DriverNotified.class))).thenReturn(notifyDrivingConvictionResponse);
         when(dvlaApimConfig.getDrivingConvictionMaxRetry()).thenReturn("10");
         when(notifyDrivingConvictionResponse.getStatus()).thenReturn(SC_INTERNAL_SERVER_ERROR);
-        when(objectToJsonObjectConverter.convert(any())).thenReturn(Json.createObjectBuilder().build());
 
         driverNotifiedEventProcessor.handleDriverNotifiedEvent(
                 getRequestPayload(DRIVER_NOTIFIED_NEW_ENDORSEMENT_JSON, STAGINGDVLA_EVENT_DRIVER_NOTIFIED, 0));
 
         verify(notifyDrivingConvictionService, times(1)).notifyDrivingConviction(any(DriverNotified.class));
         verify(scheduler, times(1)).dvlaResponseReceived(NotifyDrivingConvictionRetryScheduler.DvlaResponseType.FAIL);
-        verify(documentGeneratorService, times(1)).generateDocument(any(), any(), any(), any(), any(), any(), any());
+        verify(documentGeneratorService, times(1)).generateDvlaDocument(any(), any(), any());
         verify(sender).sendAsAdmin(envelopeArgumentCaptor.capture());
         assertThat(envelopeArgumentCaptor.getValue().metadata().name(), is("stagingdvla.command.handler.schedule-next-retry-for-driver-notified"));
     }
@@ -199,7 +196,7 @@ public class DriverNotifiedEventProcessorTest {
 
         verify(notifyDrivingConvictionService, times(1)).notifyDrivingConviction(any(DriverNotified.class));
         verify(scheduler, times(1)).dvlaResponseReceived(NotifyDrivingConvictionRetryScheduler.DvlaResponseType.FAIL);
-        verify(documentGeneratorService, never()).generateDocument(any(), any(), any(), any(), any(), any(), any());
+        verify(documentGeneratorService, never()).generateDvlaDocument(any(), any(), any());
         verify(sender).sendAsAdmin(envelopeArgumentCaptor.capture());
         assertThat(envelopeArgumentCaptor.getValue().metadata().name(), is("stagingdvla.command.handler.schedule-next-retry-for-driver-notified"));
     }
@@ -220,7 +217,7 @@ public class DriverNotifiedEventProcessorTest {
 
         verify(notifyDrivingConvictionService, times(1)).notifyDrivingConviction(any(DriverNotified.class));
         verify(scheduler, times(0)).dvlaResponseReceived(any());
-        verify(documentGeneratorService, times(0)).generateDocument(any(), any(), any(), any(), any(), any(), any());
+        verify(documentGeneratorService, times(0)).generateDvlaDocument(any(), any(), any());
         verify(sender, times(0)).sendAsAdmin(envelopeArgumentCaptor.capture());
     }
 
@@ -241,8 +238,75 @@ public class DriverNotifiedEventProcessorTest {
 
         verify(notifyDrivingConvictionService, times(1)).notifyDrivingConviction(any(DriverNotified.class));
         verify(scheduler, times(1)).dvlaResponseReceived(NotifyDrivingConvictionRetryScheduler.DvlaResponseType.FAIL);
-        verify(documentGeneratorService, times(0)).generateDocument(any(), any(), any(), any(), any(), any(), any());
+        verify(documentGeneratorService, times(0)).generateDvlaDocument(any(), any(), any());
         verify(sender, times(0)).sendAsAdmin(any());
+    }
+
+    @Test
+    public void shouldNotCallDvlaNotifyApiApi_WhenUpdateEndorsement() throws IOException {
+        when(featureControlGuard.isFeatureEnabled("dvlaFileStore")).thenReturn(false);
+        driverNotifiedEventProcessor.handleDriverNotifiedEvent(
+                getRequestPayload(DRIVER_NOTIFIED_UPDATE_ENDORSEMENT_JSON, STAGINGDVLA_EVENT_DRIVER_NOTIFIED, 0));
+
+        verify(notifyDrivingConvictionService, times(0)).notifyDrivingConviction(any());
+        verify(documentGeneratorService, times(1)).generateDvlaDocument(any(), any(), any());
+    }
+
+    @Test
+    public void shouldPassTheEventUserIdToDvlaDocumentGenerationWhenDvlaFileStoreDisabled() throws IOException {
+        when(featureControlGuard.isFeatureEnabled("dvlaFileStore")).thenReturn(false);
+        final UUID userId = randomUUID();
+        final JsonEnvelope envelope = getRequestPayload(UPDATED_DRIVER_NOTIFIED_JSON, STAGINGDVLA_EVENT_DRIVER_NOTIFIED, 0, userId);
+
+        driverNotifiedEventProcessor.handleDriverNotifiedEvent(envelope);
+
+        final ArgumentCaptor<DriverNotified> driverNotifiedCaptor = ArgumentCaptor.forClass(DriverNotified.class);
+        verify(documentGeneratorService).generateDvlaDocument(eq(envelope), eq(userId), driverNotifiedCaptor.capture());
+        assertThat(driverNotifiedCaptor.getValue().getMaterialId().toString(), is(materialId));
+        verify(documentGeneratorService, never()).generateDocument(any(), any(), any(), any(), any(), any(), any());
+    }
+
+    @Test
+    public void shouldGenerateDocumentViaBlobStorageWhenDvlaFileStoreEnabled() throws IOException {
+        when(featureControlGuard.isFeatureEnabled("dvlaFileStore")).thenReturn(true);
+        final JsonObject nowsDocumentOrderJson = Json.createObjectBuilder().add("materialId", materialId).build();
+        final String fileName = DVLA_DOCUMENT_ORDER + "_" + materialId + ".pdf";
+        when(objectToJsonObjectConverter.convert(any(DriverNotified.class))).thenReturn(nowsDocumentOrderJson);
+        when(documentGeneratorService.getMaterialIdAmendedFileName(DVLA_DOCUMENT_ORDER, materialId)).thenReturn(fileName);
+        final JsonEnvelope envelope = getRequestPayload(UPDATED_DRIVER_NOTIFIED_JSON, STAGINGDVLA_EVENT_DRIVER_NOTIFIED, 0);
+
+        driverNotifiedEventProcessor.handleDriverNotifiedEvent(envelope);
+
+        verify(documentGeneratorService).generateDocument(eq(envelope), eq(UUID.fromString(materialId)), eq(nowsDocumentOrderJson),
+                eq(fileName), eq(DVLA_DOCUMENT_TEMPLATE_NAME), eq(ConversionFormat.PDF), eq(DVLA_DOCUMENT_ORDER));
+        verify(documentGeneratorService, never()).generateDvlaDocument(any(), any(), any());
+        verify(notifyDrivingConvictionService, times(0)).notifyDrivingConviction(any());
+    }
+
+    @Test
+    public void shouldNotCreateTheDocumentDuringRetryWhenDvlaFileStoreEnabled() throws IOException {
+        when(notifyDrivingConvictionService.notifyDrivingConviction(isA(DriverNotified.class))).thenReturn(notifyDrivingConvictionResponse);
+        when(dvlaApimConfig.getDrivingConvictionMaxRetry()).thenReturn("10");
+        when(notifyDrivingConvictionResponse.getStatus()).thenReturn(SC_INTERNAL_SERVER_ERROR);
+
+        driverNotifiedEventProcessor.handleDriverNotifiedEvent(
+                getRequestPayload(DRIVER_NOTIFIED_NEW_ENDORSEMENT_JSON, STAGINGDVLA_EVENT_DRIVER_NOTIFIED, 1));
+
+        verify(featureControlGuard, never()).isFeatureEnabled(any());
+        verify(documentGeneratorService, never()).generateDocument(any(), any(), any(), any(), any(), any(), any());
+        verify(documentGeneratorService, never()).generateDvlaDocument(any(), any(), any());
+    }
+
+    @Test
+    public void shouldThrowExceptionWhenUserIdIsMissingFromTheEvent() throws IOException {
+        final JsonEnvelope envelope = JsonEnvelope.envelopeFrom(MetadataBuilderFactory.metadataWithRandomUUID(STAGINGDVLA_EVENT_DRIVER_NOTIFIED),
+                buildDriverNotifiedJsonObject(UPDATED_DRIVER_NOTIFIED_JSON, 0));
+
+        final RuntimeException exception = assertThrows(RuntimeException.class, () -> driverNotifiedEventProcessor.handleDriverNotifiedEvent(envelope));
+
+        assertThat(exception.getMessage(), is("UserId missing from event."));
+        verify(documentGeneratorService, never()).generateDvlaDocument(any(), any(), any());
+        verify(documentGeneratorService, never()).generateDocument(any(), any(), any(), any(), any(), any(), any());
     }
 
     @SuppressWarnings("java:S5778")
@@ -267,47 +331,15 @@ public class DriverNotifiedEventProcessorTest {
 
         verify(notifyDrivingConvictionService, times(1)).notifyDrivingConviction(any(DriverNotified.class));
         verify(scheduler, times(1)).dvlaResponseReceived(NotifyDrivingConvictionRetryScheduler.DvlaResponseType.FAIL);
-        verify(documentGeneratorService, times(0)).generateDocument(any(), any(), any(), any(), any(), any(), any());
+        verify(documentGeneratorService, times(0)).generateDvlaDocument(any(), any(), any());
         verify(sender, times(0)).sendAsAdmin(any());
     }
 
-    @Test
-    public void shouldNotCallDvlaNotifyApiApi_WhenUpdateEndorsement() throws IOException {
-        when(objectToJsonObjectConverter.convert(any())).thenReturn(Json.createObjectBuilder().build());
-
-        driverNotifiedEventProcessor.handleDriverNotifiedEvent(
-                getRequestPayload(DRIVER_NOTIFIED_UPDATE_ENDORSEMENT_JSON, STAGINGDVLA_EVENT_DRIVER_NOTIFIED, 0));
-
-        verify(notifyDrivingConvictionService, times(0)).notifyDrivingConviction(any());
-        verify(documentGeneratorService, times(1)).generateDocument(any(), any(), any(), any(), any(), any(), any());
-    }
-
-    private JsonEnvelope emailNotificationSentEventFor(final UUID materialId) {
-        final EmailChannel emailChannel = EmailChannel.emailChannel()
-                .withMaterialUrl("http://material-url")
-                .withPersonalisation(Personalisation.personalisation()
-                        .withAdditionalProperty("subject", "subject-value").build())
-                .withSendToAddress("test@example.com")
-                .withTemplateId(randomUUID())
-                .build();
-
-        final MaterialDetails materialDetails = MaterialDetails.materialDetails()
-                .withMaterialId(materialId)
-                .withEmailNotifications(Collections.singletonList(emailChannel))
-                .build();
-
-        final EmailNotificationSent emailNotificationSent = EmailNotificationSent.emailNotificationSent()
-                .withDetails(materialDetails)
-                .build();
-
-        final JsonEnvelope event = JsonEnvelope.envelopeFrom(
-                MetadataBuilderFactory.metadataWithRandomUUID("stagingdvla.event.email-notification-sent"),
-                Json.createObjectBuilder().build());
-
-        when(jsonObjectToObjectConverter.convert(event.payloadAsJsonObject(), EmailNotificationSent.class))
-                .thenReturn(emailNotificationSent);
-
-        return event;
+    private JsonEnvelope getRequestPayload(final String fileName, final String eventName, final int retrySequence, final UUID userId) throws IOException {
+        return JsonEnvelope.envelopeFrom(MetadataBuilderFactory
+                        .metadataWithRandomUUID(eventName)
+                        .withUserId(userId.toString()),
+                buildDriverNotifiedJsonObject(fileName, retrySequence));
     }
 
     private JsonEnvelope getRequestPayload(final String fileName, final String eventName, final int retrySequence) throws IOException {

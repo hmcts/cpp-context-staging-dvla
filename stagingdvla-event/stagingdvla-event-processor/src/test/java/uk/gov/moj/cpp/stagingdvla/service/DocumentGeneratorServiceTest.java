@@ -7,6 +7,7 @@ import static java.util.UUID.randomUUID;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -25,7 +26,6 @@ import uk.gov.justice.cpp.stagingdvla.event.Cases;
 import uk.gov.justice.cpp.stagingdvla.event.DriverNotified;
 import uk.gov.justice.services.common.converter.ObjectToJsonObjectConverter;
 import uk.gov.justice.services.common.converter.StringToJsonObjectConverter;
-import uk.gov.justice.services.core.featurecontrol.FeatureControlGuard;
 import uk.gov.justice.services.core.sender.Sender;
 import uk.gov.justice.services.messaging.Envelope;
 import uk.gov.justice.services.messaging.JsonEnvelope;
@@ -69,9 +69,6 @@ public class DocumentGeneratorServiceTest {
     @Mock
     private Sender sender;
 
-    @Mock
-    private FeatureControlGuard featureControlGuard;
-
     @Spy
     private DocumentDeliveryStatusService documentDeliveryStatusService = new DocumentDeliveryStatusService();
 
@@ -96,85 +93,90 @@ public class DocumentGeneratorServiceTest {
     public void setUp() {
         setField(documentDeliveryStatusService, "sender", sender);
         setField(documentGeneratorService, "documentDeliveryStatusService", documentDeliveryStatusService);
-        setField(documentGeneratorService, "featureControlGuard", featureControlGuard);
         setField(documentGeneratorService, "blobContainerClient", blobContainerClient);
         setField(documentGeneratorService, "azureBlobConfiguration", azureBlobConfiguration);
     }
 
     @Test
-    public void shouldGenerateDocument() throws Exception {
+    public void shouldGenerateDvlaDocument() throws Exception {
         String code = "C" ;
         final DriverNotified driverNotified = generateDriverNotified(code);
 
+        final UUID userId = randomUUID();
+
         final UUID payloadFileId = randomUUID();
-        when(featureControlGuard.isFeatureEnabled("dvlaFileStore")).thenReturn(true);
-        when(fileService.storePayload(any(JsonObject.class), anyString(), anyString(), any(ConversionFormat.class))).thenReturn(payloadFileId);
+        when(fileService.storePayload(any(JsonObject.class), anyString(), anyString())).thenReturn(payloadFileId);
 
         String inputPayload = Resources.toString(getResource("stagingdvla.command.driver-notification.json"), defaultCharset());
         final JsonObject nowsDocumentOrderJson1 = stringToJsonObjectConverter.convert(inputPayload);
 
+        when(objectToJsonObjectConverter.convert(any())).thenReturn(nowsDocumentOrderJson1);
         ArgumentCaptor<DocumentGenerationRequest> documentGenerationRequestArgumentCaptor =  ArgumentCaptor.forClass(DocumentGenerationRequest.class);
         doNothing().when(systemDocGeneratorService).generateDocument(any(DocumentGenerationRequest.class), any(JsonEnvelope.class));
         final JsonEnvelope envelope = envelopeFrom(metadataWithRandomUUID("public.systemdocgenerator.events.document-available"),
                 nowsDocumentOrderJson1);
-        documentGeneratorService.generateDocument(envelope, driverNotified.getMaterialId(), nowsDocumentOrderJson1,
-                documentGeneratorService.getMaterialIdAmendedFileName(DVLA_DOCUMENT_ORDER, driverNotified.getMaterialId().toString()),
-                DVLA_DOCUMENT_TEMPLATE_NAME,
-                ConversionFormat.PDF,
-                DVLA_DOCUMENT_ORDER);
+        documentGeneratorService.generateDvlaDocument(envelope, userId, driverNotified);
         verify(systemDocGeneratorService).generateDocument(documentGenerationRequestArgumentCaptor.capture(), eq(envelope));
 
         DocumentGenerationRequest request = documentGenerationRequestArgumentCaptor.getValue();
         assertThat(request.getConversionFormat(),is(ConversionFormat.PDF));
         assertThat(request.getOriginatingSource(),is("DVLADocumentOrder"));
         assertThat(request.getTemplateIdentifier(),is("EDT_DriverOutNotification"));
-        assertThat(request.getSourceCorrelationId(),is(driverNotified.getMaterialId().toString()));
+        assertThat(request.getSourceCorrelationId(),is(userId.toString()));
         assertThat(request.getPayloadFileServiceId(),is(payloadFileId));
-
-        // file-service path has no blob URIs, so PENDING is recorded without them
-        verifyDocumentDeliveryStatusRecorded(driverNotified, DvlaDocumentDeliveryMaterialStatus.PENDING, null, null);
     }
 
     @Test
-    public void shouldGenerateDocumentForSjpCode() throws Exception {
+    public void shouldGenerateDvlaDocumentForSjpCode() throws Exception {
         String code = "J" ;
         final DriverNotified driverNotified = generateDriverNotified(code);
 
+        final UUID userId = randomUUID();
+
         final UUID payloadFileId = randomUUID();
-        when(featureControlGuard.isFeatureEnabled("dvlaFileStore")).thenReturn(true);
-        when(fileService.storePayload(any(JsonObject.class), anyString(), anyString(), any(ConversionFormat.class))).thenReturn(payloadFileId);
+        when(fileService.storePayload(any(JsonObject.class), anyString(), anyString())).thenReturn(payloadFileId);
 
         String inputPayload = Resources.toString(getResource("stagingdvla.command.driver-notification.json"), defaultCharset());
         final JsonObject nowsDocumentOrderJson1 = stringToJsonObjectConverter.convert(inputPayload);
 
+        when(objectToJsonObjectConverter.convert(any())).thenReturn(nowsDocumentOrderJson1);
         ArgumentCaptor<DocumentGenerationRequest> documentGenerationRequestArgumentCaptor =  ArgumentCaptor.forClass(DocumentGenerationRequest.class);
         doNothing().when(systemDocGeneratorService).generateDocument(any(DocumentGenerationRequest.class), any(JsonEnvelope.class));
         final JsonEnvelope envelope = envelopeFrom(metadataWithRandomUUID("public.systemdocgenerator.events.document-available"),
                 nowsDocumentOrderJson1);
-        documentGeneratorService.generateDocument(envelope, driverNotified.getMaterialId(), nowsDocumentOrderJson1,
-                documentGeneratorService.getMaterialIdAmendedFileName(DVLA_DOCUMENT_ORDER, driverNotified.getMaterialId().toString()),
-                DVLA_DOCUMENT_TEMPLATE_NAME,
-                ConversionFormat.PDF,
-                DVLA_DOCUMENT_ORDER);
+        documentGeneratorService.generateDvlaDocument(envelope, userId, driverNotified);
         verify(systemDocGeneratorService).generateDocument(documentGenerationRequestArgumentCaptor.capture(), eq(envelope));
 
         DocumentGenerationRequest request = documentGenerationRequestArgumentCaptor.getValue();
         assertThat(request.getConversionFormat(),is(ConversionFormat.PDF));
         assertThat(request.getOriginatingSource(),is("DVLADocumentOrder"));
         assertThat(request.getTemplateIdentifier(),is("EDT_DriverOutNotification"));
-        assertThat(request.getSourceCorrelationId(),is(driverNotified.getMaterialId().toString()));
+        assertThat(request.getSourceCorrelationId(),is(userId.toString()));
         assertThat(request.getPayloadFileServiceId(),is(payloadFileId));
-
-        // file-service path has no blob URIs, so PENDING is recorded without them
-        verifyDocumentDeliveryStatusRecorded(driverNotified, DvlaDocumentDeliveryMaterialStatus.PENDING, null, null);
     }
 
     @Test
-    public void shouldUploadToBlobStorageAndRequestDocumentGenerationWithBlobUrisWhenFeatureDisabled() throws Exception {
+    public void shouldNotRequestDvlaDocumentGenerationWhenStoringThePayloadFails() throws Exception {
+        final DriverNotified driverNotified = generateDriverNotified("C");
+
+        String inputPayload = Resources.toString(getResource("stagingdvla.command.driver-notification.json"), defaultCharset());
+        final JsonObject nowsDocumentOrderJson1 = stringToJsonObjectConverter.convert(inputPayload);
+
+        when(objectToJsonObjectConverter.convert(any())).thenReturn(nowsDocumentOrderJson1);
+        when(fileService.storePayload(any(JsonObject.class), anyString(), anyString())).thenThrow(new RuntimeException("file service unavailable"));
+
+        final JsonEnvelope envelope = envelopeFrom(metadataWithRandomUUID("public.systemdocgenerator.events.document-available"),
+                nowsDocumentOrderJson1);
+
+        assertDoesNotThrow(() -> documentGeneratorService.generateDvlaDocument(envelope, randomUUID(), driverNotified));
+
+        verifyNoInteractions(systemDocGeneratorService);
+    }
+
+    @Test
+    public void shouldUploadToBlobStorageAndRequestDocumentGenerationWithBlobUris() throws Exception {
         final DriverNotified driverNotified = generateDriverNotified("C");
         final String blobUrl = "https://mystorage.blob.core.windows.net/internal/" + driverNotified.getMaterialId();
-
-        when(featureControlGuard.isFeatureEnabled("dvlaFileStore")).thenReturn(false);
 
         String inputPayload = Resources.toString(getResource("stagingdvla.command.driver-notification.json"), defaultCharset());
         final JsonObject nowsDocumentOrderJson1 = stringToJsonObjectConverter.convert(inputPayload);
@@ -182,7 +184,7 @@ public class DocumentGeneratorServiceTest {
         when(blobContainerClient.getBlobClient(anyString())).thenReturn(blobClient);
         when(blobClient.getBlobUrl()).thenReturn(blobUrl);
         when(azureBlobConfiguration.getTransferTimeout()).thenReturn(ofSeconds(300));
-        doNothing().when(systemDocGeneratorService).generateDocument(any(DocumentGenerationRequest.class), any(JsonEnvelope.class));
+        doNothing().when(systemDocGeneratorService).generateDocumentForBlobUIR(any(DocumentGenerationRequest.class), any(JsonEnvelope.class));
 
         final JsonEnvelope envelope = envelopeFrom(metadataWithRandomUUID("public.systemdocgenerator.events.document-available"),
                 nowsDocumentOrderJson1);
@@ -194,12 +196,13 @@ public class DocumentGeneratorServiceTest {
                 ConversionFormat.PDF,
                 DVLA_DOCUMENT_ORDER);
 
-        verify(fileService, never()).storePayload(any(), anyString(), anyString(), any(ConversionFormat.class));
+        verify(fileService, never()).storePayload(any(), anyString(), anyString());
         verify(blobContainerClient).getBlobClient("internal/" + fileName.replaceAll("\\.[^.]*$", ""));
         verify(blobClient).uploadWithResponse(any(BlobParallelUploadOptions.class), eq(ofSeconds(300)), any());
 
         final ArgumentCaptor<DocumentGenerationRequest> requestCaptor = ArgumentCaptor.forClass(DocumentGenerationRequest.class);
-        verify(systemDocGeneratorService).generateDocument(requestCaptor.capture(), eq(envelope));
+        verify(systemDocGeneratorService).generateDocumentForBlobUIR(requestCaptor.capture(), eq(envelope));
+        verify(systemDocGeneratorService, never()).generateDocument(any(), any());
 
         final DocumentGenerationRequest request = requestCaptor.getValue();
         assertThat(request.getPayloadFileServiceId(), nullValue());
@@ -218,8 +221,6 @@ public class DocumentGeneratorServiceTest {
     @Test
     public void shouldThrowExceptionAndNotRequestDocumentGenerationWhenBlobUploadFails() throws Exception {
         final DriverNotified driverNotified = generateDriverNotified("C");
-
-        when(featureControlGuard.isFeatureEnabled("dvlaFileStore")).thenReturn(false);
 
         String inputPayload = Resources.toString(getResource("stagingdvla.command.driver-notification.json"), defaultCharset());
         final JsonObject nowsDocumentOrderJson1 = stringToJsonObjectConverter.convert(inputPayload);

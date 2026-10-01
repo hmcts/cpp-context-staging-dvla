@@ -151,7 +151,7 @@ public class DocumentGeneratorStub {
     // The document-available schema is a oneOf: payloadFileServiceId+documentFileServiceId (above,
     // the file-service path) or payloadFileUri+destinationFileUri (this one) - systemdocgenerator
     // sends this shape when DocumentGeneratorService uploaded the input payload to Azure blob
-    // storage instead (dvlaFileStore=false), echoing back the same payloadFileUri/destinationFileUri
+    // storage instead (dvlaFileStore=true), echoing back the same payloadFileUri/destinationFileUri
     // it was asked to generate against.
     public static void publishDocumentAvailableEventForAzureBlob(final String payloadFileUri, final String destinationFileUri,
                                                                    final String sourceCorrelationId) {

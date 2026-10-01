@@ -69,7 +69,7 @@ public class SystemDocGeneratorServiceTest {
     }
 
     @Test
-    public void shouldSendPayloadAndDestinationFileUriWhenPayloadFileServiceIdIsAbsent() {
+    public void shouldSendPayloadAndDestinationFileUriForBlobUri() {
         final String sourceCorrelationId = randomUUID().toString();
         final String payloadFileUri = "https://mystorage.blob.core.windows.net/internal/" + randomUUID();
         final String destinationFileUri = payloadFileUri + "-out";
@@ -79,12 +79,14 @@ public class SystemDocGeneratorServiceTest {
         final JsonEnvelope originatingEnvelope = envelopeFrom(
                 metadataWithRandomUUID("public.systemdocgenerator.events.document-available"), createObjectBuilder().build());
 
-        systemDocGeneratorService.generateDocument(request, originatingEnvelope);
+        systemDocGeneratorService.generateDocumentForBlobUIR(request, originatingEnvelope);
 
         final ArgumentCaptor<Envelope> envelopeCaptor = ArgumentCaptor.forClass(Envelope.class);
         verify(sender).sendAsAdmin(envelopeCaptor.capture());
 
         final Envelope<JsonObject> sentEnvelope = envelopeCaptor.getValue();
+        assertThat(sentEnvelope.metadata().name(), is("systemdocgenerator.generate-document"));
+
         final JsonObject payload = sentEnvelope.payload();
         assertThat(payload.getString("originatingSource"), is(ORIGINATING_SOURCE));
         assertThat(payload.getString("templateIdentifier"), is(TEMPLATE_IDENTIFIER));
