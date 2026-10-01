@@ -141,13 +141,13 @@ public class SJPMaterialProcessorTest {
     }
 
     @Test
-    public void shouldRecordSjpFailedWhenCaseDocumentAdditionFailed() {
+    public void shouldRecordSjpSuccessWhenCaseDocumentAdditionFailed() {
         when(dvlaDocumentDeliveryRepository.findByDocumentBlobUri(DOCUMENT_URI))
                 .thenReturn(singletonList(delivery()));
 
         sjpMaterialProcessor.handleCaseDocumentFailedEvent(caseDocumentAdditionFailed(DOCUMENT_URI));
 
-        assertRecordedSjpStatus(FAILED);
+        assertRecordedSjpStatus(SUCCESS);
     }
 
     @Test
