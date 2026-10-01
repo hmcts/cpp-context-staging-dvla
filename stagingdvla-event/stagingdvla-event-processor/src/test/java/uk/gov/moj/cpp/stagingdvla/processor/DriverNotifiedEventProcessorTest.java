@@ -26,7 +26,7 @@ import uk.gov.justice.services.messaging.Envelope;
 import uk.gov.justice.services.messaging.JsonEnvelope;
 import uk.gov.justice.services.test.utils.core.messaging.MetadataBuilderFactory;
 import uk.gov.justice.services.test.utils.framework.api.JsonObjectConvertersFactory;
-import uk.gov.moj.cpp.material.url.MaterialUrlGenerator;
+import uk.gov.moj.cpp.stagingdvla.material.client.MaterialUrlGenerator;
 import uk.gov.moj.cpp.stagingdvla.exception.NotifyDrivingConvictionException;
 import uk.gov.moj.cpp.stagingdvla.notify.azure.DvlaApimConfig;
 import uk.gov.moj.cpp.stagingdvla.notify.driving.conviction.NotifyDrivingConvictionResponse;

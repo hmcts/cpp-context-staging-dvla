@@ -78,9 +78,9 @@
         </dependency>
 
         <dependency>
-            <groupId>uk.gov.moj.cpp.material</groupId>
-            <artifactId>material-client</artifactId>
-            <version>${material.version}</version>
+            <groupId>uk.gov.moj.cpp.staging.dvla</groupId>
+            <artifactId>stagingdvla-common-material-client</artifactId>
+            <version>${project.version}</version>
         </dependency>
 
         <dependency>
