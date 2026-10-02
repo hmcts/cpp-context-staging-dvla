@@ -1,7 +1,7 @@
 package uk.gov.moj.cpp.stagingdvla.handler;
 
+import static java.util.Objects.isNull;
 import static java.util.UUID.fromString;
-import static java.util.UUID.randomUUID;
 import static uk.gov.justice.services.core.enveloper.Enveloper.toEnvelopeWithMetadataFrom;
 
 import uk.gov.justice.cpp.stagingdvla.DriverAuditReportSearchCriteria;
@@ -21,7 +21,6 @@ import uk.gov.justice.services.messaging.JsonEnvelope;
 import uk.gov.moj.cpp.stagingdvla.aggregate.AuditReportAggregate;
 
 import java.time.ZonedDateTime;
-import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Stream;
 
@@ -70,7 +69,7 @@ public class DriverSearchAuditReportHandler {
         final EventStream eventStream = eventSource.getStreamById(auditReportCreated.getId());
         final AuditReportAggregate auditReportAggregate = aggregateService.get(eventStream, AuditReportAggregate.class);
         final Stream<Object> events;
-        if(Objects.isNull(auditReportCreated.getPayloadFileUri())) {
+        if(isNull(auditReportCreated.getPayloadFileUri())) {
             events = auditReportAggregate.auditReportCreated(auditReportCreated);
         } else {
             events = auditReportAggregate.auditReportCreatedForBlobUri(auditReportCreated);
