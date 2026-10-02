@@ -39,36 +39,37 @@ public class MaterialAggregate implements Aggregate {
                 when(NowsMaterialRequestRecorded.class).apply(e ->
                         details = e.getContext()
                 ),
-                when(DvlaDocumentDeliveryRecorded.class).apply(e -> {
-                            this.documentDeliveryTracked = true;
-                            if(nonNull(e.getPayloadBlobUri())) {
-                                this.payloadBlobUri = e.getPayloadBlobUri();
-                            }
-                            if(nonNull(e.getDocumentBlobUri())) {
-                                this.documentBlobUri = e.getDocumentBlobUri();
-                            }
-                            if (!this.isSjpCase && nonNull(e.getCaseId())){
-                                this.isSjpCase = true;
-                            }
-                            if(SUCCESS.name().equals(e.getMaterialStatus())){
-                                this.isMaterialStatusSuccess = true;
-                            }
-                            if (SUCCESS.name().equals(e.getSjpStatus())) {
-                                this.isSjpStatusSuccess = true;
-                            }
-                            if (SUCCESS.name().equals(e.getSjpStatus()) || FAILED.name().equals(e.getSjpStatus())) {
-                                this.isSjpStatusCompleted = true;
-                            }
-                            if (nonNull(e.getEmailStatus())) {
-                                this.emailStatus = e.getEmailStatus();
-                            }
-                        }
-                ),
+                when(DvlaDocumentDeliveryRecorded.class).apply(this::onDvlaDocumentDeliveryRecorded),
                 when(DocumentDeletedFromBlob.class).apply(e ->
                         this.documentDeletedFromBlob = true
                 ),
                 otherwiseDoNothing()
         );
+    }
+
+    private void onDvlaDocumentDeliveryRecorded(final DvlaDocumentDeliveryRecorded e) {
+        this.documentDeliveryTracked = true;
+        if(nonNull(e.getPayloadBlobUri())) {
+            this.payloadBlobUri = e.getPayloadBlobUri();
+        }
+        if(nonNull(e.getDocumentBlobUri())) {
+            this.documentBlobUri = e.getDocumentBlobUri();
+        }
+        if (!this.isSjpCase && nonNull(e.getCaseId())){
+            this.isSjpCase = true;
+        }
+        if(SUCCESS.name().equals(e.getMaterialStatus())){
+            this.isMaterialStatusSuccess = true;
+        }
+        if (SUCCESS.name().equals(e.getSjpStatus())) {
+            this.isSjpStatusSuccess = true;
+        }
+        if (SUCCESS.name().equals(e.getSjpStatus()) || FAILED.name().equals(e.getSjpStatus())) {
+            this.isSjpStatusCompleted = true;
+        }
+        if (nonNull(e.getEmailStatus())) {
+            this.emailStatus = e.getEmailStatus();
+        }
     }
 
     public Stream<Object> create(final MaterialDetails materialDetails) {

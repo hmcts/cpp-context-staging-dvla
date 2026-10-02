@@ -103,7 +103,7 @@ public class DocumentGeneratorService {
 
     @Transactional(Transactional.TxType.REQUIRES_NEW)
     public void generateDocument(final JsonEnvelope originatingEnvelope, final UUID materialId, final JsonObject payload, final String fileName, final String templateName, final ConversionFormat format, final String originatingSource) {
-        generateDocument(originatingEnvelope, materialId, payload, fileName, templateName, format, originatingSource, null);
+        uploadAndRequestDocumentGeneration(originatingEnvelope, materialId, payload, fileName, templateName, format, originatingSource, null);
     }
 
     /**
@@ -116,6 +116,13 @@ public class DocumentGeneratorService {
     @SuppressWarnings("squid:S00107")
     @Transactional(Transactional.TxType.REQUIRES_NEW)
     public void generateDocument(final JsonEnvelope originatingEnvelope, final UUID materialId, final JsonObject payload, final String fileName, final String templateName, final ConversionFormat format, final String originatingSource, final UUID sjpCaseId) {
+        uploadAndRequestDocumentGeneration(originatingEnvelope, materialId, payload, fileName, templateName, format, originatingSource, sjpCaseId);
+    }
+
+    // shared by both generateDocument overloads; kept un-annotated so neither @Transactional method calls
+    // the other - a self-invocation bypasses the CDI proxy and would never apply the callee's REQUIRES_NEW
+    @SuppressWarnings("squid:S00107")
+    private void uploadAndRequestDocumentGeneration(final JsonEnvelope originatingEnvelope, final UUID materialId, final JsonObject payload, final String fileName, final String templateName, final ConversionFormat format, final String originatingSource, final UUID sjpCaseId) {
         final Result result;
         result = uploadDocumentToAzureBlob(materialId, payload, fileName, format, templateName);
         final DocumentGenerationRequest documentGenerationRequest = new DocumentGenerationRequest(
