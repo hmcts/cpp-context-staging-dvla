@@ -113,6 +113,7 @@ public class DriverNotificationDocumentDeliveryHandlerTest {
                 .withSjpCorrelationId(sjpCorrelationId)
                 .withSjpStatus("PENDING")
                 .withMaterialStatus("PENDING")
+                .withEmailStatus("PENDING")
                 .build();
 
         final JsonEnvelope requestEnvelope = JsonEnvelope.envelopeFrom(
@@ -135,7 +136,8 @@ public class DriverNotificationDocumentDeliveryHandlerTest {
                                 withJsonPath("$.materialId", is(MATERIAL_ID.toString())),
                                 withJsonPath("$.caseId", is(caseId.toString())),
                                 withJsonPath("$.sjpCorrelationId", is(sjpCorrelationId.toString())),
-                                withJsonPath("$.sjpStatus", is("PENDING"))
+                                withJsonPath("$.sjpStatus", is("PENDING")),
+                                withJsonPath("$.emailStatus", is("PENDING"))
                         ))
                 )
         ));

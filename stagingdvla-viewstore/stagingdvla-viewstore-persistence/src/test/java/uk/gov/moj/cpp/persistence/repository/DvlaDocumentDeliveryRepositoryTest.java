@@ -35,7 +35,7 @@ public class DvlaDocumentDeliveryRepositoryTest {
         final UUID caseId = randomUUID();
         final UUID sjpCorrelationId = randomUUID();
         final DvlaDocumentDeliveryEntity entity = new DvlaDocumentDeliveryEntity(materialId, createdAt, "PENDING", "payload/blob/uri", "document/blob/uri",
-                caseId, sjpCorrelationId, "AWAITING_RESULT");
+                caseId, sjpCorrelationId, "AWAITING_RESULT", "PENDING");
 
         dvlaDocumentDeliveryRepository.save(entity);
 
@@ -49,6 +49,7 @@ public class DvlaDocumentDeliveryRepositoryTest {
         assertThat(retrieved.getCaseId(), equalTo(caseId));
         assertThat(retrieved.getSjpCorrelationId(), equalTo(sjpCorrelationId));
         assertThat(retrieved.getSjpStatus(), equalTo("AWAITING_RESULT"));
+        assertThat(retrieved.getEmailStatus(), equalTo("PENDING"));
     }
 
     @Test

@@ -219,6 +219,37 @@ public class DocumentGeneratorServiceTest {
     }
 
     @Test
+    public void shouldRecordTheSjpCaseOnTheBlobPendingRecordForAnSjpCaseDocument() throws Exception {
+        final DriverNotified driverNotified = generateDriverNotified("J");
+        final UUID sjpCaseId = randomUUID();
+        final String blobUrl = "https://mystorage.blob.core.windows.net/internal/" + driverNotified.getMaterialId();
+
+        final JsonObject nowsDocumentOrderJson = stringToJsonObjectConverter.convert(
+                Resources.toString(getResource("stagingdvla.command.driver-notification.json"), defaultCharset()));
+
+        when(blobContainerClient.getBlobClient(anyString())).thenReturn(blobClient);
+        when(blobClient.getBlobUrl()).thenReturn(blobUrl);
+        when(azureBlobConfiguration.getTransferTimeout()).thenReturn(ofSeconds(300));
+        doNothing().when(systemDocGeneratorService).generateDocumentForBlobUIR(any(DocumentGenerationRequest.class), any(JsonEnvelope.class));
+
+        final JsonEnvelope envelope = envelopeFrom(metadataWithRandomUUID("stagingdvla.event.driver-notified"), nowsDocumentOrderJson);
+        final String fileName = documentGeneratorService.getMaterialIdAmendedFileName(DVLA_DOCUMENT_ORDER, driverNotified.getMaterialId().toString());
+
+        documentGeneratorService.generateDocument(envelope, driverNotified.getMaterialId(), nowsDocumentOrderJson,
+                fileName, DVLA_DOCUMENT_TEMPLATE_NAME, ConversionFormat.PDF, DVLA_DOCUMENT_ORDER, sjpCaseId);
+
+        // the SJP case rides on the PENDING record that starts tracking, so MaterialAggregate keeps the
+        // blob past material SUCCESS whichever status record it processes first
+        final ArgumentCaptor<Envelope> envelopeArgumentCaptor = ArgumentCaptor.forClass(Envelope.class);
+        verify(sender).sendAsAdmin(envelopeArgumentCaptor.capture());
+        final Envelope<JsonObject> pendingRecord = envelopeArgumentCaptor.getValue();
+        assertThat(pendingRecord.payload().getString("materialStatus"), is("PENDING"));
+        assertThat(pendingRecord.payload().getString("payloadBlobUri"), is(blobUrl));
+        assertThat(pendingRecord.payload().getString("caseId"), is(sjpCaseId.toString()));
+        assertThat(pendingRecord.payload().containsKey("sjpStatus"), is(false));
+    }
+
+    @Test
     public void shouldThrowExceptionAndNotRequestDocumentGenerationWhenBlobUploadFails() throws Exception {
         final DriverNotified driverNotified = generateDriverNotified("C");
 
@@ -254,6 +285,7 @@ public class DocumentGeneratorServiceTest {
         assertThat(capturedEnvelope.payload().getString("materialStatus"), is(expectedStatus.name()));
         assertThat(capturedEnvelope.payload().getString("payloadBlobUri", null), is(expectedPayloadFileUri));
         assertThat(capturedEnvelope.payload().getString("documentBlobUri", null), is(expectedDestinationFileUri));
+        assertThat(capturedEnvelope.payload().containsKey("caseId"), is(false));
     }
 
     public static DriverNotified generateDriverNotified(String initiationCode) {

@@ -1,0 +1,19 @@
+{
+  "details": {
+    "userId": "6d1e4a3b-0f0e-4f4b-9f7a-2a3f0b6f1c11",
+    "hearingId": "1b0d3f5e-8a52-4a7e-9b0e-4c6f2d9e7a22",
+    "materialId": "MATERIAL_ID",
+    "payloadFileUri": "http://cpp-azurite:10000/devstoreaccount1/stagingdvla-files/internal%2FDVLADocumentOrder_MATERIAL_ID",
+    "destinationFileUri": "http://cpp-azurite:10000/devstoreaccount1/stagingdvla-files/internal%2FDVLADocumentOrder_MATERIAL_ID.pdf",
+    "emailNotifications": [
+      {
+        "templateId": "TEMPLATE_ID",
+        "sendToAddress": "dvla-test@example.com",
+        "materialUrl": "http://localhost/material/MATERIAL_ID",
+        "personalisation": {
+          "subject": "DVLA Driver Notification - New Endorsement - TEST"
+        }
+      }
+    ]
+  }
+}

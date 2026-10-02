@@ -19,6 +19,8 @@ import static org.hamcrest.Matchers.nullValue;
 import static uk.gov.justice.services.test.utils.core.reflection.ReflectionUtil.setField;
 import static uk.gov.moj.cpp.platform.test.feature.toggle.FeatureStubber.stubFeaturesFor;
 import static uk.gov.moj.stagingdvla.stubs.DVLANotificationStub.verifyDVLANotificationCommandInvoked;
+import static uk.gov.moj.stagingdvla.stubs.DocumentGeneratorStub.awaitGenerateDocumentRequest;
+import static uk.gov.moj.stagingdvla.stubs.DocumentGeneratorStub.generateDocumentRequestCount;
 import static uk.gov.moj.stagingdvla.stubs.DocumentGeneratorStub.latestGenerateDocumentRequest;
 import static uk.gov.moj.stagingdvla.stubs.DocumentGeneratorStub.latestGenerateDocumentRequests;
 import static uk.gov.moj.stagingdvla.stubs.DocumentGeneratorStub.publishDocumentAvailableEventForAzureBlob;
@@ -29,6 +31,9 @@ import static uk.gov.moj.stagingdvla.stubs.MaterialStub.ORIGINATOR;
 import static uk.gov.moj.stagingdvla.stubs.MaterialStub.awaitMaterialUploadRequest;
 import static uk.gov.moj.stagingdvla.stubs.MaterialStub.publishMaterialAddedEvent;
 import static uk.gov.moj.stagingdvla.stubs.MaterialStub.verifyMaterialCreated;
+import static uk.gov.moj.stagingdvla.stubs.NotifyStub.publishNotificationSentEvent;
+import static uk.gov.moj.stagingdvla.stubs.NotifyStub.verifyEmailNotificationSent;
+import static uk.gov.moj.stagingdvla.stubs.NotifyStub.verifyNoEmailNotificationSent;
 import static uk.gov.moj.stagingdvla.stubs.ProgressionStub.stubProgressionAddCourtDocument;
 import static uk.gov.moj.stagingdvla.stubs.ProgressionStub.verifyProgressionAddCourtDocumentInvoked;
 import static uk.gov.moj.stagingdvla.stubs.SjpStub.publishCaseDocumentAddedEvent;
@@ -103,8 +108,11 @@ public class DvlaNotificationIT extends AbstractIntegrationTest {
     private final String DRIVER_NOTIFICATION_COMMAND_PAYLOAD_SJP_GENERATE_D20 = "stagingdvla.command.driver-notification-sjp-generate-d20.json";
     private final String DRIVER_NOTIFICATION_COMMAND_PAYLOAD_SJP_APPLICATION_GRANTED = "stagingdvla.command.driver-notification-sjp-application-granted.json";
     private final String DRIVER_NOTIFICATION_COMMAND_PAYLOAD_SJP_CASE = "stagingdvla.command.driver-notification-sjp-case.json";
+    private final String DRIVER_NOTIFICATION_COMMAND_PAYLOAD_SJP_CASE_MULTIPLE_CONVICTING_COURTS = "stagingdvla.command.driver-notification-sjp-case-multiple-convicting-courts.json";
 
     private static final String STAGINGDVLA_CONTEXT = "stagingdvla";
+    // NotificationNotifyService.CLIENT_CONTEXT_PREFIX - the blob path's email carries it ahead of the materialId
+    private static final String CLIENT_CONTEXT_PREFIX = "STAGINGDVLA_";
 
     @BeforeAll
     public static void init() {
@@ -121,7 +129,7 @@ public class DvlaNotificationIT extends AbstractIntegrationTest {
     @BeforeEach
     public void setup() {
         final ImmutableMap<String, Boolean> features = of("dvlaFileStore", false);
-        FeatureStubber.stubFeaturesFor(STAGINGDVLA_CONTEXT, features);
+        stubFeaturesFor(STAGINGDVLA_CONTEXT, features);
         hearingId = randomUUID().toString();
         defendantId = randomUUID().toString();
         caseId = randomUUID().toString();
@@ -169,7 +177,7 @@ public class DvlaNotificationIT extends AbstractIntegrationTest {
         // payloadFileUri/destinationFileUri rather than payloadFileServiceId
         // dvlaFileStoreDelete=true -> DocumentDeletedFromBlobEventProcessor deletes both blobs once delivery completes
         final ImmutableMap<String, Boolean> features = of("dvlaFileStore", true, "dvlaFileStoreDelete", true);
-        FeatureStubber.stubFeaturesFor(STAGINGDVLA_CONTEXT, features);
+        stubFeaturesFor(STAGINGDVLA_CONTEXT, features);
 
         //Given
         final String body = getPayload(DRIVER_NOTIFICATION_COMMAND_PAYLOAD);
@@ -255,10 +263,12 @@ public class DvlaNotificationIT extends AbstractIntegrationTest {
         // materialDetails.json's own oneOf(fileId | payloadFileUri+destinationFileUri) contract)
         publishMaterialAddedEvent(driverNotified.getMaterialId(), UUID.fromString(USER_GROUP));
 
-        //Then: MaterialAddedProcessor.recordDocumentDeliveryStatus records the flow's final SUCCESS status
+        //Then: MaterialAddedProcessor.recordDocumentDeliveryStatus records the flow's final SUCCESS status -
+        // a NEW endorsement from a single court/conviction date goes to DVLA by API, so no D20 email is needed
         final DvlaDocumentDeliveryRecorded successDocumentDeliveryRecorded = retrieveFinalDvlaDocumentDeliveryRecordedEvent();
         assertThat(successDocumentDeliveryRecorded, is(notNullValue()));
         assertThat(successDocumentDeliveryRecorded.getMaterialId(), is(equalTo(driverNotified.getMaterialId())));
+        assertThat(successDocumentDeliveryRecorded.getEmailStatus(), is("NOT_REQUIRED"));
 
         // verify the read side reflects the completed delivery
         pollForResponse("/dvla-document-deliveries?materialId=" + materialId + "&materialStatus=SUCCESS",
@@ -266,12 +276,80 @@ public class DvlaNotificationIT extends AbstractIntegrationTest {
                 allOf(
                         withJsonPath("$.documentDeliveries[0].materialId", equalTo(materialId)),
                         withJsonPath("$.documentDeliveries[0].materialStatus", equalTo("SUCCESS")),
+                        withJsonPath("$.documentDeliveries[0].emailStatus", equalTo("NOT_REQUIRED")),
                         withJsonPath("$.documentDeliveries[0].payloadBlobUri", equalTo(payloadFileUri)),
                         withJsonPath("$.documentDeliveries[0].documentBlobUri", equalTo(destinationFileUri))
                 ));
 
-        //Then: material SUCCESS completes a non-SJP delivery, so MaterialAggregate raises
-        // document-deleted-from-blob for the payload and rendered document blobs
+        //Then: material SUCCESS with no email needed completes a non-SJP delivery, so MaterialAggregate
+        // raises document-deleted-from-blob for the payload and rendered document blobs
+        verifyDocumentDeletedFromBlob(materialId, payloadFileUri, destinationFileUri);
+        verifyNoEmailNotificationSent(CLIENT_CONTEXT_PREFIX + materialId);
+    }
+
+    @Test
+    public void shouldSendDvlaEmailAndDeleteBlobsOnceEmailIsSentWithAzureBlob() throws IOException {
+        // dvlaFileStore=true -> blob path; dvlaFileStoreDelete=true -> blobs deleted once delivery completes
+        final ImmutableMap<String, Boolean> features = of("dvlaFileStore", true, "dvlaFileStoreDelete", true);
+        stubFeaturesFor(STAGINGDVLA_CONTEXT, features);
+
+        //Given: offences convicted at two different courts on two different dates - DVLA's API can't take
+        // that, so the D20 goes to DVLA by email (SystemDocGeneratorEventProcessor.shouldSendEmailNotification)
+        final String body = getPayload(DRIVER_NOTIFICATION_COMMAND_PAYLOAD_WITH_CONVICTING_COURT_MULTIPLE_OFFENCES);
+
+        //When
+        final Response writeResponse = postCommandWithUserId(getWriteUrl("/driver-notification"),
+                DRIVER_NOTIFICATION_MEDIA_TYPE, body, USER_GROUP);
+        assertThat(writeResponse.getStatusCode(), equalTo(SC_ACCEPTED));
+
+        final DriverNotified driverNotified = jsonToObjectConverter.convert(
+                retrieveMessageAsJsonObject(consumerForDriverNotified).get(), DriverNotified.class);
+        assertThat(driverNotified, is(notNullValue()));
+        final String materialId = driverNotified.getMaterialId().toString();
+        final String clientContext = CLIENT_CONTEXT_PREFIX + materialId;
+
+        verifyGenerateDocumentStubCommandInvoked();
+        final JsonPath generateDocumentRequest = latestGenerateDocumentRequest();
+        final String payloadFileUri = generateDocumentRequest.getString("payloadFileUri");
+        final String destinationFileUri = generateDocumentRequest.getString("destinationFileUri");
+        assertThat(payloadFileUri, is(notNullValue()));
+
+        // simulate systemdocgenerator (blob branch) and then the material context storing the document
+        publishDocumentAvailableEventForAzureBlob(payloadFileUri, destinationFileUri,
+                generateDocumentRequest.getString("sourceCorrelationId"));
+        verifyProgressionAddCourtDocumentInvoked();
+        publishMaterialAddedEvent(driverNotified.getMaterialId(), UUID.fromString(USER_GROUP));
+
+        //Then: material SUCCESS is recorded with the email PENDING - material-added is also what triggers the D20 email
+        final JsonPath materialSuccessDocumentDeliveryEvent = retrieveMaterialSuccessDocumentDeliveryEvent(materialId);
+        assertThat(materialSuccessDocumentDeliveryEvent.getString("emailStatus"), equalTo("PENDING"));
+
+        //Then: the D20 email goes to notificationnotify carrying the clientContext that matches its outcome back
+        verifyEmailNotificationSent(clientContext);
+
+        // ...and while the email is PENDING the delivery is not complete, so the blobs are kept
+        assertThat(retrieveMessage(consumerForDocumentDeletedFromBlob, isJson(withJsonPath("$.materialId", equalTo(materialId)))),
+                is(nullValue()));
+
+        //When: the real notificationnotify isn't deployed here, so simulate its public notification-sent event
+        publishNotificationSentEvent(clientContext, UUID.fromString(USER_GROUP));
+
+        //Then: NotificationNotifyEventProcessor records the email as SUCCESS for this material
+        final JsonPath emailSuccessDocumentDeliveryEvent = retrieveEmailStatusDocumentDeliveryEvent(materialId, "SUCCESS");
+        assertThat(emailSuccessDocumentDeliveryEvent.getString("materialStatus"), is(nullValue()));
+
+        final String queryUserId = randomUUID().toString();
+        stubUser(queryUserId);
+        pollForResponse("/dvla-document-deliveries?materialId=" + materialId,
+                DVLA_DOCUMENT_DELIVERY_MEDIA_TYPE, queryUserId,
+                allOf(
+                        withJsonPath("$.documentDeliveries[0].materialId", equalTo(materialId)),
+                        withJsonPath("$.documentDeliveries[0].materialStatus", equalTo("SUCCESS")),
+                        withJsonPath("$.documentDeliveries[0].emailStatus", equalTo("SUCCESS")),
+                        hasNoJsonPath("$.documentDeliveries[0].caseId")
+                ));
+
+        //Then: material SUCCESS + email SUCCESS completes the non-SJP delivery, so the blobs are deleted now
         verifyDocumentDeletedFromBlob(materialId, payloadFileUri, destinationFileUri);
     }
 
@@ -478,7 +556,7 @@ public class DvlaNotificationIT extends AbstractIntegrationTest {
         // (MaterialAggregate.recordDocumentDelivery)
         // dvlaFileStoreDelete=true -> DocumentDeletedFromBlobEventProcessor deletes both blobs once delivery completes
         final ImmutableMap<String, Boolean> features = of("driverOut", false, "dvlaFileStore", true, "dvlaFileStoreDelete", true);
-        FeatureStubber.stubFeaturesFor(STAGINGDVLA_CONTEXT, features);
+        stubFeaturesFor(STAGINGDVLA_CONTEXT, features);
 
         //Given: create the driver notification for an SJP case (initiationCode "J") carrying two cases.
         // DefendantAggregate/DriverNotifiedEngine creates one DriverNotified event PER incoming case
@@ -568,6 +646,7 @@ public class DvlaNotificationIT extends AbstractIntegrationTest {
             //Then: MaterialAddedProcessor records this material's delivery as materialStatus SUCCESS
             final JsonPath materialSuccessDocumentDeliveryEvent = retrieveMaterialSuccessDocumentDeliveryEvent(caseMaterialId);
             assertThat(materialSuccessDocumentDeliveryEvent.getString("materialStatus"), equalTo("SUCCESS"));
+            assertThat(materialSuccessDocumentDeliveryEvent.getString("emailStatus"), equalTo("NOT_REQUIRED"));
             // ...but on an SJP case material SUCCESS alone must not delete the blobs - SJP still reads the document
             // from documentBlobUri (a deletion would be appended with the SUCCESS record, so a short wait suffices)
             assertThat(retrieveMessage(consumerForDocumentDeletedFromBlob), is(nullValue()));
@@ -597,7 +676,95 @@ public class DvlaNotificationIT extends AbstractIntegrationTest {
             //Then: for an SJP case the delivery completes on sjpStatus SUCCESS (not on material SUCCESS
             // above), so only now does MaterialAggregate raise document-deleted-from-blob for this material
             verifyDocumentDeletedFromBlob(caseMaterialId, payloadFileUri, destinationFileUri);
+            verifyNoEmailNotificationSent(CLIENT_CONTEXT_PREFIX + caseMaterialId);
         }
+    }
+
+    @Test
+    public void shouldSendDvlaEmailAndDeleteBlobsOnlyOnceEmailAndSjpBothSucceedForSjpCaseWithAzureBlob() throws IOException {
+        // driverOut=false SJP flow on the blob path; dvlaFileStoreDelete=true -> blobs deleted once delivery completes
+        final ImmutableMap<String, Boolean> features = of("driverOut", false, "dvlaFileStore", true, "dvlaFileStoreDelete", true);
+        stubFeaturesFor(STAGINGDVLA_CONTEXT, features);
+
+        //Given: a single SJP case (initiationCode "J") whose offences were convicted at two different courts on
+        // two different dates - so the D20 goes to DVLA by email, and SJP also files the document on the case
+        final String body = getPayload(DRIVER_NOTIFICATION_COMMAND_PAYLOAD_SJP_CASE_MULTIPLE_CONVICTING_COURTS);
+        final int generateDocumentRequestsBefore = generateDocumentRequestCount();
+
+        //When
+        final Response writeResponse = postCommandWithUserId(getWriteUrl("/driver-notification"),
+                DRIVER_NOTIFICATION_MEDIA_TYPE, body, USER_GROUP);
+        assertThat(writeResponse.getStatusCode(), equalTo(SC_ACCEPTED));
+
+        final DriverNotified driverNotified = jsonToObjectConverter.convert(
+                retrieveMessageAsJsonObject(consumerForDriverNotified).get(), DriverNotified.class);
+        assertThat(driverNotified.getCases(), hasSize(1));
+        assertThat(driverNotified.getCases().get(0).getCaseId().toString(), equalTo(caseId));
+        final String materialId = driverNotified.getMaterialId().toString();
+        final String clientContext = CLIENT_CONTEXT_PREFIX + materialId;
+
+        final JsonPath generateDocumentRequest = awaitGenerateDocumentRequest("DVLADocumentOrder", generateDocumentRequestsBefore);
+        assertThat(generateDocumentRequest.getString("sourceCorrelationId"), equalTo(materialId));
+        final String payloadFileUri = generateDocumentRequest.getString("payloadFileUri");
+        final String destinationFileUri = generateDocumentRequest.getString("destinationFileUri");
+        assertThat(payloadFileUri, is(notNullValue()));
+
+        //Then: the blob PENDING record that starts tracking already carries the SJP case
+        final JsonPath blobPendingDocumentDeliveryEvent = retrieveDocumentDeliveryEvent(materialId, "materialStatus", "PENDING");
+        assertThat(blobPendingDocumentDeliveryEvent.getString("caseId"), equalTo(caseId));
+        assertThat(blobPendingDocumentDeliveryEvent.getString("payloadBlobUri"), equalTo(payloadFileUri));
+
+        //When: systemdocgenerator (blob branch) reports the document available - it is filed with SJP by blob uri
+        publishDocumentAvailableEventForAzureBlob(payloadFileUri, destinationFileUri, generateDocumentRequest.getString("sourceCorrelationId"));
+        final String expectedSjpCorrelationId = UUID.nameUUIDFromBytes(destinationFileUri.getBytes(StandardCharsets.UTF_8)).toString();
+
+        final JsonPath sjpPendingDocumentDeliveryEvent = retrieveDocumentDeliveryEvent(materialId, "sjpStatus", "PENDING");
+        assertThat(sjpPendingDocumentDeliveryEvent.getString("caseId"), equalTo(caseId));
+        assertThat(sjpPendingDocumentDeliveryEvent.getString("sjpCorrelationId"), equalTo(expectedSjpCorrelationId));
+
+        //When: the material context stores the document (material.material-added), which also triggers the D20 email
+        publishMaterialAddedEvent(driverNotified.getMaterialId(), UUID.fromString(USER_GROUP));
+
+        //Then: material SUCCESS with the email PENDING, and the email goes out carrying its clientContext
+        final JsonPath materialSuccessDocumentDeliveryEvent = retrieveMaterialSuccessDocumentDeliveryEvent(materialId);
+        assertThat(materialSuccessDocumentDeliveryEvent.getString("emailStatus"), equalTo("PENDING"));
+        verifyEmailNotificationSent(clientContext);
+        assertNoDocumentDeletedFromBlob(materialId);
+
+        //When: notificationnotify reports the email sent
+        publishNotificationSentEvent(clientContext, UUID.fromString(USER_GROUP));
+
+        //Then: the email is SUCCESS, but SJP has not filed the document yet - it still reads it from the blob
+        retrieveEmailStatusDocumentDeliveryEvent(materialId, "SUCCESS");
+        assertNoDocumentDeletedFromBlob(materialId);
+
+        //When: SJP files the document on the case (public.sjp.case-document-added echoes the blob uri)
+        publishCaseDocumentAddedEvent(caseId, expectedSjpCorrelationId, destinationFileUri, UUID.fromString(USER_GROUP));
+
+        //Then: sjp SUCCESS completes the delivery - material, email and sjp all SUCCESS
+        retrieveDocumentDeliveryEvent(materialId, "sjpStatus", "SUCCESS");
+
+        final String queryUserId = randomUUID().toString();
+        stubUser(queryUserId);
+        pollForResponse("/dvla-document-deliveries?caseId=" + caseId,
+                DVLA_DOCUMENT_DELIVERY_MEDIA_TYPE, queryUserId,
+                allOf(
+                        withJsonPath("$.documentDeliveries[0].materialId", equalTo(materialId)),
+                        withJsonPath("$.documentDeliveries[0].caseId", equalTo(caseId)),
+                        withJsonPath("$.documentDeliveries[0].materialStatus", equalTo("SUCCESS")),
+                        withJsonPath("$.documentDeliveries[0].emailStatus", equalTo("SUCCESS")),
+                        withJsonPath("$.documentDeliveries[0].sjpStatus", equalTo("SUCCESS")),
+                        withJsonPath("$.documentDeliveries[0].sjpCorrelationId", equalTo(expectedSjpCorrelationId))
+                ));
+
+        //Then: only now are the blobs deleted
+        verifyDocumentDeletedFromBlob(materialId, payloadFileUri, destinationFileUri);
+    }
+
+    // matched on materialId, as other materials' deletions may be on the same consumer
+    private void assertNoDocumentDeletedFromBlob(final String materialId) {
+        assertThat(retrieveMessage(consumerForDocumentDeletedFromBlob, isJson(withJsonPath("$.materialId", equalTo(materialId)))),
+                is(nullValue()));
     }
 
     // matched on materialId, as other materials' deletions may be on the same consumer
@@ -621,14 +788,22 @@ public class DvlaNotificationIT extends AbstractIntegrationTest {
     // the material SUCCESS record carries no caseId (DocumentDelivery.material), so it is picked out
     // by its own materialId and status instead
     private JsonPath retrieveMaterialSuccessDocumentDeliveryEvent(final String materialId) {
+        return retrieveDocumentDeliveryEvent(materialId, "materialStatus", "SUCCESS");
+    }
+
+    private JsonPath retrieveEmailStatusDocumentDeliveryEvent(final String materialId, final String emailStatus) {
+        return retrieveDocumentDeliveryEvent(materialId, "emailStatus", emailStatus);
+    }
+
+    // drains the consumer until this material's record with the given status field value
+    private JsonPath retrieveDocumentDeliveryEvent(final String materialId, final String statusField, final String status) {
         JsonPath event;
         do {
             event = retrieveMessage(consumerForDvlaDocumentDeliveryRecorded);
             assertThat(event, is(notNullValue()));
-        } while (!(materialId.equals(event.getString("materialId")) && "SUCCESS".equals(event.getString("materialStatus"))));
+        } while (!(materialId.equals(event.getString("materialId")) && status.equals(event.getString(statusField))));
         return event;
     }
-
 
     private String getPayload(String fileName) {
         String body = FileUtil.getPayload(fileName);

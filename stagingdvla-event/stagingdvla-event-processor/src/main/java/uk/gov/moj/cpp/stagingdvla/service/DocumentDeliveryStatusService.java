@@ -9,6 +9,7 @@ import uk.gov.justice.services.core.annotation.ServiceComponent;
 import uk.gov.justice.services.core.sender.Sender;
 import uk.gov.justice.services.messaging.Envelope;
 import uk.gov.justice.services.messaging.Metadata;
+import uk.gov.moj.cpp.stagingdvla.domain.constants.DvlaDocumentDeliveryEmailStatus;
 import uk.gov.moj.cpp.stagingdvla.domain.constants.DvlaDocumentDeliveryMaterialStatus;
 
 import java.util.UUID;
@@ -33,6 +34,7 @@ public class DocumentDeliveryStatusService {
         addIfPresent(payload, "caseId", documentDelivery.caseId());
         addIfPresent(payload, "sjpCorrelationId", documentDelivery.sjpCorrelationId());
         addIfPresent(payload, "sjpStatus", documentDelivery.sjpStatus());
+        addIfPresent(payload, "emailStatus", documentDelivery.emailStatus());
 
         sender.sendAsAdmin(Envelope.envelopeFrom(
                 metadataFrom(originatingMetadata)
@@ -52,20 +54,30 @@ public class DocumentDeliveryStatusService {
                                    String documentBlobUri,
                                    UUID caseId,
                                    UUID sjpCorrelationId,
-                                   DvlaDocumentDeliveryMaterialStatus sjpStatus) {
+                                   DvlaDocumentDeliveryMaterialStatus sjpStatus,
+                                   DvlaDocumentDeliveryEmailStatus emailStatus) {
 
         public static DocumentDelivery material(final UUID materialId, final DvlaDocumentDeliveryMaterialStatus materialStatus) {
-            return new DocumentDelivery(materialId, materialStatus, null, null, null, null, null);
+            return new DocumentDelivery(materialId, materialStatus, null, null, null, null, null, null);
         }
 
         public static DocumentDelivery material(final UUID materialId, final DvlaDocumentDeliveryMaterialStatus materialStatus,
                                                 final String payloadBlobUri, final String documentBlobUri) {
-            return new DocumentDelivery(materialId, materialStatus, payloadBlobUri, documentBlobUri, null, null, null);
+            return material(materialId, materialStatus, payloadBlobUri, documentBlobUri, null);
+        }
+
+        public static DocumentDelivery material(final UUID materialId, final DvlaDocumentDeliveryMaterialStatus materialStatus,
+                                                final String payloadBlobUri, final String documentBlobUri, final UUID caseId) {
+            return new DocumentDelivery(materialId, materialStatus, payloadBlobUri, documentBlobUri, caseId, null, null, null);
         }
 
         public static DocumentDelivery sjpCase(final UUID materialId, final UUID caseId, final UUID sjpCorrelationId,
                                                final DvlaDocumentDeliveryMaterialStatus sjpStatus) {
-            return new DocumentDelivery(materialId, null, null, null, caseId, sjpCorrelationId, sjpStatus);
+            return new DocumentDelivery(materialId, null, null, null, caseId, sjpCorrelationId, sjpStatus, null);
+        }
+
+        public static DocumentDelivery email(final UUID materialId, final DvlaDocumentDeliveryEmailStatus emailStatus) {
+            return new DocumentDelivery(materialId, null, null, null, null, null, null, emailStatus);
         }
     }
 }

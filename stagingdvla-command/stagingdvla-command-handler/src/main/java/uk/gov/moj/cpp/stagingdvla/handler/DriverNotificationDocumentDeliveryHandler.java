@@ -52,7 +52,8 @@ public class DriverNotificationDocumentDeliveryHandler {
                 documentDelivery.getDocumentBlobUri(),
                 documentDelivery.getCaseId(),
                 documentDelivery.getSjpCorrelationId(),
-                documentDelivery.getSjpStatus());
+                documentDelivery.getSjpStatus(),
+                documentDelivery.getEmailStatus());
 
         if (nonNull(events)) {
             appendEventsToStream(envelope, eventStream, events);

@@ -276,11 +276,13 @@ public class QueryDrivingLicencesIT extends AbstractIntegrationTest {
                 allOf(
                         withJsonPath("$.documentDeliveries[0].materialId", equalTo(materialId.toString())),
                         withJsonPath("$.documentDeliveries[0].materialStatus", equalTo("SUCCESS")),
+                        // an audit report is never emailed to DVLA, so its delivery needs no email
+                        withJsonPath("$.documentDeliveries[0].emailStatus", equalTo("NOT_REQUIRED")),
                         withJsonPath("$.documentDeliveries[0].payloadBlobUri", equalTo(payloadFileUri)),
                         withJsonPath("$.documentDeliveries[0].documentBlobUri", equalTo(destinationFileUri))
                 ));
 
-        //Then: material SUCCESS completes the (non-SJP) audit-report delivery, so MaterialAggregate raises
+        //Then: material SUCCESS with no email needed completes the (non-SJP) audit-report delivery, so MaterialAggregate raises
         // document-deleted-from-blob for the report's payload and rendered document blobs
         final JsonPath documentDeletedFromBlob = retrieveMessage(consumerForDocumentDeletedFromBlob,
                 isJson(withJsonPath("$.materialId", equalTo(materialId.toString()))));

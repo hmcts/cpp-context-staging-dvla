@@ -18,6 +18,11 @@ public class NotificationNotifyService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(NotificationNotifyService.class);
 
+    // clientContext is echoed back by notificationnotify on notification-sent / notification-failed;
+    // stagingdvla prefixes its own value so those events can be matched back to the originating material
+    public static final String CLIENT_CONTEXT = "clientContext";
+    public static final String CLIENT_CONTEXT_PREFIX = "STAGINGDVLA_";
+
     private static final String NOTIFICATION_NOTIFY_EMAIL_METADATA_TYPE = "notificationnotify.send-email-notification";
 
     @Inject

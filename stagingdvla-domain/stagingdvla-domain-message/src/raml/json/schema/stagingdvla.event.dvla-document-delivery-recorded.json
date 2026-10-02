@@ -31,6 +31,10 @@
     "sjpStatus": {
       "description": "The SJP status of the material for this case (one of the DvlaDocumentDeliveryMaterialStatus values: PENDING, SUCCESS, FAILED)",
       "type": "string"
+    },
+    "emailStatus": {
+      "description": "The status of the DVLA email notification for this material (one of the DvlaDocumentDeliveryEmailStatus values: NOT_REQUIRED, PENDING, SUCCESS, FAILED)",
+      "type": "string"
     }
   },
   "required": [
