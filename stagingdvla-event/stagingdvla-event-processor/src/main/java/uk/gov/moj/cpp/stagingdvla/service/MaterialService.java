@@ -152,6 +152,18 @@ public class MaterialService {
         sender.send(assembleEnvelopeWithCustomPayloadAndMetaDetails(uploadMaterialPayload, UPLOAD_MATERIAL, userId.toString(), source, processId));
     }
 
+    public void uploadMaterialFromUri(final String fileUri, final UUID materialId, final UUID userId, final String source, final UUID processId) {
+        if (isNull(userId)) {
+            throw new UserNotFoundException(MISSING_USER_ID);
+        }
+        final JsonObject uploadMaterialPayload = createObjectBuilder()
+                .add(MATERIAL_ID, materialId.toString())
+                .add(FILE_URI, fileUri)
+                .build();
+
+        sender.send(assembleEnvelopeWithCustomPayloadAndMetaDetails(uploadMaterialPayload, UPLOAD_MATERIAL, userId.toString(), source, processId));
+    }
+
     public void sendCommandToDeleteMaterial(final JsonEnvelope envelope, final UUID materialId) {
         sender.send(
                 Enveloper.envelop(createObjectBuilder()

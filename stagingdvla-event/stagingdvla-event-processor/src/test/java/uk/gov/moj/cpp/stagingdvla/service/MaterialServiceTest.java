@@ -125,4 +125,34 @@ public class MaterialServiceTest {
         assertThrows(UserNotFoundException.class, () -> service.uploadMaterialFromUri(DOCUMENT_URI, randomUUID(), (UUID) null));
     }
 
+    @Test
+    public void shouldSendFileUriWithOriginatorAndProcessIdMetadataForABlobAddressedAuditReport() {
+        final UUID materialId = randomUUID();
+        final UUID userId = randomUUID();
+        final UUID processId = randomUUID();
+
+        service.uploadMaterialFromUri(DOCUMENT_URI, materialId, userId, MaterialService.AUDIT_REPORT_ORIGINATOR_VALUE, processId);
+
+        verify(sender).send(jsonEnvelopeArgumentCaptor.capture());
+
+        final JsonObject payload = jsonEnvelopeArgumentCaptor.getValue().payloadAsJsonObject();
+        assertThat(payload.getString("fileUri"), is(DOCUMENT_URI));
+        assertThat(payload.getString("materialId"), is(materialId.toString()));
+        assertThat(payload.containsKey("fileServiceId"), is(false));
+
+        // originator/processId travel in _metadata so material echoes them back on
+        // material.material-added, where MaterialAddedProcessor routes on them
+        final JsonObject metadata = payload.getJsonObject("_metadata");
+        assertThat(metadata.getString("name"), is(MaterialService.UPLOAD_MATERIAL));
+        assertThat(metadata.getString("originator"), is(MaterialService.AUDIT_REPORT_ORIGINATOR_VALUE));
+        assertThat(metadata.getString("processId"), is(processId.toString()));
+        assertThat(metadata.getJsonObject("context").getString("user"), is(userId.toString()));
+    }
+
+    @Test
+    public void shouldRejectAUriUploadWithOriginatorWhenNoUserId() {
+        assertThrows(UserNotFoundException.class, () -> service.uploadMaterialFromUri(DOCUMENT_URI, randomUUID(), null,
+                MaterialService.AUDIT_REPORT_ORIGINATOR_VALUE, randomUUID()));
+    }
+
 }

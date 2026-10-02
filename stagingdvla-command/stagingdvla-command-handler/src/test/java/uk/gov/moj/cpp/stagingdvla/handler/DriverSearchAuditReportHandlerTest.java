@@ -4,6 +4,8 @@ import static java.util.UUID.randomUUID;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.lenient;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static uk.gov.justice.services.core.annotation.Component.COMMAND_HANDLER;
@@ -145,6 +147,48 @@ public class DriverSearchAuditReportHandlerTest {
         handler.handleDriverSearchAuditReportCreated(envelope);
         final ArgumentCaptor<Stream> argumentCaptor = ArgumentCaptor.forClass(Stream.class);
         (verify(eventStream)).append(argumentCaptor.capture());
+    }
+
+    @Test
+    public void shouldCreateAuditReportFromFileServiceIdWhenNoPayloadFileUri() throws Exception {
+        final AuditReportAggregate aggregateSpy = spy(new AuditReportAggregate());
+        when(aggregateService.get(eventStream, AuditReportAggregate.class)).thenReturn(aggregateSpy);
+        final DriverRecordSearchAuditReportCreated reportCreated = DriverRecordSearchAuditReportCreated.driverRecordSearchAuditReportCreated()
+                .withId(randomUUID())
+                .withReportFileId(randomUUID().toString())
+                .build();
+
+        handler.handleDriverSearchAuditReportCreated(Envelope.envelopeFrom(auditReportCreatedMetadata(), reportCreated));
+
+        verify(aggregateSpy).auditReportCreated(reportCreated);
+        verify(aggregateSpy, never()).auditReportCreatedForBlobUri(any());
+        verify(eventStream).append(any());
+    }
+
+    @Test
+    public void shouldCreateAuditReportFromBlobUriWhenPayloadFileUriPresent() throws Exception {
+        final AuditReportAggregate aggregateSpy = spy(new AuditReportAggregate());
+        when(aggregateService.get(eventStream, AuditReportAggregate.class)).thenReturn(aggregateSpy);
+        final String payloadFileUri = "https://filestore.blob.core.windows.net/stagingdvla/DriverAuditReport.json";
+        final DriverRecordSearchAuditReportCreated reportCreated = DriverRecordSearchAuditReportCreated.driverRecordSearchAuditReportCreated()
+                .withId(randomUUID())
+                .withPayloadFileUri(payloadFileUri)
+                .withDestinationFileUri(payloadFileUri + ".csv")
+                .build();
+
+        handler.handleDriverSearchAuditReportCreated(Envelope.envelopeFrom(auditReportCreatedMetadata(), reportCreated));
+
+        verify(aggregateSpy).auditReportCreatedForBlobUri(reportCreated);
+        verify(aggregateSpy, never()).auditReportCreated(any());
+        verify(eventStream).append(any());
+    }
+
+    private static Metadata auditReportCreatedMetadata() {
+        return Envelope.metadataBuilder()
+                .withName(STAGINGDVLA_COMMAND_HANDLER_DRIVER_SEARCH_AUDIT_REPORT_CREATED)
+                .withId(randomUUID())
+                .withUserId(randomUUID().toString())
+                .build();
     }
 
 

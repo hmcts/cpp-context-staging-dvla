@@ -2,6 +2,7 @@ package uk.gov.moj.cpp.stagingdvla.processor;
 
 import static java.lang.String.join;
 import static java.time.LocalDate.parse;
+import static java.util.Objects.isNull;
 import static java.util.UUID.fromString;
 import static uk.gov.justice.services.messaging.JsonObjects.createArrayBuilder;
 import static uk.gov.justice.services.messaging.JsonObjects.createObjectBuilder;
@@ -122,12 +123,17 @@ public class DriverSearchAuditReportEventProcessor {
                     .convert(event.payloadAsJsonObject(), DriverSearchAuditReportCreated.class);
 
             final UUID reportId = auditReportCreated.getId();
-            final String fileServiceId = auditReportCreated.getReportFileId();
             final Optional<UUID> contextSystemUserId = userProvider.getContextSystemUserId();
+            if(isNull(auditReportCreated.getPayloadFileUri())) {
+                final String fileServiceId = auditReportCreated.getReportFileId();
 
-            LOGGER.info("Sending material.command.upload-file for reportId: {}", reportId);
-            materialService.uploadMaterial(fromString(fileServiceId), auditReportCreated.getMaterialId(),
-                    contextSystemUserId.orElse(null), AUDIT_REPORT_ORIGINATOR_VALUE, reportId);
+                LOGGER.info("Sending material.command.upload-file for reportId: {}", reportId);
+                materialService.uploadMaterial(fromString(fileServiceId), auditReportCreated.getMaterialId(),
+                        contextSystemUserId.orElse(null), AUDIT_REPORT_ORIGINATOR_VALUE, reportId);
+            } else {
+                materialService.uploadMaterialFromUri(auditReportCreated.getDestinationFileUri(), auditReportCreated.getMaterialId(),
+                        contextSystemUserId.orElse(null), AUDIT_REPORT_ORIGINATOR_VALUE, reportId);
+            }
         }
     }
 

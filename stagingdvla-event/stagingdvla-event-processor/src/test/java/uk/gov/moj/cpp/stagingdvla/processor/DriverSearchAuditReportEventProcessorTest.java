@@ -304,6 +304,37 @@ public class DriverSearchAuditReportEventProcessorTest {
     }
 
     @Test
+    public void shouldUploadMaterialFromDestinationFileUriWhenDriverSearchAuditReportCreatedForAzureBlob() {
+        //given
+        final UUID id = randomUUID();
+        final UUID systemUserId = randomUUID();
+        final String payloadFileUri = "https://filestore.blob.core.windows.net/stagingdvla/DriverAuditReport.json";
+        final String destinationFileUri = payloadFileUri + ".csv";
+        final DriverSearchAuditReportCreated driverSearchAuditReportCreated = DriverSearchAuditReportCreated
+                .driverSearchAuditReportCreated()
+                .withId(id)
+                .withMaterialId(id)
+                .withPayloadFileUri(payloadFileUri)
+                .withDestinationFileUri(destinationFileUri)
+                .build();
+
+        final JsonObject searchAuditReportCreated = createObjectBuilder().add("id", id.toString()).build();
+        final JsonEnvelope requestMessage = envelopeFrom(
+                metadataWithRandomUUID("stagingdvla.event.driver-search-audit-report-created"),
+                searchAuditReportCreated);
+        // when
+        when(jsonObjectToObjectConverter.convert(searchAuditReportCreated, DriverSearchAuditReportCreated.class)).thenReturn(driverSearchAuditReportCreated);
+        when(userProvider.getContextSystemUserId()).thenReturn(Optional.of(systemUserId));
+
+        // then
+        driverSearchAuditReportEventProcessor.processDriverSearchAuditReportCreated(requestMessage);
+
+        verify(materialService).uploadMaterialFromUri(eq(destinationFileUri), eq(id), eq(systemUserId), eq(MaterialService.AUDIT_REPORT_ORIGINATOR_VALUE), eq(id));
+        verify(materialService, never()).uploadMaterial(any(UUID.class), any(UUID.class), any(UUID.class), anyString(), any(UUID.class));
+        verifyNoInteractions(sender);
+    }
+
+    @Test
     public void shouldProcessDriverSearchAuditReportStoredEvent() {
         // given
         final UUID id = randomUUID();
