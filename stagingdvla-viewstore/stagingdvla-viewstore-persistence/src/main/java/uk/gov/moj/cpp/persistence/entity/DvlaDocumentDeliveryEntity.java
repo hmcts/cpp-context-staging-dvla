@@ -41,6 +41,9 @@ public class DvlaDocumentDeliveryEntity implements Serializable {
     @Column(name = "sjp_status")
     private String sjpStatus;
 
+    @Column(name = "email_status")
+    private String emailStatus;
+
     public DvlaDocumentDeliveryEntity() {
     }
 
@@ -49,6 +52,11 @@ public class DvlaDocumentDeliveryEntity implements Serializable {
     }
 
     public DvlaDocumentDeliveryEntity(final UUID materialId, final ZonedDateTime createdAt, final String materialStatus, final String payloadBlobUri, final String documentBlobUri, final UUID caseId, final UUID sjpCorrelationId, final String sjpStatus) {
+        this(materialId, createdAt, materialStatus, payloadBlobUri, documentBlobUri, caseId, sjpCorrelationId, sjpStatus, null);
+    }
+
+    @SuppressWarnings("squid:S00107")
+    public DvlaDocumentDeliveryEntity(final UUID materialId, final ZonedDateTime createdAt, final String materialStatus, final String payloadBlobUri, final String documentBlobUri, final UUID caseId, final UUID sjpCorrelationId, final String sjpStatus, final String emailStatus) {
         this.materialId = materialId;
         this.createdAt = createdAt;
         this.materialStatus = materialStatus;
@@ -57,6 +65,7 @@ public class DvlaDocumentDeliveryEntity implements Serializable {
         this.caseId = caseId;
         this.sjpCorrelationId = sjpCorrelationId;
         this.sjpStatus = sjpStatus;
+        this.emailStatus = emailStatus;
     }
 
     public UUID getMaterialId() {
@@ -121,5 +130,13 @@ public class DvlaDocumentDeliveryEntity implements Serializable {
 
     public void setSjpStatus(final String sjpStatus) {
         this.sjpStatus = sjpStatus;
+    }
+
+    public String getEmailStatus() {
+        return emailStatus;
+    }
+
+    public void setEmailStatus(final String emailStatus) {
+        this.emailStatus = emailStatus;
     }
 }

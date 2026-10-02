@@ -7,6 +7,7 @@ import static org.mockito.Mockito.verify;
 import static uk.gov.justice.services.test.utils.core.messaging.MetadataBuilderFactory.metadataWithRandomUUID;
 import static uk.gov.moj.cpp.stagingdvla.domain.constants.DvlaDocumentDeliveryMaterialStatus.FAILED;
 import static uk.gov.moj.cpp.stagingdvla.domain.constants.DvlaDocumentDeliveryMaterialStatus.PENDING;
+import static uk.gov.moj.cpp.stagingdvla.service.DocumentDeliveryStatusService.DocumentDelivery.email;
 import static uk.gov.moj.cpp.stagingdvla.service.DocumentDeliveryStatusService.DocumentDelivery.material;
 import static uk.gov.moj.cpp.stagingdvla.service.DocumentDeliveryStatusService.DocumentDelivery.sjpCase;
 import static uk.gov.moj.cpp.stagingdvla.service.DocumentDeliveryStatusService.STAGINGDVLA_COMMAND_HANDLER_DRIVER_NOTIFICATION_DOCUMENT_DELIVERY;
@@ -14,6 +15,7 @@ import static uk.gov.moj.cpp.stagingdvla.service.DocumentDeliveryStatusService.S
 import uk.gov.justice.services.core.sender.Sender;
 import uk.gov.justice.services.messaging.Envelope;
 import uk.gov.justice.services.messaging.Metadata;
+import uk.gov.moj.cpp.stagingdvla.domain.constants.DvlaDocumentDeliveryEmailStatus;
 
 import java.util.UUID;
 
@@ -86,6 +88,19 @@ public class DocumentDeliveryStatusServiceTest {
         assertThat(payload.getString("sjpStatus"), is("PENDING"));
         assertThat(payload.containsKey("materialStatus"), is(false));
         assertThat(payload.size(), is(4));
+    }
+
+    @Test
+    public void shouldRecordEmailStatus() {
+        final UUID materialId = randomUUID();
+
+        documentDeliveryStatusService.record(originatingMetadata,
+                email(materialId, DvlaDocumentDeliveryEmailStatus.SUCCESS));
+
+        final JsonObject payload = capturedEnvelope().payload();
+        assertThat(payload.getString("materialId"), is(materialId.toString()));
+        assertThat(payload.getString("emailStatus"), is("SUCCESS"));
+        assertThat(payload.size(), is(2));
     }
 
     private Envelope<JsonObject> capturedEnvelope() {

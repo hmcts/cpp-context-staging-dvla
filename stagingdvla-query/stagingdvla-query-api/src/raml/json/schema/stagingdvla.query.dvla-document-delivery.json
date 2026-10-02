@@ -57,6 +57,9 @@
         },
         "sjpStatus": {
           "type": "string"
+        },
+        "emailStatus": {
+          "type": "string"
         }
       },
       "required": [

@@ -19,10 +19,13 @@ import static uk.gov.moj.cpp.stagingdvla.notify.util.DrivingConvictionTransformU
 import static uk.gov.moj.cpp.stagingdvla.notify.util.DrivingConvictionTransformUtil.hasMultipleConvictionDates;
 import static uk.gov.moj.cpp.stagingdvla.service.DocumentGeneratorService.DVLA_DOCUMENT_ORDER;
 import static uk.gov.moj.cpp.stagingdvla.service.DocumentGeneratorService.DVLA_DOCUMENT_TEMPLATE_NAME;
+import static uk.gov.moj.cpp.stagingdvla.service.NotificationNotifyService.CLIENT_CONTEXT;
+import static uk.gov.moj.cpp.stagingdvla.service.NotificationNotifyService.CLIENT_CONTEXT_PREFIX;
 
 import uk.gov.justice.core.courts.EmailNotificationSent;
 import uk.gov.justice.core.courts.Personalisation;
 import uk.gov.justice.core.courts.notification.EmailChannel;
+import uk.gov.justice.cpp.stagingdvla.event.Cases;
 import uk.gov.justice.cpp.stagingdvla.event.DriverNotified;
 import uk.gov.justice.services.common.converter.JsonObjectToObjectConverter;
 import uk.gov.justice.services.common.converter.ObjectToJsonObjectConverter;
@@ -66,6 +69,7 @@ public class DriverNotifiedEventProcessor {
     private static final String MATERIAL_URL = "materialUrl";
     private static final String PERSONALISATION = "personalisation";
     private static final String SUBJECT = "subject";
+    private static final String CODE_FOR_SJP_CASE = "J";
     private static final String EMAIL_SUBJECT = "DVLA Driver Notification - ";
     private static final String NEW_ENDORSEMENT = "New Endorsement - ";
     private static final String UPDATED_ENDORSEMENT = "Updated Endorsement - ";
@@ -135,9 +139,19 @@ public class DriverNotifiedEventProcessor {
                         documentGeneratorService.getMaterialIdAmendedFileName(DVLA_DOCUMENT_ORDER, driverNotified.getMaterialId().toString()),
                         DVLA_DOCUMENT_TEMPLATE_NAME,
                         ConversionFormat.PDF,
-                        DVLA_DOCUMENT_ORDER);
+                        DVLA_DOCUMENT_ORDER,
+                        sjpCaseIdOf(driverNotified));
             }
         }
+    }
+
+    // same SJP test SystemDocGeneratorEventProcessor applies when filing the document (initiation code "J")
+    private static UUID sjpCaseIdOf(final DriverNotified driverNotified) {
+        return driverNotified.getCases().stream()
+                .filter(c -> CODE_FOR_SJP_CASE.equalsIgnoreCase(c.getInitiationCode()))
+                .map(Cases::getCaseId)
+                .findFirst()
+                .orElse(null);
     }
 
     private boolean containsACaseWithOffence(final DriverNotified driverNotified) {
@@ -209,6 +223,12 @@ public class DriverNotifiedEventProcessor {
         }
         final EmailChannel emailChannel = emailNotification.getDetails().getEmailNotifications().get(0);
         final JsonObjectBuilder notifyObjectBuilder = createObjectBuilder();
+        // only a blob-addressed material has its delivery tracked, so only its email needs the outcome
+        // matched back. Branch on what this material actually carries rather than on the dvlaFileStore
+        // toggle: a document rendered just before a toggle flip still has its delivery tracked
+        if (nonNull(emailNotification.getDetails().getDestinationFileUri())) {
+            notifyObjectBuilder.add(CLIENT_CONTEXT, CLIENT_CONTEXT_PREFIX + emailNotification.getDetails().getMaterialId());
+        }
         notifyObjectBuilder.add(FIELD_NOTIFICATION_ID, randomUUID().toString());
         notifyObjectBuilder.add(FIELD_TEMPLATE_ID, emailChannel.getTemplateId().toString());
         notifyObjectBuilder.add(SEND_TO_ADDRESS, emailChannel.getSendToAddress());

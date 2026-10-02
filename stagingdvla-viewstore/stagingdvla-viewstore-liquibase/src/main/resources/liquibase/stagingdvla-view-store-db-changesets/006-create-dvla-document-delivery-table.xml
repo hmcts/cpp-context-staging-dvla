@@ -25,6 +25,8 @@
             </column>
             <column name="sjp_status" type="VARCHAR(32)">
             </column>
+            <column name="email_status" type="VARCHAR(32)">
+            </column>
         </createTable>
 
         <createIndex tableName="dvla_document_delivery" indexName="dvla_document_delivery_document_blob_uri_idx">
