@@ -36,7 +36,7 @@ import uk.gov.justice.services.fileservice.domain.FileReference;
 import uk.gov.justice.services.messaging.Envelope;
 import uk.gov.justice.services.messaging.JsonEnvelope;
 import uk.gov.justice.services.messaging.Metadata;
-import uk.gov.moj.cpp.material.url.MaterialUrlGenerator;
+import uk.gov.moj.cpp.stagingdvla.material.client.MaterialUrlGenerator;
 import uk.gov.moj.cpp.stagingdvla.SjpDocumentTypes;
 import uk.gov.moj.cpp.stagingdvla.service.ApplicationParameters;
 import uk.gov.moj.cpp.stagingdvla.service.UploadMaterialContext;
