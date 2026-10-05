@@ -130,13 +130,42 @@ public class MaterialAddedProcessorTest {
         assertMaterialSuccessRecorded(materialId);
     }
 
+    @Test
+    public void shouldRecordMaterialFailedForDvlaMaterial() {
+        final UUID materialId = UUID.randomUUID();
+
+        materialAddedProcessor.processFailedToAddMaterialEvent(failedToAddMaterialEventFor(ORIGINATOR_VALUE, materialId));
+
+        assertMaterialStatusRecorded(materialId, "FAILED");
+    }
+
+    @Test
+    public void shouldRecordMaterialFailedForAuditReportMaterial() {
+        final UUID materialId = UUID.randomUUID();
+
+        materialAddedProcessor.processFailedToAddMaterialEvent(failedToAddMaterialEventFor(AUDIT_REPORT_ORIGINATOR_VALUE, materialId));
+
+        assertMaterialStatusRecorded(materialId, "FAILED");
+    }
+
+    @Test
+    public void shouldNotRecordMaterialFailedForOtherOriginator() {
+        materialAddedProcessor.processFailedToAddMaterialEvent(failedToAddMaterialEventFor("sjp", UUID.randomUUID()));
+
+        verifyNoInteractions(sender);
+    }
+
     private void assertMaterialSuccessRecorded(final UUID materialId) {
+        assertMaterialStatusRecorded(materialId, "SUCCESS");
+    }
+
+    private void assertMaterialStatusRecorded(final UUID materialId, final String materialStatus) {
         verify(sender).sendAsAdmin(adminEnvelopeCaptor.capture());
         final DefaultEnvelope documentDeliveryEnvelope = (DefaultEnvelope) adminEnvelopeCaptor.getValue();
         assertThat(documentDeliveryEnvelope.metadata().name(), is("stagingdvla.command.handler.driver-notification-document-delivery"));
         final JsonObject payload = (JsonObject) documentDeliveryEnvelope.payload();
         assertThat(payload.getString("materialId"), is(materialId.toString()));
-        assertThat(payload.getString("materialStatus"), is("SUCCESS"));
+        assertThat(payload.getString("materialStatus"), is(materialStatus));
     }
 
     private JsonEnvelope materialAddedEventFor(final String source, final UUID materialId) {
@@ -155,6 +184,25 @@ public class MaterialAddedProcessorTest {
                 metadataBuilder.build(),
                 createObjectBuilder()
                         .add("materialId", materialId.toString())
+                        .build());
+    }
+
+    private JsonEnvelope failedToAddMaterialEventFor(final String source, final UUID materialId) {
+        final JsonObject metaDataJson = createObjectBuilder()
+                .add(ID, UUID.randomUUID().toString())
+                .add(NAME, "public.events.material.failed-to-add-material")
+                .add(SOURCE, source)
+                .add(CONTEXT, createObjectBuilder()
+                        .add(USER_ID, UUID.randomUUID().toString()))
+                .build();
+
+        return envelopeFrom(
+                metadataFrom(metaDataJson).build(),
+                createObjectBuilder()
+                        .add("materialId", materialId.toString())
+                        .add("fileServiceId", UUID.randomUUID().toString())
+                        .add("failedTime", "2026-10-05T10:00:00Z")
+                        .add("errorMessage", "upload failed")
                         .build());
     }
 
