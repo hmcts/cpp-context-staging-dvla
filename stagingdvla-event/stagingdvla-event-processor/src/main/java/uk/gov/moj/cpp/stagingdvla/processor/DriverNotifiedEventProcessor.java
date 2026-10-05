@@ -35,19 +35,15 @@ import uk.gov.justice.services.core.featurecontrol.FeatureControlGuard;
 import uk.gov.justice.services.core.sender.Sender;
 import uk.gov.justice.services.messaging.Envelope;
 import uk.gov.justice.services.messaging.JsonEnvelope;
-import uk.gov.moj.cpp.material.url.MaterialUrlGenerator;
 import uk.gov.moj.cpp.stagingdvla.exception.NotifyDrivingConvictionException;
 import uk.gov.moj.cpp.stagingdvla.notify.azure.DvlaApimConfig;
 import uk.gov.moj.cpp.stagingdvla.notify.driving.conviction.NotifyDrivingConvictionResponse;
-import uk.gov.moj.cpp.stagingdvla.service.ApplicationParameters;
 import uk.gov.moj.cpp.stagingdvla.service.ConversionFormat;
 import uk.gov.moj.cpp.stagingdvla.service.DocumentGeneratorService;
 import uk.gov.moj.cpp.stagingdvla.service.NotificationNotifyService;
 import uk.gov.moj.cpp.stagingdvla.service.NotifyDrivingConvictionService;
 import uk.gov.moj.cpp.stagingdvla.service.scheduler.NotifyDrivingConvictionRetryScheduler;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -70,10 +66,6 @@ public class DriverNotifiedEventProcessor {
     private static final String PERSONALISATION = "personalisation";
     private static final String SUBJECT = "subject";
     private static final String CODE_FOR_SJP_CASE = "J";
-    private static final String EMAIL_SUBJECT = "DVLA Driver Notification - ";
-    private static final String NEW_ENDORSEMENT = "New Endorsement - ";
-    private static final String UPDATED_ENDORSEMENT = "Updated Endorsement - ";
-    private static final String REMOVAL_OF_ENDORSEMENT = "Removal of Endorsement - ";
 
     @Inject
     private Sender sender;
@@ -88,13 +80,7 @@ public class DriverNotifiedEventProcessor {
     private DocumentGeneratorService documentGeneratorService;
 
     @Inject
-    private ApplicationParameters applicationParameters;
-
-    @Inject
     private NotificationNotifyService notificationNotifyService;
-
-    @Inject
-    private MaterialUrlGenerator materialUrlGenerator;
 
     @Inject
     private NotifyDrivingConvictionService notifyDrivingConvictionService;
@@ -237,47 +223,6 @@ public class DriverNotifiedEventProcessor {
                 .add(SUBJECT, getPersonalisationValue(emailChannel.getPersonalisation()))
                 .build());
         this.notificationNotifyService.sendEmailNotification(envelope, notifyObjectBuilder.build());
-    }
-
-    private String getEmailAddress(final DriverNotified driverNotified) {
-        if (isNotEmpty(driverNotified.getRemovedEndorsements()) || isNotEmpty(driverNotified.getUpdatedEndorsements())) {
-            return applicationParameters.getDvlaEmailAddress2();
-        } else {
-            return applicationParameters.getDvlaEmailAddress1();
-        }
-    }
-
-    private String getEmailSubject(final DriverNotified driverNotified) {
-        final StringBuilder sb = new StringBuilder(EMAIL_SUBJECT);
-        if (isNotEmpty(driverNotified.getRemovedEndorsements())) {
-            sb.append(REMOVAL_OF_ENDORSEMENT);
-        } else if (isNotEmpty(driverNotified.getUpdatedEndorsements())) {
-            sb.append(UPDATED_ENDORSEMENT);
-        } else {
-            sb.append(NEW_ENDORSEMENT);
-        }
-        sb.append(driverNotified.getDefendant().getLastName());
-        sb.append(", ");
-        sb.append(driverNotified.getDefendant().getFirstName());
-        return sb.toString();
-    }
-
-    private List<EmailChannel> getEmailNotification(final DriverNotified driverNotified) {
-        final String templateId = applicationParameters.getDvlaEmailTemplateId();
-        final String materialUrl = materialUrlGenerator.pdfFileStreamUrlFor(driverNotified.getMaterialId());
-        final List<EmailChannel> emailNotifications = new ArrayList<>();
-        final EmailChannel emailChannel = EmailChannel.emailChannel()
-                .withMaterialUrl(materialUrl)
-                .withPersonalisation(buildPersonalisation(getEmailSubject(driverNotified)))
-                .withSendToAddress(getEmailAddress(driverNotified))
-                .withTemplateId(fromString(templateId)).build();
-        emailNotifications.add(emailChannel);
-        return emailNotifications;
-    }
-
-    private Personalisation buildPersonalisation(final String subject) {
-        return Personalisation.personalisation()
-                .withAdditionalProperty(SUBJECT, subject).build();
     }
 
     private String getPersonalisationValue(final Personalisation personalisation) {

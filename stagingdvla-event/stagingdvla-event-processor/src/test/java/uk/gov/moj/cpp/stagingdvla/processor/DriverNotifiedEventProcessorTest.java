@@ -99,12 +99,6 @@ public class DriverNotifiedEventProcessorTest {
     private ObjectToJsonObjectConverter objectToJsonObjectConverter;
 
     @Mock
-    private ApplicationParameters applicationParameters;
-
-    @Mock
-    private MaterialUrlGenerator materialUrlGenerator;
-
-    @Mock
     private NotifyDrivingConvictionService notifyDrivingConvictionService;
 
     @Mock
