@@ -70,5 +70,8 @@ public class DvlaDocumentDeliveryEventListener {
         if (nonNull(recorded.getSjpStatus())) {
             entity.setSjpStatus(recorded.getSjpStatus());
         }
+        if (nonNull(recorded.getEmailStatus())) {
+            entity.setEmailStatus(recorded.getEmailStatus());
+        }
     }
 }

@@ -8,7 +8,8 @@
       "documentBlobUri": "document/blob/uri",
       "caseId": "c44fa9bb-dc36-4375-83a9-ff1bc4cd4374",
       "sjpCorrelationId": "d44fa9bb-dc36-4375-83a9-ff1bc4cd4374",
-      "sjpStatus": "AWAITING_RESULT"
+      "sjpStatus": "AWAITING_RESULT",
+      "emailStatus": "SUCCESS"
     },
     {
       "materialId": "e44fa9bb-dc36-4375-83a9-ff1bc4cd4374",
@@ -18,7 +19,8 @@
       "documentBlobUri": null,
       "caseId": null,
       "sjpCorrelationId": null,
-      "sjpStatus": null
+      "sjpStatus": null,
+      "emailStatus": "PENDING"
     }
   ],
   "pageNumber": 1,

@@ -90,6 +90,20 @@ class DvlaDocumentDeliveryServiceTest {
     }
 
     @Test
+    void shouldReturnDeliveryByMaterialIdWithItsEmailStatus() {
+        final UUID materialId = randomUUID();
+        final DvlaDocumentDeliveryEntity delivery = new DvlaDocumentDeliveryEntity(materialId, now(), "SUCCESS", "payload/uri", "document/uri",
+                null, null, null, "SUCCESS");
+
+        when(dvlaDocumentDeliveryRepository.findOptionalBy(materialId)).thenReturn(Optional.of(delivery));
+
+        final DvlaDocumentDeliveryResponse response = service.findDocumentDeliveries(
+                new DvlaDocumentDeliveryQueryParameters(materialId.toString(), null, null));
+
+        assertThat(response.getDocumentDeliveries().get(0).getEmailStatus(), equalTo("SUCCESS"));
+    }
+
+    @Test
     void shouldReturnEmptyWhenMaterialIdNotFound() {
         final UUID materialId = randomUUID();
         when(dvlaDocumentDeliveryRepository.findOptionalBy(materialId)).thenReturn(Optional.empty());

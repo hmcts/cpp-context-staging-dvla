@@ -95,7 +95,8 @@ public class DvlaDocumentDeliveryService {
     private DvlaDocumentDeliveryView toView(final DvlaDocumentDeliveryEntity delivery) {
         return new DvlaDocumentDeliveryView(delivery.getMaterialId(), delivery.getCreatedAt(), delivery.getMaterialStatus(),
                 delivery.getPayloadBlobUri(), delivery.getDocumentBlobUri(),
-                delivery.getCaseId(), delivery.getSjpCorrelationId(), delivery.getSjpStatus());
+                delivery.getCaseId(), delivery.getSjpCorrelationId(), delivery.getSjpStatus(),
+                delivery.getEmailStatus());
     }
 
     private UUID parseUuid(final String paramName, final String value) {

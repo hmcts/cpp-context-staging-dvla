@@ -134,9 +134,81 @@ public class DvlaDocumentDeliveryEventListenerTest {
         verifyNoMoreInteractions(dvlaDocumentDeliveryRepository);
     }
 
+    @Test
+    public void shouldInsertNewRecordWithEmailStatus() {
+        final JsonEnvelope event = eventFor(recordedWith("PENDING", "payload/blob/uri", null, null, null, null, "PENDING"));
+
+        when(dvlaDocumentDeliveryRepository.findBy(MATERIAL_ID)).thenReturn(null);
+
+        dvlaDocumentDeliveryEventListener.handleDvlaDocumentDeliveryRecorded(event);
+
+        verify(dvlaDocumentDeliveryRepository).findBy(MATERIAL_ID);
+        verify(dvlaDocumentDeliveryRepository).save(entityArgumentCaptor.capture());
+
+        final DvlaDocumentDeliveryEntity entity = entityArgumentCaptor.getValue();
+        assertThat(entity.getMaterialId(), is(MATERIAL_ID));
+        assertThat(entity.getMaterialStatus(), is("PENDING"));
+        assertThat(entity.getEmailStatus(), is("PENDING"));
+
+        verifyNoMoreInteractions(dvlaDocumentDeliveryRepository);
+    }
+
+    @Test
+    public void shouldUpdateEmailStatusAndPreserveExistingValues() {
+        final ZonedDateTime existingCreatedAt = now();
+        final DvlaDocumentDeliveryEntity existingEntity = new DvlaDocumentDeliveryEntity(
+                MATERIAL_ID, existingCreatedAt, "SUCCESS", "existing/payload/uri", "existing/document/uri",
+                randomUUID(), randomUUID(), "PENDING", "PENDING");
+
+        final JsonEnvelope event = eventFor(recordedWith(null, null, null, null, null, null, "SUCCESS"));
+
+        when(dvlaDocumentDeliveryRepository.findBy(MATERIAL_ID)).thenReturn(existingEntity);
+
+        dvlaDocumentDeliveryEventListener.handleDvlaDocumentDeliveryRecorded(event);
+
+        verify(dvlaDocumentDeliveryRepository).save(entityArgumentCaptor.capture());
+
+        final DvlaDocumentDeliveryEntity entity = entityArgumentCaptor.getValue();
+        assertThat(entity.getEmailStatus(), is("SUCCESS"));
+        assertThat(entity.getCreatedAt(), is(existingCreatedAt));
+        assertThat(entity.getMaterialStatus(), is("SUCCESS"));
+        assertThat(entity.getPayloadBlobUri(), is("existing/payload/uri"));
+        assertThat(entity.getDocumentBlobUri(), is("existing/document/uri"));
+        assertThat(entity.getCaseId(), is(existingEntity.getCaseId()));
+        assertThat(entity.getSjpCorrelationId(), is(existingEntity.getSjpCorrelationId()));
+        assertThat(entity.getSjpStatus(), is("PENDING"));
+    }
+
+    @Test
+    public void shouldPreserveExistingEmailStatusWhenEventCarriesNone() {
+        final DvlaDocumentDeliveryEntity existingEntity = new DvlaDocumentDeliveryEntity(
+                MATERIAL_ID, now(), "PENDING", "existing/payload/uri", null,
+                null, null, null, "FAILED");
+
+        final JsonEnvelope event = eventFor(recordedWith("SUCCESS", null, null, null, null, null));
+
+        when(dvlaDocumentDeliveryRepository.findBy(MATERIAL_ID)).thenReturn(existingEntity);
+
+        dvlaDocumentDeliveryEventListener.handleDvlaDocumentDeliveryRecorded(event);
+
+        verify(dvlaDocumentDeliveryRepository).save(entityArgumentCaptor.capture());
+
+        final DvlaDocumentDeliveryEntity entity = entityArgumentCaptor.getValue();
+        assertThat(entity.getMaterialStatus(), is("SUCCESS"));
+        assertThat(entity.getEmailStatus(), is("FAILED"));
+    }
+
     private DvlaDocumentDeliveryRecorded recordedWith(final String materialStatus,
                                                         final String payloadBlobUri, final String documentBlobUri,
                                                         final UUID caseId, final UUID sjpCorrelationId, final String sjpStatus) {
+        return recordedWith(materialStatus, payloadBlobUri, documentBlobUri, caseId, sjpCorrelationId, sjpStatus, null);
+    }
+
+    @SuppressWarnings("squid:S00107")
+    private DvlaDocumentDeliveryRecorded recordedWith(final String materialStatus,
+                                                        final String payloadBlobUri, final String documentBlobUri,
+                                                        final UUID caseId, final UUID sjpCorrelationId, final String sjpStatus,
+                                                        final String emailStatus) {
         return DvlaDocumentDeliveryRecorded
                 .dvlaDocumentDeliveryRecorded()
                 .withMaterialId(MATERIAL_ID)
@@ -146,6 +218,7 @@ public class DvlaDocumentDeliveryEventListenerTest {
                 .withCaseId(caseId)
                 .withSjpCorrelationId(sjpCorrelationId)
                 .withSjpStatus(sjpStatus)
+                .withEmailStatus(emailStatus)
                 .build();
     }
 
