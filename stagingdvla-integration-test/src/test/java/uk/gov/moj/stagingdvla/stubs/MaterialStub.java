@@ -33,6 +33,7 @@ public class MaterialStub {
     public static final String UPLOAD_MATERIAL_COMMAND = "/material-service/command/api/rest/material/material";
     public static final String MATERIAL_UPLOAD_COMMAND_TYPE = "material.command.upload-file";
     private static final String MATERIAL_ADDED_EVENT = "material.material-added";
+    private static final String FAILED_TO_ADD_MATERIAL_EVENT = "public.events.material.failed-to-add-material";
     // MaterialAddedProcessor only reacts when metadata.originator == "d20" (MaterialService.
     // ORIGINATOR_VALUE) - the value the real material context echoes back, inherited from the
     // stagingdvla.command.record-nows-material-request that originally asked it to create this material
@@ -86,6 +87,26 @@ public class MaterialStub {
                 .build();
 
         publicEvents.publish(MATERIAL_ADDED_EVENT, metadata, payload);
+    }
+
+    // The failure counterpart of publishMaterialAddedEvent: the real material context raises
+    // public.events.material.failed-to-add-material when it cannot store the file, echoing back the
+    // originator of the request that asked it to (MaterialAddedProcessor only records FAILED for ours)
+    public static void publishFailedToAddMaterialEvent(final UUID materialId, final UUID userId) {
+        final JsonObject metadata = createObjectBuilder()
+                .add("id", UUID.randomUUID().toString())
+                .add("name", FAILED_TO_ADD_MATERIAL_EVENT)
+                .add("originator", ORIGINATOR)
+                .add("context", createObjectBuilder().add("user", userId.toString()))
+                .build();
+
+        final JsonObject payload = createObjectBuilder()
+                .add("materialId", materialId.toString())
+                .add("failedTime", "2026-10-05T10:00:00.000Z")
+                .add("errorMessage", "Failed to upload file")
+                .build();
+
+        publicEvents.publish(FAILED_TO_ADD_MATERIAL_EVENT, metadata, payload);
     }
 
     // The audit-report variant: MaterialAddedProcessor.handleDriverAuditReportUploadedEvent only

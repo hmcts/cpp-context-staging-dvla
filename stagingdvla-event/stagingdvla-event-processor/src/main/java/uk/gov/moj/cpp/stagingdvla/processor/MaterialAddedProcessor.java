@@ -3,6 +3,7 @@ package uk.gov.moj.cpp.stagingdvla.processor;
 import static java.util.UUID.fromString;
 import static uk.gov.justice.services.core.enveloper.Enveloper.envelop;
 import static uk.gov.justice.services.messaging.Envelope.metadataFrom;
+import static uk.gov.moj.cpp.stagingdvla.domain.constants.DvlaDocumentDeliveryMaterialStatus.FAILED;
 import static uk.gov.moj.cpp.stagingdvla.domain.constants.DvlaDocumentDeliveryMaterialStatus.SUCCESS;
 import static uk.gov.moj.cpp.stagingdvla.helper.DriverSearchAuditHelper.MATERIAL_ID;
 import static uk.gov.moj.cpp.stagingdvla.service.DocumentDeliveryStatusService.DocumentDelivery.material;
@@ -20,6 +21,7 @@ import uk.gov.justice.services.core.annotation.ServiceComponent;
 import uk.gov.justice.services.core.sender.Sender;
 import uk.gov.justice.services.messaging.Envelope;
 import uk.gov.justice.services.messaging.JsonEnvelope;
+import uk.gov.moj.cpp.stagingdvla.domain.constants.DvlaDocumentDeliveryMaterialStatus;
 import uk.gov.moj.cpp.stagingdvla.service.DocumentDeliveryStatusService;
 
 import java.util.UUID;
@@ -51,18 +53,34 @@ public class MaterialAddedProcessor {
         LOGGER.info("Received MaterialAddedEvent {}", event.toObfuscatedDebugString());
         if (event.metadata().asJsonObject().containsKey(SOURCE) && ORIGINATOR_VALUE.equalsIgnoreCase(event.metadata().asJsonObject().getString(SOURCE))) {
             processDvlaMaterialNotificationRequest(event);
-            recordMaterialSuccess(event);
+            recordMaterialStatus(event, SUCCESS);
         }
 
         if (event.metadata().asJsonObject().containsKey(SOURCE) && AUDIT_REPORT_ORIGINATOR_VALUE.equalsIgnoreCase(event.metadata().asJsonObject().getString(SOURCE))) {
             handleDriverAuditReportUploadedEvent(event);
-            recordMaterialSuccess(event);
+            recordMaterialStatus(event, SUCCESS);
         }
     }
 
-    private void recordMaterialSuccess(final JsonEnvelope event) {
+    @Handles("public.events.material.failed-to-add-material")
+    public void processFailedToAddMaterialEvent(final JsonEnvelope event) {
+        LOGGER.info("Received FailedToAddMaterialEvent {}", event.toObfuscatedDebugString());
+        // material carries the originator metadata of our add-material request through to the failure
+        if (isRequestedByStagingDvla(event)) {
+            recordMaterialStatus(event, FAILED);
+        }
+    }
+
+    private static boolean isRequestedByStagingDvla(final JsonEnvelope event) {
+        final JsonObject metadata = event.metadata().asJsonObject();
+        return metadata.containsKey(SOURCE)
+                && (ORIGINATOR_VALUE.equalsIgnoreCase(metadata.getString(SOURCE))
+                || AUDIT_REPORT_ORIGINATOR_VALUE.equalsIgnoreCase(metadata.getString(SOURCE)));
+    }
+
+    private void recordMaterialStatus(final JsonEnvelope event, final DvlaDocumentDeliveryMaterialStatus status) {
         documentDeliveryStatusService.record(event.metadata(),
-                material(fromString(event.payloadAsJsonObject().getString(MATERIAL_ID)), SUCCESS));
+                material(fromString(event.payloadAsJsonObject().getString(MATERIAL_ID)), status));
     }
 
     private void handleDriverAuditReportUploadedEvent(final JsonEnvelope event) {

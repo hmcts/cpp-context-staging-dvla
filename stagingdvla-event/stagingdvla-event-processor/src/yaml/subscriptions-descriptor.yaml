@@ -28,6 +28,8 @@ subscriptions_descriptor:
       events:
         - name: material.material-added
           schema_uri: http://justice.gov.uk/json/schemas/domains/public/material/material-added
+        - name: public.events.material.failed-to-add-material
+          schema_uri: http://justice.gov.uk/cps/material/events/public.events.material.failed-to-add-material.json
 
           #System doc generator
         - name: public.systemdocgenerator.events.document-available
