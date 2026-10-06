@@ -29,6 +29,7 @@ import static uk.gov.moj.stagingdvla.stubs.DocumentGeneratorStub.stubGenerateDoc
 import static uk.gov.moj.stagingdvla.stubs.DocumentGeneratorStub.verifyGenerateDocumentStubCommandInvoked;
 import static uk.gov.moj.stagingdvla.stubs.MaterialStub.ORIGINATOR;
 import static uk.gov.moj.stagingdvla.stubs.MaterialStub.awaitMaterialUploadRequest;
+import static uk.gov.moj.stagingdvla.stubs.MaterialStub.publishFailedToAddMaterialEvent;
 import static uk.gov.moj.stagingdvla.stubs.MaterialStub.publishMaterialAddedEvent;
 import static uk.gov.moj.stagingdvla.stubs.MaterialStub.verifyMaterialCreated;
 import static uk.gov.moj.stagingdvla.stubs.NotifyStub.publishNotificationSentEvent;
@@ -284,6 +285,55 @@ public class DvlaNotificationIT extends AbstractIntegrationTest {
         //Then: material SUCCESS with no email needed completes a non-SJP delivery, so MaterialAggregate
         // raises document-deleted-from-blob for the payload and rendered document blobs
         verifyDocumentDeletedFromBlob(materialId, payloadFileUri, destinationFileUri);
+        verifyNoEmailNotificationSent(CLIENT_CONTEXT_PREFIX + materialId);
+    }
+
+    @Test
+    public void shouldRecordMaterialFailedAndKeepBlobsWhenMaterialFailsToAddWithAzureBlob() throws IOException {
+        final ImmutableMap<String, Boolean> features = of("dvlaFileStore", true, "dvlaFileStoreDelete", true);
+        stubFeaturesFor(STAGINGDVLA_CONTEXT, features);
+
+        //Given: a driver notification on the Azure blob path, its delivery tracked from the blob PENDING record
+        final Response writeResponse = postCommandWithUserId(getWriteUrl("/driver-notification"),
+                DRIVER_NOTIFICATION_MEDIA_TYPE, getPayload(DRIVER_NOTIFICATION_COMMAND_PAYLOAD), USER_GROUP);
+        assertThat(writeResponse.getStatusCode(), equalTo(SC_ACCEPTED));
+
+        final DriverNotified driverNotified = jsonToObjectConverter.convert(
+                retrieveMessageAsJsonObject(consumerForDriverNotified).get(), DriverNotified.class);
+        final String materialId = driverNotified.getMaterialId().toString();
+
+        verifyGenerateDocumentStubCommandInvoked();
+        final JsonPath generateDocumentRequest = latestGenerateDocumentRequest();
+        final String payloadFileUri = generateDocumentRequest.getString("payloadFileUri");
+        final String destinationFileUri = generateDocumentRequest.getString("destinationFileUri");
+        retrieveDocumentDeliveryEvent(materialId, "materialStatus", "PENDING");
+
+        publishDocumentAvailableEventForAzureBlob(payloadFileUri, destinationFileUri,
+                generateDocumentRequest.getString("sourceCorrelationId"));
+        final JsonPath materialUploadRequest = awaitMaterialUploadRequest(materialId);
+        assertThat(materialUploadRequest.getString("_metadata.originator"), equalTo(ORIGINATOR));
+
+        //When: the material context cannot store the rendered document and raises
+        // public.events.material.failed-to-add-material, echoing back our originator
+        publishFailedToAddMaterialEvent(driverNotified.getMaterialId(), UUID.fromString(USER_GROUP));
+
+        //Then: MaterialAddedProcessor records the material as FAILED
+        final JsonPath materialFailedDocumentDeliveryEvent = retrieveDocumentDeliveryEvent(materialId, "materialStatus", "FAILED");
+        assertThat(materialFailedDocumentDeliveryEvent.getString("materialId"), equalTo(materialId));
+
+        final String queryUserId = randomUUID().toString();
+        stubUser(queryUserId);
+        pollForResponse("/dvla-document-deliveries?materialId=" + materialId + "&materialStatus=FAILED",
+                DVLA_DOCUMENT_DELIVERY_MEDIA_TYPE, queryUserId,
+                allOf(
+                        withJsonPath("$.documentDeliveries[0].materialId", equalTo(materialId)),
+                        withJsonPath("$.documentDeliveries[0].materialStatus", equalTo("FAILED")),
+                        withJsonPath("$.documentDeliveries[0].payloadBlobUri", equalTo(payloadFileUri)),
+                        withJsonPath("$.documentDeliveries[0].documentBlobUri", equalTo(destinationFileUri))
+                ));
+
+        //Then: a failed material does not complete the delivery - the blobs are kept and no D20 email goes out
+        assertNoDocumentDeletedFromBlob(materialId);
         verifyNoEmailNotificationSent(CLIENT_CONTEXT_PREFIX + materialId);
     }
 
