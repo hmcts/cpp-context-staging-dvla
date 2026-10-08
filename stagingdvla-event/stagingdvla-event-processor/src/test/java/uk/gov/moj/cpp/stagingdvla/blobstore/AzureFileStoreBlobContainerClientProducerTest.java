@@ -22,7 +22,7 @@ import org.slf4j.Logger;
 public class AzureFileStoreBlobContainerClientProducerTest {
 
     private static final String CONTAINER_NAME = "test-container";
-    private static final String NON_SENTINEL_CONNECTION_STRING_VALUE = "some-configured-value";
+    private static final String INVALID_CONNECTION_STRING_VALUE = "some-configured-value";
 
     private final Logger logger = mock(Logger.class);
     private final BlobContainerClient blobContainerClient = mock(BlobContainerClient.class);
@@ -87,7 +87,8 @@ public class AzureFileStoreBlobContainerClientProducerTest {
     }
 
     @Test
-    public void shouldBuildBlobContainerClientUsingDefaultAzureCredentialWhenNoConnectionStringConfigured() {
+    public void shouldBuildBlobContainerClientUsingDefaultAzureCredentialWhenAzuriteNotEnabled() {
+        setField(configuration, "azuriteEnabled", "false");
         setField(configuration, "endpoint", "https://mystorage.blob.core.windows.net");
 
         final AzureFileStoreBlobContainerClientProducer producer = new AzureFileStoreBlobContainerClientProducer();
@@ -98,8 +99,9 @@ public class AzureFileStoreBlobContainerClientProducerTest {
     }
 
     @Test
-    public void shouldAttemptConnectionStringAuthenticationWhenAConnectionStringIsConfigured() {
-        setField(configuration, "connectionString", NON_SENTINEL_CONNECTION_STRING_VALUE);
+    public void shouldAttemptConnectionStringAuthenticationWhenAzuriteEnabled() {
+        setField(configuration, "azuriteEnabled", "true");
+        setField(configuration, "connectionString", INVALID_CONNECTION_STRING_VALUE);
 
         final AzureFileStoreBlobContainerClientProducer producer = new AzureFileStoreBlobContainerClientProducer();
 

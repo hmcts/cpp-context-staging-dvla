@@ -5,92 +5,73 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static uk.gov.justice.services.test.utils.core.reflection.ReflectionUtil.setField;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class AzureFileStoreBlobConfigurationTest {
 
-    private static final String SOME_NON_SENTINEL_VALUE = "some-configured-value";
+    @Test
+    public void shouldBeAzuriteEnabledWhenFlagIsTrue() {
+        final AzureFileStoreBlobConfiguration configuration = configurationWith("true", "10", "30", "300");
 
-    private final AzureFileStoreBlobConfiguration configuration = new AzureFileStoreBlobConfiguration();
-
-    @BeforeEach
-    public void setUp() {
-        setField(configuration, "containerName", "referencedata-files");
-        setField(configuration, "endpoint", "https://mystorage.blob.core.windows.net");
-        setField(configuration, "connectionTimeoutSeconds", "10");
-        setField(configuration, "responseTimeoutSeconds", "30");
-        setField(configuration, "transferTimeoutSeconds", "300");
+        assertThat(configuration.isAzuriteEnabled(), is(true));
     }
 
     @Test
-    public void shouldReturnRawConnectionStringValue() {
-        setField(configuration, "connectionString", SOME_NON_SENTINEL_VALUE);
+    public void shouldNotBeAzuriteEnabledWhenFlagIsFalse() {
+        final AzureFileStoreBlobConfiguration configuration = configurationWith("false", "10", "30", "300");
 
-        assertThat(configuration.getConnectionString(), is(SOME_NON_SENTINEL_VALUE));
+        assertThat(configuration.isAzuriteEnabled(), is(false));
+    }
+
+    @Test
+    public void shouldNotBeAzuriteEnabledWhenFlagIsMissing() {
+        final AzureFileStoreBlobConfiguration configuration = configurationWith(null, "10", "30", "300");
+
+        assertThat(configuration.isAzuriteEnabled(), is(false));
+    }
+
+    @Test
+    public void shouldReturnConnectionString() {
+        final AzureFileStoreBlobConfiguration configuration = new AzureFileStoreBlobConfiguration();
+        setField(configuration, "connectionString", "some-connection-string");
+
+        assertThat(configuration.getConnectionString(), is("some-connection-string"));
     }
 
     @Test
     public void shouldReturnConfiguredEndpoint() {
+        final AzureFileStoreBlobConfiguration configuration = new AzureFileStoreBlobConfiguration();
+        setField(configuration, "endpoint", "https://mystorage.blob.core.windows.net");
+
         assertThat(configuration.getEndpoint(), is("https://mystorage.blob.core.windows.net"));
     }
 
     @Test
     public void shouldReturnConfiguredContainerName() {
-        assertThat(configuration.getContainerName(), is("referencedata-files"));
+        final AzureFileStoreBlobConfiguration configuration = new AzureFileStoreBlobConfiguration();
+        setField(configuration, "containerName", "stagingdvla-files");
+
+        assertThat(configuration.getContainerName(), is("stagingdvla-files"));
     }
 
     @Test
-    public void shouldTreatANonSentinelConnectionStringAsPresent() {
-        setField(configuration, "connectionString", SOME_NON_SENTINEL_VALUE);
+    public void shouldReturnConfiguredTimeouts() {
+        final AzureFileStoreBlobConfiguration configuration = configurationWith("false", "7", "11", "99");
 
-        assertThat(configuration.hasConnectionString(), is(true));
+        assertThat(configuration.getConnectionTimeout(), is(ofSeconds(7)));
+        assertThat(configuration.getResponseTimeout(), is(ofSeconds(11)));
+        assertThat(configuration.getTransferTimeout(), is(ofSeconds(99)));
     }
 
-    @Test
-    public void shouldTreatAbsentConnectionStringAsNotPresent() {
-        setField(configuration, "connectionString", null);
-
-        assertThat(configuration.hasConnectionString(), is(false));
-    }
-
-    @Test
-    public void shouldTreatBlankConnectionStringAsNotPresent() {
-        setField(configuration, "connectionString", "   ");
-
-        assertThat(configuration.hasConnectionString(), is(false));
-    }
-
-    @Test
-    public void shouldTreatSentinelConnectionStringAsNotPresent() {
-        setField(configuration, "connectionString", "DefaultAzureCredential");
-
-        assertThat(configuration.hasConnectionString(), is(false));
-    }
-
-    @Test
-    public void shouldCacheHasConnectionStringResultAcrossCalls() {
-        setField(configuration, "connectionString", "DefaultAzureCredential");
-        assertThat(configuration.hasConnectionString(), is(false));
-
-        // mutate the backing field directly - the cached lazy value must not be recomputed
-        setField(configuration, "connectionString", SOME_NON_SENTINEL_VALUE);
-
-        assertThat(configuration.hasConnectionString(), is(false));
-    }
-
-    @Test
-    public void shouldParseConnectionTimeoutInSeconds() {
-        assertThat(configuration.getConnectionTimeout(), is(ofSeconds(10)));
-    }
-
-    @Test
-    public void shouldParseResponseTimeoutInSeconds() {
-        assertThat(configuration.getResponseTimeout(), is(ofSeconds(30)));
-    }
-
-    @Test
-    public void shouldParseTransferTimeoutInSeconds() {
-        assertThat(configuration.getTransferTimeout(), is(ofSeconds(300)));
+    private AzureFileStoreBlobConfiguration configurationWith(final String azuriteEnabled,
+                                                               final String connectionTimeoutSeconds,
+                                                               final String responseTimeoutSeconds,
+                                                               final String transferTimeoutSeconds) {
+        final AzureFileStoreBlobConfiguration configuration = new AzureFileStoreBlobConfiguration();
+        setField(configuration, "azuriteEnabled", azuriteEnabled);
+        setField(configuration, "connectionTimeoutSeconds", connectionTimeoutSeconds);
+        setField(configuration, "responseTimeoutSeconds", responseTimeoutSeconds);
+        setField(configuration, "transferTimeoutSeconds", transferTimeoutSeconds);
+        return configuration;
     }
 }

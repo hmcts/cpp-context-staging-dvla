@@ -16,16 +16,14 @@ import org.slf4j.Logger;
 /**
  * CDI producer for {@link BlobContainerClient}.
  *
- * <p>Resolves credentials in this order:
- * <ol>
- *   <li>If {@code azure.filestore.connection-string} is set to a real connection string (not
- *       the {@code "DefaultAzureCredential"} sentinel default), connects using the connection
- *       string directly.  Used for local development (Azurite) and for environments where
- *       Managed Identity has not yet been provisioned.</li>
- *   <li>Otherwise uses {@code DefaultAzureCredential}, which on AKS resolves to the pod's
- *       Workload Identity (FIC) automatically.  The endpoint is read from
- *       {@code azure.filestore.endpoint}.</li>
- * </ol>
+ * <p>Credential scheme is picked by {@link AzureFileStoreBlobConfiguration#isAzuriteEnabled()}:
+ * <ul>
+ *   <li>{@code true} (local dev/IT only) - connects with {@code azure.filestore.connection-string}
+ *       directly; Azurite has no Azure AD support, so it needs SharedKey auth.</li>
+ *   <li>{@code false} (the default, every real environment) - uses {@code DefaultAzureCredential},
+ *       which on AKS resolves to the pod's Workload Identity (FIC) automatically.  The endpoint
+ *       is read from {@code azure.filestore.endpoint}.</li>
+ * </ul>
  *
  * <p><strong>Scope note:</strong> {@code BlobContainerClient} is a {@code final} class.  Weld
  * cannot create a proxy subclass for it, so the {@link Produces} method must be {@link Dependent}
@@ -84,7 +82,7 @@ public class AzureFileStoreBlobContainerClientProducer {
                 .connectionTimeout(configuration.getConnectionTimeout())
                 .responseTimeout(configuration.getResponseTimeout());
 
-        if (configuration.hasConnectionString()) {
+        if (configuration.isAzuriteEnabled()) {
             return new BlobServiceClientBuilder()
                     .httpClient(httpClientBuilder.build())
                     .connectionString(configuration.getConnectionString())
