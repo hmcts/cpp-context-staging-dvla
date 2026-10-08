@@ -20,8 +20,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
-import static uk.gov.moj.cpp.stagingdvla.service.DocumentGeneratorService.DVLA_DOCUMENT_ORDER;
-import static uk.gov.moj.cpp.stagingdvla.service.DocumentGeneratorService.DVLA_DOCUMENT_TEMPLATE_NAME;
 import static uk.gov.moj.cpp.stagingdvla.service.NotificationNotifyService.CLIENT_CONTEXT;
 import static uk.gov.moj.cpp.stagingdvla.service.NotificationNotifyService.CLIENT_CONTEXT_PREFIX;
 
@@ -41,7 +39,6 @@ import uk.gov.moj.cpp.stagingdvla.exception.NotifyDrivingConvictionException;
 import uk.gov.moj.cpp.stagingdvla.notify.azure.DvlaApimConfig;
 import uk.gov.moj.cpp.stagingdvla.notify.driving.conviction.NotifyDrivingConvictionResponse;
 import uk.gov.moj.cpp.stagingdvla.service.ApplicationParameters;
-import uk.gov.moj.cpp.stagingdvla.service.ConversionFormat;
 import uk.gov.moj.cpp.stagingdvla.service.DocumentGeneratorService;
 import uk.gov.moj.cpp.stagingdvla.service.NotificationNotifyService;
 import uk.gov.moj.cpp.stagingdvla.service.NotifyDrivingConvictionService;
@@ -271,22 +268,20 @@ public class DriverNotifiedEventProcessorTest {
         final ArgumentCaptor<DriverNotified> driverNotifiedCaptor = ArgumentCaptor.forClass(DriverNotified.class);
         verify(documentGeneratorService).generateDvlaDocument(eq(envelope), eq(userId), driverNotifiedCaptor.capture());
         assertThat(driverNotifiedCaptor.getValue().getMaterialId().toString(), is(materialId));
-        verify(documentGeneratorService, never()).generateDocument(any(), any(), any(), any(), any(), any(), any());
+        verify(documentGeneratorService, never()).generateDocument(any(), any(), any(), any());
     }
 
     @Test
     public void shouldGenerateDocumentViaBlobStorageWhenDvlaFileStoreEnabled() throws IOException {
         when(featureControlGuard.isFeatureEnabled("dvlaFileStore")).thenReturn(true);
         final JsonObject nowsDocumentOrderJson = Json.createObjectBuilder().add("materialId", materialId).build();
-        final String fileName = DVLA_DOCUMENT_ORDER + "_" + materialId + ".pdf";
         when(objectToJsonObjectConverter.convert(any(DriverNotified.class))).thenReturn(nowsDocumentOrderJson);
-        when(documentGeneratorService.getMaterialIdAmendedFileName(DVLA_DOCUMENT_ORDER, materialId)).thenReturn(fileName);
         final JsonEnvelope envelope = getRequestPayload(UPDATED_DRIVER_NOTIFIED_JSON, STAGINGDVLA_EVENT_DRIVER_NOTIFIED, 0);
 
         driverNotifiedEventProcessor.handleDriverNotifiedEvent(envelope);
 
         verify(documentGeneratorService).generateDocument(eq(envelope), eq(UUID.fromString(materialId)), eq(nowsDocumentOrderJson),
-                eq(fileName), eq(DVLA_DOCUMENT_TEMPLATE_NAME), eq(ConversionFormat.PDF), eq(DVLA_DOCUMENT_ORDER), isNull());
+                isNull());
         verify(documentGeneratorService, never()).generateDvlaDocument(any(), any(), any());
         verify(notifyDrivingConvictionService, times(0)).notifyDrivingConviction(any());
     }
@@ -301,7 +296,7 @@ public class DriverNotifiedEventProcessorTest {
         driverNotifiedEventProcessor.handleDriverNotifiedEvent(envelope);
 
         verify(documentGeneratorService).generateDocument(eq(envelope), eq(UUID.fromString(materialId)), any(),
-                any(), eq(DVLA_DOCUMENT_TEMPLATE_NAME), eq(ConversionFormat.PDF), eq(DVLA_DOCUMENT_ORDER), eq(UUID.fromString(caseId)));
+                eq(UUID.fromString(caseId)));
     }
 
     @Test
@@ -314,7 +309,7 @@ public class DriverNotifiedEventProcessorTest {
                 getRequestPayload(DRIVER_NOTIFIED_NEW_ENDORSEMENT_JSON, STAGINGDVLA_EVENT_DRIVER_NOTIFIED, 1));
 
         verify(featureControlGuard, never()).isFeatureEnabled(any());
-        verify(documentGeneratorService, never()).generateDocument(any(), any(), any(), any(), any(), any(), any());
+        verify(documentGeneratorService, never()).generateDocument(any(), any(), any(), any());
         verify(documentGeneratorService, never()).generateDvlaDocument(any(), any(), any());
     }
 
@@ -327,7 +322,7 @@ public class DriverNotifiedEventProcessorTest {
 
         assertThat(exception.getMessage(), is("UserId missing from event."));
         verify(documentGeneratorService, never()).generateDvlaDocument(any(), any(), any());
-        verify(documentGeneratorService, never()).generateDocument(any(), any(), any(), any(), any(), any(), any());
+        verify(documentGeneratorService, never()).generateDocument(any(), any(), any(), any());
     }
 
     @SuppressWarnings("java:S5778")

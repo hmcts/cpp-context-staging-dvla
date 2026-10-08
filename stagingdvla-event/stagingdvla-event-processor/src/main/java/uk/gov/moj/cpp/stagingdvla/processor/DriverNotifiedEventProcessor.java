@@ -17,8 +17,6 @@ import static uk.gov.moj.cpp.stagingdvla.notify.util.DrivingConvictionTransformU
 import static uk.gov.moj.cpp.stagingdvla.notify.util.DrivingConvictionTransformUtil.getEndorsementType;
 import static uk.gov.moj.cpp.stagingdvla.notify.util.DrivingConvictionTransformUtil.hasMultipleConvictingCourts;
 import static uk.gov.moj.cpp.stagingdvla.notify.util.DrivingConvictionTransformUtil.hasMultipleConvictionDates;
-import static uk.gov.moj.cpp.stagingdvla.service.DocumentGeneratorService.DVLA_DOCUMENT_ORDER;
-import static uk.gov.moj.cpp.stagingdvla.service.DocumentGeneratorService.DVLA_DOCUMENT_TEMPLATE_NAME;
 import static uk.gov.moj.cpp.stagingdvla.service.NotificationNotifyService.CLIENT_CONTEXT;
 import static uk.gov.moj.cpp.stagingdvla.service.NotificationNotifyService.CLIENT_CONTEXT_PREFIX;
 
@@ -38,7 +36,6 @@ import uk.gov.justice.services.messaging.JsonEnvelope;
 import uk.gov.moj.cpp.stagingdvla.exception.NotifyDrivingConvictionException;
 import uk.gov.moj.cpp.stagingdvla.notify.azure.DvlaApimConfig;
 import uk.gov.moj.cpp.stagingdvla.notify.driving.conviction.NotifyDrivingConvictionResponse;
-import uk.gov.moj.cpp.stagingdvla.service.ConversionFormat;
 import uk.gov.moj.cpp.stagingdvla.service.DocumentGeneratorService;
 import uk.gov.moj.cpp.stagingdvla.service.NotificationNotifyService;
 import uk.gov.moj.cpp.stagingdvla.service.NotifyDrivingConvictionService;
@@ -120,12 +117,8 @@ public class DriverNotifiedEventProcessor {
                 documentGeneratorService.generateDvlaDocument(envelope, userId, driverNotified);
             } else {
                 final JsonObject nowsDocumentOrderJson = objectToJsonObjectConverter.convert(driverNotified);
-                documentGeneratorService.generateDocument(envelope,  driverNotified.getMaterialId(),
+                documentGeneratorService.generateDocument(envelope, driverNotified.getMaterialId(),
                         nowsDocumentOrderJson,
-                        documentGeneratorService.getMaterialIdAmendedFileName(DVLA_DOCUMENT_ORDER, driverNotified.getMaterialId().toString()),
-                        DVLA_DOCUMENT_TEMPLATE_NAME,
-                        ConversionFormat.PDF,
-                        DVLA_DOCUMENT_ORDER,
                         sjpCaseIdOf(driverNotified));
             }
         }

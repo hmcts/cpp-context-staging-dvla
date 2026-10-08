@@ -17,9 +17,10 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
+import static uk.gov.justice.services.messaging.JsonObjects.createArrayBuilder;
+import static uk.gov.justice.services.messaging.JsonObjects.createObjectBuilder;
 import static uk.gov.justice.services.test.utils.core.reflection.ReflectionUtil.setField;
 import static uk.gov.moj.cpp.stagingdvla.service.DocumentGeneratorService.DVLA_DOCUMENT_ORDER;
-import static uk.gov.moj.cpp.stagingdvla.service.DocumentGeneratorService.DVLA_DOCUMENT_TEMPLATE_NAME;
 
 import uk.gov.justice.core.courts.CourtCentre;
 import uk.gov.justice.cpp.stagingdvla.event.Cases;
@@ -176,7 +177,7 @@ public class DocumentGeneratorServiceTest {
     @Test
     public void shouldUploadToBlobStorageAndRequestDocumentGenerationWithBlobUris() throws Exception {
         final DriverNotified driverNotified = generateDriverNotified("C");
-        final String blobUrl = "https://mystorage.blob.core.windows.net/internal/" + driverNotified.getMaterialId();
+        final String blobUrl = "https://mystorage.blob.core.windows.net/" + DVLA_DOCUMENT_ORDER + "_" + driverNotified.getMaterialId();
 
         String inputPayload = Resources.toString(getResource("stagingdvla.command.driver-notification.json"), defaultCharset());
         final JsonObject nowsDocumentOrderJson1 = stringToJsonObjectConverter.convert(inputPayload);
@@ -189,16 +190,13 @@ public class DocumentGeneratorServiceTest {
         final JsonEnvelope envelope = envelopeFrom(metadataWithRandomUUID("public.systemdocgenerator.events.document-available"),
                 nowsDocumentOrderJson1);
 
-        final String fileName = documentGeneratorService.getMaterialIdAmendedFileName(DVLA_DOCUMENT_ORDER, driverNotified.getMaterialId().toString());
-        documentGeneratorService.generateDocument(envelope, driverNotified.getMaterialId(), nowsDocumentOrderJson1,
-                fileName,
-                DVLA_DOCUMENT_TEMPLATE_NAME,
-                ConversionFormat.PDF,
-                DVLA_DOCUMENT_ORDER);
+        documentGeneratorService.generateDocument(envelope, driverNotified.getMaterialId(), nowsDocumentOrderJson1, null);
 
         verify(fileService, never()).storePayload(any(), anyString(), anyString());
-        verify(blobContainerClient).getBlobClient("internal/" + fileName.replaceAll("\\.[^.]*$", ""));
-        verify(blobClient).uploadWithResponse(any(BlobParallelUploadOptions.class), eq(ofSeconds(300)), any());
+        verify(blobContainerClient).getBlobClient(DVLA_DOCUMENT_ORDER + "_" + driverNotified.getMaterialId());
+        final ArgumentCaptor<BlobParallelUploadOptions> uploadOptionsCaptor = ArgumentCaptor.forClass(BlobParallelUploadOptions.class);
+        verify(blobClient).uploadWithResponse(uploadOptionsCaptor.capture(), eq(ofSeconds(300)), any());
+        assertThat(uploadOptionsCaptor.getValue().getMetadata().get("fileName").matches(DVLA_DOCUMENT_ORDER + "_\\d{14}\\.pdf"), is(true));
 
         final ArgumentCaptor<DocumentGenerationRequest> requestCaptor = ArgumentCaptor.forClass(DocumentGenerationRequest.class);
         verify(systemDocGeneratorService).generateDocumentForBlobUIR(requestCaptor.capture(), eq(envelope));
@@ -212,17 +210,48 @@ public class DocumentGeneratorServiceTest {
         assertThat(request.getSourceCorrelationId(), is(driverNotified.getMaterialId().toString()));
 
         assertThat(request.getPayloadFileUri(), is(blobUrl));
-        assertThat(request.getDestinationFileUri(), is(blobUrl + "." + fileName.substring(fileName.lastIndexOf('.') + 1)));
+        assertThat(request.getDestinationFileUri(), is(blobUrl + ".pdf"));
 
         verifyDocumentDeliveryStatusRecorded(driverNotified, DvlaDocumentDeliveryMaterialStatus.PENDING,
-                blobUrl, blobUrl + "." + fileName.substring(fileName.lastIndexOf('.') + 1));
+                blobUrl, blobUrl + ".pdf");
+    }
+
+    @Test
+    public void shouldUploadDriverAuditReportToBlobStorageAndRequestCsvGeneration() {
+        final UUID reportId = randomUUID();
+        final String fileName = "DriverAuditReport_2026-10-08_10-10-10.csv";
+        final String blobUrl = "https://mystorage.blob.core.windows.net/DriverAuditReport_" + reportId;
+        final JsonObject payload = createObjectBuilder().add("driverAuditRecords", createArrayBuilder()).build();
+
+        when(blobContainerClient.getBlobClient(anyString())).thenReturn(blobClient);
+        when(blobClient.getBlobUrl()).thenReturn(blobUrl);
+        when(azureBlobConfiguration.getTransferTimeout()).thenReturn(ofSeconds(300));
+
+        final JsonEnvelope envelope = envelopeFrom(metadataWithRandomUUID("stagingdvla.event.driver-search-audit-report-requested"), payload);
+        documentGeneratorService.generateDriverAuditReportDocument(envelope, reportId, payload, fileName);
+
+        verify(blobContainerClient).getBlobClient("DriverAuditReport_" + reportId);
+        final ArgumentCaptor<BlobParallelUploadOptions> uploadOptionsCaptor = ArgumentCaptor.forClass(BlobParallelUploadOptions.class);
+        verify(blobClient).uploadWithResponse(uploadOptionsCaptor.capture(), eq(ofSeconds(300)), any());
+        assertThat(uploadOptionsCaptor.getValue().getMetadata().get("fileName"), is(fileName));
+        assertThat(uploadOptionsCaptor.getValue().getMetadata().get("templateName"), is("DvlaAuditRecords"));
+
+        final ArgumentCaptor<DocumentGenerationRequest> requestCaptor = ArgumentCaptor.forClass(DocumentGenerationRequest.class);
+        verify(systemDocGeneratorService).generateDocumentForBlobUIR(requestCaptor.capture(), eq(envelope));
+        final DocumentGenerationRequest request = requestCaptor.getValue();
+        assertThat(request.getOriginatingSource(), is("DvlaAuditRecords"));
+        assertThat(request.getTemplateIdentifier(), is("DvlaAuditRecords"));
+        assertThat(request.getConversionFormat(), is(ConversionFormat.CSV));
+        assertThat(request.getSourceCorrelationId(), is(reportId.toString()));
+        assertThat(request.getPayloadFileUri(), is(blobUrl));
+        assertThat(request.getDestinationFileUri(), is(blobUrl + ".csv"));
     }
 
     @Test
     public void shouldRecordTheSjpCaseOnTheBlobPendingRecordForAnSjpCaseDocument() throws Exception {
         final DriverNotified driverNotified = generateDriverNotified("J");
         final UUID sjpCaseId = randomUUID();
-        final String blobUrl = "https://mystorage.blob.core.windows.net/internal/" + driverNotified.getMaterialId();
+        final String blobUrl = "https://mystorage.blob.core.windows.net/" + DVLA_DOCUMENT_ORDER + "_" + driverNotified.getMaterialId();
 
         final JsonObject nowsDocumentOrderJson = stringToJsonObjectConverter.convert(
                 Resources.toString(getResource("stagingdvla.command.driver-notification.json"), defaultCharset()));
@@ -233,10 +262,17 @@ public class DocumentGeneratorServiceTest {
         doNothing().when(systemDocGeneratorService).generateDocumentForBlobUIR(any(DocumentGenerationRequest.class), any(JsonEnvelope.class));
 
         final JsonEnvelope envelope = envelopeFrom(metadataWithRandomUUID("stagingdvla.event.driver-notified"), nowsDocumentOrderJson);
-        final String fileName = documentGeneratorService.getMaterialIdAmendedFileName(DVLA_DOCUMENT_ORDER, driverNotified.getMaterialId().toString());
 
-        documentGeneratorService.generateDocument(envelope, driverNotified.getMaterialId(), nowsDocumentOrderJson,
-                fileName, DVLA_DOCUMENT_TEMPLATE_NAME, ConversionFormat.PDF, DVLA_DOCUMENT_ORDER, sjpCaseId);
+        documentGeneratorService.generateDocument(envelope, driverNotified.getMaterialId(), nowsDocumentOrderJson, sjpCaseId);
+
+        // blob name stays per material; the visible file name in metadata is the file-service one
+        verify(blobContainerClient).getBlobClient(DVLA_DOCUMENT_ORDER + "_" + driverNotified.getMaterialId());
+        final ArgumentCaptor<BlobParallelUploadOptions> uploadOptionsCaptor = ArgumentCaptor.forClass(BlobParallelUploadOptions.class);
+        verify(blobClient).uploadWithResponse(uploadOptionsCaptor.capture(), eq(ofSeconds(300)), any());
+        assertThat(uploadOptionsCaptor.getValue().getMetadata().get("fileName").matches(DVLA_DOCUMENT_ORDER + "_\\d{14}\\.pdf"), is(true));
+        final ArgumentCaptor<DocumentGenerationRequest> requestCaptor = ArgumentCaptor.forClass(DocumentGenerationRequest.class);
+        verify(systemDocGeneratorService).generateDocumentForBlobUIR(requestCaptor.capture(), eq(envelope));
+        assertThat(requestCaptor.getValue().getDestinationFileUri(), is(blobUrl + ".pdf"));
 
         // the SJP case rides on the PENDING record that starts tracking, so MaterialAggregate keeps the
         // blob past material SUCCESS whichever status record it processes first
@@ -264,11 +300,7 @@ public class DocumentGeneratorServiceTest {
         final JsonEnvelope envelope = envelopeFrom(metadataWithRandomUUID("public.systemdocgenerator.events.document-available"),
                 nowsDocumentOrderJson1);
 
-        assertThrows(RuntimeException.class, () -> documentGeneratorService.generateDocument(envelope, driverNotified.getMaterialId(), nowsDocumentOrderJson1,
-                documentGeneratorService.getMaterialIdAmendedFileName(DVLA_DOCUMENT_ORDER, driverNotified.getMaterialId().toString()),
-                DVLA_DOCUMENT_TEMPLATE_NAME,
-                ConversionFormat.PDF,
-                DVLA_DOCUMENT_ORDER));
+        assertThrows(RuntimeException.class, () -> documentGeneratorService.generateDocument(envelope, driverNotified.getMaterialId(), nowsDocumentOrderJson1, null));
 
         verifyNoInteractions(systemDocGeneratorService);
         verify(sender, never()).sendAsAdmin(any());

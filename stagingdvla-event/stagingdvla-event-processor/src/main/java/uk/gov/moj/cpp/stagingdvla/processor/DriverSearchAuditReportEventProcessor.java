@@ -10,6 +10,7 @@ import static uk.gov.justice.services.core.annotation.Component.EVENT_PROCESSOR;
 import static uk.gov.justice.services.messaging.Envelope.metadataFrom;
 import static uk.gov.moj.cpp.stagingdvla.helper.DriverSearchAuditHelper.CONVERSION_FORMAT;
 import static uk.gov.moj.cpp.stagingdvla.helper.DriverSearchAuditHelper.CSV;
+import static uk.gov.moj.cpp.stagingdvla.helper.DriverSearchAuditHelper.AUDIT_REPORT_PREFIX;
 import static uk.gov.moj.cpp.stagingdvla.helper.DriverSearchAuditHelper.DVLA_AUDIT_RECORDS;
 import static uk.gov.moj.cpp.stagingdvla.helper.DriverSearchAuditHelper.FILE_NAME;
 import static uk.gov.moj.cpp.stagingdvla.helper.DriverSearchAuditHelper.FILE_SIZE;
@@ -40,7 +41,6 @@ import uk.gov.justice.services.messaging.Envelope;
 import uk.gov.justice.services.messaging.JsonEnvelope;
 import uk.gov.moj.cpp.persistence.entity.DriverAuditEntity;
 import uk.gov.moj.cpp.persistence.repository.DriverAuditRepository;
-import uk.gov.moj.cpp.stagingdvla.service.ConversionFormat;
 import uk.gov.moj.cpp.stagingdvla.service.DocumentGeneratorService;
 import uk.gov.moj.cpp.stagingdvla.service.MaterialService;
 
@@ -65,7 +65,6 @@ import org.slf4j.LoggerFactory;
 @SuppressWarnings("squid:CallToDeprecatedMethod")
 @ServiceComponent(EVENT_PROCESSOR)
 public class DriverSearchAuditReportEventProcessor {
-    public static final String AUDIT_REPORT_PREFIX = "DriverAuditReport";
     private static final Logger LOGGER = LoggerFactory.getLogger(DriverSearchAuditReportEventProcessor.class.getCanonicalName());
     public static final String DATE_FORMAT = "yyyy-MM-dd_hh-mm-ss";
     @Inject
@@ -111,7 +110,7 @@ public class DriverSearchAuditReportEventProcessor {
                         auditReportRequested.getId());
                 this.requestAuditReportDocumentGeneration(envelope, auditReportRequested.getId().toString(), fileId, DVLA_AUDIT_RECORDS, DVLA_AUDIT_RECORDS);
             } else {
-                documentGeneratorService.generateDocument(envelope, auditReportRequested.getId(), docGeneratorPayload, constructFileNameForBlobUIR(auditReportRequested.getId().toString()), DVLA_AUDIT_RECORDS, ConversionFormat.CSV, DVLA_AUDIT_RECORDS);
+                documentGeneratorService.generateDriverAuditReportDocument(envelope, auditReportRequested.getId(), docGeneratorPayload, constructFileName());
             }
         }
     }
@@ -235,10 +234,6 @@ public class DriverSearchAuditReportEventProcessor {
 
     private String constructFileName() {
         return join("_", AUDIT_REPORT_PREFIX, new SimpleDateFormat(DATE_FORMAT).format(new Date())) + ".csv";
-    }
-
-    private String constructFileNameForBlobUIR(final String materialId) {
-        return join("_", AUDIT_REPORT_PREFIX, materialId) + ".csv";
     }
 
     private void requestAuditReportDocumentGeneration(final JsonEnvelope eventEnvelope,

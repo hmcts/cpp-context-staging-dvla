@@ -13,6 +13,7 @@ public class DriverSearchAuditHelper {
     public static final String PAYLOAD_FILE_SERVICE_ID = "payloadFileServiceId";
     public static final String CSV = "csv";
     public static final String DVLA_AUDIT_RECORDS = "DvlaAuditRecords";
+    public static final String AUDIT_REPORT_PREFIX = "DriverAuditReport";
 
     private DriverSearchAuditHelper() {
     }
