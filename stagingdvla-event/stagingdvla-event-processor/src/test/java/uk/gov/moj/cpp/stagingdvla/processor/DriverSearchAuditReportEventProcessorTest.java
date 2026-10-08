@@ -34,7 +34,6 @@ import uk.gov.justice.services.messaging.Envelope;
 import uk.gov.justice.services.messaging.JsonEnvelope;
 import uk.gov.moj.cpp.persistence.entity.DriverAuditEntity;
 import uk.gov.moj.cpp.persistence.repository.DriverAuditRepository;
-import uk.gov.moj.cpp.stagingdvla.service.ConversionFormat;
 import uk.gov.moj.cpp.stagingdvla.service.DocumentGeneratorService;
 import uk.gov.moj.cpp.stagingdvla.service.MaterialService;
 
@@ -149,10 +148,8 @@ public class DriverSearchAuditReportEventProcessorTest {
         // then
         final GeneratedDocumentCall generatedDocumentCall = capturedGenerateDocumentCall(requestMessage);
         assertThat(generatedDocumentCall.materialId, is(auditReportRequested.getId()));
-        assertThat(generatedDocumentCall.templateName, is("DvlaAuditRecords"));
-        assertThat(generatedDocumentCall.originatingSource, is("DvlaAuditRecords"));
-        assertThat(generatedDocumentCall.format, is(ConversionFormat.CSV));
-        assertThat(generatedDocumentCall.fileName, is("DriverAuditReport_" + auditReportRequested.getId() + ".csv"));
+        // same visible name as the file-service path; the blob itself is named DriverAuditReport_<reportId>
+        assertThat(generatedDocumentCall.fileName.matches("DriverAuditReport_\\d{4}-\\d{2}-\\d{2}_\\d{2}-\\d{2}-\\d{2}\\.csv"), is(true));
         assertThat(generatedDocumentCall.payload.containsKey("driverAuditRecords"), is(true));
         // Blob-backed generation is fully delegated to documentGeneratorService, so the processor
         // itself must never send the systemdocgenerator command.
@@ -211,18 +208,11 @@ public class DriverSearchAuditReportEventProcessorTest {
         private final UUID materialId;
         private final JsonObject payload;
         private final String fileName;
-        private final String templateName;
-        private final ConversionFormat format;
-        private final String originatingSource;
 
-        private GeneratedDocumentCall(final UUID materialId, final JsonObject payload, final String fileName,
-                                       final String templateName, final ConversionFormat format, final String originatingSource) {
+        private GeneratedDocumentCall(final UUID materialId, final JsonObject payload, final String fileName) {
             this.materialId = materialId;
             this.payload = payload;
             this.fileName = fileName;
-            this.templateName = templateName;
-            this.format = format;
-            this.originatingSource = originatingSource;
         }
     }
 
@@ -230,15 +220,11 @@ public class DriverSearchAuditReportEventProcessorTest {
         final ArgumentCaptor<UUID> materialIdCaptor = ArgumentCaptor.forClass(UUID.class);
         final ArgumentCaptor<JsonObject> payloadCaptor = ArgumentCaptor.forClass(JsonObject.class);
         final ArgumentCaptor<String> fileNameCaptor = ArgumentCaptor.forClass(String.class);
-        final ArgumentCaptor<String> templateNameCaptor = ArgumentCaptor.forClass(String.class);
-        final ArgumentCaptor<ConversionFormat> formatCaptor = ArgumentCaptor.forClass(ConversionFormat.class);
-        final ArgumentCaptor<String> originatingSourceCaptor = ArgumentCaptor.forClass(String.class);
 
-        verify(documentGeneratorService).generateDocument(eq(requestMessage), materialIdCaptor.capture(), payloadCaptor.capture(),
-                fileNameCaptor.capture(), templateNameCaptor.capture(), formatCaptor.capture(), originatingSourceCaptor.capture());
+        verify(documentGeneratorService).generateDriverAuditReportDocument(eq(requestMessage), materialIdCaptor.capture(), payloadCaptor.capture(),
+                fileNameCaptor.capture());
 
-        return new GeneratedDocumentCall(materialIdCaptor.getValue(), payloadCaptor.getValue(), fileNameCaptor.getValue(),
-                templateNameCaptor.getValue(), formatCaptor.getValue(), originatingSourceCaptor.getValue());
+        return new GeneratedDocumentCall(materialIdCaptor.getValue(), payloadCaptor.getValue(), fileNameCaptor.getValue());
     }
 
     private JsonEnvelope givenRequestEnvelope(final DriverSearchAuditReportRequested auditReportRequested) {
