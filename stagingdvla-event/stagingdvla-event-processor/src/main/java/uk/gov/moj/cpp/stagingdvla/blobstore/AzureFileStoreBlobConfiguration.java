@@ -28,7 +28,7 @@ import javax.inject.Inject;
 public class AzureFileStoreBlobConfiguration {
 
     @Inject
-    @Value(key = "cpp.azure.filestore.azurite-enabled", defaultValue = "false")
+    @Value(key = "azure.filestore.azurite-enabled", defaultValue = "false")
     private String azuriteEnabled;
 
     @Inject
