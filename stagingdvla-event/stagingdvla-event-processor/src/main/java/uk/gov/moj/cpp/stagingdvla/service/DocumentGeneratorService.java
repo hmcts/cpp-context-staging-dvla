@@ -41,6 +41,9 @@ public class DocumentGeneratorService {
     private static final Logger LOGGER = LoggerFactory.getLogger(DocumentGeneratorService.class);
     private static final DateTimeFormatter TIMESTAMP_FORMATTER = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
     private static final String ERROR_MESSAGE = "Error while uploading document generation or upload ";
+    // virtual folders in the container: the payload sent to systemdocgenerator vs the document it writes back
+    static final String PAYLOAD_BLOB_FOLDER = "sdg/requests/";
+    static final String DOCUMENT_BLOB_FOLDER = "sdg/documents/";
 
 
     private final SystemDocGeneratorService systemDocGeneratorService;
@@ -129,7 +132,8 @@ public class DocumentGeneratorService {
 
     // shared by generateDocument and generateDriverAuditReportDocument; kept un-annotated so neither @Transactional
     // method calls the other - a self-invocation bypasses the CDI proxy and would never apply the callee's REQUIRES_NEW.
-    // The payload blob is named <blobNamePrefix>_<materialId>
+    // The payload blob is sdg/requests/<blobNamePrefix>_<materialId>; the generated document is written to
+    // sdg/documents/<blobNamePrefix>_<materialId>.<extension>
     @SuppressWarnings("squid:S00107")
     private void uploadAndRequestDocumentGeneration(final JsonEnvelope originatingEnvelope, final UUID materialId, final JsonObject payload, final String fileName, final String templateName, final ConversionFormat format, final String originatingSource, final String blobNamePrefix, final UUID sjpCaseId) {
         final Result result;
@@ -151,7 +155,8 @@ public class DocumentGeneratorService {
     private record Result(String payloadFileUri, String destinationFileUri){}
 
     private Result uploadDocumentToAzureBlob(UUID materialId, JsonObject payload, String fileName, ConversionFormat format, String templateName, String blobNamePrefix ) {
-        final BlobClient blobClient = blobContainerClient.getBlobClient(blobNamePrefix + "_" + materialId);
+        final String blobName = blobNamePrefix + "_" + materialId;
+        final BlobClient blobClient = blobContainerClient.getBlobClient(PAYLOAD_BLOB_FOLDER + blobName);
         final byte[] byteArray = payload.toString().getBytes(StandardCharsets.UTF_8);
                 blobClient.uploadWithResponse(
                         new BlobParallelUploadOptions(fromStream(new ByteArrayInputStream(byteArray)))
@@ -165,6 +170,7 @@ public class DocumentGeneratorService {
                 azureBlobConfiguration.getTransferTimeout(), NONE);
 
         final String extension = fileName.substring(fileName.lastIndexOf('.') + 1);
-        return new Result(blobClient.getBlobUrl(), blobClient.getBlobUrl() + "." + extension);
+        final String destinationFileUri = blobContainerClient.getBlobClient(DOCUMENT_BLOB_FOLDER + blobName + "." + extension).getBlobUrl();
+        return new Result(blobClient.getBlobUrl(), destinationFileUri);
     }
 }
