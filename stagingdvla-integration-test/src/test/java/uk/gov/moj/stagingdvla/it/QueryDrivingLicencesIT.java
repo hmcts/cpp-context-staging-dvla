@@ -6,6 +6,8 @@ import static com.jayway.jsonpath.matchers.JsonPathMatchers.withJsonPath;
 import static java.lang.String.format;
 import static java.util.UUID.randomUUID;
 import static org.apache.http.HttpStatus.SC_ACCEPTED;
+import static java.net.URLDecoder.decode;
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -238,7 +240,9 @@ public class QueryDrivingLicencesIT extends AbstractIntegrationTest {
         final String payloadFileUri = generateDocumentRequest.getString("payloadFileUri");
         assertThat(payloadFileUri, is(notNullValue()));
         final String destinationFileUri = generateDocumentRequest.getString("destinationFileUri");
-        assertThat(destinationFileUri, equalTo(payloadFileUri + ".csv"));
+        // the blob SDK percent-encodes the folder separators (sdg%2Frequests%2F...), so compare decoded
+        assertThat(decode(payloadFileUri, UTF_8).contains("/sdg/requests/"), is(true));
+        assertThat(decode(destinationFileUri, UTF_8), equalTo(decode(payloadFileUri, UTF_8).replace("/sdg/requests/", "/sdg/documents/") + ".csv"));
 
         // simulate systemdocgenerator raising document-available for the report (it isn't locally
         // deployed, so nothing else will) and verify the resulting material gets created - on the

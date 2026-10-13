@@ -6,6 +6,8 @@ import static com.jayway.jsonpath.matchers.JsonPathMatchers.isJson;
 import static com.jayway.jsonpath.matchers.JsonPathMatchers.withJsonPath;
 import static java.util.UUID.randomUUID;
 import static org.apache.http.HttpStatus.SC_ACCEPTED;
+import static java.net.URLDecoder.decode;
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.hamcrest.CoreMatchers.allOf;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -208,7 +210,9 @@ public class DvlaNotificationIT extends AbstractIntegrationTest {
         final String payloadFileUri = generateDocumentRequest.getString("payloadFileUri");
         assertThat(payloadFileUri, is(notNullValue()));
         final String destinationFileUri = generateDocumentRequest.getString("destinationFileUri");
-        assertThat(destinationFileUri, equalTo(payloadFileUri + ".pdf"));
+        // the blob SDK percent-encodes the folder separators (sdg%2Frequests%2F...), so compare decoded
+        assertThat(decode(payloadFileUri, UTF_8).contains("/sdg/requests/"), is(true));
+        assertThat(decode(destinationFileUri, UTF_8), equalTo(decode(payloadFileUri, UTF_8).replace("/sdg/requests/", "/sdg/documents/") + ".pdf"));
 
         // stagingdvla.command.handler.driver-notification-document-delivery is invoked internally
         // (once per document generation/upload step of the flow) - verify the flow's final
@@ -656,7 +660,9 @@ public class DvlaNotificationIT extends AbstractIntegrationTest {
             final String destinationFileUri = generateDocumentRequest.getString("destinationFileUri");
             final String sourceCorrelationId = generateDocumentRequest.getString("sourceCorrelationId");
             assertThat(payloadFileUri, is(notNullValue()));
-            assertThat(destinationFileUri, equalTo(payloadFileUri + ".pdf"));
+            // the blob SDK percent-encodes the folder separators (sdg%2Frequests%2F...), so compare decoded
+            assertThat(decode(payloadFileUri, UTF_8).contains("/sdg/requests/"), is(true));
+            assertThat(decode(destinationFileUri, UTF_8), equalTo(decode(payloadFileUri, UTF_8).replace("/sdg/requests/", "/sdg/documents/") + ".pdf"));
 
             publishDocumentAvailableEventForAzureBlob(payloadFileUri, destinationFileUri, sourceCorrelationId);
 
