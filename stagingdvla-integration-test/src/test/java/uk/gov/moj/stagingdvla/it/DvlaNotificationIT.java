@@ -39,6 +39,7 @@ import static uk.gov.moj.stagingdvla.stubs.NotifyStub.verifyEmailNotificationSen
 import static uk.gov.moj.stagingdvla.stubs.NotifyStub.verifyNoEmailNotificationSent;
 import static uk.gov.moj.stagingdvla.stubs.ProgressionStub.stubProgressionAddCourtDocument;
 import static uk.gov.moj.stagingdvla.stubs.ProgressionStub.verifyProgressionAddCourtDocumentInvoked;
+import static uk.gov.moj.stagingdvla.stubs.ProgressionStub.verifyProgressionAddCourtDocumentInvokedAsUser;
 import static uk.gov.moj.stagingdvla.stubs.SjpStub.publishCaseDocumentAddedEvent;
 import static uk.gov.moj.stagingdvla.stubs.SjpStub.stubSjpUploadCaseDocument;
 import static uk.gov.moj.stagingdvla.util.QueueUtil.EventListener;
@@ -205,7 +206,8 @@ public class DvlaNotificationIT extends AbstractIntegrationTest {
         assertThat(generateDocumentRequest.getString("originatingSource"), equalTo("DVLADocumentOrder"));
         assertThat(generateDocumentRequest.getString("templateIdentifier"), equalTo("EDT_DriverOutNotification"));
         assertThat(generateDocumentRequest.getString("conversionFormat"), equalTo("pdf"));
-        assertThat(generateDocumentRequest.getString("sourceCorrelationId"),  is(notNullValue()));
+        // the user who raised the driver notification, as on the file-service path
+        assertThat(generateDocumentRequest.getString("sourceCorrelationId"), equalTo(USER_GROUP));
         assertThat(generateDocumentRequest.getString("payloadFileServiceId"), is(nullValue()));
         final String payloadFileUri = generateDocumentRequest.getString("payloadFileUri");
         assertThat(payloadFileUri, is(notNullValue()));
@@ -246,8 +248,9 @@ public class DvlaNotificationIT extends AbstractIntegrationTest {
                 generateDocumentRequest.getString("sourceCorrelationId"));
 
         //Then: SystemDocGeneratorEventProcessor.handleDvlaDocumentAvailable delivers the generated
-        // document onward as a court document for this (non-SJP) case
-        verifyProgressionAddCourtDocumentInvoked();
+        // document onward as a court document for this (non-SJP) case, as the user who raised the
+        // driver notification - progression authorises it against that user's groups
+        verifyProgressionAddCourtDocumentInvokedAsUser(USER_GROUP);
 
         //Then: NowsMaterialStatusEventProcessor asks the material context to store the rendered
         // document via material.command.upload-file - on the Azure blob path it references the
@@ -760,7 +763,7 @@ public class DvlaNotificationIT extends AbstractIntegrationTest {
         final String clientContext = CLIENT_CONTEXT_PREFIX + materialId;
 
         final JsonPath generateDocumentRequest = awaitGenerateDocumentRequest("DVLADocumentOrder", generateDocumentRequestsBefore);
-        assertThat(generateDocumentRequest.getString("sourceCorrelationId"), equalTo(materialId));
+        assertThat(generateDocumentRequest.getString("sourceCorrelationId"), equalTo(USER_GROUP));
         final String payloadFileUri = generateDocumentRequest.getString("payloadFileUri");
         final String destinationFileUri = generateDocumentRequest.getString("destinationFileUri");
         assertThat(payloadFileUri, is(notNullValue()));

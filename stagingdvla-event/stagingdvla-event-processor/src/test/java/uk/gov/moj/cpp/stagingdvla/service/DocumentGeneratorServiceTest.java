@@ -199,7 +199,8 @@ public class DocumentGeneratorServiceTest {
         final JsonEnvelope envelope = envelopeFrom(metadataWithRandomUUID("public.systemdocgenerator.events.document-available"),
                 nowsDocumentOrderJson1);
 
-        documentGeneratorService.generateDocument(envelope, driverNotified.getMaterialId(), nowsDocumentOrderJson1, null);
+        final UUID userId = randomUUID();
+        documentGeneratorService.generateDocument(envelope, userId, driverNotified.getMaterialId(), nowsDocumentOrderJson1, null);
 
         verify(fileService, never()).storePayload(any(), anyString(), anyString());
         verify(blobContainerClient).getBlobClient(PAYLOAD_BLOB_FOLDER + blobName);
@@ -216,7 +217,8 @@ public class DocumentGeneratorServiceTest {
         assertThat(request.getConversionFormat(), is(ConversionFormat.PDF));
         assertThat(request.getOriginatingSource(), is("DVLADocumentOrder"));
         assertThat(request.getTemplateIdentifier(), is("EDT_DriverOutNotification"));
-        assertThat(request.getSourceCorrelationId(), is(driverNotified.getMaterialId().toString()));
+        // the requesting user, as on the file-service path: it comes back as the user the court document is added as
+        assertThat(request.getSourceCorrelationId(), is(userId.toString()));
 
         assertThat(request.getPayloadFileUri(), is(blobUrl));
         assertThat(request.getDestinationFileUri(), is(documentUrl));
@@ -280,7 +282,7 @@ public class DocumentGeneratorServiceTest {
 
         final JsonEnvelope envelope = envelopeFrom(metadataWithRandomUUID("stagingdvla.event.driver-notified"), nowsDocumentOrderJson);
 
-        documentGeneratorService.generateDocument(envelope, driverNotified.getMaterialId(), nowsDocumentOrderJson, sjpCaseId);
+        documentGeneratorService.generateDocument(envelope, randomUUID(), driverNotified.getMaterialId(), nowsDocumentOrderJson, sjpCaseId);
 
         // blob name stays per material; the visible file name in metadata is the file-service one
         verify(blobContainerClient).getBlobClient(PAYLOAD_BLOB_FOLDER + blobName);
@@ -317,10 +319,21 @@ public class DocumentGeneratorServiceTest {
         final JsonEnvelope envelope = envelopeFrom(metadataWithRandomUUID("public.systemdocgenerator.events.document-available"),
                 nowsDocumentOrderJson1);
 
-        assertThrows(RuntimeException.class, () -> documentGeneratorService.generateDocument(envelope, driverNotified.getMaterialId(), nowsDocumentOrderJson1, null));
+        assertThrows(RuntimeException.class, () -> documentGeneratorService.generateDocument(envelope, randomUUID(), driverNotified.getMaterialId(), nowsDocumentOrderJson1, null));
 
         verifyNoInteractions(systemDocGeneratorService);
         verify(sender, never()).sendAsAdmin(any());
+    }
+
+    @Test
+    public void shouldReadTheMaterialIdBackFromThePayloadBlobName() {
+        final UUID materialId = randomUUID();
+
+        assertThat(DocumentGeneratorService.materialIdFromPayloadFileUri(
+                "https://mystorage.blob.core.windows.net/stagingdvla-files/" + PAYLOAD_BLOB_FOLDER + DVLA_DOCUMENT_ORDER + "_" + materialId), is(materialId));
+        // as system-doc-generator echoes it back: percent-encoded
+        assertThat(DocumentGeneratorService.materialIdFromPayloadFileUri(
+                "https://mystorage.blob.core.windows.net/stagingdvla-files/sdg%2Frequests%2F" + DVLA_DOCUMENT_ORDER + "_" + materialId), is(materialId));
     }
 
     private void verifyDocumentDeliveryStatusRecorded(final DriverNotified driverNotified, final DvlaDocumentDeliveryMaterialStatus expectedStatus,

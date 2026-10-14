@@ -462,6 +462,8 @@ public class SystemDocGeneratorEventProcessorTest {
         verify(sender).send(envelopeCaptor.capture());
         final Envelope<JsonObject> addCourtDocumentRequestToProgression = envelopeCaptor.getValue();
         assertThat(addCourtDocumentRequestToProgression.metadata().name(), is("progression.add-court-document"));
+        // progression authorises add-court-document against this user's groups
+        assertThat(addCourtDocumentRequestToProgression.metadata().userId().orElse(null), is(sourceCorrelationId.toString()));
         assertThat(addCourtDocumentRequestToProgression.payload().getString("materialId"), is(materialId.toString()));
         assertThat(addCourtDocumentRequestToProgression.payload().getJsonObject("courtDocument"), notNullValue());
 
@@ -554,7 +556,7 @@ public class SystemDocGeneratorEventProcessorTest {
     @Test
     public void shouldRecordDeliveryStatusFailedWhenDocumentGenerationFailsForDvlaDocumentOrder() {
         systemDocGeneratorEventProcessor.handleDocumentGenerationFailedEvent(
-                generationFailedEvent(DVLA_DOCUMENT_ORDER, AZURE_BLOB_BASE_URL + "internal%2FDVLADocumentOrder_" + randomUUID()));
+                generationFailedEvent(DVLA_DOCUMENT_ORDER, AZURE_BLOB_BASE_URL + "sdg%2Frequests%2FDVLADocumentOrder_" + materialId, randomUUID().toString()));
 
         assertDeliveryStatusFailedRecorded();
     }
@@ -562,7 +564,7 @@ public class SystemDocGeneratorEventProcessorTest {
     @Test
     public void shouldRecordDeliveryStatusFailedWhenDocumentGenerationFailsForDriverAuditReport() {
         systemDocGeneratorEventProcessor.handleDocumentGenerationFailedEvent(
-                generationFailedEvent(DVLA_AUDIT_RECORDS, AZURE_BLOB_BASE_URL + "internal%2FDvlaAuditRecords_" + randomUUID()));
+                generationFailedEvent(DVLA_AUDIT_RECORDS, AZURE_BLOB_BASE_URL + "sdg%2Frequests%2FDvlaAuditRecords_" + randomUUID(), materialId));
 
         assertDeliveryStatusFailedRecorded();
     }
@@ -570,7 +572,7 @@ public class SystemDocGeneratorEventProcessorTest {
     @Test
     public void shouldMatchOriginatingSourceIgnoringCaseWhenDocumentGenerationFails() {
         systemDocGeneratorEventProcessor.handleDocumentGenerationFailedEvent(
-                generationFailedEvent(DVLA_DOCUMENT_ORDER.toUpperCase(), AZURE_BLOB_BASE_URL + "internal%2FDVLADocumentOrder_" + randomUUID()));
+                generationFailedEvent(DVLA_DOCUMENT_ORDER.toUpperCase(), AZURE_BLOB_BASE_URL + "sdg%2Frequests%2FDVLADocumentOrder_" + materialId, randomUUID().toString()));
 
         assertDeliveryStatusFailedRecorded();
     }
@@ -578,7 +580,7 @@ public class SystemDocGeneratorEventProcessorTest {
     @Test
     public void shouldNotRecordDeliveryStatusWhenDocumentGenerationFailsWithoutPayloadFileUri() {
         // file-service path: no blob-backed PENDING record exists, so the material is not tracked
-        systemDocGeneratorEventProcessor.handleDocumentGenerationFailedEvent(generationFailedEvent(DVLA_DOCUMENT_ORDER, null));
+        systemDocGeneratorEventProcessor.handleDocumentGenerationFailedEvent(generationFailedEvent(DVLA_DOCUMENT_ORDER, null, randomUUID().toString()));
 
         verifyNoInteractions(sender);
     }
@@ -586,15 +588,16 @@ public class SystemDocGeneratorEventProcessorTest {
     @Test
     public void shouldNotRecordDeliveryStatusWhenDocumentGenerationFailsForOtherOriginatingSource() {
         systemDocGeneratorEventProcessor.handleDocumentGenerationFailedEvent(
-                generationFailedEvent("OtherContextDocument", AZURE_BLOB_BASE_URL + "internal%2FOther_" + randomUUID()));
+                generationFailedEvent("OtherContextDocument", AZURE_BLOB_BASE_URL + "sdg%2Frequests%2FOther_" + randomUUID(), randomUUID().toString()));
 
         verifyNoInteractions(sender);
     }
 
-    private JsonEnvelope generationFailedEvent(final String originatingSource, final String payloadFileUri) {
+    // sourceCorrelationId: the requesting user for a D20 (the material is in the payload blob name), the reportId for an audit report
+    private JsonEnvelope generationFailedEvent(final String originatingSource, final String payloadFileUri, final String sourceCorrelationId) {
         final JsonObjectBuilder payload = createObjectBuilder()
                 .add("originatingSource", originatingSource)
-                .add("sourceCorrelationId", materialId);
+                .add("sourceCorrelationId", sourceCorrelationId);
         if (payloadFileUri != null) {
             payload.add("payloadFileUri", payloadFileUri);
         } else {

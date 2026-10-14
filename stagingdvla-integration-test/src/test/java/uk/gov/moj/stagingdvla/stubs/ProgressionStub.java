@@ -12,6 +12,7 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 import static javax.ws.rs.core.HttpHeaders.CONTENT_TYPE;
 import static javax.ws.rs.core.Response.Status.ACCEPTED;
 import static org.awaitility.Awaitility.await;
+import static uk.gov.justice.services.common.http.HeaderConstants.USER_ID;
 
 import com.github.tomakehurst.wiremock.matching.RequestPatternBuilder;
 
@@ -31,6 +32,15 @@ public class ProgressionStub {
             final RequestPatternBuilder requestPatternBuilder = postRequestedFor(urlPathMatching(URL_PROGRESSION_ADD_COURT_DOCUMENT_COMMAND));
 
             verify(requestPatternBuilder);
+            return true;
+        });
+    }
+
+    // progression authorises add-court-document against the groups of the user in this header
+    public static void verifyProgressionAddCourtDocumentInvokedAsUser(final String userId) {
+        await().atMost(30, SECONDS).pollInterval(500, MILLISECONDS).until(() -> {
+            verify(postRequestedFor(urlPathMatching(URL_PROGRESSION_ADD_COURT_DOCUMENT_COMMAND))
+                    .withHeader(USER_ID, equalTo(userId)));
             return true;
         });
     }
