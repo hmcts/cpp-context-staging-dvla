@@ -30,6 +30,7 @@ import javax.transaction.Transactional;
 
 import com.azure.storage.blob.BlobClient;
 import com.azure.storage.blob.BlobContainerClient;
+import com.azure.storage.blob.BlobUrlParts;
 import com.azure.storage.blob.options.BlobParallelUploadOptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -111,13 +112,16 @@ public class DocumentGeneratorService {
      */
     @Transactional(Transactional.TxType.REQUIRES_NEW)
     public void generateDriverAuditReportDocument(final JsonEnvelope originatingEnvelope, final UUID reportId, final JsonObject payload, final String fileName) {
-        uploadAndRequestDocumentGeneration(originatingEnvelope, reportId, payload, fileName,
+        uploadAndRequestDocumentGeneration(originatingEnvelope, reportId, reportId.toString(), payload, fileName,
                 DVLA_AUDIT_RECORDS, ConversionFormat.CSV, DVLA_AUDIT_RECORDS, AUDIT_REPORT_PREFIX, null);
     }
 
     /**
      * Blob-backed D20 generation for a driverNotified payload.
      *
+     * @param userId    the user the driverNotified event was raised by. It goes out as the
+     *                  sourceCorrelationId, as on the file-service path, and comes back on
+     *                  document-available as the user the court document is added as
      * @param sjpCaseId the SJP case the document is filed with, null otherwise. It goes on the blob
      *                  PENDING record that starts delivery tracking, so MaterialAggregate knows from
      *                  the outset that the blob must outlive material SUCCESS until SJP has read it -
@@ -125,8 +129,8 @@ public class DocumentGeneratorService {
      *                  SUCCESS processed first would overtake (deleting the blob SJP still needs)
      */
     @Transactional(Transactional.TxType.REQUIRES_NEW)
-    public void generateDocument(final JsonEnvelope originatingEnvelope, final UUID materialId, final JsonObject payload, final UUID sjpCaseId) {
-        uploadAndRequestDocumentGeneration(originatingEnvelope, materialId, payload, getTimeStampAmendedFileName(DVLA_DOCUMENT_ORDER),
+    public void generateDocument(final JsonEnvelope originatingEnvelope, final UUID userId, final UUID materialId, final JsonObject payload, final UUID sjpCaseId) {
+        uploadAndRequestDocumentGeneration(originatingEnvelope, materialId, userId.toString(), payload, getTimeStampAmendedFileName(DVLA_DOCUMENT_ORDER),
                 DVLA_DOCUMENT_TEMPLATE_NAME, ConversionFormat.PDF, DVLA_DOCUMENT_ORDER, DVLA_DOCUMENT_ORDER, sjpCaseId);
     }
 
@@ -135,14 +139,14 @@ public class DocumentGeneratorService {
     // The payload blob is sdg/requests/<blobNamePrefix>_<materialId>; the generated document is written to
     // sdg/documents/<blobNamePrefix>_<materialId>.<extension>
     @SuppressWarnings("squid:S00107")
-    private void uploadAndRequestDocumentGeneration(final JsonEnvelope originatingEnvelope, final UUID materialId, final JsonObject payload, final String fileName, final String templateName, final ConversionFormat format, final String originatingSource, final String blobNamePrefix, final UUID sjpCaseId) {
+    private void uploadAndRequestDocumentGeneration(final JsonEnvelope originatingEnvelope, final UUID materialId, final String sourceCorrelationId, final JsonObject payload, final String fileName, final String templateName, final ConversionFormat format, final String originatingSource, final String blobNamePrefix, final UUID sjpCaseId) {
         final Result result;
         result = uploadDocumentToAzureBlob(materialId, payload, fileName, format, templateName, blobNamePrefix);
         final DocumentGenerationRequest documentGenerationRequest = new DocumentGenerationRequest(
                 originatingSource,
                 templateName,
                 format,
-                materialId.toString(),
+                sourceCorrelationId,
                 null,
                 result.payloadFileUri(),
                 result.destinationFileUri());
@@ -153,6 +157,16 @@ public class DocumentGeneratorService {
     }
 
     private record Result(String payloadFileUri, String destinationFileUri){}
+
+    /**
+     * The materialId a payload blob was uploaded for, read back from its name
+     * (sdg/requests/<blobNamePrefix>_<materialId>) - the sourceCorrelationId carries the user on the
+     * D20 path, so it cannot be used for this.
+     */
+    public static UUID materialIdFromPayloadFileUri(final String payloadFileUri) {
+        final String blobName = BlobUrlParts.parse(payloadFileUri).getBlobName();
+        return UUID.fromString(blobName.substring(blobName.lastIndexOf('_') + 1));
+    }
 
     private Result uploadDocumentToAzureBlob(UUID materialId, JsonObject payload, String fileName, ConversionFormat format, String templateName, String blobNamePrefix ) {
         final String blobName = blobNamePrefix + "_" + materialId;

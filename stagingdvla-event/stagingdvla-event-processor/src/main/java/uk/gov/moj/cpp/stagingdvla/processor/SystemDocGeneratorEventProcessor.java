@@ -18,6 +18,7 @@ import static uk.gov.moj.cpp.stagingdvla.notify.util.DrivingConvictionTransformU
 import static uk.gov.moj.cpp.stagingdvla.notify.util.DrivingConvictionTransformUtil.hasMultipleConvictingCourts;
 import static uk.gov.moj.cpp.stagingdvla.notify.util.DrivingConvictionTransformUtil.hasMultipleConvictionDates;
 import static uk.gov.moj.cpp.stagingdvla.service.DocumentDeliveryStatusService.DocumentDelivery.material;
+import static uk.gov.moj.cpp.stagingdvla.service.DocumentGeneratorService.materialIdFromPayloadFileUri;
 import static uk.gov.moj.cpp.stagingdvla.service.DocumentDeliveryStatusService.DocumentDelivery.sjpCase;
 
 import uk.gov.justice.core.courts.CourtDocument;
@@ -169,10 +170,13 @@ public class SystemDocGeneratorEventProcessor {
         } else {
             final String originatingSource = documentAvailablePayload.getString(ORIGINATING_SOURCE, "");
             // only blob-backed stagingdvla documents are tracked (see MaterialAggregate.recordDocumentDelivery)
-            if (DVLA_DOCUMENT_ORDER.equalsIgnoreCase(originatingSource) || isForDriverAuditReportDocument(originatingSource)) {
-                final String materialId = documentAvailablePayload.getString(SOURCE_CORRELATION_ID);
+            if (DVLA_DOCUMENT_ORDER.equalsIgnoreCase(originatingSource)) {
+                // the D20 sourceCorrelationId is the requesting user, so the material comes from the blob name
+                documentDeliveryStatusService.record(envelope.metadata(), material(materialIdFromPayloadFileUri(payloadFileUri), FAILED));
+            } else if (isForDriverAuditReportDocument(originatingSource)) {
+                final String reportId = documentAvailablePayload.getString(SOURCE_CORRELATION_ID);
 
-                documentDeliveryStatusService.record(envelope.metadata(), material(fromString(materialId), FAILED));
+                documentDeliveryStatusService.record(envelope.metadata(), material(fromString(reportId), FAILED));
             }
         }
     }

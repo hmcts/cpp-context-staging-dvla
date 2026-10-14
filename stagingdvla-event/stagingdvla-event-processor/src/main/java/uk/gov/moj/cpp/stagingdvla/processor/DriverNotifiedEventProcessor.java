@@ -117,7 +117,7 @@ public class DriverNotifiedEventProcessor {
                 documentGeneratorService.generateDvlaDocument(envelope, userId, driverNotified);
             } else {
                 final JsonObject nowsDocumentOrderJson = objectToJsonObjectConverter.convert(driverNotified);
-                documentGeneratorService.generateDocument(envelope, driverNotified.getMaterialId(),
+                documentGeneratorService.generateDocument(envelope, userId, driverNotified.getMaterialId(),
                         nowsDocumentOrderJson,
                         sjpCaseIdOf(driverNotified));
             }
