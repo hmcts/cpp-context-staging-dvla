@@ -42,6 +42,7 @@ import uk.gov.moj.cpp.stagingdvla.service.ApplicationParameters;
 import uk.gov.moj.cpp.stagingdvla.service.DocumentGeneratorService;
 import uk.gov.moj.cpp.stagingdvla.service.NotificationNotifyService;
 import uk.gov.moj.cpp.stagingdvla.service.NotifyDrivingConvictionService;
+import uk.gov.moj.cpp.stagingdvla.service.NotifyGatewaySendEmailService;
 import uk.gov.moj.cpp.stagingdvla.service.scheduler.NotifyDrivingConvictionRetryScheduler;
 
 import java.io.IOException;
@@ -118,6 +119,9 @@ public class DriverNotifiedEventProcessorTest {
 
     @Mock
     private NotificationNotifyService notificationNotifyService;
+
+    @Mock
+    private NotifyGatewaySendEmailService notifyGatewaySendEmailService;
 
     private final String identifier = randomUUID().toString();
     private final String masterDefendantId = randomUUID().toString();
@@ -353,28 +357,34 @@ public class DriverNotifiedEventProcessorTest {
     }
 
     @Test
-    public void shouldSendEmailNotificationWithClientContextForBlobAddressedMaterial() throws IOException {
+    public void shouldSendEmailNotificationViaNotifyGatewayForBlobAddressedMaterial() throws IOException {
         final JsonEnvelope envelope = getRequestPayload(EMAIL_NOTIFICATION_SENT_BLOB_JSON, STAGINGDVLA_EVENT_EMAIL_NOTIFICATION_SENT, 0);
 
         driverNotifiedEventProcessor.handleSentEmailNotificationEvent(envelope);
 
-        final JsonObject notifyPayload = captureEmailNotificationPayload(envelope);
+        final JsonObject notifyPayload = captureGatewayEmailNotificationPayload(envelope);
         assertThat(notifyPayload.getString(CLIENT_CONTEXT), is(CLIENT_CONTEXT_PREFIX + materialId));
-        assertEmailNotificationFields(notifyPayload);
-        // decided by the material itself, not by the dvlaFileStore toggle
+        assertThat(notifyPayload.getString("fileUri"),
+                is("http://cpp-azurite:10000/devstoreaccount1/stagingdvla-files/internal%2FDVLADocumentOrder_" + materialId + ".pdf"));
+        assertCommonEmailNotificationFields(notifyPayload);
+        // routed by what the material itself carries (DVLAFS-12), not a fresh dvlaFileStore re-read
         verifyNoInteractions(featureControlGuard);
+        verifyNoInteractions(notificationNotifyService);
     }
 
     @Test
-    public void shouldSendEmailNotificationWithoutClientContextForFileServiceMaterial() throws IOException {
+    public void shouldSendEmailNotificationViaLegacyNotificationNotifyForFileServiceMaterial() throws IOException {
         final JsonEnvelope envelope = getRequestPayload(EMAIL_NOTIFICATION_SENT_JSON, STAGINGDVLA_EVENT_EMAIL_NOTIFICATION_SENT, 0);
 
         driverNotifiedEventProcessor.handleSentEmailNotificationEvent(envelope);
 
         final JsonObject notifyPayload = captureEmailNotificationPayload(envelope);
         assertThat(notifyPayload.containsKey(CLIENT_CONTEXT), is(false));
-        assertEmailNotificationFields(notifyPayload);
+        assertThat(notifyPayload.containsKey("fileUri"), is(false));
+        assertThat(notifyPayload.getString("materialUrl"), is("http://localhost/material/" + materialId));
+        assertCommonEmailNotificationFields(notifyPayload);
         verifyNoInteractions(featureControlGuard);
+        verifyNoInteractions(notifyGatewaySendEmailService);
     }
 
     private JsonObject captureEmailNotificationPayload(final JsonEnvelope envelope) {
@@ -383,11 +393,16 @@ public class DriverNotifiedEventProcessorTest {
         return notifyPayloadCaptor.getValue();
     }
 
-    private void assertEmailNotificationFields(final JsonObject notifyPayload) {
+    private JsonObject captureGatewayEmailNotificationPayload(final JsonEnvelope envelope) {
+        final ArgumentCaptor<JsonObject> notifyPayloadCaptor = ArgumentCaptor.forClass(JsonObject.class);
+        verify(notifyGatewaySendEmailService).sendEmailNotification(eq(envelope), notifyPayloadCaptor.capture());
+        return notifyPayloadCaptor.getValue();
+    }
+
+    private void assertCommonEmailNotificationFields(final JsonObject notifyPayload) {
         assertThat(UUID.fromString(notifyPayload.getString("notificationId")).toString(), is(notifyPayload.getString("notificationId")));
         assertThat(notifyPayload.getString("templateId"), is(templateId));
         assertThat(notifyPayload.getString("sendToAddress"), is("dvla-test@example.com"));
-        assertThat(notifyPayload.getString("materialUrl"), is("http://localhost/material/" + materialId));
         assertThat(notifyPayload.getJsonObject("personalisation").getString("subject"), is("DVLA Driver Notification - New Endorsement - TEST"));
     }
 
