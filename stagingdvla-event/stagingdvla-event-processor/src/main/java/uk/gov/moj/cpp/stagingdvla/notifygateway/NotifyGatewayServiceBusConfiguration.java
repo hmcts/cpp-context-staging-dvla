@@ -9,7 +9,7 @@ import javax.inject.Inject;
  * JNDI-backed configuration for staging-dvla's send side of the {@code cp-gov-uk-notify-gateway}
  * Azure Service Bus integration (DVLAFS-12). The local-emulator-vs-real-Azure switch lives in the
  * shared {@code uk.gov.moj.cpp.stagingdvla.azure.AzureEmulatorConfiguration}
- * (reads {@code azure.local-emulator-enabled}) — this class only carries values specific to this one
+ * (reads {@code azure.emulator-enabled}) — this class only carries values specific to this one
  * Service Bus integration: the emulator's connection string (a different value from Azurite's own,
  * hence still its own key here), the real namespace, and the queue names.
  *

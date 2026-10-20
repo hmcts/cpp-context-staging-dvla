@@ -20,7 +20,7 @@ import javax.inject.Inject;
 public class AzureEmulatorConfiguration {
 
     @Inject
-    @Value(key = "azure.local-emulator-enabled", defaultValue = "false")
+    @Value(key = "azure.emulator-enabled", defaultValue = "false")
     private String localEmulatorEnabled;
 
     public boolean isLocalEmulatorEnabled() {
