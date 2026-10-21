@@ -29,12 +29,17 @@ import com.azure.messaging.servicebus.models.ServiceBusReceiveMode;
  */
 public class NotifyGatewayStub {
 
-    // the emulator's static "same machine" connection string (see cpp-developers-docker's
-    // standalone.xml notifygateway.servicebus.connection-string) - SAS_KEY_VALUE is a fixed
-    // placeholder the emulator always accepts for UseDevelopmentEmulator=true, not a real secret
-    private static final String CONNECTION_STRING =
-            "Endpoint=sb://localhost;SharedAccessKeyName=RootManageSharedAccessKey;"
-                    + "SharedAccessKey=SAS_KEY_VALUE;UseDevelopmentEmulator=true;";
+    // the emulator's static "same machine" endpoint (see cpp-developers-docker's standalone.xml
+    // notifygateway.servicebus.connection-string) - SAS_KEY_VALUE is a fixed placeholder the
+    // emulator always accepts for UseDevelopmentEmulator=true, not a real secret.
+    // Endpoint overridable via SERVICEBUS_EMULATOR_ENDPOINT: in the mdv validation pipeline the
+    // emulator isn't reachable at localhost (it's a separate in-cluster pod, not port-forwarded
+    // like cpp-developers-docker's socat sidecar), so validation-tests.yaml injects the real
+    // in-cluster FQDN there - mirrors AZURITE_ENDPOINT's same role for NotifyStub/MaterialStub.
+    private static final String CONNECTION_STRING = "Endpoint="
+            + Optional.ofNullable(System.getenv("SERVICEBUS_EMULATOR_ENDPOINT")).orElse("sb://localhost")
+            + ";SharedAccessKeyName=RootManageSharedAccessKey;"
+            + "SharedAccessKey=SAS_KEY_VALUE;UseDevelopmentEmulator=true;";
     private static final String SEND_QUEUE_NAME = "ng-send-email";
 
     private static final ServiceBusReceiverClient RECEIVER_CLIENT = new ServiceBusClientBuilder()
