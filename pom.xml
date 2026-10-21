@@ -11,7 +11,7 @@
 
     <groupId>uk.gov.moj.cpp.staging.dvla</groupId>
     <artifactId>stagingdvla-parent</artifactId>
-    <version>17.104.112-CHD-2786-SNAPSHOT</version>
+    <version>17.104.112-PEG-3606-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>stagingdvla Context - Parent Module</name>
@@ -37,6 +37,11 @@
      TODO: move to cpp-platform-maven-common-bom once available there -->
         <azure-core-http-jdk-httpclient.version>1.0.0-beta.14</azure-core-http-jdk-httpclient.version>
 
+        <!-- DVLAFS-12 needs >= 7.17.8 — first version whose connection string parses UseDevelopmentEmulator=true.
+     azure-core/azure-identity/azure-storage-blob stay on common-bom's own pins, unbumped.
+     TODO: move to cpp-platform-maven-common-bom once available there -->
+        <azure-messaging-servicebus.version>7.17.8</azure-messaging-servicebus.version>
+
         <!-- TODO: move to cpp-platform-maven-common-bom once available there -->
         <cpp-platform-azure-utils.version>17.104.3</cpp-platform-azure-utils.version>
 
@@ -48,6 +53,11 @@
                 <groupId>com.azure</groupId>
                 <artifactId>azure-core-http-jdk-httpclient</artifactId>
                 <version>${azure-core-http-jdk-httpclient.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.azure</groupId>
+                <artifactId>azure-messaging-servicebus</artifactId>
+                <version>${azure-messaging-servicebus.version}</version>
             </dependency>
             <dependency>
                 <groupId>uk.gov.moj.cpp.common.library.utils</groupId>
