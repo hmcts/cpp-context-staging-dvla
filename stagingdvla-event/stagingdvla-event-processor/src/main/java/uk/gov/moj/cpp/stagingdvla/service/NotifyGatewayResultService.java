@@ -16,6 +16,7 @@ import java.util.UUID;
 
 import javax.inject.Inject;
 import javax.json.JsonObject;
+import javax.json.JsonReader;
 
 import com.azure.messaging.servicebus.ServiceBusReceivedMessage;
 import org.slf4j.Logger;
@@ -75,8 +76,8 @@ public class NotifyGatewayResultService {
     }
 
     private static JsonObject bodyOf(final ServiceBusReceivedMessage message) {
-        try {
-            return createReader(new StringReader(message.getBody().toString())).readObject();
+        try (JsonReader reader = createReader(new StringReader(message.getBody().toString()))) {
+            return reader.readObject();
         } catch (final RuntimeException e) {
             throw new MalformedResultMessageException("unparseable notify-gateway result body: " + e.getMessage());
         }

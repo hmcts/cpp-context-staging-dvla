@@ -1,5 +1,6 @@
 package uk.gov.moj.cpp.stagingdvla.notifygateway;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
@@ -65,7 +66,7 @@ public class NotifyGatewayResultConsumerTest {
         // a fresh instance, not the @InjectMocks-managed one - @InjectMocks pre-populates the
         // client field with the mock by type regardless of init() having run, which would make
         // this case untestable against the shared `consumer`
-        new NotifyGatewayResultConsumer().cleanup();
+        assertDoesNotThrow(() -> new NotifyGatewayResultConsumer().cleanup());
     }
 
     @Test
