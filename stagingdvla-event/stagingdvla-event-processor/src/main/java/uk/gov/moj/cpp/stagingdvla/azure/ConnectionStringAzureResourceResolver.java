@@ -2,9 +2,14 @@ package uk.gov.moj.cpp.stagingdvla.azure;
 
 import uk.gov.moj.cpp.stagingdvla.notifygateway.NotifyGatewayServiceBusConfiguration;
 
+import java.util.function.Consumer;
+
 import javax.enterprise.inject.Vetoed;
 
 import com.azure.messaging.servicebus.ServiceBusClientBuilder;
+import com.azure.messaging.servicebus.ServiceBusErrorContext;
+import com.azure.messaging.servicebus.ServiceBusProcessorClient;
+import com.azure.messaging.servicebus.ServiceBusReceivedMessageContext;
 import com.azure.messaging.servicebus.ServiceBusSenderClient;
 
 /**
@@ -26,5 +31,19 @@ public final class ConnectionStringAzureResourceResolver implements AzureResourc
                 .sender()
                 .queueName(configuration.getSendQueueName())
                 .buildClient();
+    }
+
+    @Override
+    public ServiceBusProcessorClient serviceBusProcessorClient(final NotifyGatewayServiceBusConfiguration configuration,
+                                                                 final Consumer<ServiceBusReceivedMessageContext> processMessage,
+                                                                 final Consumer<ServiceBusErrorContext> processError) {
+        return new ServiceBusClientBuilder()
+                .connectionString(configuration.getConnectionString())
+                .processor()
+                .queueName(configuration.getReplyQueueName())
+                .disableAutoComplete()
+                .processMessage(processMessage)
+                .processError(processError)
+                .buildProcessorClient();
     }
 }

@@ -36,6 +36,8 @@ import static uk.gov.moj.stagingdvla.stubs.MaterialStub.publishFailedToAddMateri
 import static uk.gov.moj.stagingdvla.stubs.MaterialStub.publishMaterialAddedEvent;
 import static uk.gov.moj.stagingdvla.stubs.MaterialStub.verifyMaterialCreated;
 import static uk.gov.moj.stagingdvla.stubs.NotifyGatewayStub.bodyOf;
+import static uk.gov.moj.stagingdvla.stubs.NotifyGatewayStub.publishNotificationFailed;
+import static uk.gov.moj.stagingdvla.stubs.NotifyGatewayStub.publishNotificationSent;
 import static uk.gov.moj.stagingdvla.stubs.NotifyGatewayStub.verifyEmailNotificationSentToGateway;
 import static uk.gov.moj.stagingdvla.stubs.NotifyStub.awaitLegacyEmailNotificationSent;
 import static uk.gov.moj.stagingdvla.stubs.NotifyStub.publishNotificationSentEvent;
@@ -351,8 +353,8 @@ public class DvlaNotificationIT extends AbstractIntegrationTest {
     // Deliberate pair with shouldSendDvlaEmailViaLegacyNotifyWhenFileServiceMaterial below:
     // dvlaFileStore=true routes the D20 email through the notify gateway's ASB queue (this test,
     // against the real Service Bus emulator - DVLAFS-12); dvlaFileStore=false keeps the legacy
-    // notificationnotify REST send. Blob-deletion-after-email-success isn't covered here - blocked
-    // on DVLAFS-19 (consuming the gateway's reply).
+    // notificationnotify REST send. Blob-deletion-after-email-success is DVLAFS-19, now covered
+    // below by publishing the gateway's reply onto staging-dvla's own dedicated result queue.
     @Test
     public void shouldSendDvlaEmailToNotifyGatewayWhenAzureBlobMaterial() throws IOException {
         final ImmutableMap<String, Boolean> features = of("dvlaFileStore", true, "dvlaFileStoreDelete", true);
@@ -396,6 +398,93 @@ public class DvlaNotificationIT extends AbstractIntegrationTest {
         assertThat(messageBody.getJsonObject("personalisation").getString("subject"), is(notNullValue()));
         assertThat(message.getSubject(), equalTo("send-email-notification"));
         assertThat(message.getReplyTo(), equalTo("stagingdvla-notification-result"));
+
+        // DVLAFS-19: simulate the gateway's reply landing on staging-dvla's own dedicated result
+        // queue; NotifyGatewayResultConsumer (the real consumer under test, already running) picks
+        // it up and records the email leg SUCCESS
+        publishNotificationSent(clientContext, randomUUID());
+        final JsonPath emailSuccessEvent = retrieveEmailStatusDocumentDeliveryEvent(materialId, "SUCCESS");
+        assertThat(emailSuccessEvent.getString("materialId"), equalTo(materialId));
+    }
+
+    // DVLAFS-19 AC-5: the gateway can legitimately republish the same notificationId's result (a
+    // task transaction rollback-then-retry, per the gateway's own engineering notes - not
+    // hypothetical). The deletion gate must not double-fire on the duplicate.
+    @Test
+    public void shouldNotDoubleApplyDuplicateNotifyGatewayResult() throws IOException {
+        final ImmutableMap<String, Boolean> features = of("dvlaFileStore", true, "dvlaFileStoreDelete", true);
+        stubFeaturesFor(STAGINGDVLA_CONTEXT, features);
+
+        final String body = getPayload(DRIVER_NOTIFICATION_COMMAND_PAYLOAD_WITH_CONVICTING_COURT_MULTIPLE_OFFENCES);
+        final Response writeResponse = postCommandWithUserId(getWriteUrl("/driver-notification"),
+                DRIVER_NOTIFICATION_MEDIA_TYPE, body, USER_GROUP);
+        assertThat(writeResponse.getStatusCode(), equalTo(SC_ACCEPTED));
+
+        final DriverNotified driverNotified = jsonToObjectConverter.convert(
+                retrieveMessageAsJsonObject(consumerForDriverNotified).get(), DriverNotified.class);
+        final String materialId = driverNotified.getMaterialId().toString();
+        final String clientContext = CLIENT_CONTEXT_PREFIX + materialId;
+
+        verifyGenerateDocumentStubCommandInvoked();
+        final JsonPath generateDocumentRequest = latestGenerateDocumentRequest();
+        final String payloadFileUri = generateDocumentRequest.getString("payloadFileUri");
+        final String destinationFileUri = generateDocumentRequest.getString("destinationFileUri");
+
+        publishDocumentAvailableEventForAzureBlob(payloadFileUri, destinationFileUri,
+                generateDocumentRequest.getString("sourceCorrelationId"));
+        verifyProgressionAddCourtDocumentInvoked();
+        publishMaterialAddedEvent(driverNotified.getMaterialId(), UUID.fromString(USER_GROUP));
+        verifyEmailNotificationSentToGateway(clientContext);
+
+        final UUID notificationId = randomUUID();
+
+        //When: the same notificationId's notification-sent is published twice
+        publishNotificationSent(clientContext, notificationId);
+        verifyDocumentDeletedFromBlob(materialId, payloadFileUri, destinationFileUri);
+        publishNotificationSent(clientContext, notificationId);
+
+        //Then: no second document-deleted-from-blob for this materialId - one delivery, one deletion
+        assertThat(retrieveMessage(consumerForDocumentDeletedFromBlob,
+                        isJson(withJsonPath("$.materialId", equalTo(materialId)))),
+                is(nullValue()));
+    }
+
+    // DVLAFS-19 AC-3, failed half: a failed delivery marks the email leg FAILED and retains the
+    // blobs (the "alertable" half of AC-3 has no alerting mechanism anywhere in this CR or the
+    // gateway CR yet - not asserted here, tracked as a known gap).
+    @Test
+    public void shouldRecordEmailFailedAndRetainBlobsWhenNotifyGatewayReportsFailure() throws IOException {
+        final ImmutableMap<String, Boolean> features = of("dvlaFileStore", true, "dvlaFileStoreDelete", true);
+        stubFeaturesFor(STAGINGDVLA_CONTEXT, features);
+
+        final String body = getPayload(DRIVER_NOTIFICATION_COMMAND_PAYLOAD_WITH_CONVICTING_COURT_MULTIPLE_OFFENCES);
+        final Response writeResponse = postCommandWithUserId(getWriteUrl("/driver-notification"),
+                DRIVER_NOTIFICATION_MEDIA_TYPE, body, USER_GROUP);
+        assertThat(writeResponse.getStatusCode(), equalTo(SC_ACCEPTED));
+
+        final DriverNotified driverNotified = jsonToObjectConverter.convert(
+                retrieveMessageAsJsonObject(consumerForDriverNotified).get(), DriverNotified.class);
+        final String materialId = driverNotified.getMaterialId().toString();
+        final String clientContext = CLIENT_CONTEXT_PREFIX + materialId;
+
+        verifyGenerateDocumentStubCommandInvoked();
+        final JsonPath generateDocumentRequest = latestGenerateDocumentRequest();
+        final String payloadFileUri = generateDocumentRequest.getString("payloadFileUri");
+        final String destinationFileUri = generateDocumentRequest.getString("destinationFileUri");
+
+        publishDocumentAvailableEventForAzureBlob(payloadFileUri, destinationFileUri,
+                generateDocumentRequest.getString("sourceCorrelationId"));
+        verifyProgressionAddCourtDocumentInvoked();
+        publishMaterialAddedEvent(driverNotified.getMaterialId(), UUID.fromString(USER_GROUP));
+        verifyEmailNotificationSentToGateway(clientContext);
+
+        //When
+        publishNotificationFailed(clientContext, randomUUID(), "Gov.Notify rejected the request");
+
+        //Then
+        final JsonPath emailFailedEvent = retrieveEmailStatusDocumentDeliveryEvent(materialId, "FAILED");
+        assertThat(emailFailedEvent.getString("materialId"), equalTo(materialId));
+        assertNoDocumentDeletedFromBlob(materialId);
     }
 
     // dvlaFileStore=false counterpart (the class default - not re-stubbed here): legacy file-service
@@ -780,8 +869,8 @@ public class DvlaNotificationIT extends AbstractIntegrationTest {
     }
 
     // Email verification is ASB-gateway here too (consistent with the blob-path pairing above), not
-    // the legacy stub this test used before. Email-SUCCESS and the final deletion aren't covered -
-    // blocked on DVLAFS-19. Renamed from
+    // the legacy stub this test used before. Email-SUCCESS and the final deletion are DVLAFS-19,
+    // now covered below. Renamed from
     // shouldSendDvlaEmailAndDeleteBlobsOnlyOnceEmailAndSjpBothSucceedForSjpCaseWithAzureBlob.
     @Test
     public void shouldSendDvlaEmailToNotifyGatewayAndFileSjpDocumentForSjpCaseWithAzureBlob() throws IOException {
@@ -836,10 +925,17 @@ public class DvlaNotificationIT extends AbstractIntegrationTest {
         // SJP filing is independent of the email transport, so it's fully provable regardless
         publishCaseDocumentAddedEvent(caseId, expectedSjpCorrelationId, destinationFileUri, UUID.fromString(USER_GROUP));
 
-        // email still PENDING (DVLAFS-19 not built) - material+sjp SUCCESS alone must not delete,
-        // proving the gate still requires email too
+        // email still PENDING - material+sjp SUCCESS alone must not delete, proving the gate still
+        // requires email too
         retrieveDocumentDeliveryEvent(materialId, "sjpStatus", "SUCCESS");
         assertNoDocumentDeletedFromBlob(materialId);
+
+        // DVLAFS-19: the gateway's reply is the last condition the gate needs - material SUCCESS
+        // and sjp SUCCESS are already recorded above, so this email SUCCESS should be what flips
+        // the gate and deletes both blobs
+        publishNotificationSent(clientContext, randomUUID());
+        retrieveEmailStatusDocumentDeliveryEvent(materialId, "SUCCESS");
+        verifyDocumentDeletedFromBlob(materialId, payloadFileUri, destinationFileUri);
     }
 
     // matched on materialId, as other materials' deletions may be on the same consumer
