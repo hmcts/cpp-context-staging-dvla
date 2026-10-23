@@ -6,6 +6,9 @@ import static uk.gov.justice.services.test.utils.core.reflection.ReflectionUtil.
 
 import uk.gov.moj.cpp.stagingdvla.notifygateway.NotifyGatewayServiceBusConfiguration;
 
+import com.azure.messaging.servicebus.ServiceBusErrorContext;
+import com.azure.messaging.servicebus.ServiceBusProcessorClient;
+import com.azure.messaging.servicebus.ServiceBusReceivedMessageContext;
 import com.azure.messaging.servicebus.ServiceBusSenderClient;
 import org.junit.jupiter.api.Test;
 
@@ -23,5 +26,19 @@ public class ManagedIdentityAzureResourceResolverTest {
 
         assertThat(senderClient.getFullyQualifiedNamespace(), is("sbsteccm01.servicebus.windows.net"));
         assertThat(senderClient.getEntityPath(), is("steccm01.ng-send-email"));
+    }
+
+    @Test
+    public void shouldBuildServiceBusProcessorClientForTheConfiguredNamespaceAndReplyQueue() {
+        final NotifyGatewayServiceBusConfiguration configuration = new NotifyGatewayServiceBusConfiguration();
+        setField(configuration, "fullyQualifiedNamespace", "sbsteccm01.servicebus.windows.net");
+        setField(configuration, "replyQueueName", "steccm01.stagingdvla-notification-result");
+
+        final ServiceBusProcessorClient processorClient = resolver.serviceBusProcessorClient(
+                configuration, (final ServiceBusReceivedMessageContext context) -> { }, (final ServiceBusErrorContext context) -> { });
+
+        // ServiceBusProcessorClient exposes no getFullyQualifiedNamespace() (unlike ServiceBusSenderClient
+        // above) - getQueueName() is the only identifying accessor available to assert against
+        assertThat(processorClient.getQueueName(), is("steccm01.stagingdvla-notification-result"));
     }
 }

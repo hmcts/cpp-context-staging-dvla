@@ -46,7 +46,7 @@ public class NotifyGatewayResultConsumer {
     private ServiceBusProcessorClient client;
 
     @PostConstruct
-    private void init() {
+    void init() {
         client = azureResourceResolver.serviceBusProcessorClient(configuration, this::processMessage, this::processError);
         client.start();
         if (LOGGER.isDebugEnabled()) {
@@ -55,13 +55,13 @@ public class NotifyGatewayResultConsumer {
     }
 
     @PreDestroy
-    private void cleanup() {
+    void cleanup() {
         if (client != null) {
             client.close();
         }
     }
 
-    private void processMessage(final ServiceBusReceivedMessageContext context) {
+    void processMessage(final ServiceBusReceivedMessageContext context) {
         try {
             notifyGatewayResultService.handle(context.getMessage());
             context.complete();
@@ -75,7 +75,7 @@ public class NotifyGatewayResultConsumer {
         // suppress it as an error
     }
 
-    private void processError(final ServiceBusErrorContext context) {
+    void processError(final ServiceBusErrorContext context) {
         LOGGER.error("notify-gateway result consumer error on entity {}", context.getEntityPath(), context.getException());
     }
 }
