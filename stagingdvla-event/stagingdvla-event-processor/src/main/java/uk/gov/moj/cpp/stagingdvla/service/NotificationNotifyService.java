@@ -1,5 +1,6 @@
 package uk.gov.moj.cpp.stagingdvla.service;
 
+import static java.util.UUID.fromString;
 import static uk.gov.justice.services.core.annotation.Component.EVENT_PROCESSOR;
 import static uk.gov.justice.services.core.enveloper.Enveloper.envelop;
 
@@ -7,6 +8,8 @@ import uk.gov.justice.services.core.annotation.ServiceComponent;
 import uk.gov.justice.services.core.sender.Sender;
 import uk.gov.justice.services.messaging.Envelope;
 import uk.gov.justice.services.messaging.JsonEnvelope;
+
+import java.util.UUID;
 
 import javax.inject.Inject;
 import javax.json.JsonObject;
@@ -24,6 +27,18 @@ public class NotificationNotifyService {
     public static final String CLIENT_CONTEXT_PREFIX = "STAGINGDVLA_";
 
     private static final String NOTIFICATION_NOTIFY_EMAIL_METADATA_TYPE = "notificationnotify.send-email-notification";
+
+    // Shared by both result-event consumers (NotificationNotifyEventProcessor - legacy topic,
+    // NotifyGatewayResultService - gateway reply queue, DVLAFS-19): a result payload belongs to a
+    // DVLA document delivery only if its clientContext carries this prefix, and the rest of the
+    // clientContext is that delivery's materialId.
+    public static UUID materialIdFrom(final JsonObject payload) {
+        return fromString(payload.getString(CLIENT_CONTEXT).substring(CLIENT_CONTEXT_PREFIX.length()));
+    }
+
+    public static boolean isStagingDvlaNotification(final JsonObject payload) {
+        return payload.getString(CLIENT_CONTEXT, "").startsWith(CLIENT_CONTEXT_PREFIX);
+    }
 
     @Inject
     @ServiceComponent(EVENT_PROCESSOR)
