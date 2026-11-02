@@ -36,8 +36,12 @@ public class NotifyGatewayResultService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(NotifyGatewayResultService.class);
 
-    private static final String NOTIFICATION_SENT_SUBJECT = "notification-sent";
-    private static final String NOTIFICATION_FAILED_SUBJECT = "notification-failed";
+    // Must match cp-gov-uk-notify-gateway's ResultEventPublisher, which sets the Service Bus
+    // `subject` to the event's fully-qualified name (NotificationSentEvent/NotificationFailedEvent's
+    // EVENT_NAME), not the short "notification-sent"/"notification-failed" form - comparing
+    // against the short form never matches and dead-letters every result message.
+    private static final String NOTIFICATION_SENT_SUBJECT = "public.notificationnotify.events.notification-sent";
+    private static final String NOTIFICATION_FAILED_SUBJECT = "public.notificationnotify.events.notification-failed";
 
     @Inject
     private DocumentDeliveryStatusService documentDeliveryStatusService;
