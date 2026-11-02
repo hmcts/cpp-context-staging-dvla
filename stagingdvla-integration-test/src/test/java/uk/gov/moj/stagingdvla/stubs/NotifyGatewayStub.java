@@ -56,8 +56,12 @@ public class NotifyGatewayStub {
     // DvlaNotificationIT's own ReplyTo assertions (`"stagingdvla-notification-result"`).
     private static final String RESULT_QUEUE_NAME = "stagingdvla-notification-result";
 
-    private static final String NOTIFICATION_SENT_SUBJECT = "notification-sent";
-    private static final String NOTIFICATION_FAILED_SUBJECT = "notification-failed";
+    // Must match what the real gateway actually sends (ResultEventPublisher sets the fully-qualified
+    // event name, not the short form) - this stub previously used the short form, which happened to
+    // match NotifyGatewayResultService's own (equally wrong) short-form check, masking the mismatch
+    // at the integration-test level too.
+    private static final String NOTIFICATION_SENT_SUBJECT = "public.notificationnotify.events.notification-sent";
+    private static final String NOTIFICATION_FAILED_SUBJECT = "public.notificationnotify.events.notification-failed";
 
     private static final ServiceBusReceiverClient RECEIVER_CLIENT = new ServiceBusClientBuilder()
             .connectionString(CONNECTION_STRING)
