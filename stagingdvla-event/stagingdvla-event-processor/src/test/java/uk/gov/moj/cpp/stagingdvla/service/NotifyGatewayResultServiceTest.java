@@ -91,7 +91,7 @@ public class NotifyGatewayResultServiceTest {
     @Test
     public void shouldThrowOnUnparseableBody() {
         final ServiceBusReceivedMessage message = mock(ServiceBusReceivedMessage.class);
-        when(message.getSubject()).thenReturn("notification-sent");
+        when(message.getSubject()).thenReturn("public.notificationnotify.events.notification-sent");
         when(message.getBody()).thenReturn(BinaryData.fromString("not json"));
 
         assertThrows(MalformedResultMessageException.class, () -> notifyGatewayResultService.handle(message));
@@ -115,7 +115,7 @@ public class NotifyGatewayResultServiceTest {
         if (clientContext != null) {
             payload.add("clientContext", clientContext);
         }
-        return messageWithSubjectAndBody("notification-sent", payload.build());
+        return messageWithSubjectAndBody("public.notificationnotify.events.notification-sent", payload.build());
     }
 
     private static ServiceBusReceivedMessage failedMessage(final String clientContext) {
@@ -126,7 +126,7 @@ public class NotifyGatewayResultServiceTest {
         if (clientContext != null) {
             payload.add("clientContext", clientContext);
         }
-        return messageWithSubjectAndBody("notification-failed", payload.build());
+        return messageWithSubjectAndBody("public.notificationnotify.events.notification-failed", payload.build());
     }
 
     private static ServiceBusReceivedMessage messageWithSubjectAndBody(final String subject, final JsonObject body) {
