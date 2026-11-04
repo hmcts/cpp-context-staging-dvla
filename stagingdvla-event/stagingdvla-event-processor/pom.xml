@@ -40,6 +40,10 @@
             <artifactId>azure-core-http-jdk-httpclient</artifactId>
         </dependency>
         <dependency>
+            <groupId>com.azure</groupId>
+            <artifactId>azure-messaging-servicebus</artifactId>
+        </dependency>
+        <dependency>
             <groupId>uk.gov.moj.cpp.common</groupId>
             <artifactId>event-processor</artifactId>
         </dependency>

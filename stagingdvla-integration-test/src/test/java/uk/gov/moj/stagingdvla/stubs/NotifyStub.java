@@ -2,6 +2,7 @@ package uk.gov.moj.stagingdvla.stubs;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.equalTo;
+import static com.github.tomakehurst.wiremock.client.WireMock.findAll;
 import static com.github.tomakehurst.wiremock.client.WireMock.matchingJsonPath;
 import static com.github.tomakehurst.wiremock.client.WireMock.post;
 import static com.github.tomakehurst.wiremock.client.WireMock.postRequestedFor;
@@ -19,11 +20,13 @@ import static org.awaitility.Awaitility.await;
 import static uk.gov.justice.services.common.http.HeaderConstants.ID;
 import static uk.gov.moj.stagingdvla.util.QueueUtil.publicEvents;
 
+import java.util.Objects;
 import java.util.UUID;
 
 import javax.json.JsonObject;
 
 import com.github.tomakehurst.wiremock.matching.RequestPatternBuilder;
+import io.restassured.path.json.JsonPath;
 
 public class NotifyStub {
 
@@ -46,8 +49,6 @@ public class NotifyStub {
                         .withHeader(CONTENT_TYPE, APPLICATION_JSON)));
     }
 
-    // the send-email-notification request DriverNotifiedEventProcessor.handleSentEmailNotificationEvent
-    // sends for this clientContext (blob-addressed material), with the D20 email's channel fields
     public static void verifyEmailNotificationSent(final String clientContext) {
         await().atMost(30, SECONDS).pollInterval(500, MILLISECONDS).untilAsserted(() ->
                 verify(emailNotificationRequestFor(clientContext)
@@ -59,6 +60,17 @@ public class NotifyStub {
 
     public static void verifyNoEmailNotificationSent(final String clientContext) {
         verify(0, emailNotificationRequestFor(clientContext));
+    }
+
+    // legacy path never carries a clientContext, so match by its absence instead
+    public static JsonPath awaitLegacyEmailNotificationSent() {
+        return await().atMost(30, SECONDS).pollInterval(500, MILLISECONDS).until(() ->
+                findAll(postRequestedFor(urlPathMatching(NOTIFICATION_NOTIFY_ENDPOINT))
+                        .withHeader(CONTENT_TYPE, equalTo(COMMAND_MEDIA_TYPE))).stream()
+                        .map(request -> new JsonPath(request.getBodyAsString()))
+                        .filter(requestBody -> !requestBody.getMap("").containsKey("clientContext"))
+                        .findFirst()
+                        .orElse(null), Objects::nonNull);
     }
 
     private static RequestPatternBuilder emailNotificationRequestFor(final String clientContext) {

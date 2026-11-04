@@ -39,6 +39,11 @@ public class DocumentGeneratorService {
 
     public static final String DVLA_DOCUMENT_TEMPLATE_NAME = "EDT_DriverOutNotification";
     public static final String DVLA_DOCUMENT_ORDER = "DVLADocumentOrder";
+    // blob index tags set on every payload blob uploaded for document generation
+    public static final String TAG_MATERIAL_ID = "materialId";
+    public static final String TAG_DOCUMENT_TYPE = "documentType";
+    public static final String DOCUMENT_TYPE_DVLA_DOCUMENT_ORDER = "DVLA_DOCUMENT_ORDER";
+    public static final String DOCUMENT_TYPE_DRIVER_SEARCH_AUDIT_REPORT = "DriverSearchAuditReport";
     private static final Logger LOGGER = LoggerFactory.getLogger(DocumentGeneratorService.class);
     private static final DateTimeFormatter TIMESTAMP_FORMATTER = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
     private static final String ERROR_MESSAGE = "Error while uploading document generation or upload ";
@@ -113,7 +118,7 @@ public class DocumentGeneratorService {
     @Transactional(Transactional.TxType.REQUIRES_NEW)
     public void generateDriverAuditReportDocument(final JsonEnvelope originatingEnvelope, final UUID reportId, final JsonObject payload, final String fileName) {
         uploadAndRequestDocumentGeneration(originatingEnvelope, reportId, reportId.toString(), payload, fileName,
-                DVLA_AUDIT_RECORDS, ConversionFormat.CSV, DVLA_AUDIT_RECORDS, AUDIT_REPORT_PREFIX, null);
+                DVLA_AUDIT_RECORDS, ConversionFormat.CSV, DVLA_AUDIT_RECORDS, AUDIT_REPORT_PREFIX, DOCUMENT_TYPE_DRIVER_SEARCH_AUDIT_REPORT, null);
     }
 
     /**
@@ -131,7 +136,7 @@ public class DocumentGeneratorService {
     @Transactional(Transactional.TxType.REQUIRES_NEW)
     public void generateDocument(final JsonEnvelope originatingEnvelope, final UUID userId, final UUID materialId, final JsonObject payload, final UUID sjpCaseId) {
         uploadAndRequestDocumentGeneration(originatingEnvelope, materialId, userId.toString(), payload, getTimeStampAmendedFileName(DVLA_DOCUMENT_ORDER),
-                DVLA_DOCUMENT_TEMPLATE_NAME, ConversionFormat.PDF, DVLA_DOCUMENT_ORDER, DVLA_DOCUMENT_ORDER, sjpCaseId);
+                DVLA_DOCUMENT_TEMPLATE_NAME, ConversionFormat.PDF, DVLA_DOCUMENT_ORDER, DVLA_DOCUMENT_ORDER, DOCUMENT_TYPE_DVLA_DOCUMENT_ORDER, sjpCaseId);
     }
 
     // shared by generateDocument and generateDriverAuditReportDocument; kept un-annotated so neither @Transactional
@@ -139,9 +144,9 @@ public class DocumentGeneratorService {
     // The payload blob is sdg/requests/<blobNamePrefix>_<materialId>; the generated document is written to
     // sdg/documents/<blobNamePrefix>_<materialId>.<extension>
     @SuppressWarnings("squid:S00107")
-    private void uploadAndRequestDocumentGeneration(final JsonEnvelope originatingEnvelope, final UUID materialId, final String sourceCorrelationId, final JsonObject payload, final String fileName, final String templateName, final ConversionFormat format, final String originatingSource, final String blobNamePrefix, final UUID sjpCaseId) {
+    private void uploadAndRequestDocumentGeneration(final JsonEnvelope originatingEnvelope, final UUID materialId, final String sourceCorrelationId, final JsonObject payload, final String fileName, final String templateName, final ConversionFormat format, final String originatingSource, final String blobNamePrefix, final String documentType, final UUID sjpCaseId) {
         final Result result;
-        result = uploadDocumentToAzureBlob(materialId, payload, fileName, format, templateName, blobNamePrefix);
+        result = uploadDocumentToAzureBlob(materialId, payload, fileName, format, templateName, blobNamePrefix, documentType);
         final DocumentGenerationRequest documentGenerationRequest = new DocumentGenerationRequest(
                 originatingSource,
                 templateName,
@@ -168,19 +173,22 @@ public class DocumentGeneratorService {
         return UUID.fromString(blobName.substring(blobName.lastIndexOf('_') + 1));
     }
 
-    private Result uploadDocumentToAzureBlob(UUID materialId, JsonObject payload, String fileName, ConversionFormat format, String templateName, String blobNamePrefix ) {
+    private Result uploadDocumentToAzureBlob(UUID materialId, JsonObject payload, String fileName, ConversionFormat format, String templateName, String blobNamePrefix, String documentType) {
         final String blobName = blobNamePrefix + "_" + materialId;
         final BlobClient blobClient = blobContainerClient.getBlobClient(PAYLOAD_BLOB_FOLDER + blobName);
         final byte[] byteArray = payload.toString().getBytes(StandardCharsets.UTF_8);
                 blobClient.uploadWithResponse(
                         new BlobParallelUploadOptions(fromStream(new ByteArrayInputStream(byteArray)))
                 .setMetadata(of(
-                "correlation_id", materialId.toString(),
-        FILE_NAME, fileName,
-        CONVERSION_FORMAT, format.toString(),
-        TEMPLATE_NAME, templateName,
-        NUMBER_OF_PAGES, "1",
-        FILE_SIZE, String.valueOf(byteArray.length))),
+                    "correlation_id", materialId.toString(),
+                    FILE_NAME, fileName,
+                    CONVERSION_FORMAT, format.toString(),
+                    TEMPLATE_NAME, templateName,
+                    NUMBER_OF_PAGES, "1",
+                    FILE_SIZE, String.valueOf(byteArray.length)))
+                .setTags(of(
+                    TAG_MATERIAL_ID, materialId.toString(),
+                    TAG_DOCUMENT_TYPE, documentType)),
                 azureBlobConfiguration.getTransferTimeout(), NONE);
 
         final String extension = fileName.substring(fileName.lastIndexOf('.') + 1);
