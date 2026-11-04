@@ -3,6 +3,7 @@ package uk.gov.moj.cpp.stagingdvla.notifygateway;
 import uk.gov.moj.cpp.stagingdvla.azure.AzureResourceResolver;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.Dependent;
 import javax.enterprise.inject.Produces;
@@ -21,6 +22,12 @@ import com.azure.messaging.servicebus.ServiceBusSenderClient;
  * classes are not proxyable by Weld ({@code ServiceBusSenderClient} is {@code final}), so the
  * {@link Produces} method is {@link Dependent} rather than {@code @ApplicationScoped}; one shared
  * instance is built once in {@link #initialise()}.
+ *
+ * <p><strong>Lifecycle:</strong> the client holds a live AMQP connection, so it is closed in
+ * {@link #cleanup()} when this bean is destroyed (undeploy/redeploy, shutdown). It is deliberately
+ * not closed through a {@code @Disposes} method: the produced bean is {@code @Dependent}, so a
+ * disposer would run as each injection point's owner is destroyed and close the shared client
+ * under every other user.
  */
 @SuppressWarnings("java:S6813")
 @ApplicationScoped
@@ -37,6 +44,13 @@ public class NotifyGatewaySenderClientProducer {
     @PostConstruct
     public void initialise() {
         senderClient = azureResourceResolver.serviceBusSenderClient(configuration);
+    }
+
+    @PreDestroy
+    void cleanup() {
+        if (senderClient != null) {
+            senderClient.close();
+        }
     }
 
     @Produces

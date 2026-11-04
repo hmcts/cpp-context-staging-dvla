@@ -2,6 +2,8 @@ package uk.gov.moj.cpp.stagingdvla.notifygateway;
 
 import static org.hamcrest.CoreMatchers.sameInstance;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import uk.gov.moj.cpp.stagingdvla.azure.AzureResourceResolver;
@@ -35,5 +37,20 @@ public class NotifyGatewaySenderClientProducerTest {
         producer.initialise();
 
         assertThat(producer.notifyGatewaySenderClient(), sameInstance(senderClient));
+    }
+
+    @Test
+    public void shouldCloseTheCachedClientWhenDestroyed() {
+        when(azureResourceResolver.serviceBusSenderClient(configuration)).thenReturn(senderClient);
+        producer.initialise();
+
+        producer.cleanup();
+
+        verify(senderClient).close();
+    }
+
+    @Test
+    public void shouldNotFailOnDestroyWhenTheClientWasNeverBuilt() {
+        assertDoesNotThrow(() -> producer.cleanup());
     }
 }
