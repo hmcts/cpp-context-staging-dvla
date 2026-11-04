@@ -1,5 +1,6 @@
 package uk.gov.moj.cpp.stagingdvla.notifygateway;
 
+import uk.gov.justice.services.core.featurecontrol.FeatureControlGuard;
 import uk.gov.moj.cpp.stagingdvla.azure.AzureResourceResolver;
 import uk.gov.moj.cpp.stagingdvla.service.MalformedResultMessageException;
 import uk.gov.moj.cpp.stagingdvla.service.NotifyGatewayResultService;
@@ -43,10 +44,17 @@ public class NotifyGatewayResultConsumer {
     @Inject
     private NotifyGatewayResultService notifyGatewayResultService;
 
+    @Inject
+    private FeatureControlGuard featureControlGuard;
+
     private ServiceBusProcessorClient client;
 
     @PostConstruct
     void init() {
+        if (!featureControlGuard.isFeatureEnabled("dvlaFileStore")) {
+            LOGGER.info("dvlaFileStore is disabled - NotifyGatewayResultConsumer will not start");
+            return;
+        }
         client = azureResourceResolver.serviceBusProcessorClient(configuration, this::processMessage, this::processError);
         client.start();
         if (LOGGER.isDebugEnabled()) {

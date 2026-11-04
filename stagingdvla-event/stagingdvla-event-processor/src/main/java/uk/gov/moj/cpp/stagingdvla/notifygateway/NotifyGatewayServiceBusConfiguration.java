@@ -30,11 +30,11 @@ public class NotifyGatewayServiceBusConfiguration {
     private String fullyQualifiedNamespace;
 
     @Inject
-    @Value(key = "notifygateway.servicebus.send-queue-name")
+    @Value(key = "notifygateway.servicebus.send-queue-name", defaultValue = "")
     private String sendQueueName;
 
     @Inject
-    @Value(key = "notifygateway.servicebus.reply-queue-name")
+    @Value(key = "notifygateway.servicebus.reply-queue-name", defaultValue = "")
     private String replyQueueName;
 
     /** Only meaningful when {@code AzureEmulatorConfiguration.isLocalEmulatorEnabled()} is {@code true}. */
