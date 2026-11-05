@@ -35,9 +35,9 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
-import javax.inject.Inject;
-import javax.json.JsonObject;
-import javax.ws.rs.BadRequestException;
+import jakarta.inject.Inject;
+import jakarta.json.JsonObject;
+import jakarta.ws.rs.BadRequestException;
 
 import java.util.regex.Pattern;
 

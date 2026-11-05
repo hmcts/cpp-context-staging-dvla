@@ -2,22 +2,22 @@ package uk.gov.moj.stagingdvla.util;
 
 import static java.lang.String.format;
 import static java.util.Optional.ofNullable;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.fail;
 import static uk.gov.justice.services.messaging.JsonObjects.createReader;
 import static uk.gov.moj.stagingdvla.util.OptionalPresent.ifPresent;
 
 import java.io.StringReader;
 import java.util.Optional;
 
-import javax.jms.Connection;
-import javax.jms.JMSException;
-import javax.jms.Message;
-import javax.jms.MessageConsumer;
-import javax.jms.MessageProducer;
-import javax.jms.Session;
-import javax.jms.TextMessage;
-import javax.jms.Topic;
-import javax.json.JsonObject;
+import jakarta.jms.Connection;
+import jakarta.jms.JMSException;
+import jakarta.jms.Message;
+import jakarta.jms.MessageConsumer;
+import jakarta.jms.MessageProducer;
+import jakarta.jms.Session;
+import jakarta.jms.TextMessage;
+import jakarta.jms.Topic;
+import jakarta.json.JsonObject;
 
 import io.restassured.path.json.JsonPath;
 import org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory;

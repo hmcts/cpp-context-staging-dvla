@@ -1,6 +1,5 @@
 package uk.gov.moj.stagingdvla.util;
 
-
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static com.github.tomakehurst.wiremock.client.WireMock.configureFor;
 import static com.github.tomakehurst.wiremock.client.WireMock.get;
@@ -13,12 +12,11 @@ import static uk.gov.justice.services.test.utils.core.http.RequestParamsBuilder.
 import static uk.gov.justice.services.test.utils.core.matchers.ResponseStatusMatcher.status;
 import static uk.gov.moj.stagingdvla.util.FileUtil.getPayload;
 
-import uk.gov.justice.service.wiremock.testutil.InternalEndpointMockUtils;
 import uk.gov.justice.services.test.utils.core.http.RestPoller;
 
 import java.util.UUID;
 
-import javax.ws.rs.core.Response;
+import jakarta.ws.rs.core.Response;
 
 public class StubUtil {
 

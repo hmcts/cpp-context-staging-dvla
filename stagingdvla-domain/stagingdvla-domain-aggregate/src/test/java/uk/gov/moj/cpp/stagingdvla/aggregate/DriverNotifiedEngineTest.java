@@ -13,8 +13,8 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static uk.gov.justice.cpp.stagingdvla.event.Results.results;
@@ -24,7 +24,6 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.DEF
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.DEFENDANT_DRIVING_LICENCE_NUMBER;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.DISQUALIFICATION_PERIOD;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.DVLACODE_FOR_OFFENCE;
-import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.DVLA_ENDORSEMENT_CODE;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.FINE;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.LICENCE_ISSUE_NUMBER;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.LICENCE_PRODUCED_IN_COURT;
