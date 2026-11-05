@@ -14,7 +14,7 @@ import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants.PEN
 import static uk.gov.moj.cpp.stagingdvla.aggregate.helper.DisqualificationPeriodHelper.getDisqualificationPeriod;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.utils.AggregateTestHelper.getOffences;
 import java.util.LinkedList;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class DisqualificationPeriodHelperTest {
 

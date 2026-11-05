@@ -18,7 +18,7 @@ import uk.gov.moj.cpp.persistence.entity.DriverAuditReportEntity;
 import uk.gov.moj.cpp.persistence.repository.DriverAuditReportRepository;
 import uk.gov.moj.cpp.stagingdvla.domain.constants.DriverAuditReportStatus;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 @ServiceComponent(EVENT_LISTENER)
 public class DriverSearchAuditReportEventListener {

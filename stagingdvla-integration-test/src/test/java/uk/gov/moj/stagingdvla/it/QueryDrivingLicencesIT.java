@@ -18,7 +18,6 @@ import uk.gov.justice.services.test.utils.persistence.DatabaseCleaner;
 import java.time.LocalDate;
 import java.util.UUID;
 
-import org.hamcrest.CoreMatchers;
 import org.hamcrest.core.StringContains;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;

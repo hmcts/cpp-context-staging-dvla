@@ -1,19 +1,19 @@
 package uk.gov.justice.api.resource;
 
-import static javax.ws.rs.core.HttpHeaders.CONTENT_TYPE;
-import static javax.ws.rs.core.Response.Status.OK;
-import static javax.ws.rs.core.Response.Status.fromStatusCode;
-import static javax.ws.rs.core.Response.status;
+import static jakarta.ws.rs.core.HttpHeaders.CONTENT_TYPE;
+import static jakarta.ws.rs.core.Response.Status.OK;
+import static jakarta.ws.rs.core.Response.Status.fromStatusCode;
+import static jakarta.ws.rs.core.Response.status;
 import static org.slf4j.LoggerFactory.getLogger;
 import static uk.gov.justice.services.messaging.JsonObjects.createObjectBuilder;
 
 import uk.gov.justice.services.core.annotation.Adapter;
 import uk.gov.moj.cpp.stagingdvla.query.view.StagingdvlaQueryView;
 
-import javax.ejb.Stateless;
-import javax.inject.Inject;
-import javax.json.JsonObject;
-import javax.ws.rs.core.Response;
+import jakarta.ejb.Stateless;
+import jakarta.inject.Inject;
+import jakarta.json.JsonObject;
+import jakarta.ws.rs.core.Response;
 
 import org.slf4j.Logger;
 

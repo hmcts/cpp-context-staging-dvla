@@ -11,16 +11,16 @@ import uk.gov.moj.cpp.stagingdvla.notify.driving.conviction.NotifyDrivingConvict
 import uk.gov.moj.cpp.stagingdvla.notify.driving.conviction.NotifyDrivingConvictionResponse;
 import uk.gov.moj.cpp.stagingdvla.notify.util.DrivingConvictionTransformUtil;
 
-import javax.inject.Inject;
-import javax.ws.rs.ProcessingException;
-import javax.ws.rs.core.Response;
+import jakarta.inject.Inject;
+import jakarta.ws.rs.ProcessingException;
+import jakarta.ws.rs.core.Response;
 import java.io.IOException;
 import java.util.stream.Collectors;
 
 import static java.util.Objects.nonNull;
-import static javax.servlet.http.HttpServletResponse.SC_BAD_REQUEST;
-import static javax.servlet.http.HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
-import static javax.servlet.http.HttpServletResponse.SC_UNAUTHORIZED;
+import static jakarta.servlet.http.HttpServletResponse.SC_BAD_REQUEST;
+import static jakarta.servlet.http.HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
+import static jakarta.servlet.http.HttpServletResponse.SC_UNAUTHORIZED;
 
 
 public class NotifyDrivingConvictionService {

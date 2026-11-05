@@ -2,8 +2,8 @@ package uk.gov.moj.cpp.stagingdvla.notify.azure;
 
 import uk.gov.justice.services.common.configuration.Value;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
 @ApplicationScoped
 public class DvlaApimConfig {

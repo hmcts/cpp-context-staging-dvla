@@ -23,7 +23,6 @@ import uk.gov.justice.cpp.stagingdvla.event.DefendantCaseOffences;
 import uk.gov.justice.cpp.stagingdvla.event.DriverNotified;
 import uk.gov.justice.cpp.stagingdvla.event.Prompts;
 import uk.gov.justice.cpp.stagingdvla.event.Results;
-import uk.gov.moj.cpp.stagingdvla.aggregate.helper.AggregateConstants;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

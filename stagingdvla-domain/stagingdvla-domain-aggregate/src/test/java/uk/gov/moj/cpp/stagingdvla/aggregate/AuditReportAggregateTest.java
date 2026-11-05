@@ -20,8 +20,8 @@ import java.util.List;
 import java.util.UUID;
 
 import org.hamcrest.CoreMatchers;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -38,7 +38,7 @@ public class AuditReportAggregateTest {
     private AuditReportAggregate aggregate;
 
 
-    @Before
+    @BeforeEach
     public void setUp() {
         aggregate = new AuditReportAggregate();
     }

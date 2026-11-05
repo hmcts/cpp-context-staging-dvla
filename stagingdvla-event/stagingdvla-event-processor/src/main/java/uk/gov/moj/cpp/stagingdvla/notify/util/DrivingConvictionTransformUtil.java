@@ -40,10 +40,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 
 @SuppressWarnings({"squid:MethodCyclomaticComplexity", "squid:S3776"})
 public class DrivingConvictionTransformUtil {
