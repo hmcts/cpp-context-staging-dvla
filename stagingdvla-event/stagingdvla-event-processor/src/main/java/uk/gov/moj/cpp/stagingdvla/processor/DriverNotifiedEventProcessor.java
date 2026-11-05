@@ -39,6 +39,7 @@ import uk.gov.moj.cpp.stagingdvla.notify.driving.conviction.NotifyDrivingConvict
 import uk.gov.moj.cpp.stagingdvla.service.DocumentGeneratorService;
 import uk.gov.moj.cpp.stagingdvla.service.NotificationNotifyService;
 import uk.gov.moj.cpp.stagingdvla.service.NotifyDrivingConvictionService;
+import uk.gov.moj.cpp.stagingdvla.service.NotifyGatewaySendEmailService;
 import uk.gov.moj.cpp.stagingdvla.service.scheduler.NotifyDrivingConvictionRetryScheduler;
 
 import java.util.Optional;
@@ -60,6 +61,7 @@ public class DriverNotifiedEventProcessor {
     private static final String FIELD_TEMPLATE_ID = "templateId";
     private static final String SEND_TO_ADDRESS = "sendToAddress";
     private static final String MATERIAL_URL = "materialUrl";
+    private static final String FILE_URI = "fileUri";
     private static final String PERSONALISATION = "personalisation";
     private static final String SUBJECT = "subject";
     private static final String CODE_FOR_SJP_CASE = "J";
@@ -78,6 +80,9 @@ public class DriverNotifiedEventProcessor {
 
     @Inject
     private NotificationNotifyService notificationNotifyService;
+
+    @Inject
+    private NotifyGatewaySendEmailService notifyGatewaySendEmailService;
 
     @Inject
     private NotifyDrivingConvictionService notifyDrivingConvictionService;
@@ -201,13 +206,21 @@ public class DriverNotifiedEventProcessor {
             LOGGER.info("D20 email notification sent event - {}", envelope.toObfuscatedDebugString());
         }
         final EmailChannel emailChannel = emailNotification.getDetails().getEmailNotifications().get(0);
-        final JsonObjectBuilder notifyObjectBuilder = createObjectBuilder();
-        // only a blob-addressed material has its delivery tracked, so only its email needs the outcome
-        // matched back. Branch on what this material actually carries rather than on the dvlaFileStore
-        // toggle: a document rendered just before a toggle flip still has its delivery tracked
-        if (nonNull(emailNotification.getDetails().getDestinationFileUri())) {
-            notifyObjectBuilder.add(CLIENT_CONTEXT, CLIENT_CONTEXT_PREFIX + emailNotification.getDetails().getMaterialId());
+        final String destinationFileUri = emailNotification.getDetails().getDestinationFileUri();
+
+        // only a blob-addressed material has an attachment the gateway can resolve and a delivery
+        // to track back (DVLAFS-12/18), so route on what this material actually carries rather than
+        // a fresh dvlaFileStore re-read: a document rendered just before a toggle flip still carries
+        // (or doesn't carry) its destinationFileUri regardless of the flag's current live value
+        if (nonNull(destinationFileUri)) {
+            sendViaNotifyGateway(envelope, emailChannel, destinationFileUri, emailNotification.getDetails().getMaterialId());
+        } else {
+            sendViaLegacyNotificationNotify(envelope, emailChannel);
         }
+    }
+
+    private void sendViaLegacyNotificationNotify(final JsonEnvelope envelope, final EmailChannel emailChannel) {
+        final JsonObjectBuilder notifyObjectBuilder = createObjectBuilder();
         notifyObjectBuilder.add(FIELD_NOTIFICATION_ID, randomUUID().toString());
         notifyObjectBuilder.add(FIELD_TEMPLATE_ID, emailChannel.getTemplateId().toString());
         notifyObjectBuilder.add(SEND_TO_ADDRESS, emailChannel.getSendToAddress());
@@ -216,6 +229,20 @@ public class DriverNotifiedEventProcessor {
                 .add(SUBJECT, getPersonalisationValue(emailChannel.getPersonalisation()))
                 .build());
         this.notificationNotifyService.sendEmailNotification(envelope, notifyObjectBuilder.build());
+    }
+
+    private void sendViaNotifyGateway(final JsonEnvelope envelope, final EmailChannel emailChannel,
+                                       final String destinationFileUri, final UUID materialId) {
+        final JsonObjectBuilder commandBuilder = createObjectBuilder();
+        commandBuilder.add(FIELD_NOTIFICATION_ID, randomUUID().toString());
+        commandBuilder.add(FIELD_TEMPLATE_ID, emailChannel.getTemplateId().toString());
+        commandBuilder.add(SEND_TO_ADDRESS, emailChannel.getSendToAddress());
+        commandBuilder.add(FILE_URI, destinationFileUri);
+        commandBuilder.add(CLIENT_CONTEXT, CLIENT_CONTEXT_PREFIX + materialId);
+        commandBuilder.add(PERSONALISATION, createObjectBuilder()
+                .add(SUBJECT, getPersonalisationValue(emailChannel.getPersonalisation()))
+                .build());
+        this.notifyGatewaySendEmailService.sendEmailNotification(envelope, commandBuilder.build());
     }
 
     private String getPersonalisationValue(final Personalisation personalisation) {

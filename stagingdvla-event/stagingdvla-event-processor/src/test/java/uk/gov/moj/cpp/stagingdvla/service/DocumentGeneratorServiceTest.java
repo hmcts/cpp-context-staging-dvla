@@ -207,6 +207,8 @@ public class DocumentGeneratorServiceTest {
         final ArgumentCaptor<BlobParallelUploadOptions> uploadOptionsCaptor = ArgumentCaptor.forClass(BlobParallelUploadOptions.class);
         verify(blobClient).uploadWithResponse(uploadOptionsCaptor.capture(), eq(ofSeconds(300)), any());
         assertThat(uploadOptionsCaptor.getValue().getMetadata().get("fileName").matches(DVLA_DOCUMENT_ORDER + "_\\d{14}\\.pdf"), is(true));
+        assertThat(uploadOptionsCaptor.getValue().getTags().get("materialId"), is(driverNotified.getMaterialId().toString()));
+        assertThat(uploadOptionsCaptor.getValue().getTags().get("documentType"), is("DVLA_DOCUMENT_ORDER"));
 
         final ArgumentCaptor<DocumentGenerationRequest> requestCaptor = ArgumentCaptor.forClass(DocumentGenerationRequest.class);
         verify(systemDocGeneratorService).generateDocumentForBlobUIR(requestCaptor.capture(), eq(envelope));
@@ -250,6 +252,8 @@ public class DocumentGeneratorServiceTest {
         verify(blobClient).uploadWithResponse(uploadOptionsCaptor.capture(), eq(ofSeconds(300)), any());
         assertThat(uploadOptionsCaptor.getValue().getMetadata().get("fileName"), is(fileName));
         assertThat(uploadOptionsCaptor.getValue().getMetadata().get("templateName"), is("DvlaAuditRecords"));
+        assertThat(uploadOptionsCaptor.getValue().getTags().get("materialId"), is(reportId.toString()));
+        assertThat(uploadOptionsCaptor.getValue().getTags().get("documentType"), is("DriverSearchAuditReport"));
 
         final ArgumentCaptor<DocumentGenerationRequest> requestCaptor = ArgumentCaptor.forClass(DocumentGenerationRequest.class);
         verify(systemDocGeneratorService).generateDocumentForBlobUIR(requestCaptor.capture(), eq(envelope));

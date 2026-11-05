@@ -157,7 +157,7 @@ public class QueryDrivingLicencesIT extends AbstractIntegrationTest {
         final ImmutableMap<String, Boolean> features = of("dvlaFileStore", false);
         stubFeaturesFor(CONTEXT_NAME, features);
 
-        final String reference = "AUDITREPORT" + UUID.randomUUID();
+        final String reference = "AUDITREPORT";
         final String startDate = LocalDate.now().minusDays(1).toString();
         final String endDate = LocalDate.now().plusDays(1).toString();
         final String email = "richard.chapman@acme.com";
