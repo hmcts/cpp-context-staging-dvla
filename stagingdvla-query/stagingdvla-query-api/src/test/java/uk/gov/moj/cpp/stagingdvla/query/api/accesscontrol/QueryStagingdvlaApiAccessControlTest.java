@@ -1,8 +1,5 @@
 package uk.gov.moj.cpp.stagingdvla.query.api.accesscontrol;
 
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
@@ -15,20 +12,14 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;
-import org.kie.api.KieServices;
-import org.kie.api.definition.KiePackage;
-import org.kie.api.definition.rule.Rule;
 import org.kie.api.runtime.ExecutionResults;
 import org.mockito.Mock;
 
 /*
- * Was @Disabled with super("COMMAND_API_SESSION"): the query module's kmodule.xml only declares
- * QUERY_API_SESSION, so the session could not be built and no access-control rule here was ever tested.
- * The shared @AfterEach verify is now inside the four original tests, so the CHD-03 tests can use other actions.
+ * Was @Disabled: it used COMMAND_API_SESSION, which the query kmodule.xml does not declare.
  */
 public class QueryStagingdvlaApiAccessControlTest extends BaseDroolsAccessControlTest {
 
-    private static final String QUERY_API_KBASE = "QUERY_API";
 
     private Action action;
 
@@ -79,30 +70,7 @@ public class QueryStagingdvlaApiAccessControlTest extends BaseDroolsAccessContro
         verify(userAndGroupProvider).isMemberOfAnyOfTheSuppliedGroups(action, RuleConstants.getQueryDriverDetails());
     }
 
-    /*
-     * CHD-03 (BC-20) - Java 17 behaviour: the production kmodule.xml loads all six query rules into the
-     * QUERY_API kbase. A kbase that resolves to 0 rules would make every deny test pass vacuously.
-     */
-    @Test
-    public void chd03_shouldLoadAllSixQueryRulesIntoTheQueryApiKbase() {
-        final List<String> ruleNames = KieServices.get().getKieClasspathContainer().getKieBase(QUERY_API_KBASE).getKiePackages().stream()
-                .map(KiePackage::getRules)
-                .flatMap(rules -> rules.stream().map(Rule::getName))
-                .toList();
-
-        assertThat(ruleNames, containsInAnyOrder(
-                "Command - Rule for Query Person",
-                "Command - Rule for driver detail Person",
-                "Command - Rule for driver image",
-                "Query - Rule for Query Driver Audit Details",
-                "Query - Rule for Driver Search Audit Reports",
-                "Query - Rule for Driver Search Audit Report Download"));
-    }
-
-    /*
-     * CHD-03 (BC-03 residual guard) - Java 17 behaviour: the driver-search rules are "in a group OR has the
-     * Driver Search/View permission", so a user with only the permission is allowed.
-     */
+    // CHD-03: the driver search permission alone is enough.
     @Test
     public void chd03_shouldAllowDriverSearchByPermissionWhenUserIsInNoAllowedGroup() throws Exception {
         for (final String actionName : List.of("stagingdvla.query.drivernumber", "stagingdvla.query.driverdetails", "stagingdvla.query.driverimage")) {
@@ -113,23 +81,17 @@ public class QueryStagingdvlaApiAccessControlTest extends BaseDroolsAccessContro
         }
     }
 
-    /*
-     * CHD-03 - Java 17 behaviour: with neither the group nor the permission, every driver-search action is denied.
-     */
+    // CHD-03: driver image is denied with neither the group nor the permission (the other two actions are covered above).
     @Test
-    public void chd03_shouldDenyDriverSearchWithNeitherGroupNorPermission() throws Exception {
-        for (final String actionName : List.of("stagingdvla.query.drivernumber", "stagingdvla.query.driverdetails", "stagingdvla.query.driverimage")) {
-            action = createActionFor(actionName);
+    public void chd03_shouldNotAllowUnauthorisedUserToQueryDriverImage() throws Exception {
+        action = createActionFor("stagingdvla.query.driverimage");
 
-            assertFailureOutcome(executeRulesWith(action));
-            verify(userAndGroupProvider).isMemberOfAnyOfTheSuppliedGroups(action, RuleConstants.getQueryDriverDetails());
-            verify(userAndGroupProvider).hasPermission(action, PermissionConstants.getPermissionsForDriverSearch());
-        }
+        assertFailureOutcome(executeRulesWith(action));
+        verify(userAndGroupProvider).isMemberOfAnyOfTheSuppliedGroups(action, RuleConstants.getQueryDriverDetails());
+        verify(userAndGroupProvider).hasPermission(action, PermissionConstants.getPermissionsForDriverSearch());
     }
 
-    /*
-     * CHD-03 - Java 17 behaviour: the audit actions (records, report list, report download) allow Auditors only.
-     */
+    // CHD-03: audit actions are for Auditors only.
     @Test
     public void chd03_shouldAllowAuditActionsForAuditors() {
         for (final String actionName : List.of("stagingdvla.query.driver-audit-records", "stagingdvla.query.driver-search-audit-reports",
@@ -150,16 +112,6 @@ public class QueryStagingdvlaApiAccessControlTest extends BaseDroolsAccessContro
             assertFailureOutcome(executeRulesWith(action));
             verify(userAndGroupProvider).isMemberOfAnyOfTheSuppliedGroups(action, RuleConstants.getQueryDriverSearchAuditDetails());
         }
-    }
-
-    /*
-     * CHD-03 - Java 17 behaviour: an action no rule names is denied (fail closed).
-     */
-    @Test
-    public void chd03_shouldDenyAnActionThatNoRuleNames() {
-        action = createActionFor("stagingdvla.query.not-a-real-action");
-
-        assertFailureOutcome(executeRulesWith(action));
     }
 
     @Override

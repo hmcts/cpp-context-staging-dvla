@@ -149,16 +149,7 @@ public class DriverAuditRepositoryTest {
         assertThat(results.get(0).getId(), equalTo(matchBoth.getId()));
     }
 
-    /*
-     * CHD-02 - parity: Java 17 and Java 25 both read driver_audit.date_time back in UTC, whatever the JVM default zone is.
-     * Java 17: the framework's EntityManagerProducer (persistence-deltaspike 17.104.0) calls TimeZone.setDefault(UTC)
-     * when the EntityManager is created, and Hibernate 5 then hydrates in ZoneId.systemDefault() -> zone "UTC".
-     * Java 25: Hibernate 6 with hibernate.jdbc.time_zone=UTC (TIMESTAMP_UTC) -> zone "Z".
-     * Only the zone label differs (UTC vs Z); the instant and the local date/time are identical, and nothing prints
-     * the label (StagingdvlaQueryView and the audit-report CSV use toLocalDate()/toLocalTime()), so an entry at
-     * 00:30 UTC in summer shows 01 Jul, 00:30 on both. The test sets Europe/London first to prove the read does not
-     * follow the JVM zone.
-     */
+    // CHD-02: read back in UTC on both J17 (zone UTC) and J25 (zone Z), even with the JVM zone set to Europe/London.
     @Test
     public void chd02_shouldReadAuditDateTimeBackInUtcWhateverTheJvmZone() {
         final TimeZone originalDefault = TimeZone.getDefault();
@@ -185,11 +176,7 @@ public class DriverAuditRepositoryTest {
         }
     }
 
-    /*
-     * CHD-09 (BC-24) - Java 17 behaviour: the native audit queries bind LocalDateTime parameters and compare
-     * with >= and <=, so rows exactly on startDate and endDate are included and a row one millisecond outside
-     * either bound is not. Runs on H2 here; the pgjdbc half of BC-24 still needs a PostgreSQL run.
-     */
+    // CHD-09: the date range is inclusive at both ends (H2 only; PostgreSQL still to check).
     @Test
     public void chd09_shouldIncludeRowsExactlyOnTheStartAndEndBoundsAndExcludeOneMillisecondOutside() {
         final ZonedDateTime start = ZonedDateTime.of(2026, 3, 1, 9, 0, 0, 0, ZoneOffset.UTC);

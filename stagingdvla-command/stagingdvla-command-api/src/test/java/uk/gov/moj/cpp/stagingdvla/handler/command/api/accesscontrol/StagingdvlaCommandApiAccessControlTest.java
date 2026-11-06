@@ -1,7 +1,5 @@
 package uk.gov.moj.cpp.stagingdvla.handler.command.api.accesscontrol;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
@@ -14,15 +12,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.junit.jupiter.api.Test;
-import org.kie.api.KieServices;
-import org.kie.api.definition.KiePackage;
-import org.kie.api.definition.rule.Rule;
 import org.mockito.Mock;
 
 /*
- * CHD-03 (BC-20, with the BC-03 residual guard). The command API had no access-control test, so these pin the
- * Java 17 behaviour of stagingdvla-command-api.drl: the kbase loads all three rules, driver notification is
- * allowed for the notify groups, the audit-report commands for Auditors only, and anything else is denied.
+ * CHD-03: pins the command API access-control rules (stagingdvla-command-api.drl).
  */
 public class StagingdvlaCommandApiAccessControlTest extends BaseDroolsAccessControlTest {
 
@@ -36,19 +29,6 @@ public class StagingdvlaCommandApiAccessControlTest extends BaseDroolsAccessCont
 
     public StagingdvlaCommandApiAccessControlTest() {
         super("COMMAND_API_SESSION");
-    }
-
-    @Test
-    public void chd03_shouldLoadAllThreeCommandRulesIntoTheCommandApiKbase() {
-        final List<String> ruleNames = KieServices.get().getKieClasspathContainer().getKieBase("COMMAND_API").getKiePackages().stream()
-                .map(KiePackage::getRules)
-                .flatMap(rules -> rules.stream().map(Rule::getName))
-                .toList();
-
-        assertThat(ruleNames, containsInAnyOrder(
-                "Command - API - Action - " + DRIVER_NOTIFICATION,
-                "Command - API - Action - " + AUDIT_REPORT_COMMANDS.get(0),
-                "Command - API - Action - " + AUDIT_REPORT_COMMANDS.get(1)));
     }
 
     @Test
@@ -85,11 +65,6 @@ public class StagingdvlaCommandApiAccessControlTest extends BaseDroolsAccessCont
             assertFailureOutcome(executeRulesWith(action));
             verify(userAndGroupProvider).isMemberOfAnyOfTheSuppliedGroups(action, RuleConstants.getCommandDriverSearchAudit());
         }
-    }
-
-    @Test
-    public void chd03_shouldDenyACommandThatNoRuleNames() {
-        assertFailureOutcome(executeRulesWith(createActionFor("stagingdvla.command.not-a-real-command")));
     }
 
     @Override

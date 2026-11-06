@@ -43,10 +43,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-
 @ExtendWith(MockitoExtension.class)
 public class RestEasyClientServiceTest {
-
 
     @InjectMocks
     private RestEasyClientService restEasyClientService;
@@ -62,7 +60,6 @@ public class RestEasyClientServiceTest {
 
     @Mock
     jakarta.ws.rs.core.Response expectedResponse;
-
 
     @Test
     public void testPost() {
@@ -82,12 +79,7 @@ public class RestEasyClientServiceTest {
         assertEquals(HttpServletResponse.SC_OK, actualResponse.getStatus());
     }
 
-    /*
-     * CHD-05 (BC-12) - Java 17 behaviour (RESTEasy 4 ResteasyClientBuilderImpl): disableTrustManager() turns off
-     * both certificate trust and hostname checks, so a POST over HTTPS to a server whose self-signed certificate is
-     * for another host succeeds. The request carries the JSON body and the three APIM headers. The ITs only use
-     * plain-HTTP WireMock, so this is the only test of the TLS path to the DVLA API gateway.
-     */
+    // CHD-05: the DVLA client posts over HTTPS with trust and hostname checks off, sending the APIM headers.
     @Test
     public void chd05_shouldPostJsonWithApimHeadersOverHttpsToAServerWithAnUntrustedCertificateForAnotherHost() throws Exception {
         final AtomicReference<Headers> receivedHeaders = new AtomicReference<>();
