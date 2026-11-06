@@ -118,14 +118,12 @@ public class StagingdvlaQueryApiTest {
         final Envelope<DriverQueryParameters> envelope = envelopeFrom(metadataWithDefaults()
                 .withName("stagingdvla.query.drivernumber"), queryParameters);
 
-
         BadRequestException exception = assertThrows(
                 BadRequestException.class,
                 () ->  stagingdvlaQueryApi.findByDriverNumber(envelope)
         );
 
     }
-
 
     @Test
     void shouldReturnDriverList() {
@@ -163,7 +161,6 @@ public class StagingdvlaQueryApiTest {
         final Envelope<DriverSummaryQueryParameters> envelope = envelopeFrom(metadataWithDefaults()
                 .withName("stagingdvla.query.driverdetails"), queryParameters);
 
-
         BadRequestException exception = assertThrows(
                 BadRequestException.class,
                 () ->  stagingdvlaQueryApi.findByDriverDetails(envelope)
@@ -182,7 +179,6 @@ public class StagingdvlaQueryApiTest {
         final DriverSummaryResponse driverSummaryResponse = prepareDriverSummaryResponse(LAST_NAME, POSTCODE);
         final Envelope<DriverSummaryQueryParameters> envelope = envelopeFrom(metadataWithDefaults()
                 .withName("stagingdvla.query.driverdetails"), queryParameters);
-
 
         BadRequestException exception = assertThrows(
                 BadRequestException.class,

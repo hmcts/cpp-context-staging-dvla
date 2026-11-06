@@ -13,6 +13,8 @@ import uk.gov.moj.cpp.persistence.entity.DriverAuditReportEntity;
 import java.util.List;
 import java.util.UUID;
 
+import jakarta.persistence.EntityManager;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
@@ -87,6 +89,40 @@ public class DriverAuditReportRepositoryTest {
         driverAuditReportRepository.remove(detached);
 
         assertThat(driverAuditReportRepository.findByUserIdOrderByDateTimeDesc(USER_ID).size(), is(0));
+    }
+
+    // CHD-01 (accepted): J17 threw NoResultException; J25 returns null, which the query view turns into a 403.
+    @Test
+    public void chd01_shouldReturnNullWhenReportBelongsToAnotherUserOrMaterial_acceptedJava25Contract() {
+        final UUID materialId = randomUUID();
+        final DriverAuditReportEntity saved = driverAuditReportRepository.save(aReport(materialId));
+
+        assertThat(driverAuditReportRepository.findByIdAndUserIdAndMaterialId(saved.getId(), randomUUID(), materialId), is(nullValue()));
+        assertThat(driverAuditReportRepository.findByIdAndUserIdAndMaterialId(saved.getId(), USER_ID, randomUUID()), is(nullValue()));
+    }
+
+    // CHD-13: saving an instance whose id already has a row updates that row.
+    @Test
+    public void chd13_shouldUpdateTheExistingRowWhenSavingAnInstanceWithAnExistingId() {
+        final DriverAuditReportEntity saved = driverAuditReportRepository.save(aReport(randomUUID()));
+        flushAndClear();
+
+        final DriverAuditReportEntity sameId = new DriverAuditReportEntity(saved.getId(), USER_ID, saved.getDateTime(),
+                "reportSearchCriteria", "STORED", saved.getReportFileId(), saved.getMaterialId());
+        driverAuditReportRepository.save(sameId);
+        flushAndClear();
+
+        assertThat(driverAuditReportRepository.findBy(saved.getId()).getStatus(), is("STORED"));
+        assertThat(driverAuditReportRepository.findByUserIdOrderByDateTimeDesc(USER_ID).size(), is(1));
+    }
+
+    private EntityManager entityManager() {
+        return hibernateTestEntityManagerProvider.getEntityManager();
+    }
+
+    private void flushAndClear() {
+        entityManager().flush();
+        entityManager().clear();
     }
 
     private DriverAuditReportEntity aReport(final UUID materialId) {

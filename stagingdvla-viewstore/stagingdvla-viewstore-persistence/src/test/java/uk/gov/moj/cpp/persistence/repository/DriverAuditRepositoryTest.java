@@ -10,8 +10,11 @@ import uk.gov.moj.cpp.persistence.entity.DriverAuditEntity;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.UUID;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -144,6 +147,60 @@ public class DriverAuditRepositoryTest {
 
         assertThat(results.size(), equalTo(1));
         assertThat(results.get(0).getId(), equalTo(matchBoth.getId()));
+    }
+
+    // CHD-02: read back in UTC on both J17 (zone UTC) and J25 (zone Z), even with the JVM zone set to Europe/London.
+    @Test
+    public void chd02_shouldReadAuditDateTimeBackInUtcWhateverTheJvmZone() {
+        final TimeZone originalDefault = TimeZone.getDefault();
+        TimeZone.setDefault(TimeZone.getTimeZone("Europe/London"));
+        try {
+            final ZonedDateTime halfPastMidnightUtcInBst = ZonedDateTime.of(2026, 7, 1, 0, 30, 0, 0, ZoneOffset.UTC);
+            final DriverAuditEntity audit = new DriverAuditEntity(randomUUID(), USER_ID, "user@example.com", halfPastMidnightUtcInBst,
+                    "reasonType", "CaseUrn", "DLN-CHD02", "Ada", "Lovelace", "FEMALE", "AB12CD", LocalDate.of(1980, 1, 1));
+            driverAuditRepository.save(audit);
+            hibernateTestEntityManagerProvider.getEntityManager().flush();
+            hibernateTestEntityManagerProvider.getEntityManager().clear();
+
+            final List<DriverAuditEntity> results = driverAuditRepository.findAllActiveDriverAuditRecords(
+                    LocalDateTime.of(2026, 6, 30, 0, 0), LocalDateTime.of(2026, 7, 2, 0, 0), "DLN-CHD02", null);
+
+            assertThat(results.size(), equalTo(1));
+            final ZonedDateTime readBack = results.get(0).getDateTime();
+            assertThat(readBack.toInstant(), equalTo(halfPastMidnightUtcInBst.toInstant()));
+            assertThat(readBack.getZone().normalized(), equalTo(ZoneOffset.UTC));
+            assertThat(readBack.toLocalDate(), equalTo(LocalDate.of(2026, 7, 1)));
+            assertThat(readBack.toLocalTime(), equalTo(LocalTime.of(0, 30)));
+        } finally {
+            TimeZone.setDefault(originalDefault);
+        }
+    }
+
+    // CHD-09: the date range is inclusive at both ends (H2 only; PostgreSQL still to check).
+    @Test
+    public void chd09_shouldIncludeRowsExactlyOnTheStartAndEndBoundsAndExcludeOneMillisecondOutside() {
+        final ZonedDateTime start = ZonedDateTime.of(2026, 3, 1, 9, 0, 0, 0, ZoneOffset.UTC);
+        final ZonedDateTime end = ZonedDateTime.of(2026, 3, 2, 17, 0, 0, 0, ZoneOffset.UTC);
+
+        final DriverAuditEntity justBefore = anAudit("DLN-CHD09", start.minusNanos(1_000_000));
+        final DriverAuditEntity onStart = anAudit("DLN-CHD09", start);
+        final DriverAuditEntity onEnd = anAudit("DLN-CHD09", end);
+        final DriverAuditEntity justAfter = anAudit("DLN-CHD09", end.plusNanos(1_000_000));
+        driverAuditRepository.save(justBefore);
+        driverAuditRepository.save(onStart);
+        driverAuditRepository.save(onEnd);
+        driverAuditRepository.save(justAfter);
+
+        final List<DriverAuditEntity> results = driverAuditRepository.findAllActiveDriverAuditRecords(
+                start.toLocalDateTime(), end.toLocalDateTime(), "DLN-CHD09", null);
+
+        assertThat(results.stream().map(DriverAuditEntity::getId).sorted().toList(),
+                equalTo(List.of(onStart.getId(), onEnd.getId()).stream().sorted().toList()));
+    }
+
+    private DriverAuditEntity anAudit(final String drivingLicenceNumber, final ZonedDateTime dateTime) {
+        return new DriverAuditEntity(randomUUID(), USER_ID, "user@example.com", dateTime, "reasonType", "CaseUrn",
+                drivingLicenceNumber, "Ada", "Lovelace", "FEMALE", "AB12CD", LocalDate.of(1980, 1, 1));
     }
 
     private void verifyCaseText(final DriverAuditEntity actual, final DriverAuditEntity expected) {
