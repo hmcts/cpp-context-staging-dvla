@@ -5,12 +5,24 @@ import uk.gov.moj.cpp.persistence.entity.CaseTextEntity;
 import java.util.List;
 import java.util.UUID;
 
-import org.apache.deltaspike.data.api.EntityRepository;
-import org.apache.deltaspike.data.api.Repository;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 
-@Repository
-public interface CaseTextRepository extends EntityRepository<CaseTextEntity, UUID> {
+@ApplicationScoped
+public class CaseTextRepository {
 
-    List<CaseTextEntity> findByCaseIdOrderByCreatedDateTimeDesc(UUID caseId);
+    @PersistenceContext(unitName = "stagingdvla-persistence-unit")
+    EntityManager entityManager;
 
+    public CaseTextEntity save(final CaseTextEntity caseTextEntity) {
+        return entityManager.merge(caseTextEntity);
+    }
+
+    public List<CaseTextEntity> findByCaseIdOrderByCreatedDateTimeDesc(final UUID caseId) {
+        return entityManager.createQuery(
+                        "SELECT c FROM CaseTextEntity c WHERE c.caseId = :caseId ORDER BY c.createdDateTime DESC", CaseTextEntity.class)
+                .setParameter("caseId", caseId)
+                .getResultList();
+    }
 }

@@ -30,9 +30,9 @@ import uk.gov.moj.cpp.stagingdvla.service.scheduler.NotifyDrivingConvictionRetry
 
 import java.util.concurrent.atomic.AtomicReference;
 
-import javax.ejb.TimerService;
-import javax.json.JsonArrayBuilder;
-import javax.json.JsonObject;
+import jakarta.ejb.TimerService;
+import jakarta.json.JsonArrayBuilder;
+import jakarta.json.JsonObject;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

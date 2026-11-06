@@ -2,8 +2,8 @@ package uk.gov.moj.cpp.stagingdvla.query.api;
 
 import static java.util.UUID.randomUUID;
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertThrows;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -46,7 +46,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import javax.ws.rs.BadRequestException;
+import jakarta.ws.rs.BadRequestException;
 
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
@@ -118,14 +118,12 @@ public class StagingdvlaQueryApiTest {
         final Envelope<DriverQueryParameters> envelope = envelopeFrom(metadataWithDefaults()
                 .withName("stagingdvla.query.drivernumber"), queryParameters);
 
-
         BadRequestException exception = assertThrows(
                 BadRequestException.class,
                 () ->  stagingdvlaQueryApi.findByDriverNumber(envelope)
         );
 
     }
-
 
     @Test
     void shouldReturnDriverList() {
@@ -163,7 +161,6 @@ public class StagingdvlaQueryApiTest {
         final Envelope<DriverSummaryQueryParameters> envelope = envelopeFrom(metadataWithDefaults()
                 .withName("stagingdvla.query.driverdetails"), queryParameters);
 
-
         BadRequestException exception = assertThrows(
                 BadRequestException.class,
                 () ->  stagingdvlaQueryApi.findByDriverDetails(envelope)
@@ -182,7 +179,6 @@ public class StagingdvlaQueryApiTest {
         final DriverSummaryResponse driverSummaryResponse = prepareDriverSummaryResponse(LAST_NAME, POSTCODE);
         final Envelope<DriverSummaryQueryParameters> envelope = envelopeFrom(metadataWithDefaults()
                 .withName("stagingdvla.query.driverdetails"), queryParameters);
-
 
         BadRequestException exception = assertThrows(
                 BadRequestException.class,

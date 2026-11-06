@@ -15,7 +15,7 @@ import uk.gov.moj.cpp.persistence.repository.DriverAuditRepository;
 
 import java.time.LocalDate;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 @ServiceComponent(EVENT_LISTENER)
 public class DriverAuditEventListener {

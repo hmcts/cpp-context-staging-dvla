@@ -2,7 +2,7 @@ package uk.gov.moj.cpp.stagingdvla.material.client;
 
 import java.util.UUID;
 
-import javax.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.ApplicationScoped;
 
 /**
  * Staging-DVLA-owned copy of material's URL-building helper (decouples staging-dvla from the

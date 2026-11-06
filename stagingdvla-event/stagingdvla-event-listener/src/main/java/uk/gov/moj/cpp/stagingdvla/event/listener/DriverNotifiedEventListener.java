@@ -16,7 +16,7 @@ import uk.gov.moj.cpp.persistence.repository.DrivingConvictionRetryRepository;
 import java.time.ZonedDateTime;
 import java.util.UUID;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
