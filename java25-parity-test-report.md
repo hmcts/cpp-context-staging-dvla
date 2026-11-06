@@ -67,14 +67,17 @@ for the record with their result before removal.
   0 failures, 0 errors.
 - **After the review, JDK 25.0.5:** `mvn -o -B install` on every changed module (command-api, command-handler,
   viewstore-persistence, event-processor, query-api, integration-test): BUILD SUCCESS, 0 failures, 0 errors. The only
-  skip is `MaterialAddedProcessorTest`, already `@Disabled` on `main`. Expected full counts on the next run: 453 unit
-  tests, 1 skipped; 106 ITs.
+  skip is `MaterialAddedProcessorTest`, already `@Disabled` on `main`.
+- **Full run after the review (2026-11-06), JDK 25.0.5:** `./runIntegrationTests.sh`, exit 0. Unit tests **453 run,
+  0 failures, 0 errors, 1 skipped** (`MaterialAddedProcessorTest`). `stagingdvla-service-25.104.2-CHD-2875-SNAPSHOT.war`
+  deployed; healthcheck pong for 1 out of 1 WARs. ITs **106 run, 0 failures, 0 errors, 0 skipped**
+  (`failsafe-summary.xml`).
 - **JDK 17.0.10:** 446 tests, 2 failures, 1 error, 1 skipped; the 3 red tests were CHD-01 and CHD-14 ×2, all expected.
   See `java17-parity-test-report.md`.
 
 ## Next steps
 
-1. Rerun `./runIntegrationTests.sh` on the final commit.
-2. Apply the same test review to the Java 17 branch if it is kept.
+1. ~~Rerun `./runIntegrationTests.sh` after the review.~~ Done: all green. Rerun on the final commit.
+2. ~~Apply the same test review to the Java 17 branch.~~ Done.
 3. Fix the 3 invalid IT payloads (CHD-04) on both branches, in a separate change.
 4. PostgreSQL check for the CHD-09 boundary; smoke-test APIM and material (CHD-05) in the first deployed environment.
