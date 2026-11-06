@@ -104,6 +104,19 @@
             <artifactId>javax.json</artifactId>
             <scope>test</scope>
         </dependency>
+        <!-- CHD-05 parity port: javaee-api's javax.servlet classes lack LocalStrings, which the RESTEasy 4 client
+             needs to initialise outside WildFly (MissingResourceException otherwise); BOM-managed -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!-- CHD-05: Apache HttpClient (under ResteasyClientBuilderImpl) needs commons-logging; WildFly provides it at runtime -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <scope>test</scope>
+        </dependency>
         <dependency>
             <groupId>uk.gov.justice.services</groupId>
             <artifactId>test-utils-core</artifactId>
