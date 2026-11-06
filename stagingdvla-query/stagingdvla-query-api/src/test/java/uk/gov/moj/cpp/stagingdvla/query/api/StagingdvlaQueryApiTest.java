@@ -18,6 +18,8 @@ import uk.gov.justice.services.messaging.JsonEnvelope;
 import uk.gov.moj.cpp.stagingdvla.query.api.service.UserDetails;
 import uk.gov.moj.cpp.stagingdvla.query.api.service.UserGroupService;
 import uk.gov.moj.cpp.stagingdvla.query.view.StagingdvlaQueryView;
+import uk.gov.justice.services.common.converter.jackson.ObjectMapperProducer;
+import uk.gov.moj.cpp.stagingdvla.query.view.request.DriverAuditContent;
 import uk.gov.moj.cpp.stagingdvla.query.view.request.DriverAuditQueryParameters;
 import uk.gov.moj.cpp.stagingdvla.query.view.request.DriverQueryParameters;
 import uk.gov.moj.cpp.stagingdvla.query.view.request.DriverSummaryQueryParameters;
@@ -42,6 +44,8 @@ import uk.gov.moj.cpp.stagingdvla.query.view.service.DriverService;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -505,5 +509,33 @@ public class StagingdvlaQueryApiTest {
         userDetails.setUserId(randomUUID());
         userDetails.setEmail("peter.parker@gmail.com");
         return userDetails;
+    }
+
+    /*
+     * CHD-10 (BC-08) - Java 17 behaviour: StagingdvlaQueryApi sends the driver-search audit with
+     * dateTime(ZonedDateTime.now()), serialised by the framework ObjectMapper (pattern yyyy-MM-dd'T'HH:mm:ss.SSS'Z',
+     * mapper time zone UTC). A JVM-zone value is written as the UTC instant with millisecond precision, whatever
+     * zone it was created in, and the listener stores what it parses from that string.
+     */
+    @Test
+    void chd10_shouldSerialiseTheAuditDateTimeAsTheUtcInstantWithMillisecondsAndAZ() {
+        final ObjectMapperProducer objectMapperProducer = new ObjectMapperProducer();
+        final ZonedDateTime londonSummer = ZonedDateTime.of(2026, 7, 1, 1, 30, 15, 123_456_789, ZoneId.of("Europe/London"));
+        final ZonedDateTime utcRegion = ZonedDateTime.of(2026, 7, 1, 0, 30, 15, 123_000_000, ZoneId.of("UTC"));
+
+        final String fromLondon = objectMapperProducer.objectMapper().valueToTree(auditContentAt(londonSummer)).get("dateTime").asText();
+        final String fromUtcRegion = objectMapperProducer.objectMapper().valueToTree(auditContentAt(utcRegion)).get("dateTime").asText();
+
+        assertThat(fromLondon, is("2026-07-01T00:30:15.123Z"));
+        assertThat(fromUtcRegion, is("2026-07-01T00:30:15.123Z"));
+    }
+
+    private static DriverAuditContent auditContentAt(final ZonedDateTime dateTime) {
+        return new DriverAuditContent.Builder()
+                .id(randomUUID())
+                .userId(randomUUID())
+                .userEmail("auditor@example.com")
+                .dateTime(dateTime)
+                .build();
     }
 }

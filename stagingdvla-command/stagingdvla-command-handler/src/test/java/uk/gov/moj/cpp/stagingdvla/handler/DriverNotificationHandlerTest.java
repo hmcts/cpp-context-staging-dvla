@@ -6,7 +6,10 @@ import static java.util.UUID.randomUUID;
 import static uk.gov.justice.services.messaging.JsonObjects.createObjectBuilder;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static uk.gov.justice.services.core.annotation.Component.COMMAND_HANDLER;
@@ -18,6 +21,7 @@ import static uk.gov.justice.services.test.utils.core.matchers.JsonEnvelopeMatch
 import static uk.gov.justice.services.test.utils.core.matchers.JsonEnvelopeMetadataMatcher.metadata;
 import static uk.gov.justice.services.test.utils.core.matchers.JsonEnvelopePayloadMatcher.payload;
 import static uk.gov.justice.services.test.utils.core.matchers.JsonEnvelopeStreamMatcher.streamContaining;
+import static uk.gov.justice.services.test.utils.core.matchers.JsonSchemaValidationMatcher.isValidJsonEnvelopeForSchema;
 import static uk.gov.justice.services.test.utils.core.messaging.MetadataBuilderFactory.metadataWithRandomUUID;
 
 import org.apache.commons.lang3.StringUtils;
@@ -41,12 +45,22 @@ import uk.gov.justice.services.messaging.Envelope;
 import uk.gov.justice.services.messaging.JsonEnvelope;
 import uk.gov.moj.cpp.stagingdvla.aggregate.DefendantAggregate;
 
+import java.io.IOException;
+import java.io.StringReader;
 import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Stream;
+
+import jakarta.json.Json;
+import jakarta.json.JsonObject;
+import jakarta.json.JsonReader;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -70,6 +84,12 @@ public class DriverNotificationHandlerTest {
     private static final UUID CASE_ID = randomUUID();
     private static final UUID APPLICATION_ID = randomUUID();
     private static final String CONVICTING_COURT_CODE = "2577";
+
+    private static final Path IT_PAYLOADS = Paths.get("..", "..", "stagingdvla-integration-test", "src", "test", "resources");
+    private static final Set<String> SCHEMA_INVALID_IT_PAYLOADS = Set.of(
+            "applicationAmendReshare/scenario4a/command2.json",
+            "appealAmendReshare/cimd_3240_ac1/command2.json",
+            "appealAmendReshare/cimd_3240_ac2/command2.json");
 
     @InjectMocks
     private DriverNotificationHandler handler;
@@ -222,5 +242,56 @@ public class DriverNotificationHandlerTest {
                         ))
                 )
         ));
+    }
+
+    /*
+     * CHD-04 (BC-13) - Java 17 behaviour (inferred: the handler schema and the core-domain judicialResultCategory
+     * enum are identical in 17.104.4 and 25.104.6): these three IT payloads are rejected by the handler schema
+     * (courtApplications[0].applicationSubType is not allowed; judicialResultCategory "Intermediary" is not in
+     * FINAL/INTERMEDIARY/ANCILLARY). The ITs that send them expect 0 notifications, so they pass because of the
+     * rejection rather than the amend/reshare rule they are named after.
+     */
+    @Test
+    public void chd04_shouldRejectTheThreeAmendReshareItPayloadsAgainstTheHandlerSchema() throws IOException {
+        for (final String payload : SCHEMA_INVALID_IT_PAYLOADS) {
+            assertThat(payload, driverNotificationHandlerEnvelopeFrom(IT_PAYLOADS.resolve(payload)), not(isValidJsonEnvelopeForSchema()));
+        }
+    }
+
+    /*
+     * CHD-06 (BC-15) - Java 17 behaviour: every other driver-notification payload the ITs send is valid against
+     * the handler schema, including the core-domain schemas it references (courtCentre, nowdefendant,
+     * courtsDefinitions). A core-domain model forked from a stale base would reject some of them.
+     */
+    @Test
+    public void chd06_shouldAcceptEveryOtherDriverNotificationItPayloadAgainstTheHandlerSchema() throws IOException {
+        final List<Path> payloads;
+        try (Stream<Path> files = Files.walk(IT_PAYLOADS)) {
+            payloads = files
+                    .filter(path -> path.getFileName().toString().matches("command.*\\.json"))
+                    .filter(path -> !SCHEMA_INVALID_IT_PAYLOADS.contains(IT_PAYLOADS.relativize(path).toString().replace('\\', '/')))
+                    .sorted()
+                    .toList();
+        }
+        assertThat(payloads.size(), greaterThan(200));
+
+        final List<String> rejected = new java.util.ArrayList<>();
+        for (final Path payload : payloads) {
+            if (!isValidJsonEnvelopeForSchema().matches(driverNotificationHandlerEnvelopeFrom(payload))) {
+                rejected.add(IT_PAYLOADS.relativize(payload).toString());
+            }
+        }
+        assertThat(rejected, is(empty()));
+    }
+
+    private JsonEnvelope driverNotificationHandlerEnvelopeFrom(final Path payloadFile) throws IOException {
+        final String json = Files.readString(payloadFile)
+                .replace("%DEFENDANT_ID%", randomUUID().toString())
+                .replace("%HEARING_ID%", randomUUID().toString());
+        try (JsonReader reader = Json.createReader(new StringReader(json))) {
+            final JsonObject payload = reader.readObject();
+            return JsonEnvelope.envelopeFrom(
+                    metadataWithRandomUUID(DriverNotificationHandler.STAGINGDVLA_COMMAND_HANDLER_DRIVER_NOTIFICATION).build(), payload);
+        }
     }
 }
