@@ -38,6 +38,7 @@ import static uk.gov.moj.stagingdvla.stubs.MaterialStub.verifyMaterialCreated;
 import static uk.gov.moj.stagingdvla.stubs.NotifyGatewayStub.bodyOf;
 import static uk.gov.moj.stagingdvla.stubs.NotifyGatewayStub.publishNotificationFailed;
 import static uk.gov.moj.stagingdvla.stubs.NotifyGatewayStub.publishNotificationSent;
+import static uk.gov.moj.stagingdvla.stubs.NotifyGatewayStub.publishNotificationValidationFailed;
 import static uk.gov.moj.stagingdvla.stubs.NotifyGatewayStub.verifyEmailNotificationSentToGateway;
 import static uk.gov.moj.stagingdvla.stubs.NotifyStub.awaitLegacyEmailNotificationSent;
 import static uk.gov.moj.stagingdvla.stubs.NotifyStub.publishNotificationSentEvent;
@@ -485,6 +486,60 @@ public class DvlaNotificationIT extends AbstractIntegrationTest {
         final JsonPath emailFailedEvent = retrieveEmailStatusDocumentDeliveryEvent(materialId, "FAILED");
         assertThat(emailFailedEvent.getString("materialId"), equalTo(materialId));
         assertNoDocumentDeletedFromBlob(materialId);
+    }
+
+    // notification-validation-failed: the gateway rejects the send-email command itself (payload
+    // validation failure) before ever attempting delivery - a different, newly-distinguished
+    // outcome from notification-failed above (GOV.UK Notify rejecting an accepted request).
+    // Correlation comes from originalEventPayload's nested clientContext, not a top-level one -
+    // NotifyGatewayStub.publishNotificationValidationFailed builds that shape. reason/details are
+    // logged by NotifyGatewayResultService, not persisted - only the VALIDATION_FAILED status itself
+    // is recorded/queryable.
+    @Test
+    public void shouldRecordEmailValidationFailedAndRetainBlobsWhenNotifyGatewayRejectsPayload() throws IOException {
+        final ImmutableMap<String, Boolean> features = of("dvlaFileStore", true, "dvlaFileStoreDelete", true);
+        stubFeaturesFor(STAGINGDVLA_CONTEXT, features);
+
+        final String body = getPayload(DRIVER_NOTIFICATION_COMMAND_PAYLOAD_WITH_CONVICTING_COURT_MULTIPLE_OFFENCES);
+        final Response writeResponse = postCommandWithUserId(getWriteUrl("/driver-notification"),
+                DRIVER_NOTIFICATION_MEDIA_TYPE, body, USER_GROUP);
+        assertThat(writeResponse.getStatusCode(), equalTo(SC_ACCEPTED));
+
+        final DriverNotified driverNotified = jsonToObjectConverter.convert(
+                retrieveMessageAsJsonObject(consumerForDriverNotified).get(), DriverNotified.class);
+        final String materialId = driverNotified.getMaterialId().toString();
+        final String clientContext = CLIENT_CONTEXT_PREFIX + materialId;
+
+        verifyGenerateDocumentStubCommandInvoked();
+        final JsonPath generateDocumentRequest = latestGenerateDocumentRequest();
+        final String payloadFileUri = generateDocumentRequest.getString("payloadFileUri");
+        final String destinationFileUri = generateDocumentRequest.getString("destinationFileUri");
+
+        publishDocumentAvailableEventForAzureBlob(payloadFileUri, destinationFileUri,
+                generateDocumentRequest.getString("sourceCorrelationId"));
+        verifyProgressionAddCourtDocumentInvoked();
+        publishMaterialAddedEvent(driverNotified.getMaterialId(), UUID.fromString(USER_GROUP));
+        verifyEmailNotificationSentToGateway(clientContext);
+
+        //When
+        publishNotificationValidationFailed(clientContext, "PAYLOAD_VALIDATION_FAILED",
+                "sendToAddress: must not be blank");
+
+        //Then
+        final JsonPath emailValidationFailedEvent = retrieveEmailStatusDocumentDeliveryEvent(materialId, "VALIDATION_FAILED");
+        assertThat(emailValidationFailedEvent.getString("materialId"), equalTo(materialId));
+        assertNoDocumentDeletedFromBlob(materialId);
+
+        // material-added (above) already recorded materialStatus=SUCCESS, before this email outcome
+        // was even published - the view's materialStatus doesn't revert for a later email result
+        final String queryUserId = randomUUID().toString();
+        stubUser(queryUserId);
+        pollForResponse("/dvla-document-deliveries?materialId=" + materialId + "&materialStatus=SUCCESS",
+                DVLA_DOCUMENT_DELIVERY_MEDIA_TYPE, queryUserId,
+                allOf(
+                        withJsonPath("$.documentDeliveries[0].materialId", equalTo(materialId)),
+                        withJsonPath("$.documentDeliveries[0].emailStatus", equalTo("VALIDATION_FAILED"))
+                ));
     }
 
     // dvlaFileStore=false counterpart (the class default - not re-stubbed here): legacy file-service

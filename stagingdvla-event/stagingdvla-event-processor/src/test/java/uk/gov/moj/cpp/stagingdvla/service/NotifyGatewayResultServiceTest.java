@@ -13,6 +13,7 @@ import static org.mockito.Mockito.when;
 import static uk.gov.justice.services.messaging.JsonObjects.createObjectBuilder;
 import static uk.gov.moj.cpp.stagingdvla.domain.constants.DvlaDocumentDeliveryEmailStatus.FAILED;
 import static uk.gov.moj.cpp.stagingdvla.domain.constants.DvlaDocumentDeliveryEmailStatus.SUCCESS;
+import static uk.gov.moj.cpp.stagingdvla.domain.constants.DvlaDocumentDeliveryEmailStatus.VALIDATION_FAILED;
 
 import uk.gov.justice.services.messaging.Metadata;
 import uk.gov.moj.cpp.stagingdvla.domain.constants.DvlaDocumentDeliveryEmailStatus;
@@ -79,6 +80,33 @@ public class NotifyGatewayResultServiceTest {
     }
 
     @Test
+    public void shouldRecordEmailStatusValidationFailedOnNotificationValidationFailed() {
+        notifyGatewayResultService.handle(validationFailedMessage("STAGINGDVLA_" + materialId));
+
+        // reason/details are logged, not persisted - only the status itself is recorded
+        assertEmailStatusRecorded(VALIDATION_FAILED);
+    }
+
+    @Test
+    public void shouldIgnoreValidationFailedResultWithoutClientContextInOriginalEventPayload() {
+        notifyGatewayResultService.handle(validationFailedMessage(null));
+
+        verifyNoInteractions(documentDeliveryStatusService);
+    }
+
+    @Test
+    public void shouldThrowOnUnparseableOriginalEventPayload() {
+        final JsonObjectBuilder payload = createObjectBuilder()
+                .add("reason", "PAYLOAD_VALIDATION_FAILED")
+                .add("details", "sendToAddress: must not be blank")
+                .add("originalEventPayload", "not json");
+        final ServiceBusReceivedMessage message = messageWithSubjectAndBody("notification-validation-failed", payload.build());
+
+        assertThrows(MalformedResultMessageException.class, () -> notifyGatewayResultService.handle(message));
+        verifyNoInteractions(documentDeliveryStatusService);
+    }
+
+    @Test
     public void shouldThrowOnUnrecognisedSubject() {
         // the subject is checked before the body is even read, so no body stub is needed here
         final ServiceBusReceivedMessage message = mock(ServiceBusReceivedMessage.class);
@@ -127,6 +155,19 @@ public class NotifyGatewayResultServiceTest {
             payload.add("clientContext", clientContext);
         }
         return messageWithSubjectAndBody("notification-failed", payload.build());
+    }
+
+    private static ServiceBusReceivedMessage validationFailedMessage(final String clientContext) {
+        final JsonObjectBuilder originalPayload = createObjectBuilder()
+                .add("sendToAddress", "");
+        if (clientContext != null) {
+            originalPayload.add("clientContext", clientContext);
+        }
+        final JsonObjectBuilder payload = createObjectBuilder()
+                .add("reason", "PAYLOAD_VALIDATION_FAILED")
+                .add("details", "sendToAddress: must not be blank")
+                .add("originalEventPayload", originalPayload.build().toString());
+        return messageWithSubjectAndBody("notification-validation-failed", payload.build());
     }
 
     private static ServiceBusReceivedMessage messageWithSubjectAndBody(final String subject, final JsonObject body) {
