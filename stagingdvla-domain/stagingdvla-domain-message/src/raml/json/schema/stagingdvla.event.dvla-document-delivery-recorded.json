@@ -33,7 +33,7 @@
       "type": "string"
     },
     "emailStatus": {
-      "description": "The status of the DVLA email notification for this material (one of the DvlaDocumentDeliveryEmailStatus values: NOT_REQUIRED, PENDING, SUCCESS, FAILED)",
+      "description": "The status of the DVLA email notification for this material (one of the DvlaDocumentDeliveryEmailStatus values: NOT_REQUIRED, PENDING, SUCCESS, FAILED, VALIDATION_FAILED)",
       "type": "string"
     }
   },
