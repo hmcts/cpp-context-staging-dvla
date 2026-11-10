@@ -6,7 +6,7 @@
     <parent>
         <groupId>uk.gov.moj.cpp.common</groupId>
         <artifactId>service-parent-pom</artifactId>
-        <version>25.104.6</version>
+        <version>25.104.7</version>
     </parent>
 
     <groupId>uk.gov.moj.cpp.staging.dvla</groupId>
@@ -25,7 +25,7 @@
         <notification.notify.version>17.0.1</notification.notify.version>
         <systemdocgenerator.version>17.0.57</systemdocgenerator.version>
         <material.version>17.0.57</material.version>
-        <coredomain.version>25.104.6</coredomain.version>
+        <coredomain.version>25.104.7</coredomain.version>
         <usersgroups.version>17.104.48</usersgroups.version>
         <progression.version>17.104.306</progression.version>
         <sjp.version>17.104.197</sjp.version>
