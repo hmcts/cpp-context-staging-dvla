@@ -58,6 +58,7 @@ public class NotifyGatewayStub {
 
     private static final String NOTIFICATION_SENT_SUBJECT = "notification-sent";
     private static final String NOTIFICATION_FAILED_SUBJECT = "notification-failed";
+    private static final String NOTIFICATION_VALIDATION_FAILED_SUBJECT = "notification-validation-failed";
 
     private static final ServiceBusReceiverClient RECEIVER_CLIENT = new ServiceBusClientBuilder()
             .connectionString(CONNECTION_STRING)
@@ -133,6 +134,30 @@ public class NotifyGatewayStub {
                 .add("clientContext", clientContext)
                 .build();
         send(NOTIFICATION_FAILED_SUBJECT, body);
+    }
+
+    /**
+     * Publishes a {@code notification-validation-failed} result onto staging-dvla's own dedicated
+     * result queue — simulates the gateway rejecting the send-email command itself (payload
+     * validation failure), before ever attempting delivery. Unlike {@link #publishNotificationSent}
+     * and {@link #publishNotificationFailed}, this event carries no top-level {@code clientContext}
+     * and no {@code notificationId} (the command was never accepted) — the join key is nested one
+     * level down, inside {@code originalEventPayload}, a JSON string echoing the rejected command
+     * body verbatim (here reduced to just the one field {@code NotifyGatewayResultService} actually
+     * reads off it).
+     */
+    public static void publishNotificationValidationFailed(final String clientContext, final String reason,
+                                                             final String details) {
+        final JsonObject originalEventPayload = createObjectBuilder()
+                .add("sendToAddress", "")
+                .add("clientContext", clientContext)
+                .build();
+        final JsonObject body = createObjectBuilder()
+                .add("reason", reason)
+                .add("details", details)
+                .add("originalEventPayload", originalEventPayload.toString())
+                .build();
+        send(NOTIFICATION_VALIDATION_FAILED_SUBJECT, body);
     }
 
     private static void send(final String subject, final JsonObject body) {

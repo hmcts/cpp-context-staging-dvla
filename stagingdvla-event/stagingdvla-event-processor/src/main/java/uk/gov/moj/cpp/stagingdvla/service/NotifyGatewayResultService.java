@@ -38,14 +38,28 @@ public class NotifyGatewayResultService {
 
     private static final String NOTIFICATION_SENT_SUBJECT = "notification-sent";
     private static final String NOTIFICATION_FAILED_SUBJECT = "notification-failed";
+    private static final String NOTIFICATION_VALIDATION_FAILED_SUBJECT = "notification-validation-failed";
+
+    private static final String REASON = "reason";
+    private static final String DETAILS = "details";
+    private static final String ORIGINAL_EVENT_PAYLOAD = "originalEventPayload";
 
     @Inject
     private DocumentDeliveryStatusService documentDeliveryStatusService;
 
     public void handle(final ServiceBusReceivedMessage message) {
         final String subject = message.getSubject();
+
+        // the gateway never accepted the command, so there's no notificationId/clientContext on
+        // this payload directly - correlation has to come from the rejected command it echoes back
+        if (NOTIFICATION_VALIDATION_FAILED_SUBJECT.equals(subject)) {
+            handleValidationFailed(parseJson(message.getBody().toString(), "notify-gateway result body"));
+            return;
+        }
+
+        // subject is checked (and any unrecognised one rejected) before the body is ever read
         final DvlaDocumentDeliveryEmailStatus status = statusFor(subject);
-        final JsonObject payload = bodyOf(message);
+        final JsonObject payload = parseJson(message.getBody().toString(), "notify-gateway result body");
 
         // nothing else ever publishes to this queue, so this is a defensive guard, not an
         // expected branch - mirrors NotificationNotifyEventProcessor's own filter
@@ -57,12 +71,43 @@ public class NotifyGatewayResultService {
         }
 
         final UUID materialId = materialIdFrom(payload);
-        final Metadata metadata = metadataBuilder()
+
+        documentDeliveryStatusService.record(metadataFor(), email(materialId, status));
+    }
+
+    private void handleValidationFailed(final JsonObject payload) {
+        final JsonObject originalPayload = parseJson(payload.getString(ORIGINAL_EVENT_PAYLOAD, ""),
+                "notification-validation-failed originalEventPayload");
+
+        // the rejected command itself carries clientContext (set by DriverNotifiedEventProcessor
+        // when it was first built) - same shared filter/extraction as every other subject, just
+        // pointed at the nested payload instead of the outer one
+        if (!isStagingDvlaNotification(originalPayload)) {
+            if (LOGGER.isWarnEnabled()) {
+                LOGGER.warn("ignoring {} on the notify-gateway result queue with no staging-dvla clientContext in its originalEventPayload",
+                        NOTIFICATION_VALIDATION_FAILED_SUBJECT);
+            }
+            return;
+        }
+
+        final UUID materialId = materialIdFrom(originalPayload);
+        // reason/details are logged for triage, not persisted - the view-store isn't widened for them
+        final String reason = payload.getString(REASON, null);
+        final String details = payload.getString(DETAILS, null);
+        if (LOGGER.isWarnEnabled()) {
+            LOGGER.warn("{} for materialId {}: reason={}, details={}",
+                    NOTIFICATION_VALIDATION_FAILED_SUBJECT, materialId, reason, details);
+        }
+
+        documentDeliveryStatusService.record(metadataFor(),
+                email(materialId, DvlaDocumentDeliveryEmailStatus.VALIDATION_FAILED));
+    }
+
+    private static Metadata metadataFor() {
+        return metadataBuilder()
                 .withId(randomUUID())
                 .withName(STAGINGDVLA_COMMAND_HANDLER_DRIVER_NOTIFICATION_DOCUMENT_DELIVERY)
                 .build();
-
-        documentDeliveryStatusService.record(metadata, email(materialId, status));
     }
 
     private static DvlaDocumentDeliveryEmailStatus statusFor(final String subject) {
@@ -75,11 +120,11 @@ public class NotifyGatewayResultService {
         throw new MalformedResultMessageException("unrecognised notify-gateway result subject: " + subject);
     }
 
-    private static JsonObject bodyOf(final ServiceBusReceivedMessage message) {
-        try (JsonReader reader = createReader(new StringReader(message.getBody().toString()))) {
+    private static JsonObject parseJson(final String json, final String errorContext) {
+        try (JsonReader reader = createReader(new StringReader(json))) {
             return reader.readObject();
         } catch (final RuntimeException e) {
-            throw new MalformedResultMessageException("unparseable notify-gateway result body: " + e.getMessage());
+            throw new MalformedResultMessageException("unparseable " + errorContext + ": " + e.getMessage());
         }
     }
 }
