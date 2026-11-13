@@ -27,7 +27,7 @@
         <systemdocgenerator.version>17.0.57</systemdocgenerator.version>
         <material.version>17.0.57</material.version>
         <coredomain.version>17.104.6-CHD-2786-SNAPSHOT</coredomain.version>
-        <usersgroups.version>17.104.48</usersgroups.version>
+        <usersgroups.version>25.104.52</usersgroups.version>
         <commons-text.version>1.10.0</commons-text.version>
         <progression.version>17.104.306</progression.version>
         <sjp.version>17.104.197</sjp.version>
