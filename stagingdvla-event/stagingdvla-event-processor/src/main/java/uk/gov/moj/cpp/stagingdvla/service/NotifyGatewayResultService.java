@@ -50,57 +50,39 @@ public class NotifyGatewayResultService {
     public void handle(final ServiceBusReceivedMessage message) {
         final String subject = message.getSubject();
 
-        // the gateway never accepted the command, so there's no notificationId/clientContext on
-        // this payload directly - correlation has to come from the rejected command it echoes back
-        if (NOTIFICATION_VALIDATION_FAILED_SUBJECT.equals(subject)) {
-            handleValidationFailed(parseJson(message.getBody().toString(), "notify-gateway result body"));
-            return;
-        }
-
         // subject is checked (and any unrecognised one rejected) before the body is ever read
         final DvlaDocumentDeliveryEmailStatus status = statusFor(subject);
         final JsonObject payload = parseJson(message.getBody().toString(), "notify-gateway result body");
 
+        // the gateway never accepted a rejected command, so it carries no clientContext of its
+        // own - correlation instead comes from the rejected command it echoes back verbatim in
+        // originalEventPayload. notification-sent/notification-failed have no such field (the
+        // command WAS accepted), so they correlate directly off the outer payload instead.
+        final JsonObject correlationPayload = status == DvlaDocumentDeliveryEmailStatus.VALIDATION_FAILED
+                ? parseJson(payload.getString(ORIGINAL_EVENT_PAYLOAD, ""), "notification-validation-failed originalEventPayload")
+                : payload;
+
         // nothing else ever publishes to this queue, so this is a defensive guard, not an
         // expected branch - mirrors NotificationNotifyEventProcessor's own filter
-        if (!isStagingDvlaNotification(payload)) {
+        if (!isStagingDvlaNotification(correlationPayload)) {
             if (LOGGER.isWarnEnabled()) {
                 LOGGER.warn("ignoring {} on the notify-gateway result queue with no staging-dvla clientContext", subject);
             }
             return;
         }
 
-        final UUID materialId = materialIdFrom(payload);
+        final UUID materialId = materialIdFrom(correlationPayload);
+
+        if (status == DvlaDocumentDeliveryEmailStatus.VALIDATION_FAILED) {
+            // reason/details are logged for triage, not persisted - the view-store isn't widened for them
+            final String reason = payload.getString(REASON, null);
+            final String details = payload.getString(DETAILS, null);
+            if (LOGGER.isWarnEnabled()) {
+                LOGGER.warn("{} for materialId {}: reason={}, details={}", subject, materialId, reason, details);
+            }
+        }
 
         documentDeliveryStatusService.record(metadataFor(), email(materialId, status));
-    }
-
-    private void handleValidationFailed(final JsonObject payload) {
-        final JsonObject originalPayload = parseJson(payload.getString(ORIGINAL_EVENT_PAYLOAD, ""),
-                "notification-validation-failed originalEventPayload");
-
-        // the rejected command itself carries clientContext (set by DriverNotifiedEventProcessor
-        // when it was first built) - same shared filter/extraction as every other subject, just
-        // pointed at the nested payload instead of the outer one
-        if (!isStagingDvlaNotification(originalPayload)) {
-            if (LOGGER.isWarnEnabled()) {
-                LOGGER.warn("ignoring {} on the notify-gateway result queue with no staging-dvla clientContext in its originalEventPayload",
-                        NOTIFICATION_VALIDATION_FAILED_SUBJECT);
-            }
-            return;
-        }
-
-        final UUID materialId = materialIdFrom(originalPayload);
-        // reason/details are logged for triage, not persisted - the view-store isn't widened for them
-        final String reason = payload.getString(REASON, null);
-        final String details = payload.getString(DETAILS, null);
-        if (LOGGER.isWarnEnabled()) {
-            LOGGER.warn("{} for materialId {}: reason={}, details={}",
-                    NOTIFICATION_VALIDATION_FAILED_SUBJECT, materialId, reason, details);
-        }
-
-        documentDeliveryStatusService.record(metadataFor(),
-                email(materialId, DvlaDocumentDeliveryEmailStatus.VALIDATION_FAILED));
     }
 
     private static Metadata metadataFor() {
@@ -116,6 +98,9 @@ public class NotifyGatewayResultService {
         }
         if (NOTIFICATION_FAILED_SUBJECT.equals(subject)) {
             return DvlaDocumentDeliveryEmailStatus.FAILED;
+        }
+        if (NOTIFICATION_VALIDATION_FAILED_SUBJECT.equals(subject)) {
+            return DvlaDocumentDeliveryEmailStatus.VALIDATION_FAILED;
         }
         throw new MalformedResultMessageException("unrecognised notify-gateway result subject: " + subject);
     }
