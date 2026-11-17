@@ -391,9 +391,9 @@ public class DvlaNotificationIT extends AbstractIntegrationTest {
 
         // wire contract: command-send-email-notification.schema.json
         final JsonObject messageBody = bodyOf(message);
-        assertThat(messageBody.getString("fileUri"), equalTo(destinationFileUri));
+        assertThat(messageBody.containsKey("fileUri"), is(false));
+        assertThat(messageBody.getString("materialUrl"), is(notNullValue()));
         assertThat(messageBody.getString("clientContext"), equalTo(clientContext));
-        assertThat(messageBody.containsKey("materialUrl"), is(false));
         assertThat(messageBody.getString("templateId"), is(notNullValue()));
         assertThat(messageBody.getString("sendToAddress"), is(notNullValue()));
         assertThat(messageBody.getJsonObject("personalisation").getString("subject"), is(notNullValue()));
@@ -972,7 +972,8 @@ public class DvlaNotificationIT extends AbstractIntegrationTest {
 
         final ServiceBusReceivedMessage gatewayMessage = verifyEmailNotificationSentToGateway(clientContext);
         final JsonObject gatewayMessageBody = bodyOf(gatewayMessage);
-        assertThat(gatewayMessageBody.getString("fileUri"), equalTo(destinationFileUri));
+        assertThat(gatewayMessageBody.containsKey("fileUri"), is(false));
+        assertThat(gatewayMessageBody.getString("materialUrl"), is(notNullValue()));
         assertThat(gatewayMessage.getSubject(), equalTo("send-email-notification"));
         assertThat(gatewayMessage.getReplyTo(), equalTo("stagingdvla-notification-result"));
         assertNoDocumentDeletedFromBlob(materialId);
