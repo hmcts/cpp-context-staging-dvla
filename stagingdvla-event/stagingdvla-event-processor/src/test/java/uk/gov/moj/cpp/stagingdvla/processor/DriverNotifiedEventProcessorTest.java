@@ -364,8 +364,8 @@ public class DriverNotifiedEventProcessorTest {
 
         final JsonObject notifyPayload = captureGatewayEmailNotificationPayload(envelope);
         assertThat(notifyPayload.getString(CLIENT_CONTEXT), is(CLIENT_CONTEXT_PREFIX + materialId));
-        assertThat(notifyPayload.getString("fileUri"),
-                is("http://cpp-azurite:10000/devstoreaccount1/stagingdvla-files/internal%2FDVLADocumentOrder_" + materialId + ".pdf"));
+        assertThat(notifyPayload.containsKey("fileUri"), is(false));
+        assertThat(notifyPayload.getString("materialUrl"), is("http://localhost/material/" + materialId));
         assertCommonEmailNotificationFields(notifyPayload);
         // routed by what the material itself carries (DVLAFS-12), not a fresh dvlaFileStore re-read
         verifyNoInteractions(featureControlGuard);

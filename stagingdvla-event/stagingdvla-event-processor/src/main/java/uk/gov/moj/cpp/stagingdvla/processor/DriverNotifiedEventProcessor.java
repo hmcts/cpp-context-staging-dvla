@@ -61,7 +61,6 @@ public class DriverNotifiedEventProcessor {
     private static final String FIELD_TEMPLATE_ID = "templateId";
     private static final String SEND_TO_ADDRESS = "sendToAddress";
     private static final String MATERIAL_URL = "materialUrl";
-    private static final String FILE_URI = "fileUri";
     private static final String PERSONALISATION = "personalisation";
     private static final String SUBJECT = "subject";
     private static final String CODE_FOR_SJP_CASE = "J";
@@ -208,12 +207,14 @@ public class DriverNotifiedEventProcessor {
         final EmailChannel emailChannel = emailNotification.getDetails().getEmailNotifications().get(0);
         final String destinationFileUri = emailNotification.getDetails().getDestinationFileUri();
 
-        // only a blob-addressed material has an attachment the gateway can resolve and a delivery
-        // to track back (DVLAFS-12/18), so route on what this material actually carries rather than
-        // a fresh dvlaFileStore re-read: a document rendered just before a toggle flip still carries
-        // (or doesn't carry) its destinationFileUri regardless of the flag's current live value
+        // only a blob-addressed material has a delivery to track back via clientContext (DVLAFS-12/18),
+        // so route on what this material actually carries rather than a fresh dvlaFileStore re-read:
+        // a document rendered just before a toggle flip still carries (or doesn't carry) its
+        // destinationFileUri regardless of the flag's current live value. The gateway command itself
+        // still sends materialUrl either way - the attachment is always fetched via Material, never
+        // fileUri directly.
         if (nonNull(destinationFileUri)) {
-            sendViaNotifyGateway(envelope, emailChannel, destinationFileUri, emailNotification.getDetails().getMaterialId());
+            sendViaNotifyGateway(envelope, emailChannel, emailNotification.getDetails().getMaterialId());
         } else {
             sendViaLegacyNotificationNotify(envelope, emailChannel);
         }
@@ -232,12 +233,12 @@ public class DriverNotifiedEventProcessor {
     }
 
     private void sendViaNotifyGateway(final JsonEnvelope envelope, final EmailChannel emailChannel,
-                                       final String destinationFileUri, final UUID materialId) {
+                                       final UUID materialId) {
         final JsonObjectBuilder commandBuilder = createObjectBuilder();
         commandBuilder.add(FIELD_NOTIFICATION_ID, randomUUID().toString());
         commandBuilder.add(FIELD_TEMPLATE_ID, emailChannel.getTemplateId().toString());
         commandBuilder.add(SEND_TO_ADDRESS, emailChannel.getSendToAddress());
-        commandBuilder.add(FILE_URI, destinationFileUri);
+        commandBuilder.add(MATERIAL_URL, emailChannel.getMaterialUrl());
         commandBuilder.add(CLIENT_CONTEXT, CLIENT_CONTEXT_PREFIX + materialId);
         commandBuilder.add(PERSONALISATION, createObjectBuilder()
                 .add(SUBJECT, getPersonalisationValue(emailChannel.getPersonalisation()))
