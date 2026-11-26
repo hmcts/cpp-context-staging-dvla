@@ -99,7 +99,7 @@ class DefendantAggregateTestSteps {
                     for (int i = 0; i < expectedEventsArray.size(); i++) {
                         final String expectedEventPayload = objectToJsonObjectConverter.convert(expectedEventsArray.getJsonObject(i)).toString();
                         final String actualEventPayload = actualEvents.get(i);
-                        assertThat(actualEventPayload, JsonMatcher.matchesJson(expectedEventPayload, FIELDS_TO_CHECK_PRESENCE_ONLY));
+                        assertThat(actualEventPayload, JsonMatcher.matchesJson(expectedEventPayload, step.expectedEventsAssertion.presenceOnlyFields(FIELDS_TO_CHECK_PRESENCE_ONLY)));
                         assertJsonPaths(actualEventPayload, step.expectedEventsAssertion.jsonpathAssertions);
                     }
                 }
@@ -215,10 +215,16 @@ class DefendantAggregateTestSteps {
     static final class ExpectedEventsAssertion {
         final String expectedEventsJsonFile;
         final JsonPathAssertions jsonpathAssertions;
+        final List<String> additionalPresenceOnlyFields;
 
         private ExpectedEventsAssertion(final String expectedEventsJsonFile, final JsonPathAssertions jsonpathAssertions) {
+            this(expectedEventsJsonFile, jsonpathAssertions, List.of());
+        }
+
+        private ExpectedEventsAssertion(final String expectedEventsJsonFile, final JsonPathAssertions jsonpathAssertions, final List<String> additionalPresenceOnlyFields) {
             this.expectedEventsJsonFile = expectedEventsJsonFile;
             this.jsonpathAssertions = jsonpathAssertions;
+            this.additionalPresenceOnlyFields = additionalPresenceOnlyFields;
         }
 
         /**
@@ -240,7 +246,24 @@ class DefendantAggregateTestSteps {
          * Creates and returns a new instance of ExpectedEventsAssertion with the specified JsonPathAssertions.
          */
         public ExpectedEventsAssertion withAssertions(final JsonPathAssertions jsonpathAssertions) {
-            return new ExpectedEventsAssertion(this.expectedEventsJsonFile, jsonpathAssertions);
+            return new ExpectedEventsAssertion(this.expectedEventsJsonFile, jsonpathAssertions, this.additionalPresenceOnlyFields);
+        }
+
+        /**
+         * Fields that are only checked for presence (not value) in the actual events, in addition to the scenario defaults.
+         * Use for values that are deliberately left unasserted, e.g. pending an open question.
+         * Each field is matched as a regular expression against the JSON path; anchor it (e.g. "^notificationType$") to match one path only.
+         */
+        public ExpectedEventsAssertion withPresenceOnlyFields(final String... fields) {
+            final List<String> combined = new ArrayList<>(this.additionalPresenceOnlyFields);
+            combined.addAll(Arrays.asList(fields));
+            return new ExpectedEventsAssertion(this.expectedEventsJsonFile, this.jsonpathAssertions, combined);
+        }
+
+        List<String> presenceOnlyFields(final List<String> defaults) {
+            final List<String> fields = new ArrayList<>(defaults);
+            fields.addAll(additionalPresenceOnlyFields);
+            return fields;
         }
     }
 
