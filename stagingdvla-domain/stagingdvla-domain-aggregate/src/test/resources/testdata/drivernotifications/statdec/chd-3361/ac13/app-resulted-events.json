@@ -1,0 +1,397 @@
+{
+  "caseApplicationReferences": [
+    "TESTREF0001"
+  ],
+  "cases": [
+    {
+      "caseId": "278513c9-ab07-41b1-b978-2c1c080197e6",
+      "caseStatus": "INACTIVE",
+      "defendantCaseOffences": [
+        {
+          "allocationDecision": "Summary-only offence",
+          "civilOffence": false,
+          "code": "RC86818",
+          "convictingCourtCode": "2577",
+          "convictionStatus": "Convicted",
+          "dateFromWhichDisqRemoved": "",
+          "disqualificationPeriod": "",
+          "dttpDtetp": "",
+          "dvlaCode": "CU84",
+          "endorsableFlag": true,
+          "fine": "",
+          "interimImposedFinalSentence": "",
+          "modeOfTrial": "Summary",
+          "otherSentence": "E12M",
+          "penaltyPoints": "3",
+          "results": [
+            {
+              "d20": false,
+              "dvlaCode": "E",
+              "judicialResultCategory": "FINAL",
+              "label": "Conditional discharge",
+              "prompts": [
+                {
+                  "durationSequence": 1,
+                  "label": "Period\u00a0of conditional discharge",
+                  "promptIdentifier": "d3205319-84cf-4c5b-9d7a-7e4bb1865054",
+                  "promptReference": "periodofConditionalDischarge",
+                  "value": "12 Months"
+                }
+              ],
+              "publishedForNows": false,
+              "resultIdentifier": "554c2622-c1cc-459e-a98d-b7f317ab065c"
+            },
+            {
+              "d20": true,
+              "judicialResultCategory": "ANCILLARY",
+              "label": "Driving record endorsed with penalty points",
+              "prompts": [
+                {
+                  "label": "Penalty points for this offence",
+                  "promptIdentifier": "a8719de4-7783-448a-b792-e3f94e670ad0",
+                  "promptReference": "PENPT",
+                  "value": "3"
+                }
+              ],
+              "publishedForNows": false,
+              "resultIdentifier": "cee54856-4450-4f28-a8a9-72b688726201"
+            },
+            {
+              "d20": false,
+              "judicialResultCategory": "ANCILLARY",
+              "label": "0: None or unknown",
+              "publishedForNows": true,
+              "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956"
+            }
+          ],
+          "sentenceDate": "2026-05-15",
+          "sentencingCourtCode": "2577",
+          "startDate": "2025-08-13",
+          "title": "Permit use of motor vehicle - driver not having proper control - endorsable offence",
+          "wording": "Permit use of motor vehicle - driver not having proper control - endorsable offence"
+        }
+      ],
+      "hasSV": false,
+      "initiationCode": "C",
+      "reference": "TESTREF0001"
+    }
+  ],
+  "courtApplications": [
+    {
+      "applicationReceivedDate": "2026-05-13",
+      "applicationReference": "TESTREF0001",
+      "applicationStatus": "FINALISED",
+      "applicationType": "Appearance to make statutory declaration (other than SJP)",
+      "applicationTypeId": "a6663f2a-c900-4bb4-a7d7-4be34cb2f1f7",
+      "id": "7caa74b9-1962-4c59-95d7-0b3ac59ff73a",
+      "results": [
+        {
+          "d20": false,
+          "judicialResultCategory": "FINAL",
+          "label": "Granted",
+          "publishedForNows": false,
+          "resultIdentifier": "2b3f7c20-8fc1-4fad-9076-df196c24b27e"
+        },
+        {
+          "d20": false,
+          "judicialResultCategory": "FINAL",
+          "label": "Statutory Declaration",
+          "prompts": [
+            {
+              "label": "Statutory declaration made under",
+              "promptIdentifier": "7b6ef0ac-2d0b-44e5-a68e-4720b96cc679",
+              "promptReference": "statutoryDeclarationMadeUnder",
+              "value": "Section 16E of the Magistrates' Courts Act 1980"
+            },
+            {
+              "label": "Financial penalties to be written off",
+              "promptIdentifier": "36e32c50-dbec-41c4-904b-25eb20c9c54a",
+              "promptReference": "financialPenaltiesToBeWrittenOff",
+              "value": "No"
+            },
+            {
+              "label": "Prosecutor to be notified organisation name",
+              "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+              "promptReference": "prosecutortobenotifiedOrganisationName",
+              "value": "Derbyshire Police"
+            },
+            {
+              "label": "Prosecutor to be notified address line 1",
+              "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+              "promptReference": "prosecutortobenotifiedAddress1",
+              "value": "Criminal Justice Department"
+            },
+            {
+              "label": "Prosecutor to be notified address line 2",
+              "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+              "promptReference": "prosecutortobenotifiedAddress2",
+              "value": "Derbyshire Constabulary"
+            },
+            {
+              "label": "Prosecutor to be notified address line 3",
+              "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+              "promptReference": "prosecutortobenotifiedAddress3",
+              "value": "Butterley Hall"
+            },
+            {
+              "label": "Prosecutor to be notified address line 4",
+              "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+              "promptReference": "prosecutortobenotifiedAddress4",
+              "value": "Ripley"
+            },
+            {
+              "label": "Prosecutor to be notified address line 5",
+              "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+              "promptReference": "prosecutortobenotifiedAddress5",
+              "value": "Derby"
+            },
+            {
+              "label": "Prosecutor to be notified post code",
+              "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+              "promptReference": "prosecutortobenotifiedPostCode",
+              "value": "DE5 3RS"
+            },
+            {
+              "label": "Prosecutor to be notified email address 1",
+              "promptIdentifier": "0a7dd6aa-f7cc-43d7-ba03-c9621f3e4471",
+              "promptReference": "prosecutortobenotifiedEmailAddress1",
+              "value": "criminaldataderbyshire@derbyshire.police.uk"
+            }
+          ],
+          "publishedForNows": false,
+          "resultDefinitionGroup": "Enforcement",
+          "resultIdentifier": "e2f6e11b-c3a2-4e76-8d29-fbede4174988"
+        }
+      ]
+    }
+  ],
+  "defendant": {
+    "address": {
+      "line1": "1",
+      "line2": "Test Street",
+      "line3": "Test Town",
+      "postCode": "ZZ1 1ZZ"
+    },
+    "dateOfBirth": "1990-01-01",
+    "firstName": "Test",
+    "gender": "MALE",
+    "lastName": "Defendant",
+    "name": "Test Defendant",
+    "title": "MR"
+  },
+  "distinctPrompts": [],
+  "identifier": "cec92813-93a6-4d63-850a-30ec663a9f3d",
+  "licenceProducedInCourt": "0: None or unknown",
+  "masterDefendantId": "bb73a262-d23c-4558-b75f-62112b9e0518",
+  "materialId": "ae863d6d-9780-4c2d-aa83-ef1398d0b923",
+  "notificationType": "Update",
+  "notificationWasPreviouslySent": true,
+  "orderDate": "2026-05-15",
+  "orderingCourt": {
+    "address": {
+      "address1": "176A Lavender Hill",
+      "address2": "London",
+      "address3": "",
+      "address4": "",
+      "address5": "",
+      "postcode": "SW11 1JU"
+    },
+    "code": "B01LY00",
+    "courtHearingLocation": "B01LY01",
+    "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+    "lja": {
+      "ljaCode": "2577",
+      "ljaName": "South West London Magistrates' Court"
+    },
+    "name": "Lavender Hill Magistrates' Court",
+    "roomId": "9e4932f7-97b2-3010-b942-ddd2624e4dd8",
+    "roomName": "Courtroom 01"
+  },
+  "orderingCourtCode": "2577",
+  "orderingHearingId": "ad88fcb4-6a81-443d-947e-ca89c2e3dcb6",
+  "previous": {
+    "caseApplicationReferences": [
+      "TESTREF0001"
+    ],
+    "cases": [
+      {
+        "caseId": "278513c9-ab07-41b1-b978-2c1c080197e6",
+        "caseStatus": "ACTIVE",
+        "defendantCaseOffences": [
+          {
+            "allocationDecision": "Summary-only offence",
+            "civilOffence": false,
+            "code": "RC86823",
+            "convictingCourtCode": "2577",
+            "convictionDate": "2026-05-13",
+            "convictionStatus": "Convicted",
+            "dateFromWhichDisqRemoved": "",
+            "disqualificationPeriod": "",
+            "dttpDtetp": "",
+            "dvlaCode": "CU80",
+            "endorsableFlag": true,
+            "fine": "",
+            "interimImposedFinalSentence": "",
+            "modeOfTrial": "Summary",
+            "otherSentence": "E06M",
+            "penaltyPoints": "",
+            "plea": "GUILTY",
+            "results": [
+              {
+                "d20": false,
+                "dvlaCode": "E",
+                "judicialResultCategory": "FINAL",
+                "label": "Conditional discharge",
+                "prompts": [
+                  {
+                    "durationSequence": 1,
+                    "label": "Period\u00a0of conditional discharge",
+                    "promptIdentifier": "d3205319-84cf-4c5b-9d7a-7e4bb1865054",
+                    "promptReference": "periodofConditionalDischarge",
+                    "value": "6 Months"
+                  }
+                ],
+                "publishedForNows": false,
+                "resultIdentifier": "554c2622-c1cc-459e-a98d-b7f317ab065c"
+              },
+              {
+                "d20": true,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "Driving record endorsed (no points)",
+                "publishedForNows": false,
+                "resultIdentifier": "b0aeb4fc-df63-4e2f-af88-97e3f23e847f"
+              },
+              {
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "0: None or unknown",
+                "publishedForNows": true,
+                "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956"
+              }
+            ],
+            "startDate": "2025-08-13",
+            "title": "Supervisor of provisional licence holder use hand-held mobile phone / device - endorsable offence",
+            "wording": "Supervisor of provisional licence holder use hand-held mobile phone / device - endorsable offence"
+          },
+          {
+            "allocationDecision": "Summary-only offence",
+            "civilOffence": false,
+            "code": "RC86818",
+            "convictingCourtCode": "2577",
+            "convictionDate": "2026-05-13",
+            "convictionStatus": "Convicted",
+            "dateFromWhichDisqRemoved": "",
+            "disqualificationPeriod": "000600",
+            "dttpDtetp": "",
+            "dvlaCode": "CU84",
+            "endorsableFlag": true,
+            "fine": "",
+            "interimImposedFinalSentence": "",
+            "modeOfTrial": "Summary",
+            "otherSentence": "E06M",
+            "penaltyPoints": "",
+            "plea": "GUILTY",
+            "results": [
+              {
+                "d20": false,
+                "dvlaCode": "E",
+                "judicialResultCategory": "FINAL",
+                "label": "Conditional discharge",
+                "prompts": [
+                  {
+                    "durationSequence": 1,
+                    "label": "Period\u00a0of conditional discharge",
+                    "promptIdentifier": "d3205319-84cf-4c5b-9d7a-7e4bb1865054",
+                    "promptReference": "periodofConditionalDischarge",
+                    "value": "6 Months"
+                  }
+                ],
+                "publishedForNows": false,
+                "resultIdentifier": "554c2622-c1cc-459e-a98d-b7f317ab065c"
+              },
+              {
+                "d20": true,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "Discretionary with ordinary disqualification",
+                "prompts": [
+                  {
+                    "durationSequence": 1,
+                    "label": "Disqualification period",
+                    "promptIdentifier": "2bf54447-328c-4c1b-a123-341adbd52172",
+                    "promptReference": "disqualificationPeriod",
+                    "value": "6 Months"
+                  }
+                ],
+                "publishedForNows": false,
+                "resultIdentifier": "ccfc452e-ebe4-4cd7-b8a0-4f90768447b4",
+                "resultWording": "Disqualified for holding or obtaining a driving licence. Discretionary disqualification. Driving record endorsed. Section 34(2) Road Traffic Offenders Act 1988"
+              },
+              {
+                "d20": false,
+                "judicialResultCategory": "ANCILLARY",
+                "label": "0: None or unknown",
+                "publishedForNows": true,
+                "resultIdentifier": "c3a39c2f-b056-442f-8dfc-604b5434f956"
+              }
+            ],
+            "startDate": "2025-08-13",
+            "title": "Permit use of motor vehicle - driver not having proper control - endorsable offence",
+            "wording": "Permit use of motor vehicle - driver not having proper control - endorsable offence"
+          }
+        ],
+        "hasSV": false,
+        "initiationCode": "C",
+        "reference": "TESTREF0001"
+      }
+    ],
+    "defendant": {
+      "address": {
+        "line1": "1",
+        "line2": "Test Street",
+        "line3": "Test Town",
+        "postCode": "ZZ1 1ZZ"
+      },
+      "dateOfBirth": "1990-01-01",
+      "firstName": "Test",
+      "gender": "MALE",
+      "lastName": "Defendant",
+      "name": "Test Defendant",
+      "title": "MR"
+    },
+    "distinctPrompts": [],
+    "identifier": "00f2ef16-73da-439b-98ab-e4686128ef1d",
+    "licenceProducedInCourt": "0: None or unknown",
+    "masterDefendantId": "bb73a262-d23c-4558-b75f-62112b9e0518",
+    "materialId": "cdfed8eb-4dad-45ae-b0d3-1a5b89b1db8b",
+    "orderDate": "2026-05-13",
+    "orderingCourt": {
+      "address": {
+        "address1": "176A Lavender Hill",
+        "address2": "London",
+        "address3": "",
+        "address4": "",
+        "address5": "",
+        "postcode": "SW11 1JU"
+      },
+      "code": "B01LY00",
+      "courtHearingLocation": "B01LY02",
+      "id": "f8254db1-1683-483e-afb3-b87fde5a0a26",
+      "lja": {
+        "ljaCode": "2577",
+        "ljaName": "South West London Magistrates' Court"
+      },
+      "name": "Lavender Hill Magistrates' Court",
+      "roomId": "b4562684-9209-3ec4-a544-7f80dabd94d8",
+      "roomName": "Courtroom 02"
+    },
+    "orderingHearingId": "82416ef6-7e1e-4949-bc5c-1f790090cd80",
+    "retrySequence": 0
+  },
+  "removedEndorsements": [
+    "CU80"
+  ],
+  "retrySequence": 0,
+  "updatedEndorsements": [
+    "CU84"
+  ]
+}

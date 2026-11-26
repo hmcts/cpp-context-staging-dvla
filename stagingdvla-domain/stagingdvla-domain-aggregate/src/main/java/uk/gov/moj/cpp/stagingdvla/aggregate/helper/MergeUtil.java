@@ -133,7 +133,10 @@ public class MergeUtil {
                 .withSuspendedSentence(offence.getSuspendedSentence())
                 .withDttpDtetp(offence.getDttpDtetp())
                 .withInterimImposedFinalSentence(offence.getInterimImposedFinalSentence())
-                .withDateFromWhichDisqRemoved(offence.getDateFromWhichDisqRemoved());
+                .withDateFromWhichDisqRemoved(offence.getDateFromWhichDisqRemoved())
+                .withPlea(offence.getPlea())
+                .withConvictionDate(offence.getConvictionDate())
+                .withConvictionStatus(offence.getConvictionStatus());
         if (isNotEmpty(mergedOffence.getConvictionDate())) {
              mergedOffenceWithAttributes.withSentenceDate(nonNull(previousOffence) && isNotEmpty(previousOffence.getSentenceDate()) ? previousOffence.getSentenceDate() : orderDate);
              mergedOffenceWithAttributes.withSentencingCourtCode(nonNull(previousOffence) && isNotEmpty(previousOffence.getSentencingCourtCode()) ? previousOffence.getSentencingCourtCode() : orderingCourtCode);

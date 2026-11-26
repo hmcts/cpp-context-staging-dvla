@@ -1,6 +1,7 @@
 package uk.gov.moj.cpp.stagingdvla.aggregate;
 
 import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.Matchers.empty;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.DefendantAggregateTestSteps.ExpectedEventsAssertion.expectedEventsJson;
 import static uk.gov.moj.cpp.stagingdvla.aggregate.DefendantAggregateTestSteps.ExpectedEventsAssertion.noExpectedEvents;
@@ -402,6 +403,23 @@ class DefendantAggregateStatDecAppScenariosTest {
                                                 .withAssertions(jsonPathAssertions()
                                                         .add("notificationType", "Remove")
                                                         .add("previous", notNullValue())))
+                ),
+                // CHD-3361 AC13: notificationType is not asserted (not specified by the story)
+                Arguments.of("CHD-3361-AC13 granted STAT DEC with earlier D20 - cloned offences not back-filled with plea or conviction date",
+                        defendantAggregateScenario()
+                                .withNotifyDriverStep(
+                                        "case hearing resulted",
+                                        "/testdata/drivernotifications/statdec/chd-3361/ac13/case-resulted.json",
+                                        expectedEventsJson("/testdata/drivernotifications/statdec/chd-3361/ac13/case-resulted-events.json"))
+                                .withNotifyDriverStep(
+                                        "stat dec granted with plea and conviction date cleared",
+                                        "/testdata/drivernotifications/statdec/chd-3361/ac13/app-resulted.json",
+                                        expectedEventsJson("/testdata/drivernotifications/statdec/chd-3361/ac13/app-resulted-events.json")
+                                                .withPresenceOnlyFields("^notificationType$")
+                                                .withAssertions(jsonPathAssertions()
+                                                        .add("previous", notNullValue())
+                                                        .add("cases[*].defendantCaseOffences[*].plea", empty())
+                                                        .add("cases[*].defendantCaseOffences[*].convictionDate", empty())))
                 )
         );
     }
